@@ -8,7 +8,7 @@ A front end javascript libray collection for modern browser.
 # CONTAINS
 * dom
 * event
-* ajax`
+* ajax
 * util
 	* search
 	* cookie
