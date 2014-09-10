@@ -6,15 +6,16 @@ A front end javascript libray collection for modern browser.
 * anyone
 
 # CONTAINS
-* dom
-* event
-* ajax
+* core
+	* dom
+	* event
+	* ajax
 * util
 	* search
 	* cookie
 	* hash
 	* selection
-* components
+* widget
 	* dialog
 	* confirm
 	* msg
