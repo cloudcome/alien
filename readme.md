@@ -1,4 +1,4 @@
-# ![Aline](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/aline.png)
+# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png)
 一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。
 
 # 作者
@@ -10,12 +10,15 @@
 	* dom
 	* event
 	* ajax
+	* more
 * util
 	* search
 	* cookie
 	* hash
 	* selection
-* widget
+	* ua
+	* more
+* ui
 	* dialog
 	* confirm
 	* msg
@@ -27,6 +30,7 @@
 	* upload
 	* datetimepicker
 	* preview
+	* more
 
 
 # 更多

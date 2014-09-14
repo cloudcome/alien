@@ -1,4 +1,4 @@
-# 扩展组件库
+# UI库
 * dialog
 * confirm
 * msg
