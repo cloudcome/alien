@@ -6,31 +6,11 @@
 * you
 
 # 内容
-* core
-	* dom
-	* event
-	* ajax
-	* more
+详细API参考各个文件夹
 * util
-	* search
-	* cookie
-	* hash
-	* selection
-	* ua
-	* more
+* core
 * ui
-	* dialog
-	* confirm
-	* msg
-	* scroller
-	* drag
-	* drop
-	* clip
-	* progress
-	* upload
-	* datetimepicker
-	* preview
-	* more
+
 
 
 # 更多
