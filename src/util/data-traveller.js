@@ -1,12 +1,15 @@
 /*!
- * util-data.js
+ * data-traveller.js
  * @author ydr.me
  * 2014-09-14 17:26
  */
 
 
-
 define(function (require, exports, module) {
+    /**
+     * @module util/data-traveller
+     */
+
     'use strict';
 
     var udf;
@@ -37,6 +40,8 @@ define(function (require, exports, module) {
             } else if (isNaN(object) && ret === 'number') {
                 return 'nan';
             }
+
+            return ret;
         },
         /**
          * 遍历元素
@@ -47,15 +52,17 @@ define(function (require, exports, module) {
         each: function each(data, callback, context) {
             var i;
             var j;
+            var dataType = this.type(data);
 
-            if (this.type(data) === 'array') {
+            // 数组 || 元素集合 || 节点集合
+            if (dataType === 'array' || dataType === 'htmlcollection' || dataType === 'nodelist') {
                 for (i = 0, j = data.length; i < j; i++) {
                     context = context || data[i];
                     if (callback.call(context, i, data[i]) === false) {
                         break;
                     }
                 }
-            } else {
+            } else if (data !== null && data !== udf) {
                 for (i in data) {
                     if (data.hasOwnProperty(i)) {
                         context = context || data[i];
