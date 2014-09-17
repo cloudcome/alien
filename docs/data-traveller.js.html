@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: util/data-traveller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: util/data-traveller.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*!
+ * data-traveller.js
+ * @author ydr.me
+ * 2014-09-14 17:26
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module util/data-traveller
+     */
+
+    'use strict';
+
+    var udf;
+
+    module.exports = {
+        /**
+         * 判断数据类型
+         * @param {*} object
+         * @returns {string}
+         */
+        type: function type(object) {
+            if (object === window) {
+                return 'window';
+            } else if (object === document) {
+                return 'document';
+            } else if (object === udf) {
+                return 'undefined';
+            } else if (object === null) {
+                return 'null';
+            } else if (object === null) {
+                return 'null';
+            }
+
+            var ret = ({}).toString.call(object).match(/\s(.*)\]/)[1].toLowerCase();
+
+            if (/element/.test(ret)) {
+                return 'element';
+            } else if (isNaN(object) &amp;&amp; ret === 'number') {
+                return 'nan';
+            }
+        },
+        /**
+         * 遍历元素
+         * @param {Array/Object}   data  数组
+         * @param {Function}       callback  回调，返回false时停止遍历
+         * @param {*}              [context] 上下文
+         */
+        each: function each(data, callback, context) {
+            var i;
+            var j;
+
+            if (this.type(data) === 'array') {
+                for (i = 0, j = data.length; i &lt; j; i++) {
+                    context = context || data[i];
+                    if (callback.call(context, i, data[i]) === false) {
+                        break;
+                    }
+                }
+            } else if (data !== null &amp;&amp; data !== udf) {
+                for (i in data) {
+                    if (data.hasOwnProperty(i)) {
+                        context = context || data[i];
+                        if (callback.call(context, i, data[i]) === false) {
+                            break;
+                        }
+                    }
+                }
+            }
+        },
+        /**
+         * 扩展静态对象
+         * @param {Boolean} 是否深度扩展，可省略，默认false
+         * @param {Object}  源对象
+         * @param {Object}  目标对象
+         * @returns {*}
+         */
+        extend: function extend(/*arguments*/) {
+            var args = arguments;
+            var isExtendDeep = typeof(args[0]) === 'boolean' &amp;&amp; args[0] === !0;
+            var current = isExtendDeep ? 1 : 0;
+            var length = args.length;
+            var source = args[current];
+            var i;
+            var obj;
+
+            for (; current &lt; length; current++) {
+                obj = args[current];
+                for (i in obj) {
+                    if (obj.hasOwnProperty(i) &amp;&amp; obj[i] !== undefined) {
+                        if (typeof(obj[i]) === 'object' &amp;&amp; isExtendDeep) {
+                            source[i] = extend(isExtendDeep, source, obj[i]);
+                        } else {
+                            source[i] = obj[i];
+                        }
+                    }
+                }
+            }
+
+            return source;
+        }
+    };
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="dom-selector.html">core/dom-selector</a></li><li><a href="dom-modification.html">parent/dom-modification</a></li><li><a href="browser-prefix.html">util/browser-prefix</a></li><li><a href="data-traveller.html">util/data-traveller</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    &copy; alienjs.xyz build on Tue Sep 16 2014 18:03:14 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

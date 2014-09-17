@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/dom-modification.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/dom-modification.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*!
+ * dom-modification.js
+ * @author ydr.me
+ * 2014-09-16 17:02
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module parent/dom-modification
+     */
+    'use strict';
+
+    var dataTraveller = require('../util/data-traveller.js');
+    var regHump = /[A-Z]/g;
+
+    module.exports = {
+        /**
+         * 解析字符串为节点，兼容IE10+
+         * @link https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
+         * @param {String} htmlString
+         * @returns {NodeList}
+         */
+        parse: function (htmlString) {
+            var parser = new DOMParser();
+            return parser.parseFromString(htmlString, 'text/html').body.childNodes;
+        },
+        /**
+         * 创建节点
+         * @param {String}       nodeName       节点名称，可以为#text、#comment、tagName
+         * @param {String/Object}[attributes]   节点属性
+         * @returns {Node}
+         * @examples
+         * create('#text', '123');
+         * create('#comment', '123');
+         * create('div', {id:'id-123'});
+         */
+        create: function (nodeName, attributes) {
+            var node;
+
+            switch (nodeName) {
+                case '#text':
+                    return document.createTextNode(attributes);
+
+                case '#comment':
+                    return document.createComment(attributes);
+
+                default:
+                    node = document.createElement(nodeName);
+                    dataTraveller.each(attributes, function (key, val) {
+                        var styles = [];
+
+                        if (typeof val === 'object') {
+                            if (key === 'style') {
+                                dataTraveller.each(val, function (k, v) {
+                                    styles.push(_toSepString(k) + ':' + v);
+                                });
+
+                                val = styles.join(';');
+                            } else {
+                                try {
+                                    val = JSON.stringify(val);
+                                } catch (err) {
+                                    val = '';
+                                }
+                            }
+
+                            node.setAttribute(key, val);
+                        } else {
+                            node.setAttribute(key, val);
+                        }
+                    });
+                    return node;
+            }
+        },
+        append: function (children, parent) {
+            if (parent &amp;&amp; children) {
+                return parent.appendChild(children);
+            }
+
+            return null;
+        },
+        prepend: function (children, parent) {
+            if (parent &amp;&amp; children &amp;&amp; parent.firstChild) {
+                return parent.insertBefore(children, parent.firstChild);
+            } else {
+                return this.append(children, parent);
+            }
+        },
+        before: function (children, parent) {
+            if (parent &amp;&amp; children &amp;&amp; parent.parentNode) {
+                return parent.parentNode.insertBefore(children, parent);
+            }
+
+            return null;
+        },
+        after: function (children, parent) {
+            if (parent &amp;&amp; children &amp;&amp; parent.parentNode) {
+                return parent.nextSibling ?
+                    parent.parentNode.insertBefore(children, parent.nextSibling) :
+                    this.append(children, parent.parentNode);
+            }
+
+            return null;
+        }
+    };
+
+    /**
+     * 转换驼峰字符串为短横线分隔符字符串
+     * @param {String} humpString 驼峰字符串
+     * @returns {String} 短横线分隔符字符串
+     * @private
+     */
+    function _toSepString(humpString) {
+        return humpString.replace(regHump, function ($0) {
+            return '-' + $0.toLowerCase();
+        });
+    }
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="dom-selector.html">core/dom-selector</a></li><li><a href="dom-modification.html">parent/dom-modification</a></li><li><a href="browser-prefix.html">util/browser-prefix</a></li><li><a href="data-traveller.html">util/data-traveller</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    &copy; alienjs.xyz build on Tue Sep 16 2014 18:03:14 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
