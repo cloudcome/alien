@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: core/dom-selector.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: core/dom-selector.js</h1>
-
-    
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*!
+/*!
  * core-dom-selector.js
  * @author ydr.me
  * 2014-09-14 17:23
@@ -106,12 +82,12 @@ define(function (require, exports, module) {
         next: function (element) {
             return _toArray(element.nextElementSibling);
         },
-//        prevAll: function(){
-//
-//        },
-//        nextAll: function(){
-//
-//        },
+        // prevAll: function(){
+        //
+        // },
+        // nextAll: function(){
+        //
+        // },
         /**
          * 获得元素的最近匹配祖先元素
          * @param {HTMLElement} element 元素
@@ -130,11 +106,16 @@ define(function (require, exports, module) {
         },
         /**
          * 获得父级元素
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} element        元素
+         * @param {Boolean} [isPositionParent] 是否为已定位祖先
          * @returns {Array}
          */
-        parent: function (element) {
-            return _toArray(element.parentNode || element.parentElement);
+        parent: function (element, isPositionParent) {
+            if(isPositionParent){
+
+            }else{
+                return _toArray(element.parentNode || element.parentElement);
+            }
         },
         /**
          * 获取子元素
@@ -149,15 +130,32 @@ define(function (require, exports, module) {
          * @param {HTMLElement} element 元素
          * @returns {Array}
          */
-        contents: function(element){
-            return _toArray(element.childNodes);
-        }
+        contents: function (element) {
+            return _toArray(element.contentDocument ? element.contentDocument : element.childNodes);
+        },
         // equal: function (element1, element2) {
         //     return element1.isEqualNode(element2);
         // },
         // matches: function (element, selector) {
         //     element.matches(selector);
         // }
+        /**
+         * 过滤节点集合
+         * @param {Node} nodeList   节点集合
+         * @param {Function} filter 过滤方法，返回true选择该节点
+         * @returns {Array} 过滤后的节点集合
+         */
+        filter: function (nodeList, filter) {
+            var ret = [];
+
+            dataTraveller.each(nodeList, function (index, node) {
+                if (filter.call(node)) {
+                    ret.push(node);
+                }
+            });
+
+            return ret;
+        }
     };
 
     /**
@@ -169,32 +167,10 @@ define(function (require, exports, module) {
     function _toArray(object) {
         if (object === null || object === udf) {
             return [];
-        } else if (typeof object === 'object' &amp;&amp; object.length !== udf) {
+        } else if (typeof object === 'object' && object.length !== udf) {
             return [].slice.call(object);
         } else {
             return [object];
         }
     }
-});</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="dom-selector.html">core/dom-selector</a></li><li><a href="dom-modification.html">parent/dom-modification</a></li><li><a href="browser-prefix.html">util/browser-prefix</a></li><li><a href="data-traveller.html">util/data-traveller</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    &copy; alienjs.xyz build on Tue Sep 16 2014 18:03:14 GMT+0800 (中国标准时间)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>
+});

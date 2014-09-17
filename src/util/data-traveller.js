@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: util/data-traveller.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: util/data-traveller.js</h1>
-
-    
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*!
+/*!
  * data-traveller.js
  * @author ydr.me
  * 2014-09-14 17:26
@@ -61,9 +37,11 @@ define(function (require, exports, module) {
 
             if (/element/.test(ret)) {
                 return 'element';
-            } else if (isNaN(object) &amp;&amp; ret === 'number') {
+            } else if (isNaN(object) && ret === 'number') {
                 return 'nan';
             }
+
+            return ret;
         },
         /**
          * 遍历元素
@@ -74,15 +52,17 @@ define(function (require, exports, module) {
         each: function each(data, callback, context) {
             var i;
             var j;
+            var dataType = this.type(data);
 
-            if (this.type(data) === 'array') {
-                for (i = 0, j = data.length; i &lt; j; i++) {
+            // 数组 || 元素集合 || 节点集合
+            if (dataType === 'array' || dataType === 'htmlcollection' || dataType === 'nodelist') {
+                for (i = 0, j = data.length; i < j; i++) {
                     context = context || data[i];
                     if (callback.call(context, i, data[i]) === false) {
                         break;
                     }
                 }
-            } else if (data !== null &amp;&amp; data !== udf) {
+            } else if (data !== null && data !== udf) {
                 for (i in data) {
                     if (data.hasOwnProperty(i)) {
                         context = context || data[i];
@@ -102,18 +82,18 @@ define(function (require, exports, module) {
          */
         extend: function extend(/*arguments*/) {
             var args = arguments;
-            var isExtendDeep = typeof(args[0]) === 'boolean' &amp;&amp; args[0] === !0;
+            var isExtendDeep = typeof(args[0]) === 'boolean' && args[0] === !0;
             var current = isExtendDeep ? 1 : 0;
             var length = args.length;
             var source = args[current];
             var i;
             var obj;
 
-            for (; current &lt; length; current++) {
+            for (; current < length; current++) {
                 obj = args[current];
                 for (i in obj) {
-                    if (obj.hasOwnProperty(i) &amp;&amp; obj[i] !== undefined) {
-                        if (typeof(obj[i]) === 'object' &amp;&amp; isExtendDeep) {
+                    if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
+                        if (typeof(obj[i]) === 'object' && isExtendDeep) {
                             source[i] = extend(isExtendDeep, source, obj[i]);
                         } else {
                             source[i] = obj[i];
@@ -125,26 +105,4 @@ define(function (require, exports, module) {
             return source;
         }
     };
-});</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="dom-selector.html">core/dom-selector</a></li><li><a href="dom-modification.html">parent/dom-modification</a></li><li><a href="browser-prefix.html">util/browser-prefix</a></li><li><a href="data-traveller.html">util/data-traveller</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    &copy; alienjs.xyz build on Tue Sep 16 2014 18:03:14 GMT+0800 (中国标准时间)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>
+});

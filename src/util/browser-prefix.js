@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: util/browser-prefix.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: util/browser-prefix.js</h1>
-
-    
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*!
+/*!
  * browser-prefix.js
  * @author ydr.me
  * 2014-09-16 16:20
@@ -92,26 +68,4 @@ define(function (require, exports, module) {
             return $1.toUpperCase() + $2;
         });
     }
-});</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="dom-selector.html">core/dom-selector</a></li><li><a href="dom-modification.html">parent/dom-modification</a></li><li><a href="browser-prefix.html">util/browser-prefix</a></li><li><a href="data-traveller.html">util/data-traveller</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    &copy; alienjs.xyz build on Tue Sep 16 2014 18:03:14 GMT+0800 (中国标准时间)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>
+});
