@@ -39,7 +39,19 @@
     111
     <div class="div">2</div>
     222
-    <div class="div">3</div>
+    <div class="div">3
+        <div class="a">a1
+            <div class="b">b1
+                <div class="c">c1</div>
+            </div>
+            <div class="b">b2
+                <div class="c">c2</div>
+            </div>
+            <div class="b">b3
+                <div class="d">d1</div>
+            </div>
+        </div>
+    </div>
     333
     <div class="div">4</div>
     444
@@ -50,7 +62,7 @@
 <script src="/seajs/sea.js"></script>
 <script>
     define('app', function (require) {
-        var domSelector = require('/src/core/dom-selector.js');
+        var domSelector = require('/src/core/dom/selector.js');
         var div = domSelector.query('#div');
         var divs = domSelector.query('.div', div[0]);
         var div3 = divs[3];
@@ -73,8 +85,8 @@
         console.log(domSelector.next(div3));
 
         console.log('==========================');
-        console.log('div3 closest .body');
-        console.log(domSelector.closest(div3, '.body'));
+        console.log('div3 closest body');
+        console.log(domSelector.closest(div3, 'body'));
 
         console.log('==========================');
         console.log('div3 parent');

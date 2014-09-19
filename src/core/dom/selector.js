@@ -7,14 +7,15 @@
 
 define(function (require, exports, module) {
     /**
-     * @module core/dom-selector
+     * @module core/dom/selector
      */
     'use strict';
 
-    var dataTraveller = require('../util/data-traveller.js');
-    var browserPrfix = require('../util/browser-prefix.js');
+    var data = require('../../util/data.js');
+    var compatible = require('../../util/compatible.js');
+    var howdo = require('../../util/howdo.js');
     var udf;
-    var matchesSelector = browserPrfix.html5('matchesSelector', document.body);
+    var matchesSelector = compatible.html5('matchesSelector', document.body);
 
     module.exports = {
         /**
@@ -26,7 +27,7 @@ define(function (require, exports, module) {
         query: function (selector, context) {
             context = context || document;
 
-            return _toArray(context.querySelectorAll(selector));
+            return data.toArray(context.querySelectorAll(selector), !0);
         },
 
         /**
@@ -37,9 +38,9 @@ define(function (require, exports, module) {
         siblings: function (element) {
             var ret = [];
             var parent = element.parentNode;
-            var childrens = _toArray(parent.children);
+            var childrens = data.toArray(parent.children, !0);
 
-            dataTraveller.each(childrens, function (index, child) {
+            data.each(childrens, function (index, child) {
                 if (child !== element) {
                     ret.push(child);
                 }
@@ -55,9 +56,9 @@ define(function (require, exports, module) {
         index: function (element) {
             var ret = -1;
             var parent = element.parentNode;
-            var childrens = _toArray(parent.children);
+            var childrens = data.toArray(parent.children, !0);
 
-            dataTraveller.each(childrens, function (index, child) {
+            data.each(childrens, function (index, child) {
                 if (child === element) {
                     ret = index;
                     return !1;
@@ -72,7 +73,7 @@ define(function (require, exports, module) {
          * @returns {Array}
          */
         prev: function (element) {
-            return _toArray(element.previousElementSibling);
+            return data.toArray(element.previousElementSibling, !0);
         },
         /**
          * 获取元素的下一个兄弟元素
@@ -80,7 +81,7 @@ define(function (require, exports, module) {
          * @returns {Array}
          */
         next: function (element) {
-            return _toArray(element.nextElementSibling);
+            return data.toArray(element.nextElementSibling, !0);
         },
         // prevAll: function(){
         //
@@ -89,33 +90,31 @@ define(function (require, exports, module) {
         //
         // },
         /**
-         * 获得元素的最近匹配祖先元素
+         * 获得元素的最近匹配祖先元素或子代元素集合
          * @param {HTMLElement} element 元素
          * @param {String} selector 选择器
          * @returns {Array}
          */
         closest: function (element, selector) {
-            while (element !== document) {
-                if (element[matchesSelector](selector)) {
-                    return _toArray(element);
+            var the = this;
+
+            while (data.type(element) !== 'document') {
+                if (the.isMatched(element, selector)) {
+                    return data.toArray(element, !0);
                 }
+
                 element = this.parent(element)[0];
             }
 
-            return _toArray();
+            return data.toArray();
         },
         /**
          * 获得父级元素
          * @param {HTMLElement} element        元素
-         * @param {Boolean} [isPositionParent] 是否为已定位祖先
          * @returns {Array}
          */
-        parent: function (element, isPositionParent) {
-            if(isPositionParent){
-
-            }else{
-                return _toArray(element.parentNode || element.parentElement);
-            }
+        parent: function (element) {
+            return data.toArray(element.parentNode || element.parentElement, !0);
         },
         /**
          * 获取子元素
@@ -123,22 +122,26 @@ define(function (require, exports, module) {
          * @returns {Array}
          */
         children: function (element) {
-            return _toArray(element.children);
+            return data.toArray(element.children, !0);
         },
+
         /**
          * 获取子节点
          * @param {HTMLElement} element 元素
          * @returns {Array}
          */
         contents: function (element) {
-            return _toArray(element.contentDocument ? element.contentDocument : element.childNodes);
+            return data.toArray(element.contentDocument ? element.contentDocument : element.childNodes, !0);
         },
-        // equal: function (element1, element2) {
-        //     return element1.isEqualNode(element2);
-        // },
-        // matches: function (element, selector) {
-        //     element.matches(selector);
-        // }
+        /**
+         * 元素与选择器是否匹配
+         * @param {HTMLElement} element 元素
+         * @param {String} selector 选择器
+         * @returns {Boolean}
+         */
+        isMatched: function (element, selector) {
+            return data.type(element) !== 'element' ? !1 : element[matchesSelector](selector);
+        },
         /**
          * 过滤节点集合
          * @param {Node} nodeList   节点集合
@@ -148,7 +151,7 @@ define(function (require, exports, module) {
         filter: function (nodeList, filter) {
             var ret = [];
 
-            dataTraveller.each(nodeList, function (index, node) {
+            data.each(nodeList, function (index, node) {
                 if (filter.call(node)) {
                     ret.push(node);
                 }
@@ -157,20 +160,4 @@ define(function (require, exports, module) {
             return ret;
         }
     };
-
-    /**
-     * 将类数组转换为数组
-     * @param {*} [object]
-     * @returns {Array}
-     * @private
-     */
-    function _toArray(object) {
-        if (object === null || object === udf) {
-            return [];
-        } else if (typeof object === 'object' && object.length !== udf) {
-            return [].slice.call(object);
-        } else {
-            return [object];
-        }
-    }
 });

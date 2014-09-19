@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
-    var dataTraveller = require('./data-traveller.js');
+    var data = require('./data.js');
     var regFirstLetter = /^(\w)(.*)$/;
     var p = document.createElement('p');
 
@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         html5: function (standard, parent) {
             var html5Key = null;
 
-            dataTraveller.each(html5Prefixs, function (index, prefix) {
+            data.each(html5Prefixs, function (index, prefix) {
                 html5Key = prefix ? prefix + _toUpperCaseFirstLetter(standard) : standard;
 
                 if (html5Key in parent) {
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         css3: function (standard) {
             var cssKey = null;
 
-            dataTraveller.each(css3Prefixs, function (index, prefix) {
+            data.each(css3Prefixs, function (index, prefix) {
                 cssKey = prefix ? prefix + '-' + standard : standard;
 
                 if (cssKey in p) {

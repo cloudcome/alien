@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/data-traveller
+     * @module util/data
      */
 
     'use strict';
@@ -27,8 +27,6 @@ define(function (require, exports, module) {
                 return 'document';
             } else if (object === udf) {
                 return 'undefined';
-            } else if (object === null) {
-                return 'null';
             } else if (object === null) {
                 return 'null';
             }
@@ -52,17 +50,19 @@ define(function (require, exports, module) {
         each: function each(data, callback, context) {
             var i;
             var j;
-            var dataType = this.type(data);
+            var likeArray = this.toArray(data);
 
-            // 数组 || 元素集合 || 节点集合
-            if (dataType === 'array' || dataType === 'htmlcollection' || dataType === 'nodelist') {
-                for (i = 0, j = data.length; i < j; i++) {
-                    context = context || data[i];
-                    if (callback.call(context, i, data[i]) === false) {
+            // 数组 或 类似数组
+            if (likeArray.length) {
+                for (i = 0, j = likeArray.length; i < j; i++) {
+                    context = context || likeArray[i];
+                    if (callback.call(context, i, likeArray[i]) === false) {
                         break;
                     }
                 }
-            } else if (data !== null && data !== udf) {
+            }
+            // 纯对象
+            else if (data !== null && data !== udf) {
                 for (i in data) {
                     if (data.hasOwnProperty(i)) {
                         context = context || data[i];
@@ -75,12 +75,12 @@ define(function (require, exports, module) {
         },
         /**
          * 扩展静态对象
-         * @param {Boolean} 是否深度扩展，可省略，默认false
-         * @param {Object}  源对象
-         * @param {Object}  目标对象
+         * @param {Boolean} [isExtendDeep] 是否深度扩展，可省略，默认false
+         * @param {Object}  [source] 源对象
+         * @param {Object}  [target] 目标对象，可以是多个
          * @returns {*}
          */
-        extend: function extend(/*arguments*/) {
+        extend: function extend(isExtendDeep, source, target) {
             var args = arguments;
             var isExtendDeep = typeof(args[0]) === 'boolean' && args[0] === !0;
             var current = isExtendDeep ? 1 : 0;
@@ -103,6 +103,27 @@ define(function (require, exports, module) {
             }
 
             return source;
+        },
+        /**
+         * 转换对象为一个纯数组，只要对象有length属性即可
+         * @param {Object} [data] 对象
+         * @param {Boolean} [isConvertWhole] 是否转换整个对象为数组中的第0个元素，当该对象无length属性时，默认false
+         * @returns {Array}
+         */
+        toArray: function toArray(data, isConvertWhole) {
+            var ret = [];
+            var i = 0;
+            var j;
+
+            if (data && 'length' in data && this.type(data.length) === 'number' && data.length >= 0) {
+                for (j = data.length; i < j; i++) {
+                    ret.push(data[i]);
+                }
+            } else if (data && isConvertWhole) {
+                ret.push(data);
+            }
+
+            return ret;
         }
     };
 });

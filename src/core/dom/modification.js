@@ -7,11 +7,11 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/dom-modification
+     * @module core/dom/modification
      */
     'use strict';
 
-    var dataTraveller = require('../util/data-traveller.js');
+    var data = require('../../util/data.js');
     var regHump = /[A-Z]/g;
 
     module.exports = {
@@ -21,7 +21,7 @@ define(function (require, exports, module) {
          * @param {String} htmlString
          * @returns {NodeList}
          */
-        parse: function (htmlString) {
+        parse: function parse(htmlString) {
             var parser = new DOMParser();
             return parser.parseFromString(htmlString, 'text/html').body.childNodes;
         },
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
          * create('#comment', '123');
          * create('div', {id:'id-123'});
          */
-        create: function (nodeName, attributes) {
+        create: function create(nodeName, attributes) {
             var node;
 
             switch (nodeName) {
@@ -47,12 +47,12 @@ define(function (require, exports, module) {
 
                 default:
                     node = document.createElement(nodeName);
-                    dataTraveller.each(attributes, function (key, val) {
+                    data.each(attributes, function (key, val) {
                         var styles = [];
 
                         if (typeof val === 'object') {
                             if (key === 'style') {
-                                dataTraveller.each(val, function (k, v) {
+                                data.each(val, function (k, v) {
                                     styles.push(_toSepString(k) + ':' + v);
                                 });
 
@@ -75,57 +75,60 @@ define(function (require, exports, module) {
         },
         /**
          * 在指定容器内后加节点
-         * @param {Node} children 操作节点
-         * @param {HTMLElement} parent   容器节点
+         * @param {Node} source 操作节点
+         * @param {HTMLElement} target   容器节点
          * @returns {Node}
          */
-        append: function (children, parent) {
-            if (parent && children) {
-                return parent.appendChild(children);
+        append: function append(source, target) {
+            if (target && source) {
+                return parent.appendChild(source);
             }
 
             return null;
         },
         /**
          * 在指定容器内前加节点
-         * @param {Node} children 操作节点
-         * @param {HTMLElement} parent   容器节点
+         * @param {Node} source 操作节点
+         * @param {HTMLElement} target   容器节点
          * @returns {Node}
          */
-        prepend: function (children, parent) {
-            if (parent && children && parent.firstChild) {
-                return parent.insertBefore(children, parent.firstChild);
+        prepend: function prepend(source, target) {
+            if (target && source && target.firstChild) {
+                return target.insertBefore(source, parent.firstChild);
             } else {
-                return this.append(children, parent);
+                return this.append(source, target);
             }
         },
         /**
          * 在指定容器外前加节点
-         * @param {Node} children 操作节点
-         * @param {HTMLElement} parent   容器节点
+         * @param {Node} source 操作节点
+         * @param {HTMLElement} target   容器节点
          * @returns {Node}
          */
-        before: function (children, parent) {
-            if (parent && children && parent.parentNode) {
-                return parent.parentNode.insertBefore(children, parent);
+        before: function before(source, target) {
+            if (target && source && target.parentNode) {
+                return target.parentNode.insertBefore(source, target);
             }
 
             return null;
         },
         /**
          * 在指定容器外后加节点
-         * @param {Node} children 操作节点
-         * @param {HTMLElement} parent   容器节点
+         * @param {Node} source 操作节点
+         * @param {HTMLElement} target   容器节点
          * @returns {Node} 该操作节点
          */
-        after: function (children, parent) {
-            if (parent && children && parent.parentNode) {
+        after: function after(source, target) {
+            if (target && source && parent.parentNode) {
                 return parent.nextSibling ?
-                    parent.parentNode.insertBefore(children, parent.nextSibling) :
-                    this.append(children, parent.parentNode);
+                    parent.parentNode.insertBefore(source, target.nextSibling) :
+                    this.append(source, target.parentNode);
             }
 
             return null;
+        },
+        wrap: function wrap() {
+
         }
     };
 
