@@ -75,70 +75,92 @@ define(function (require, exports, module) {
         },
         /**
          * 在指定容器内后加节点
-         * @param {Node} source 操作节点
-         * @param {HTMLElement} target   容器节点
-         * @returns {Node}
+         * @param {HTMLElement|Node} source 操作节点
+         * @param {HTMLElement|Node} target   目标节点
+         * @returns {HTMLElement|Node} 目标节点
          */
         append: function append(source, target) {
             if (target && source) {
-                return target.appendChild(source);
+                target.appendChild(source);
+                return target;
             }
 
             return null;
         },
+        appendTo: function (source, target) {
+            this.append(source, target);
+            return source;
+        },
         /**
          * 在指定容器内前加节点
-         * @param {Node} source 操作节点
-         * @param {HTMLElement} target   容器节点
-         * @returns {Node}
+         * @param {HTMLElement|Node} source 操作节点
+         * @param {HTMLElement|Node} target   目标节点
+         * @returns {HTMLElement|Node} 目标节点
          */
         prepend: function prepend(source, target) {
             if (target && source && target.firstChild) {
-                return target.insertBefore(source, target.firstChild);
+                target.insertBefore(source, target.firstChild);
+                return target;
             } else {
                 return this.append(source, target);
             }
         },
+        prependTo: function (source, target) {
+            this.prepend(source, target);
+            return source;
+        },
         /**
          * 在指定容器外前加节点
-         * @param {Node} source 操作节点
-         * @param {HTMLElement} target   容器节点
-         * @returns {Node}
+         * @param {HTMLElement|Node} source 操作节点
+         * @param {HTMLElement|Node} target   目标节点
+         * @returns {HTMLElement|Node} 目标节点
          */
         before: function before(source, target) {
             if (target && source && target.parentNode) {
-                return target.parentNode.insertBefore(source, target);
+                target.parentNode.insertBefore(source, target);
+                return target;
             }
 
             return null;
+        },
+        insertBefore: function (source, target) {
+            this.before(source, target);
+            return source;
         },
         /**
          * 在指定容器外后加节点
-         * @param {Node} source 操作节点
-         * @param {HTMLElement} target   容器节点
-         * @returns {Node} 该操作节点
+         * @param {HTMLElement|Node} source 操作节点
+         * @param {HTMLElement|Node} target   目标节点
+         * @returns {HTMLElement|Node} 目标节点
          */
         after: function after(source, target) {
             if (target && source && target.parentNode) {
-                return target.nextSibling ?
+                target.nextSibling ?
                     target.parentNode.insertBefore(source, target.nextSibling) :
                     this.append(source, target.parentNode);
+                return target;
             }
 
             return null;
         },
+        insertAfter: function (source, target) {
+            this.after(source, target);
+            return source;
+        },
         /**
          * 元素外层追加一层
-         * @param {HTMLElement} source 元素
+         * @param {HTMLElement|Node} source 元素
          * @param {String} htmlstring html字符串
          */
         wrap: function wrap(source, htmlstring) {
             var target = this.parse(htmlstring);
 
             if (target.length && target[0].nodeType === 1) {
-                this.before(target[0], source);
-                this.append(source, target[0]);
+                target = this.insertBefore(target[0], source);
+                return this.append(source, target);
             }
+
+            return null;
         }
     };
 

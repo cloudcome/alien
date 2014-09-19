@@ -47,23 +47,23 @@
 
         console.log('==========================');
         console.log('body append');
-        domModification.append(_create(), body);
+        console.log(domModification.append(_create(), body));
 
         console.log('==========================');
         console.log('body prepend');
-        domModification.prepend(_create(), body);
+        console.log(domModification.prepend(_create(), body));
 
         console.log('==========================');
         console.log('script before');
-        domModification.before(_create(), script);
+        console.log(domModification.before(_create(), script));
 
         console.log('==========================');
         console.log('script after');
-        domModification.after(_create(), script);
+        console.log(domModification.after(_create(), script));
 
         console.log('==========================');
-        console.log('script after');
-        domModification.wrap(script, '<div/>');
+        console.log('script wrap');
+        console.log(domModification.wrap(script, '<div/>'));
 
 
         function _create() {

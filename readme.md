@@ -1,5 +1,5 @@
 # ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png)
-一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。
+一个为现代浏览器而生的前端解决方案。
 
 
 # 作者
