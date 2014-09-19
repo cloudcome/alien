@@ -19,7 +19,7 @@ define(function (require, exports, module) {
          * 解析字符串为节点，兼容IE10+
          * @link https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
          * @param {String} htmlString
-         * @returns {NodeList}
+         * @returns {NodeList/HTMLElement}
          */
         parse: function parse(htmlString) {
             var parser = new DOMParser();
@@ -81,7 +81,7 @@ define(function (require, exports, module) {
          */
         append: function append(source, target) {
             if (target && source) {
-                return parent.appendChild(source);
+                return target.appendChild(source);
             }
 
             return null;
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
          */
         prepend: function prepend(source, target) {
             if (target && source && target.firstChild) {
-                return target.insertBefore(source, parent.firstChild);
+                return target.insertBefore(source, target.firstChild);
             } else {
                 return this.append(source, target);
             }
@@ -119,16 +119,26 @@ define(function (require, exports, module) {
          * @returns {Node} 该操作节点
          */
         after: function after(source, target) {
-            if (target && source && parent.parentNode) {
-                return parent.nextSibling ?
-                    parent.parentNode.insertBefore(source, target.nextSibling) :
+            if (target && source && target.parentNode) {
+                return target.nextSibling ?
+                    target.parentNode.insertBefore(source, target.nextSibling) :
                     this.append(source, target.parentNode);
             }
 
             return null;
         },
-        wrap: function wrap() {
+        /**
+         * 元素外层追加一层
+         * @param {HTMLElement} source 元素
+         * @param {String} htmlstring html字符串
+         */
+        wrap: function wrap(source, htmlstring) {
+            var target = this.parse(htmlstring);
 
+            if (target.length && target[0].nodeType === 1) {
+                this.before(target[0], source);
+                this.append(source, target[0]);
+            }
         }
     };
 

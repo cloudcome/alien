@@ -7,10 +7,19 @@
 * you
 
 
+# 特点
+* 易使用，接口清晰，职责单一
+* 易理解，模块化编程，颗粒化分解
+* 易扩展，合理宏观
+* 易推广，开源免费，人人参与
+
+
 # 兼容
 * ![ie10](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140919111504913271952205.png) IE10+
 * ![chrome](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140919111534857215164833.png) chrome latest
 * ![firefox](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140919111545251609050667.png) firefox latest
+* ![safari](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140919191953088445180368.png) safari latest
+* 适合桌面现代浏览器、手机现代浏览器
 
 
 # 内容

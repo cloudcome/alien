@@ -22,7 +22,6 @@
 </head>
 <body>
 
-
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
@@ -61,6 +60,10 @@
         console.log('==========================');
         console.log('script after');
         domModification.after(_create(), script);
+
+        console.log('==========================');
+        console.log('script after');
+        domModification.wrap(script, '<div/>');
 
 
         function _create() {
