@@ -12,23 +12,27 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
+    var domSelector = require('./selector.js');
     var regHump = /[A-Z]/g;
+    var regSpace = /\s+/g;
+    var regDir = />/g;
 
     module.exports = {
         /**
          * 解析字符串为节点，兼容IE10+
          * @link https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
          * @param {String} htmlString
-         * @returns {NodeList/HTMLElement}
+         * @returns {NodeList|HTMLElement}
          */
         parse: function parse(htmlString) {
             var parser = new DOMParser();
             return parser.parseFromString(htmlString, 'text/html').body.childNodes;
         },
+
         /**
          * 创建节点
          * @param {String}       nodeName       节点名称，可以为#text、#comment、tagName
-         * @param {String/Object}[attributes]   节点属性
+         * @param {String|Object} [attributes]   节点属性
          * @returns {Node}
          * @examples
          * create('#text', '123');
@@ -70,82 +74,69 @@ define(function (require, exports, module) {
                             node.setAttribute(key, val);
                         }
                     });
+
                     return node;
             }
         },
+
         /**
-         * 在指定容器内后加节点
-         * @param {HTMLElement|Node} source 操作节点
-         * @param {HTMLElement|Node} target   目标节点
-         * @returns {HTMLElement|Node} 目标节点
+         * 将源插入到指定的目标位置，并返回指定的元素
+         * @param {HTMLElement|Node} source 源
+         * @param {HTMLElement|Node} target 目标
+         * @param {String} position 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
+         * @param {Boolean} [isReturnSource] 是否返回源，默认false
+         * @returns {HTMLElement|Node|null}
          */
-        append: function append(source, target) {
-            if (target && source) {
-                target.appendChild(source);
-                return target;
+        insert: function insert(source, target, position, isReturnSource) {
+            switch (position) {
+                // 源插入到目标外部之前
+                case 'beforebegin':
+                    if (target && source && target.parentNode) {
+                        target.parentNode.insertBefore(source, target);
+
+                        return isReturnSource ? source : target;
+                    }
+
+                    break;
+
+                // 源插入到目标内部最前
+                case 'afterbegin':
+                    if (source && target) {
+                        if (target.firstChild) {
+                            target.insertBefore(source, target.firstChild);
+                        } else {
+                            target.appendChild(source);
+                        }
+
+                        return isReturnSource ? source : target;
+                    }
+
+                    break;
+
+                // 源插入到目标内部最后
+                case 'beforeend':
+                    if (target && source) {
+                        target.appendChild(source);
+
+                        return isReturnSource ? source : target;
+                    }
+
+                    break;
+
+                // 源插入到目标外部之后
+                case 'afterend':
+                    if (target && source && target.parentNode) {
+                        target.nextSibling ?
+                            target.parentNode.insertBefore(source, target.nextSibling) :
+                            target.parentNode.appendChild(source);
+
+                        return isReturnSource ? source : target;
+                    }
+
+                    break;
             }
 
             return null;
-        },
-        appendTo: function (source, target) {
-            this.append(source, target);
-            return source;
-        },
-        /**
-         * 在指定容器内前加节点
-         * @param {HTMLElement|Node} source 操作节点
-         * @param {HTMLElement|Node} target   目标节点
-         * @returns {HTMLElement|Node} 目标节点
-         */
-        prepend: function prepend(source, target) {
-            if (target && source && target.firstChild) {
-                target.insertBefore(source, target.firstChild);
-                return target;
-            } else {
-                return this.append(source, target);
-            }
-        },
-        prependTo: function (source, target) {
-            this.prepend(source, target);
-            return source;
-        },
-        /**
-         * 在指定容器外前加节点
-         * @param {HTMLElement|Node} source 操作节点
-         * @param {HTMLElement|Node} target   目标节点
-         * @returns {HTMLElement|Node} 目标节点
-         */
-        before: function before(source, target) {
-            if (target && source && target.parentNode) {
-                target.parentNode.insertBefore(source, target);
-                return target;
-            }
-
-            return null;
-        },
-        insertBefore: function (source, target) {
-            this.before(source, target);
-            return source;
-        },
-        /**
-         * 在指定容器外后加节点
-         * @param {HTMLElement|Node} source 操作节点
-         * @param {HTMLElement|Node} target   目标节点
-         * @returns {HTMLElement|Node} 目标节点
-         */
-        after: function after(source, target) {
-            if (target && source && target.parentNode) {
-                target.nextSibling ?
-                    target.parentNode.insertBefore(source, target.nextSibling) :
-                    this.append(source, target.parentNode);
-                return target;
-            }
-
-            return null;
-        },
-        insertAfter: function (source, target) {
-            this.after(source, target);
-            return source;
         },
         /**
          * 元素外层追加一层
@@ -156,11 +147,45 @@ define(function (require, exports, module) {
             var target = this.parse(htmlstring);
 
             if (target.length && target[0].nodeType === 1) {
-                target = this.insertBefore(target[0], source);
-                return this.append(source, target);
+                target = this.insert(target[0], source, 'beforebegin', !0);
+
+                if (target) {
+                    while (target.firstElementChild) {
+                        target = target.firstElementChild;
+                    }
+
+                    return this.insert(source, target, 'beforeend');
+                }
             }
 
             return null;
+        },
+        /**
+         * 移除源的外层元素，匹配选择器
+         * @param {HTMLElement|Node} source 源
+         * @param {String} selector 选择器
+         */
+        unwrap: function unwrap(source, selector) {
+            var selectors = selector.trim().replace(regDir, '').split(regSpace);
+            var the = this;
+
+            // .div1 .p1 .div2
+            // => .div2 .p1 .div1
+            data.each(selectors.reverse(), function (index, selector) {
+                if (domSelector.isMatched(source.parentNode, selector)) {
+                    _removeParent(source);
+                } else {
+                    return !1;
+                }
+            });
+
+            function _removeParent(element) {
+                var target = the.insert(element, element.parentNode, 'beforebegin');
+
+                if (target) {
+                    target.remove();
+                }
+            }
         }
     };
 

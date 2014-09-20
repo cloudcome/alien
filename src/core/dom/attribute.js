@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     var regSplit = /[A-Z]/g;
     var regSpace = /\s+/;
     var data = require('../../util/data.js');
+    var compatible = require('../../util/compatible.js');
 
     module.exports = {
         /**
@@ -95,7 +96,7 @@ define(function (require, exports, module) {
                 },
                 set: function (cssKey, cssVal) {
                     cssKey = cssKey.split(':')[0];
-                    element.style[_toSepString(cssKey)] = cssVal;
+                    element.style[compatible.css3(_toSepString(cssKey))] = cssVal;
                 }
             });
         },
@@ -106,7 +107,7 @@ define(function (require, exports, module) {
          * @param {String} [dataVal] 数据集值
          * @returns {*}
          */
-        data: function data(element, dataKey, dataVal) {
+        data: function _data(element, dataKey, dataVal) {
             return _getSet(arguments, {
                 get: function (dataKey) {
                     return element.dataset[_toHumpString(dataKey)];
