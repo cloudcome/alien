@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
- - Emitter.html
+ - emitter.html
  - @author ydr.me
- - 2014-09-20 11:49
+ - 2014-09-20 11:14
  -->
 <html>
 <head lang="zh-cn">
@@ -19,9 +19,30 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>Emitter.html</title>
+    <title>emitter.html</title>
 </head>
 <body>
 
+
+<script src="/seajs/sea.js" id="script"></script>
+<script>
+    define('app', function (require) {
+        var Emitter = require('/src/core/event/Emitter.js');
+        var emitter = new Emitter();
+
+        emitter.on('hi', function (data) {
+            alert('hi ' + (data || 'who??'));
+        });
+
+        setTimeout(function () {
+            emitter.emit('hi');
+        }, 1000);
+
+        setTimeout(function () {
+            emitter.emit('hi', '云淡然');
+        }, 2000);
+    });
+    seajs.use('app');
+</script>
 </body>
 </html>
