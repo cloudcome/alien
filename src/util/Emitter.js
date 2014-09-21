@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var data = require('data.js');
     var regSpace = /\s+/g;
 
     var Emitter = function () {
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
             var the = this;
 
             _middleware(eventType, function (et) {
-                if (this.eventsPool[et] && listener) {
+                if (the.eventsPool[et] && listener) {
                     data.each(this.eventsPool, function (index, _listener) {
                         if (listener === _listener) {
                             the.eventsPool.splice(index, 1);
