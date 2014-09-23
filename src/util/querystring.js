@@ -116,6 +116,7 @@ define(function (require, exports, module) {
     function _isSafe(object) {
         var type = data.type(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
+
         return ret === !0 ? !0 : type;
     }
 
