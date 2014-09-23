@@ -17,6 +17,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/;
     var data = require('../../util/data.js');
     var compatible = require('../../util/compatible.js');
+    var regPx = /margin|width|height|padding|top|right|bottom|left/i;
+    var regNum = /^\d+$/;
 
     module.exports = {
         /**
@@ -95,8 +97,9 @@ define(function (require, exports, module) {
                     return getComputedStyle(element, pseudo)[_toSepString(cssKey)];
                 },
                 set: function (cssKey, cssVal) {
-                    cssKey = cssKey.split(':')[0];
-                    element.style[compatible.css3(_toSepString(cssKey))] = cssVal;
+                    cssKey = compatible.css3(_toSepString(cssKey.split(':')[0]));
+                    cssVal = _toCssVal(cssKey, cssVal);
+                    element.style[cssKey] = cssVal;
                 }
             });
         },
@@ -208,6 +211,28 @@ define(function (require, exports, module) {
         return string.replace(regSep, '').replace(regSplit, function ($0) {
             return '-' + $0.toLowerCase();
         });
+    }
+
+
+    /**
+     * 转换纯数字的css属性为字符，如：width=100 => width=100px
+     * @param {String} cssKey css属性
+     * @param {String|Number} cssVal css属性值
+     * @returns {*}
+     * @private
+     */
+    function _toCssVal(cssKey, cssVal) {
+        if (!regPx.test(cssKey)) {
+            return cssVal;
+        }
+
+        cssVal += '';
+
+        if (regNum.test(cssVal)) {
+            return cssVal + 'px';
+        }
+
+        return cssVal;
     }
 
 
