@@ -12,8 +12,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
+    var compatible = require('../../util/compatible.js');
     var domSelector = require('./selector.js');
-    var regHump = /[A-Z]/g;
     var regSpace = /\s+/g;
     var regDir = />/g;
 
@@ -26,6 +26,7 @@ define(function (require, exports, module) {
          */
         parse: function parse(htmlString) {
             var parser = new DOMParser();
+
             return parser.parseFromString(htmlString, 'text/html').body.childNodes;
         },
 
@@ -57,7 +58,7 @@ define(function (require, exports, module) {
                         if (typeof val === 'object') {
                             if (key === 'style') {
                                 data.each(val, function (k, v) {
-                                    styles.push(_toSepString(k) + ':' + v);
+                                    styles.push(compatible.css3(k) + ':' + v);
                                 });
 
                                 val = styles.join(';');
@@ -188,16 +189,4 @@ define(function (require, exports, module) {
             }
         }
     };
-
-    /**
-     * 转换驼峰字符串为短横线分隔符字符串
-     * @param {String} humpString 驼峰字符串
-     * @returns {String} 短横线分隔符字符串
-     * @private
-     */
-    function _toSepString(humpString) {
-        return humpString.replace(regHump, function ($0) {
-            return '-' + $0.toLowerCase();
-        });
-    }
 });

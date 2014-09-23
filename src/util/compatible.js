@@ -1,5 +1,5 @@
 /*!
- * browser-prefix.js
+ * compatible.js
  * @author ydr.me
  * 2014-09-16 16:20
  */
@@ -7,13 +7,15 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/browser-prefix
+     * @module util/compatible
      */
     'use strict';
 
+    var data = require('./data.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
-    var data = require('./data.js');
+    var regCss3 = /^-(webkit|moz|ms)-/i;
+    var regHump = /[A-Z]/g;
     var regFirstLetter = /^(\w)(.*)$/;
     var p = document.createElement('p');
 
@@ -44,6 +46,7 @@ define(function (require, exports, module) {
          */
         css3: function css3(standard) {
             var cssKey = null;
+            standard = _toSepString(standard.trim().replace(regCss3, ''));
 
             data.each(css3Prefixs, function (index, prefix) {
                 cssKey = prefix ? prefix + '-' + standard : standard;
@@ -66,6 +69,18 @@ define(function (require, exports, module) {
     function _toUpperCaseFirstLetter(word) {
         return word.replace(regFirstLetter, function ($0, $1, $2) {
             return $1.toUpperCase() + $2;
+        });
+    }
+
+    /**
+     * 转换驼峰字符串为短横线分隔符字符串
+     * @param {String} humpString 驼峰字符串
+     * @returns {String} 短横线分隔符字符串
+     * @private
+     */
+    function _toSepString(humpString) {
+        return humpString.replace(regHump, function ($0) {
+            return '-' + $0.toLowerCase();
         });
     }
 });
