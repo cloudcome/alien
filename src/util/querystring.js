@@ -13,6 +13,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('./data.js');
+    var regSp = /\+/g;
 
     module.exports = {
         /**
@@ -69,17 +70,29 @@ define(function (require, exports, module) {
 
             data.each(arr, function (index, item) {
                 var temp = item.split(eq);
-                var key = _decode(temp[0]);
-                var val = _decode(temp.slice(1).join(''));
+                var key = '';
+                var val = '';
 
-                if (!ret[key]) {
-                    ret[key] = val;
-                } else {
-                    if (data.type(ret[key]) !== 'array') {
-                        ret[key] = [ret[key]];
+                try {
+                    key = _decode(temp[0].replace(regSp, ' '));
+                } catch (err) {
+                }
+
+                try {
+                    val = _decode(temp.slice(1).join(''));
+                } catch (err) {
+                }
+
+                if (key.length) {
+                    if (!ret[key]) {
+                        ret[key] = val;
+                    } else {
+                        if (data.type(ret[key]) !== 'array') {
+                            ret[key] = [ret[key]];
+                        }
+
+                        ret[key].push(val);
                     }
-
-                    ret[key].push(val);
                 }
             });
 
