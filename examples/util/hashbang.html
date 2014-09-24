@@ -24,17 +24,25 @@
 <body>
 
 
-
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var hashbang = require('/src/util/hashbang.js');
 
-        window.hashbang = hashbang;
+        hashbang.on('path', 0, function (eve, newObject, oldObject) {
+            console.log('path: 0');
+            console.log(newObject);
+            console.log(oldObject);
+        });
+
+        hashbang.on('query', ['b', 'c'], function (eve, newObject, oldObject) {
+            console.log('query: [b c]');
+            console.log(newObject);
+            console.log(oldObject);
+        });
     });
     seajs.use('app');
 </script>
-
 
 
 </body>

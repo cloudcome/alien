@@ -57,7 +57,7 @@ define(function (require, exports, module) {
 
         /**
          * 事件监听
-         * @param {HTMLElement|Node} element 元素
+         * @param {Object|HTMLElement|Node} element 元素
          * @param {String} eventType 事件类型，多个事件使用空格分开
          * @param {String} [selector] 事件委托时的选择器，默认空
          * @param {Function} listener 事件回调
@@ -69,8 +69,8 @@ define(function (require, exports, module) {
 
             // on self
             // .on(body, 'click', fn);
-            if (data.type(selector) === 'function') {
-                isCapture = listener;
+            if (data.type(arguments[2]) === 'function') {
+                isCapture = arguments[3];
                 callback = selector;
             }
             // delegate
@@ -93,7 +93,7 @@ define(function (require, exports, module) {
 
         /**
          * 移除事件监听
-         * @param {HTMLElement|Node} element 元素
+         * @param {window|HTMLElement|Node} element 元素
          * @param {String} eventType 事件类型
          * @param {Function} listener 回调
          */

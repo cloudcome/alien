@@ -14,13 +14,14 @@ define(function (require, exports, module) {
 
     var data = require('./data.js');
     var regSp = /\+/g;
+    var regQ = /^\?+/;
 
     module.exports = {
         /**
          * 字符化
          * @param {String} string 字符串
-         * @param {String} sep 分隔符，默认&
-         * @param {String} eq 等于符，默认=
+         * @param {String} [sep] 分隔符，默认&
+         * @param {String} [eq] 等于符，默认=
          * @returns {String}
          */
         stringify: function stringify(object, sep, eq) {
@@ -48,17 +49,17 @@ define(function (require, exports, module) {
         },
         /**
          * 解析
-         * @param {String} string 字符串
-         * @param {String} sep 分隔符，默认&
-         * @param {String} eq 等于符，默认=
+         * @param {String} querystring 字符串
+         * @param {String} [sep] 分隔符，默认&
+         * @param {String} [eq] 等于符，默认=
          * @returns {Object}
          */
-        parse: function parse(string, sep, eq) {
+        parse: function parse(querystring, sep, eq) {
             sep = sep || '&';
             eq = eq || '=';
 
             var ret = {};
-            var type = data.type(string);
+            var type = data.type(querystring);
             var arr;
 
             if (type !== 'string') {
@@ -66,22 +67,12 @@ define(function (require, exports, module) {
             }
 
             // 最大长度100
-            arr = string.split(sep).slice(0, 100);
+            arr = querystring.replace(regQ, '').split(sep).slice(0, 100);
 
             data.each(arr, function (index, item) {
                 var temp = item.split(eq);
-                var key = '';
-                var val = '';
-
-                try {
-                    key = _decode(temp[0].replace(regSp, ' '));
-                } catch (err) {
-                }
-
-                try {
-                    val = _decode(temp.slice(1).join(''));
-                } catch (err) {
-                }
+                var key = _decode(temp[0].replace(regSp, ' '));
+                var val = _decode(temp.slice(1).join(''));
 
                 if (key.length) {
                     if (!ret[key]) {
@@ -97,6 +88,55 @@ define(function (require, exports, module) {
             });
 
             return ret;
+        },
+        /**
+         * 获取当前 querystring 中的键值
+         * @param {String} key 键
+         * @returns {String|undefined}
+         */
+        get: function get(key) {
+            return this.parse(location.search)[key];
+        },
+        /**
+         * 设置当前 querystring 中的键值
+         * @param {String|Object} key 键或键值对
+         * @param {String} [val] 值
+         */
+        set: function set(key, val) {
+            var ret = this.parse(location.search);
+            var setter = {};
+
+            if (arguments.length === 2) {
+                setter[key] = val;
+            } else {
+                setter = key;
+            }
+
+            data.extend(!0, ret, setter);
+
+            location.search = this.stringify(ret);
+        },
+        /**
+         * 移除当前 querystring 的键
+         * @param {String|Array|undefined} [key] 键或键数组
+         */
+        remove: function remove(key) {
+            if (!arguments.length) {
+                location.search = '';
+                return;
+            }
+
+            var ret = this.parse(location.search);
+
+            if (data.type(key) !== 'array') {
+                key = [key];
+            }
+
+            data.each(key, function (index, k) {
+                delete(ret[k]);
+            });
+
+            location.search = this.stringify(ret);
         }
     };
 
@@ -117,7 +157,11 @@ define(function (require, exports, module) {
      * @private
      */
     function _decode(string) {
-        return decodeURIComponent(string);
+        try {
+            return decodeURIComponent(string);
+        } catch (err) {
+            return '';
+        }
     }
 
     /**
