@@ -13,11 +13,20 @@ define(function (require, exports, module) {
 
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
+    var regColon = /:([^\/]+)/g;
+    var regEndSlash = /\/$/;
+    var regSep = /\//g;
     var data = require('./data.js');
     var qs = require('./querystring.js');
     var event = require('../core/event/event.js');
     var pathListenerMap = {};
     var queryListenerMap = {};
+    var matchesDefaults = {
+        // 是否忽略大小写，默认 false
+        isIgnoreCase: !1,
+        // 是否忽略末尾斜杠，默认 true
+        isIgnoreEndSlash: !0
+    };
     var hashbang = module.exports = {
         /**
          * 解析 hashbang 字符串为对象
@@ -79,6 +88,58 @@ define(function (require, exports, module) {
             });
 
             return '#!' + (hashPath.length ? '/' + hashPath.join('/') : '') + '/' + (hashQuerystring ? '?' + hashQuerystring : '');
+        },
+
+        /**
+         * 匹配 URL path 部分
+         * @param {String} hashbangString hash 字符串
+         * @param {String} regexp 正怎字符串
+         * @param {Object} [options] 参数配置
+         * @returns {*}
+         */
+        matches: function matches(hashbangString, regexp, options) {
+            // /id/:id/ => /id/abc123/   √
+
+            options = data.extend({}, matchesDefaults, options);
+
+            var keys = [0];
+            var matched;
+            var regSource = regexp;
+            var reg;
+            var ret = null;
+
+            if (data.type(hashbangString) !== 'string') {
+                return ret;
+            }
+
+            hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+
+
+            if (options.isIgnoreEndSlash) {
+                regexp += regEndSlash.test(regexp) ? '?' : '/?';
+            }
+
+            regexp = regexp.replace(regColon, '([^/]+)').replace(regSep, '\\/');
+            reg = new RegExp('^' + regexp + '$', options.isIgnoreCase ? 'i' : '');
+
+            while ((matched = regColon.exec(regSource)) !== null) {
+                keys.push(matched[1]);
+            }
+
+            matched = hashbangString.match(reg);
+
+            if (!matched) {
+                return ret;
+            }
+
+            data.each(keys, function (index, key) {
+                if (index && matched[index]) {
+                    ret = ret || {};
+                    ret[key] = matched[index];
+                }
+            });
+
+            return ret;
         },
 
         /**

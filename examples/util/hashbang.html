@@ -29,6 +29,8 @@
     define('app', function (require) {
         var hashbang = require('/src/util/hashbang.js');
 
+        window.hashbang = hashbang;
+
         hashbang.on('path', 0, function (eve, newObject, oldObject) {
             console.log('path: 0');
             console.log(newObject);
