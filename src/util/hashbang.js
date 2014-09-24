@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
         },
         isHashbang: function isHashbang(hashstring){
-            return regHashbang.toString(hashstring);
+            return regHashbang.test(hashstring);
         }
     };
 });
