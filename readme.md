@@ -3,6 +3,7 @@
 
 
 # 作者
+* [模块书写约定](https://github.com/cloudcome/alien/blob/master/module-convention.md)
 * [cloudcome](http://github.com/cloudcome/)
 * you
 
