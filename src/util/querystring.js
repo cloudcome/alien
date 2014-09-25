@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     module.exports = {
         /**
          * 字符化
-         * @param {String} string 字符串
+         * @param {Object} object query 对象
          * @param {String} [sep] 分隔符，默认&
          * @param {String} [eq] 等于符，默认=
          * @returns {String}
