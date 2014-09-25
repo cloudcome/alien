@@ -75,7 +75,7 @@ define(function (require, exports, module) {
         },
         /**
          * 扩展静态对象
-         * @param {Boolean} [isExtendDeep] 是否深度扩展，可省略，默认false
+         * @param {Boolean|Object} [isExtendDeep] 是否深度扩展，可省略，默认false
          * @param {Object}  [source] 源对象
          * @param {Object}  [target] 目标对象，可以是多个
          * @returns {*}
