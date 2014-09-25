@@ -85,6 +85,13 @@ function parse(querystring, sep, eq) {
 ```
 
 
+### 模块引用
+必须使用相对路径，文件后缀不能省略，示例如下：
+```
+var data = require('./data.js');
+```
+
+
 ### 模块方法
 必须使用约定注释规范，每个函数必须命名，示例如下：
 ```
