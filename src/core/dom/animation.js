@@ -15,7 +15,7 @@ define(function (require, exports, module) {
     var attribute = require('./attribute.js');
     var data = require('../../util/data.js');
     var compatible = require('../../util/compatible.js');
-    var event = require('../event/event.js');
+    var event = require('../event/base.js');
     var easingMap = {
         'in': 'ease-in',
         'out': 'ease-out',
@@ -50,8 +50,6 @@ define(function (require, exports, module) {
         duration: 789,
         delay: 0
     };
-
-//    var transitionendEventType = compatible.html5('ontransitionend', window).slice(2);
     var transitionendEventType = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd';
     var noop = function () {
     };
@@ -71,6 +69,10 @@ define(function (require, exports, module) {
          * .animate(element, to, property, callback);
          */
         animate: function animate(element, to, property, callback) {
+            if(attribute.css(element, 'display') === 'none'){
+                return;
+            }
+
             var args = arguments;
             var argL = args.length;
             var keys = [];
@@ -102,7 +104,7 @@ define(function (require, exports, module) {
                 }
 
                 hasDispatch = 1;
-                event.un(element, transitionendEventType, listener);
+                base.un(element, transitionendEventType, listener);
                 callback();
                 attribute.css(element, 'transition-duration', '');
                 attribute.css(element, 'transition-delay', '');
@@ -110,7 +112,7 @@ define(function (require, exports, module) {
                 attribute.css(element, 'transition-property', '');
             };
 
-            event.on(element, transitionendEventType, listener);
+            base.on(element, transitionendEventType, listener);
             property = data.extend({}, defaults, property);
             property.easing2 = easingMap[property.easing];
 

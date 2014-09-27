@@ -23,11 +23,52 @@
 </head>
 <body>
 
+<ul>
+    <li>路由1：/index/</li>
+    <li>路由2：/user/:userId/</li>
+</ul>
+
+<button id="btn1">设置为 #!/index/</button><br>
+<button id="btn2">设置为 #!/user/:userId/</button><br>
+<button id="btn3">设置为 #!/dmin/:adminId/page/:pageNo</button><br>
+<div>监听结果：
+    <p id="ret"></p>
+</div>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var hashbang = require('/src/util/hashbang.js');
+        var data = require('/src/util/data.js');
+        var ret = document.getElementById('ret');
+        var routes = [
+            '/index/',
+            '/user/:userId/'
+        ]
+
+        document.getElementById('btn1').onclick = function () {
+            var hash = hashbang.stringify({
+                path: '/index/'
+            });
+
+            location.hash = hash;
+        }
+
+        document.getElementById('btn2').onclick = function () {
+            var hash = hashbang.stringify({
+                path: '/user/'+ Date.now()
+            });
+
+            location.hash = hash;
+        }
+
+        document.getElementById('btn3').onclick = function () {
+            var hash = hashbang.stringify({
+                path: ['admin', Date.now(), 'page', Date.now()]
+            });
+
+            location.hash = hash;
+        }
 
         window.hashbang = hashbang;
 
@@ -41,6 +82,19 @@
             console.log('query: [b c]');
             console.log(newObject);
             console.log(oldObject);
+        });
+
+        hashbang.on('path', -1, function (eve, newObject, oldObject) {
+            var matched;
+
+            data.each(routes, function (index, route) {
+                matched = hashbang.matches(eve.newURL, route);
+                if(matched){
+                    return !1;
+                }
+            });
+
+            ret.innerHTML = JSON.stringify(matched);
         });
     });
     seajs.use('app');

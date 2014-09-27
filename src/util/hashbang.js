@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var regSep = /\//g;
     var data = require('./data.js');
     var qs = require('./querystring.js');
-    var event = require('../core/event/event.js');
+    var event = require('../core/event/base.js');
     var pathListenerMap = {};
     var queryListenerMap = {};
     var matchesDefaults = {
@@ -83,28 +83,35 @@ define(function (require, exports, module) {
             var hashPath = [];
             var hashQuerystring = qs.stringify(hashbangObject.query, sep, eq);
 
+            if (data.type(hashbangObject.path) === 'string') {
+                return '#!' + hashbangObject.path +
+                    (hashQuerystring ? '?' + hashQuerystring : '');
+            }
+
             data.each(hashbangObject.path, function (index, path) {
                 hashPath.push(_encode(path));
             });
 
-            return '#!' + (hashPath.length ? '/' + hashPath.join('/') : '') + '/' + (hashQuerystring ? '?' + hashQuerystring : '');
+            return '#!' + (hashPath.length ? '/' + hashPath.join('/') : '') + '/' +
+                (hashQuerystring ? '?' + hashQuerystring : '');
         },
 
         /**
          * 匹配 URL path 部分
          * @param {String} hashbangString hash 字符串
-         * @param {String} regexp 正怎字符串
+         * @param {String} route 正怎字符串
          * @param {Object} [options] 参数配置
          * @returns {*}
          */
-        matches: function matches(hashbangString, regexp, options) {
+        matches: function matches(hashbangString, route, options) {
             // /id/:id/ => /id/abc123/   √
 
             options = data.extend({}, matchesDefaults, options);
 
+            var temp;
             var keys = [0];
             var matched;
-            var regSource = regexp;
+            var routeSource = route;
             var reg;
             var ret = null;
 
@@ -112,17 +119,20 @@ define(function (require, exports, module) {
                 return ret;
             }
 
+            temp = hashbangString.split('#');
+            temp.shift();
+            hashbangString = '#' + temp.join('');
             hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
 
 
             if (options.isIgnoreEndSlash) {
-                regexp += regEndSlash.test(regexp) ? '?' : '/?';
+                route += regEndSlash.test(route) ? '?' : '/?';
             }
 
-            regexp = regexp.replace(regColon, '([^/]+)').replace(regSep, '\\/');
-            reg = new RegExp('^' + regexp + '$', options.isIgnoreCase ? 'i' : '');
+            route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/');
+            reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');
 
-            while ((matched = regColon.exec(regSource)) !== null) {
+            while ((matched = regColon.exec(routeSource)) !== null) {
                 keys.push(matched[1]);
             }
 
@@ -139,7 +149,14 @@ define(function (require, exports, module) {
                 }
             });
 
-            return ret;
+            return {
+                route: routeSource,
+                params: ret
+            };
+        },
+
+        setPath: function () {
+
         },
 
         /**
@@ -149,11 +166,11 @@ define(function (require, exports, module) {
          * @param {Function} listener 监听回调
          */
         on: function on(part, key, listener) {
+            var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
+
             if (data.type(key) !== 'array') {
                 key = [key];
             }
-
-            var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
             data.each(key, function (index, k) {
                 listenerMap[k] = listenerMap[k] || [];
@@ -168,6 +185,8 @@ define(function (require, exports, module) {
          * 移除监听 hashbang
          * @param {String} part 监听部分，可以为`query`或`path`
          * @param {String|Number|Array} key 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
+         * path: -1 表示监听 path 所有部分
+         * query: "" 空字符串，表示监听 query 所有部分
          * @param {Function} [listener] 监听回调，回调为空表示删除该键的所有监听队列
          */
         un: function un(part, key, listener) {
@@ -180,7 +199,7 @@ define(function (require, exports, module) {
 
             data.each(key, function (i, k) {
                 if (argsL === 1) {
-                    delete(listenerMap[k]);
+                    listenerMap[k] = [];
                 } else {
                     data.each(listenerMap[k], function (j, _listener) {
                         if (listener === _listener) {
@@ -193,12 +212,15 @@ define(function (require, exports, module) {
         }
     };
 
-
-    event.on(window, 'hashchange', function (eve) {
+    base.on(window, 'hashchange', function (eve) {
         var newObject = hashbang.parse(eve.newURL);
         var oldObject = hashbang.parse(eve.oldURL);
         var pathDifferentKeys = _differentKeys(newObject.path, oldObject.path);
         var queryDifferentKeys = _differentKeys(newObject.query, oldObject.query);
+
+        data.each(pathListenerMap[-1], function (index, listener) {
+            listener(eve, newObject, oldObject);
+        });
 
         data.each(pathDifferentKeys, function (index, key) {
             if (pathListenerMap[key]) {
@@ -206,6 +228,10 @@ define(function (require, exports, module) {
                     listener(eve, newObject, oldObject);
                 });
             }
+        });
+
+        data.each(queryListenerMap[''], function (index, listener) {
+            listener(eve, newObject, oldObject);
         });
 
         data.each(queryDifferentKeys, function (index, key) {
@@ -253,7 +279,7 @@ define(function (require, exports, module) {
         var keys = [];
 
         data.each(obj1, function (key, val) {
-            if (val !== obj2[key]) {
+            if (!obj2 || val !== obj2[key]) {
                 keys.push(key);
             }
         });
