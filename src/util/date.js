@@ -233,7 +233,10 @@ define(function (require, exports, module) {
             hours = Math.floor(diff / (1000 * 60 * 60));
             days = Math.floor(diff / (1000 * 60 * 60 * 24));
             years = Math.abs(compareDate.getFullYear() - old.getFullYear());
-            months = Math.abs(years * 12 + compareDate.getMonth() - old.getMonth());
+            months = isInFeature ?
+                years * 12 - compareDate.getMonth() + old.getMonth() :
+                years * 12 + compareDate.getMonth() - old.getMonth();
+            years -= (isInFeature ? 1 : 0);
 
 
             // < 10s

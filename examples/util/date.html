@@ -23,15 +23,18 @@
 </head>
 <body>
 
-<h1>YYYY-MM-DD HH:mm:ss aaa =><br> <span id="ret"></span></h1>
+<h1>YYYY-MM-DD HH:mm:ss aaa =><br> <span id="ret1"></span></h1>
+<h1>2014年4月11日 08:00:00 至今：<span id="ret2"></span></h1>
+<h1>2015年4月11日 08:00:00 至今：<span id="ret3"></span></h1>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var date = require('/src/util/date.js');
 
-        document.getElementById('ret').innerHTML = date.format('YYYY-MM-DD HH:mm:ss aaa');
-        window.date = date;
+        document.getElementById('ret1').innerHTML = date.format('YYYY-MM-DD HH:mm:ss aaa');
+        document.getElementById('ret2').innerHTML = date.from('2014-4-11 08:00:00');
+        document.getElementById('ret3').innerHTML = date.from('2015-4-11 08:00:00');
     });
     seajs.use('app');
 </script>
