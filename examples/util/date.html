@@ -24,17 +24,29 @@
 <body>
 
 <h1>YYYY-MM-DD HH:mm:ss aaa =><br> <span id="ret1"></span></h1>
+
 <h1>2014年4月11日 08:00:00 至今：<span id="ret2"></span></h1>
+
 <h1>2015年4月11日 08:00:00 至今：<span id="ret3"></span></h1>
+
+<h1>本周是今年的第<span id="ret4"></span>周</h1>
+
+<h1>本周是本月的第<span id="ret5"></span>周</h1>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var date = require('/src/util/date.js');
+        var now = new Date();
+        var YYYY = now.getFullYear();
+        var M = now.getMonth();
+        var D = now.getDate();
 
         document.getElementById('ret1').innerHTML = date.format('YYYY-MM-DD HH:mm:ss aaa');
         document.getElementById('ret2').innerHTML = date.from('2014-4-11 08:00:00');
         document.getElementById('ret3').innerHTML = date.from('2015-4-11 08:00:00');
+        document.getElementById('ret4').innerHTML = date.getWeeksInYear(YYYY, M, D);
+        document.getElementById('ret5').innerHTML = date.getWeeksInMonth(YYYY, M, D);
     });
     seajs.use('app');
 </script>

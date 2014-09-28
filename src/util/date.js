@@ -172,6 +172,14 @@ define(function (require, exports, module) {
 //
 //            return new Date(year, month, 1).getDay();
 //        },
+        /**
+         * 计算某年某月某日是当年的第几周
+         * @param {Number} year 年
+         * @param {Number} month 月
+         * @param {Number} date 日
+         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @returns {number}
+         */
         getWeeksInYear: function getWeeksInYear(year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
 
@@ -184,6 +192,14 @@ define(function (require, exports, module) {
 
             return Math.ceil(pastDate / 7);
         },
+        /**
+         * 计算某年某月某日是当月的第几周
+         * @param {Number} year 年
+         * @param {Number} month 月
+         * @param {Number} date 日
+         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @returns {number}
+         */
         getWeeksInMonth: function getWeeksInMonth(year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
 
