@@ -23,6 +23,27 @@ define(function (require, exports, module) {
         /**
          * 格式化日志
          * @param {String} format 格式化字符串
+         * 假设当前时间为：2014年1月1日 19点9分9秒 周三
+         * YYYY 2014
+         * YY 14
+         * MM 01
+         * M 1
+         * DD 01
+         * D 1
+         * HH 19
+         * hh 07
+         * H 19
+         * h 7
+         * mm 09
+         * m 9
+         * ss 09
+         * s 9
+         * www 星期三
+         * ww 周三
+         * w 三
+         * aaa 下午
+         * AA PM
+         * aa pm
          * @param {Date|Object|Number|String} [date] 日期
          * @param {Object} [config] 格式配置
          * @returns {null|string}
@@ -213,7 +234,7 @@ define(function (require, exports, module) {
          * @param {String|Number|Date} [date] 被比较时间，默认为当前时间
          * @returns {string}
          */
-        from: function fromNow(date, compareDate) {
+        from: function from(date, compareDate) {
             compareDate = compareDate || new Date();
             compareDate = this.parse(compareDate);
 
