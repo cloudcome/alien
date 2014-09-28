@@ -16,9 +16,9 @@ define(function (require, exports, module) {
     var regColon = /:([^\/]+)/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    var data = require('./data.js');
+    var data = require('../../util/data.js');
     var qs = require('./querystring.js');
-    var event = require('../core/event/base.js');
+    var event = require('../event/base.js');
     var pathListenerMap = {};
     var queryListenerMap = {};
     var matchesDefaults = {

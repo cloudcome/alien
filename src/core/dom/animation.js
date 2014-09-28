@@ -14,7 +14,7 @@ define(function (require, exports, module) {
 
     var attribute = require('./attribute.js');
     var data = require('../../util/data.js');
-    var compatible = require('../../util/compatible.js');
+    var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
     var easingMap = {
         'in': 'ease-in',
@@ -59,7 +59,7 @@ define(function (require, exports, module) {
          * 动画
          * @param {HTMLElement|Node} element 元素
          * @param {Object} to 终点
-         * @param {Object} [property] 属性
+         * @param {Object} [options] 配置
          * @param {Function} [callback] 回调
          *
          * @examples
@@ -68,8 +68,8 @@ define(function (require, exports, module) {
          * .animate(element, to, callback);
          * .animate(element, to, property, callback);
          */
-        animate: function animate(element, to, property, callback) {
-            if(attribute.css(element, 'display') === 'none'){
+        animate: function animate(element, to, options, callback) {
+            if (attribute.css(element, 'display') === 'none') {
                 return;
             }
 
@@ -78,13 +78,15 @@ define(function (require, exports, module) {
             var keys = [];
             var listener;
             var hasDispatch = 0;
+            var easing = '';
+            var timeid = 0;
 
             callback = args[argL - 1];
 
             if (argL === 3) {
                 // .animate(element, to, callback);
                 if (data.type(args[2]) === 'function') {
-                    property = {};
+                    options = {};
                 }
                 // .animate(element, to, property);
                 else {
@@ -93,40 +95,44 @@ define(function (require, exports, module) {
             }
             // .animate(element, to);
             else if (argL === 2) {
-                property = {};
+                options = {};
                 callback = noop;
             }
 
-            keys = [];
             listener = function () {
+                if (timeid) {
+                    clearTimeout(timeid);
+                    timeid = 0;
+                }
+
                 if (hasDispatch) {
                     return;
                 }
 
                 hasDispatch = 1;
-                base.un(element, transitionendEventType, listener);
-                callback();
+                event.un(element, transitionendEventType, listener);
                 attribute.css(element, 'transition-duration', '');
                 attribute.css(element, 'transition-delay', '');
                 attribute.css(element, 'transition-timing-function', '');
                 attribute.css(element, 'transition-property', '');
+                callback();
             };
 
-            base.on(element, transitionendEventType, listener);
-            property = data.extend({}, defaults, property);
-            property.easing2 = easingMap[property.easing];
+            event.on(element, transitionendEventType, listener);
+            options = data.extend({}, defaults, options);
+            easing = easingMap[options.easing];
 
-            if (!property.easing2) {
-                property.easing2 = easingMap[defaults.easing];
+            if (!easing) {
+                easing = easingMap[defaults.easing];
             }
 
             data.each(to, function (key) {
                 keys.push(key);
             });
 
-            attribute.css(element, 'transition-duration', property.duration + 'ms');
-            attribute.css(element, 'transition-delay', property.delay + 'ms');
-            attribute.css(element, 'transition-timing-function', property.easing2);
+            attribute.css(element, 'transition-duration', options.duration + 'ms');
+            attribute.css(element, 'transition-delay', options.delay + 'ms');
+            attribute.css(element, 'transition-timing-function', easing);
             attribute.css(element, 'transition-property', keys.join(','));
 
             setTimeout(function () {
@@ -134,6 +140,8 @@ define(function (require, exports, module) {
                     attribute.css(element, key, val);
                 });
             }, 0);
+
+            timeid = setTimeout(listener, options.duration + options.delay + 50);
         }
     };
 });

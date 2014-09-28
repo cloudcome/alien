@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var compatible = require('../../util/compatible.js');
+    var compatible = require('../navigator/compatible.js');
     var howdo = require('../../util/howdo.js');
     var udf;
     var matchesSelector = compatible.html5('matchesSelector', document.body);

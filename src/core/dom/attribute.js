@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     var regSplit = /[A-Z]/g;
     var regSpace = /\s+/;
     var data = require('../../util/data.js');
-    var compatible = require('../../util/compatible.js');
+    var compatible = require('../navigator/compatible.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
     var regNum = /^\d+$/;
 

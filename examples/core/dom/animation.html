@@ -32,6 +32,7 @@
     </style>
 </head>
 <body>
+    <p id="ret"></p>
     <div id="demo">click</div>
 
     <script src="/seajs/sea.js" id="script"></script>
@@ -39,20 +40,21 @@
         define('app', function (require) {
             var animation = require('/src/core/dom/animation.js');
             var demo = document.getElementById('demo');
+            var ret = document.getElementById('ret');
 
             demo.onclick = function () {
                 animation.animate(demo, {
                     width: 300,
                     height: 300,
-                    margin: 20,
+                    margin: 200,
                     background: '#FF8B8B',
                     border: '6px solid #D15858'
                 },{
                     duration: 5000,
                     delay: 1000,
-                    easing: 'ease-in-out-expo'
+                    easing: 'ease-in-sine'
                 }, function () {
-                    alert('done');
+                    ret.innerHTML = '运行结束'+ Date.now();
                 });
             };
         });

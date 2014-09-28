@@ -12,7 +12,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var data = require('../../util/data.js');
     var regSp = /\+/g;
     var regQ = /^\?+/;
 

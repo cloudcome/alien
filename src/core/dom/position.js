@@ -1,13 +1,13 @@
 /*!
- * promise.js
+ * position.js
  * @author ydr.me
- * 2014-09-19 11:22
+ * @create 2014-09-28 13:27
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module parent/promise
+     * @module core/dom/position
      */
     'use strict';
 

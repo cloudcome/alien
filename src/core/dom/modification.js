@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var compatible = require('../../util/compatible.js');
+    var compatible = require('../navigator/compatible.js');
     var domSelector = require('./selector.js');
     var regSpace = /\s+/g;
     var regDir = />/g;

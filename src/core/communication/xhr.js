@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var qs = require('../../util/querystring.js');
+    var qs = require('../navigator/querystring.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
     var noop = function () {

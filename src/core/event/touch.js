@@ -5,7 +5,7 @@
  */
 
 
-define(function (require) {
+define(function (require, exports, module) {
     /**
      * @module core/event/touch
      */
@@ -40,4 +40,6 @@ define(function (require) {
             return !1;
         }
     });
+
+    module.exports = event;
 });

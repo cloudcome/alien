@@ -7,9 +7,10 @@
 * 首先，最顶层的文件夹有`core`（核心模块集合）、`util`（工具模块集合）和`ui`（UI表现模块集合）
 * `core`：核心模块集合分为2级
 	* 1级：模块类型，有`dom`（文档对象模型类模块集合，包括DOM选择器、属性、特性、修改、动画等）、`event`（事件类模块集合，包括事件基础、触摸事件、历史事件等）、`communication`（通信类模块集合，包括异步通信、跨域通信、socket通信等）
+	  `navigator`（hashbang（hash操作）、querystring（search操作）、compatible（适配））
 		* 2级：具体模块，核心模块全部是静态方法模块（具体命名方法看下个部分）
 * `util`：工具模块集合分为1级
-	* 1级：具体模块，包含data（数据判断）、validate（数据验证）、filter（数据过滤）、hashbang（hash操作）、querystring（search操作）、howdo（异步回调）、Promise（异步回调）、compatible（适配）、Emitter（事件）、ua（user agent）、support（支持）等。
+	* 1级：具体模块，包含data（数据判断）、validate（数据验证）、filter（数据过滤）、howdo（顺序多异步回调）、Promise（顺序单异步回调）、Emitter（事件）、ua（user agent）、support（支持）等。
 * `ui`：UI表现模块集合分为3级
 	* 1级：模块名称，如`dialog`
 		* 2级：模块出口，必须是`index.js`
