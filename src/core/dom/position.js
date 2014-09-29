@@ -11,5 +11,9 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    module.exports = {};
+    module.exports = {
+        width: function width(){
+
+        }
+    };
 });
