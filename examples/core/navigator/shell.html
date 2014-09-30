@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+ - shell.html
+ - @author ydr.me
+ - @create 2014-09-30 17:34
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>shell.html</title>
+    <style>
+        li {
+            line-height: 30px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<ul id="ret"></ul>
+
+<script src="/seajs/sea.js" id="script"></script>
+<script>
+    define('app', function (require) {
+        var shell = require('/src/core/navigator/shell.js');
+        var ret = document.getElementById('ret');
+        var arr = [];
+
+        _push('是否为IE浏览器：', shell.isIE, '，IE版本号：', shell.ieVersion);
+        _push('是否为Chrome：', shell.isChrome);
+        _push('是否为360极速浏览器：', shell.is360ee);
+        _push('是否为360安全浏览器：', shell.is360se);
+        _push('是否为搜狗高速浏览器：', shell.isSogou);
+        _push('是否为猎豹安全浏览器：', shell.isLiebao);
+        _push('是否为QQ浏览器：', shell.isQQ);
+        _push('是否为QQ浏览器：', typeof window.external);
+
+
+        ret.innerHTML = arr.join('');
+
+        function _push() {
+            var str = '';
+
+            for (var i = 0, j = arguments.length; i < j; i++) {
+                if (typeof  arguments[i] === 'boolean') {
+                    str += arguments[i] ? '是' : '否';
+                } else {
+                    str += String(arguments[i]);
+                }
+            }
+
+            return arr.push('<li>' + str + '</li>');
+        }
+    });
+    seajs.use('app');
+</script>
+</body>
+</html>
