@@ -33,6 +33,7 @@ define(function (require, exports, module) {
     var domId = 0;
     var key = 'alien__' + Date.now();
 
+
     module.exports = {
         /**
          * 事件创建
@@ -53,8 +54,10 @@ define(function (require, exports, module) {
 
         /**
          * 触发事件
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node|EventTarget} element 元素
          * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
+         * @returns {Object} this
+         * @chainable
          */
         dispatch: function dispatch(element, eventTypeOrEvent) {
             var et;
@@ -71,6 +74,8 @@ define(function (require, exports, module) {
             }
 
             element.dispatchEvent(et);
+
+            return this;
         },
 
         /**
@@ -80,10 +85,12 @@ define(function (require, exports, module) {
          * @param {String} [selector] 事件委托时的选择器，默认空
          * @param {Function} listener 事件回调
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
+         * @returns {Object} this
+         * @chainable
          */
         on: function on(element, eventType, selector, listener, isCapture) {
             if (!element.addEventListener) {
-                return;
+                return this;
             }
 
             var callback;
@@ -118,6 +125,8 @@ define(function (require, exports, module) {
                     _on(element, eventType, callback, listener, isCapture);
                 });
             }
+
+            return this;
         },
 
         /**
@@ -126,10 +135,12 @@ define(function (require, exports, module) {
          * @param {String} eventType 事件类型
          * @param {Function} listener 回调
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
+         * @returns {Object} this
+         * @chainable
          */
         un: function un(element, eventType, listener, isCapture) {
             if (!element.addEventListener) {
-                return;
+                return this;
             }
 
             var eventTypes = eventType.trim().split(regSpace);
@@ -137,6 +148,8 @@ define(function (require, exports, module) {
             data.each(eventTypes, function (index, eventType) {
                 _un(element, eventType, listener, isCapture);
             });
+
+            return this;
         }
     };
 
