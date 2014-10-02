@@ -14,6 +14,10 @@ define(function (require, exports, module) {
     var data = require('data.js');
     var regSpace = /\s+/g;
 
+    /**
+     * 事件构建函数
+     * @constructor
+     */
     var Emitter = function () {
         this.eventsPool = {};
         this.maxLength = 999;
@@ -23,12 +27,13 @@ define(function (require, exports, module) {
         constructor: Emitter,
         /**
          * 添加事件回调
+         * @method on
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} listener 事件回调
          * @returns {Emitter}
          * @chainable
          */
-        on: function on(eventType, listener) {
+        on: function (eventType, listener) {
             var the = this;
 
             _middleware(eventType, function (et) {
@@ -49,12 +54,13 @@ define(function (require, exports, module) {
         },
         /**
          * 移除事件回调
+         * @method un
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} [listener] 事件回调，缺省时将移除该事件类型上的所有事件回调
          * @returns {Emitter}
          * @chainable
          */
-        un: function un(eventType, listener) {
+        un: function (eventType, listener) {
             var the = this;
 
             _middleware(eventType, function (et) {
@@ -74,12 +80,13 @@ define(function (require, exports, module) {
         },
         /**
          * 事件触发
+         * @method emit
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {*} 事件传参，多个参数依次即可
          * @returns {Emitter}
          * @chainable
          */
-        emit: function emit(eventType) {
+        emit: function (eventType) {
             var the = this;
             var args = [].slice.call(arguments, 1);
 

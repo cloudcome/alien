@@ -962,7 +962,7 @@ define(function (require, exports, module) {
 
 
     module.exports = {
-        parse: function parse() {
+        parse: function () {
             return (new UAParser()).getResult();
         }
     };

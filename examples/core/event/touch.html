@@ -32,7 +32,8 @@
 </head>
 <body>
 
-<div id="ret"></div>
+<div id="ret1">touch event type</div>
+<div id="ret2">swipe event type</div>
 
 <div id="demo">touch me</div>
 
@@ -41,16 +42,26 @@
     define('app', function (require) {
         var event = require('/src/core/event/base.js');
         var demo = document.getElementById('demo');
-        var ret = document.getElementById('ret');
+        var ret1 = document.getElementById('ret1');
+        var ret2 = document.getElementById('ret2');
 
         require('/src/core/event/touch.js');
 
         event.on(demo, 'tap', function () {
-            ret.innerHTML = 'tap it';
-        }).on(demo, 'swipe', function () {
-            ret.innerHTML = 'swipe it';
+            ret1.innerHTML = 'tap it';
+        }).on(demo, 'swipe', function (eve) {
+            ret1.innerHTML = 'swipe it';
+            console.log(eve);
+        }).on(demo, 'swipeup', function () {
+            ret2.innerHTML = 'swipeup it';
+        }).on(demo, 'swiperight', function () {
+            ret2.innerHTML = 'swiperight it';
+        }).on(demo, 'swipedown', function () {
+            ret2.innerHTML = 'swipedown it';
+        }).on(demo, 'swipeleft', function () {
+            ret2.innerHTML = 'swipeleft it';
         }).on(demo, 'taphold', function () {
-            ret.innerHTML = 'taphold it';
+            ret1.innerHTML = 'taphold it';
         });
     });
     seajs.use('app');

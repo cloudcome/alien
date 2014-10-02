@@ -20,7 +20,7 @@ define(function (require, exports, module) {
          * @param {*} object
          * @returns {string}
          */
-        type: function type(object) {
+        type: function (object) {
             if (object === window) {
                 return 'window';
             } else if (object === document) {
@@ -31,7 +31,7 @@ define(function (require, exports, module) {
                 return 'null';
             }
 
-            var ret = ({}).toString.call(object).match(/\s(.*)\]/)[1].toLowerCase();
+            var ret = Object.prototype.toString.call(object).match(/\s(.*)\]/)[1].toLowerCase();
 
             if (/element/.test(ret)) {
                 return 'element';
@@ -47,7 +47,7 @@ define(function (require, exports, module) {
          * @param {Function}       callback  回调，返回false时停止遍历
          * @param {*}              [context] 上下文
          */
-        each: function each(data, callback, context) {
+        each: function (data, callback, context) {
             var i;
             var j;
             var likeArray = this.toArray(data);
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
          * @param {Object}  [target] 目标对象，可以是多个
          * @returns {*}
          */
-        extend: function extend(isExtendDeep, source, target) {
+        extend: function (isExtendDeep, source, target) {
             var args = arguments;
             var isExtendDeep = typeof(args[0]) === 'boolean' && args[0] === !0;
             var current = isExtendDeep ? 1 : 0;
@@ -97,10 +97,10 @@ define(function (require, exports, module) {
                         type = this.type(obj[i]);
                         if (type === 'object' && isExtendDeep) {
                             source[i] = {};
-                            extend.call(this, isExtendDeep, source[i], obj[i]);
+                            this.extend.call(this, isExtendDeep, source[i], obj[i]);
                         } else if (type === 'array' && isExtendDeep) {
                             source[i] = [];
-                            extend.call(this, isExtendDeep, source[i], obj[i]);
+                            this.extend.call(this, isExtendDeep, source[i], obj[i]);
                         } else {
                             source[i] = obj[i];
                         }
@@ -116,7 +116,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [isConvertWhole] 是否转换整个对象为数组中的第0个元素，当该对象无length属性时，默认false
          * @returns {Array}
          */
-        toArray: function toArray(data, isConvertWhole) {
+        toArray: function (data, isConvertWhole) {
             var ret = [];
             var i = 0;
             var j;

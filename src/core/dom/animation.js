@@ -68,7 +68,7 @@ define(function (require, exports, module) {
          * .animate(element, to, callback);
          * .animate(element, to, property, callback);
          */
-        animate: function animate(element, to, options, callback) {
+        animate: function (element, to, options, callback) {
             if (attribute.css(element, 'display') === 'none') {
                 return;
             }

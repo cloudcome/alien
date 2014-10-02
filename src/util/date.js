@@ -48,7 +48,7 @@ define(function (require, exports, module) {
          * @param {Object} [config] 格式配置
          * @returns {null|string}
          */
-        format: function format(format, date, config) {
+        format: function (format, date, config) {
             if (data.type(format) !== 'string') {
                 throw new Error('date format must string');
             }
@@ -150,7 +150,7 @@ define(function (require, exports, module) {
          * @param {String} string 时间字符串
          * @returns {Date|null}
          */
-        parse: function parse(string) {
+        parse: function (string) {
             var date = new Date(string);
 
             if (_parseDate(date)) {
@@ -166,7 +166,7 @@ define(function (require, exports, module) {
          * @param {Number} year 年份
          * @returns {boolean}
          */
-        isLeapYear: function isLeapYear(year) {
+        isLeapYear: function (year) {
             return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
         },
         /**
@@ -176,7 +176,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {Number} 天数
          */
-        getDaysInMonth: function getMonthOfDates(year, month, isNatualMonth) {
+        getDaysInMonth: function (year, month, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
 
             return  month === 1 ? (this.isLeapYear(year) ? 29 : 28) : monthDates[month];
@@ -188,7 +188,7 @@ define(function (require, exports, module) {
 //         * @param {Boolean} [isNatualMonth] 是否为自然月
 //         * @returns {Number} 星期序号，即周日为0
 //         */
-//        getMonthFirstDateOfDay: function getMonthFirstDateOfDay(year, month, isNatualMonth) {
+//        getMonthFirstDateOfDay: function (year, month, isNatualMonth) {
 //            month = isNatualMonth ? month - 1 : month;
 //
 //            return new Date(year, month, 1).getDay();
@@ -201,7 +201,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {number}
          */
-        getWeeksInYear: function getWeeksInYear(year, month, date, isNatualMonth) {
+        getWeeksInYear: function (year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
 
             var pastDate = date + new Date(year, 0, 1).getDay();
@@ -221,7 +221,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {number}
          */
-        getWeeksInMonth: function getWeeksInMonth(year, month, date, isNatualMonth) {
+        getWeeksInMonth: function (year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
 
             var pastDate = date + new Date(year, month, 1).getDay();
@@ -234,7 +234,7 @@ define(function (require, exports, module) {
          * @param {String|Number|Date} [date] 被比较时间，默认为当前时间
          * @returns {string}
          */
-        from: function from(date, compareDate) {
+        from: function (date, compareDate) {
             compareDate = compareDate || new Date();
             compareDate = this.parse(compareDate);
 

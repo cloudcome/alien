@@ -18,102 +18,112 @@ define(function (require, exports, module) {
     var data = require('../../util/data.js');
     var compatible = require('../navigator/compatible.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
-    var regNum = /^\d+$/;
+    var regNum = /^-?\d+$/;
 
     module.exports = {
         /**
          * 设置、获取元素的特征
-         * @param {HTMLElement} element            元素
-         * @param {String/Object/Array} attrkey    特征键、键值对、键数组
-         * @param {String} [attrVal]               特征值
+         * @param {HTMLElement} ele 元素
+         * @param {String/Object/Array} attrkey 特征键、键值对、键数组
+         * @param {String} [attrVal] 特征值
          * @returns {*}
          */
-        attr: function attr(element, attrkey, attrVal) {
+        attr: function (ele, attrkey, attrVal) {
             return _getSet(arguments, {
                 get: function (attrKey) {
-                    return element.getAttribute(attrKey);
+                    return ele.getAttribute(attrKey);
                 },
                 set: function (attrkey, attrVal) {
-                    element.setAttribute(attrkey, attrVal);
+                    ele.setAttribute(attrkey, attrVal);
                 }
             });
         },
         /**
          * 判断元素是否包含某个特征
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String} attrKey 单个特征
          * @returns {boolean}
          */
-        hasAttr: function hasAttr(element, attrKey) {
-            return element.hasAttribute(attrKey);
+        hasAttr: function (ele, attrKey) {
+            return ele.hasAttribute(attrKey);
         },
         /**
          * 移除元素的某个特征
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String} [attrKey] 单个或多个特征属性，为空表示移除所有特征
          */
-        removeAttr: function removeAttr(element, attrKey) {
-            var attrKeys = attrKey ? attrKey.split(regSpace) : element.attributes;
+        removeAttr: function (ele, attrKey) {
+            var attrKeys = attrKey ? attrKey.split(regSpace) : ele.attributes;
 
             data.each(attrKeys, function (index, attrKey) {
                 if (attrKey) {
-                    element.removeAttribute(data.type(attrKey) === 'attr' ? attrKey.nodeName : attrKey);
+                    ele.removeAttribute(data.type(attrKey) === 'attr' ? attrKey.nodeName : attrKey);
                 }
             });
         },
         /**
          * 设置、获取元素的属性
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String/Object/Array} propKey 属性键、键值对、键数组
          * @param {String} [propVal] 属性值
          * @returns {*}
          */
-        prop: function prop(element, propKey, propVal) {
+        prop: function (ele, propKey, propVal) {
             return _getSet(arguments, {
                 get: function (propKey) {
-                    return element[propKey];
+                    return ele[propKey];
                 },
                 set: function (propKey, propVal) {
-                    element[propKey] = propVal;
+                    ele[propKey] = propVal;
                 }
             });
         },
+        fixCss: function (key, val) {
+            return {
+                key: compatible.css3(_toSepString(key)),
+                val: _toCssVal(key, val)
+            };
+        },
         /**
          * 设置、获取元素的样式
-         * @param {HTMLElement} element 元素
-         * @param {String/Object/Array} cssKey 样式属性、样式键值对、样式属性数组，
+         * @param {HTMLElement} ele 元素
+         * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
          *                                     样式属性可以写成`width:after`（伪元素的width）或`width`（实际元素的width）
-         * @param {String} [cssVal] 样式属性值
+         * @param {String|Number} [val] 样式属性值
          * @returns {*}
          */
-        css: function css(element, cssKey, cssVal) {
+        css: function (ele, key, val) {
+            var the = this;
+
             return _getSet(arguments, {
-                get: function (cssKey) {
-                    var temp = cssKey.split(':');
+                get: function (key) {
+                    var temp = key.split(':');
                     var pseudo = temp[temp.length - 1];
 
-                    cssKey = temp[0];
+                    key = temp[0];
                     pseudo = pseudo ? pseudo : null;
-                    return getComputedStyle(element, pseudo)[_toSepString(cssKey)];
+                    return getComputedStyle(ele, pseudo)[_toSepString(key)];
                 },
-                set: function (cssKey, cssVal) {
-                    cssKey = compatible.css3(_toSepString(cssKey.split(':')[0]));
-                    cssVal = _toCssVal(cssKey, cssVal);
-                    element.style[cssKey] = cssVal;
+                set: function (key, val) {
+                    key = key.split(':')[0];
+
+                    var fix = the.fixCss(key, val);
+
+                    ele.style[fix.key] = fix.val;
                 }
             });
         },
         /**
          * 设置、获取元素的数据集
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
          * @param {String} [dataVal] 数据集值
          * @returns {*}
          */
-        data: function _data(element, dataKey, dataVal) {
+        data: function (ele, dataKey, dataVal) {
             return _getSet(arguments, {
                 get: function (dataKey) {
-                    return element.dataset[_toHumpString(dataKey)];
+                    return ele.dataset[_toHumpString(dataKey)];
                 },
                 set: function (dataKey, dataVal) {
                     if (data.type(dataVal) === 'object') {
@@ -123,68 +133,68 @@ define(function (require, exports, module) {
                             dataVal = '';
                         }
                     }
-                    element.dataset[_toHumpString(dataKey)] = dataVal;
+                    ele.dataset[_toHumpString(dataKey)] = dataVal;
                 }
             });
         },
         /**
          * 设置、获取元素的innerHTML
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String}      [html] html字符串
          * @returns {String/Undefined}
          */
-        html: function html(element, html) {
+        html: function (ele, html) {
             return _getSet(arguments, {
                 get: function () {
-                    return element.innerHTML;
+                    return ele.innerHTML;
                 },
                 set: function (html) {
-                    element.innerHTML = html;
+                    ele.innerHTML = html;
                 }
             }, 1);
         },
         /**
          * 设置、获取元素的innerText
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String}      [text]  text字符串
          * @returns {String/Undefined}
          */
-        text: function text(element, text) {
+        text: function (ele, text) {
             return _getSet(arguments, {
                 get: function () {
-                    return element.innerText;
+                    return ele.innerText;
                 },
                 set: function (text) {
-                    element.innerText = text;
+                    ele.innerText = text;
                 }
             }, 1);
         },
         /**
          * 添加元素的className
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String} className 多个className使用空格分开
          * @returns {Undefined}
          */
-        addClass: function addClass(element, className) {
-            _class(element, 0, className);
+        addClass: function (ele, className) {
+            _class(ele, 0, className);
         },
         /**
          * 移除元素的className
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
          * @returns {Undefined}
          */
-        removeClass: function removeClass(element, className) {
-            _class(element, 1, className);
+        removeClass: function (ele, className) {
+            _class(ele, 1, className);
         },
         /**
          * 判断元素是否包含某个className
-         * @param {HTMLElement} element 元素
+         * @param {HTMLElement} ele 元素
          * @param {String} className 单个className
          * @returns {Boolean}
          */
-        hasClass: function hasClass(element, className) {
-            return _class(element, 2, className);
+        hasClass: function (ele, className) {
+            return _class(ele, 2, className);
         }
     };
 
@@ -216,23 +226,23 @@ define(function (require, exports, module) {
 
     /**
      * 转换纯数字的css属性为字符，如：width=100 => width=100px
-     * @param {String} cssKey css属性
-     * @param {String|Number} cssVal css属性值
+     * @param {String} key css属性
+     * @param {String|Number} val css属性值
      * @returns {*}
      * @private
      */
-    function _toCssVal(cssKey, cssVal) {
-        if (!regPx.test(cssKey)) {
-            return cssVal;
+    function _toCssVal(key, val) {
+        if (!regPx.test(key)) {
+            return val;
         }
 
-        cssVal += '';
+        val += '';
 
-        if (regNum.test(cssVal)) {
-            return cssVal + 'px';
+        if (regNum.test(val)) {
+            return val + 'px';
         }
 
-        return cssVal;
+        return val;
     }
 
 
@@ -251,28 +261,28 @@ define(function (require, exports, module) {
         var ret = {};
         var argsLength = args.length;
 
-        // .fn(element);
+        // .fn(ele);
         if (argsLength === 0) {
             return getSet.get();
         }
-        // .fn(element, 'name', '1');
+        // .fn(ele, 'name', '1');
         else if (argsLength === 2 && argumentsSetLength === 2) {
             return getSet.set(args[0], args[1]);
         }
-        // .fn(element, {name: 1, id: 2});
+        // .fn(ele, {name: 1, id: 2});
         else if (argsLength === 1 && arg0Type === 'object' && argumentsSetLength === 2) {
             data.each(args[0], function (key, val) {
                 getSet.set(key, val);
             });
         }
-        // .fn(element, ['name', 'id']);
+        // .fn(ele, ['name', 'id']);
         else if (argsLength === 1 && arg0Type === 'array' && argumentsSetLength === 2) {
             data.each(args[0], function (index, key) {
                 ret[key] = getSet.get(key);
             });
             return ret;
         }
-        // .fn(element, 'name');
+        // .fn(ele, 'name');
         else if (argsLength === 1 && arg0Type === 'string') {
             return argumentsSetLength === 1 ?
                 getSet.set(args[0]) :
@@ -283,20 +293,25 @@ define(function (require, exports, module) {
 
     /**
      * 操作元素的className
-     * @param {HTMLElement} element 元素
+     * @param {HTMLElement} ele 元素
      * @param {Number} type 操作类型，0=add，1=remove，2=has
      * @param {String} [className] 样式名称，多个样式使用空格分开
      * @returns {Boolean}
      * @private
      */
-    function _class(element, type, className) {
+    function _class(ele, type, className) {
+
+        if (data.type(ele) !== 'element') {
+            return;
+        }
+
         var classNames;
 
         if (className) {
             classNames = className.trim().split(regSpace);
         }
 
-        var classList = element.classList;
+        var classList = ele.classList;
 
         switch (type) {
             // addClass
@@ -317,7 +332,7 @@ define(function (require, exports, module) {
                         }
                     });
                 } else {
-                    element.className = '';
+                    ele.className = '';
                 }
                 break;
 

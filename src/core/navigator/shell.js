@@ -19,66 +19,66 @@ define(function (require, exports, module) {
 
     module.exports = {
         // 是否为IE
-        isIE: (function isIE() {
+        isIE: (function () {
             return !!ieVer;
         })(),
         // IE 版本
-        ieVersion: (function ieVersion() {
+        ieVersion: (function () {
             return ieVer;
         })(),
         // 是否为Chrome
-        isChrome: (function is360se() {
+        isChrome: (function () {
             return chromiumType === 'chrome';
         })(),
         // 是否为360安全浏览器
-        is360se: (function is360se() {
+        is360se: (function () {
             return chromiumType === '360se';
         })(),
         // 是否为360极速浏览器
-        is360ee: (function is360ee() {
+        is360ee: (function () {
             return chromiumType === '360ee';
         })(),
         // 是否为猎豹安全浏览器
-        isLiebao: (function is360ee() {
+        isLiebao: (function () {
             return chromiumType === 'liebao';
         })(),
         // 是否为搜狗高速浏览器
-        isSogou: (function is360ee() {
+        isSogou: (function () {
             return chromiumType === 'sogou';
         })(),
         // 是否为QQ浏览器
-        isQQ: (function is360ee() {
+        isQQ: (function () {
             return chromiumType === 'qq';
         })()
     };
 
 
-    /**
-     * 测试 MIME
-     * @param where
-     * @param value
-     * @param [name]
-     * @param [nameReg]
-     * @returns {boolean}
-     * @private
-     */
-    function _mime(where, value, name, nameReg) {
-        var mimeTypes = navigator.mimeTypes;
-        var i;
-
-        for (i in mimeTypes) {
-            if (mimeTypes[i][where] == value) {
-                if (name !== undefined && nameReg.test(mimeTypes[i][name])) {
-                    return !0;
-                }
-                else if (name === undefined) {
-                    return !0;
-                }
-            }
-        }
-
-        return !1;
-    }
+//    /**
+//     * 测试 MIME
+//     * @param where
+//     * @param value
+//     * @param [name]
+//     * @param [nameReg]
+//     * @returns {boolean}
+//     * @private
+//     */
+//    function _mime(where, value, name, nameReg) {
+//        var mimeTypes = navigator.mimeTypes;
+//        var i;
+//
+//        for (i in mimeTypes) {
+//            if (mimeTypes[i][where] == value) {
+//                if (name !== undefined && nameReg.test(mimeTypes[i][name])) {
+//                    return !0;
+//                }
+//                else if (name === undefined) {
+//                    return !0;
+//                }
+//            }
+//        }
+//
+//        return !1;
+//    }
 
 
     /**

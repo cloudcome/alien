@@ -24,7 +24,7 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node} [context] 上下文
          * @return {Array}
          */
-        query: function query(selector, context) {
+        query: function (selector, context) {
             context = context || document;
 
             return data.toArray(context.querySelectorAll(selector), !0);
@@ -32,16 +32,16 @@ define(function (require, exports, module) {
 
         /**
          * 获取当前元素的其他兄弟元素
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        siblings: function siblings(element) {
+        siblings: function (ele) {
             var ret = [];
-            var parent = element.parentNode;
+            var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
 
             data.each(childrens, function (index, child) {
-                if (child !== element) {
+                if (child !== ele) {
                     ret.push(child);
                 }
             });
@@ -50,16 +50,16 @@ define(function (require, exports, module) {
         },
         /**
          * 获取当前元素的索引值
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {number} 未匹配到位-1，匹配到为[0,+∞)
          */
-        index: function index(element) {
+        index: function (ele) {
             var ret = -1;
-            var parent = element.parentNode;
+            var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
 
             data.each(childrens, function (index, child) {
-                if (child === element) {
+                if (child === ele) {
                     ret = index;
                     return !1;
                 }
@@ -69,19 +69,19 @@ define(function (require, exports, module) {
         },
         /**
          * 获取元素的上一个兄弟元素
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        prev: function prev(element) {
-            return data.toArray(element.previousElementSibling, !0);
+        prev: function (ele) {
+            return data.toArray(ele.previousElementSibling, !0);
         },
         /**
          * 获取元素的下一个兄弟元素
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        next: function next(element) {
-            return data.toArray(element.nextElementSibling, !0);
+        next: function (ele) {
+            return data.toArray(ele.nextElementSibling, !0);
         },
         // prevAll: function(){
         //
@@ -91,56 +91,56 @@ define(function (require, exports, module) {
         // },
         /**
          * 获得元素的最近匹配祖先元素或子代元素集合
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @param {String} selector 选择器
          * @returns {Array}
          */
-        closest: function closest(element, selector) {
+        closest: function (ele, selector) {
             var the = this;
 
-            while (data.type(element) !== 'document') {
-                if (the.isMatched(element, selector)) {
-                    return data.toArray(element, !0);
+            while (data.type(ele) !== 'document') {
+                if (the.isMatched(ele, selector)) {
+                    return data.toArray(ele, !0);
                 }
 
-                element = this.parent(element)[0];
+                ele = this.parent(ele)[0];
             }
 
             return data.toArray();
         },
         /**
          * 获得父级元素
-         * @param {HTMLElement|Node} element        元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        parent: function parent(element) {
-            return data.toArray(element.parentNode || element.parentElement, !0);
+        parent: function (ele) {
+            return data.toArray(ele.parentNode || ele.parentElement, !0);
         },
         /**
          * 获取子元素
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        children: function children(element) {
-            return data.toArray(element.children, !0);
+        children: function (ele) {
+            return data.toArray(ele.children, !0);
         },
 
         /**
          * 获取子节点
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
          */
-        contents: function contents(element) {
-            return data.toArray(element.contentDocument ? element.contentDocument : element.childNodes, !0);
+        contents: function (ele) {
+            return data.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
         },
         /**
          * 元素与选择器是否匹配
-         * @param {HTMLElement|Node} element 元素
+         * @param {HTMLElement|Node} ele 元素
          * @param {String} selector 选择器
          * @returns {Boolean}
          */
-        isMatched: function isMatched(element, selector) {
-            return data.type(element) !== 'element' ? !1 : element[matchesSelector](selector);
+        isMatched: function (ele, selector) {
+            return data.type(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
         },
         /**
          * 过滤节点集合
@@ -148,7 +148,7 @@ define(function (require, exports, module) {
          * @param {Function} filter 过滤方法，返回true选择该节点
          * @returns {Array} 过滤后的节点集合
          */
-        filter: function filter(nodeList, filter) {
+        filter: function (nodeList, filter) {
             var ret = [];
 
             data.each(nodeList, function (index, node) {

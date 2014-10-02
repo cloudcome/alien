@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/hashbang
+     * @module util/navigator/hashbang
      */
     'use strict';
 
@@ -30,12 +30,13 @@ define(function (require, exports, module) {
     var hashbang = module.exports = {
         /**
          * 解析 hashbang 字符串为对象
+         * @static
          * @param {String} hashbangString 原始字符串或URL
          * @param {String} [sep] query 部分分隔符，默认`&`
          * @param {String} [eq] query 部分等于符，默认`=`
          * @returns {Object} 包含`path`和`query`两个字段
          */
-        parse: function parse(hashbangString, sep, eq) {
+        parse: function (hashbangString, sep, eq) {
             if (data.type(hashbangString) !== 'string') {
                 return {};
             }
@@ -103,7 +104,7 @@ define(function (require, exports, module) {
          * @param {Object} [options] 参数配置
          * @returns {*}
          */
-        matches: function matches(hashbangString, route, options) {
+        matches: function (hashbangString, route, options) {
             // /id/:id/ => /id/abc123/   √
 
             options = data.extend({}, matchesDefaults, options);
@@ -165,7 +166,7 @@ define(function (require, exports, module) {
          * @param {String|Number|Array} key 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
          * @param {Function} listener 监听回调
          */
-        on: function on(part, key, listener) {
+        on: function (part, key, listener) {
             var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
             if (data.type(key) !== 'array') {
@@ -189,7 +190,7 @@ define(function (require, exports, module) {
          * query: "" 空字符串，表示监听 query 所有部分
          * @param {Function} [listener] 监听回调，回调为空表示删除该键的所有监听队列
          */
-        un: function un(part, key, listener) {
+        un: function (part, key, listener) {
             if (data.type(key) !== 'array') {
                 key = [key];
             }

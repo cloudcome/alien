@@ -24,7 +24,7 @@ define(function (require, exports, module) {
          * @param {String} [eq] 等于符，默认=
          * @returns {String}
          */
-        stringify: function stringify(object, sep, eq) {
+        stringify: function (object, sep, eq) {
             sep = sep || '&';
             eq = eq || '=';
 
@@ -54,7 +54,7 @@ define(function (require, exports, module) {
          * @param {String} [eq] 等于符，默认=
          * @returns {Object}
          */
-        parse: function parse(querystring, sep, eq) {
+        parse: function (querystring, sep, eq) {
             sep = sep || '&';
             eq = eq || '=';
 
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
          * @param {String} key 键
          * @returns {String|undefined}
          */
-        get: function get(key) {
+        get: function (key) {
             return this.parse(location.search)[key];
         },
         /**
@@ -102,7 +102,7 @@ define(function (require, exports, module) {
          * @param {String|Object} key 键或键值对
          * @param {String} [val] 值
          */
-        set: function set(key, val) {
+        set: function (key, val) {
             var ret = this.parse(location.search);
             var setter = {};
 
@@ -120,7 +120,7 @@ define(function (require, exports, module) {
          * 移除当前 querystring 的键
          * @param {String|Array|undefined} [key] 键或键数组
          */
-        remove: function remove(key) {
+        remove: function (key) {
             if (!arguments.length) {
                 location.search = '';
                 return;

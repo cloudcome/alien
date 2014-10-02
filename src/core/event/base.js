@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/child.js
+     * @module core/event/base
      */
     'use strict';
 
@@ -31,18 +31,23 @@ define(function (require, exports, module) {
     var unCaptureRealListeners = {};
     var isCaptureRealListeners = {};
     var domId = 0;
-    var key = 'alien__' + Date.now();
+    var key = 'alienElement_' + Date.now();
 
 
+    /**
+     * static
+     * @type {{create: create, dispatch: dispatch, on: on, un: un}}
+     */
     module.exports = {
         /**
          * 事件创建
          * @param {String} eventType 事件类型
          * @param {Object} [properties] 事件属性
          * @param {Object} [details] 事件信息
+         * @static
          * @returns {Event}
          */
-        create: function create(eventType, properties, details) {
+        create: function (eventType, properties, details) {
             var et = new Event(eventType, properties);
 
             data.each(details, function (key, val) {
@@ -57,9 +62,10 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node|EventTarget} element 元素
          * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
          * @returns {Object} this
+         * @static
          * @chainable
          */
-        dispatch: function dispatch(element, eventTypeOrEvent) {
+        dispatch: function (element, eventTypeOrEvent) {
             var et;
 
             if (data.type(eventTypeOrEvent) === 'string') {
@@ -86,9 +92,10 @@ define(function (require, exports, module) {
          * @param {Function} listener 事件回调
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
          * @returns {Object} this
+         * @static
          * @chainable
          */
-        on: function on(element, eventType, selector, listener, isCapture) {
+        on: function (element, eventType, selector, listener, isCapture) {
             if (!element.addEventListener) {
                 return this;
             }
@@ -136,9 +143,10 @@ define(function (require, exports, module) {
          * @param {Function} listener 回调
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
          * @returns {Object} this
+         * @static
          * @chainable
          */
-        un: function un(element, eventType, listener, isCapture) {
+        un: function (element, eventType, listener, isCapture) {
             if (!element.addEventListener) {
                 return this;
             }
@@ -169,23 +177,25 @@ define(function (require, exports, module) {
             element[key] = ++domId;
         }
 
-        unCaptureOriginalListeners[domId] = unCaptureOriginalListeners[domId] || {};
-        isCaptureOriginalListeners[domId] = isCaptureOriginalListeners[domId] || {};
-        unCaptureActualListeners[domId] = unCaptureActualListeners[domId] || {};
-        isCaptureActualListeners[domId] = isCaptureActualListeners[domId] || {};
-        unCaptureRealListeners[domId] = unCaptureRealListeners[domId] || {};
-        isCaptureRealListeners[domId] = isCaptureRealListeners[domId] || {};
-        unCaptureOriginalListeners[domId][eventType] = unCaptureOriginalListeners[domId][eventType] || [];
-        isCaptureOriginalListeners[domId][eventType] = isCaptureOriginalListeners[domId][eventType] || [];
-        unCaptureActualListeners[domId][eventType] = unCaptureActualListeners[domId][eventType] || [];
-        isCaptureActualListeners[domId][eventType] = isCaptureActualListeners[domId][eventType] || [];
+        var id = element[key];
+
+        unCaptureOriginalListeners[id] = unCaptureOriginalListeners[id] || {};
+        isCaptureOriginalListeners[id] = isCaptureOriginalListeners[id] || {};
+        unCaptureActualListeners[id] = unCaptureActualListeners[id] || {};
+        isCaptureActualListeners[id] = isCaptureActualListeners[id] || {};
+        unCaptureRealListeners[id] = unCaptureRealListeners[id] || {};
+        isCaptureRealListeners[id] = isCaptureRealListeners[id] || {};
+        unCaptureOriginalListeners[id][eventType] = unCaptureOriginalListeners[id][eventType] || [];
+        isCaptureOriginalListeners[id][eventType] = isCaptureOriginalListeners[id][eventType] || [];
+        unCaptureActualListeners[id][eventType] = unCaptureActualListeners[id][eventType] || [];
+        isCaptureActualListeners[id][eventType] = isCaptureActualListeners[id][eventType] || [];
 
         if (isCapture) {
-            isCaptureOriginalListeners[domId][eventType].push(originalListener);
-            isCaptureActualListeners[domId][eventType].push(actualListener);
+            isCaptureOriginalListeners[id][eventType].push(originalListener);
+            isCaptureActualListeners[id][eventType].push(actualListener);
 
-            if (!isCaptureRealListeners[domId][eventType]) {
-                isCaptureRealListeners[domId][eventType] = !0;
+            if (!isCaptureRealListeners[id][eventType]) {
+                isCaptureRealListeners[id][eventType] = !0;
 
                 element.addEventListener(eventType, function (eve) {
                     var the = this;
@@ -206,11 +216,11 @@ define(function (require, exports, module) {
                 }, !0);
             }
         } else {
-            unCaptureOriginalListeners[domId][eventType].push(originalListener);
-            unCaptureActualListeners[domId][eventType].push(actualListener);
+            unCaptureOriginalListeners[id][eventType].push(originalListener);
+            unCaptureActualListeners[id][eventType].push(actualListener);
 
-            if (!unCaptureRealListeners[domId][eventType]) {
-                unCaptureRealListeners[domId][eventType] = !0;
+            if (!unCaptureRealListeners[id][eventType]) {
+                unCaptureRealListeners[id][eventType] = !0;
 
                 element.addEventListener(eventType, function (eve) {
                     var the = this;

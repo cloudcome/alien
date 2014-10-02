@@ -26,7 +26,7 @@ define(function (require, exports, module) {
          * @param {Object} parent   标准方法父级
          * @returns {String} 私有属性、方法名称
          */
-        html5: function html5(standard, parent) {
+        html5: function (standard, parent) {
             var html5Key = null;
 
             data.each(html5Prefixs, function (index, prefix) {
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
          * @param {String} standard 标准的CSS3属性
          * @returns {String} 私有CSS3属性
          */
-        css3: function css3(standard) {
+        css3: function (standard) {
             var cssKey = null;
             standard = _toSepString(standard.trim().replace(regCss3, ''));
 

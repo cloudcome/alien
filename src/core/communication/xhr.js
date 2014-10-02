@@ -55,7 +55,7 @@ define(function (require, exports, module) {
     };
 
     module.exports = {
-        ajax: function ajax(options) {
+        ajax: function (options) {
             options = data.extend(!0, {}, defaults, options);
 
             if (!options.headers) {
@@ -71,18 +71,22 @@ define(function (require, exports, module) {
                 var responseText = xhr.responseText;
                 var json;
 
-                switch(options.type){
-                    case 'json':
-                        try{
-                            json = JSON.parse(responseText);
-                        }catch(err){
-                            options.onerror.call(xhr, err);
-                        }
-                       break;
+                if (xhr.status > 399 && xhr.status < 600) {
+                    switch (options.type) {
+                        case 'json':
+                            try {
+                                json = JSON.parse(responseText);
+                            } catch (err) {
+                                options.onerror.call(xhr, err);
+                            }
+                            break;
 
-                    default:
-                        options.onload.call(xhr, responseText);
-                        break;
+                        default:
+                            options.onload.call(xhr, responseText);
+                            break;
+                    }
+                } else {
+                    options.onerror.call(xhr, new Error('transmission status error'));
                 }
             };
 
@@ -96,6 +100,15 @@ define(function (require, exports, module) {
 
             xhr.onerror = function (err) {
                 options.onerror.call(xhr, err);
+            };
+
+            xhr.upload.onprogress = function (eve) {
+                if (eve.lengthComputable) {
+                    eve.details = eve.details || {};
+                    eve.details.complete = eve.loaded / eve.total * 100 | 0;
+                }
+
+                options.onprogress.call(xhr, eve);
             };
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
@@ -132,8 +145,14 @@ define(function (require, exports, module) {
     }
 
 
+    /**
+     * 构建传输数据
+     * @param options
+     * @returns {*}
+     * @private
+     */
     function _buildData(options) {
-        if(options.method === 'GET'){
+        if (options.method === 'GET') {
             return null;
         }
 

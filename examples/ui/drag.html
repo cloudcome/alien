@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+ - drag.html
+ - @author ydr.me
+ - @create 2014-10-02 15:47
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>drag.html</title>
+    <style>
+        pre{
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        #demo {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            background: #f5f5f5;
+            border: 4px solid #ddd;
+        }
+
+        #handle {
+            background: #eee;
+            height: 30px;
+            line-height: 30px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="demo">
+    <div id="handle">drag here</div>
+    <p>限制了拖动范围：0,0 => 200,200</p>
+</div>
+
+
+<pre>
+var defaults = {
+    // 鼠标操作区域选择器，默认为 null，即整个元素
+    // 参数为选择器字符串
+    handle: null,
+
+    // 拖拽轴向，x：水平，y：垂直，xy：所有
+    axis: 'xy',
+
+    // 拖拽对象的最小位置，格式为{left: 10, top: 10}
+    // 参考于 document
+    min: null,
+
+    // 拖拽对象的最大位置，格式为{left: 1000, top: 1000}
+    // 参考于 document
+    max: null,
+
+    // 拖拽时的层级值
+    zIndex: 99999,
+
+    // 拖拽开始后回调
+    // this: drag element
+    // arg0: event
+    ondragstart: noop,
+
+    // 拖拽中回调
+    // this: drag element
+    // arg0: event
+    ondrag: noop,
+
+    // 拖拽结束后回调
+    // this: drag element
+    // arg0: event
+    ondragend: noop
+};
+</pre>
+
+<script src="/seajs/sea.js" id="script"></script>
+<script>
+    define('app', function (require) {
+        var drag = require('/src/ui/drag/index.js');
+        var demo = document.getElementById('demo');
+
+        drag(demo, {
+            min: {
+                x: 0,
+                y: 0
+            },
+            max: {
+                x: 200,
+                y: 200
+            },
+            handle: '#handle'
+        });
+    });
+    seajs.use('app');
+</script>
+</body>
+</html>

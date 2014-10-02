@@ -12,10 +12,11 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var compatible = require('../navigator/compatible.js');
-    var domSelector = require('./selector.js');
+    var selector = require('./selector.js');
+    var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
     var regDir = />/g;
+    var head = selector.query('head')[0] || document.documentElement;
 
     module.exports = {
         /**
@@ -24,7 +25,7 @@ define(function (require, exports, module) {
          * @param {String} htmlString
          * @returns {NodeList|HTMLElement}
          */
-        parse: function parse(htmlString) {
+        parse: function (htmlString) {
             var parser = new DOMParser();
 
             return parser.parseFromString(htmlString, 'text/html').body.childNodes;
@@ -40,7 +41,7 @@ define(function (require, exports, module) {
          * create('#comment', '123');
          * create('div', {id:'id-123'});
          */
-        create: function create(nodeName, attributes) {
+        create: function (nodeName, attributes) {
             var node;
 
             switch (nodeName) {
@@ -58,7 +59,8 @@ define(function (require, exports, module) {
                         if (typeof val === 'object') {
                             if (key === 'style') {
                                 data.each(val, function (k, v) {
-                                    styles.push(compatible.css3(k) + ':' + v);
+                                    var fix = attribute.fixCss(k, v);
+                                    styles.push(fix.key + ':' + fix.val);
                                 });
 
                                 val = styles.join(';');
@@ -88,7 +90,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [isReturnSource] 是否返回源，默认false
          * @returns {HTMLElement|Node|null}
          */
-        insert: function insert(source, target, position, isReturnSource) {
+        insert: function (source, target, position, isReturnSource) {
             switch (position) {
                 // 源插入到目标外部之前
                 case 'beforebegin':
@@ -140,11 +142,28 @@ define(function (require, exports, module) {
             return null;
         },
         /**
+         * 移除某个元素
+         * @param {HTMLElement|Node} ele
+         */
+        remove: function (ele) {
+            var parent = selector.parent(ele);
+
+            if (parent.length) {
+                parent[0].removeChild(ele);
+            } else {
+                try {
+                    ele.remove();
+                } catch (err) {
+                    // ignore
+                }
+            }
+        },
+        /**
          * 元素外层追加一层
          * @param {HTMLElement|Node} source 元素
          * @param {String} htmlstring html字符串
          */
-        wrap: function wrap(source, htmlstring) {
+        wrap: function (source, htmlstring) {
             var target = this.parse(htmlstring);
 
             if (target.length && target[0].nodeType === 1) {
@@ -166,14 +185,14 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node} source 源
          * @param {String} selector 选择器
          */
-        unwrap: function unwrap(source, selector) {
+        unwrap: function (source, selector) {
             var selectors = selector.trim().replace(regDir, '').split(regSpace);
             var the = this;
 
             // .div1 .p1 .div2
             // => .div2 .p1 .div1
             data.each(selectors.reverse(), function (index, selector) {
-                if (domSelector.isMatched(source.parentNode, selector)) {
+                if (selector.isMatched(source.parentNode, selector)) {
                     _removeParent(source);
                 } else {
                     return !1;
@@ -184,8 +203,39 @@ define(function (require, exports, module) {
                 var target = the.insert(element, element.parentNode, 'beforebegin');
 
                 if (target) {
-                    target.remove();
+                    the.remove(target);
                 }
+            }
+        },
+        /**
+         * 添加样式
+         * @param {String} styleText 样式内容
+         * @param {String} [id] 已有的 style ID
+         */
+        style: function (styleText, id) {
+            var style = selector.query('#' + id);
+
+            if (style.length) {
+                style = style[0];
+            } else {
+                style = this.create('style');
+                this.insert(style, head, 'beforeend');
+            }
+
+            // IE
+            if (style.styleSheet !== undefined) {
+
+                // 此 BUG 仅影响 IE8（含） 以下浏览器
+                // http://support.microsoft.com/kb/262161
+                // if (document.getElementsByTagName('style').length > 31) {
+                //     throw new Error('Exceed the maximal count of style tags in IE')
+                // }
+
+                style.styleSheet.cssText += styleText
+            }
+            // W3C
+            else {
+                style.appendChild(this.create('#text', styleText));
             }
         }
     };
