@@ -7,20 +7,25 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/navigator/hashbang
+     * @module core/navigator/hashbang
+     * @requires util/data
+     * @requires core/navigator/querystring
+     * @requires core/event/base
      */
     'use strict';
 
+    var data = require('../../util/data.js');
+    var qs = require('./querystring.js');
+    var event = require('../event/base.js');
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
     var regColon = /:([^\/]+)/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    var data = require('../../util/data.js');
-    var qs = require('./querystring.js');
-    var event = require('../event/base.js');
     var pathListenerMap = {};
+    var pathAllListener = [];
     var queryListenerMap = {};
+    var queryAllListener = [];
     var matchesDefaults = {
         // 是否忽略大小写，默认 false
         isIgnoreCase: !1,
@@ -35,6 +40,16 @@ define(function (require, exports, module) {
          * @param {String} [sep] query 部分分隔符，默认`&`
          * @param {String} [eq] query 部分等于符，默认`=`
          * @returns {Object} 包含`path`和`query`两个字段
+         *
+         * @example
+         * hashbang.parse('#!/a/b/c?a=1&b=2');
+         * // => {
+         * //    path: ["a", "b", "c"],
+         * //    query: {
+         * //        a: "1",
+         * //        b: "2"
+         * //    }
+         * // }
          */
         parse: function (hashbangString, sep, eq) {
             if (data.type(hashbangString) !== 'string') {
@@ -74,6 +89,17 @@ define(function (require, exports, module) {
          * @param {String} [sep] query 部分分隔符，默认`&`
          * @param {String} [eq] query 部分等于符，默认`=`
          * @returns {string} hashbang 字符串
+         *
+         * @example
+         * hashbang.stringify({
+         *    path: ["a", "b", "c"],
+         *    query: {
+         *       a: 1,
+         *       b: 2,
+         *       c: 3
+         *    }
+         * });
+         * // => "#!/a/b/c/?a=1&b=2&c=3"
          */
         stringify: function (hashbangObject, sep, eq) {
             sep = sep || '&';
@@ -102,7 +128,21 @@ define(function (require, exports, module) {
          * @param {String} hashbangString hash 字符串
          * @param {String} route 正怎字符串
          * @param {Object} [options] 参数配置
+         * @param {Object} [options.isIgnoreCase] 是否忽略大小写，默认 false
+         * @param {Object} [options.isIgnoreEndSlash] 是否忽略末尾斜杠，默认 true
          * @returns {*}
+         *
+         * @example
+         * hashbang.matches('#!/id/abc123/', '/id/:id/');
+         * // => {
+         * //     params: {
+         * //        id: "abc123"
+         * //     },
+         * //     route: "/id/:id/"
+         * // }
+         *
+         * hashbang.matches('#!/name/abc123/', '/id/:id/');
+         * // => null
          */
         matches: function (hashbangString, route, options) {
             // /id/:id/ => /id/abc123/   √
@@ -156,89 +196,179 @@ define(function (require, exports, module) {
             };
         },
 
-        setPath: function () {
+        set: function (part, key, val) {
+            var oldObject = this.parse(location.hash);
+            var map = {};
 
+            if(part === 'query'){
+                if(data.type(key) === 'object'){
+                    map = key;
+                }else{
+                    map[key] = val;
+                }
+
+                oldObject.query = data.extend({}, oldObject.query, map);
+                location.hash = this.stringify(oldObject);
+            }else{
+                if(data.type(key) === 'array'){
+                    map = key;
+                }else{
+                    map[key] = val;
+                }
+
+                oldObject.path = data.extend({}, oldObject.path, map);
+                location.hash = this.stringify(oldObject);
+            }
         },
 
         /**
          * 监听 hashbang
          * @param {String} part 监听部分，可以为`query`或`path`
-         * @param {String|Number|Array} key 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
+         * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
          * @param {Function} listener 监听回调
+         *
+         * @example
+         * // pathc
+         * hashbang.on('path', fn);
+         * hashbang.on('path', 0, fn);
+         *
+         * // query
+         * hashbang.on('query', fn);
+         * hashbang.on('query', 'abc', fn);
          */
         on: function (part, key, listener) {
-            var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
+            var args = arguments;
+            var argL = args.length;
+            var listenerMap;
 
-            if (data.type(key) !== 'array') {
-                key = [key];
-            }
-
-            data.each(key, function (index, k) {
-                listenerMap[k] = listenerMap[k] || [];
+            if (argL === 2) {
+                listener = args[1];
 
                 if (data.type(listener) === 'function') {
-                    listenerMap[k].push(listener);
+                    if (part === 'query') {
+                        queryAllListener.push(listener);
+                    } else {
+                        pathAllListener.push(listener);
+                    }
                 }
-            });
+            } else if (argL === 3) {
+                listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
+
+                if (data.type(key) !== 'array') {
+                    key = [key];
+                }
+
+                data.each(key, function (index, k) {
+                    listenerMap[k] = listenerMap[k] || [];
+
+                    if (data.type(listener) === 'function') {
+                        listenerMap[k].push(listener);
+                    }
+                });
+            }
         },
 
         /**
          * 移除监听 hashbang
          * @param {String} part 监听部分，可以为`query`或`path`
-         * @param {String|Number|Array} key 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
-         * path: -1 表示监听 path 所有部分
-         * query: "" 空字符串，表示监听 query 所有部分
+         * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
          * @param {Function} [listener] 监听回调，回调为空表示删除该键的所有监听队列
+         *
+         * @example
+         * // path
+         * // 移除 path 0字段上的一个监听
+         * hashbang.un('path', 0, fn);
+         * // 移除 path 0字段上的所有监听
+         * hashbang.un('path', 0);
+         * // 移除 path 所有字段的一个监听
+         * hashbang.un('path', fn);
+         * // 移除 path 所有字段的所有监听
+         * hashbang.un('path');
+         *
+         * // query
+         * // 移除 query abc 键上的一个监听
+         * hashbang.un('query', 'abc', fn);
+         * // 移除 query abc 键上的所有监听
+         * hashbang.un('query', 'abc');
+         * // 移除 query 所有键上的一个监听
+         * hashbang.un('query', fn);
+         * // 移除 query 所有键上的所有监听
+         * hashbang.un('query');
          */
         un: function (part, key, listener) {
-            if (data.type(key) !== 'array') {
-                key = [key];
-            }
-
-            var argsL = arguments.length;
+            var args = arguments;
+            var argL = args.length;
+            var findIndex;
+            var arg1Type = data.type(args[1]);
+            var arg2Type = data.type(args[2]);
             var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
-            data.each(key, function (i, k) {
-                if (argsL === 1) {
-                    listenerMap[k] = [];
+            if (argL === 1) {
+                if (part === 'query') {
+                    queryAllListener = [];
                 } else {
-                    data.each(listenerMap[k], function (j, _listener) {
-                        if (listener === _listener) {
-                            listenerMap[k].splice(j, 1);
-                            return !1;
-                        }
-                    });
+                    pathAllListener = [];
                 }
-            });
+            } else if (argL === 2 && arg1Type === 'function') {
+                listener = args[1];
+                listenerMap = part === 'query' ? queryAllListener : pathAllListener;
+
+                findIndex = listenerMap.indexOf(listener);
+
+                if (findIndex > -1) {
+                    listenerMap.splice(findIndex, 1);
+                }
+            } else if (argL === 2 && (arg1Type === 'string' || arg1Type === 'array')) {
+                key = arg1Type === 'array' ? key : [key];
+
+                data.each(key, function (index, k) {
+                    listenerMap[k] = [];
+                });
+            } else if (argL === 3 && (arg1Type === 'string' || arg1Type === 'array') && arg2Type === 'function') {
+                key = arg1Type === 'array' ? key : [key];
+
+                data.each(key, function (index, k) {
+                    var findIndex = listenerMap.indexOf(listener);
+
+                    if (findIndex > -1) {
+                        listenerMap[k].splice(findIndex, 1);
+                    }
+                });
+            }
         }
     };
 
-    base.on(window, 'hashchange', function (eve) {
+    event.on(window, 'hashchange', function (eve) {
         var newObject = hashbang.parse(eve.newURL);
         var oldObject = hashbang.parse(eve.oldURL);
         var pathDifferentKeys = _differentKeys(newObject.path, oldObject.path);
         var queryDifferentKeys = _differentKeys(newObject.query, oldObject.query);
+        var args = [eve, newObject, oldObject];
 
-        data.each(pathListenerMap[-1], function (index, listener) {
-            listener(eve, newObject, oldObject);
-        });
+        if(pathDifferentKeys.length){
+            data.each(pathAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
 
-        data.each(pathDifferentKeys, function (index, key) {
+        data.each(pathDifferentKeys, function (i, key) {
             if (pathListenerMap[key]) {
                 data.each(pathListenerMap[key], function (j, listener) {
-                    listener(eve, newObject, oldObject);
+                    listener.apply(window, args);
                 });
             }
         });
 
-        data.each(queryListenerMap[''], function (index, listener) {
-            listener(eve, newObject, oldObject);
-        });
+        if(queryDifferentKeys.length){
+            data.each(queryAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
 
-        data.each(queryDifferentKeys, function (index, key) {
+        data.each(queryDifferentKeys, function (i, key) {
             if (queryListenerMap[key]) {
                 data.each(queryListenerMap[key], function (j, listener) {
-                    listener(eve, newObject, oldObject);
+                    listener.apply(window, args);
                 });
             }
         });

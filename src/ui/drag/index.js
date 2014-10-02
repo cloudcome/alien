@@ -8,6 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module ui/drag/index
+     * @requires util/data
+     * @requires core/event/touch
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/position
+     * @requires core/dom/modification
+     * @requires core/dom/modification
      */
     'use strict';
 
@@ -84,11 +91,9 @@ define(function (require, exports, module) {
             var handle = options.handle ? selector.query(options.handle, ele) : ele;
 
             handle = handle.length ? handle[0] : ele;
-
-            event
-                .on(handle, start, the._start.bind(the))
-                .on(document, move, the._move.bind(the))
-                .on(document, end, the._end.bind(the));
+            event.on(handle, start, the._start.bind(the));
+            event.on(document, move, the._move.bind(the));
+            event.on(document, end, the._end.bind(the));
         },
         /**
          * 克隆一个可视副本

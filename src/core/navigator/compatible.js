@@ -7,7 +7,8 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/compatible
+     * @module core/navigator/compatible
+     * @requires util/data
      */
     'use strict';
 
@@ -25,6 +26,10 @@ define(function (require, exports, module) {
          * @param {String} standard 标准属性、方法名称
          * @param {Object} parent   标准方法父级
          * @returns {String} 私有属性、方法名称
+         *
+         * @example
+         * compatible.html5('audioContext', window);
+         * // => "webkitAudioContext"
          */
         html5: function (standard, parent) {
             var html5Key = null;
@@ -39,10 +44,15 @@ define(function (require, exports, module) {
 
             return html5Key;
         },
+
         /**
          * 获取有浏览器前缀的CSS3名称
          * @param {String} standard 标准的CSS3属性
          * @returns {String} 私有CSS3属性
+         *
+         * @example
+         * compatible.css3('border-start');
+         * // => "-webkit-border-start"
          */
         css3: function (standard) {
             var cssKey = null;

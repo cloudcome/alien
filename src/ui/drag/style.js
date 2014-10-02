@@ -8,6 +8,7 @@
 define(function (require) {
     /**
      * @module ui/drag/style
+     * @requires core/dom/modification
      */
     'use strict';
 

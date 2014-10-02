@@ -38,7 +38,7 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var hashbang = require('/src/util/hashbang.js');
+        var hashbang = require('/src/core/navigator/hashbang.js');
         var data = require('/src/util/data.js');
         var ret = document.getElementById('ret');
         var routes = [
@@ -47,27 +47,15 @@
         ]
 
         document.getElementById('btn1').onclick = function () {
-            var hash = hashbang.stringify({
-                path: '/index/'
-            });
-
-            location.hash = hash;
+            hashbang.set('path', 0, ['index']);
         }
 
         document.getElementById('btn2').onclick = function () {
-            var hash = hashbang.stringify({
-                path: '/user/'+ Date.now()
-            });
-
-            location.hash = hash;
+            hashbang.set('path', 0, ['user', Date.now()]);
         }
 
         document.getElementById('btn3').onclick = function () {
-            var hash = hashbang.stringify({
-                path: ['admin', Date.now(), 'page', Date.now()]
-            });
-
-            location.hash = hash;
+            hashbang.set('path', 0, ['admin', Date.now(), 'page', Date.now()]);
         }
 
         window.hashbang = hashbang;
@@ -84,7 +72,7 @@
             console.log(oldObject);
         });
 
-        hashbang.on('path', -1, function (eve, newObject, oldObject) {
+        hashbang.on('path', function (eve, newObject, oldObject) {
             var matched;
 
             data.each(routes, function (index, route) {

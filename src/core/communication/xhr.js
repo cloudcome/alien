@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/child.js
+     * @module core/communication/xhr
+     * @requires util/data
+     * @requires core/navigator/querystring
      */
     'use strict';
 
@@ -55,6 +57,23 @@ define(function (require, exports, module) {
     };
 
     module.exports = {
+        /**
+         * ajax 请求
+         * @param {Object} [options] 配置参数
+         * @param {String} [options.url] 请求地址
+         * @param {String} [options.method] 请求方法，默认 GET
+         * @param {String} [options.type] 数据类型，默认 json
+         * @param {String|Object} [options.query] URL querstring
+         * @param {*} [options.data] 请求数据
+         * @param {Boolean} [options.isAsync] 是否异步，默认 true
+         * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+         * @param {String} [options.username] 请求鉴权用户名
+         * @param {String} [options.password] 请求鉴权密码
+         * @param {Function(this:XMLHttpRequest, event)} [options.onload] 请求并处理成功
+         * @param {Function(this:XMLHttpRequest, event)} [options.onerror] 请求失败或处理失败
+         * @param {Function(this:XMLHttpRequest, event, percent)} [options.onprogress] 上传进度回调
+         * @returns {XMLHttpRequest}
+         */
         ajax: function (options) {
             options = data.extend(!0, {}, defaults, options);
 
@@ -104,8 +123,8 @@ define(function (require, exports, module) {
 
             xhr.upload.onprogress = function (eve) {
                 if (eve.lengthComputable) {
-                    eve.details = eve.details || {};
-                    eve.details.complete = eve.loaded / eve.total * 100 | 0;
+                    eve.detail = eve.detail || {};
+                    eve.detail.complete = (eve.loaded / eve.total * 100 | 0)+'%';
                 }
 
                 options.onprogress.call(xhr, eve);

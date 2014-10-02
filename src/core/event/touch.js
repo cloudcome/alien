@@ -11,6 +11,15 @@ define(function (require, exports, module) {
      * @requires core/event/base
      * @requires core/dom/attribute
      * @requires util/data
+     *
+     * @example
+     * event.on(ele, 'tap', fn);
+     * event.on(ele, 'taphold', fn);
+     * event.on(ele, 'swipe', fn);
+     * event.on(ele, 'swipeup', fn);
+     * event.on(ele, 'swiperight', fn);
+     * event.on(ele, 'swipebottom', fn);
+     * event.on(ele, 'swipeleft', fn);
      */
     'use strict';
 
@@ -77,7 +86,9 @@ define(function (require, exports, module) {
                 event.dispatch(target, options.taphold.event)
             }, options.taphold.timeout);
         }
-    }).on(document, touchmove, function (eve) {
+    });
+
+    event.on(document, touchmove, function (eve) {
         var firstTouch;
         var target;
         var deltaX;
@@ -98,7 +109,9 @@ define(function (require, exports, module) {
                 }
             }
         }
-    }).on(document, touchend, function (eve) {
+    });
+
+    event.on(document, touchend, function (eve) {
         _reset(eve);
 
         var firstTouch;
@@ -141,7 +154,11 @@ define(function (require, exports, module) {
                 }, 0);
             }
         }
-    }).on(document, touchcancel, _reset).on(window, 'scroll', _reset);
+    });
+
+    event.on(document, touchcancel, _reset);
+
+    event.on(window, 'scroll', _reset);
 
 
     /**
@@ -163,12 +180,12 @@ define(function (require, exports, module) {
      * 合并必要的信息到创建的事件对象上
      * @param  {Event} createEvent    创建的事件对象
      * @param  {Event} originalEvent  原始的事件对象
-     * @param  {Object} [details]     事件信息
+     * @param  {Object} [detail]     事件信息
      * @return {Event} 合并后的事件对象
      * @version 1.0
      * 2014年7月12日13:36:11
      */
-    function _mergeEvent(createEvent, originalEvent, details) {
+    function _mergeEvent(createEvent, originalEvent, detail) {
         var copyEvent = originalEvent;
 
         _copy();
@@ -181,9 +198,9 @@ define(function (require, exports, module) {
             _copy();
         }
 
-        data.each(details, function (key, val) {
-            createEvent.details = createEvent.details || {};
-            createEvent.details[key] = val;
+        data.each(detail, function (key, val) {
+            createEvent.detail = createEvent.detail || {};
+            createEvent.detail[key] = val;
         });
 
         function _copy() {

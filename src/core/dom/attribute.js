@@ -8,6 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/attribute
+     * @requires util/data
+     * @requires core/navigator/compatible
      */
     'use strict';
 
@@ -22,11 +24,23 @@ define(function (require, exports, module) {
 
     module.exports = {
         /**
-         * 设置、获取元素的特征
+         * 设置、获取元素的属性
          * @param {HTMLElement} ele 元素
          * @param {String/Object/Array} attrkey 特征键、键值对、键数组
          * @param {String} [attrVal] 特征值
          * @returns {*}
+         *
+         * @example
+         * // set
+         * attribute.attr(ele, 'href', 'http://ydr.me');
+         * attribute.attr(ele, {
+         *    href: '',
+         *    title: ''
+         * });
+         *
+         * // get
+         * attribute.attr(ele, 'href');
+         * attribute.attr(ele, ['href', 'title']);
          */
         attr: function (ele, attrkey, attrVal) {
             return _getSet(arguments, {
@@ -39,18 +53,27 @@ define(function (require, exports, module) {
             });
         },
         /**
-         * 判断元素是否包含某个特征
+         * 判断元素是否包含某个属性
          * @param {HTMLElement} ele 元素
          * @param {String} attrKey 单个特征
          * @returns {boolean}
+         *
+         * @example
+         * // 判断是否有某个属性
+         * attribute.hasAttr(ele, 'href');
+         * // => true
          */
         hasAttr: function (ele, attrKey) {
             return ele.hasAttribute(attrKey);
         },
         /**
-         * 移除元素的某个特征
+         * 移除元素的某个属性
          * @param {HTMLElement} ele 元素
          * @param {String} [attrKey] 单个或多个特征属性，为空表示移除所有特征
+         *
+         * @example
+         * // 移除
+         * attribute.removeAttr(ele, 'href');
          */
         removeAttr: function (ele, attrKey) {
             var attrKeys = attrKey ? attrKey.split(regSpace) : ele.attributes;
@@ -62,11 +85,23 @@ define(function (require, exports, module) {
             });
         },
         /**
-         * 设置、获取元素的属性
+         * 设置、获取元素的特性
          * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} propKey 属性键、键值对、键数组
-         * @param {String} [propVal] 属性值
+         * @param {String/Object/Array} propKey 特性键、特性键值对、特性组
+         * @param {String} [propVal] 特性值
          * @returns {*}
+         *
+         * @example
+         * // set
+         * attribute.prop(ele, 'hi', 'hey');
+         * attribute.prop(ele, {
+         *     hi: 'hey',
+         *     ha: 'hehe'
+         * });
+         *
+         * // get
+         * attribute.prop(ele, 'hi');
+         * attribute.prop(ele, ['hi', 'ha']);
          */
         prop: function (ele, propKey, propVal) {
             return _getSet(arguments, {
@@ -78,6 +113,19 @@ define(function (require, exports, module) {
                 }
             });
         },
+        /**
+         * 修正 css 键值
+         * @param {String} key css 键
+         * @param {String} val css 值
+         * @returns {{key: String, val: *}}
+         *
+         * @example
+         * attribute.fixCss('marginTop', 10);
+         * // => {
+         * //    key: 'margin-top',
+         * //    val: '10px'
+         * // }
+         */
         fixCss: function (key, val) {
             return {
                 key: compatible.css3(_toSepString(key)),
@@ -88,16 +136,29 @@ define(function (require, exports, module) {
          * 设置、获取元素的样式
          * @param {HTMLElement} ele 元素
          * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
-         *                                     样式属性可以写成`width:after`（伪元素的width）或`width`（实际元素的width）
+         *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
          * @param {String|Number} [val] 样式属性值
          * @returns {*}
+         *
+         * @example
+         * // set
+         * attribute.css(ele, 'width', 100);
+         * attribute.css(ele, '{
+         *    width: 100,
+         *    height: '200px'
+         * });
+         *
+         * // get
+         * attribute.css(ele, 'width');
+         * attribute.css(ele, 'width::after');
+         * attribute.css(ele, ['width','height']);
          */
         css: function (ele, key, val) {
             var the = this;
 
             return _getSet(arguments, {
                 get: function (key) {
-                    var temp = key.split(':');
+                    var temp = key.split('::');
                     var pseudo = temp[temp.length - 1];
 
                     key = temp[0];
@@ -105,7 +166,7 @@ define(function (require, exports, module) {
                     return getComputedStyle(ele, pseudo)[_toSepString(key)];
                 },
                 set: function (key, val) {
-                    key = key.split(':')[0];
+                    key = key.split('::')[0];
 
                     var fix = the.fixCss(key, val);
 
@@ -119,6 +180,18 @@ define(function (require, exports, module) {
          * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
          * @param {String} [dataVal] 数据集值
          * @returns {*}
+         *
+         * @example
+         * // set
+         * attribute.data(ele, 'abc', 123);
+         * attribute.data(ele, 'abc', {
+         *    a: 1,
+         *    b: 2
+         * });
+         *
+         * // get
+         * attribute.data(ele, 'abc');
+         * attribute.data(ele, ['abc', 'def']);
          */
         data: function (ele, dataKey, dataVal) {
             return _getSet(arguments, {
@@ -142,6 +215,13 @@ define(function (require, exports, module) {
          * @param {HTMLElement} ele 元素
          * @param {String}      [html] html字符串
          * @returns {String/Undefined}
+         *
+         * @example
+         * // set
+         * attribute.html(ele, 'html');
+         *
+         * // get
+         * attribute.html(ele);
          */
         html: function (ele, html) {
             return _getSet(arguments, {
@@ -158,6 +238,13 @@ define(function (require, exports, module) {
          * @param {HTMLElement} ele 元素
          * @param {String}      [text]  text字符串
          * @returns {String/Undefined}
+         *
+         * @example
+         * // set
+         * attribute.text(ele, 'html');
+         *
+         * // get
+         * attribute.text(ele);
          */
         text: function (ele, text) {
             return _getSet(arguments, {
@@ -174,6 +261,10 @@ define(function (require, exports, module) {
          * @param {HTMLElement} ele 元素
          * @param {String} className 多个className使用空格分开
          * @returns {Undefined}
+         *
+         * @example
+         * attribute.addClass(ele, 'class');
+         * attribute.addClass(ele, 'class1 class2');
          */
         addClass: function (ele, className) {
             _class(ele, 0, className);
@@ -183,6 +274,12 @@ define(function (require, exports, module) {
          * @param {HTMLElement} ele 元素
          * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
          * @returns {Undefined}
+         *
+         * @example
+         * // remove all className
+         * attribute.removeClass(ele);
+         * attribute.removeClass(ele, 'class');
+         * attribute.removeClass(ele, 'class1 class2');
          */
         removeClass: function (ele, className) {
             _class(ele, 1, className);
@@ -192,6 +289,9 @@ define(function (require, exports, module) {
          * @param {HTMLElement} ele 元素
          * @param {String} className 单个className
          * @returns {Boolean}
+         *
+         * @example
+         * attribute.hasClass(ele, 'class');
          */
         hasClass: function (ele, className) {
             return _class(ele, 2, className);

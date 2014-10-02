@@ -8,6 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/event/base
+     * @requires util/data
+     * @requires core/dom/selector
      */
     'use strict';
 
@@ -32,6 +34,15 @@ define(function (require, exports, module) {
     var isCaptureRealListeners = {};
     var domId = 0;
     var key = 'alienElement_' + Date.now();
+    var defaults = {
+        // 是否冒泡
+        bubbles: !0,
+        // 是否可以被阻止冒泡
+        cancelable: !0,
+        // 事情细节
+        detail: {}
+    };
+    var udf;
 
 
     /**
@@ -43,45 +54,44 @@ define(function (require, exports, module) {
          * 事件创建
          * @param {String} eventType 事件类型
          * @param {Object} [properties] 事件属性
-         * @param {Object} [details] 事件信息
-         * @static
+         * @param {Boolean} [properties.bubbles] 是否冒泡，默认 true
+         * @param {Boolean} [properties.cancelable] 是否可以被取消冒泡，默认 true
+         * @param {Object} [properties.detail] 事件细节，默认{}
          * @returns {Event}
+         *
+         * @example
+         * event.create('myclick');
+         * event.create('myclick', {
+         *     bubbles: !0,
+         *     cancelable: !0,
+         *     detail: {
+         *        a: 1,
+         *        b: 2
+         *     },
+         * });
          */
-        create: function (eventType, properties, details) {
-            var et = new Event(eventType, properties);
+        create: function (eventType, properties) {
+            properties = data.extend({}, defaults, properties);
 
-            data.each(details, function (key, val) {
-                et[key] = val;
-            });
-
-            return et;
+            return new Event(eventType, properties);
         },
 
         /**
          * 触发事件
-         * @param {HTMLElement|Node|EventTarget} element 元素
+         * @param {HTMLElement|Node|EventTarget} ele 元素
          * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
          * @returns {Object} this
-         * @static
-         * @chainable
+         *
+         * @example
+         * event.dispatch(ele, 'myclick');
+         * event.dispatch(ele, myclikEvent);
          */
-        dispatch: function (element, eventTypeOrEvent) {
-            var et;
+        dispatch: function (ele, eventTypeOrEvent) {
+            var et = data.type(eventTypeOrEvent) === 'string' ?
+                this.create(eventTypeOrEvent) :
+                eventTypeOrEvent;
 
-            if (data.type(eventTypeOrEvent) === 'string') {
-                et = this.create(eventTypeOrEvent, {
-                    // 是否冒泡
-                    bubbles: true,
-                    // 是否可以被取消
-                    cancelable: true
-                });
-            } else {
-                et = eventTypeOrEvent;
-            }
-
-            element.dispatchEvent(et);
-
-            return this;
+            ele.dispatchEvent(et);
         },
 
         /**
@@ -91,13 +101,19 @@ define(function (require, exports, module) {
          * @param {String} [selector] 事件委托时的选择器，默认空
          * @param {Function} listener 事件回调
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
-         * @returns {Object} this
-         * @static
-         * @chainable
+         *
+         * @example
+         * // un capture
+         * event.on(ele, 'click', fn, false):
+         * event.on(ele, 'click', 'li', fn, false):
+         *
+         * // is capture
+         * event.on(ele, 'click', fn, true):
+         * event.on(ele, 'click', 'li', fn, true):
          */
         on: function (element, eventType, selector, listener, isCapture) {
             if (!element.addEventListener) {
-                return this;
+                return;
             }
 
             var callback;
@@ -129,35 +145,41 @@ define(function (require, exports, module) {
 
             if (callback) {
                 data.each(eventTypes, function (index, eventType) {
-                    _on(element, eventType, callback, listener, isCapture);
+                    if(data.type(listener) === 'function'){
+                        _on(element, eventType, callback, listener, isCapture);
+                    }
                 });
             }
-
-            return this;
         },
 
         /**
          * 移除事件监听
          * @param {window|HTMLElement|Node} element 元素
          * @param {String} eventType 事件类型
-         * @param {Function} listener 回调
+         * @param {Function} [listener] 回调，回调为空表示删除所有已经在 alien 中注册的事件
          * @param {Boolean} [isCapture] 是否事件捕获，默认false
-         * @returns {Object} this
-         * @static
-         * @chainable
+         *
+         * @example
+         * // remove one listener
+         * event.un(ele, 'click', fn, false);
+         * event.un(ele, 'click', fn, true);
+         *
+         * // remove all listener
+         * event.un(ele, 'click', false);
+         * event.un(ele, 'click');
          */
         un: function (element, eventType, listener, isCapture) {
             if (!element.addEventListener) {
-                return this;
+                return;
             }
 
+            var args = Array.prototype.slice.call(arguments);
             var eventTypes = eventType.trim().split(regSpace);
 
             data.each(eventTypes, function (index, eventType) {
-                _un(element, eventType, listener, isCapture);
+                args.splice(1, 1, eventType);
+                _un.apply(window, args);
             });
-
-            return this;
         }
     };
 
@@ -248,28 +270,52 @@ define(function (require, exports, module) {
      * 移除事件队列
      * @param {HTMLElement|Object} element 元素
      * @param {String} eventType 单个事件类型
-     * @param {Function} originalListener 原始事件
+     * @param {Function} [originalListener] 原始事件，事件为空为删除所有已被 alien 注册事件
      * @param {Boolean} isCapture 是否事件捕获
      * @private
      */
     function _un(element, eventType, originalEvent, isCapture) {
         var domId = element[key];
         var findIndex;
+        var args = arguments;
+        var argL = args.length;
+
+        if(argL === 3){
+            // _un(ele, 'click', true);
+            if(data.type(args[2]) === 'boolean'){
+                isCapture = args[2];
+                originalEvent = null;
+            }
+            // _un(ele, 'click', fn);
+            else{
+                isCapture = !1;
+            }
+        }
 
         if (domId) {
             if (isCapture) {
-                findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if(data.type(originalEvent) === 'function'){
+                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
-                if (findIndex > -1) {
-                    isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
-                    isCaptureActualListeners[domId][eventType].splice(findIndex, 1);
+                    if (findIndex > -1) {
+                        isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
+                        isCaptureActualListeners[domId][eventType].splice(findIndex, 1);
+                    }
+                }else{
+                    isCaptureOriginalListeners[domId][eventType] = [];
+                    isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if(data.type(originalEvent) === 'function') {
+                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
-                if (findIndex > -1) {
-                    unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
-                    unCaptureActualListeners[domId][eventType].splice(findIndex, 1);
+                    if (findIndex > -1) {
+                        unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
+                        unCaptureActualListeners[domId][eventType].splice(findIndex, 1);
+                    }
+                }else{
+                    unCaptureOriginalListeners[domId][eventType] = [];
+                    unCaptureActualListeners[domId][eventType] = [];
                 }
             }
         } else {

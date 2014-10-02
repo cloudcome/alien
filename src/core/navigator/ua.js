@@ -8,13 +8,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/ua
+     * @module core/navigator/ua
      */
     'use strict';
 
 
-    var EMPTY = '',
-        UNKNOWN = '?',
+    var UNKNOWN = '?',
         FUNC_TYPE = 'function',
         UNDEF_TYPE = 'undefined',
         OBJ_TYPE = 'object',

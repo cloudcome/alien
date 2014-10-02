@@ -6,11 +6,6 @@
 
 
 define(function (require, exports, module) {
-    /**
-     * @module core/event/ready
-     * @require core/event/base
-     * @require util/data
-     */
     'use strict';
 
     var event = require('./base.js');
@@ -19,8 +14,17 @@ define(function (require, exports, module) {
     var isReady;
 
     /**
-     * 文档准备完毕后回到
+     * @module core/event/ready
+     * @requires core/event/base
+     * @requires util/data
+     *
+     * 文档准备完毕后回调
      * @param {Function} callback 回调
+     * @exports core/event/ready
+     *
+     * @example
+     * var ready = require('/src/event/ready.js');
+     * ready(fn);
      */
     module.exports = function (callback) {
         if(document.readyState === 'complete' || isReady){
@@ -28,7 +32,7 @@ define(function (require, exports, module) {
         }else if(data.type(callback) === 'function'){
             callbacks.push(callback);
         }
-    }
+    };
 
 
     event.on(document, 'DOMContentLoaded', function () {

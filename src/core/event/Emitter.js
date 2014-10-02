@@ -7,11 +7,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module core/event/emitter
+     * @module core/event/Emitter
+     * @require util/data
      */
     'use strict';
 
-    var data = require('data.js');
+    var data = require('../../util/data.js');
     var regSpace = /\s+/g;
 
     /**
@@ -32,6 +33,10 @@ define(function (require, exports, module) {
          * @param {Function} listener 事件回调
          * @returns {Emitter}
          * @chainable
+         *
+         * @example
+         * var emitter = new Emitter();
+         * emitter.on('hi', fn);
          */
         on: function (eventType, listener) {
             var the = this;
@@ -59,6 +64,11 @@ define(function (require, exports, module) {
          * @param {Function} [listener] 事件回调，缺省时将移除该事件类型上的所有事件回调
          * @returns {Emitter}
          * @chainable
+         *
+         * @example
+         * var emitter = new Emitter();
+         * emitter.un('hi', fn);
+         * emitter.un('hi');
          */
         un: function (eventType, listener) {
             var the = this;
@@ -82,13 +92,20 @@ define(function (require, exports, module) {
          * 事件触发
          * @method emit
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
-         * @param {*} 事件传参，多个参数依次即可
+         * @param {*...} 事件传参，多个参数依次即可
          * @returns {Emitter}
          * @chainable
+         *
+         * @example
+         * var emitter = new Emitter();
+         * emitter.emit('hi', 1, 2, 3);
+         * emitter.emit('hi', 1, 2);
+         * emitter.emit('hi', 1);
+         * emitter.emit('hi');
          */
         emit: function (eventType) {
             var the = this;
-            var args = [].slice.call(arguments, 1);
+            var args = Array.prototype.slice.call(arguments, 1);
 
             _middleware(eventType, function (et) {
                 if (the.eventsPool[et]) {

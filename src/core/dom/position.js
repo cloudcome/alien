@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/position
-     * @require util/data
-     * @require core/dom/attribute
+     * @requires util/data
+     * @requires core/dom/attribute
      */
     'use strict';
 
@@ -22,6 +22,13 @@ define(function (require, exports, module) {
          * @param {Element} ele
          * @param {Number} [val] 距离值
          * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.top(ele, 100);
+         *
+         * // get
+         * position.top(ele);
          */
         top: function () {
             return _middleware(arguments, {
@@ -40,6 +47,13 @@ define(function (require, exports, module) {
          * @param {Element} ele
          * @param {Number} [val] 距离值
          * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.left(ele, 100);
+         *
+         * // get
+         * position.left(ele);
          */
         left: function () {
             return _middleware(arguments, {
@@ -60,6 +74,13 @@ define(function (require, exports, module) {
          * @param {Element} ele
          * @param {Number} [val] 宽度值
          * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.width(ele, 100);
+         *
+         * // get
+         * position.width(ele);
          */
         width: function () {
             return _middleware(arguments, {
@@ -80,6 +101,13 @@ define(function (require, exports, module) {
          * @param {Element} ele
          * @param {Number} [val] 高度值
          * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.height(ele, 100);
+         *
+         * // get
+         * position.height(ele);
          */
         height: function () {
             return _middleware(arguments, {

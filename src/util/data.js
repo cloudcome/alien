@@ -21,9 +21,11 @@ define(function (require, exports, module) {
          * @returns {string}
          */
         type: function (object) {
-            if (object === window) {
+            if (typeof window !== 'undefined' && object === window) {
                 return 'window';
-            } else if (object === document) {
+            } else if (typeof global !== 'undefined' && object === global) {
+                return 'global';
+            } else if (typeof document !== 'undefined' && object === document) {
                 return 'document';
             } else if (object === udf) {
                 return 'undefined';
@@ -77,7 +79,7 @@ define(function (require, exports, module) {
          * 扩展静态对象
          * @param {Boolean|Object} [isExtendDeep] 是否深度扩展，可省略，默认false
          * @param {Object}  [source] 源对象
-         * @param {Object}  [target] 目标对象，可以是多个
+         * @param {...Object}  [target] 目标对象，可以是多个
          * @returns {*}
          */
         extend: function (isExtendDeep, source, target) {

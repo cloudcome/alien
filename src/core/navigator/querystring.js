@@ -8,7 +8,8 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/querystring
+     * @module core/navigator/querystring
+     * @requires util/data
      */
     'use strict';
 

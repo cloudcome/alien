@@ -9,6 +9,10 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/animation
+     * @requires core/dom/attribute
+     * @requires util/data
+     * @requires core/navigator/compatible
+     * @requires core/event/base
      */
     'use strict';
 
@@ -60,13 +64,16 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node} element 元素
          * @param {Object} to 终点
          * @param {Object} [options] 配置
+         * @param {String} [options.easing] 缓冲类型，默认为`liner`
+         * @param {Number} [options.duration] 动画时间，默认789ms
+         * @param {Number} [options.delay] 延迟时间，默认0
          * @param {Function} [callback] 回调
          *
-         * @examples
-         * .animate(element, to);
-         * .animate(element, to, property);
-         * .animate(element, to, callback);
-         * .animate(element, to, property, callback);
+         * @example
+         * animation.animate(element, to);
+         * animation.animate(element, to, property);
+         * animation.animate(element, to, callback);
+         * animation.animate(element, to, property, callback);
          */
         animate: function (element, to, options, callback) {
             if (attribute.css(element, 'display') === 'none') {

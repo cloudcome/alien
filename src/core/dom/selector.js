@@ -8,13 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/selector
+     * @requires util/data
+     * @requires core/navigator/compatible
      */
     'use strict';
 
     var data = require('../../util/data.js');
     var compatible = require('../navigator/compatible.js');
-    var howdo = require('../../util/howdo.js');
-    var udf;
     var matchesSelector = compatible.html5('matchesSelector', document.body);
 
     module.exports = {
@@ -23,6 +23,12 @@ define(function (require, exports, module) {
          * @param {String}  selector  选择器
          * @param {HTMLElement|Node} [context] 上下文
          * @return {Array}
+         *
+         * @example
+         * selector.query('body');
+         * // => [HTMLBODYElement]
+         * selector.query('div');
+         * // => [div, div, ...]
          */
         query: function (selector, context) {
             context = context || document;
@@ -34,6 +40,10 @@ define(function (require, exports, module) {
          * 获取当前元素的其他兄弟元素
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.siblings(ele);
+         * // => [div, div, ...];
          */
         siblings: function (ele) {
             var ret = [];
@@ -48,10 +58,16 @@ define(function (require, exports, module) {
 
             return ret;
         },
+
         /**
          * 获取当前元素的索引值
          * @param {HTMLElement|Node} ele 元素
          * @returns {number} 未匹配到位-1，匹配到为[0,+∞)
+         *
+         * @example
+         * selector.index(ele);
+         * // find => [0,+∞)
+         * // unfind => -1
          */
         index: function (ele) {
             var ret = -1;
@@ -67,10 +83,15 @@ define(function (require, exports, module) {
 
             return ret;
         },
+
         /**
          * 获取元素的上一个兄弟元素
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.prev(ele);
+         * // => [div];
          */
         prev: function (ele) {
             return data.toArray(ele.previousElementSibling, !0);
@@ -79,6 +100,10 @@ define(function (require, exports, module) {
          * 获取元素的下一个兄弟元素
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.next(ele);
+         * // => [div];
          */
         next: function (ele) {
             return data.toArray(ele.nextElementSibling, !0);
@@ -94,6 +119,10 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node} ele 元素
          * @param {String} selector 选择器
          * @returns {Array}
+         *
+         * @example
+         * selector.closest(ele);
+         * // => [div];
          */
         closest: function (ele, selector) {
             var the = this;
@@ -112,6 +141,10 @@ define(function (require, exports, module) {
          * 获得父级元素
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.parent(ele);
+         * // => [div];
          */
         parent: function (ele) {
             return data.toArray(ele.parentNode || ele.parentElement, !0);
@@ -120,6 +153,10 @@ define(function (require, exports, module) {
          * 获取子元素
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.children(ele);
+         * // => [div, div, ...];
          */
         children: function (ele) {
             return data.toArray(ele.children, !0);
@@ -129,24 +166,38 @@ define(function (require, exports, module) {
          * 获取子节点
          * @param {HTMLElement|Node} ele 元素
          * @returns {Array}
+         *
+         * @example
+         * selector.contents(ele);
+         * // => [div, div, ...];
          */
         contents: function (ele) {
             return data.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
         },
+
         /**
          * 元素与选择器是否匹配
          * @param {HTMLElement|Node} ele 元素
          * @param {String} selector 选择器
          * @returns {Boolean}
+         *
+         * @example
+         * selector.isMatched(ele, 'div');
+         * // => true OR false
          */
         isMatched: function (ele, selector) {
             return data.type(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
         },
+
         /**
          * 过滤节点集合
          * @param {Node} nodeList   节点集合
          * @param {Function} filter 过滤方法，返回true选择该节点
          * @returns {Array} 过滤后的节点集合
+         *
+         * @example
+         * selector.filter(ele, 'div');
+         * // => [div, div, ...]
          */
         filter: function (nodeList, filter) {
             var ret = [];

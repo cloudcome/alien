@@ -24,7 +24,7 @@
         "email": "cloudcome@163.com",
         "url": "http://ydr.me"
     },
-    "homepage": "http://localhost:999/docs",
+    "homepage": "http://cloudcome.github.io/alien/",
     "repository": {
         "type": "git",
         "url": "https://github.com/cloudcome/alien"
@@ -33,10 +33,6 @@
         "url": "https://github.com/cloudcome/alien/issues"
     },
     "licenses": "MIT",
-    "spm": {
-        "main": "index.js",
-        "dependencies": {}
-    },
     "dependencies": {
         "jsdoc": "^3.3.0-alpha9"
     }
