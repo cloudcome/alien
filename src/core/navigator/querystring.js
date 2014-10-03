@@ -24,6 +24,10 @@ define(function (require, exports, module) {
          * @param {String} [sep] 分隔符，默认&
          * @param {String} [eq] 等于符，默认=
          * @returns {String}
+         *
+         * @example
+         * querystring.stringify({a:1,b:[1,2,3]});
+         * // => "a=1&b=1&b=2&b=3"
          */
         stringify: function (object, sep, eq) {
             sep = sep || '&';
@@ -37,7 +41,7 @@ define(function (require, exports, module) {
 
             data.each(object, function (key, val) {
                 var type = _isSafe(val);
-                if (type === !0) {
+                if (type === true) {
                     ret.push(_encode(key) + eq + _clean(val));
                 } else if (type === 'array') {
                     data.each(val, function (k, v) {
@@ -54,6 +58,10 @@ define(function (require, exports, module) {
          * @param {String} [sep] 分隔符，默认&
          * @param {String} [eq] 等于符，默认=
          * @returns {Object}
+         *
+         * @example
+         * querystring.parse("a=1&b=1&b=2&b=3");
+         * // => {a: "1",b: ["1","2","3"]}
          */
         parse: function (querystring, sep, eq) {
             sep = sep || '&';
@@ -89,56 +97,56 @@ define(function (require, exports, module) {
             });
 
             return ret;
-        },
-        /**
-         * 获取当前 querystring 中的键值
-         * @param {String} key 键
-         * @returns {String|undefined}
-         */
-        get: function (key) {
-            return this.parse(location.search)[key];
-        },
-        /**
-         * 设置当前 querystring 中的键值
-         * @param {String|Object} key 键或键值对
-         * @param {String} [val] 值
-         */
-        set: function (key, val) {
-            var ret = this.parse(location.search);
-            var setter = {};
-
-            if (arguments.length === 2) {
-                setter[key] = val;
-            } else {
-                setter = key;
-            }
-
-            data.extend(!0, ret, setter);
-
-            location.search = this.stringify(ret);
-        },
-        /**
-         * 移除当前 querystring 的键
-         * @param {String|Array|undefined} [key] 键或键数组
-         */
-        remove: function (key) {
-            if (!arguments.length) {
-                location.search = '';
-                return;
-            }
-
-            var ret = this.parse(location.search);
-
-            if (data.type(key) !== 'array') {
-                key = [key];
-            }
-
-            data.each(key, function (index, k) {
-                delete(ret[k]);
-            });
-
-            location.search = this.stringify(ret);
         }
+//        /**
+//         * 获取当前 querystring 中的键值
+//         * @param {String} key 键
+//         * @returns {String|undefined}
+//         */
+//        get: function (key) {
+//            return this.parse(location.search)[key];
+//        },
+//        /**
+//         * 设置当前 querystring 中的键值
+//         * @param {String|Object} key 键或键值对
+//         * @param {String} [val] 值
+//         */
+//        set: function (key, val) {
+//            var ret = this.parse(location.search);
+//            var setter = {};
+//
+//            if (arguments.length === 2) {
+//                setter[key] = val;
+//            } else {
+//                setter = key;
+//            }
+//
+//            data.extend(!0, ret, setter);
+//
+//            location.search = this.stringify(ret);
+//        },
+//        /**
+//         * 移除当前 querystring 的键
+//         * @param {String|Array|undefined} [key] 键或键数组
+//         */
+//        remove: function (key) {
+//            if (!arguments.length) {
+//                location.search = '';
+//                return;
+//            }
+//
+//            var ret = this.parse(location.search);
+//
+//            if (data.type(key) !== 'array') {
+//                key = [key];
+//            }
+//
+//            data.each(key, function (index, k) {
+//                delete(ret[k]);
+//            });
+//
+//            location.search = this.stringify(ret);
+//        }
     };
 
     /**
@@ -175,7 +183,7 @@ define(function (require, exports, module) {
         var type = data.type(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
-        return ret === !0 ? !0 : type;
+        return ret === true ? !0 : type;
     }
 
 
@@ -186,7 +194,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _clean(object) {
-        if (_isSafe(object) === !0) {
+        if (_isSafe(object) === true) {
             return _encode(object.toString());
         }
 

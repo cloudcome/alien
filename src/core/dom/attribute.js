@@ -7,6 +7,7 @@
 
 define(function (require, exports, module) {
     /**
+     * 处理有关 dom 属性的 API
      * @module core/dom/attribute
      * @requires util/data
      * @requires core/navigator/compatible
@@ -143,7 +144,7 @@ define(function (require, exports, module) {
          * @example
          * // set
          * attribute.css(ele, 'width', 100);
-         * attribute.css(ele, '{
+         * attribute.css(ele, {
          *    width: 100,
          *    height: '200px'
          * });

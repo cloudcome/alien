@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JSDoc: <?js= title ?></title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.1.10.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap-responsive.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body data-target="#docs-sidebar" data-spy="scroll" data-offset="65">
+
+<div id="main" class="container-fluid">
+
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <?js= this.nav ?>
+        </div>
+    </nav>
+
+    <div class="row-fluid">
+        <nav id="docs-sidebar">
+            <?js
+                /**
+                 *  The self (or this) var contains the following keys:
+                 *
+                 *  'path'                  // path to template being used
+                 *  'layout'                // which template being used for main layout
+                 *  'cache',                // content of each cached template
+                 *  'settings'              // parse settings
+                 *  'find'                  // helper function to find doclets
+                 *  'linkto'
+                 *  'resolveAuthorLinks'
+                 *  'tutoriallink'
+                 *  'htmlsafe'
+                 *  'nav'
+                 */
+                var self            = this
+                    , data  = {
+                            members     : [],
+                            methods     : [],
+                            methodNames : [],
+                            events      : [],
+                            mixins      : [],
+                            classes     : [],
+                            namespaces  : [],
+                        }
+                    ;
+
+                docs.forEach(function(doc, i) {
+                    // each doc contains similar information that is found in the
+                    // self.find results
+                    //console.log('layout.tmpl - Processing doc: ' + doc.longname);
+                    var members     = self.find({
+                                            kind: 'member',
+                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+                                        })
+                        , methods    = self.find({
+                                            kind: 'function',
+                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+                                        })
+                        , events     = self.find({
+                                            kind: 'event',
+                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+                                        })
+                        , mixins     = self.find({
+                                            kind: 'mixer',
+                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+                                        })
+                        , classes    = self.find({
+                                            kind: 'class',
+                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+                                        });
+
+                    //console.log("CLASSES", classes, "\n\n\n");
+                    //doc.name == 'ToolTipCSControls' && console.log("METHODS", methods, "\n\n\n");
+                    //console.log("MEMBERS", members, "\n\n\n");
+                    //console.log("EVENTS", events, "\n\n\n");
+                    //console.log("MIXINS", mixins, "\n\n\n");
+
+                    // collect member names
+                    if (members && members.length && members.forEach) {
+                        members.forEach(function(p) {
+                            data.members.push(p);
+                        });
+                    }
+
+                    // collect method names
+                    if (methods && methods.length && methods.forEach) {
+                        //console.log('METHODS LOOP; methods.length = ' + methods.length);
+                        methods.forEach(function(p) {
+                            //doc.longname == 'Bar' && console.log('METHOD!  ', p,"\n\n\n");
+                            data.methods.push(p);
+                        });
+                    }
+
+                    // collect event names
+                    if (events && events.length && events.forEach) {
+                        events.forEach(function(p) {
+                            data.events.push(p);
+                        });
+                    }
+
+                    // collect mixin names
+                    if (mixins && mixins.length && mixins.forEach) {
+                        mixins.forEach(function(p) {
+                            data.mixins.push(p);
+                        });
+                    }
+                });
+            ?>
+
+            <ul class="nav nav-list">
+                <?js if (data.members.length) { ?>
+                    <li class="nav-header">Members &times; <?js= data.members.length ?></li>
+
+                    <?js data.members.forEach(function(membr) { ?>
+                        <?js= self.partial('sidebarLi.tmpl', membr) ?>
+                    <?js }); ?>
+                <?js } ?>
+
+                <?js if (data.methods && data.methods.length && data.methods.forEach) { ?>
+                    <li class="nav-header">Methods &times; <?js= data.methods.length ?></li>
+
+                    <?js data.methods.forEach(function(meth) { ?>
+                        <?js= self.partial('sidebarLi.tmpl', meth) ?>
+                    <?js }); ?>
+                <?js } ?>
+
+                <?js if (data.events.length) { ?>
+                    <li class="nav-header">Events &times; <?js= data.events.length ?></li>
+
+                    <?js data.events.forEach(function(evt) {
+                        evt.aHref = '#' + evt.id.replace(':', '-'); ?>
+                        <?js= self.partial('sidebarLi.tmpl', evt) ?>
+                    <?js }); ?>
+                <?js } ?>
+
+                <?js if (data.mixins.length) { ?>
+                    <li class="nav-header">Mixins &times; <?js= data.mixins.length ?></li>
+
+                    <?js data.mixins.forEach(function(mixn) {
+                        mixn.aHref = '#' + mixn.id.replace(':', '-'); ?>
+                        <?js= self.partial('sidebarLi.tmpl', mixn) ?>
+                    <?js }); ?>
+                <?js } ?>
+            </ul>
+        </nav>
+
+        <section id="docs-content">
+            <h1 class="page-title"><?js= title.replace(/['"']/g, '') ?></h1>
+
+            <?js= content ?>
+        </section>
+    </div>
+</div>
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script src="scripts/bootstrap.min.js"> </script>
+<script src="scripts/script.js"> </script>
+
+</body>
+</html>

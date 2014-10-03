@@ -32,8 +32,10 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var qs = require('/src/util/querystring.js');
+        var qs = require('/src/core/navigator/querystring.js');
         var str;
+
+        window.querystring = qs;
 
         console.log(str = qs.stringify({
             a: 1,

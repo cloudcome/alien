@@ -23,31 +23,35 @@ define(function (require, exports, module) {
     module.exports = {
         /**
          * 格式化日志
-         * @param {String} format 格式化字符串
-         * 假设当前时间为：2014年1月1日 19点9分9秒 周三
-         * YYYY 2014
-         * YY 14
-         * MM 01
-         * M 1
-         * DD 01
-         * D 1
-         * HH 19
-         * hh 07
-         * H 19
-         * h 7
-         * mm 09
-         * m 9
-         * ss 09
-         * s 9
-         * www 星期三
-         * ww 周三
-         * w 三
-         * aaa 下午
-         * AA PM
-         * aa pm
+         * @param {String} format 格式化字符串<br>
+         * 假设当前时间为：2014年1月1日 19点9分9秒 周三<br>
+         * <code>YYYY</code> 2014<br>
+         * <code>YY</code> 14<br>
+         * <code>MM</code> 01<br>
+         * <code>M</code> 1<br>
+         * <code>DD</code> 01<br>
+         * <code>D</code> 1<br>
+         * <code>HH</code> 19<br>
+         * <code>hh</code> 07<br>
+         * <code>H</code> 19<br>
+         * <code>h</code> 7<br>
+         * <code>mm</code> 09<br>
+         * <code>m</code> 9<br>
+         * <code>ss</code> 09<br>
+         * <code>s</code> 9<br>
+         * <code>www</code> 星期三<br>
+         * <code>ww</code> 周三<br>
+         * <code>w</code> 三<br>
+         * <code>aaa</code> 下午<br>
+         * <code>AA</code> PM<br>
+         * <code>aa</code> pm<br>
          * @param {Date|Object|Number|String} [date] 日期
          * @param {Object} [config] 格式配置
          * @returns {null|string}
+         *
+         * @example
+         * date.format('YYYY 年');
+         * // => "2014 年"
          */
         format: function (format, date, config) {
             if (data.type(format) !== 'string') {
@@ -150,6 +154,10 @@ define(function (require, exports, module) {
          * 解析时间
          * @param {String} string 时间字符串
          * @returns {Date|null}
+         *
+         * @example
+         * date.parse('12/21/2014 12:21:22');
+         * // => Sun Dec 21 2014 12:21:22 GMT+0800 (CST)
          */
         parse: function (string) {
             var date = new Date(string);
@@ -166,6 +174,10 @@ define(function (require, exports, module) {
          * 是否为闰年
          * @param {Number} year 年份
          * @returns {boolean}
+         *
+         * @example
+         * date.isLeapYear(2014);
+         * // => false
          */
         isLeapYear: function (year) {
             return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
@@ -176,6 +188,11 @@ define(function (require, exports, module) {
          * @param {Number} month 月份，默认序列月，即1月为第0月
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {Number} 天数
+         *
+         * @example
+         * // 获得10月份的天数
+         * date.getDaysInMonth(2014, 9);
+         * // => 31
          */
         getDaysInMonth: function (year, month, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
@@ -201,6 +218,11 @@ define(function (require, exports, module) {
          * @param {Number} date 日
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {number}
+         *
+         * @example
+         * // 判断2014年10月24日是今年的第几周
+         * date.getWeeksInYear(2014, 9, 24);
+         * // => 43
          */
         getWeeksInYear: function (year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
@@ -221,6 +243,11 @@ define(function (require, exports, module) {
          * @param {Number} date 日
          * @param {Boolean} [isNatualMonth] 是否为自然月
          * @returns {number}
+         *
+         * @example
+         * // 判断2014年10月24日是当月的第几周
+         * date.getWeeksInMonth(2014, 9, 24);
+         * // => 4
          */
         getWeeksInMonth: function (year, month, date, isNatualMonth) {
             month = isNatualMonth ? month - 1 : month;
@@ -234,6 +261,49 @@ define(function (require, exports, module) {
          * @param {String|Number|Date} date 比较时间
          * @param {String|Number|Date} [date] 被比较时间，默认为当前时间
          * @returns {string}
+         *
+         * @example
+         * // 过去时间
+         * date.from(Date.now() - 1);
+         * // => "刚刚"
+         * date.from(Date.now() - 10*1000);
+         * // => "10秒前"
+         * date.from(Date.now() - 61*1000);
+         * // => "1分钟前"
+         * date.from(Date.now() - 60*60*1000);
+         * // => "1小时前"
+         * date.from(Date.now() - 24*60*60*1000);
+         * // => "1天前"
+         * date.from(Date.now() - 30*24*60*60*1000);
+         * // => "1个月前"
+         * date.from(Date.now() - 12*30*24*60*60*1000);
+         * // => "1年前"
+         * date.from(Date.now() - 20*12*30*24*60*60*1000);
+         * // => "19年前"
+         * date.from(Date.now() - 100*12*30*24*60*60*1000);
+         * // => "很久之前"
+         *
+         * // 将来时间
+         * date.from(Date.now() + 1);
+         * // => "即将"
+         * date.from(Date.now() + 10*1000);
+         * // => "10秒后"
+         * date.from(Date.now() + 61*1000);
+         * // => "1分钟后"
+         * date.from(Date.now() + 60*60*1000);
+         * // => "1小时后"
+         * date.from(Date.now() + 24*60*60*1000);
+         * // => "1天后"
+         * date.from(Date.now() + 30*24*60*60*1000);
+         * // => "1个月后"
+         * date.from(Date.now() + 12*30*24*60*60*1000);
+         * // => "11个月后"
+         * date.from(Date.now() + 20*12*30*24*60*60*1000);
+         * // => "19年后"
+         * date.from(Date.now() + 100*12*30*24*60*60*1000);
+         * // => "98年后"
+         * date.from(Date.now() + 200*12*30*24*60*60*1000);
+         * // => "很久之后"
          */
         from: function (date, compareDate) {
             compareDate = compareDate || new Date();
@@ -283,27 +353,27 @@ define(function (require, exports, module) {
             }
             // < 60s
             else if (minutes < 1) {
-                return seconds + '秒' + (isInFeature ? '内' : '前');
+                return seconds + '秒' + (isInFeature ? '后' : '前');
             }
             // < 1h
             else if (hours < 1) {
-                return minutes + '分钟' + (isInFeature ? '内' : '前');
+                return minutes + '分钟' + (isInFeature ? '后' : '前');
             }
             // < 1d
             else if (days < 1) {
-                return hours + '小时' + (minutes % 60 ? minutes % 60 + '分钟' : '') + (isInFeature ? '内' : '前');
+                return hours + '小时' + (minutes % 60 ? minutes % 60 + '分钟' : '') + (isInFeature ? '后' : '前');
             }
             // < 1M
             else if (months < 1) {
-                return days + '天' + (isInFeature ? '内' : '前');
+                return days + '天' + (isInFeature ? '后' : '前');
             }
             // < 1Y
             else if (years < 1) {
-                return months + '个月' + (isInFeature ? '内' : '前');
+                return months + '个月' + (isInFeature ? '后' : '前');
             }
             // < 100Y
             else if (years < 100) {
-                return years + '年' + (isInFeature ? '内' : '前');
+                return years + '年' + (isInFeature ? '后' : '前');
             }
 
             return '很久之' + (isInFeature ? '后' : '前');

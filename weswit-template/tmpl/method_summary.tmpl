@@ -1,0 +1,14 @@
+<?js
+var data = obj;
+var self = this;
+?>
+
+<?js if (!data.inherited) { ?>
+  <dt>
+    <?js= self.linkto(data.longname,id) ?>
+  </dt>
+  <?js if (data.summary) { ?>
+      <dd class="summary"><?js= summary ?></dd>
+  <?js } ?>
+<?js } ?>  
+ 

@@ -6,16 +6,6 @@
 
 
 define(function (require, exports, module) {
-    /**
-     * @module ui/drag/index
-     * @requires util/data
-     * @requires core/event/touch
-     * @requires core/dom/selector
-     * @requires core/dom/attribute
-     * @requires core/dom/position
-     * @requires core/dom/modification
-     * @requires core/dom/modification
-     */
     'use strict';
 
 
@@ -32,7 +22,7 @@ define(function (require, exports, module) {
     var klass = 'alien-drag';
     var body = document.body;
     var noop = function () {
-
+        // ignore
     };
     var defaults = {
         // 鼠标操作区域选择器，默认为 null，即整个元素
@@ -71,6 +61,12 @@ define(function (require, exports, module) {
         // arg0: event
         ondragend: noop
     };
+    /**
+     * 构造一个拖拽
+     * @param {HTMLElement} ele 元素
+     * @param {Object} [options] 配置
+     * @constructor
+     */
     var Drag = function (ele, options) {
         this.ele = ele;
         this.options = options;
@@ -111,7 +107,7 @@ define(function (require, exports, module) {
                     zIndex: the.options.zIndex - 1
                 }
             });
-            the.clone = modification.insert(clone, document.body, 'beforeend', !0);
+            the.clone = modification.insert(clone, body, 'beforeend', !0);
         },
         /**
          * 开始拖拽
@@ -137,6 +133,8 @@ define(function (require, exports, module) {
                 if (options.isClone) {
                     the._clone();
                 }
+
+                the.options.ondragstart.call(the.ele, eve);
             }
         },
         /**
@@ -183,6 +181,7 @@ define(function (require, exports, module) {
                     }
 
                     eve.preventDefault();
+                    the.options.ondrag.call(the.ele, eve);
                 }
             }
         },
@@ -203,11 +202,41 @@ define(function (require, exports, module) {
                 if (the.clone) {
                     modification.remove(the.clone);
                 }
+
+                the.options.ondragend.call(the.ele, eve);
             }
         }
     };
 
 
+
+    /**
+     * 实例化一个拖拽对象
+     * @module ui/drag/index
+     * @requires util/data
+     * @requires core/event/touch
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/position
+     * @requires core/dom/modification
+     * @requires core/dom/modification
+     *
+     * @param {HTMLElement} ele 元素
+     * @param {Object} [options] 参数配置
+     * @param {null|Object|String} [options.handle] 鼠标操作区域选择器，默认为 null，即整个元素
+     * @param {Boolean} [options.isClone] 是否克隆一个副本作为参考对象，默认 true
+     * @param {String} [options.axis] 拖拽轴向，x：水平，y：垂直，xy：所有，默认为"xy"
+     * @param {null|Object} [options.min] 拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document
+     * @param {null|Object} [options.max] 拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document
+     * @param {Number} [options.zIndex] 拖拽时的层级值，默认为99999
+     * @param {Function} [options.ondragstart] 拖拽开始后回调
+     * @param {Function} [options.ondrag] 拖拽中回调
+     * @param {Function} [options.ondragend] 拖拽结束后回调
+     * @returns {*}
+     *
+     * @example
+     * var drag = drag(ele);
+     */
     module.exports = function (ele, options) {
         options = data.extend(!0, {}, defaults, options);
 

@@ -84,15 +84,15 @@ define(function (require, exports, module) {
                             q = props[p];
                             // check if given property is actually array
                             if (typeof(q) === OBJ_TYPE && q.length > 0) {
-                                if (q.length == 2) {
-                                    if (typeof(q[1]) == FUNC_TYPE) {
+                                if (q.length === 2) {
+                                    if (typeof(q[1]) === FUNC_TYPE) {
                                         // assign modified match
                                         result[q[0]] = q[1].call(this, match);
                                     } else {
                                         // assign given value, ignore regex match
                                         result[q[0]] = q[1];
                                     }
-                                } else if (q.length == 3) {
+                                } else if (q.length === 3) {
                                     // check whether function or regex
                                     if (typeof(q[1]) === FUNC_TYPE && !(q[1].exec && q[1].test)) {
                                         // call function (usually string mapper)
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
                                         // sanitize match using given regex
                                         result[q[0]] = match ? match.replace(q[1], q[2]) : undefined;
                                     }
-                                } else if (q.length == 4) {
+                                } else if (q.length === 4) {
                                     result[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : undefined;
                                 }
                             } else {
@@ -112,7 +112,9 @@ define(function (require, exports, module) {
                     }
                 }
 
-                if (!!matches) break; // break the loop immediately if match found
+                if (!!matches) {
+                    break;
+                } // break the loop immediately if match found
             }
             return result;
         },
@@ -961,6 +963,33 @@ define(function (require, exports, module) {
 
 
     module.exports = {
+        /**
+         * ua 解析
+         * @returns {{browser:Object,cpu:Object,device:Object,engine:Object,os:Object,ua:String}}
+         *
+         * @example
+         * // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36
+         * ua.parse();
+         * // =>
+         * // {
+         * //    browser: {
+         * //        major: "37", name: "Chrome", version: "37.0.2062.124"
+         * //    },
+         * //    cpu: {
+         * //        architecture: undefined
+         * //    },
+         * //    device: {
+         * //        model: undefined, type: undefined, vendor: undefined
+         * //    },
+         * //    engine: {
+         * //        name: "WebKit", version: "537.36"
+         * //    },
+         * //    os: {
+         * //        name: "Mac OS X", version: "10.9.5"
+         * //    },
+         * //    ua: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36"
+         * // }
+         */
         parse: function () {
             return (new UAParser()).getResult();
         }

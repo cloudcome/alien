@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var data = require('../../util/data.js');
     var qs = require('./querystring.js');
     var event = require('../event/base.js');
+//    var udf;
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
     var regColon = /:([^\/]+)/g;
@@ -196,30 +197,171 @@ define(function (require, exports, module) {
             };
         },
 
-        set: function (part, key, val) {
-            var oldObject = this.parse(location.hash);
-            var map = {};
-
-            if(part === 'query'){
-                if(data.type(key) === 'object'){
-                    map = key;
-                }else{
-                    map[key] = val;
-                }
-
-                oldObject.query = data.extend({}, oldObject.query, map);
-                location.hash = this.stringify(oldObject);
-            }else{
-                if(data.type(key) === 'array'){
-                    map = key;
-                }else{
-                    map[key] = val;
-                }
-
-                oldObject.path = data.extend({}, oldObject.path, map);
-                location.hash = this.stringify(oldObject);
-            }
-        },
+//        /**
+//         * 设置当前 hashbang
+//         * @param {String} part 设置部分，分别为`path`或`query`
+//         * @param {String} key 设置键、键值对
+//         * @param {String} [val] 键值
+//         *
+//         * @example
+//         * // path
+//         * hashbang.set('path', 0, 'a');
+//         * hashbang.set('path', ['b', 'c']);
+//         *
+//         * // query
+//         * hashbang.set('query', 'a', 1);
+//         * hashbang.set('query', {
+//         *     a: 2,
+//         *     b: 3
+//         * });
+//         */
+//        set: function (part, key, val) {
+//            if (!_isSafePart(part)) {
+//                throw new Error('hashbang `part` must be `path` or `query`');
+//            }
+//
+//            var parse = this.parse(location.hash);
+//            var map;
+//            var keyType = data.type(key);
+//            var valType = _isSafeVal(val);
+//            var maxPathLength;
+//
+//            if (part === 'query') {
+//                if (keyType === 'string' && valType === true || keyType === 'object') {
+//                    if (keyType === 'object') {
+//                        map = key;
+//                    } else {
+//                        map = {};
+//                        map[key] = val;
+//                    }
+//
+//                    parse.query = data.extend({}, parse.query, map);
+//                } else {
+//                    throw new Error('`key` must be a object or `key` must b a string, ' +
+//                        '`val` must be a string/number/boolean');
+//                }
+//            } else {
+//                if (keyType === 'number' && valType === true || keyType === 'array') {
+//                    if (keyType === 'array') {
+//                        map = key;
+//                    } else {
+//                        map = [];
+//                        map[key] = val;
+//                    }
+//
+//                    maxPathLength = parse.path.length + 1;
+//
+//                    if (map.length > maxPathLength) {
+//                        throw new Error('set path array length must lt ' + maxPathLength);
+//                    }
+//
+//                    parse.path = data.extend({}, parse.path, map);
+//
+//                } else {
+//                    throw new Error('`key` must be a object or `key` must b a string, ' +
+//                        '`val` must be a string/number/boolean');
+//                }
+//            }
+//
+//            location.hash = this.stringify(parse);
+//        },
+//
+//        /**
+//         * 移除键值
+//         * @param {String} part 可以为`path`或`query`
+//         * @param {Array|String|Number} key 移除键
+//         *
+//         * @example
+//         * // path
+//         * hashbang.remove('path', 0);
+//         * hashbang.remove('path', [0, 1]);
+//         *
+//         * // query
+//         * hashbang.remove('query', 'a');
+//         * hashbang.remove('query', ['a', 'b']);
+//         */
+//        remove: function (part, key) {
+//            if (!_isSafePart(part)) {
+//                throw new Error('hashbang `part` must be `path` or `query`');
+//            }
+//
+//            var keyType = data.type(key);
+//            var removeKeys = [];
+//            var parse = this.parse(location.hash);
+//
+//            if (part === 'path') {
+//                if (keyType === 'array') {
+//                    removeKeys = key;
+//                } else {
+//                    removeKeys.push(key);
+//                }
+//
+//                data.each(removeKeys, function (index, key) {
+//                    if (data.type(key) === 'number') {
+//                        parse.path.splice(key - index, 1);
+//                    }
+//                });
+//            } else {
+//                if (keyType === 'array') {
+//                    removeKeys = key;
+//                } else {
+//                    removeKeys.push(key);
+//                }
+//
+//                data.each(removeKeys, function (index, key) {
+//                    if (data.type(key) === 'string') {
+//                        delete(parse.query[key]);
+//                    }
+//                });
+//            }
+//
+//            location.hash = this.stringify(parse);
+//        },
+//
+//        /**
+//         * 获取 hashbang 的键值
+//         * @param {String} [part] 获取部分，分别为`path`或`query`，为空表示获取全部解析
+//         * @param {Number|String} [key] 键，为空表示返回该部分全部解析
+//         * @returns {Object|String|undefined} 返回值
+//         *
+//         * @example
+//         * // all
+//         * hashbang.get();
+//         * // => {path: ["b", "c"], query: {a:"2", b: "3"}}
+//         *
+//         * // path
+//         * hashbang.get('path');
+//         * // => ["b", "c"]
+//         * hashbang.get('path', 0);
+//         * // => "b"
+//         *
+//         * // query
+//         * hashbang.get('query');
+//         * // => {a:"2", b: "3"}
+//         * hashbang.get('query', 'a');
+//         * // => "2"
+//         */
+//        get: function (part, key) {
+//            var keyType = data.type(key);
+//            var argL = arguments.length;
+//            var parse = this.parse(location.hash);
+//
+//            if (argL === 0) {
+//                return parse;
+//            }
+//
+//            if (!_isSafePart(part)) {
+//                throw new Error('hashbang `part` must be `path` or `query`');
+//            }
+//
+//            if (argL === 1) {
+//                return parse[part];
+//            } else if (argL === 2 && (part === 'path' && keyType === 'number' || part === 'query' && keyType === 'string')) {
+//                return parse[part][key];
+//            } else {
+//                throw new Error('`path` key must be a number, `query` key must be a string');
+//            }
+//        },
 
         /**
          * 监听 hashbang
@@ -237,6 +379,10 @@ define(function (require, exports, module) {
          * hashbang.on('query', 'abc', fn);
          */
         on: function (part, key, listener) {
+            if (!_isSafePart(part)) {
+                throw new Error('hashbang `part` must be `path` or `query`');
+            }
+
             var args = arguments;
             var argL = args.length;
             var listenerMap;
@@ -296,6 +442,10 @@ define(function (require, exports, module) {
          * hashbang.un('query');
          */
         un: function (part, key, listener) {
+            if (!_isSafePart(part)) {
+                throw new Error('hashbang `part` must be `path` or `query`');
+            }
+
             var args = arguments;
             var argL = args.length;
             var findIndex;
@@ -345,7 +495,7 @@ define(function (require, exports, module) {
         var queryDifferentKeys = _differentKeys(newObject.query, oldObject.query);
         var args = [eve, newObject, oldObject];
 
-        if(pathDifferentKeys.length){
+        if (pathDifferentKeys.length) {
             data.each(pathAllListener, function (i, listener) {
                 listener.apply(window, args);
             });
@@ -359,7 +509,7 @@ define(function (require, exports, module) {
             }
         });
 
-        if(queryDifferentKeys.length){
+        if (queryDifferentKeys.length) {
             data.each(queryAllListener, function (i, listener) {
                 listener.apply(window, args);
             });
@@ -373,6 +523,31 @@ define(function (require, exports, module) {
             }
         });
     });
+
+
+    /**
+     * 判断 hashbang 部分是否合法
+     * @param {*} part
+     * @returns {boolean}
+     * @private
+     */
+    function _isSafePart(part) {
+        return part === 'path' || part === 'query';
+    }
+
+
+//    /**
+//     * 数据是否安全
+//     * @param {*} object
+//     * @returns {Boolean|String} 如果安全返回true，否则返回数据类型
+//     * @private
+//     */
+//    function _isSafeVal(object) {
+//        var type = data.type(object);
+//        var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
+//
+//        return ret === !0 ? !0 : type;
+//    }
 
 
     /**

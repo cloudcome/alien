@@ -23,10 +23,15 @@
 </head>
 <body>
 
+<div id="ret"></div>
+
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var ua = require('/src/core/navigator/ua.js');
+        var ret = document.getElementById('ret');
+
+        ret.innerHTML = JSON.stringify(ua.parse());
         console.log(ua.parse());
     });
     seajs.use('app');

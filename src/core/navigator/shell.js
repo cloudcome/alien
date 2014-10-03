@@ -18,35 +18,83 @@ define(function (require, exports, module) {
     var chromiumType = _getChromiumType();
 
     module.exports = {
-        // 是否为IE
+        /**
+         * 判断是否为 IE 浏览器
+         *
+         * @example
+         * shell.isIE;
+         * // true or false
+         */
         isIE: (function () {
             return !!ieVer;
         })(),
-        // IE 版本
+        /**
+         * IE 版本
+         *
+         * @example
+         * shell.isIE;
+         * // true or false
+         */
         ieVersion: (function () {
             return ieVer;
         })(),
-        // 是否为Chrome
+        /**
+         * 是否为谷歌 chrome 浏览器
+         *
+         * @example
+         * shell.isChrome;
+         * // true or false
+         */
         isChrome: (function () {
             return chromiumType === 'chrome';
         })(),
-        // 是否为360安全浏览器
+        /**
+         * 是否为360安全浏览器
+         *
+         * @example
+         * shell.is360se;
+         * // true or false
+         */
         is360se: (function () {
             return chromiumType === '360se';
         })(),
-        // 是否为360极速浏览器
+        /**
+         * 是否为360极速浏览器
+         *
+         * @example
+         * shell.is360ee;
+         * // true or false
+         */
         is360ee: (function () {
             return chromiumType === '360ee';
         })(),
-        // 是否为猎豹安全浏览器
+        /**
+         * 是否为猎豹安全浏览器
+         *
+         * @example
+         * shell.isLiebao;
+         * // true or false
+         */
         isLiebao: (function () {
             return chromiumType === 'liebao';
         })(),
-        // 是否为搜狗高速浏览器
+        /**
+         * 是否搜狗高速浏览器
+         *
+         * @example
+         * shell.isSogou;
+         * // true or false
+         */
         isSogou: (function () {
             return chromiumType === 'sogou';
         })(),
-        // 是否为QQ浏览器
+        /**
+         * 是否为 QQ 浏览器
+         *
+         * @example
+         * shell.isQQ;
+         * // true or false
+         */
         isQQ: (function () {
             return chromiumType === 'qq';
         })()

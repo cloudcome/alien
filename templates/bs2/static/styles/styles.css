@@ -1,0 +1,20 @@
+#docs-sidebar{
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 250px;
+    background: #fff;
+    overflow-y: auto;
+    bottom: 0;
+    border-right: 1px solid #ddd;
+}
+
+
+#docs-content{
+    position: fixed;
+    top: 40px;
+    right: 0;
+    left: 270px;
+    bottom: 0;
+    overflow-y: auto;
+}

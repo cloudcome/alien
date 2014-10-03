@@ -92,7 +92,7 @@ define(function (require, exports, module) {
          * 事件触发
          * @method emit
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
-         * @param {*...} 事件传参，多个参数依次即可
+         * @param {*} 事件传参，多个参数依次即可
          * @returns {Emitter}
          * @chainable
          *

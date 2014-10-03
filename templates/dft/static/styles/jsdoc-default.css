@@ -22,11 +22,16 @@ a:active {
     color: #444;
 }
 
+code {
+    background: #EBEBEB;
+    padding: 2px 4px;
+}
+
 dt {
     margin-top: 50px;
 }
 
-dt:first-child{
+dt:first-child {
     margin-top: 0;
 }
 
@@ -344,8 +349,8 @@ h4.name {
     background: #fff;
 }
 
-.params thead tr, .props thead tr {
-    background-color: #f8f8f8;
+.params thead th, .props thead th {
+    background-color: #eee;
     font-weight: bold;
 }
 
@@ -354,6 +359,13 @@ h4.name {
     font-weight: bold;
 }
 
+.params .th-type {
+    width: 100px;
+}
+
+.params .th-attr {
+    width: 100px;
+}
 
 .params thead .last, .props thead .last {
     border-right: 1px solid #ddd;

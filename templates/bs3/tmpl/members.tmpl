@@ -1,0 +1,37 @@
+<?js
+var data = obj;//console.log('MEMBER DATA: ', data, "\n\n\n");
+var self = this;
+
+var wrapClass = [];
+if (data.overrides) wrapClass.push('overrides');
+if (data.inherited) wrapClass.push('inherited');
+?>
+<section class="docs-member <?js= wrapClass.join(' ') ?>">
+    <dt>
+        <h4 class="name" id="<?js= id ?>"><?js= data.attribs + name + (data.signature ? data.signature : '') ?></h4>
+
+        <?js if (data.summary) { ?>
+        <p class="summary"><?js= summary ?></p>
+        <?js } ?>
+    </dt>
+    <dd>
+        <?js if (data.description) { ?>
+        <div class="description lead">
+            <blockquote>
+                <?js= data.description ?>
+            </blockquote>
+        </div>
+        <?js } ?>
+
+        <?js if (data.type && data.type.names) {?>
+            <h5>Type: <?js= self.partial('type.tmpl', data.type.names) ?></h5>
+        <?js } ?>
+
+        <?js= this.partial('details.tmpl', data) ?>
+
+        <?js if (data.examples && examples.length) { ?>
+            <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
+            <?js= this.partial('examples.tmpl', examples) ?>
+        <?js } ?>
+    </dd>
+</section>

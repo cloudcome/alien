@@ -1,0 +1,28 @@
+{
+  "name": "jsdoc-bootstrap-template",
+  "version": "0.0.1",
+  "description": "This is a rendering template for JSDoc3 using Twitter's Bootstrap for styling. I was unsatisfied with the other Bootstrap-based templates at the time, so I wrote my own. Currently, the template is running Bootstrap 2.",
+  "main": "publish.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Smolations/jsdoc-bootstrap-template.git"
+  },
+  "keywords": [
+    "jsdoc",
+    "jsdoc3",
+    "bootstrap",
+    "template"
+  ],
+  "author": "Smolations",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Smolations/jsdoc-bootstrap-template/issues"
+  },
+  "homepage": "https://github.com/Smolations/jsdoc-bootstrap-template"
+}

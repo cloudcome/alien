@@ -43,6 +43,7 @@
         var YYYY = now.getFullYear();
         var M = now.getMonth();
         var D = now.getDate();
+        window.date = date;
 
         document.getElementById('ret1').innerHTML = date.format('YYYY-MM-DD HH:mm:ss aaa www');
         document.getElementById('ret2').innerHTML = date.from('2014-4-11 08:00:00');

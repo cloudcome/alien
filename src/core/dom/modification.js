@@ -97,8 +97,8 @@ define(function (require, exports, module) {
 
         /**
          * 将源插入到指定的目标位置，并返回指定的元素
-         * @param {HTMLElement|Node} source 源
-         * @param {HTMLElement|Node} target 目标
+         * @param {Object} source 源
+         * @param {Object} target 目标
          * @param {String} position 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
          * @param {Boolean} [isReturnSource] 是否返回源，默认false
          * @returns {HTMLElement|Node|null}

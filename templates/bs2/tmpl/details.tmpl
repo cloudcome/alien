@@ -1,0 +1,299 @@
+<?js
+var data = obj;//console.log('DETAILS DATA BEGIN',data,'DETAILS DATA END');
+var self = this;
+var defaultObjectClass = '';
+
+// Check if the default value is an object, if so, apply code highlighting
+if (data.defaultvalue && data.defaultvaluetype === 'object') {
+    data.defaultvalue = "<pre class=\"prettyprint\"><code>" + data.defaultvalue + "</code></pre>";
+    defaultObjectClass = ' class="object-value"';
+}
+
+/**
+ *  Instead of commenting, I have added "&& false" to some conditionals so that they
+ *  simply never evaluate to true.
+ */
+
+// need help with setting the active tab
+var foundFirst = false;
+
+data.tabClasses = {
+    version: '',
+    since: '',
+    inherits: '',
+    deprecated: '',
+    author: '',
+    copyright: '',
+    license: '',
+    defaultvalue: '',
+    meta: '',
+    tutorials: '',
+    see: '',
+    todo: '',
+}
+?>
+
+
+<dl class="details">
+    <?js
+        var properties = data.properties;
+        if (properties && properties.length && properties.forEach) {
+    ?>
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl><?js= this.partial('properties.tmpl', properties) ?></dl>
+
+    <?js } ?>
+
+    <?js
+    /**
+     *  The href attributes get modified by client-side JS so that they match the
+     *  anchors ids in the tab pane.
+     */
+    ?>
+    <ul class="nav nav-tabs">
+        <?js if (data.deprecated) { ?>
+
+            <?js foundFirst = true; ?>
+            <li class="active">
+                <a href="#tab" data-toggle="tab">Deprecated?</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.version) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.version = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.version ?>">
+                <a href="#tab" data-toggle="tab">Version</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.since && false) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.since = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.since ?>">
+                <a href="#tab" data-toggle="tab">Since</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.inherited && data.inherits) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.inherits = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.inherits ?>">
+                <a href="#tab" data-toggle="tab">Inherited From</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.author && author.length && false) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.author = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.author ?>">
+                <a href="#tab" data-toggle="tab">Author</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.copyright) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.copyright = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.copyright ?>">
+                <a href="#tab" data-toggle="tab">Copyright</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.license) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.license = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.license ?>">
+                <a href="#tab" data-toggle="tab">License</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.defaultvalue) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.defaultvalue = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.defaultvalue ?>">
+                <a href="#tab" data-toggle="tab">Default Value</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.meta) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.meta = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.meta ?>">
+                <a href="#tab" data-toggle="tab">Source</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.tutorials && tutorials.length) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.tutorials = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.tutorials ?>">
+                <a href="#tabtutorials" data-toggle="tab">Tutorials</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.see && see.length) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.see = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.see ?>">
+                <a href="#tab" data-toggle="tab">See</a>
+            </li>
+
+        <?js } ?>
+        <?js if (data.todo && todo.length) { ?>
+
+            <?js if (!foundFirst) {
+                foundFirst = true;
+                data.tabClasses.todo = 'active';
+            } ?>
+            <li class="<?js= data.tabClasses.todo ?>">
+                <a href="#tab" data-toggle="tab">To Do</a>
+            </li>
+
+        <?js } ?>
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        <?js if (data.deprecated) { ?>
+
+            <div class="tab-pane active" id="tab">
+                <?js if (data.deprecated === true) { ?>
+                    <p>
+                        <span class="label label-important">Yes</span>
+                    </p>
+
+                <?js } else { ?>
+                    <p>
+                        <span class="label label-important">Yes</span>&nbsp;<?js= data.deprecated ?>
+                    </p>
+                <?js } ?>
+            </div>
+
+        <?js } ?>
+        <?js if (data.version) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.version ?>" id="tab">
+                <p><?js= data.version ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.since && false) { ?>
+
+            <div class="tab-pane <?= data.tabClasses.since ?>" id="tab">
+                <p><?js= data.since ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.inherited && data.inherits) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.inherits ?>" id="tab">
+                <p><?js= this.linkto(data.inherits, this.htmlsafe(data.inherits)) ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.author && author.length && false) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.author ?>" id="tab">
+                <ul>
+                <?js author.forEach(function(a) { ?>
+                    <li><?js= self.resolveAuthorLinks(a) ?></li>
+                <?js }); ?>
+                </ul>
+            </div>
+
+        <?js } ?>
+        <?js if (data.copyright) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.copyright ?>" id="tab">
+                <p><?js= copyright ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.license) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.license ?>" id="tab">
+                <p><?js= license ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.defaultvalue) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.defaultvalue ?>" id="tab">
+                <code><?js= data.defaultvalue ?></code>
+            </div>
+
+        <?js } ?>
+        <?js if (data.meta) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.meta ?>" id="tab">
+                <p><?js= self.linkto(meta.filename, meta.filename + ':' + meta.lineno, null, 'line' + meta.lineno) ?></p>
+            </div>
+
+        <?js } ?>
+        <?js if (data.tutorials && tutorials.length) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.tutorials ?>" id="tab">
+                <ul>
+                <?js tutorials.forEach(function(t) { ?>
+                    <li><?js= self.tutoriallink(t) ?></li>
+                <?js }); ?>
+                </ul>
+            </div>
+
+        <?js } ?>
+        <?js if (data.see && see.length) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.see ?>" id="tab">
+                <ul class="docs-see-list">
+                <?js see.forEach(function(s) { ?>
+                    <li><?js= self.linkto(s, self.killQuotes(s)) ?></li>
+                <?js }); ?>
+                </ul>
+            </div>
+
+        <?js } ?>
+        <?js if (data.todo && todo.length) { ?>
+
+            <div class="tab-pane <?js= data.tabClasses.todo ?>" id="tab">
+                <ul>
+                <?js todo.forEach(function(t) { ?>
+                    <li><?js= t ?></li>
+                <?js }); ?>
+                </ul>
+            </div>
+
+        <?js } ?>
+    </div>
+</dl>
