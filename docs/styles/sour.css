@@ -1,0 +1,82 @@
+div.summary {
+
+}
+
+div.doc_group {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+div.doc_group h5 {
+	padding-left: 0.7em;
+}
+
+.summary-table, .props
+{
+	border-spacing: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+
+.summary-table .name, .props .name, .name code {
+	color: #64A519;
+	font-family: Consolas, 'Lucida Console', Monaco, monospace;
+	font-size: 100%;
+}
+
+.summary-table td, .summary-table th, .props td, .props th
+{
+	/*border: 1px solid #ddd;*/
+	margin: 0px;
+	text-align: left;
+	vertical-align: top;
+	padding: 4px 6px;
+	display: table-cell;
+}
+
+.summary-table thead tr, .props thead tr
+{
+	/*background-color: #ddd;*/
+	font-weight: bold;
+}
+
+.summary-table .summary-table thead tr, .props .props thead tr
+{
+	background-color: #fff;
+	font-weight: bold;
+}
+/*
+.summary-table th, .props th { border-right: 1px solid #aaa; }
+.summary-table thead .last, .props thead .last { border-right: 1px solid #ddd; }
+*/
+
+/* TODO Begin: Move into summary table */
+
+.small {
+	font-size: 0.8em;
+}
+
+td.first {
+	border-right-color: white;
+}
+
+td.text-right {
+	text-align: right;
+}
+
+/* End: Move into summary table */
+
+/* Someone said it is bad to use tables for formatting... I forgot why. */
+table.layout-table {
+	width: 100%;
+}
+
+table.layout-table td.layout {
+	vertical-align: top;
+}
+
+.inherited div {
+	padding-left: 2em;
+}

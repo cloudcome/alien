@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: core/dom/position.js - Alien documents</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.1.10.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Alien documents</a>
+    </div>
+    <nav role="navigation">
+		<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="xhr.html">core/communication/xhr</a></li>
+<li><a href="animation.html">core/dom/animation</a></li>
+<li><a href="attribute.html">core/dom/attribute</a></li>
+<li><a href="modification.html">core/dom/modification</a></li>
+<li><a href="position.html">core/dom/position</a></li>
+<li><a href="selector.html">core/dom/selector</a></li>
+<li><a href="base.html">core/event/base</a></li>
+<li><a href="Emitter.html">core/event/Emitter</a></li>
+<li><a href="ready.html">core/event/ready</a></li>
+<li><a href="touch.html">core/event/touch</a></li>
+<li><a href="compatible.html">core/navigator/compatible</a></li>
+<li><a href="hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="querystring.html">core/navigator/querystring</a></li>
+<li><a href="shell.html">core/navigator/shell</a></li>
+<li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="index_.html">ui/drag/index</a></li>
+<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="data.html">util/data</a></li>
+<li><a href="date.html">util/date</a></li>
+</ul>
+</li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: core/dom/position.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * position.js
+ * @author ydr.me
+ * @create 2014-09-28 13:27
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module core/dom/position
+     * @requires util/data
+     * @requires core/dom/attribute
+     */
+    'use strict';
+
+    var data = require('../../util/data.js');
+    var attribute = require('./attribute.js');
+
+    module.exports = {
+        /**
+         * 获取、设置元素距离文档边缘的 top 距离
+         * @param {Element} ele
+         * @param {Number} [val] 距离值
+         * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.top(ele, 100);
+         *
+         * // get
+         * position.top(ele);
+         */
+        top: function () {
+            return _middleware(arguments, {
+                get: function (ele) {
+                    return ele.getBoundingClientRect().top;
+                },
+                set: function (ele, val) {
+                    _setBoundingClientRect(ele, 'top', val);
+                }
+            });
+        },
+
+
+        /**
+         * 获取、设置元素距离文档边缘的 left 距离
+         * @param {Element} ele
+         * @param {Number} [val] 距离值
+         * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.left(ele, 100);
+         *
+         * // get
+         * position.left(ele);
+         */
+        left: function () {
+            return _middleware(arguments, {
+                get: function (ele) {
+                    return ele.getBoundingClientRect().left;
+                },
+                set: function (ele, val) {
+                    _setBoundingClientRect(ele, 'left', val);
+                }
+            });
+        },
+
+
+        /**
+         * 获取、设置元素的占位宽度
+         * content-box: cssWidth + padding + border
+         * border-box:  cssWidth
+         * @param {Element} ele
+         * @param {Number} [val] 宽度值
+         * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.width(ele, 100);
+         *
+         * // get
+         * position.width(ele);
+         */
+        width: function () {
+            return _middleware(arguments, {
+                get: function (ele) {
+                    return ele.getBoundingClientRect().width;
+                },
+                set: function (ele, val) {
+                    _setBoundingClientRect(ele, 'width', val);
+                }
+            });
+        },
+
+
+        /**
+         * 获取、设置元素的占位高度
+         * content-box: cssHeight + padding + border
+         * border-box:  cssHeight
+         * @param {Element} ele
+         * @param {Number} [val] 高度值
+         * @returns {Number|undefined|*}
+         *
+         * @example
+         * // set
+         * position.height(ele, 100);
+         *
+         * // get
+         * position.height(ele);
+         */
+        height: function () {
+            return _middleware(arguments, {
+                get: function (ele) {
+                    return ele.getBoundingClientRect().height;
+                },
+                set: function (ele, val) {
+                    _setBoundingClientRect(ele, 'height', val);
+                }
+            });
+        }
+    };
+
+
+    /**
+     * 中间件
+     * @param {Array} args 参数数组
+     * @param {Object} getSet 函数对象
+     * @returns {Number|undefined|*}
+     * @private
+     */
+    function _middleware(args, getSet) {
+        var ele;
+        var argsLength = args.length;
+
+        if (argsLength) {
+            ele = args[0];
+
+            if (data.type(ele) !== 'element') {
+                return;
+            }
+
+            if (argsLength === 1) {
+                return getSet.get(ele);
+            } else if (argsLength === 2) {
+                getSet.set(ele, args[1]);
+            }
+        }
+    }
+
+
+    /**
+     * 格式化字符串为数字
+     * @param {*} number
+     * @returns {Number} NaN 返回0，其他正常返回
+     * @private
+     */
+    function _parseFloat(number) {
+        var number = parseFloat(number);
+
+        if (isNaN(number)) {
+            return 0;
+        }
+
+        return number;
+    }
+
+
+    /**
+     * 设置元素的位置
+     * @param {Element} ele 元素
+     * @param {String} key 键名
+     * @param {Number} val 键值
+     * @private
+     */
+    function _setBoundingClientRect(ele, key, val) {
+        val = _parseFloat(val);
+
+        var rect = ele.getBoundingClientRect();
+        var now = rect[key];
+        var width = rect.width;
+        var height = rect.height;
+        var deleta = val - now;
+        var css;
+
+        if (attribute.css(ele, 'position') === 'static' &amp;&amp; key !== 'width' &amp;&amp; key !== 'height') {
+            css = _parseFloat(attribute.css(ele, 'margin-' + key));
+            attribute.css(ele, 'margin-' + key, css + deleta);
+        } else {
+            css = _parseFloat(attribute.css(ele, key));
+            attribute.css(ele, key, css + deleta);
+        }
+    }
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script src="js/bootstrap.js"> </script>
+<script src="js/script.js"> </script>
+
+</body>
+</html>
