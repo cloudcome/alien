@@ -8,6 +8,8 @@
 
 define(function (require, exports, module) {
     /**
+     * 单次动画，如果要实现动画队列，使用`howdo`配合起来使用即可实现
+     *
      * @module core/dom/animation
      * @requires core/dom/attribute
      * @requires util/data
@@ -49,6 +51,7 @@ define(function (require, exports, module) {
         'ease-in-out-circ': 'cubic-bezier(.785,.135,.15,.86)',
         'ease-in-out-back': 'cubic-bezier(.68,-.55,.265,1.55)'
     };
+    var regCubic = /^cubic-bezier\(/i;
     var defaults = {
         easing: 'linear',
         duration: 789,
@@ -56,12 +59,17 @@ define(function (require, exports, module) {
     };
     var transitionendEventType = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd';
     var noop = function () {
+        // ignore
     };
+    var key = 'alien-core-animation-'+Date.now();
+    var index = 0;
+    var animationMap = {};
+    window.attribute = attribute;
 
     module.exports = {
         /**
-         * 动画
-         * @param {HTMLElement|Node} element 元素
+         * 动画，不会判断当前动画终点与当前是否一致
+         * @param {HTMLElement|Node} ele 元素
          * @param {Object} to 终点
          * @param {Object} [options] 配置
          * @param {String} [options.easing] 缓冲类型，默认为`liner`
@@ -70,16 +78,21 @@ define(function (require, exports, module) {
          * @param {Function} [callback] 回调
          *
          * @example
-         * animation.animate(element, to);
-         * animation.animate(element, to, property);
-         * animation.animate(element, to, callback);
-         * animation.animate(element, to, property, callback);
+         * animation.animate(ele, to);
+         * animation.animate(ele, to, property);
+         * animation.animate(ele, to, callback);
+         * animation.animate(ele, to, property, callback);
          */
-        animate: function (element, to, options, callback) {
-            if (attribute.css(element, 'display') === 'none') {
+        animate: function (ele, to, options, callback) {
+            if (attribute.css(ele, 'display') === 'none') {
                 return;
             }
 
+            if(!ele[key]){
+                ele[key] = ++index;
+            }
+
+            var id = ele[key];
             var args = arguments;
             var argL = args.length;
             var keys = [];
@@ -88,6 +101,12 @@ define(function (require, exports, module) {
             var easing = '';
             var timeid = 0;
 
+            // 如果正在动画，取消后续操作
+            if(animationMap[id]){
+                return;
+            }
+
+            animationMap[id] = to;
             callback = args[argL - 1];
 
             if (argL === 3) {
@@ -117,38 +136,74 @@ define(function (require, exports, module) {
                 }
 
                 hasDispatch = 1;
-                event.un(element, transitionendEventType, listener);
-                attribute.css(element, 'transition-duration', '');
-                attribute.css(element, 'transition-delay', '');
-                attribute.css(element, 'transition-timing-function', '');
-                attribute.css(element, 'transition-property', '');
+                animationMap[id] = null;
+                event.un(ele, transitionendEventType, listener);
+                attribute.css(ele, 'transition-duration', '');
+                attribute.css(ele, 'transition-delay', '');
+                attribute.css(ele, 'transition-timing-function', '');
+                attribute.css(ele, 'transition-property', '');
                 callback();
             };
 
-            event.on(element, transitionendEventType, listener);
+            event.on(ele, transitionendEventType, listener);
             options = data.extend({}, defaults, options);
             easing = easingMap[options.easing];
-
-            if (!easing) {
-                easing = easingMap[defaults.easing];
-            }
+            easing = !easing && !regCubic.test(options.easing) ?
+                easingMap[defaults.easing] :
+                defaults.easing;
 
             data.each(to, function (key) {
                 keys.push(key);
             });
 
-            attribute.css(element, 'transition-duration', options.duration + 'ms');
-            attribute.css(element, 'transition-delay', options.delay + 'ms');
-            attribute.css(element, 'transition-timing-function', easing);
-            attribute.css(element, 'transition-property', keys.join(','));
+            attribute.css(ele, 'transition-duration', options.duration + 'ms');
+            attribute.css(ele, 'transition-delay', options.delay + 'ms');
+            attribute.css(ele, 'transition-timing-function', easing);
+            attribute.css(ele, 'transition-property', keys.join(','));
 
             setTimeout(function () {
                 data.each(to, function (key, val) {
-                    attribute.css(element, key, val);
+                    attribute.css(ele, key, val);
                 });
             }, 0);
 
             timeid = setTimeout(listener, options.duration + options.delay + 50);
+        },
+        /**
+         * 停止当前动画
+         * @param ele {HTMLElement|Node} 元素
+         * @param [toEnd=false] {Boolean} 是否立即停止到动画终点，默认 false
+         * @returns {boolean}
+         *
+         * @example
+         * animation.top(ele, true);
+         * animation.top(ele, false);
+         */
+        stop: function (ele, toEnd) {
+            var id = ele[key];
+            var to;
+
+            if(!id || !(to = animationMap[id])){
+                return !1;
+            }
+
+
+
+            attribute.css(ele, 'transition-duration', '');
+            attribute.css(ele, 'transition-delay', '');
+            attribute.css(ele, 'transition-timing-function', '');
+            attribute.css(ele, 'transition-property', '');
+            data.each(transitionendEventType.split(' '), function (i, et) {
+                event.dispatch(ele, et);
+            });
+
+            if(!toEnd){
+                setTimeout(function () {
+                    data.each(to, function (key) {
+                        attribute.css(ele, key, attribute.css(ele, key));
+                    });
+                }, 0);
+            }
         }
     };
 });

@@ -21,7 +21,10 @@ define(function (require, exports, module) {
     var data = require('../../util/data.js');
     var compatible = require('../navigator/compatible.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
-    var regNum = /^-?\d+$/;
+    // +123.456
+    // -123.456
+    var regNum = /^[+\-]?\d+(\.\d*)?$/;
+    var regEndPoint = /\.$/;
 
     module.exports = {
         /**
@@ -117,7 +120,7 @@ define(function (require, exports, module) {
         /**
          * 修正 css 键值
          * @param {String} key css 键
-         * @param {String} val css 值
+         * @param {*} val css 值
          * @returns {{key: String, val: *}}
          *
          * @example
@@ -340,7 +343,7 @@ define(function (require, exports, module) {
         val += '';
 
         if (regNum.test(val)) {
-            return val + 'px';
+            return val.replace(regEndPoint, '') + 'px';
         }
 
         return val;
@@ -397,7 +400,7 @@ define(function (require, exports, module) {
      * @param {HTMLElement} ele 元素
      * @param {Number} type 操作类型，0=add，1=remove，2=has
      * @param {String} [className] 样式名称，多个样式使用空格分开
-     * @returns {Boolean}
+     * @returns {*}
      * @private
      */
     function _class(ele, type, className) {

@@ -31,14 +31,7 @@ define(function (require, exports, module) {
          * position.top(ele);
          */
         top: function () {
-            return _middleware(arguments, {
-                get: function (ele) {
-                    return ele.getBoundingClientRect().top;
-                },
-                set: function (ele, val) {
-                    _setBoundingClientRect(ele, 'top', val);
-                }
-            });
+            return _middleware('top', arguments);
         },
 
 
@@ -56,14 +49,7 @@ define(function (require, exports, module) {
          * position.left(ele);
          */
         left: function () {
-            return _middleware(arguments, {
-                get: function (ele) {
-                    return ele.getBoundingClientRect().left;
-                },
-                set: function (ele, val) {
-                    _setBoundingClientRect(ele, 'left', val);
-                }
-            });
+            return _middleware('left', arguments);
         },
 
 
@@ -83,14 +69,7 @@ define(function (require, exports, module) {
          * position.width(ele);
          */
         width: function () {
-            return _middleware(arguments, {
-                get: function (ele) {
-                    return ele.getBoundingClientRect().width;
-                },
-                set: function (ele, val) {
-                    _setBoundingClientRect(ele, 'width', val);
-                }
-            });
+            return _middleware('width', arguments);
         },
 
 
@@ -110,40 +89,42 @@ define(function (require, exports, module) {
          * position.height(ele);
          */
         height: function () {
-            return _middleware(arguments, {
-                get: function (ele) {
-                    return ele.getBoundingClientRect().height;
-                },
-                set: function (ele, val) {
-                    _setBoundingClientRect(ele, 'height', val);
-                }
-            });
+            return _middleware('height', arguments);
         }
     };
 
 
     /**
      * 中间件
+     * @param {String} key 求值类型
      * @param {Array} args 参数数组
      * @param {Object} getSet 函数对象
      * @returns {Number|undefined|*}
      * @private
      */
-    function _middleware(args, getSet) {
+    function _middleware(key, args) {
         var ele;
+        var eleType;
         var argsLength = args.length;
 
         if (argsLength) {
             ele = args[0];
-
-            if (data.type(ele) !== 'element') {
-                return;
-            }
+            eleType = data.type(ele);
 
             if (argsLength === 1) {
-                return getSet.get(ele);
-            } else if (argsLength === 2) {
-                getSet.set(ele, args[1]);
+                switch (eleType) {
+                    case 'element':
+                        return ele.getBoundingClientRect()[key];
+
+                    case 'window':
+                        return window['inner' + (key === 'width'?'Width':'Height')];
+
+                    case 'document':
+                        return document.documentElement.getBoundingClientRect()[key];
+                }
+
+            } else if (argsLength === 2 && eleType === 'element' && data.type(args[1]) === 'number') {
+                _setBoundingClientRect(ele, key, args[1]);
             }
         }
     }
@@ -174,8 +155,6 @@ define(function (require, exports, module) {
      * @private
      */
     function _setBoundingClientRect(ele, key, val) {
-        val = _parseFloat(val);
-
         var rect = ele.getBoundingClientRect();
         var now = rect[key];
         var width = rect.width;

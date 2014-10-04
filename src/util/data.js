@@ -122,8 +122,9 @@ define(function (require, exports, module) {
             var ret = [];
             var i = 0;
             var j;
+            var dataTypeof = typeof(data);
 
-            if (data && 'length' in data && this.type(data.length) === 'number' && data.length >= 0) {
+            if (dataTypeof === 'object' && this.type(data.length) === 'number' && data.length >= 0) {
                 for (j = data.length; i < j; i++) {
                     ret.push(data[i]);
                 }

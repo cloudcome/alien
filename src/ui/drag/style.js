@@ -12,16 +12,21 @@ define(function (require) {
      */
     'use strict';
 
-    var modification = require('../../core/dom/modification.js');
-    var style = '.alien-drag{\
-    opacity: .8\
-    }\
-    .alien-clone{\
-    position:absolute;\
-    z-index: 999;\
-    background: #fff;\
-    border:1px dashed #ccc;\
-    }';
+    var style = function () {
+        /***
+         .alien-ui-drag{
+            opacity: .8;
+         }
 
-    modification.style(style);
+         .alien-ui-drag-clone{
+            position: absolute;
+            z-index: 999;
+            background: #fff;
+            border: 1px dashed #ccc;
+         }
+         */
+    };
+    var modification = require('../../core/dom/modification.js');
+
+    modification.style(style.toString().match(/\/\*{3}([\s\S]*)\*\//)[1]);
 });

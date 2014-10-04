@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var start = 'mousedown taphold';
     var move = 'mousemove touchmove';
     var end = 'mouseup touchend touchcancel';
-    var klass = 'alien-drag';
+    var klass = 'alien-ui-drag';
     var body = document.body;
     var noop = function () {
         // ignore
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
         _clone: function () {
             var the = this;
             var clone = modification.create('div', {
-                'class': 'alien-clone',
+                'class': 'alien-ui-drag-clone',
                 style: {
                     top: position.top(the.ele),
                     width: position.width(the.ele),
