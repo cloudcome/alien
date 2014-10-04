@@ -22,44 +22,77 @@ define(function (require, exports, module) {
 
     module.exports = {
         /**
-         * 格式化日志
+         * 格式化日期<br>
+         * 主要参考ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ<br>
+         * 其他参数参考自moment<br>
+         *
          * @param {String} format 格式化字符串<br>
-         * 假设当前时间为：2014年1月1日 19点9分9秒 周三<br>
-         * <code>YYYY</code> 2014<br>
-         * <code>YY</code> 14<br>
-         * <code>MM</code> 01<br>
-         * <code>M</code> 1<br>
-         * <code>DD</code> 01<br>
-         * <code>D</code> 1<br>
-         * <code>HH</code> 19<br>
-         * <code>hh</code> 07<br>
-         * <code>H</code> 19<br>
-         * <code>h</code> 7<br>
-         * <code>mm</code> 09<br>
-         * <code>m</code> 9<br>
-         * <code>ss</code> 09<br>
-         * <code>s</code> 9<br>
-         * <code>www</code> 星期三<br>
-         * <code>ww</code> 周三<br>
-         * <code>w</code> 三<br>
-         * <code>aaa</code> 下午<br>
-         * <code>AA</code> PM<br>
-         * <code>aa</code> pm<br>
+         * 假设当前时间为：2014年1月1日 19点9分9秒9毫秒 周三<br>
+         * <strong>日期</strong><br>
+         * 至少4位年份<code>YYYY</code> 2014<br>
+         * 至少2位年份<code>YY</code> 14<br>
+         * 至少2位月份<code>MM</code> 01<br>
+         * 至少1位月份<code>M</code> 1<br>
+         * 至少2位日期<code>DD</code> 01<br>
+         * 至少1位日期<code>D</code> 1<br>
+         *
+         * <strong>时间</strong><br>
+         * 至少2位24小时制小时<code>HH</code> 19<br>
+         * 至少1位24小时制小时<code>H</code> 19<br>
+         * 至少2位12小时制小时<code>hh</code> 07<br>
+         * 至少1位12小时制小时<code>h</code> 7<br>
+         * 至少2位分钟数<code>mm</code> 09<br>
+         * 至少1位分钟数<code>m</code> 9<br>
+         * 至少2位秒数<code>ss</code> 09<br>
+         * 至少1位秒数<code>s</code> 9<br>
+         * 至少3位毫秒数<code>SSS</code> 009<br>
+         * 至少2位毫秒数<code>SS</code> 09<br>
+         * 至少1位毫秒数<code>S</code> 9<br>
+         *
+         * <strong>时段</strong><br>
+         * 星期<code>e</code> 三<br>
+         * 上下午<code>a</code> 下午<br>
+         *
          * @param {Date|Object|Number|String} [date] 日期
          * @param {Object} [config] 格式配置
          * @returns {null|string}
          *
          * @example
+         * // 默认的格式化
+         * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+         * // => "2014 年"
          * date.format('YYYY 年');
          * // => "2014 年"
+         *
+         * // 自定义格式化
+         * var month = {
+         *    "01": "January",
+         *    "02": "February",
+         *    "03": "March",
+         *    "04": "April",
+         *    "05": "May",
+         *    "06": "June",
+         *    "07": "July",
+         *    "08": "August",
+         *    "09": "September",
+         *    "10": "October",
+         *    "11": "November",
+         *    "12": "December",
+         * };
+         * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
+         *    // 要替换的字段，以及要替换的值
+         *    'MM': month
+         * });
+         * // => "2014年October月04日 17:28:06.363 星期六 下午"
          */
         format: function (format, date, config) {
             if (data.type(format) !== 'string') {
-                throw new Error('date format must string');
+                throw new Error('date format must be a string');
             }
 
             if (data.type(arguments[1]) === 'object') {
                 config = arguments[1];
+                date = new Date();
             }
 
             format = format || 'YYYY-MM-DD HH:mm:ss www';
@@ -76,76 +109,134 @@ define(function (require, exports, module) {
             var a = H > 12 ? 0 : 1;
             var m = String(date.getMinutes());
             var s = String(date.getSeconds());
-            var w = String(date.getDay());
+            var S = String(date.getMilliseconds());
+            var e = String(date.getDay());
             var formater = [
                 {
-                    YYYY: Y
+                    key: 'YYYY',
+                    val: Y,
+                    is: 'Y'
                 },
                 {
-                    YY: Y.slice(-2)
+                    key: 'YY',
+                    val: Y.slice(-2),
+                    is: 'Y'
                 },
                 {
-                    MM: _fixNumber(M)
+                    key: 'MM',
+                    val: _fixNumber(M),
+                    is: 'M'
                 },
                 {
-                    M: M
+                    key: 'M',
+                    val: M,
+                    is: 'M'
                 },
                 {
-                    DD: _fixNumber(D)
+                    key: 'DD',
+                    val: _fixNumber(D),
+                    is: 'D'
                 },
                 {
-                    D: D
+                    key: 'D',
+                    val: D,
+                    is: 'D'
                 },
                 {
-                    HH: _fixNumber(H)
+                    key: 'HH',
+                    val: _fixNumber(H),
+                    is: 'H'
                 },
                 {
-                    H: H
+                    key: 'H',
+                    val: H,
+                    is: 'H'
                 },
                 {
-                    hh: _fixNumber(h)
+                    key: 'hh',
+                    val: _fixNumber(h),
+                    is: 'h'
                 },
                 {
-                    h: h
+                    key: 'h',
+                    val: h,
+                    is: 'h'
                 },
                 {
-                    mm: _fixNumber(m)
+                    key: 'mm',
+                    val: _fixNumber(m),
+                    is: 'm'
                 },
                 {
-                    m: m
+                    key: 'm',
+                    val: m,
+                    is: 'm'
                 },
                 {
-                    ss: _fixNumber(s)
+                    key: 'ss',
+                    val: _fixNumber(s),
+                    is: 's'
                 },
                 {
-                    s: s
+                    key: 's',
+                    val: s,
+                    is: 's'
                 },
                 {
-                    www: '星期' + weeks[w]
+                    key: 'SSS',
+                    val: _fixNumber(S, 3),
+                    is: 'S'
                 },
                 {
-                    ww: '周' + weeks[w]
+                    key: 'SS',
+                    val: _fixNumber(S, 2),
+                    is: 'S'
                 },
                 {
-                    w: weeks[w]
+                    key: 'S',
+                    val: S,
+                    is: 'S'
                 },
                 {
-                    aaa: a ? '上午' : '下午'
+                    key: 'e',
+                    val: weeks[e],
+                    is: 'e'
                 },
                 {
-                    AA: a ? 'AM' : 'PM'
-                },
-                {
-                    aa: a ? 'am' : 'pm'
+                    key: 'a',
+                    val: a ? '上午' : '下午',
+                    is: 'a'
                 }
             ];
+            var hasFormat = {};
+            var configFormater= [];
 
+            // 年、月、日、时、分、秒、毫秒、星期、上下午
+            // 只保证每个字段只被格式化一次，防止误操作
             data.each(formater, function (index, fmt) {
-                var key = Object.keys(fmt)[0];
-                var val = config[key] || fmt[key];
-                var reg = new RegExp(key, 'mg');
+                var reg = new RegExp(fmt.key, 'mg');
 
-                format = format.replace(reg, val);
+                if (!hasFormat[fmt.is]) {
+                    if (config[fmt.key]) {
+                        hasFormat[fmt.is] = !0;
+                        configFormater.push({
+                            key: fmt.key,
+                            val: config[fmt.key][fmt.val],
+                            is: fmt.is
+                        });
+                    } else {
+                        if (reg.test(format)) {
+                            hasFormat[fmt.is] = !0;
+                            format = format.replace(reg, fmt.val);
+                        }
+                    }
+                }
+            });
+
+            // 自定义格式化
+            data.each(configFormater, function (index, fmt) {
+                var reg = new RegExp(fmt.key, 'mg');
+                format = format.replace(reg, fmt.val);
             });
 
             return format;
@@ -186,7 +277,7 @@ define(function (require, exports, module) {
          * 获得某年某月的天数
          * @param {Number} year 年
          * @param {Number} month 月份，默认序列月，即1月为第0月
-         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @param {Boolean} [isNatualMonth=false] 是否为自然月，默认为 false
          * @returns {Number} 天数
          *
          * @example
@@ -199,11 +290,30 @@ define(function (require, exports, module) {
 
             return  month === 1 ? (this.isLeapYear(year) ? 29 : 28) : monthDates[month];
         },
+        /**
+         * 获得某年某月某日在当年的第几天
+         * @param {Number} year 年份
+         * @param {Number} month 默认序列月
+         * @param {Number} date 日期
+         * @param {Boolean} [isNatualMonth=false] 是否自然月，默认 false
+         * @returns {Number}
+         */
+        getDaysInYear: function (year, month, date, isNatualMonth) {
+            month = isNatualMonth ? month - 1 : month;
+
+            var days = date;
+
+            while (month--) {
+                days += this.getDaysInMonth(year, month);
+            }
+
+            return days;
+        },
 //        /**
 //         * 获得某年某月1日星期几
 //         * @param {Number} year 年
 //         * @param {Number} month 月份，默认序列月，即1月为第0月
-//         * @param {Boolean} [isNatualMonth] 是否为自然月
+//         * @param {Boolean} [isNatualMonth=false] 是否为自然月
 //         * @returns {Number} 星期序号，即周日为0
 //         */
 //        getMonthFirstDateOfDay: function (year, month, isNatualMonth) {
@@ -241,7 +351,7 @@ define(function (require, exports, module) {
          * @param {Number} year 年
          * @param {Number} month 月
          * @param {Number} date 日
-         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @param {Boolean} [isNatualMonth=false] 是否为自然月
          * @returns {number}
          *
          * @example
@@ -399,11 +509,19 @@ define(function (require, exports, module) {
 
     /**
      * 修复十进制数字，4 => '04'
-     * @param {Number|String} num
+     * @param {Number|String} num 数字
+     * @param {Number} [length=2] 长度，默认2
      * @returns {Number|string}
      * @private
      */
-    function _fixNumber(num) {
-        return num < 10 ? '0' + num : num;
+    function _fixNumber(num, length) {
+        num = String(num);
+        length = length || 2;
+
+        while (num.length < length) {
+            num = '0' + num;
+        }
+
+        return num;
     }
 });

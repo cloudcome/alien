@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<h1>现在是：YYYY-MM-DD HH:mm:ss aaa www<br> 现在是：<span id="ret1"></span></h1>
+<h1>现在是：YYYY年MM月DD日 HH:mm:ss.SSS 星期e a<br> 现在是：<span id="ret1"></span></h1>
 
 <h1>2014年4月11日 08:00:00 至今：<span id="ret2"></span></h1>
 
@@ -34,6 +34,7 @@
 <h1>本周是本月的第<span id="ret5"></span>周</h1>
 
 <h1>本月有<span id="ret6"></span>天</h1>
+<h1>今天是今年的第<span id="ret7"></span>天</h1>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
@@ -45,15 +46,17 @@
         var D = now.getDate();
         window.date = date;
 
-        document.getElementById('ret1').innerHTML = date.format('YYYY-MM-DD HH:mm:ss aaa www');
+        document.getElementById('ret1').innerHTML = date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
         document.getElementById('ret2').innerHTML = date.from('2014-4-11 08:00:00');
         document.getElementById('ret3').innerHTML = date.from('2015-4-11 08:00:00');
         document.getElementById('ret4').innerHTML = date.getWeeksInYear(YYYY, M, D);
         document.getElementById('ret5').innerHTML = date.getWeeksInMonth(YYYY, M, D);
         document.getElementById('ret6').innerHTML = date.getDaysInMonth(YYYY, M);
+        document.getElementById('ret7').innerHTML = date.getDaysInYear(YYYY, M, D);
     });
     seajs.use('app');
 </script>
 
 </body>
 </html>
+

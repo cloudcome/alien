@@ -16,9 +16,89 @@ define(function (require, exports, module) {
 
     module.exports = {
         /**
-         * 判断数据类型
+         * 判断数据类型，结果全部为小写<br>
+         * 原始数据类型：boolean、number、string、undefined、symbol
          * @param {*} object
          * @returns {string}
+         *
+         * @example
+         * data.type();
+         * // => "undefined"
+         *
+         * data.type(null);
+         * // => "null"
+         *
+         * data.type(1);
+         * // => "number"
+         *
+         * data.type("1");
+         * // => "string"
+         *
+         * data.type(!1);
+         * // => "boolean"
+         *
+         * data.type({});
+         * // => "object"
+         *
+         * data.type([]);
+         * // => "array"
+         *
+         * data.type(/./);
+         * // => "regexp"
+         *
+         * data.type(window);
+         * // => "window"
+         *
+         * data.type(document);
+         * // => "document"
+         *
+         * data.type(document);
+         * // => "document"
+         *
+         * data.type(NaN);
+         * // => "nan"
+         *
+         * data.type(Infinity);
+         * // => "number"
+         *
+         * data.type(function(){});
+         * // => "function"
+         *
+         * data.type(new Image);
+         * // => "element"
+         *
+         * data.type(new Date);
+         * // => "date"
+         *
+         * data.type(document.links);
+         * // => "htmlcollection"
+         *
+         * data.type(document.body.dataset);
+         * // => "domstringmap"
+         *
+         * data.type(document.body.classList);
+         * // => "domtokenlist"
+         *
+         * data.type(document.body.childNodes);
+         * // => "nodelist"
+         *
+         * data.type(document.createAttribute('abc'));
+         * // => "attr"
+         *
+         * data.type(document.createComment('abc'));
+         * // => "comment"
+         *
+         * data.type(new Event('abc'));
+         * // => "event"
+         *
+         * data.type(document.createExpression());
+         * // => "xpathexpression"
+         *
+         * data.type(document.createRange());
+         * // => "range"
+         *
+         * data.type(document.createTextNode(''));
+         * // => "text"
          */
         type: function (object) {
             if (typeof window !== 'undefined' && object === window) {
@@ -45,9 +125,14 @@ define(function (require, exports, module) {
         },
         /**
          * 遍历元素
-         * @param {Array/Object}   data  数组
-         * @param {Function}       callback  回调，返回false时停止遍历
-         * @param {*}              [context] 上下文
+         * @param {Array/Object} data  数组
+         * @param {Function(this:data, key, val)} callback  回调，返回false时停止遍历
+         * @param {*} [context] 上下文
+         *
+         * @example
+         * // 与 jQuery.each 一样
+         * // 返回 false 时将退出当前遍历
+         * data.each(list, function(key, val){});
          */
         each: function (data, callback, context) {
             var i;
@@ -81,6 +166,23 @@ define(function (require, exports, module) {
          * @param {Object}  [source] 源对象
          * @param {...Object}  [target] 目标对象，可以是多个
          * @returns {*}
+         *
+         * @example
+         * // 使用方法与 jQuery.extend 一样
+         * var o1 = {a: 1};
+         * var o2 = {b: 2};
+         * var o3 = data.extend(true, o1, o2);
+         * // => {a: 1, b: 2}
+         * o1 === o3
+         * // => true
+         *
+         * // 如果不想污染原始对象，可以传递一个空对象作为容器
+         * var o1 = {a: 1};
+         * var o2 = {b: 2};
+         * var o3 = data.extend(true, {}, o1, o2);
+         * // => {a: 1, b: 2}
+         * o1 === o3
+         * // => fale
          */
         extend: function (isExtendDeep, source, target) {
             var args = arguments;
@@ -95,7 +197,7 @@ define(function (require, exports, module) {
             for (; current < length; current++) {
                 obj = args[current];
                 for (i in obj) {
-                    if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
+                    if (this.hasOwnProperty(obj, i) && obj[i] !== undefined) {
                         type = this.type(obj[i]);
                         if (type === 'object' && isExtendDeep) {
                             source[i] = {};
@@ -117,6 +219,18 @@ define(function (require, exports, module) {
          * @param {Object} [data] 对象
          * @param {Boolean} [isConvertWhole] 是否转换整个对象为数组中的第0个元素，当该对象无length属性时，默认false
          * @returns {Array}
+         *
+         * @example
+         * var o = {0:"foo", 1:"bar", length: 2}
+         * data.toArray(o);
+         * // => ["foo", "bar"]
+         *
+         * var a1 = [1, 2, 3];
+         * // 转换后的数组是之前的副本
+         * var a2 = data.toArray(a1);
+         * // => [1, 2, 3]
+         * a2 === a1;
+         * // => false
          */
         toArray: function (data, isConvertWhole) {
             var ret = [];
@@ -133,6 +247,20 @@ define(function (require, exports, module) {
             }
 
             return ret;
+        },
+        /**
+         * 判断一个对象是否有属于自身的方法、属性，而不是原型链方法、属性以及其他继承来的方法、属性
+         * @param obj {Object} 判断对象
+         * @param prop {String} 方法、属性名称
+         * @returns {Boolean}
+         *
+         * @example
+         * var o = {a: 1};
+         * data.hasOwnProperty(o, 'a');
+         * // => true
+         */
+        hasOwnProperty: function (obj, prop) {
+            return Object.prototype.hasOwnProperty.call(obj, prop);
         }
     };
 });

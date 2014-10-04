@@ -88,8 +88,9 @@ body{
 }
 
 .params .th-name,
-.params .th-type{
-    width: 100px;
+.params .th-type,
+.params .th-arg{
+    max-width: 150px;
 }
 
 

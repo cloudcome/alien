@@ -7,8 +7,9 @@
 
 define(function (require, exports, module) {
     /**
+     * 对话框
      * @module ui/dialog/index
-     * @requires ui/dialog/drag
+     * @requires ui/drag/index
      */
     'use strict';
 
@@ -38,6 +39,7 @@ define(function (require, exports, module) {
         left: 'center',
         top: 'center',
         title: '无标题对话框',
+        canDrag: !0,
         duration: 345,
         easing: 'ease-in-out-back',
         // 优先级2
@@ -55,8 +57,20 @@ define(function (require, exports, module) {
 
     require('./style.js');
 
+    /**
+     * @class
+     * @type {{constructor: Dialog, _init: _init, open: open, close: close, position: position, _position: _position, _content: _content, _remote: _remote}}
+     */
     Dialog.prototype = {
+        /**
+         * @lends Dialog.prototype
+         */
         constructor: Dialog,
+        /**
+         * 初始化
+         * @returns {Dialog}
+         * @private
+         */
         _init: function () {
             index++;
 
@@ -94,7 +108,7 @@ define(function (require, exports, module) {
             the.hasOpen = !1;
             the.zIndex = 0;
 
-            if (options.title !== null) {
+            if (options.title !== null && options.canDrag) {
                 drag(dialog, {
                     handle: '.' + titleClass,
                     zIndex: the.zIndex
@@ -108,6 +122,10 @@ define(function (require, exports, module) {
 
             return the;
         },
+        /**
+         * 打开对话框
+         * @returns {Dialog}
+         */
         open: function () {
             var winW = position.width(window);
             var winH = position.height(window);
@@ -169,15 +187,21 @@ define(function (require, exports, module) {
             }, function () {
                 options.onopen.call(dialog);
             }, function () {
-                if (options.content) {
-                    //
-                } else if (options.remote) {
+                if (!options.content && options.remote) {
                     the._remote();
                 }
             });
 
+            if (options.content) {
+                the._content();
+            }
+
             return the;
         },
+        /**
+         * 关闭对话框
+         * @returns {Dialog}
+         */
         close: function () {
             var the = this;
             var bg = the.bg;
@@ -220,6 +244,10 @@ define(function (require, exports, module) {
 
             return the;
         },
+        /**
+         * 重新定位对话框
+         * @returns {Dialog}
+         */
         position: function () {
             var the = this;
             var options = the.options;
@@ -232,6 +260,12 @@ define(function (require, exports, module) {
 
             return the;
         },
+        /**
+         * 获取对话框需要定位的终点位置
+         * @returns {Object}
+         * @type {{width:Number,height:Number,left:Number,top:Number}}
+         * @private
+         */
         _position: function () {
             var the = this;
             var options = the.options;
@@ -265,6 +299,29 @@ define(function (require, exports, module) {
 
             return pos;
         },
+        /**
+         * 对话框添加内容，并重新定位
+         * @private
+         */
+        _content: function () {
+            var the = this;
+            var options = the.options;
+            var content = options.content;
+            var contentType = data.type(content);
+
+            the.body.innerHTML = '';
+
+            if (contentType === 'string') {
+                content = modification.create('#text', content);
+            }
+
+            modification.insert(content, the.body, 'beforeend');
+            the.position();
+        },
+        /**
+         * 对话框添加远程地址，并重新定位
+         * @private
+         */
         _remote: function () {
             var the = this;
             var options = the.options;
@@ -282,6 +339,28 @@ define(function (require, exports, module) {
         }
     };
 
+    /**
+     * 对话框，自动实例化
+     * @param ele {HTMLElement|Node} 元素
+     * @param [options] {Object}
+     * @param [options.width=500] {Number|String} 对话框宽度
+     * @param [options.height="auto"] {Number|String} 对话框高度
+     * @param [options.left="center"] {Number|String} 对话框左距离，默认水平居中
+     * @param [options.top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
+     * @param [options.title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
+     * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，当有标题栏存在的时候
+     * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间
+     * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
+     * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
+     * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度
+     * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容
+     * @param [options.onopen] {Function} 对话框打开时回调
+     * @param [options.onclose] {Function} 对话框关闭时回调
+     * @returns {Dialog}
+     *
+     * @example
+     * var d1 = dialog(ele, options);
+     */
     module.exports = function (ele, options) {
         options = data.extend(!0, {}, defaults, options);
 
