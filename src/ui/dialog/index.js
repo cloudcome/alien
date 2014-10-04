@@ -206,8 +206,6 @@ define(function (require, exports, module) {
             }, {
                 duration: options.duration,
                 easing: options.easing
-            }, function () {
-
             });
 
             animation.animate(bg, {
