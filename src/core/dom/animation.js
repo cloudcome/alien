@@ -204,6 +204,12 @@ define(function (require, exports, module) {
                     });
                 }, 0);
             }
+        },
+        /**
+         * @todo 增加平滑滚动
+         */
+        scrollTo: function () {
+
         }
     };
 });

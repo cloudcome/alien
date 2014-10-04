@@ -47,49 +47,9 @@
 
 <div id="demo">
     <div id="handle">drag here</div>
-    <p>限制了拖动范围：0,0 => 200,200</p>
+    <p>限制了拖动范围：0,0 => 400,400</p>
 </div>
 
-
-<pre>
-var defaults = {
-    // 鼠标操作区域选择器，默认为 null，即整个元素
-    // 参数为选择器字符串
-    handle: null,
-
-    // 是否克隆一个副本作为参考对象，默认 true
-    isClone: !0,
-
-    // 拖拽轴向，x：水平，y：垂直，xy：所有
-    axis: 'xy',
-
-    // 拖拽对象的最小位置，格式为{left: 10, top: 10}
-    // 参考于 document
-    min: null,
-
-    // 拖拽对象的最大位置，格式为{left: 1000, top: 1000}
-    // 参考于 document
-    max: null,
-
-    // 拖拽时的层级值
-    zIndex: 99999,
-
-    // 拖拽开始后回调
-    // this: drag element
-    // arg0: event
-    ondragstart: noop,
-
-    // 拖拽中回调
-    // this: drag element
-    // arg0: event
-    ondrag: noop,
-
-    // 拖拽结束后回调
-    // this: drag element
-    // arg0: event
-    ondragend: noop
-};
-</pre>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
@@ -103,8 +63,8 @@ var defaults = {
                 y: 0
             },
             max: {
-                x: 200,
-                y: 200
+                x: 400,
+                y: 400
             },
             handle: '#handle'
         });

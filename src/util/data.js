@@ -13,6 +13,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var udf;
+    var canListTypeArr = 'array object nodelist htmlcollection'.split(' ');
 
     module.exports = {
         /**
@@ -232,18 +233,18 @@ define(function (require, exports, module) {
          * a2 === a1;
          * // => false
          */
-        toArray: function (data, isConvertWhole) {
+        toArray: function (obj, isConvertWhole) {
             var ret = [];
             var i = 0;
             var j;
-            var dataTypeof = typeof(data);
+            var objType = this.type(obj);
 
-            if (dataTypeof === 'object' && this.type(data.length) === 'number' && data.length >= 0) {
-                for (j = data.length; i < j; i++) {
-                    ret.push(data[i]);
+            if (canListTypeArr.indexOf(objType)> -1 && this.type(obj.length) === 'number' && obj.length >= 0) {
+                for (j = obj.length; i < j; i++) {
+                    ret.push(obj[i]);
                 }
-            } else if (data && isConvertWhole) {
-                ret.push(data);
+            } else if (obj && isConvertWhole) {
+                ret.push(obj);
             }
 
             return ret;

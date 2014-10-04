@@ -8,8 +8,10 @@
 define(function (require, exports, module) {
     'use strict';
 
+    require('./style.js');
 
     var udf;
+    var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
     var event = require('../../core/event/touch.js');
     var selector = require('../../core/dom/selector.js');
@@ -19,7 +21,7 @@ define(function (require, exports, module) {
     var start = 'mousedown taphold';
     var move = 'mousemove touchmove';
     var end = 'mouseup touchend touchcancel';
-    var klass = 'alien-ui-drag';
+    var dragClass = 'alien-ui-drag';
     var body = document.body;
     var noop = function () {
         // ignore
@@ -61,21 +63,17 @@ define(function (require, exports, module) {
         // arg0: event
         ondragend: noop
     };
-    /**
-     * 构造一个拖拽
-     * @param {HTMLElement} ele 元素
-     * @param {Object} [options] 配置
-     * @constructor
-     */
-    var Drag = function (ele, options) {
-        this.ele = ele;
-        this.options = options;
-    };
-
-    require('./style.js');
-
-    Drag.prototype = {
-        constructor: Drag,
+    var Drag = klass.create({
+        /**
+         * 构造一个拖拽
+         * @param {HTMLElement} ele 元素
+         * @param {Object} [options] 配置
+         * @constructor
+         */
+        constructor: function (ele, options) {
+            this.ele = ele;
+            this.options = options;
+        },
         /**
          * 初始化
          * @private
@@ -126,7 +124,7 @@ define(function (require, exports, module) {
                 the.top = position.top(the.ele);
                 the.left = position.left(the.ele);
                 the.zIndex = attribute.css(the.ele, 'z-index');
-                attribute.addClass(the.ele, klass);
+                attribute.addClass(the.ele, dragClass);
                 eve.preventDefault();
                 attribute.css(the.ele, 'z-index', options.zIndex);
 
@@ -195,7 +193,7 @@ define(function (require, exports, module) {
 
             if (the.is) {
                 the.is = !1;
-                attribute.removeClass(the.ele, klass);
+                attribute.removeClass(the.ele, dragClass);
                 eve.preventDefault();
                 attribute.css(the.ele, 'z-index', the.zIndex);
 
@@ -206,7 +204,8 @@ define(function (require, exports, module) {
                 the.options.ondragend.call(the.ele, eve);
             }
         }
-    };
+    });
+
 
 
 

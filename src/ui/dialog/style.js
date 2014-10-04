@@ -47,7 +47,6 @@ define(function (require) {
             font-weight: normal;
             overflow: hidden;
             background: -moz-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
-            background: -webkit-gradient(linear, 0deg, color-stop(0, FFFFFF), color-stop(100%, EEEEEE));
             background: -webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
             background: -o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
             background: -ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
@@ -96,9 +95,65 @@ define(function (require) {
             width: 100%;
             height: 400px;
          }
+
+         @-webkit-keyframes alien-ui-dialog-shake {
+            0%, 100% {
+                -webkit-transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                -webkit-transform: translateX(-10px);
+            }
+            20%, 40%, 60%, 80% {
+                -webkit-transform: translateX(10px);
+            }
+        }
+
+        @-moz-keyframes alien-ui-dialog-shake {
+            0%, 100% {
+                -moz-transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                -moz-transform: translateX(-10px);
+            }
+            20%, 40%, 60%, 80% {
+                -moz-transform: translateX(10px);
+            }
+        }
+
+         @-o-keyframes alien-ui-dialog-shake {
+            0%, 100% {
+                -o-transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                -o-transform: translateX(-10px);
+            }
+            20%, 40%, 60%, 80% {
+                -o-transform: translateX(10px);
+            }
+        }
+
+        @keyframes alien-ui-dialog-shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-10px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(10px);
+            }
+        }
+
+         .alien-ui-dialog-shake{
+            -webkit-animation: both 500ms alien-ui-dialog-shake;
+            -moz-animation: both 500ms alien-ui-dialog-shake;
+            -ms-animation: both 500ms alien-ui-dialog-shake;
+            -o-animation: both 500ms alien-ui-dialog-shake;
+            animation: both 500ms alien-ui-dialog-shake;
+         }
          */
     };
     var modification = require('../../core/dom/modification.js');
 
-    modification.style(style.toString().match(/\/\*{3}([\s\S]*)\*\//)[1]);
+    modification.style(style);
 });

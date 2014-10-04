@@ -45,13 +45,13 @@
     <div id="demo1">
         <h1>这是第1个对话框</h1>
         <p>这是个默认宽度，自适应高度的对话框，默认水平居中（1/2）、垂直居中（为了美观实际为2/5处），可以拖动，适宜做对话框、消息框、输入框等交互。</p>
-        <button id="close1">关闭第1个对话框</button>
+        <button id="close1">关闭当前对话框</button>
         <button id="open2">打开第2个对话框</button>
     </div>
     <div id="demo2">
         <h1>这是第2个对话框</h1>
-        <p>这个对话框固定宽度：350px，固定高度：400px，水平居中，垂直顶部，而且不能拖动，适宜做提示框等消息提醒用，非交互对话框。</p>
-        <button id="close2">关闭第2个对话框</button>
+        <p>这个对话框固定宽度：350px，固定高度：400px，水平居中，垂直顶部，而且不能拖动，并且没有对话框包裹的，适宜做提示框等消息提醒用，非交互对话框。</p>
+        <button id="close2">关闭当前对话框</button>
         <button id="open3">打开第3个对话框，远程加载`wap.baidu.com`</button>
     </div>
     <div id="demo3"></div>
@@ -70,7 +70,8 @@
             width: 350,
             height: 400,
             top: 0,
-            title: null
+            title: null,
+            wrap: false
         });
         var d3 = dialog(demo3, {
             remote: 'http://wap.baidu.com/'
@@ -91,6 +92,10 @@
         document.getElementById('close2').onclick = function () {
             d2.close();
         };
+//
+//        document.getElementById('destroy2').onclick = function () {
+//            d2.destroy();
+//        };
 
         document.getElementById('open3').onclick = function () {
             d3.open();

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+ - msg.html
+ - @author ydr.me
+ - @create 2014-10-04 22:26
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>msg.html</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+
+<button id="btn0">0个按钮的 msg</button>
+<button id="btn1">1个按钮的 msg</button>
+<button id="btn2">2个按钮的 msg</button>
+<button id="btn3">3个按钮的 msg</button>
+<button id="btn4">4个按钮的 msg</button>
+<button id="btn5">5个按钮的 msg</button>
+
+
+<script src="/seajs/sea.js" id="script"></script>
+<script>
+    define('app', function (require) {
+        var msg = require('/src/ui/msg/index.js');
+
+
+        document.getElementById('btn0').onclick = function () {
+            msg({
+                style: 'inverse',
+                content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
+                buttons: [
+                ]
+            });
+        }
+
+        document.getElementById('btn1').onclick = function () {
+            msg({
+                style: 'muted',
+                content: '你在朋友圈里这么流弊，你家里人造吗？',
+                buttons: [
+                    {
+                        '我去年买了个表': function () {
+                            alert('我去年买了个表');
+                        }
+
+                    }
+                ]
+            });
+        }
+
+        document.getElementById('btn2').onclick = function () {
+            msg({
+                style: 'success',
+                content: '你到底说不说，说不说，说不说？',
+                buttons: [
+                    {
+                        '说': function () {
+                            alert('我说！');
+                        }
+
+                    },
+                    {
+                        '不说': function () {
+                            alert('不说！');
+                        }
+                    }
+                ]
+            });
+        }
+
+        document.getElementById('btn3').onclick = function () {
+            msg({
+                style: 'info',
+                content: '有你这么逗比的吗？',
+                buttons: [
+                    {
+                        '有': function () {
+                            alert('有吧！');
+                        }
+
+                    },
+                    {
+                        '有': function () {
+                            alert('还是有吧！');
+                        }
+                    },
+                    {
+                        '有': function () {
+                            alert('还是还是有吧！');
+                        }
+                    }
+                ]
+            });
+        }
+
+        document.getElementById('btn4').onclick = function () {
+            msg({
+                style: 'warning',
+                content: '这么多按钮，确定是你需要的？',
+                buttons: [
+                    {
+                        '不知道': function () {
+                            alert('不知道！');
+                        }
+
+                    },
+                    {
+                        '应该是我需要的': function () {
+                            alert('应该是我需要的！');
+                        }
+                    },
+                    {
+                        '我也不知道': function () {
+                            alert('我也不知道！');
+                        }
+                    },
+                    {
+                        '还是越多越好吧': function () {
+                            alert('还是越多越好吧！');
+                        }
+                    }
+                ]
+            });
+        }
+
+        document.getElementById('btn5').onclick = function () {
+            msg({
+                style: 'danger',
+                content: '数一下这里一共出现了几个按钮？！',
+                buttons: [
+                    {
+                        '一共1个按钮': function () {
+                            alert('一共1个按钮！');
+                        }
+
+                    },
+                    {
+                        '一共2个按钮': function () {
+                            alert('一共2个按钮！');
+                        }
+                    },
+                    {
+                        '一共3个按钮': function () {
+                            alert('一共3个按钮！');
+                        }
+                    },
+                    {
+                        '一共4个按钮': function () {
+                            alert('一共4个按钮！');
+                        }
+                    },
+                    {
+                        '算了，还是不数了': function () {
+                            alert('算了，还是不数了！');
+                        }
+                    }
+                ]
+            });
+        }
+    });
+    seajs.use('app');
+</script>
+</body>
+</html>

@@ -21,12 +21,12 @@ define(function (require) {
          .alien-ui-drag-clone{
             position: absolute;
             z-index: 999;
-            background: #fff;
-            border: 1px dashed #ccc;
+            background: #FEFFF3;
+            border: 1px dashed #F3DB7A;
          }
          */
     };
     var modification = require('../../core/dom/modification.js');
 
-    modification.style(style.toString().match(/\/\*{3}([\s\S]*)\*\//)[1]);
+    modification.style(style);
 });

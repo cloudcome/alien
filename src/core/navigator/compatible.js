@@ -33,22 +33,24 @@ define(function (require, exports, module) {
          */
         html5: function (standard, parent) {
             var html5Key = null;
+            var find = !1;
 
             data.each(html5Prefixs, function (index, prefix) {
                 html5Key = prefix ? prefix + _toUpperCaseFirstLetter(standard) : standard;
 
                 if (html5Key in parent) {
+                    find = !0;
                     return !1;
                 }
             });
 
-            return html5Key;
+            return find ? html5Key : undefined;
         },
 
         /**
          * 获取有浏览器前缀的CSS3名称
          * @param {String} standard 标准的CSS3属性
-         * @returns {String} 私有CSS3属性
+         * @returns {String|null} 私有CSS3属性
          *
          * @example
          * compatible.css3('border-start');
@@ -56,17 +58,20 @@ define(function (require, exports, module) {
          */
         css3: function (standard) {
             var cssKey = null;
+            var find = !1;
+
             standard = _toSepString(standard.trim().replace(regCss3, ''));
 
             data.each(css3Prefixs, function (index, prefix) {
                 cssKey = prefix ? prefix + '-' + standard : standard;
 
                 if (cssKey in p.style) {
+                    find = !0;
                     return !1;
                 }
             });
 
-            return cssKey;
+            return find ? cssKey : null;
         }
     };
 

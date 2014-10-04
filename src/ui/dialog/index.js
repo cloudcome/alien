@@ -13,6 +13,9 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('./style.js');
+
+    var klass = require('../../util/class.js');
     var drag = require('../drag/index.js');
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
@@ -26,10 +29,12 @@ define(function (require, exports, module) {
     var html = document.documentElement;
     var body = document.body;
     var overflowClass = 'alien-ui-dialog-overflow';
+    var dialogClass = 'alien-ui-dialog';
     var bodyClass = 'alien-ui-dialog-body';
     var titleClass = 'alien-ui-dialog-title';
     var closeClass = 'alien-ui-dialog-close';
     var iframeClass = 'alien-ui-dialog-iframe';
+    var shakeClass = 'alien-ui-dialog-shake';
     var noop = function () {
         // ignore
     };
@@ -47,25 +52,26 @@ define(function (require, exports, module) {
         remoteHeight: 400,
         // 优先级1
         content: null,
+        // 优先级1
+        isWrap: !0,
         onopen: noop,
         onclose: noop
     };
-    var Dialog = function (ele, options) {
-        this.ele = ele;
-        this.options = options;
-    };
-
-    require('./style.js');
-
-    /**
-     * @class
-     * @type {{constructor: Dialog, _init: _init, open: open, close: close, position: position, _position: _position, _content: _content, _remote: _remote}}
-     */
-    Dialog.prototype = {
+    // 打开的对话框队列
+    var openDialogs = [];
+    var dialogsMap = {};
+    var Dialog = klass.create({
         /**
-         * @lends Dialog.prototype
+         * 对话框构造函数
+         * @param {HTMLElement|Node} ele 元素
+         * @param {Object} [options] 参数
          */
-        constructor: Dialog,
+        constructor: function (ele, options) {
+            this.ele = ele;
+            this.options = options;
+        },
+
+
         /**
          * 初始化
          * @returns {Dialog}
@@ -82,51 +88,67 @@ define(function (require, exports, module) {
             });
             var dialog = modification.create('div', {
                 id: 'alien-ui-dialog-' + index,
-                'class': 'alien-ui-dialog',
+                'class': dialogClass,
                 role: 'dialog'
             });
             var bd;
 
 
-            dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
-                (options.title === null ? '' :
-                    '<div class="alien-ui-dialog-header">' +
-                    '<div class="' + titleClass + '">' + options.title + '</div>' +
-                    '<div class="' + closeClass + '">&times;</div>' +
-                    '</div>') +
-                '<div class="' + bodyClass + '"></div>' +
-                '</div>';
-            bd = selector.query('.' + bodyClass, dialog)[0];
+            if (options.isWrap) {
+                dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
+                    (options.title === null ? '' :
+                        '<div class="alien-ui-dialog-header">' +
+                        '<div class="' + titleClass + '">' + options.title + '</div>' +
+                        '<div class="' + closeClass + '">&times;</div>' +
+                        '</div>') +
+                    '<div class="' + bodyClass + '"></div>' +
+                    '</div>';
+                bd = selector.query('.' + bodyClass, dialog)[0];
+            }
 
             modification.insert(bg, body, 'beforeend');
             modification.insert(dialog, bg, 'beforeend');
-            modification.insert(the.ele, bd, 'beforeend');
-
             the.bg = bg;
+
             the.dialog = dialog;
-            the.body = bd;
             the.hasOpen = !1;
             the.zIndex = 0;
+            the.id = index;
+            dialogsMap[the.id] = the;
 
-            if (options.title !== null && options.canDrag) {
+            if (options.title !== null && options.canDrag && options.isWrap) {
                 drag(dialog, {
                     handle: '.' + titleClass,
                     zIndex: the.zIndex
                 });
             }
 
+            modification.insert(the.ele, bd ? bd : dialog, 'beforeend');
 
             event.on(dialog, 'click tap', '.' + closeClass, function () {
                 the.close();
             });
 
+            event.on(the.bg, 'click tap', function (eve) {
+                eve.stopPropagation();
+
+                if (!selector.closest(eve.target, '.' + dialogClass).length) {
+                    the._shake();
+                }
+            });
+
             return the;
         },
+
+
         /**
          * 打开对话框
+         * @param {Function} [callback] 打开之后回调
          * @returns {Dialog}
          */
-        open: function () {
+        open: function (callback) {
+            callback = callback || noop;
+
             var winW = position.width(window);
             var winH = position.height(window);
             var the = this;
@@ -134,18 +156,25 @@ define(function (require, exports, module) {
             var dialog = the.dialog;
             var to;
             var options = the.options;
+            var findIndex;
 
             if (the.hasOpen) {
                 return the;
             }
 
             the.hasOpen = !0;
+            findIndex = openDialogs.indexOf(the.id);
 
+            if(findIndex > -1){
+                openDialogs.splice(findIndex, 1);
+            }
+
+            openDialogs.push(the.id);
             attribute.addClass(html, overflowClass);
             attribute.addClass(body, overflowClass);
 
             if (options.content || options.remote) {
-                the.body.innerHTML = '';
+                the.ele.innerHTML = '';
             }
 
             attribute.css(bg, {
@@ -186,23 +215,30 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 options.onopen.call(dialog);
-            }, function () {
+
                 if (!options.content && options.remote) {
-                    the._remote();
+                    the.setRemote(options.remote);
+                }
+
+                if(data.type(callback) === 'function'){
+                    callback.call(the);
                 }
             });
 
             if (options.content) {
-                the._content();
+                the.setContent(options.content);
             }
 
             return the;
         },
+
+
         /**
          * 关闭对话框
+         * @param {Function} [callback] 打开之后回调
          * @returns {Dialog}
          */
-        close: function () {
+        close: function (callback) {
             var the = this;
             var bg = the.bg;
             var dialog = the.dialog;
@@ -217,9 +253,12 @@ define(function (require, exports, module) {
             }
 
             the.hasOpen = !1;
+            openDialogs.pop();
 
-            attribute.removeClass(html, overflowClass);
-            attribute.removeClass(body, overflowClass);
+            if (!openDialogs.length) {
+                attribute.removeClass(html, overflowClass);
+                attribute.removeClass(body, overflowClass);
+            }
 
             animation.animate(dialog, {
                 opacity: 0,
@@ -240,15 +279,22 @@ define(function (require, exports, module) {
             }, function () {
                 attribute.css(bg, 'display', 'none');
                 options.onclose.call(dialog);
+
+                if(data.type(callback) === 'function'){
+                    callback.call(the);
+                }
             });
 
             return the;
         },
+
+
         /**
          * 重新定位对话框
+         * @param {Function} [callback] 打开之后回调
          * @returns {Dialog}
          */
-        position: function () {
+        position: function (callback) {
             var the = this;
             var options = the.options;
             var pos = the._position();
@@ -256,10 +302,91 @@ define(function (require, exports, module) {
             animation.animate(the.dialog, pos, {
                 duration: options.duration,
                 easing: options.easing
+            }, function () {
+                if(data.type(callback) === 'function'){
+                    callback.call(the);
+                }
             });
 
             return the;
         },
+
+
+        /**
+         * 对话框添加内容，并重新定位
+         * @private
+         */
+        setContent: function (content) {
+            var the = this;
+            var contentType = data.type(content);
+
+            the.ele.innerHTML = '';
+
+            if (contentType === 'string') {
+                content = modification.create('#text', content);
+            }
+
+            modification.insert(content, the.ele, 'beforeend');
+            the.position();
+
+            return the;
+        },
+
+
+        /**
+         * 对话框添加远程地址，并重新定位
+         * @param {String} url 远程地址
+         * @param {Number} [height=400] 高度
+         * @private
+         */
+        setRemote: function (url, height) {
+
+            var the = this;
+            var options = the.options;
+            var iframe = modification.create('iframe', {
+                src: url,
+                'class': iframeClass,
+                style: {
+                    height: height || options.remoteHeight
+                }
+            });
+
+            the.ele.innerHTML = '';
+            modification.insert(iframe, the.ele, 'beforeend');
+            the.position();
+
+            return the;
+        },
+
+
+        /**
+         * 销毁对话框
+         * @param {Function} [callback] 打开之后回调
+         */
+        destroy: function (callback) {
+            var the = this;
+
+            // 关闭对话框
+            the.close(function () {
+                // 从对话框 map 里删除
+                delete(dialogsMap[the.id]);
+
+                // 将内容放到 body 里
+                modification.insert(the.ele, body, 'beforeend');
+
+                // 在 DOM 里删除
+                modification.remove(the.bg);
+
+                // 设置当前实例为 null
+                the = null;
+
+                if(data.type(callback) === 'function'){
+                    callback.call(the);
+                }
+            });
+        },
+
+
         /**
          * 获取对话框需要定位的终点位置
          * @returns {Object}
@@ -299,45 +426,44 @@ define(function (require, exports, module) {
 
             return pos;
         },
+
+
+
+
+
         /**
-         * 对话框添加内容，并重新定位
+         * 晃动对话框以示提醒
          * @private
          */
-        _content: function () {
+        _shake: function () {
             var the = this;
-            var options = the.options;
-            var content = options.content;
-            var contentType = data.type(content);
 
-            the.body.innerHTML = '';
-
-            if (contentType === 'string') {
-                content = modification.create('#text', content);
+            if (the.shakeTimeid) {
+                the.shakeTimeid = 0
+                clearTimeout(the.shakeTimeid);
+                attribute.removeClass(the.dialog, shakeClass);
             }
 
-            modification.insert(content, the.body, 'beforeend');
-            the.position();
-        },
-        /**
-         * 对话框添加远程地址，并重新定位
-         * @private
-         */
-        _remote: function () {
-            var the = this;
-            var options = the.options;
-            var iframe = modification.create('iframe', {
-                src: options.remote,
-                'class': iframeClass,
-                style: {
-                    height: options.remoteHeight
-                }
-            });
+            attribute.addClass(the.dialog, shakeClass);
 
-            the.body.innerHTML = '';
-            modification.insert(iframe, the.body, 'beforeend');
-            the.position();
+            the.shakeTimeid = setTimeout(function () {
+                attribute.removeClass(the.dialog, shakeClass);
+            }, 500);
         }
-    };
+    });
+
+
+    event.on(document, 'keyup', function (eve) {
+        var d;
+
+        if(eve.which === 27 && openDialogs.length){
+            d = dialogsMap[openDialogs[openDialogs.length - 1]];
+
+            if(d && d.constructor === Dialog){
+                d._shake();
+            }
+        }
+    });
 
     /**
      * 对话框，自动实例化
@@ -353,7 +479,8 @@ define(function (require, exports, module) {
      * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
      * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
      * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度
-     * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容
+     * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
+     * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
      * @param [options.onopen] {Function} 对话框打开时回调
      * @param [options.onclose] {Function} 对话框关闭时回调
      * @returns {Dialog}

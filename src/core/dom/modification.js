@@ -19,6 +19,7 @@ define(function (require, exports, module) {
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
     var regDir = />/g;
+    var regComments = /\/\*+([\s\S]*?)\*+\//;
     var head = selector.query('head')[0] || document.documentElement;
 
     module.exports = {
@@ -246,17 +247,35 @@ define(function (require, exports, module) {
         },
         /**
          * 添加样式
-         * @param {String} styleText 样式内容
+         * @param {String|Function} styleText 样式内容或包含样式样式内容的函数
          * @param {String} [id] 已有的 style ID
          *
          * @example
+         * // 直接传入字符串
          * modification.style('body{padding: 10px;}');
          * modification.style('body{padding: 10px;}', 'id');
+         *
+         * // 传入函数
+         * modification.style(function(){
+         *    /****
+         *      body{
+         *          padding: 10px;
+         *      }
+         *    **\/
+         * });
          */
         style: function (styleText, id) {
+//            var style = data.type(id) === 'string'?selector.query('#' + id):null;
             var style = selector.query('#' + id);
+            var styleTextType = data.type(styleText);
 
-            if (style.length) {
+            styleText = String(styleText);
+
+            if(styleTextType==='function'){
+                styleText = (styleText.match(regComments) || ['',''])[1];
+            }
+
+            if (style && style.length) {
                 style = style[0];
             } else {
                 style = this.create('style');
