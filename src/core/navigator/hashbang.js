@@ -7,6 +7,10 @@
 
 define(function (require, exports, module) {
     /**
+     * URL 的 hash 部分解析与设置<br>
+     * 支持的 hashbang 格式为<code>#!/foo/bar/?a=1&b=2&b=3</code><br>
+     * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
+     *
      * @module core/navigator/hashbang
      * @requires util/data
      * @requires core/navigator/querystring

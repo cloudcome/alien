@@ -8,6 +8,9 @@
 
 define(function (require, exports, module) {
     /**
+     * querystring 的解析与设置<br>
+     * 合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
+     *
      * @module core/navigator/querystring
      * @requires util/data
      */

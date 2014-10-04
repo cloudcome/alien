@@ -32,8 +32,8 @@ define(function (require, exports, module) {
          * IE 版本
          *
          * @example
-         * shell.isIE;
-         * // true or false
+         * shell.ieVersion;
+         * // 6/7/8/9/10/11/12...
          */
         ieVersion: (function () {
             return ieVer;

@@ -8,19 +8,19 @@
 define(function (require, exports, module) {
     /**
      * @module ui/msg/index
+     * @requires util/class
+     * @requires util/data
+     * @requires core/event/touch
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires ui/drag/index
+     * @requires ui/dialog/index
+     * @requires ui/msg/style
      */
     'use strict';
 
     require('./style.js');
 
-    var klass = require('../../util/class.js');
-    var data = require('../../util/data.js');
-    var event = require('../../core/event/touch.js');
-    var drag = require('../drag/index.js');
-    var dialog = require('../dialog/index.js');
-    var selector = require('../../core/dom/selector.js');
-    var modification = require('../../core/dom/modification.js');
-    var event = require('../../core/event/touch.js');
     var defaults = {
         width: 300,
         height: 'auto',
@@ -31,6 +31,13 @@ define(function (require, exports, module) {
         buttons: null,
         style: 'muted'
     };
+    var klass = require('../../util/class.js');
+    var data = require('../../util/data.js');
+    var event = require('../../core/event/touch.js');
+    var drag = require('../drag/index.js');
+    var dialog = require('../dialog/index.js');
+    var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
     var index = 0;
     var body = document.body;
     var titleClass = 'alien-ui-msg-title';
@@ -143,16 +150,37 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            // 卸载事件
+            event.un(the.dialog.dialog, 'click tap');
+
             // 销毁对话框
             the.dialog.destroy(function () {
                 // 在 DOM 里删除
                 modification.remove(the.msg);
-
-                the = null;
             });
         }
     });
 
+
+    /**
+     * 实例化一个临时消息框
+     *
+     * @param {Object} [options]
+     * @param [options.width=300] {Number|String} 消息框宽度
+     * @param [options.height="auto"] {Number|String} 消息框高度
+     * @param [options.left="center"] {Number|String} 消息框左距离，默认水平居中
+     * @param [options.top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
+     * @param [options.title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
+     * @param [options.content="Hello world!"] {String} 消息框内容
+     * @param [options.buttons=null] {Array|null} 消息框按钮，参考：<code>[{"确定": fn1, "取消": fn2}]</code>
+     * @param [options.style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
+     *
+     * @example
+     * var m1 = msg(options);
+     *
+     * // 只有一个公共方法
+     * m1.destroy();
+     */
     module.exports = function (options) {
         options = data.extend(!0, {}, defaults, options);
 

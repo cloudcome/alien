@@ -6,6 +6,14 @@
 
 
 define(function (require, exports, module) {
+    /**
+     * 文档准备完毕后回调
+     *
+     * @module core/event/ready
+     * @requires core/event/base
+     * @requires util/data
+     */
+
     'use strict';
 
     var event = require('./base.js');
@@ -14,11 +22,7 @@ define(function (require, exports, module) {
     var isReady;
 
     /**
-     * @module core/event/ready
-     * @requires core/event/base
-     * @requires util/data
-     *
-     * 文档准备完毕后回调
+     * 监听准备完毕后回调或文档已准备立即回调
      * @param {Function} callback 回调
      * @exports core/event/ready
      *

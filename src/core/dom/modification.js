@@ -30,7 +30,7 @@ define(function (require, exports, module) {
          * @returns {NodeList|HTMLElement}
          *
          * @example
-         * modification.parse('<div/>');
+         * modification.parse('&lt;div/>');
          * // => HTMLDIVElement
          */
         parse: function (htmlString) {
@@ -102,7 +102,7 @@ define(function (require, exports, module) {
          * @param {Object} target 目标
          * @param {String} position 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
          * @param {Boolean} [isReturnSource] 是否返回源，默认false
-         * @returns {HTMLElement|Node|null}
+         * @returns {Object|null}
          *
          * @example
          * // - beforebegin
@@ -188,13 +188,14 @@ define(function (require, exports, module) {
                 }
             }
         },
+
         /**
          * 元素外层追加一层
          * @param {HTMLElement|Node} source 元素
          * @param {String} htmlstring html字符串
          *
          * @example
-         * modification.wrap(ele, '<div/>');
+         * modification.wrap(ele, '&lt;div/&gt;');
          */
         wrap: function (source, htmlstring) {
             var target = this.parse(htmlstring);
@@ -245,6 +246,8 @@ define(function (require, exports, module) {
                 }
             }
         },
+
+
         /**
          * 添加样式
          * @param {String|Function} styleText 样式内容或包含样式样式内容的函数
@@ -262,6 +265,7 @@ define(function (require, exports, module) {
          *          padding: 10px;
          *      }
          *    **\/
+         * //   ^ 上面这里多打了个反斜杠，是因为这部分是写在注释里的，在实际书写的是要去掉的
          * });
          */
         style: function (styleText, id) {

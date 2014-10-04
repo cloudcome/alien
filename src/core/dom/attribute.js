@@ -188,19 +188,30 @@ define(function (require, exports, module) {
          * @example
          * // set
          * attribute.data(ele, 'abc', 123);
-         * attribute.data(ele, 'abc', {
+         * attribute.data(ele, 'def', {
          *    a: 1,
          *    b: 2
          * });
+         * // => <div data-abc="123" data-def='{"a":1,"b":2}'></div>
+         * // data 逻辑与jquery 的 data 是不一致的，所有的数据都是保存在 DOM 上的
          *
          * // get
          * attribute.data(ele, 'abc');
+         * // => "123"
          * attribute.data(ele, ['abc', 'def']);
+         * // 数据会优先被 JSON 解析，如果解析失败将返回原始字符串
+         * // => {a: 1, b: 2}
          */
         data: function (ele, dataKey, dataVal) {
             return _getSet(arguments, {
                 get: function (dataKey) {
-                    return ele.dataset[_toHumpString(dataKey)];
+                    var ret = ele.dataset[_toHumpString(dataKey)];
+
+                    try{
+                        return JSON.parse(ret);
+                    }catch(err){
+                        return ret;
+                    }
                 },
                 set: function (dataKey, dataVal) {
                     if (data.type(dataVal) === 'object') {

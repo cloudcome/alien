@@ -6,6 +6,21 @@
 
 
 define(function (require, exports, module) {
+    /**
+     * @author ydr.me
+     * @create 2014-09-27 15:51
+     *
+     * @module ui/drag/index
+     * @requires ui/drag/style
+     * @requires util/data
+     * @requires core/event/touch
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/position
+     * @requires core/dom/modification
+     * @requires core/dom/modification
+     */
+
     'use strict';
 
     require('./style.js');
@@ -64,15 +79,19 @@ define(function (require, exports, module) {
         ondragend: noop
     };
     var Drag = klass.create({
-        /**
-         * 构造一个拖拽
-         * @param {HTMLElement} ele 元素
-         * @param {Object} [options] 配置
-         * @constructor
-         */
         constructor: function (ele, options) {
             this.ele = ele;
             this.options = options;
+        },
+        /**
+         * 销毁拖拽
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the.handle, start, the._start);
+            event.un(document, move, the._move);
+            event.un(document, end, the._end);
         },
         /**
          * 初始化
@@ -84,8 +103,8 @@ define(function (require, exports, module) {
             var options = the.options;
             var handle = options.handle ? selector.query(options.handle, ele) : ele;
 
-            handle = handle.length ? handle[0] : ele;
-            event.on(handle, start, the._start.bind(the));
+            the.handle = handle.length ? handle[0] : ele;
+            event.on(the.handle, start, the._start.bind(the));
             event.on(document, move, the._move.bind(the));
             event.on(document, end, the._end.bind(the));
         },
@@ -207,18 +226,8 @@ define(function (require, exports, module) {
     });
 
 
-
-
     /**
      * 实例化一个拖拽对象
-     * @module ui/drag/index
-     * @requires util/data
-     * @requires core/event/touch
-     * @requires core/dom/selector
-     * @requires core/dom/attribute
-     * @requires core/dom/position
-     * @requires core/dom/modification
-     * @requires core/dom/modification
      *
      * @param {HTMLElement} ele 元素
      * @param {Object} [options] 参数配置

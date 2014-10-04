@@ -20,7 +20,7 @@ define(function (require, exports, module) {
          * 单继承
          * @param {Function} constructor 子类
          * @param {Function} superConstructor 父类
-         * @param {Boolean} [isInheritStatic=false] 父类
+         * @param {Boolean} [isCopyStatic=false] 是否复制静态方法
          * @link https://github.com/joyent/node/blob/master/lib/util.js#L628
          *
          * @example
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
          * // 这里开始写子类的原型方法
          * Child.prototype = {};
          */
-        inherit: function (constructor, superConstructor, isInheritStatic) {
+        inherit: function (constructor, superConstructor, isCopyStatic) {
             constructor.super_ = superConstructor;
 //            var F = function () {
 //                // ignore
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            if (isInheritStatic) {
+            if (isCopyStatic) {
                 data.extend(!0, constructor, superConstructor);
             }
         },

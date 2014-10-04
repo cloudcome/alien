@@ -7,6 +7,8 @@
 
 define(function (require, exports, module) {
     /**
+     * 扩展触摸事件支持
+     *
      * @module core/event/touch
      * @requires core/event/base
      * @requires core/dom/attribute
@@ -219,5 +221,9 @@ define(function (require, exports, module) {
         return createEvent;
     }
 
+    /**
+     * 出口
+     * @type {*|exports}
+     */
     module.exports = event;
 });

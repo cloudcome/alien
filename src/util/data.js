@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         /**
          * 判断数据类型，结果全部为小写<br>
          * 原始数据类型：boolean、number、string、undefined、symbol
-         * @param {*} object
+         * @param {*} object 任何对象
          * @returns {string}
          *
          * @example
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
         },
         /**
          * 遍历元素
-         * @param {Array/Object} data  数组
+         * @param {Array/Object} list  数组、可枚举对象
          * @param {Function(this:data, key, val)} callback  回调，返回false时停止遍历
          * @param {*} [context] 上下文
          *
@@ -135,10 +135,10 @@ define(function (require, exports, module) {
          * // 返回 false 时将退出当前遍历
          * data.each(list, function(key, val){});
          */
-        each: function (data, callback, context) {
+        each: function (list, callback, context) {
             var i;
             var j;
-            var likeArray = this.toArray(data);
+            var likeArray = this.toArray(list);
 
             // 数组 或 类似数组
             if (likeArray.length) {
@@ -150,11 +150,11 @@ define(function (require, exports, module) {
                 }
             }
             // 纯对象
-            else if (data !== null && data !== udf) {
-                for (i in data) {
-                    if (data.hasOwnProperty(i)) {
-                        context = context || data[i];
-                        if (callback.call(context, i, data[i]) === false) {
+            else if (list !== null && list !== udf) {
+                for (i in list) {
+                    if (list.hasOwnProperty(i)) {
+                        context = context || list[i];
+                        if (callback.call(context, i, list[i]) === false) {
                             break;
                         }
                     }

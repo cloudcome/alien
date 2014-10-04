@@ -1,16 +1,20 @@
-/*!
- * index.js
- * @author ydr.me
- * @create 2014-10-04 02:33
- */
-
-
 define(function (require, exports, module) {
     /**
-     * 对话框
      * @module ui/dialog/index
+     * @requires ui/dialog/style
      * @requires ui/drag/index
+     * @requires util/class
+     * @requires util/data
+     * @requires core/dom/modification
+     * @requires core/dom/selector
+     * @requires core/dom/position
+     * @requires core/dom/attribute
+     * @requires core/dom/animation
+     * @requires core/event/touch
+     * @author ydr.me
+     * @create 2014-10-04 02:33
      */
+
     'use strict';
 
     require('./style.js');
@@ -61,11 +65,6 @@ define(function (require, exports, module) {
     var openDialogs = [];
     var dialogsMap = {};
     var Dialog = klass.create({
-        /**
-         * 对话框构造函数
-         * @param {HTMLElement|Node} ele 元素
-         * @param {Object} [options] 参数
-         */
         constructor: function (ele, options) {
             this.ele = ele;
             this.options = options;
@@ -374,11 +373,12 @@ define(function (require, exports, module) {
                 // 将内容放到 body 里
                 modification.insert(the.ele, body, 'beforeend');
 
+                // 移除事件监听
+                event.un(the.dialog, 'click tap');
+                event.un(the.bg, 'click tap');
+
                 // 在 DOM 里删除
                 modification.remove(the.bg);
-
-                // 设置当前实例为 null
-                the = null;
 
                 if(data.type(callback) === 'function'){
                     callback.call(the);
@@ -466,7 +466,8 @@ define(function (require, exports, module) {
     });
 
     /**
-     * 对话框，自动实例化
+     * 实例化一个模态交互对话框
+     *
      * @param ele {HTMLElement|Node} 元素
      * @param [options] {Object}
      * @param [options.width=500] {Number|String} 对话框宽度
@@ -475,10 +476,10 @@ define(function (require, exports, module) {
      * @param [options.top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
      * @param [options.title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
      * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，当有标题栏存在的时候
-     * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间
+     * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
      * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
      * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
-     * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度
+     * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
      * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
      * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
      * @param [options.onopen] {Function} 对话框打开时回调

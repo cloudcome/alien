@@ -7,6 +7,8 @@
 
 define(function (require, exports, module) {
     /**
+     * 选择器返回结果全部都是数组，即使是返回的只有1个元素
+     *
      * @module core/dom/selector
      * @requires util/data
      * @requires core/navigator/compatible
@@ -196,7 +198,9 @@ define(function (require, exports, module) {
          * @returns {Array} 过滤后的节点集合
          *
          * @example
-         * selector.filter(ele, 'div');
+         * selector.filter(ele, function(){
+         *     return this.nodeName === 'DIV';
+         * });
          * // => [div, div, ...]
          */
         filter: function (nodeList, filter) {

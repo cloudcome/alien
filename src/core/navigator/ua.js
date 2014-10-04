@@ -9,6 +9,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/ua
+     * @see https://github.com/faisalman/ua-parser-js/blob/master/src/ua-parser.js
+     * @author cloudcome
      */
     'use strict';
 
