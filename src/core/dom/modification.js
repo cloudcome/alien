@@ -15,12 +15,12 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var selector = require('./selector.js');
+    var domSelector = require('./selector.js');
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
     var regDir = />/g;
     var regComments = /\/\*+([\s\S]*?)\*+\//;
-    var head = selector.query('head')[0] || document.documentElement;
+    var head = domSelector.query('head')[0] || document.documentElement;
 
     module.exports = {
         /**
@@ -176,7 +176,7 @@ define(function (require, exports, module) {
          * modification.remove(ele);
          */
         remove: function (ele) {
-            var parent = selector.parent(ele);
+            var parent = domSelector.parent(ele);
 
             if (parent.length) {
                 parent[0].removeChild(ele);
@@ -231,7 +231,7 @@ define(function (require, exports, module) {
             // .div1 .p1 .div2
             // => .div2 .p1 .div1
             data.each(selectors.reverse(), function (index, selector) {
-                if (selector.isMatched(source.parentNode, selector)) {
+                if (domSelector.isMatched(source.parentNode, selector)) {
                     _removeParent(source);
                 } else {
                     return !1;
@@ -269,8 +269,8 @@ define(function (require, exports, module) {
          * });
          */
         style: function (styleText, id) {
-//            var style = data.type(id) === 'string'?selector.query('#' + id):null;
-            var style = selector.query('#' + id);
+//            var style = data.type(id) === 'string'?domSelector.query('#' + id):null;
+            var style = domSelector.query('#' + id);
             var styleTextType = data.type(styleText);
 
             styleText = String(styleText);

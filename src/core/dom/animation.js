@@ -61,7 +61,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var key = 'alien-core-animation-'+Date.now();
+    var key = 'alien-core-animation-' + Date.now();
     var index = 0;
     var animationMap = {};
     window.attribute = attribute;
@@ -88,7 +88,7 @@ define(function (require, exports, module) {
                 return;
             }
 
-            if(!ele[key]){
+            if (!ele[key]) {
                 ele[key] = ++index;
             }
 
@@ -102,7 +102,7 @@ define(function (require, exports, module) {
             var timeid = 0;
 
             // 如果正在动画，取消后续操作
-            if(animationMap[id]){
+            if (animationMap[id]) {
                 return;
             }
 
@@ -147,10 +147,13 @@ define(function (require, exports, module) {
 
             event.on(ele, transitionendEventType, listener);
             options = data.extend({}, defaults, options);
-            easing = easingMap[options.easing];
-            easing = !easing && !regCubic.test(options.easing) ?
-                easingMap[defaults.easing] :
-                defaults.easing;
+
+            if (regCubic.test(options.easing)) {
+                easing = options.easing;
+            } else {
+                easing = easingMap[options.easing];
+                easing = easing || easingMap[defaults.easing];
+            }
 
             data.each(to, function (key) {
                 keys.push(key);
@@ -183,10 +186,9 @@ define(function (require, exports, module) {
             var id = ele[key];
             var to;
 
-            if(!id || !(to = animationMap[id])){
+            if (!id || !(to = animationMap[id])) {
                 return !1;
             }
-
 
 
             attribute.css(ele, 'transition-duration', '');
@@ -197,7 +199,7 @@ define(function (require, exports, module) {
                 event.dispatch(ele, et);
             });
 
-            if(!toEnd){
+            if (!toEnd) {
                 setTimeout(function () {
                     data.each(to, function (key) {
                         attribute.css(ele, key, attribute.css(ele, key));

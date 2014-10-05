@@ -23,6 +23,12 @@
 * 适合桌面现代浏览器、手机现代浏览器
 
 
+# 示例
+1. 下载下来
+2. 然后使用 [sts](https://www.npmjs.org/package/sts) 启动根目录即可
+3. 打开`http://localhost:端口号/examples/ui/dialog.html`
+
+
 # 内容
 * util
 	* data.js----------------------------------包含数据的遍历、判断
