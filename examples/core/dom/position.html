@@ -59,6 +59,15 @@
             left: 40px;
             background: #f5f5f5;
         }
+
+        .hide{
+            display: none;
+        }
+
+        #div3{
+            width: 200px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -69,12 +78,23 @@
     <div id="demo">demo</div>
 </div>
 
+
+
+下面有一个被隐藏嵌套导致不可见的 div，层级为：.hide.hide1>.hide.hide2>#div3，尺寸为200*100
+<div class="hide hide1">
+    <div class="hide hide2">
+        <div id="div3"></div>
+    </div>
+</div>
+
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var position = require('/src/core/dom/position.js');
+        var attribute = require('/src/core/dom/attribute.js');
         var ret = document.getElementById('ret');
         var demo = document.getElementById('demo');
+        var div3 = document.getElementById('div3');
         var str = '';
         var key = 'width';
 
@@ -85,6 +105,10 @@
         str += '<br>' + key + '设置为 200<br>';
         position[key](demo, 200);
         str += key + ' = ' + position[key](demo);
+
+        console.log(position.width(div3));
+//        console.log(attribute.state(div3));
+//        console.log(attribute.state(div3, 'show'));
 
         ret.innerHTML = str;
     });

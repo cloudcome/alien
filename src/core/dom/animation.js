@@ -18,42 +18,19 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var udf;
     var attribute = require('./attribute.js');
     var data = require('../../util/data.js');
+    var eeeing = require('../../util/easing.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
-    var easingMap = {
-        'in': 'ease-in',
-        'out': 'ease-out',
-        'in-out': 'ease-in-out',
-        'snap': 'cubic-bezier(0,1,.5,1)',
-        'linear': 'cubic-bezier(.25,.25,.75,.75)',
-        'ease-in-quad': 'cubic-bezier(.55,.085,.68,.53)',
-        'ease-in-cubic': 'cubic-bezier(.55,.055,.675,.19)',
-        'ease-in-quart': 'cubic-bezier(.895,.03,.685,.22)',
-        'ease-in-quint': 'cubic-bezier(.755,.05,.855,.06)',
-        'ease-in-sine': 'cubic-bezier(.470,0,.745,.715)',
-        'ease-in-expo': 'cubic-bezier(.950,.05,.795,.035)',
-        'ease-in-circ': 'cubic-bezier(.6,.04,.98,.335)',
-        'ease-in-back': 'cubic-bezier(.6,-.28,.735,.045)',
-        'ease-out-quad': 'cubic-bezier(.25,.46,.45,.94)',
-        'ease-out-cubic': 'cubic-bezier(.215,.61,.355,1)',
-        'ease-out-quart': 'cubic-bezier(.165,.84,.44,1)',
-        'ease-out-quint': 'cubic-bezier(.23, 1,.32,1)',
-        'ease-out-sine': 'cubic-bezier(.39,.575,.565,1)',
-        'ease-out-expo': 'cubic-bezier(.19,1,.22,1)',
-        'ease-out-circ': 'cubic-bezier(.075,.82,.165,1)',
-        'ease-out-back': 'cubic-bezier(.175,.885,.32,1.275)',
-        'ease-in-out-quart': 'cubic-bezier(.770,0,.175,1)',
-        'ease-in-out-quint': 'cubic-bezier(.860,0,.07,1)',
-        'ease-in-out-sine': 'cubic-bezier(.445,.05,.55,.95)',
-        'ease-in-out-expo': 'cubic-bezier(1,0,0,1)',
-        'ease-in-out-circ': 'cubic-bezier(.785,.135,.15,.86)',
-        'ease-in-out-back': 'cubic-bezier(.68,-.55,.265,1.55)'
+    var cssDefaults = {
+        easing: 'in-out',
+        duration: 789,
+        delay: 0
     };
-    var regCubic = /^cubic-bezier\(/i;
-    var defaults = {
-        easing: 'linear',
+    var jsDefaults = {
+        easing: 'swing',
         duration: 789,
         delay: 0
     };
@@ -64,17 +41,24 @@ define(function (require, exports, module) {
     var key = 'alien-core-animation-' + Date.now();
     var index = 0;
     var animationMap = {};
-    window.attribute = attribute;
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
 
     module.exports = {
         /**
          * 动画，不会判断当前动画终点与当前是否一致
+         *
          * @param {HTMLElement|Node} ele 元素
          * @param {Object} to 终点
          * @param {Object} [options] 配置
-         * @param {String} [options.easing] 缓冲类型，默认为`liner`
-         * @param {Number} [options.duration] 动画时间，默认789ms
-         * @param {Number} [options.delay] 延迟时间，默认0
+         * @param {String} [options.easing] 缓冲类型，默认为`in-out`，内置的有
+         * in、out、in-out、snap、linear、ease-in-quad、ease-in-cubic、ease-in-quart、
+         * ease-in-sine、ease-in-expo、ease-in-circ、ease-in-back、ease-out-quad、
+         * ease-out-cubic、ease-out-quart、ease-out-sine、ease-out-expo、ease-out-circ、
+         * ease-out-back、ease-in-out-quad、ease-in-out-cubic、ease-in-out-quart、ease-in-out-sine、
+         * ease-in-out-expo、ease-in-out-circ、ease-in-out-back，也可以提供自定义的缓冲类型，格式为 css3的
+         * `ransition-timing-function`的值，为`cubic-bezier(...)`
+         * @param {Number} [options.duration] 动画时间，默认789，单位ms
+         * @param {Number} [options.delay] 延迟时间，默认0，单位ms
          * @param {Function} [callback] 回调
          *
          * @example
@@ -98,8 +82,8 @@ define(function (require, exports, module) {
             var keys = [];
             var listener;
             var hasDispatch = 0;
-            var easing = '';
             var timeid = 0;
+            var easing = '';
 
             // 如果正在动画，取消后续操作
             if (animationMap[id]) {
@@ -146,13 +130,11 @@ define(function (require, exports, module) {
             };
 
             event.on(ele, transitionendEventType, listener);
-            options = data.extend({}, defaults, options);
+            options = data.extend({}, cssDefaults, options);
+            easing = eeeing.css3[options.easing];
 
-            if (regCubic.test(options.easing)) {
+            if(!easing){
                 easing = options.easing;
-            } else {
-                easing = easingMap[options.easing];
-                easing = easing || easingMap[defaults.easing];
             }
 
             data.each(to, function (key) {
@@ -172,11 +154,13 @@ define(function (require, exports, module) {
 
             timeid = setTimeout(listener, options.duration + options.delay + 50);
         },
+
+
         /**
          * 停止当前动画
          * @param ele {HTMLElement|Node} 元素
          * @param [toEnd=false] {Boolean} 是否立即停止到动画终点，默认 false
-         * @returns {boolean}
+         * @returns {undefined}
          *
          * @example
          * animation.top(ele, true);
@@ -187,9 +171,14 @@ define(function (require, exports, module) {
             var to;
 
             if (!id || !(to = animationMap[id])) {
-                return !1;
+                return;
             }
 
+            if (!toEnd) {
+                data.each(to, function (key) {
+                    attribute.css(ele, key, attribute.css(ele, key));
+                });
+            }
 
             attribute.css(ele, 'transition-duration', '');
             attribute.css(ele, 'transition-delay', '');
@@ -198,20 +187,113 @@ define(function (require, exports, module) {
             data.each(transitionendEventType.split(' '), function (i, et) {
                 event.dispatch(ele, et);
             });
-
-            if (!toEnd) {
-                setTimeout(function () {
-                    data.each(to, function (key) {
-                        attribute.css(ele, key, attribute.css(ele, key));
-                    });
-                }, 0);
-            }
         },
-        /**
-         * @todo 增加平滑滚动
-         */
-        scrollTo: function () {
 
+
+
+        /**
+         * 平滑滚动
+         * @param {HTMLElement|Node|window|document} ele 要滚动的元素
+         * @param {Object} to 终点
+         * @param {Object} [to.x] x轴终点
+         * @param {Object} [to.y] y轴终点
+         * @param {Object} options 配置
+         * @param {Object} [options.duration] 动画时间，默认789，单位 ms
+         * @param {Object} [options.easing] 动画缓冲，默认 swing
+         * 默认配置的缓冲函数有：linear、easeIn、easeOut、easeBoth、easeInStrong、easeOutStrong
+         * easeBothStrong、easeOutQuart、easeInOutExpo、easeOutExpo、swing、swingFrom、swingTo
+         * backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有一个参数t，表示时间比 = 已耗时 / 总时间，
+         * 计算值=开始值 + ( 结束值 - 开始值 ) * 时间比
+         * @param {Object} [options.delay] 动画延时，默认0，单位ms
+         * @param {Function} [callback] 回调
+         * @returns {undefined}
+         *
+         * @example
+         * animation.scrollTo(window, {
+         *    x: 100,
+         *    y: 100
+         * }, {
+         *    duration: 1000,
+         *    easing: 'linear',
+         *    delay: 100
+         * }, function(){
+         *    alert('OK');
+         * });
+         */
+        scrollTo: function (ele, to, options, callback) {
+            var args = arguments;
+            var from = {
+                x: attribute.scrollLeft(ele),
+                y: attribute.scrollTop(ele)
+            };
+            var totalDistance;
+            var pastTime = 0;
+            var beginTimestamp;
+
+            if (data.type(args[3]) !== 'function') {
+                callback = noop;
+            }
+
+            to = to || {};
+            to.x = to.x === udf ? from.x : to.x;
+            to.y = to.y === udf ? from.y : to.y;
+            options = data.extend(!0, {}, jsDefaults, options);
+
+            totalDistance = {
+                x: to.x - from.x,
+                y: to.y - from.y
+            };
+
+            if (!totalDistance.x && !totalDistance.y) {
+                return callback.call(ele);
+            }
+
+            setTimeout(_progress, options.delay);
+
+            function _progress() {
+                if (!beginTimestamp) {
+                    beginTimestamp = Date.now();
+                }
+
+                // 时间超过 || 距离超过
+                if (pastTime >= options.duration) {
+                    if(totalDistance.x){
+                        attribute.scrollLeft(ele, to.x);
+                    }
+
+                    if(totalDistance.y){
+                        attribute.scrollTop(ele, to.y);
+                    }
+
+                    callback.call(ele);
+                } else {
+                    window[requestAnimationFrame](function () {
+                        if (!eeeing.js[options.easing]) {
+                            throw new Error('can not find easing name of ' + options.easing);
+                        }
+
+                        pastTime = Date.now() - beginTimestamp;
+
+                        var easing = eeeing.js[options.easing];
+                        // 时间比 = 已耗时 / 总时间
+                        var t = pastTime / options.duration;
+                        // 当前值 = 开始值 + ( 结束值 - 开始值 ) * 时间比
+                        var x = from.x + (to.x - from.x) * easing(t);
+                        var y = from.y + (to.y - from.y) * easing(t);
+
+                        if(totalDistance.x){
+                            attribute.scrollLeft(ele, x);
+                        }
+
+                        if(totalDistance.y){
+                            attribute.scrollTop(ele, y);
+                        }
+
+                        _progress();
+                    });
+                }
+            }
         }
     };
 });
+

@@ -196,10 +196,8 @@ define(function (require, exports, module) {
             attribute.css(dialog, {
                 opacity: 0,
                 visibility: 'visible',
-                width: 0,
-                height: 0,
-                left: winW / 2,
-                top: winH * 2 / 5
+                left: to.left,
+                top: -to.height - 10
             });
 
             animation.animate(bg, {
@@ -242,10 +240,7 @@ define(function (require, exports, module) {
             var bg = the.bg;
             var dialog = the.dialog;
             var options = the.options;
-            var theW = position.width(dialog);
             var theH = position.height(dialog);
-            var theL = position.left(dialog);
-            var theT = position.top(dialog);
 
             if (!the.hasOpen) {
                 return the;
@@ -261,10 +256,7 @@ define(function (require, exports, module) {
 
             animation.animate(dialog, {
                 opacity: 0,
-                width: 0,
-                height: 0,
-                left: theL + theW / 2,
-                top: theT + theH / 2
+                top: -theH - 10
             }, {
                 duration: options.duration,
                 easing: options.easing

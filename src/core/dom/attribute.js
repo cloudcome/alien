@@ -20,6 +20,7 @@ define(function (require, exports, module) {
     var regSpace = /\s+/;
     var data = require('../../util/data.js');
     var compatible = require('../navigator/compatible.js');
+    var selector = require('./selector.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
     // +123.456
     // -123.456
@@ -30,8 +31,8 @@ define(function (require, exports, module) {
         /**
          * 设置、获取元素的属性
          * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} attrkey 特征键、键值对、键数组
-         * @param {String} [attrVal] 特征值
+         * @param {String/Object/Array} key 特征键、键值对、键数组
+         * @param {String} [val] 特征值
          * @returns {*}
          *
          * @example
@@ -46,20 +47,26 @@ define(function (require, exports, module) {
          * attribute.attr(ele, 'href');
          * attribute.attr(ele, ['href', 'title']);
          */
-        attr: function (ele, attrkey, attrVal) {
+        attr: function (ele, key, val) {
+            if(!ele || ele.nodeType !== 1 || !key) {
+                return;
+            }
+
             return _getSet(arguments, {
-                get: function (attrKey) {
-                    return ele.getAttribute(attrKey);
+                get: function (key) {
+                    return ele.getAttribute(key);
                 },
-                set: function (attrkey, attrVal) {
-                    ele.setAttribute(attrkey, attrVal);
+                set: function (key, val) {
+                    ele.setAttribute(key, val);
                 }
             });
         },
+
+        
         /**
          * 判断元素是否包含某个属性
          * @param {HTMLElement} ele 元素
-         * @param {String} attrKey 单个特征
+         * @param {String} key 单个特征
          * @returns {boolean}
          *
          * @example
@@ -67,32 +74,44 @@ define(function (require, exports, module) {
          * attribute.hasAttr(ele, 'href');
          * // => true
          */
-        hasAttr: function (ele, attrKey) {
-            return ele.hasAttribute(attrKey);
+        hasAttr: function (ele, key) {
+            if(!ele || ele.nodeType !== 1 || !key) {
+                return !1;
+            }
+
+            return ele.hasAttribute(key);
         },
+
+
         /**
          * 移除元素的某个属性
          * @param {HTMLElement} ele 元素
-         * @param {String} [attrKey] 单个或多个特征属性，为空表示移除所有特征
+         * @param {String} [key] 单个或多个特征属性，为空表示移除所有特征
          *
          * @example
          * // 移除
          * attribute.removeAttr(ele, 'href');
          */
-        removeAttr: function (ele, attrKey) {
-            var attrKeys = attrKey ? attrKey.split(regSpace) : ele.attributes;
+        removeAttr: function (ele, key) {
+            if(!ele || ele.nodeType !== 1 ) {
+                return;
+            }
 
-            data.each(attrKeys, function (index, attrKey) {
-                if (attrKey) {
-                    ele.removeAttribute(data.type(attrKey) === 'attr' ? attrKey.nodeName : attrKey);
+            var attrKeys = key ? key.split(regSpace) : ele.attributes;
+
+            data.each(attrKeys, function (index, key) {
+                if (key) {
+                    ele.removeAttribute(data.type(key) === 'attr' ? key.nodeName : key);
                 }
             });
         },
+
+
         /**
          * 设置、获取元素的特性
          * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} propKey 特性键、特性键值对、特性组
-         * @param {String} [propVal] 特性值
+         * @param {String/Object/Array} key 特性键、特性键值对、特性组
+         * @param {String} [val] 特性值
          * @returns {*}
          *
          * @example
@@ -107,16 +126,18 @@ define(function (require, exports, module) {
          * attribute.prop(ele, 'hi');
          * attribute.prop(ele, ['hi', 'ha']);
          */
-        prop: function (ele, propKey, propVal) {
+        prop: function (ele, key, val) {
             return _getSet(arguments, {
-                get: function (propKey) {
-                    return ele[propKey];
+                get: function (key) {
+                    return ele[key];
                 },
-                set: function (propKey, propVal) {
-                    ele[propKey] = propVal;
+                set: function (key, val) {
+                    ele[key] = val;
                 }
             });
         },
+
+
         /**
          * 修正 css 键值
          * @param {String} key css 键
@@ -136,9 +157,11 @@ define(function (require, exports, module) {
                 val: _toCssVal(key, val)
             };
         },
+
+
         /**
          * 设置、获取元素的样式
-         * @param {HTMLElement} ele 元素
+         * @param {HTMLElement|Node} ele 元素
          * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
          *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
          * @param {String|Number} [val] 样式属性值
@@ -158,6 +181,10 @@ define(function (require, exports, module) {
          * attribute.css(ele, ['width','height']);
          */
         css: function (ele, key, val) {
+            if(!ele || ele.nodeType !== 1 || !key) {
+                return;
+            }
+
             var the = this;
 
             return _getSet(arguments, {
@@ -178,6 +205,62 @@ define(function (require, exports, module) {
                 }
             });
         },
+
+
+        /**
+         * 设置、获取元素的滚动条高度
+         * @param ele {HTMLElement|Node|window|document} 元素
+         * @param [top] {Number} 高度
+         * @returns {number|*}
+         *
+         * @example
+         * // get
+         * attribute.scrollTop(ele);
+         *
+         * // set
+         * attribute.scrollTop(ele, 100);
+         */
+        scrollTop: function (ele, top) {
+            if (top === undefined) {
+                return _isDispute(ele) ? Math.abs(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
+            }
+
+            if (_isDispute(ele)) {
+                document.body.scrollTop = top;
+                document.documentElement.scrollTop = top;
+            } else {
+                ele.scrollTop = top;
+            }
+        },
+
+
+        /**
+         * 设置、获取元素的滚动条左距离
+         * @param ele {HTMLElement|Node|window|document} 元素
+         * @param [left] {Number} 高度
+         * @returns {number|*}
+         *
+         * @example
+         * // get
+         * attribute.scrollLeft(ele);
+         *
+         * // set
+         * attribute.scrollLeft(ele, 100);
+         */
+        scrollLeft: function (ele, left) {
+            if (left === undefined) {
+                return _isDispute(ele) ? Math.abs(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
+            }
+
+            if (_isDispute(ele)) {
+                document.body.scrollLeft = left;
+                document.documentElement.scrollLeft = left;
+            } else {
+                ele.scrollLeft = left;
+            }
+        },
+
+
         /**
          * 设置、获取元素的数据集
          * @param {HTMLElement} ele 元素
@@ -202,34 +285,40 @@ define(function (require, exports, module) {
          * // 数据会优先被 JSON 解析，如果解析失败将返回原始字符串
          * // => {a: 1, b: 2}
          */
-        data: function (ele, dataKey, dataVal) {
-            return _getSet(arguments, {
-                get: function (dataKey) {
-                    var ret = ele.dataset[_toHumpString(dataKey)];
+        data: function (ele, key, val) {
+            if(!ele || ele.nodeType !== 1 || !key) {
+                return;
+            }
 
-                    try{
+            return _getSet(arguments, {
+                get: function (key) {
+                    var ret = ele.dataset[_toHumpString(key)];
+
+                    try {
                         return JSON.parse(ret);
-                    }catch(err){
+                    } catch (err) {
                         return ret;
                     }
                 },
-                set: function (dataKey, dataVal) {
-                    if (data.type(dataVal) === 'object') {
+                set: function (key, val) {
+                    if (data.type(val) === 'object') {
                         try {
-                            dataVal = JSON.stringify(dataVal);
+                            val = JSON.stringify(val);
                         } catch (err) {
-                            dataVal = '';
+                            val = '';
                         }
                     }
-                    ele.dataset[_toHumpString(dataKey)] = dataVal;
+                    ele.dataset[_toHumpString(key)] = val;
                 }
             });
         },
+
+
         /**
          * 设置、获取元素的innerHTML
          * @param {HTMLElement} ele 元素
          * @param {String}      [html] html字符串
-         * @returns {String/Undefined}
+         * @returns {String|undefined}
          *
          * @example
          * // set
@@ -239,6 +328,10 @@ define(function (require, exports, module) {
          * attribute.html(ele);
          */
         html: function (ele, html) {
+            if(!ele || ele.nodeType !== 1) {
+                return;
+            }
+
             return _getSet(arguments, {
                 get: function () {
                     return ele.innerHTML;
@@ -248,11 +341,13 @@ define(function (require, exports, module) {
                 }
             }, 1);
         },
+
+
         /**
          * 设置、获取元素的innerText
          * @param {HTMLElement} ele 元素
          * @param {String}      [text]  text字符串
-         * @returns {String/Undefined}
+         * @returns {String|undefined}
          *
          * @example
          * // set
@@ -262,6 +357,10 @@ define(function (require, exports, module) {
          * attribute.text(ele);
          */
         text: function (ele, text) {
+            if(!ele || ele.nodeType !== 1) {
+                return;
+            }
+
             return _getSet(arguments, {
                 get: function () {
                     return ele.innerText;
@@ -271,24 +370,32 @@ define(function (require, exports, module) {
                 }
             }, 1);
         },
+
+
         /**
          * 添加元素的className
          * @param {HTMLElement} ele 元素
          * @param {String} className 多个className使用空格分开
-         * @returns {Undefined}
+         * @returns {undefined}
          *
          * @example
          * attribute.addClass(ele, 'class');
          * attribute.addClass(ele, 'class1 class2');
          */
         addClass: function (ele, className) {
+            if(!ele || ele.nodeType !== 1) {
+                return;
+            }
+
             _class(ele, 0, className);
         },
+
+
         /**
          * 移除元素的className
          * @param {HTMLElement} ele 元素
          * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
-         * @returns {Undefined}
+         * @returns {undefined}
          *
          * @example
          * // remove all className
@@ -297,8 +404,14 @@ define(function (require, exports, module) {
          * attribute.removeClass(ele, 'class1 class2');
          */
         removeClass: function (ele, className) {
+            if(!ele || ele.nodeType !== 1) {
+                return;
+            }
+
             _class(ele, 1, className);
         },
+
+
         /**
          * 判断元素是否包含某个className
          * @param {HTMLElement} ele 元素
@@ -309,7 +422,72 @@ define(function (require, exports, module) {
          * attribute.hasClass(ele, 'class');
          */
         hasClass: function (ele, className) {
+            if(!ele || ele.nodeType !== 1) {
+                return !1;
+            }
+
             return _class(ele, 2, className);
+        },
+
+        /**
+         * 获得某元素的状况，可能值为`show`或`hide`
+         * @param {HTMLElement|Node} ele 元素
+         * @param {String} [state] 设置状态值，`show`或者`hide`
+         * @returns {String|Array} 获取值为`show`或`hide`，设置时返回改变过的 dom 数组
+         */
+        state: function (ele, state) {
+            var nowState;
+            var temp;
+            var ret = [];
+            var key = 'display';
+            var none = 'none';
+            var block = 'block';
+
+            // get
+            if(!state){
+                if(!ele || ele.nodeType !== 1) {
+                    return 'hide';
+                }
+
+                // 本身就是隐藏的
+                if(this.css(ele, key) === none) {
+                    return 'hide';
+                }
+
+                while((temp = selector.parent(ele)) && temp.length){
+                    ele = temp[0];
+
+                    if(this.css(ele, key) === none) {
+                        return 'hide';
+                    }
+                }
+
+                return 'show';
+            }
+
+            // set
+            nowState = this.state(ele);
+
+            if(nowState === state || !ele || ele.nodeType !== 1) {
+                return ret;
+            }
+
+            if(nowState === 'show'){
+                ele.style.display = none;
+            }else{
+                while(this.state(ele)!== state ){
+                    if(this.css(ele, key) === none){
+                        this.css(ele, key, block);
+                        ret.push(ele);
+                    }
+
+                    if((temp = selector.parent(ele)) && temp.length){
+                        ele = temp[0];
+                    }
+                }
+            }
+
+            return ret;
         }
     };
 
@@ -358,6 +536,17 @@ define(function (require, exports, module) {
         }
 
         return val;
+    }
+
+
+    /**
+     * 是否为有争议的 ele
+     * @param ele
+     * @returns {boolean}
+     * @private
+     */
+    function _isDispute(ele) {
+        return ele === window || ele === document || ele === document.body || ele === document.documentElement;
     }
 
 

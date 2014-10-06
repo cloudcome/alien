@@ -111,21 +111,26 @@ define(function (require, exports, module) {
             ele = args[0];
             eleType = data.type(ele);
 
-            if (argsLength === 1) {
-                switch (eleType) {
-                    case 'element':
-                        return ele.getBoundingClientRect()[key];
+            // 切换显隐
+            return _swap(ele, function () {
+                // get
+                if (argsLength === 1) {
+                    switch (eleType) {
+                        case 'element':
+                            return ele.getBoundingClientRect()[key];
 
-                    case 'window':
-                        return window['inner' + (key === 'width'?'Width':'Height')];
+                        case 'window':
+                            return window['inner' + (key === 'width'?'Width':'Height')];
 
-                    case 'document':
-                        return document.documentElement.getBoundingClientRect()[key];
+                        case 'document':
+                            return document.documentElement.getBoundingClientRect()[key];
+                    }
                 }
-
-            } else if (argsLength === 2 && eleType === 'element' && data.type(args[1]) === 'number') {
-                _setBoundingClientRect(ele, key, args[1]);
-            }
+                // set
+                else if (argsLength === 2 && eleType === 'element' && data.type(args[1]) === 'number') {
+                    _setBoundingClientRect(ele, key, args[1]);
+                }
+            });
         }
     }
 
@@ -168,6 +173,31 @@ define(function (require, exports, module) {
         } else {
             css = _parseFloat(attribute.css(ele, key));
             attribute.css(ele, key, css + deleta);
+        }
+    }
+
+    /**
+     * 切换显隐状态来计算元素尺寸
+     * @param {HTMLElement} ele 元素
+     * @param {Function} doWhat 做
+     * @private
+     */
+    function _swap(ele, doWhat) {
+        var eles;
+        var ret;
+
+        if(attribute.state(ele) === 'show'){
+            return doWhat(ele);
+        }else{
+            eles = attribute.state(ele, 'show');
+
+            ret = doWhat(ele);
+
+            data.each(eles, function (index, ele) {
+                ele.style.display = '';
+            });
+
+            return ret;
         }
     }
 });

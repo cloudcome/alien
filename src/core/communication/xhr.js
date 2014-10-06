@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
     var noop = function () {
-
+        // ignore
     };
     var defaults = {
         // 请求地址
@@ -41,10 +41,12 @@ define(function (require, exports, module) {
         username: null,
         // 请求鉴权密码
         password: null,
-        // 请求成功回调
+        // 覆盖 MIME
+        mimeType: null,
+        // 请求并解析成功回调
         // this：xhr
         // 参数1：响应结果
-        onload: noop,
+        onsuccess: noop,
         // 请求失败回调
         // this：xhr
         // 参数1：错误对象
@@ -55,6 +57,7 @@ define(function (require, exports, module) {
         // 参数2：当前百分比
         onprogress: noop
     };
+    var index = 0;
 
     module.exports = {
         /**
@@ -81,7 +84,10 @@ define(function (require, exports, module) {
                 options.headers = {};
             }
 
-            options.headers['X-Requested-With'] = 'XMLHttpRequest';
+            if(!options.headers['X-Requested-With']){
+                options.headers['X-Requested-With'] = 'XMLHttpRequest';
+            }
+
             options.method = options.method.toUpperCase();
 
             var xhr = new XMLHttpRequest();
@@ -98,10 +104,11 @@ define(function (require, exports, module) {
                             } catch (err) {
                                 options.onerror.call(xhr, err);
                             }
+
                             break;
 
                         default:
-                            options.onload.call(xhr, responseText);
+                            options.onsuccess.call(xhr, responseText);
                             break;
                     }
                 } else {
@@ -131,6 +138,11 @@ define(function (require, exports, module) {
             };
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
+
+            if(options.mimeType){
+                xhr.overrideMimeType(options.mimeType);
+            }
+
             data.each(options.headers, function (key, val) {
                 xhr.setRequestHeader(key, val);
             });
@@ -151,7 +163,7 @@ define(function (require, exports, module) {
         var url = options.url;
         var query = options.url;
         var querystring = data.type(query) === 'string' ? query : qs.stringify(query);
-        var cache = options.isCache ? '' : '_=' + Date.now();
+        var cache = options.isCache ? '' : '_=' + (++index);
 
         // 删除原有的缓存字符串
         url = options.isCache ? url : url.replace(regCache, '').replace(regEnd, '');

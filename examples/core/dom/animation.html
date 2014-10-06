@@ -29,6 +29,11 @@
             border: 2px solid #ccc;
         }
 
+        #content {
+            font-size: 200px;
+            padding: 100px;
+        }
+
     </style>
 </head>
 <body>
@@ -39,12 +44,18 @@
 <hr/>
 <div id="demo">click</div>
 
+
+<div id="content">这里是一块非常大的内容区域</div>
+
+
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var animation = require('/src/core/dom/animation.js');
         var demo = document.getElementById('demo');
         var ret = document.getElementById('ret');
+
+        window.animation = animation;
 
         demo.onclick = function () {
             animation.animate(demo, {
