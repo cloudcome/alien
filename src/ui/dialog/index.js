@@ -7,7 +7,6 @@ define(function (require, exports, module) {
      * @requires util/data
      * @requires core/dom/modification
      * @requires core/dom/selector
-     * @requires core/dom/position
      * @requires core/dom/attribute
      * @requires core/dom/animation
      * @requires core/event/touch
@@ -23,7 +22,6 @@ define(function (require, exports, module) {
     var drag = require('../drag/index.js');
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
-    var position = require('../../core/dom/position.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
@@ -148,8 +146,8 @@ define(function (require, exports, module) {
         open: function (callback) {
             callback = callback || noop;
 
-            var winW = position.width(window);
-            var winH = position.height(window);
+            var winW = attribute.width(window);
+            var winH = attribute.height(window);
             var the = this;
             var bg = the.bg;
             var dialog = the.dialog;
@@ -240,7 +238,7 @@ define(function (require, exports, module) {
             var bg = the.bg;
             var dialog = the.dialog;
             var options = the.options;
-            var theH = position.height(dialog);
+            var theH = attribute.height(dialog);
 
             if (!the.hasOpen) {
                 return the;
@@ -388,8 +386,8 @@ define(function (require, exports, module) {
         _position: function () {
             var the = this;
             var options = the.options;
-            var winW = position.width(window);
-            var winH = position.height(window);
+            var winW = attribute.width(window);
+            var winH = attribute.height(window);
             var pos = {};
 
             animation.stop(the.dialog, !0);
@@ -399,8 +397,8 @@ define(function (require, exports, module) {
                 height: options.height
             });
 
-            pos.width = position.width(the.dialog);
-            pos.height = position.height(the.dialog);
+            pos.width = attribute.width(the.dialog);
+            pos.height = attribute.height(the.dialog);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;

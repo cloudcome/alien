@@ -193,22 +193,31 @@ define(function (require, exports, module) {
          * 元素外层追加一层
          * @param {HTMLElement|Node} source 元素
          * @param {String} htmlstring html字符串
+         * @returns {HTMLElement|Node|null} 如果存在返回 wrap 包裹对象，否则返回 null
          *
          * @example
-         * modification.wrap(ele, '&lt;div/&gt;');
+         * modification.wrap(ele, '&lt;div/>');
          */
         wrap: function (source, htmlstring) {
             var target = this.parse(htmlstring);
+            var wrap;
 
             if (target.length && target[0].nodeType === 1) {
-                target = this.insert(target[0], source, 'beforebegin', !0);
+                // 这里必须复制对象
+                // 因为后面的 DOM 修改会影响这里，因为 target 是一个对象引用
+                wrap = data.extend([], target);
+                target = this.insert(wrap[0], source, 'beforebegin', !0);
 
                 if (target) {
+                    // #div1>#div2>#div3
+                    // 插入到 #div3 里（最里层）
                     while (target.firstElementChild) {
                         target = target.firstElementChild;
                     }
 
-                    return this.insert(source, target, 'beforeend');
+                    this.insert(source, target, 'beforeend');
+
+                    return wrap;
                 }
             }
 
@@ -250,41 +259,17 @@ define(function (require, exports, module) {
 
         /**
          * 添加样式
-         * @param {String|Function} styleText 样式内容或包含样式样式内容的函数
-         * @param {String} [id] 已有的 style ID
+         * @param {String} styleText 样式内容
          *
          * @example
-         * // 直接传入字符串
-         * modification.style('body{padding: 10px;}');
-         * modification.style('body{padding: 10px;}', 'id');
-         *
-         * // 传入函数
-         * modification.style(function(){
-         *    /****
-         *      body{
-         *          padding: 10px;
-         *      }
-         *    **\/
-         * //   ^ 上面这里多打了个反斜杠，是因为这部分是写在注释里的，在实际书写的是要去掉的
-         * });
+         * modification.importStyle('body{padding: 10px;}');
          */
-        style: function (styleText, id) {
-//            var style = data.type(id) === 'string'?domSelector.query('#' + id):null;
-            var style = domSelector.query('#' + id);
-            var styleTextType = data.type(styleText);
+        importStyle: function (styleText) {
+            var style =  this.create('style');
 
             styleText = String(styleText);
 
-            if(styleTextType==='function'){
-                styleText = (styleText.match(regComments) || ['',''])[1];
-            }
-
-            if (style && style.length) {
-                style = style[0];
-            } else {
-                style = this.create('style');
-                this.insert(style, head, 'beforeend');
-            }
+            this.insert(style, head, 'beforeend');
 
             // IE
             if (style.styleSheet !== undefined) {
@@ -295,7 +280,7 @@ define(function (require, exports, module) {
                 //     throw new Error('Exceed the maximal count of style tags in IE')
                 // }
 
-                style.styleSheet.cssText += styleText
+                style.styleSheet.cssText += styleText;
             }
             // W3C
             else {

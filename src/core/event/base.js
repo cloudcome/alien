@@ -42,7 +42,8 @@ define(function (require, exports, module) {
         // 事情细节
         detail: {}
     };
-    var udf;
+    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
+
 
 
     /**
@@ -91,7 +92,51 @@ define(function (require, exports, module) {
                 this.create(eventTypeOrEvent) :
                 eventTypeOrEvent;
 
-            ele.dispatchEvent(et);
+            // 同时触发相同的原生事件会报错
+            try{
+                ele.dispatchEvent(et);
+            }catch(err){
+                // ignore
+            }
+        },
+
+        /**
+         * 扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
+         * @param {String|Event} createEvent 创建事件
+         * @param {Event} copyEvent 复制事件
+         * @param {Object} [detail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
+         * @returns {Event} 创建事件
+         *
+         * @example
+         * event.extend('myclick', clickEvent, {
+         *     a: 1,
+         *     b: 2
+         * });
+         */
+        extend: function (createEvent, copyEvent, detail) {
+            if(data.type(createEvent) === 'string'){
+                createEvent = this.create(createEvent);
+            }
+
+            data.each(mustEventProperties, function (index, prototype) {
+                if (prototype in copyEvent) {
+                    try{
+                        // 某些浏览器不允许重写只读属性，如 iPhone safari
+                        createEvent[prototype] = copyEvent[prototype];
+                    }catch(err){
+                        // ignore
+                    }
+                }
+            });
+
+            detail = detail || {};
+            createEvent.alienDetail = createEvent.alienDetail || {};
+
+            data.each(detail, function (key, val) {
+                createEvent.alienDetail[key] = val;
+            });
+
+            return createEvent;
         },
 
         /**

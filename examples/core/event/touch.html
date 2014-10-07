@@ -47,20 +47,33 @@
 
         require('/src/core/event/touch.js');
 
-        event.on(demo, 'tap', function () {
+        event.on(demo, 'tap', function (eve) {
             ret1.innerHTML = 'tap it';
-        }).on(demo, 'swipe', function (eve) {
+            console.log(eve);
+        });
+
+        event.on(demo, 'swipe', function (eve) {
             ret1.innerHTML = 'swipe it';
             console.log(eve);
-        }).on(demo, 'swipeup', function () {
+        });
+
+        event.on(demo, 'swipeup', function () {
             ret2.innerHTML = 'swipeup it';
-        }).on(demo, 'swiperight', function () {
+        });
+
+        event.on(demo, 'swiperight', function () {
             ret2.innerHTML = 'swiperight it';
-        }).on(demo, 'swipedown', function () {
+        });
+
+        event.on(demo, 'swipedown', function () {
             ret2.innerHTML = 'swipedown it';
-        }).on(demo, 'swipeleft', function () {
+        });
+
+        event.on(demo, 'swipeleft', function () {
             ret2.innerHTML = 'swipeleft it';
-        }).on(demo, 'taphold', function () {
+        });
+
+        event.on(demo, 'taphold', function () {
             ret1.innerHTML = 'taphold it';
         });
     });

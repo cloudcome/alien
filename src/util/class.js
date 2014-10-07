@@ -160,6 +160,38 @@ define(function (require, exports, module) {
                 property.constructor.prototype[key] = val;
             });
 
+            // 添加默认方法
+            if (property.constructor.prototype.getOptions === undefined) {
+                property.constructor.prototype.getOptions = function (key) {
+                    var the = this;
+                    var keyType = data.type(key);
+                    var ret = [];
+
+                    if (keyType === 'string' || keyType === 'number') {
+                        return the.options[key];
+                    } else if (keyType === 'array') {
+                        data.each(key, function (index, k) {
+                            ret.push(the.options[k]);
+                        });
+
+                        return ret;
+                    }
+                };
+            }
+
+            if (property.constructor.prototype.setOptions === undefined) {
+                property.constructor.prototype.setOptions = function (key, val) {
+                    var the = this;
+                    var keyType = data.type(key);
+
+                    if (keyType === 'string' || keyType === 'number') {
+                        return the.options[key] = val;
+                    } else if (keyType === 'object') {
+                        data.extend(the.options, key);
+                    }
+                };
+            }
+
             return property.constructor;
         }
     };

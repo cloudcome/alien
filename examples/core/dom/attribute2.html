@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- - position.html
+ - attribute2.html
  - @author ydr.me
  - @create 2014-10-02 14:04
  -->
@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>position.html</title>
+    <title>attribute2.html</title>
     <style>
         body {
             border: 5px solid #000;
@@ -90,7 +90,6 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var position = require('/src/core/dom/position.js');
         var attribute = require('/src/core/dom/attribute.js');
         var ret = document.getElementById('ret');
         var demo = document.getElementById('demo');
@@ -98,15 +97,15 @@
         var str = '';
         var key = 'width';
 
-        window.position = position;
+        window.attribute = attribute;
         window.demo = demo;
 
-        str += key + ' = ' + position[key](demo);
+        str += key + ' = ' + attribute[key](demo);
         str += '<br>' + key + '设置为 200<br>';
-        position[key](demo, 200);
-        str += key + ' = ' + position[key](demo);
+        attribute[key](demo, 200);
+        str += key + ' = ' + attribute[key](demo);
 
-        console.log(position.width(div3));
+        console.log(attribute.width(div3));
 //        console.log(attribute.state(div3));
 //        console.log(attribute.state(div3, 'show'));
 

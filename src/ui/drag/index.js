@@ -16,8 +16,6 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires core/dom/selector
      * @requires core/dom/attribute
-     * @requires core/dom/position
-     * @requires core/dom/modification
      * @requires core/dom/modification
      */
 
@@ -31,7 +29,6 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
-    var position = require('../../core/dom/position.js');
     var modification = require('../../core/dom/modification.js');
     var start = 'mousedown taphold';
     var move = 'mousemove touchmove';
@@ -107,6 +104,8 @@ define(function (require, exports, module) {
             event.on(the.handle, start, the._start.bind(the));
             event.on(document, move, the._move.bind(the));
             event.on(document, end, the._end.bind(the));
+
+            return the;
         },
         /**
          * 克隆一个可视副本
@@ -117,10 +116,10 @@ define(function (require, exports, module) {
             var clone = modification.create('div', {
                 'class': 'alien-ui-drag-clone',
                 style: {
-                    top: position.top(the.ele),
-                    width: position.width(the.ele),
-                    height: position.height(the.ele),
-                    left: position.left(the.ele),
+                    top: attribute.top(the.ele),
+                    width: attribute.width(the.ele) - 2,
+                    height: attribute.height(the.ele) - 2,
+                    left: attribute.left(the.ele),
                     zIndex: the.options.zIndex - 1
                 }
             });
@@ -140,8 +139,8 @@ define(function (require, exports, module) {
                 the.is = !0;
                 the.pageX = eve.pageX;
                 the.pageY = eve.pageY;
-                the.top = position.top(the.ele);
-                the.left = position.left(the.ele);
+                the.top = attribute.top(the.ele);
+                the.left = attribute.left(the.ele);
                 the.zIndex = attribute.css(the.ele, 'z-index');
                 attribute.addClass(the.ele, dragClass);
                 eve.preventDefault();
@@ -169,36 +168,37 @@ define(function (require, exports, module) {
                 if (eve.type === 'mousemove' && eve.which !== 1) {
                     event.dispatch(the.ele, 'mouseup');
                 } else {
-                    if (options.axis.indexOf('x') > -1) {
-                        x = the.left + eve.pageX - the.pageX;
+                    if(the.options.ondrag.call(the.ele, eve) !== false){
+                        if (options.axis.indexOf('x') > -1) {
+                            x = the.left + eve.pageX - the.pageX;
 
-                        if (options.min && options.min.x !== udf && x < options.min.x) {
-                            x = options.min.x;
+                            if (options.min && options.min.x !== udf && x < options.min.x) {
+                                x = options.min.x;
+                            }
+
+                            if (options.max && options.max.x !== udf && x > options.max.x) {
+                                x = options.max.x;
+                            }
+
+                            attribute.left(the.ele, x);
                         }
 
-                        if (options.max && options.max.x !== udf && x > options.max.x) {
-                            x = options.max.x;
+                        if (options.axis.indexOf('y') > -1) {
+                            y = the.top + eve.pageY - the.pageY;
+
+                            if (options.min && options.min.y !== udf && y < options.min.y) {
+                                y = options.min.y;
+                            }
+
+                            if (options.max && options.max.y !== udf && y > options.max.y) {
+                                y = options.max.y;
+                            }
+
+                            attribute.top(the.ele, y);
                         }
-
-                        position.left(the.ele, x);
-                    }
-
-                    if (options.axis.indexOf('y') > -1) {
-                        y = the.top + eve.pageY - the.pageY;
-
-                        if (options.min && options.min.y !== udf && y < options.min.y) {
-                            y = options.min.y;
-                        }
-
-                        if (options.max && options.max.y !== udf && y > options.max.y) {
-                            y = options.max.y;
-                        }
-
-                        position.top(the.ele, y);
                     }
 
                     eve.preventDefault();
-                    the.options.ondrag.call(the.ele, eve);
                 }
             }
         },

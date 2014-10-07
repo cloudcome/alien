@@ -12,21 +12,12 @@ define(function (require) {
      */
     'use strict';
 
-    var style = function () {
-        /***
-         .alien-ui-drag{
-            opacity: .8;
-         }
 
-         .alien-ui-drag-clone{
-            position: absolute;
-            z-index: 999;
-            background: #FEFFF3;
-            border: 1px dashed #F3DB7A;
-         }
-         */
-    };
+    var style =
+        '.alien-ui-drag{opacity:.8}' +
+        '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#FEFFF3;border:1px dashed #F3DB7A}';
+
     var modification = require('../../core/dom/modification.js');
 
-    modification.style(style);
+    modification.importStyle(style);
 });
