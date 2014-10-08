@@ -21,6 +21,9 @@ define(function (require, exports, module) {
 
     require('./style.js');
 
+    var noop = function(){
+        // ignore
+    };
     var defaults = {
         width: 300,
         height: 'auto',
@@ -29,7 +32,8 @@ define(function (require, exports, module) {
         title: '提示',
         content: 'Hello world!',
         buttons: null,
-        style: 'muted'
+        style: 'muted',
+        onclose: noop
     };
     var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
@@ -126,10 +130,12 @@ define(function (require, exports, module) {
          */
         _event: function () {
             var the = this;
+            var options = the.options;
 
             // 点击关闭对话框
             event.on(the.dialog.dialog, 'click tap', '.'+closeClass, function () {
                 the.destroy();
+                options.onclose.call(the, -1);
             });
 
             // 点击按钮响应事件
@@ -139,6 +145,7 @@ define(function (require, exports, module) {
                 if(data.type(the.events[index]) === 'function'){
                     the.destroy();
                     the.events[index].call(the, eve);
+                    options.onclose.call(the, index);
                 }
             });
         },
@@ -174,6 +181,9 @@ define(function (require, exports, module) {
      * @param [options.content="Hello world!"] {String} 消息框内容
      * @param [options.buttons=null] {Array|null} 消息框按钮，参考：<code>[{"确定": fn1, "取消": fn2}]</code>
      * @param [options.style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
+     * @param [options.onclose] {Function} 关闭对话框后的回调<br>
+     *     this: 消息框实例<br>
+     *     arguments[0]: {Number} index 即为选择的按钮索引，如果点关闭按钮的话，值为-1
      *
      * @example
      * var m1 = msg(options);

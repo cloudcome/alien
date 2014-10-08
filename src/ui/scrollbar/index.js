@@ -45,10 +45,12 @@ define(function (require, exports, module) {
     var trackYClass = 'alien-ui-scrollbar-track-y';
     var thumbXClass = 'alien-ui-scrollbar-thumb-x';
     var thumbYClass = 'alien-ui-scrollbar-thumb-y';
-//    var trackActiveClass = 'alien-ui-scrollbar-track-active';
+    // var trackActiveClass = 'alien-ui-scrollbar-track-active';
     var thumbActiveClass = 'alien-ui-scrollbar-thumb-active';
     // @link http://en.wikipedia.org/wiki/DOM_events#Common.2FW3C_events
-    var updateEvent = 'DOMSubtreeModified DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
+    // var updateEvent = 'DOMSubtreeModified DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
+    // 这里不能用 DOMSubtreeModified，会导致IE卡死
+    var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     var isPlaceholderScroll = _isPlaceholderScroll();
     var Scrollbar = klass.create({
         constructor: function (ele, options) {
@@ -433,7 +435,10 @@ define(function (require, exports, module) {
      * @return {Boolean}
      */
     function _isPlaceholderScroll() {
-        var iframe = modification.create('iframe');
+        // 在 iframe 里操作的原因是，滚动条可以被样式修改，防止样式修改导致滚动条判断不正确
+        var iframe = modification.create('iframe', {
+            src: 'javascript:;'
+        });
         var div;
         var clientWidth;
         var iframeDocument;
@@ -441,6 +446,7 @@ define(function (require, exports, module) {
         modification.insert(iframe, document.body, 'beforeend');
         iframeDocument = selector.contents(iframe)[0];
         iframeDocument.write('<!DOCTYPE html><html><body><div></div></body></html>');
+        iframeDocument.close();
 
         div = selector.query('div', iframeDocument)[0];
 
@@ -448,8 +454,6 @@ define(function (require, exports, module) {
             width: 100,
             height: 100,
             position: 'absolute',
-            top: -999999,
-            left: -999999,
             padding: 0,
             margin: 0,
             overflow: 'scroll'

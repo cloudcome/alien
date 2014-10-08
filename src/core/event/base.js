@@ -43,7 +43,27 @@ define(function (require, exports, module) {
         detail: {}
     };
     var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
+    var eventTypeArr = ['Events', 'HTMLEvents', 'MouseEvents', 'UIEvents', 'MutationEvents'];
+    var eventInitArr = ['', '', 'Mouse', 'UI', 'Mutation'];
 
+    /**
+     * http://hi.baidu.com/flondon/item/a83892e3b454192a5a7cfb35
+     * eventType 共5种类型：Events、HTMLEvents、UIEevents、MouseEvents、MutationEvents。
+     * ● Events ：所有的事件。
+     * ● HTMLEvents：abort、blur、change、error、focus、load、reset、resize、scroll、select、submit、unload。
+     * ● UIEvents：DOMActivate、DOMFocusIn、DOMFocusOut、keydown、keypress、keyup。
+     * ● MouseEvents：click、mousedown、mousemove、mouseout、mouseover、mouseup、touch。
+     * ● MutationEvents：DOMAttrModified、DOMNodeInserted、DOMNodeRemoved、DOMCharacterDataModified、DOMNodeInsertedIntoDocument、DOMNodeRemovedFromDocument、DOMSubtreeModified。
+     */
+    var htmlEvents = 'abort blur change error focus load reset resize scroll select submit unload'.split(' ');
+    var mouseEvents = /click|mouse|touch/;
+    var uiEvents = /key|DOM(Active|Focus)/;
+    var mutationEvents = /DOM(Attr|Node|Character|Subtree)/;
+    // Any events specific to one element do not bubble: submit, focus, blur, load,
+    // unload, change, reset, scroll, most of the DOM events (DOMFocusIn, DOMFocusOut, DOMNodeRemoved, etc),
+    // mouseenter, mouseleave, etc
+    // @link http://stackoverflow.com/questions/5574207/javascript-which-events-do-not-bubble
+    var canNotBubbleEvents = 'blur error focus load unload change scroll submit mouseenter mouseleave'.split(' ');
 
 
     /**
@@ -59,6 +79,7 @@ define(function (require, exports, module) {
          * @param {Boolean} [properties.cancelable] 是否可以被取消冒泡，默认 true
          * @param {Object} [properties.detail] 事件细节，默认{}
          * @returns {Event}
+         * @link https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
          *
          * @example
          * event.create('myclick');
@@ -74,7 +95,39 @@ define(function (require, exports, module) {
         create: function (eventType, properties) {
             properties = data.extend({}, defaults, properties);
 
-            return new Event(eventType, properties);
+            var et;
+            var args;
+            var eventTypeIndex = 0;
+
+            try {
+                // ie11+/chrome/firefox
+                et = new Event(eventType, properties);
+            } catch (err) {
+                try {
+                    // who?
+                    et = new CustomEvent(eventType, properties);
+                } catch (err) {
+                    // <= 10
+                    args = [eventType, !!properties.bubbles, !!properties.cancelable, window, {},
+                        0, 0, 0, 0, !1, !1, !1, !1, 0, null
+                    ];
+
+                    if (htmlEvents.indexOf(eventType)) {
+                        eventTypeIndex = 1;
+                    } else if (mouseEvents.test(eventType)) {
+                        eventTypeIndex = 2;
+                    } else if (uiEvents.test(eventType)) {
+                        eventTypeIndex = 3;
+                    } else if (mutationEvents.test(eventType)) {
+                        eventTypeIndex = 4;
+                    }
+
+                    et = document.createEvent(eventTypeArr[eventTypeIndex]);
+                    et['init' + eventInitArr[eventTypeIndex] + 'Event'].apply(et, args);
+                }
+            }
+
+            return et;
         },
 
         /**
@@ -93,9 +146,9 @@ define(function (require, exports, module) {
                 eventTypeOrEvent;
 
             // 同时触发相同的原生事件会报错
-            try{
+            try {
                 ele.dispatchEvent(et);
-            }catch(err){
+            } catch (err) {
                 // ignore
             }
         },
@@ -114,16 +167,16 @@ define(function (require, exports, module) {
          * });
          */
         extend: function (createEvent, copyEvent, detail) {
-            if(data.type(createEvent) === 'string'){
+            if (data.type(createEvent) === 'string') {
                 createEvent = this.create(createEvent);
             }
 
             data.each(mustEventProperties, function (index, prototype) {
                 if (prototype in copyEvent) {
-                    try{
+                    try {
                         // 某些浏览器不允许重写只读属性，如 iPhone safari
                         createEvent[prototype] = copyEvent[prototype];
-                    }catch(err){
+                    } catch (err) {
                         // ignore
                     }
                 }
@@ -182,7 +235,7 @@ define(function (require, exports, module) {
                     // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                     var closestElement = domSelector.closest(eve.target, selector);
 
-                    if (eventTypes.indexOf(event.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
+                    if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
                         return listener.call(closestElement[0], eve);
                     }
                 }
@@ -190,7 +243,7 @@ define(function (require, exports, module) {
 
             if (callback) {
                 data.each(eventTypes, function (index, eventType) {
-                    if(data.type(listener) === 'function'){
+                    if (data.type(listener) === 'function') {
                         _on(element, eventType, callback, listener, isCapture);
                     }
                 });
@@ -325,40 +378,40 @@ define(function (require, exports, module) {
         var args = arguments;
         var argL = args.length;
 
-        if(argL === 3){
+        if (argL === 3) {
             // _un(ele, 'click', true);
-            if(data.type(args[2]) === 'boolean'){
+            if (data.type(args[2]) === 'boolean') {
                 isCapture = args[2];
                 originalEvent = null;
             }
             // _un(ele, 'click', fn);
-            else{
+            else {
                 isCapture = !1;
             }
         }
 
         if (domId) {
             if (isCapture) {
-                if(data.type(originalEvent) === 'function'){
+                if (data.type(originalEvent) === 'function') {
                     findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {
                         isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
                         isCaptureActualListeners[domId][eventType].splice(findIndex, 1);
                     }
-                }else{
+                } else {
                     isCaptureOriginalListeners[domId][eventType] = [];
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if(data.type(originalEvent) === 'function') {
+                if (data.type(originalEvent) === 'function') {
                     findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {
                         unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
                         unCaptureActualListeners[domId][eventType].splice(findIndex, 1);
                     }
-                }else{
+                } else {
                     unCaptureOriginalListeners[domId][eventType] = [];
                     unCaptureActualListeners[domId][eventType] = [];
                 }

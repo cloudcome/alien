@@ -165,11 +165,13 @@ define(function (require, exports, module) {
          * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
          *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
          * @param {String|Number} [val] 样式属性值
+         * @param {Boolean} [isImportant=false] 是否设置为最高优先级，默认false
          * @returns {*}
          *
          * @example
          * // set
          * attribute.css(ele, 'width', 100);
+         * attribute.css(ele, 'width', 100, true);
          * attribute.css(ele, {
          *    width: 100,
          *    height: '200px'
@@ -180,7 +182,7 @@ define(function (require, exports, module) {
          * attribute.css(ele, 'width::after');
          * attribute.css(ele, ['width','height']);
          */
-        css: function (ele, key, val) {
+        css: function (ele, key, val, isImportant) {
             if(!ele || ele.nodeType !== 1 || !key) {
                 return;
             }
@@ -201,7 +203,10 @@ define(function (require, exports, module) {
 
                     var fix = the.fixCss(key, val);
 
-                    ele.style[fix.key] = fix.val;
+                    // ele.style[fix.key] = fix.val;
+                    // 样式名, 样式值, 优先级
+                    // object.setProperty (propertyName, propertyValue, priority);
+                    ele.style.setProperty(fix.key, fix.val, isImportant ? 'important': null);
                 }
             });
         },
