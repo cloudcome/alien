@@ -76,6 +76,9 @@ define(function (require, exports, module) {
         ondragend: noop
     };
     var Drag = klass.create({
+        STATIC: {
+            defaults: defaults
+        },
         constructor: function (ele, options) {
             this.ele = ele;
             this.options = options;

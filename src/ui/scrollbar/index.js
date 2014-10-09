@@ -53,6 +53,11 @@ define(function (require, exports, module) {
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     var isPlaceholderScroll = _isPlaceholderScroll();
     var Scrollbar = klass.create({
+        STATIC: {
+            defaults: defaults
+        },
+
+
         constructor: function (ele, options) {
             var the = this;
 

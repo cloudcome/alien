@@ -48,9 +48,16 @@ define(function (require, exports, module) {
     var closeClass = 'alien-ui-msg-close';
     var buttonClass = 'alien-ui-msg-button';
     var Msg = klass.create({
+        STATIC: {
+            defaults: defaults
+        },
+
+
         constructor: function (options) {
             this.options = options;
         },
+
+
         _init: function () {
             var the = this;
             var options = the.options;

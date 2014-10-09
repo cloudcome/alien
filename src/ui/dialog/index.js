@@ -63,6 +63,10 @@ define(function (require, exports, module) {
     var openDialogs = [];
     var dialogsMap = {};
     var Dialog = klass.create({
+        STATIC: {
+            defaults: defaults
+        },
+
         constructor: function (ele, options) {
             this.ele = ele;
             this.options = options;

@@ -50,6 +50,11 @@ define(function (require, exports, module) {
     var navActiveClass = 'alien-ui-slider-nav-item-active';
     var navItemClass = 'alien-ui-slider-nav-item';
     var Slider = klass.create({
+        STATIC: {
+            defaults: defaults
+        },
+
+
         constructor: function (ele, options) {
             this.ele = ele;
             this.options = options;
