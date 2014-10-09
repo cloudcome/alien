@@ -35,16 +35,17 @@ define(function (require, exports, module) {
         /**
          * 设置进度
          * @param {*} value 进度对象
+         * @param {*} [context] 上下文
          * @returns {Deferred}
          * @chainable
          */
-        setProgress: function (value) {
+        notify: function (value, context) {
             var the = this;
 
             the._progress = value;
 
             data.each(the.callbacks.progress, function (index, cb) {
-                cb.call(cb, value);
+                cb.call(context, value);
             });
 
             return this;

@@ -30,8 +30,10 @@
         }
 
         #content {
-            font-size: 200px;
-            padding: 100px;
+            width: 3000px;
+            font-size: 300px;
+            padding: 200px;
+            background: #82b361;
         }
 
     </style>
@@ -41,11 +43,12 @@
 <p id="ret">结果：</p>
 <button id="stop1">立即结束到当前: `.stop(false)`</button>
 <button id="stop2">立即结束到终点: `.stop(true)`</button>
+<button id="scrollTo">scrollTo(body, {x: 200, y: 200})</button>
 <hr/>
 <div id="demo">click</div>
 
 
-<div id="content">这里是一块非常大的内容区域</div>
+<div id="content">这里是一块非常大的内容区域这里是一块非常大的内容区域</div>
 
 
 <script src="/seajs/sea.js" id="script"></script>
@@ -63,7 +66,7 @@
                 height: 500,
                 background: '#FF8B8B'
             }, {
-                duration: 30000,
+                duration: 3000,
                 delay: 0
             }, function () {
                 ret.innerHTML = '运行结束' + Date.now();
@@ -76,6 +79,13 @@
 
         document.getElementById('stop2').onclick = function () {
             animation.stop(demo, true);
+        }
+
+        document.getElementById('scrollTo').onclick = function () {
+            animation.scrollTo(document, {
+                x: 200,
+                y: 200
+            });
         }
     });
     seajs.use('app');

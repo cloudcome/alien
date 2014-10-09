@@ -15,18 +15,16 @@ define(function (require, exports, module) {
 
     var data = require('../../util/data.js');
     var qs = require('../navigator/querystring.js');
+    var Deferred = require('../../util/Deferred.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
-    var noop = function () {
-        // ignore
-    };
     var defaults = {
         // 请求地址
         url: location.href,
         // 请求方式
         method: 'GET',
         // 响应数据类型：json、text
-        type: 'json',
+        dataType: 'json',
         // 请求 querystring
         query: null,
         // 请求数据
@@ -42,22 +40,10 @@ define(function (require, exports, module) {
         // 请求鉴权密码
         password: null,
         // 覆盖 MIME
-        mimeType: null,
-        // 请求并解析成功回调
-        // this：xhr
-        // 参数1：响应结果
-        onsuccess: noop,
-        // 请求失败回调
-        // this：xhr
-        // 参数1：错误对象
-        onerror: noop,
-        // 请求进度回调，常用于上传文件
-        // this：xhr
-        // 参数1：event
-        // 参数2：当前百分比
-        onprogress: noop
+        mimeType: null
     };
     var index = 0;
+    var regProtocol = /^([\w-]+:)\/\//;
 
     module.exports = {
         /**
@@ -65,17 +51,14 @@ define(function (require, exports, module) {
          * @param {Object} [options] 配置参数
          * @param {String} [options.url] 请求地址
          * @param {String} [options.method] 请求方法，默认 GET
-         * @param {String} [options.type] 数据类型，默认 json
+         * @param {String} [options.dataType] 数据类型，默认 json
          * @param {String|Object} [options.query] URL querstring
          * @param {*} [options.data] 请求数据
          * @param {Boolean} [options.isAsync] 是否异步，默认 true
          * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
          * @param {String} [options.username] 请求鉴权用户名
          * @param {String} [options.password] 请求鉴权密码
-         * @param {Function(this:XMLHttpRequest, event)} [options.onload] 请求并处理成功
-         * @param {Function(this:XMLHttpRequest, event)} [options.onerror] 请求失败或处理失败
-         * @param {Function(this:XMLHttpRequest, event, percent)} [options.onprogress] 上传进度回调
-         * @returns {XMLHttpRequest}
+         * @returns {Deferred} 返回一个 Deferred 实例
          */
         ajax: function (options) {
             options = data.extend(!0, {}, defaults, options);
@@ -84,62 +67,74 @@ define(function (require, exports, module) {
                 options.headers = {};
             }
 
-            if(!options.headers['X-Requested-With']){
+            if (!options.headers['X-Requested-With']) {
                 options.headers['X-Requested-With'] = 'XMLHttpRequest';
             }
 
             options.method = options.method.toUpperCase();
 
             var xhr = new XMLHttpRequest();
+            var df = new Deferred();
+            var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
 
             xhr.onload = function () {
                 var responseText = xhr.responseText;
                 var json;
 
-                if (xhr.status > 399 && xhr.status < 600) {
-                    switch (options.type) {
+                // 200 - 300
+                if ((xhr.status >= 200 && xhr.status < 300) ||
+                    // 304
+                    xhr.status === 304 ||
+                    // file
+                    (xhr.status === 0 && protocol === 'file:')) {
+                    switch (options.dataType) {
                         case 'json':
                             try {
                                 json = JSON.parse(responseText);
+                                return df.resolve(json, xhr);
                             } catch (err) {
-                                options.onerror.call(xhr, err);
+                                return df.reject(err, xhr);
                             }
 
                             break;
 
                         default:
-                            options.onsuccess.call(xhr, responseText);
+                            df.resolve(responseText, xhr);
                             break;
                     }
                 } else {
-                    options.onerror.call(xhr, new Error('transmission status error'));
+                    df.reject(new Error('transmission status error'), xhr);
                 }
             };
 
             xhr.onabort = function () {
-                options.onerror.call(xhr, new Error('transmission is aborted'));
+                df.reject(new Error('transmission is aborted'), xhr);
             };
 
             xhr.ontimeout = function () {
-                options.onerror.call(xhr, new Error('transmission has expired'));
+                df.reject(new Error('transmission has expired'), xhr);
             };
 
             xhr.onerror = function (err) {
-                options.onerror.call(xhr, err);
+                df.reject(err, xhr);
             };
 
             xhr.upload.onprogress = function (eve) {
+                eve.alienDetail = eve.alienDetail || {};
+                eve.alienDetail.complete = 0;
+                eve.alienDetail.percent = '0%';
+
                 if (eve.lengthComputable) {
-                    eve.detail = eve.detail || {};
-                    eve.detail.complete = (eve.loaded / eve.total * 100 | 0)+'%';
+                    eve.alienDetail.complete = eve.loaded / eve.total;
+                    eve.alienDetail.percent = (eve.alienDetail.complete * 100) + '%';
                 }
 
-                options.onprogress.call(xhr, eve);
+                df.notify(eve, xhr);
             };
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
 
-            if(options.mimeType){
+            if (options.mimeType) {
                 xhr.overrideMimeType(options.mimeType);
             }
 
@@ -148,7 +143,21 @@ define(function (require, exports, module) {
             });
             xhr.send(_buildData(options));
 
-            return xhr;
+            return df;
+        },
+        get: function (url, query) {
+            return this.ajax({
+                method: 'GET',
+                url: url,
+                query: query
+            });
+        },
+        post: function (url, data) {
+            return this.ajax({
+                method: 'POST',
+                url: url,
+                data: data,
+            });
         }
     };
 
@@ -161,7 +170,7 @@ define(function (require, exports, module) {
      */
     function _buildURL(options) {
         var url = options.url;
-        var query = options.url;
+        var query = options.query;
         var querystring = data.type(query) === 'string' ? query : qs.stringify(query);
         var cache = options.isCache ? '' : '_=' + (++index);
 

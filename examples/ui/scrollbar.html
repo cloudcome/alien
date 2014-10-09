@@ -29,7 +29,7 @@
             overflow: hidden;
         }
         #demo{
-            width: 1000px;
+            width: 2000px;
             line-height: 300px;
             font-size: 300px;
             background: #dbe2a7;
@@ -41,6 +41,11 @@
 <body>
 
 
+
+<button id="scrollTop">scrollTop</button>
+<button id="scrollBottom">scrollBottom</button>
+<button id="scrollLeft">scrollLeft</button>
+<button id="scrollRight">scrollRight</button>
 
 <div id="container">
     <div id="demo">
@@ -56,6 +61,22 @@
         var sl1 = scrollbar(demo);
 
         window.sl1 = sl1;
+
+        document.getElementById('scrollTop').onclick = function(){
+            sl1.scrollTop();
+        };
+
+        document.getElementById('scrollBottom').onclick = function(){
+            sl1.scrollBottom();
+        };
+
+        document.getElementById('scrollLeft').onclick = function(){
+            sl1.scrollLeft();
+        };
+
+        document.getElementById('scrollRight').onclick = function(){
+            sl1.scrollRight();
+        };
     });
     seajs.use('app');
 </script>

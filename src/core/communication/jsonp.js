@@ -12,11 +12,9 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
+    var Deferred = require('../../util/Deferred.js');
     var qs = require('../navigator/querystring.js');
     var modification = require('../../core/dom/modification.js');
-    var noop = function () {
-        // ignore
-    };
     var defaults = {
         // 可选 var 和 function
         type: 'function',
@@ -25,12 +23,12 @@ define(function (require, exports, module) {
         // 请求参数
         query: null,
         // 是否保留缓存
-        isCache: !1,
-        onsuccess: noop,
-        onerror: noop
+        isCache: !1
     };
     var regQ = /\?$/;
     var index = 0;
+
+    exports.defaults = defaults;
 
     /**
      * 跨域 JSONP
@@ -39,8 +37,7 @@ define(function (require, exports, module) {
      * @param {String} options.url 请求地址，必须为`http://ydr.me/?callback=?`格式，与jquery 一致
      * @param {Object|null} [options.query=null] 请求参数
      * @param {Boolean} [options.isCache=false] 是否保留缓存，默认 false
-     * @param {Function} [options.onsuccess=noop]  成功回调
-     * @param {Function} [options.onerror=noop]  失败回调
+     * @returns {Deferred} 返回 Deferred 实例
      *
      * @example
      * jsonp(options);
@@ -66,11 +63,12 @@ define(function (require, exports, module) {
             async: 'async',
             src: options.url.replace(regQ, name) + (qss ? '&' + qss : '')
         });
+        var df = new Deferred();
 
         if (options.type === 'function') {
             window[name] = function (dt) {
                 if (data.type(options.onsuccess) === 'function') {
-                    options.onsuccess(dt);
+                    df.resolve(dt);
                 }
 
                 delete(window[name]);
@@ -81,16 +79,14 @@ define(function (require, exports, module) {
         }
 
         script.onerror = function (err) {
-            if (data.type(options.onerror) === 'function') {
-                options.onerror(err);
-                modification.remove(script);
-            }
+            df.reject(err);
+            modification.remove(script);
         };
 
         script.onload = function () {
             if (options.type === 'var') {
-                options.onsuccess(window[name]);
-                delete(window[name]);
+                df.resolve(window[name]);
+                window[name] = null;
                 modification.remove(script);
             }
         };

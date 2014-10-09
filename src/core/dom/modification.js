@@ -179,7 +179,11 @@ define(function (require, exports, module) {
             var parent = domSelector.parent(ele);
 
             if (parent.length) {
-                parent[0].removeChild(ele);
+                try{
+                    parent[0].removeChild(ele);
+                }catch(err){
+                    // ignore
+                }
             } else {
                 try {
                     ele.remove();

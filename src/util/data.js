@@ -124,6 +124,21 @@ define(function (require, exports, module) {
 
             return ret;
         },
+
+
+        /**
+         * 格式化数字，如果是非数字则返回默认值
+         * @param {*} obj 待格式化对象
+         * @param {*} [dft] 非数字时的默认值
+         * @returns {*}
+         */
+        parseFloat: function (obj, dft) {
+            obj = parseFloat(obj);
+
+            return isNaN(obj) ? dft : obj;
+        },
+
+
         /**
          * 遍历元素
          * @param {Array/Object} list  数组、可枚举对象
@@ -161,6 +176,8 @@ define(function (require, exports, module) {
                 }
             }
         },
+
+
         /**
          * 扩展静态对象
          * @param {Boolean|Object} [isExtendDeep] 是否深度扩展，可省略，默认false
@@ -215,6 +232,8 @@ define(function (require, exports, module) {
 
             return source;
         },
+
+
         /**
          * 转换对象为一个纯数组，只要对象有length属性即可
          * @param {Object} [data] 对象
@@ -249,6 +268,8 @@ define(function (require, exports, module) {
 
             return ret;
         },
+
+
         /**
          * 判断一个对象是否有属于自身的方法、属性，而不是原型链方法、属性以及其他继承来的方法、属性
          * @param obj {Object} 判断对象

@@ -197,7 +197,7 @@ define(function (require, exports, module) {
          * @param {Object} to 终点
          * @param {Object} [to.x] x轴终点
          * @param {Object} [to.y] y轴终点
-         * @param {Object} options 配置
+         * @param {Object} [options] 配置
          * @param {Object} [options.duration] 动画时间，默认789，单位 ms
          * @param {Object} [options.easing] 动画缓冲，默认 swing
          * 默认配置的缓冲函数有：linear、easeIn、easeOut、easeBoth、easeInStrong、easeOutStrong

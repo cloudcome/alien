@@ -7,7 +7,6 @@
 
 define(function (require, exports, module) {
     /**
-     * @TODO 模拟滚动条，不占用内容区的原生滚动条使用原生滚动条，占用内容区的原生滚动条就模拟
      * @module ui/scrollbar/index
      * @requires util/data
      * @requires util/class
@@ -37,8 +36,9 @@ define(function (require, exports, module) {
         minY: 30,
         axis: 'y',
         speed: 100,
-        duration: 123,
-        easing: 'ease-in-out-back'
+        duration: 456,
+        cssEasing: 'in-out',
+        jsEasing: 'swing'
     };
     var bodyClass = 'alien-ui-scrollbar-body';
     var trackXClass = 'alien-ui-scrollbar-track-x';
@@ -61,8 +61,9 @@ define(function (require, exports, module) {
         constructor: function (ele, options) {
             var the = this;
 
-            the.ele = ele;
-            the.options = options;
+            the._ele = ele;
+            the._options = options;
+            the._options.easing = isPlaceholderScroll ? the._options.cssEasing : the._options.jsEasing;
 
             if (data.type(options.width) !== 'number' || data.type(options.height) !== 'number') {
                 throw new Error('scrollbar require width and height px value');
@@ -76,63 +77,59 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
-            var options = the.options;
+            var options = the._options;
             var wrap;
 
-            if(!isPlaceholderScroll){
-                // 内容区域的尺寸
-                the.scrollLeft = 0;
-                the.scrollTop = 0;
-                // 滚动条的尺寸关系
-                the.xLeft = 0;
-                the.xLeftMax = 0;
-                the.xWidth = 0;
-                the.xOffset = 0;
-                the.yTop = 0;
-                the.yTopMax = 0;
-                the.yHeight = 0;
-                the.yOffset = 0;
+            if (isPlaceholderScroll) {
+                wrap = modification.wrap(the._ele, '<div class="alien-ui-scrollbar">' +
+                    '<div class="' + bodyClass + '"></div>' +
+                    // wrap 插入的是第一个最底层元素里 ^️
+                    '<div class="alien-ui-scrollbar-track ' + trackXClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbXClass + '"></div></div>' +
+                    '<div class="alien-ui-scrollbar-track ' + trackYClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbYClass + '"></div></div>' +
+                    '</div>')[0];
 
-                return the;
+                the._animateOptions = {
+                    duration: options.duration,
+                    easing: options.easing
+                };
+
+                the._body = selector.query('.' + bodyClass, wrap)[0];
+                the._trackX = selector.query('.' + trackXClass, wrap)[0];
+                the._trackY = selector.query('.' + trackYClass, wrap)[0];
+                the._thumbX = selector.query('.' + thumbXClass, wrap)[0];
+                the._thumbY = selector.query('.' + thumbYClass, wrap)[0];
+                the._xOffset = the._thumbX.offsetLeft * 2;
+                the._yOffset = the._thumbY.offsetTop * 2;
+            } else {
+                wrap = modification.wrap(the._ele, '<div class="alien-ui-scrollbar"/>')[0];
+                the._xOffset = 0;
+                the._yOffset = 0;
+
+                attribute.css(wrap, {
+                    'overflow-scrolling': 'touch',
+                    overflow: 'auto'
+                });
             }
 
-            wrap = modification.wrap(the.ele, '<div class="alien-ui-scrollbar">' +
-                '<div class="' + bodyClass + '"></div>' +
-                // wrap 插入的是第一个最底层元素里 ^️
-                '<div class="alien-ui-scrollbar-track ' + trackXClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbXClass + '"></div></div>' +
-                '<div class="alien-ui-scrollbar-track ' + trackYClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbYClass + '"></div></div>' +
-                '</div>')[0];
-
-            the.animateOptions = {
-                duration: options.duration,
-                easing: options.easing
-            };
-            the.wrap = wrap;
-            the.body = selector.query('.' + bodyClass, wrap)[0];
-            the.trackX = selector.query('.' + trackXClass, wrap)[0];
-            the.trackY = selector.query('.' + trackYClass, wrap)[0];
-            the.thumbX = selector.query('.' + thumbXClass, wrap)[0];
-            the.thumbY = selector.query('.' + thumbYClass, wrap)[0];
+            the._wrap = wrap;
             // 内容区域的尺寸
-            the.scrollLeft = 0;
-            the.scrollTop = 0;
+            the._scrollLeft = 0;
+            the._scrollTop = 0;
             // 滚动条的尺寸关系
-            the.xLeft = 0;
-            the.xLeftMax = 0;
-            the.xWidth = 0;
-            the.xOffset = the.thumbX.offsetLeft * 2;
-            the.yTop = 0;
-            the.yTopMax = 0;
-            the.yHeight = 0;
-            the.yOffset = the.thumbY.offsetTop * 2;
+            the._xLeft = 0;
+            the._xLeftMax = 0;
+            the._xWidth = 0;
+            the._yTop = 0;
+            the._yTopMax = 0;
+            the._yHeight = 0;
+            the._isWheel = !1;
 
             the.update({
-                width: attribute.width(the.ele),
-                height: attribute.height(the.ele)
+                width: attribute.width(the._ele),
+                height: attribute.height(the._ele)
             });
 
             the._event();
-
             return the;
         },
 
@@ -142,32 +139,36 @@ define(function (require, exports, module) {
          * @private
          */
         _resize: function () {
+            if (!isPlaceholderScroll) {
+                return this;
+            }
+
             var the = this;
-            var options = the.options;
+            var options = the._options;
 
             // 计算滚动条的x轴的宽、y轴的高
-            the.xWidth = (options.width - the.xOffset) * options.width / the.scrollWidth;
+            the._xWidth = (options.width - the._xOffset) * options.width / the._scrollWidth;
 
-            if (the.xWidth < options.minX) {
-                the.xWidth = options.minX;
+            if (the._xWidth < options.minX) {
+                the._xWidth = options.minX;
             }
 
-            the.yHeight = (options.height - the.yOffset) * options.height / the.scrollHeight;
+            the._yHeight = (options.height - the._yOffset) * options.height / the._scrollHeight;
 
-            if (the.yHeight < options.minY) {
-                the.yHeight = options.minY;
+            if (the._yHeight < options.minY) {
+                the._yHeight = options.minY;
             }
 
-            the.xLeftMax = options.width - the.xOffset - the.xWidth;
-            the.yTopMax = options.height - the.yOffset - the.yHeight;
+            the._xLeftMax = options.width - the._xOffset - the._xWidth;
+            the._yTopMax = options.height - the._yOffset - the._yHeight;
 
-            animation.animate(the.thumbX, {
-                width: the.xWidth
-            }, the.animateOptions);
+            animation.animate(the._thumbX, {
+                width: the._xWidth
+            }, the._animateOptions);
 
-            animation.animate(the.thumbY, {
-                height: the.yHeight
-            }, the.animateOptions);
+            animation.animate(the._thumbY, {
+                height: the._yHeight
+            }, the._animateOptions);
         },
 
 
@@ -177,101 +178,111 @@ define(function (require, exports, module) {
          */
         _event: function () {
             var the = this;
-            var options = the.options;
-            var thumb = options.axis === 'y' ? the.thumbY : the.thumbX;
+            var options = the._options;
+            var thumb = options.axis === 'y' ? the._thumbY : the._thumbX;
             var key = options.axis === 'y' ? 'Top' : 'Left';
             var x0;
             var left0;
             var y0;
             var top0;
 
-            // 更新内容尺寸
-            event.on(the.wrap, updateEvent, function () {
-                the.update();
-            });
+            if (isPlaceholderScroll) {
+                // 更新内容尺寸
+                event.on(the._wrap, updateEvent, function () {
+                    the.update();
+                });
 
 
-            // 鼠标滚动
-            event.on(the.wrap, 'wheelstart', function () {
-                attribute.addClass(thumb, thumbActiveClass);
-            });
+                // 鼠标滚动
+                event.on(the._wrap, 'wheelstart', function () {
+                    attribute.addClass(thumb, thumbActiveClass);
+                    the._isWheel = !0;
+                });
 
-            event.on(the.wrap, 'wheelchange', function (eve) {
-                var y = eve.alienDetail.deltaY;
-                var d = -y * options.speed;
+                event.on(the._wrap, 'wheelchange', function (eve) {
+                    var y = eve.alienDetail.deltaY;
+                    var d = -y * options.speed;
 
-                the['scroll' + key] += d;
-                the['scroll' + options.axis.toUpperCase()]();
-            });
+                    animation.stop(the._wrap);
+                    the['_scroll' + key] += d;
+                    the['scroll' + options.axis.toUpperCase()]();
+                });
 
-            event.on(the.wrap, 'wheelend', function () {
-                attribute.removeClass(thumb, thumbActiveClass);
-            });
+                event.on(the._wrap, 'wheelend', function () {
+                    the._isWheel = !1;
+                    attribute.removeClass(thumb, thumbActiveClass);
+                });
 
-            // 拖拽支持
-            the.dragX = drag(the.thumbX, {
-                isClone: !1,
-                axis: 'x',
-                ondragstart: function (eve) {
-                    x0 = eve.pageX;
-                    left0 = parseFloat(attribute.css(the.thumbX, 'left'));
-                    attribute.addClass(the.thumbX, thumbActiveClass);
-                },
-                ondrag: function (eve) {
-                    var left = left0 + eve.pageX - x0;
-                    var ratio;
+                // 拖拽支持
+                the._dragX = drag(the._thumbX, {
+                    isClone: !1,
+                    axis: 'x',
+                    ondragstart: function (eve) {
+                        x0 = eve.pageX;
+                        left0 = parseFloat(attribute.css(the._thumbX, 'left'));
+                        attribute.addClass(the._thumbX, thumbActiveClass);
+                    },
+                    ondrag: function (eve) {
+                        var left = left0 + eve.pageX - x0;
+                        var ratio;
 
-                    if (left < 0) {
-                        left = 0;
-                    } else if (left > the.xLeftMax) {
-                        left = the.xLeftMax;
+                        if (left < 0) {
+                            left = 0;
+                        } else if (left > the._xLeftMax) {
+                            left = the._xLeftMax;
+                        }
+
+                        ratio = left / (options.width - the._xWidth - the._xOffset);
+                        the._xLeft = left;
+                        the._scrollLeft = (the._scrollWidth - options.width) * ratio;
+
+                        attribute.css(the._body, 'left', -the._scrollLeft);
+                        attribute.css(the._thumbX, 'left', left);
+
+                        return !1;
+                    },
+                    ondragend: function () {
+                        attribute.removeClass(the._thumbX, thumbActiveClass);
                     }
+                });
 
-                    ratio = left / (options.width - the.xWidth - the.xOffset);
-                    the.xLeft = left;
-                    the.scrollLeft = (the.scrollWidth - options.width) * ratio;
+                the._dragY = drag(the._thumbY, {
+                    isClone: !1,
+                    axis: 'y',
+                    ondragstart: function (eve) {
+                        y0 = eve.pageY;
+                        top0 = parseFloat(attribute.css(the._thumbY, 'top'));
+                        attribute.addClass(the._thumbY, thumbActiveClass);
+                    },
+                    ondrag: function (eve) {
+                        var top = top0 + eve.pageY - y0;
+                        var ratio;
 
-                    attribute.css(the.body, 'left', -the.scrollLeft);
-                    attribute.css(the.thumbX, 'left', left);
+                        if (top < 0) {
+                            top = 0;
+                        } else if (top > the._yTopMax) {
+                            top = the._yTopMax;
+                        }
 
-                    return !1;
-                },
-                ondragend: function () {
-                    attribute.removeClass(the.thumbX, thumbActiveClass);
-                }
-            });
+                        ratio = top / (options.height - the._yHeight - the._yOffset);
+                        the._yTop = top;
+                        the._scrollTop = (the._scrollHeight - options.height) * ratio;
 
-            the.dragY = drag(the.thumbY, {
-                isClone: !1,
-                axis: 'y',
-                ondragstart: function (eve) {
-                    y0 = eve.pageY;
-                    top0 = parseFloat(attribute.css(the.thumbY, 'top'));
-                    attribute.addClass(the.thumbY, thumbActiveClass);
-                },
-                ondrag: function (eve) {
-                    var top = top0 + eve.pageY - y0;
-                    var ratio;
+                        attribute.css(the._body, 'top', -the._scrollTop);
+                        attribute.css(the._thumbY, 'top', top);
 
-                    if (top < 0) {
-                        top = 0;
-                    } else if (top > the.yTopMax) {
-                        top = the.yTopMax;
+                        return !1;
+                    },
+                    ondragend: function () {
+                        attribute.removeClass(the._thumbY, thumbActiveClass);
                     }
-
-                    ratio = top / (options.height - the.yHeight - the.yOffset);
-                    the.yTop = top;
-                    the.scrollTop = (the.scrollHeight - options.height) * ratio;
-
-                    attribute.css(the.body, 'top', -the.scrollTop);
-                    attribute.css(the.thumbY, 'top', top);
-
-                    return !1;
-                },
-                ondragend: function () {
-                    attribute.removeClass(the.thumbY, thumbActiveClass);
-                }
-            });
+                });
+            }else{
+                event.on(the._wrap, 'scroll', function () {
+                    the._scrollLeft = the._wrap.scrollLeft;
+                    the._scrollTop = the._wrap.scrollTop;
+                });
+            }
         },
 
 
@@ -282,34 +293,68 @@ define(function (require, exports, module) {
          */
         scrollX: function (x) {
             var the = this;
-            var options = the.options;
-            var width = the.scrollWidth - options.width;
-            var track = options.width - the.xWidth - the.xOffset;
+            var options = the._options;
+            var maxScrollWidth = the._scrollWidth - options.width;
+            var track = options.width - the._xWidth - the._xOffset;
 
-            if (x) {
-                if (x < 0) {
-                    x = 0;
-                } else if (x > width) {
-                    x = width;
+            if (arguments.length) {
+                x = data.parseFloat(x, 0);
+
+                if (x < 0 || x> maxScrollWidth) {
+                    x = maxScrollWidth;
                 }
 
-                the.scrollLeft = x;
+                the._scrollLeft = x;
             }
 
-            if (the.scrollLeft > width) {
-                the.scrollLeft = width;
-            } else if (the.scrollLeft < 0) {
-                the.scrollLeft = 0;
+            if (the._scrollLeft > maxScrollWidth) {
+                the._scrollLeft = maxScrollWidth;
+            } else if (the._scrollLeft < 0) {
+                the._scrollLeft = 0;
             }
 
-            attribute.css(the.body, {
-                left: -the.scrollLeft
-            });
-            attribute.css(the.thumbX, {
-                left: the.xLeft = track * the.scrollLeft / width
-            });
+            if (isPlaceholderScroll) {
+                if(the._isWheel){
+                    attribute.css(the._body, {
+                        left: -the._scrollLeft
+                    });
+                    attribute.css(the._thumbX, {
+                        left: the._xLeft = track * the._scrollLeft / maxScrollWidth
+                    });
+                }else{
+                    animation.animate(the._body, {
+                        left: -the._scrollLeft
+                    }, the._animateOptions);
+                    animation.animate(the._thumbX, {
+                        left: the._xLeft = track * the._scrollLeft / maxScrollWidth
+                    }, the._animateOptions);
+                }
+            } else {
+                animation.scrollTo(the._wrap, {
+                    x: the._scrollLeft,
+                    y: the._scrollTop
+                }, the._animateOptions);
+            }
 
             return the;
+        },
+
+
+        /**
+         * 滚动左边缘
+         * @returns {Scrollbar}
+         */
+        scrollLeft: function(){
+            return this.scrollX(0);
+        },
+
+
+        /**
+         * 滚动到右边缘
+         * @returns {Scrollbar}
+         */
+        scrollRight: function(){
+            return this.scrollX(-1);
         },
 
 
@@ -320,34 +365,68 @@ define(function (require, exports, module) {
          */
         scrollY: function (y) {
             var the = this;
-            var options = the.options;
-            var height = the.scrollHeight - options.height;
-            var track = options.height - the.yHeight - the.yOffset;
+            var options = the._options;
+            var maxScrollHeight = the._scrollHeight - options.height;
+            var track = options.height - the._yHeight - the._yOffset;
 
-            if (y) {
-                if (y < 0) {
-                    y = 0;
-                } else if (y > height) {
-                    y = height;
+            if (arguments.length) {
+                y = data.parseFloat(y, 0);
+
+                if (y < 0 || y> maxScrollHeight) {
+                    y = maxScrollHeight;
                 }
 
-                the.scrollTop = y;
+                the._scrollTop = y;
             }
 
-            if (the.scrollTop > height) {
-                the.scrollTop = height;
-            } else if (the.scrollTop < 0) {
-                the.scrollTop = 0;
+            if (the._scrollTop > maxScrollHeight) {
+                the._scrollTop = maxScrollHeight;
+            } else if (the._scrollTop < 0) {
+                the._scrollTop = 0;
             }
 
-            attribute.css(the.body, {
-                top: -the.scrollTop
-            });
-            attribute.css(the.thumbY, {
-                top: the.yTop = track * the.scrollTop / height
-            });
+            if (isPlaceholderScroll) {
+                if(the._isWheel){
+                    attribute.css(the._body, {
+                        top: -the._scrollTop
+                    });
+                    attribute.css(the._thumbY, {
+                        top: the._yTop = track * the._scrollTop / maxScrollHeight
+                    });
+                }else{
+                    animation.animate(the._body, {
+                        top: -the._scrollTop
+                    }, the._animateOptions);
+                    animation.animate(the._thumbY, {
+                        top: the._yTop = track * the._scrollTop / maxScrollHeight
+                    }, the._animateOptions);
+                }
+            } else {
+                animation.scrollTo(the._wrap, {
+                    x: the._scrollLeft,
+                    y: the._scrollTop
+                }, the._animateOptions);
+            }
 
             return the;
+        },
+
+
+        /**
+         * 滚动到顶部
+         * @returns {Scrollbar}
+         */
+        scrollTop: function(){
+            return this.scrollY(0);
+        },
+
+
+        /**
+         * 滚动都底部
+         * @returns {Scrollbar}
+         */
+        scrollBottom: function(){
+            return this.scrollY(-1);
         },
 
 
@@ -360,9 +439,9 @@ define(function (require, exports, module) {
             var the = this;
 
             size = size || {};
-            the.scrollWidth = size.width || attribute.width(the.ele);
-            the.scrollHeight = size.height || attribute.height(the.ele);
-            the.resize(the.options);
+            the._scrollWidth = size.width || attribute.width(the._ele);
+            the._scrollHeight = size.height || attribute.height(the._ele);
+            the.resize(the._options);
 
             return the;
         },
@@ -375,7 +454,7 @@ define(function (require, exports, module) {
          */
         resize: function (size) {
             var the = this;
-            var options = the.options;
+            var options = the._options;
 
             if (data.type(size) !== 'object') {
                 return the;
@@ -386,10 +465,10 @@ define(function (require, exports, module) {
                 height: size.height
             });
 
-            animation.animate(the.wrap, {
+            animation.animate(the._wrap, {
                 width: options.width,
                 height: options.height
-            }, the.animateOptions);
+            }, the._animateOptions);
 
             the._resize();
             the.scrollX();
@@ -406,18 +485,18 @@ define(function (require, exports, module) {
             var the = this;
 
             // 清除拖拽
-            the.dragX.destroy();
-            the.dragY.destroy();
+            the._dragX.destroy();
+            the._dragY.destroy();
 
             // 清除监听
-            event.un(the.wrap, updateEvent);
-            event.un(the.wrap, 'wheelchange');
-            event.un(the.wrap, 'wheelend');
+            event.un(the._wrap, updateEvent);
+            event.un(the._wrap, 'wheelchange');
+            event.un(the._wrap, 'wheelend');
 
             // unwrap
-            modification.remove(the.trackX);
-            modification.remove(the.trackY);
-            modification.unwrap(the.ele, 'div div');
+            modification.remove(the._trackX);
+            modification.remove(the._trackY);
+            modification.unwrap(the._ele, 'div div');
         }
     });
 
