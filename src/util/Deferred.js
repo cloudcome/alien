@@ -23,8 +23,8 @@ define(function (require, exports, module) {
             // 0       ->    1     ->         2
             // pending -> progress -> resolved/rejected
             var the = this;
-            the.status = 'pending';
-            the.statusCode = 0;
+            the.state = 'pending';
+            the.code = 0;
             the.callbacks = {
                 progress: [],
                 resolved: [],
@@ -105,7 +105,7 @@ define(function (require, exports, module) {
         resolve: function (result, context) {
             var the = this;
 
-            if (this.statusCode > 1) {
+            if (this.code > 1) {
                 throw new Error('do not resolve after ' + the.status);
             }
 
@@ -113,8 +113,8 @@ define(function (require, exports, module) {
                 throw new Error('resolve require a result');
             }
 
-            the.status = 'resolved';
-            the.statusCode = 2;
+            the.state = 'resolved';
+            the.code = 2;
 
             data.each(the.callbacks.always, function (index, cbs) {
                 cbs[0].call(context ? context : the, result);
@@ -137,7 +137,7 @@ define(function (require, exports, module) {
         reject: function (reason, context) {
             var the = this;
 
-            if (the.statusCode > 1) {
+            if (the.code > 1) {
                 throw new Error('do not reject after ' + the.status);
             }
 
@@ -145,8 +145,8 @@ define(function (require, exports, module) {
                 throw new Error('reject require a reason');
             }
 
-            the.status = 'rejected';
-            the.statusCode = 2;
+            the.state = 'rejected';
+            the.code = 2;
 
             data.each(the.callbacks.always, function (index, cbs) {
                 cbs[0].call(context ? context : the);
