@@ -1,5 +1,5 @@
 /*!
- * emitter.js
+ * Emitter.js
  * @author ydr.me
  * 2014-09-19 11:20
  */
@@ -7,12 +7,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module core/event/Emitter
+     * @module util/Emitter
      * @require util/data
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var data = require('./data.js');
     var regSpace = /\s+/g;
 
     /**

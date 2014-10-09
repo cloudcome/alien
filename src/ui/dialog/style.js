@@ -14,7 +14,7 @@ define(function (require) {
 
     var style =
         // 外层
-        '.alien-ui-dialog-overflow{overflow:hidden}' +
+        '.alien-ui-dialog-overflow{position:relative;width:100%;height:100%;overflow:hidden}' +
         // 背景
         '.alien-ui-dialog-bg{display:none;position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(255,255,255,.3);overflow:auto;-webkit-overflow-scrolling:touch}' +
         '.alien-ui-dialog{position:absolute;width:500px;background:#fff}' +

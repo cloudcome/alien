@@ -47,23 +47,23 @@
             msg({
                 style: 'inverse',
                 content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
-                buttons: [
-                ]
+                buttons: []
             });
         }
+
 
         document.getElementById('btn1').onclick = function () {
             msg({
                 style: 'muted',
                 content: '你在朋友圈里这么流弊，你家里人造吗？',
-                buttons: [
-                    {
-                        '我去年买了个表': function () {
-                            alert('我去年买了个表');
-                        }
-
+                buttons: ['我去年买了个表'],
+                onclose: function (index) {
+                    if (index === -1) {
+                        this.shake();
+                        this.setContent('别想关闭我');
+                        return !1;
                     }
-                ]
+                }
             });
         }
 
@@ -71,19 +71,14 @@
             msg({
                 style: 'success',
                 content: '你到底说不说，说不说，说不说？',
-                buttons: [
-                    {
-                        '说': function () {
-                            alert('我说！');
-                        }
-
-                    },
-                    {
-                        '不说': function () {
-                            alert('不说！');
-                        }
+                buttons: ['说', '不说'],
+                onclose: function (index) {
+                    if (index === -1) {
+                        this.shake();
+                        this.setContent('你到底说不说，说不说，说不说？你到底说不说，说不说，说不说？你到底说不说，说不说，说不说？');
+                        return !1;
                     }
-                ]
+                }
             });
         }
 
@@ -92,23 +87,15 @@
                 style: 'info',
                 content: '有你这么逗比的吗？',
                 buttons: [
-                    {
-                        '有': function () {
-                            alert('有吧！');
-                        }
-
-                    },
-                    {
-                        '有': function () {
-                            alert('还是有吧！');
-                        }
-                    },
-                    {
-                        '有': function () {
-                            alert('还是还是有吧！');
-                        }
+                    '有吗', '有吧', '有的'
+                ],
+                onclose: function (index) {
+                    if (index === -1) {
+                        this.shake();
+                        this.setContent('有你这么逗比的吗？有你这么逗比的吗？有你这么逗比的吗？有你这么逗比的吗？');
+                        return !1;
                     }
-                ]
+                }
             });
         }
 
@@ -116,29 +103,14 @@
             msg({
                 style: 'warning',
                 content: '这么多按钮，确定是你需要的？',
-                buttons: [
-                    {
-                        '不知道': function () {
-                            alert('不知道！');
-                        }
-
-                    },
-                    {
-                        '应该是我需要的': function () {
-                            alert('应该是我需要的！');
-                        }
-                    },
-                    {
-                        '我也不知道': function () {
-                            alert('我也不知道！');
-                        }
-                    },
-                    {
-                        '还是越多越好吧': function () {
-                            alert('还是越多越好吧！');
-                        }
+                buttons: ['不知道', '应该是我需要的', '我也不知道', '还是越多越好吧'],
+                onclose: function (index) {
+                    if (index === -1) {
+                        this.shake();
+                        this.setContent('这么多按钮，确定是你需要的？这么多按钮，确定是你需要的？这么多按钮，确定是你需要的？');
+                        return !1;
                     }
-                ]
+                }
             });
         }
 
@@ -146,34 +118,14 @@
             msg({
                 style: 'danger',
                 content: '数一下这里一共出现了几个按钮？！',
-                buttons: [
-                    {
-                        '一共1个按钮': function () {
-                            alert('一共1个按钮！');
-                        }
-
-                    },
-                    {
-                        '一共2个按钮': function () {
-                            alert('一共2个按钮！');
-                        }
-                    },
-                    {
-                        '一共3个按钮': function () {
-                            alert('一共3个按钮！');
-                        }
-                    },
-                    {
-                        '一共4个按钮': function () {
-                            alert('一共4个按钮！');
-                        }
-                    },
-                    {
-                        '算了，还是不数了': function () {
-                            alert('算了，还是不数了！');
-                        }
+                buttons: ['一共1个按钮', '一共2个按钮', '一共3个按钮', '一共4个按钮', '算了，懒得数了'],
+                onclose: function (index) {
+                    if (index === -1) {
+                        this.shake();
+                        this.setContent('数一下这里一共出现了几个按钮？！数一下这里一共出现了几个按钮？！');
+                        return !1;
                     }
-                ]
+                }
             });
         }
     });

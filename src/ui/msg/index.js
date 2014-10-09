@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 
     require('./style.js');
 
-    var noop = function(){
+    var noop = function () {
         // ignore
     };
     var defaults = {
@@ -46,6 +46,7 @@ define(function (require, exports, module) {
     var body = document.body;
     var titleClass = 'alien-ui-msg-title';
     var closeClass = 'alien-ui-msg-close';
+    var bodyClass = 'alien-ui-msg-body';
     var buttonClass = 'alien-ui-msg-button';
     var Msg = klass.create({
         STATIC: {
@@ -69,17 +70,9 @@ define(function (require, exports, module) {
             var buttonsLength = 0;
 
             options.buttons = options.buttons || [];
-            the.events = [];
 
             /**
-             * buttons
-             * [
-             *    {
-             *        '确定': function(){
-             *            alert('确定');
-             *        }
-             *    }
-             * ]
+             * buttons: ["确定", "取消"]
              * // <=3个按钮水平排列
              * // >3个按钮将纵向排列
              */
@@ -90,24 +83,21 @@ define(function (require, exports, module) {
                     (buttonsLength > 3 ? 'vertical' : 'horizontal') +
                     ' alien-ui-msg-buttons-' + buttonsLength + '">';
 
-                data.each(options.buttons, function (index, button) {
-                    var text = Object.keys(button)[0];
-
-                    buttons += '<div class="'+buttonClass+' alien-ui-msg-button-' + index +
+                data.each(options.buttons, function (index, text) {
+                    buttons += '<div class="' + buttonClass + ' alien-ui-msg-button-' + index +
                         '">' + text + '</div>';
-                    the.events.push(button[text]);
                 });
 
                 buttons += '</div>';
             }
 
             msg.innerHTML =
-                (options.title === null ? '':
-                '<div class="alien-ui-msg-header">' +
-                '<div class="'+titleClass+'">'+options.title+'</div>' +
-                '<div class="'+closeClass+'">&times;</div>' +
-                '</div>')+
-                '<div class="alien-ui-msg-body">' + options.content + '</div>' +
+                (options.title === null ? '' :
+                    '<div class="alien-ui-msg-header">' +
+                    '<div class="' + titleClass + '">' + options.title + '</div>' +
+                    '<div class="' + closeClass + '">&times;</div>' +
+                    '</div>') +
+                '<div class="' + bodyClass + '">' + options.content + '</div>' +
                 buttons;
 
             modification.insert(msg, body, 'beforeend');
@@ -119,7 +109,7 @@ define(function (require, exports, module) {
                 isWrap: !1
             }).open();
 
-            if(options.title){
+            if (options.title) {
                 drag(the.dialog.dialog, {
                     handle: '.' + titleClass,
                     zIndex: the.dialog.zIndex
@@ -128,6 +118,9 @@ define(function (require, exports, module) {
 
             the._event();
             the.msg = msg;
+            the.body = selector.query('.' + bodyClass, the.msg)[0];
+
+            return the;
         },
 
 
@@ -140,21 +133,47 @@ define(function (require, exports, module) {
             var options = the.options;
 
             // 点击关闭对话框
-            event.on(the.dialog.dialog, 'click tap', '.'+closeClass, function () {
-                the.destroy();
-                options.onclose.call(the, -1);
+            event.on(the.dialog.dialog, 'click tap', '.' + closeClass, function () {
+                if (options.onclose.call(the, -1) !== false) {
+                    the.destroy();
+                }
             });
 
             // 点击按钮响应事件
             event.on(the.dialog.dialog, 'click tap', '.' + buttonClass, function (eve) {
                 var index = selector.index(eve.target);
 
-                if(data.type(the.events[index]) === 'function'){
+                if (options.onclose.call(the, index) !== false) {
                     the.destroy();
-                    the.events[index].call(the, eve);
-                    options.onclose.call(the, index);
                 }
             });
+        },
+
+
+        /**
+         * 设置对话框内容
+         * @param content
+         * @returns {Msg}
+         */
+        setContent: function (content) {
+            var the = this;
+
+            if (content) {
+                the.body.innerHTML = the.options.content = String(content);
+            }
+
+            return the;
+        },
+
+
+        /**
+         * 晃动消息框，以示提醒
+         * @returns {Msg}
+         */
+        shake: function () {
+            this.dialog.shake();
+
+            return this;
         },
 
 
@@ -186,7 +205,7 @@ define(function (require, exports, module) {
      * @param [options.top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
      * @param [options.title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
      * @param [options.content="Hello world!"] {String} 消息框内容
-     * @param [options.buttons=null] {Array|null} 消息框按钮，参考：<code>[{"确定": fn1, "取消": fn2}]</code>
+     * @param [options.buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
      * @param [options.style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
      * @param [options.onclose] {Function} 关闭对话框后的回调<br>
      *     this: 消息框实例<br>

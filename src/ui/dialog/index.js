@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var data = require('../../util/data.js');
     var index = 0;
     var zIndex = 9999;
-    var html = document.documentElement;
+//    var html = document.documentElement;
     var body = document.body;
     var overflowClass = 'alien-ui-dialog-overflow';
     var dialogClass = 'alien-ui-dialog';
@@ -94,7 +94,6 @@ define(function (require, exports, module) {
             });
             var bd;
 
-
             if (options.isWrap) {
                 dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
                     (options.title === null ? '' :
@@ -134,7 +133,7 @@ define(function (require, exports, module) {
                 eve.stopPropagation();
 
                 if (!selector.closest(eve.target, '.' + dialogClass).length) {
-                    the._shake();
+                    the.shake();
                 }
             });
 
@@ -150,8 +149,8 @@ define(function (require, exports, module) {
         open: function (callback) {
             callback = callback || noop;
 
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
+//            var winW = attribute.width(window);
+//            var winH = attribute.height(window);
             var the = this;
             var bg = the.bg;
             var dialog = the.dialog;
@@ -166,12 +165,11 @@ define(function (require, exports, module) {
             the.hasOpen = !0;
             findIndex = openDialogs.indexOf(the.id);
 
-            if(findIndex > -1){
+            if (findIndex > -1) {
                 openDialogs.splice(findIndex, 1);
             }
 
             openDialogs.push(the.id);
-            attribute.addClass(html, overflowClass);
             attribute.addClass(body, overflowClass);
 
             if (options.content || options.remote) {
@@ -194,12 +192,14 @@ define(function (require, exports, module) {
             the.zIndex = zIndex;
             to = the._position();
             to.opacity = '';
+            to.transform = 'scale(1)';
 
             attribute.css(dialog, {
                 opacity: 0,
                 visibility: 'visible',
                 left: to.left,
-                top: -to.height - 10
+                top: to.top,
+                transform: 'scale(0)'
             });
 
             animation.animate(bg, {
@@ -219,7 +219,7 @@ define(function (require, exports, module) {
                     the.setRemote(options.remote);
                 }
 
-                if(data.type(callback) === 'function'){
+                if (data.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -242,7 +242,7 @@ define(function (require, exports, module) {
             var bg = the.bg;
             var dialog = the.dialog;
             var options = the.options;
-            var theH = attribute.height(dialog);
+//            var theH = attribute.height(dialog);
 
             if (!the.hasOpen) {
                 return the;
@@ -252,13 +252,12 @@ define(function (require, exports, module) {
             openDialogs.pop();
 
             if (!openDialogs.length) {
-                attribute.removeClass(html, overflowClass);
                 attribute.removeClass(body, overflowClass);
             }
 
             animation.animate(dialog, {
                 opacity: 0,
-                top: -theH - 10
+                transform: 'scale(0)'
             }, {
                 duration: options.duration,
                 easing: options.easing
@@ -271,9 +270,10 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 attribute.css(bg, 'display', 'none');
+                attribute.css(dialog, 'transform', 'scale(1)');
                 options.onclose.call(dialog);
 
-                if(data.type(callback) === 'function'){
+                if (data.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -296,7 +296,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                if(data.type(callback) === 'function'){
+                if (data.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -307,7 +307,7 @@ define(function (require, exports, module) {
 
         /**
          * 对话框添加内容，并重新定位
-         * @private
+         * @returns {Dialog}
          */
         setContent: function (content) {
             var the = this;
@@ -330,7 +330,7 @@ define(function (require, exports, module) {
          * 对话框添加远程地址，并重新定位
          * @param {String} url 远程地址
          * @param {Number} [height=400] 高度
-         * @private
+         * @returns {Dialog}
          */
         setRemote: function (url, height) {
 
@@ -347,6 +347,29 @@ define(function (require, exports, module) {
             the.ele.innerHTML = '';
             modification.insert(iframe, the.ele, 'beforeend');
             the.position();
+
+            return the;
+        },
+
+
+        /**
+         * 晃动对话框以示提醒
+         * @returns {Dialog}
+         */
+        shake: function () {
+            var the = this;
+
+            if (the.shakeTimeid) {
+                the.shakeTimeid = 0
+                clearTimeout(the.shakeTimeid);
+                attribute.removeClass(the.dialog, shakeClass);
+            }
+
+            attribute.addClass(the.dialog, shakeClass);
+
+            the.shakeTimeid = setTimeout(function () {
+                attribute.removeClass(the.dialog, shakeClass);
+            }, 500);
 
             return the;
         },
@@ -374,7 +397,7 @@ define(function (require, exports, module) {
                 // 在 DOM 里删除
                 modification.remove(the.bg);
 
-                if(data.type(callback) === 'function'){
+                if (data.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -419,30 +442,6 @@ define(function (require, exports, module) {
             }
 
             return pos;
-        },
-
-
-
-
-
-        /**
-         * 晃动对话框以示提醒
-         * @private
-         */
-        _shake: function () {
-            var the = this;
-
-            if (the.shakeTimeid) {
-                the.shakeTimeid = 0
-                clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the.dialog, shakeClass);
-            }
-
-            attribute.addClass(the.dialog, shakeClass);
-
-            the.shakeTimeid = setTimeout(function () {
-                attribute.removeClass(the.dialog, shakeClass);
-            }, 500);
         }
     });
 
@@ -450,11 +449,11 @@ define(function (require, exports, module) {
     event.on(document, 'keyup', function (eve) {
         var d;
 
-        if(eve.which === 27 && openDialogs.length){
+        if (eve.which === 27 && openDialogs.length) {
             d = dialogsMap[openDialogs[openDialogs.length - 1]];
 
-            if(d && d.constructor === Dialog){
-                d._shake();
+            if (d && d.constructor === Dialog) {
+                d.shake();
             }
         }
     });
