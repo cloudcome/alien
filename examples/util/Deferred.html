@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+ - Deferred.html
+ - @author ydr.me
+ - @create 2014-10-09 17:34
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Deferred.html</title>
+</head>
+<body>
+
+
+<script src="/seajs/sea.js" id="script"></script>
+<script>
+    define('app', function (require) {
+        var Deferred = require('/src/util/Deferred.js');
+
+        var d1 = new Deferred();
+        d1.done(function () {
+            console.log('d1 done');
+        }).fail(function () {
+            console.log('d1 fail');
+        });
+
+        var d2 = new Deferred();
+        d2.done(function () {
+            console.log('d2 done 1');
+        }).done(function () {
+            console.log(this.a);
+            console.log(d2.status);
+        }).fail(function () {
+            console.log('d2 fail');
+        }).progress(function (val) {
+            console.log(val);
+        });
+
+        setTimeout(function(){
+            d1.reject(new Error('d1'), {
+                a: 1
+            });
+        }, 1000);
+
+        var i = 1;
+        var t2 = setInterval(function () {
+            d2.setProgress(++i);
+        }, 600);
+
+        setTimeout(function(){
+            clearInterval(t2);
+            d2.resolve('d2', {
+                a: 1
+            });
+        }, 10000);
+    });
+    seajs.use('app');
+</script>
+</body>
+</html>
