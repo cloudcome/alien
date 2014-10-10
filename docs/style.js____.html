@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: ui/scrollbar/style.js - Alien documents</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.1.10.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Alien documents</a>
+    </div>
+    <nav role="navigation">
+		<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
+<li><a href="xhr.html">core/communication/xhr</a></li>
+<li><a href="animation.html">core/dom/animation</a></li>
+<li><a href="attribute.html">core/dom/attribute</a></li>
+<li><a href="modification.html">core/dom/modification</a></li>
+<li><a href="selector.html">core/dom/selector</a></li>
+<li><a href="base.html">core/event/base</a></li>
+<li><a href="ready.html">core/event/ready</a></li>
+<li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
+<li><a href="compatible.html">core/navigator/compatible</a></li>
+<li><a href="hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="querystring.html">core/navigator/querystring</a></li>
+<li><a href="shell.html">core/navigator/shell</a></li>
+<li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
+<li><a href="data.html">util/data</a></li>
+<li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
+</ul>
+</li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: ui/scrollbar/style.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * style.js
+ * @author ydr.me
+ * @create 2014-10-06 16:11
+ */
+
+
+define(function (require) {
+    /**
+     * @module ui/scrollbar/style
+     */
+    'use strict';
+
+    var modification = require('../../core/dom/modification.js');
+    var duration = 456;
+    var style =
+        // 包裹
+        '.alien-ui-scrollbar{position:relative;overflow:hidden}' +
+        '.alien-ui-scrollbar *{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}' +
+        // 内容
+        '.alien-ui-scrollbar-body{position:relative;top:0;left:0}' +
+        // 滑道
+        '.alien-ui-scrollbar-track{position:absolute;bottom:0;right:0;border-width:0;border-style:solid;border-color:rgba(255,255,255,0);background:rgba(255,255,255,0);-webkit-transition-duration:' + duration + 'ms;-moz-transition-duration:' + duration + 'ms;transition-duration:' + duration + 'ms;-webkit-transition-property:background;-moz-transition-property:background;transition-property:background}' +
+        '.alien-ui-scrollbar-track-x{left:0;height:13px;border-top-width:1px}' +
+        '.alien-ui-scrollbar-track-y{top:0;width:13px;border-left-width:1px}' +
+        '.alien-ui-scrollbar-track:hover{border-color:#ccc;background:#f5f5f5}' +
+        '.alien-ui-scrollbar-track-x:hover{box-shadow:inset 0 1px 5px #C2BDBD}' +
+        '.alien-ui-scrollbar-track-y:hover{box-shadow:inset 1px 0 5px #C2BDBD}' +
+        // 滑块
+        '.alien-ui-scrollbar-thumb{position:absolute;background:rgba(0,0,0,.2);border-radius:10px;margin-top:3px;margin-left:3px;-webkit-transition-duration:' + duration + 'ms;-moz-transition-duration:' + duration + 'ms;transition-duration:' + duration + 'ms;-webkit-transition-property:background;-moz-transition-property:background;transition-property:background}' +
+        '.alien-ui-scrollbar-thumb-x{width:100%;height:8px;left:0}' +
+        '.alien-ui-scrollbar-thumb-y{width:8px;height:100%;top:0}' +
+        '.alien-ui-scrollbar-thumb:hover,.alien-ui-scrollbar-thumb-active{background:rgba(0,0,0,.6)}';
+
+    modification.importStyle(style);
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script src="js/bootstrap.js"> </script>
+<script src="js/script.js"> </script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- - scrollbar.html
+ - Scrollbar.html
  - @author ydr.me
  - @create 2014-10-07 12:48
  -->
@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>scrollbar.html</title>
+    <title>Scrollbar.html</title>
 
     <style>
         #container{
@@ -56,11 +56,9 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var scrollbar = require('/src/ui/scrollbar/index.js');
+        var Scrollbar = require('/src/ui/Scrollbar.js');
         var demo = document.getElementById('demo');
-        var sl1 = scrollbar(demo);
-
-        window.sl1 = sl1;
+        var sl1 = new Scrollbar(demo).init();
 
         document.getElementById('scrollTop').onclick = function(){
             sl1.scrollTop();

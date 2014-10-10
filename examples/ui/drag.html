@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- - drag.html
+ - Drag.html
  - @author ydr.me
  - @create 2014-10-02 15:47
  -->
@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>drag.html</title>
+    <title>Drag.html</title>
     <style>
         pre{
             background: #f5f5f5;
@@ -54,10 +54,9 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var drag = require('/src/ui/drag/index.js');
+        var Drag = require('/src/ui/Drag.js');
         var demo = document.getElementById('demo');
-
-        drag(demo, {
+        var drag1 = new Drag(demo, {
             min: {
                 x: 0,
                 y: 0
@@ -68,6 +67,8 @@
             },
             handle: '#handle'
         });
+
+        drag1.init();
     });
     seajs.use('app');
 </script>

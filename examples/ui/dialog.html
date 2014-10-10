@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- - dialog.html
+ - Dialog.html
  - @author ydr.me
  - @create 2014-10-04 02:34
  -->
@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>dialog.html</title>
+    <title>Dialog.html</title>
     <style>
         body{
             padding: 0;
@@ -60,22 +60,22 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var dialog = require('/src/ui/dialog/index.js');
+        var Dialog = require('/src/ui/Dialog.js');
         var demo1 = document.getElementById('demo1');
         var demo2 = document.getElementById('demo2');
         var demo3 = document.getElementById('demo3');
 
-        var d1 = dialog(demo1);
-        var d2 = dialog(demo2,{
+        var d1 = new Dialog(demo1).init();
+        var d2 = new Dialog(demo2,{
             width: 350,
             height: 400,
             top: 0,
             title: null,
             wrap: false
-        });
-        var d3 = dialog(demo3, {
+        }).init();
+        var d3 = new Dialog(demo3, {
             remote: 'http://wap.baidu.com/'
-        });
+        }).init();
 
         document.getElementById('open1').onclick = function () {
             d1.open();
@@ -100,9 +100,6 @@
         document.getElementById('open3').onclick = function () {
             d3.open();
         };
-
-
-
     });
     seajs.use('app');
 </script>

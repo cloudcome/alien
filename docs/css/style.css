@@ -22,7 +22,7 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    width: 260px;
+    width: 200px;
     bottom: 0;
     overflow: auto;
 }
@@ -52,12 +52,19 @@ body{
     font-size: 20px;
 }
 
+
+.dropdown-menu{
+    max-height: 350px;
+    overflow: auto;
+}
+
+
 #docs-content {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    left: 260px;
+    left: 200px;
     overflow: auto;
 }
 
@@ -88,11 +95,12 @@ body{
 }
 
 .params .th-name,
-.params .th-type{
-    width: 100px;
+.params .th-type,
+.params .th-arg{
+    max-width: 150px;
 }
 
-
+.docs-member,
 .docs-method {
     padding: 10px 0;
 }
@@ -112,4 +120,12 @@ body{
 
 .optional::after{
     content: "]";
+}
+
+.details {
+    margin-top: 20px;
+}
+
+.returns-table td{
+    padding: 0 10px;
 }

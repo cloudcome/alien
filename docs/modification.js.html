@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -100,11 +119,12 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var selector = require('./selector.js');
+    var domSelector = require('./selector.js');
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
     var regDir = />/g;
-    var head = selector.query('head')[0] || document.documentElement;
+    var regComments = /\/\*+([\s\S]*?)\*+\//;
+    var head = domSelector.query('head')[0] || document.documentElement;
 
     module.exports = {
         /**
@@ -114,7 +134,7 @@ define(function (require, exports, module) {
          * @returns {NodeList|HTMLElement}
          *
          * @example
-         * modification.parse('&lt;div/>');
+         * modification.parse('&amp;lt;div/>');
          * // => HTMLDIVElement
          */
         parse: function (htmlString) {
@@ -186,7 +206,7 @@ define(function (require, exports, module) {
          * @param {Object} target 目标
          * @param {String} position 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
          * @param {Boolean} [isReturnSource] 是否返回源，默认false
-         * @returns {HTMLElement|Node|null}
+         * @returns {Object|null}
          *
          * @example
          * // - beforebegin
@@ -260,10 +280,14 @@ define(function (require, exports, module) {
          * modification.remove(ele);
          */
         remove: function (ele) {
-            var parent = selector.parent(ele);
+            var parent = domSelector.parent(ele);
 
             if (parent.length) {
-                parent[0].removeChild(ele);
+                try{
+                    parent[0].removeChild(ele);
+                }catch(err){
+                    // ignore
+                }
             } else {
                 try {
                     ele.remove();
@@ -272,26 +296,36 @@ define(function (require, exports, module) {
                 }
             }
         },
+
         /**
          * 元素外层追加一层
          * @param {HTMLElement|Node} source 元素
          * @param {String} htmlstring html字符串
+         * @returns {HTMLElement|Node|null} 如果存在返回 wrap 包裹对象，否则返回 null
          *
          * @example
-         * modification.wrap(ele, '&lt;div/>');
+         * modification.wrap(ele, '&amp;lt;div/>');
          */
         wrap: function (source, htmlstring) {
             var target = this.parse(htmlstring);
+            var wrap;
 
             if (target.length &amp;&amp; target[0].nodeType === 1) {
-                target = this.insert(target[0], source, 'beforebegin', !0);
+                // 这里必须复制对象
+                // 因为后面的 DOM 修改会影响这里，因为 target 是一个对象引用
+                wrap = data.extend([], target);
+                target = this.insert(wrap[0], source, 'beforebegin', !0);
 
                 if (target) {
+                    // #div1>#div2>#div3
+                    // 插入到 #div3 里（最里层）
                     while (target.firstElementChild) {
                         target = target.firstElementChild;
                     }
 
-                    return this.insert(source, target, 'beforeend');
+                    this.insert(source, target, 'beforeend');
+
+                    return wrap;
                 }
             }
 
@@ -314,7 +348,7 @@ define(function (require, exports, module) {
             // .div1 .p1 .div2
             // => .div2 .p1 .div1
             data.each(selectors.reverse(), function (index, selector) {
-                if (selector.isMatched(source.parentNode, selector)) {
+                if (domSelector.isMatched(source.parentNode, selector)) {
                     _removeParent(source);
                 } else {
                     return !1;
@@ -329,24 +363,21 @@ define(function (require, exports, module) {
                 }
             }
         },
+
+
         /**
          * 添加样式
          * @param {String} styleText 样式内容
-         * @param {String} [id] 已有的 style ID
          *
          * @example
-         * modification.style('body{padding: 10px;}');
-         * modification.style('body{padding: 10px;}', 'id');
+         * modification.importStyle('body{padding: 10px;}');
          */
-        style: function (styleText, id) {
-            var style = selector.query('#' + id);
+        importStyle: function (styleText) {
+            var style =  this.create('style');
 
-            if (style.length) {
-                style = style[0];
-            } else {
-                style = this.create('style');
-                this.insert(style, head, 'beforeend');
-            }
+            styleText = String(styleText);
+
+            this.insert(style, head, 'beforeend');
 
             // IE
             if (style.styleSheet !== undefined) {
@@ -357,7 +388,7 @@ define(function (require, exports, module) {
                 //     throw new Error('Exceed the maximal count of style tags in IE')
                 // }
 
-                style.styleSheet.cssText += styleText
+                style.styleSheet.cssText += styleText;
             }
             // W3C
             else {

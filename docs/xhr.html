@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -136,7 +155,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-357500653015449646348755068611354" data-toggle="tab">Source</a>
+                <a href="#tab-meta-397432604338973767765335037838668" data-toggle="tab">Source</a>
             </li>
 
         
@@ -157,7 +176,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-357500653015449646348755068611354">
+            <div class="tab-pane active" id="tab-meta-397432604338973767765335037838668">
                 <p><a href="xhr.js.html#line9">core/communication/xhr.js:9</a></p>
             </div>
 
@@ -370,7 +389,7 @@
 
         <tr>
             
-                <td class="name"><code>type</code></td>
+                <td class="name"><code>dataType</code></td>
             
 
             <td class="type">
@@ -608,108 +627,6 @@
         </tr>
 
 	
-
-        <tr>
-            
-                <td class="name"><code>onload</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">请求并处理成功</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>onerror</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">请求失败或处理失败</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>onprogress</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">上传进度回调</td>
-        </tr>
-
-	
 	</tbody>
 </table>
 
@@ -731,11 +648,11 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">XMLHttpRequest</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Deferred</span>
         
     
 </td>
-            <td class="param-desc"></td>
+            <td class="param-desc">返回一个 Deferred 实例</td>
         </tr>
     </tbody>
 </table>
@@ -764,7 +681,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-647837665397673807399367797188461" data-toggle="tab">Source</a>
+                <a href="#tab-meta-706710619619116239769678586162627" data-toggle="tab">Source</a>
             </li>
 
         
@@ -785,8 +702,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-647837665397673807399367797188461">
-                <p><a href="xhr.js.html#line77">core/communication/xhr.js:77</a></p>
+            <div class="tab-pane active" id="tab-meta-706710619619116239769678586162627">
+                <p><a href="xhr.js.html#line63">core/communication/xhr.js:63</a></p>
             </div>
 
         

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Module: ui/Drag - Alien documents</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.1.10.min.js"> </script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Alien documents</a>
+    </div>
+    <nav role="navigation">
+		<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
+<li><a href="xhr.html">core/communication/xhr</a></li>
+<li><a href="animation.html">core/dom/animation</a></li>
+<li><a href="attribute.html">core/dom/attribute</a></li>
+<li><a href="modification.html">core/dom/modification</a></li>
+<li><a href="selector.html">core/dom/selector</a></li>
+<li><a href="base.html">core/event/base</a></li>
+<li><a href="ready.html">core/event/ready</a></li>
+<li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
+<li><a href="compatible.html">core/navigator/compatible</a></li>
+<li><a href="hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="querystring.html">core/navigator/querystring</a></li>
+<li><a href="shell.html">core/navigator/shell</a></li>
+<li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
+<li><a href="data.html">util/data</a></li>
+<li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
+</ul>
+</li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+	                    <li class="sidebar-header">Methods &times; 2</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#destroy">destroy</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#init">init</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Module: ui/Drag</h1>
+
+		            
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            ui/Drag
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="module-ui/Drag">
+        <span class="type-signature"></span>new require(ui/Drag)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>实例化一个拖拽对象
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">参数配置
+                <h6>Properties</h6>
+                
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>handle</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">鼠标操作区域选择器，默认为 null，即整个元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isClone</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">是否克隆一个副本作为参考对象，默认 true</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>axis</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽轴向，x：水平，y：垂直，xy：所有，默认为"xy"</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>zIndex</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽时的层级值，默认为99999</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>ondragstart</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽开始后回调</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>ondrag</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽中回调</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>ondragend</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">拖拽结束后回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-92702036187984058599821049720049" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-92702036187984058599821049720049">
+                <p><a href="Drag.js_.html#line264">ui/Drag.js:264</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-74197426997125154799152445048094" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-74197426997125154799152445048094">
+                <p><a href="Drag.js_.html#line9">ui/Drag.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="data.html">module:util/data</a></li>
+        
+            <li><a href="touch.html">module:core/event/touch</a></li>
+        
+            <li><a href="selector.html">module:core/dom/selector</a></li>
+        
+            <li><a href="attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="modification.html">module:core/dom/modification</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+        <section id="docs-methods">
+            <h3 class="subsection-title">Methods</h3>
+
+            <dl>
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="destroy">
+        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>销毁拖拽
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-1065097087994217920904217823408544" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-1065097087994217920904217823408544">
+                <p><a href="Drag.js_.html#line94">ui/Drag.js:94</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="init">
+        <span class="type-signature">&lt;inner> </span>init<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>初始化
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-149707718985155223900199674535543" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-149707718985155223900199674535543">
+                <p><a href="Drag.js_.html#line106">ui/Drag.js:106</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+<script src="js/bootstrap.js"> </script>
+<script src="js/script.js"> </script>
+
+</body>
+</html>

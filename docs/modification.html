@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -83,6 +102,15 @@
 
 <li class="">
     
+        <a class="" href="#importStyle">importStyle</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#insert">insert</a>
     
 </li>
@@ -102,15 +130,6 @@
 <li class="">
     
         <a class="" href="#remove">remove</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#style">style</a>
     
 </li>
 
@@ -190,7 +209,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-71341671980917457641522632911801" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6475432906299834875033902935684" data-toggle="tab">Source</a>
             </li>
 
         
@@ -211,7 +230,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-71341671980917457641522632911801">
+            <div class="tab-pane active" id="tab-meta-6475432906299834875033902935684">
                 <p><a href="modification.js.html#line9">core/dom/modification.js:9</a></p>
             </div>
 
@@ -428,7 +447,7 @@ modification.create('div', {id:'id-123'});
 
             
             <li class="active">
-                <a href="#tab-meta-9018679051660001998369091656059" data-toggle="tab">Source</a>
+                <a href="#tab-meta-30707607325166464309777753893286" data-toggle="tab">Source</a>
             </li>
 
         
@@ -449,8 +468,156 @@ modification.create('div', {id:'id-123'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-9018679051660001998369091656059">
-                <p><a href="modification.js.html#line57">core/dom/modification.js:57</a></p>
+            <div class="tab-pane active" id="tab-meta-30707607325166464309777753893286">
+                <p><a href="modification.js.html#line58">core/dom/modification.js:58</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="importStyle">
+        <span class="type-signature">&lt;static> </span>importStyle<span class="signature">(styleText)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>添加样式
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>styleText</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">样式内容</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>modification.importStyle('body{padding: 10px;}');</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-23867249349132186823589410632849" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-23867249349132186823589410632849">
+                <p><a href="modification.js.html#line271">core/dom/modification.js:271</a></p>
             </div>
 
         
@@ -664,10 +831,7 @@ modification.create('div', {id:'id-123'});
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
         |
     
 &nbsp;&nbsp;<span class="param-type label label-info">null</span>
@@ -718,7 +882,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-69143014121800669145147874951363" data-toggle="tab">Source</a>
+                <a href="#tab-meta-314544879598543059181007577572018" data-toggle="tab">Source</a>
             </li>
 
         
@@ -739,8 +903,8 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-69143014121800669145147874951363">
-                <p><a href="modification.js.html#line119">core/dom/modification.js:119</a></p>
+            <div class="tab-pane active" id="tab-meta-314544879598543059181007577572018">
+                <p><a href="modification.js.html#line120">core/dom/modification.js:120</a></p>
             </div>
 
         
@@ -863,7 +1027,7 @@ modification.insert(source, target, 'afterend');</code></pre>
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>modification.parse('<div/>');
+    <pre class="prettyprint"><code>modification.parse('&lt;div/>');
 // => HTMLDIVElement</code></pre>
 
         
@@ -888,7 +1052,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-35628335620276638448875499889255" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3324615829624235625336216669529676" data-toggle="tab">Source</a>
             </li>
 
         
@@ -909,8 +1073,8 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-35628335620276638448875499889255">
-                <p><a href="modification.js.html#line35">core/dom/modification.js:35</a></p>
+            <div class="tab-pane active" id="tab-meta-3324615829624235625336216669529676">
+                <p><a href="modification.js.html#line36">core/dom/modification.js:36</a></p>
             </div>
 
         
@@ -1039,7 +1203,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-61696436651982377233527682255954" data-toggle="tab">Source</a>
+                <a href="#tab-meta-59747504512779419883013681974262" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1060,201 +1224,8 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-61696436651982377233527682255954">
-                <p><a href="modification.js.html#line177">core/dom/modification.js:177</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="style">
-        <span class="type-signature">&lt;static> </span>style<span class="signature">(styleText, <span class="optional">id</span>)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>添加样式
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters:</h5>
-            
-
-<table class="params table table-bordered table-hover">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>styleText</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">样式内容</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">已有的 style ID</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>modification.style('body{padding: 10px;}');
-modification.style('body{padding: 10px;}', 'id');</code></pre>
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-107653746148571376766359526664019" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-107653746148571376766359526664019">
-                <p><a href="modification.js.html#line256">core/dom/modification.js:256</a></p>
+            <div class="tab-pane active" id="tab-meta-59747504512779419883013681974262">
+                <p><a href="modification.js.html#line178">core/dom/modification.js:178</a></p>
             </div>
 
         
@@ -1409,7 +1380,7 @@ modification.unwrap(ele, '#div1 #div2 #div3');
 
             
             <li class="active">
-                <a href="#tab-meta-2070004569832235622514492785558105" data-toggle="tab">Source</a>
+                <a href="#tab-meta-140479717403650285703193575609475" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1430,8 +1401,8 @@ modification.unwrap(ele, '#div1 #div2 #div3');
         
         
 
-            <div class="tab-pane active" id="tab-meta-2070004569832235622514492785558105">
-                <p><a href="modification.js.html#line225">core/dom/modification.js:225</a></p>
+            <div class="tab-pane active" id="tab-meta-140479717403650285703193575609475">
+                <p><a href="modification.js.html#line240">core/dom/modification.js:240</a></p>
             </div>
 
         
@@ -1457,7 +1428,7 @@ modification.unwrap(ele, '#div1 #div2 #div3');
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id="wrap">
-        <span class="type-signature">&lt;static> </span>wrap<span class="signature">(source, htmlstring)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;static> </span>wrap<span class="signature">(source, htmlstring)</span><span class="type-signature"> 
     </h4>
 
     
@@ -1556,11 +1527,35 @@ modification.unwrap(ele, '#div1 #div2 #div3');
         
 
         
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        
+    
+</td>
+            <td class="param-desc">如果存在返回 wrap 包裹对象，否则返回 null</td>
+        </tr>
+    </tbody>
+</table>
+
+            
 
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>modification.wrap(ele, '<div/>');</code></pre>
+    <pre class="prettyprint"><code>modification.wrap(ele, '&lt;div/>');</code></pre>
 
         
 
@@ -1584,7 +1579,7 @@ modification.unwrap(ele, '#div1 #div2 #div3');
 
             
             <li class="active">
-                <a href="#tab-meta-19749137875624531409967225045" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5109621030278504006062620086595416" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1605,8 +1600,8 @@ modification.unwrap(ele, '#div1 #div2 #div3');
         
         
 
-            <div class="tab-pane active" id="tab-meta-19749137875624531409967225045">
-                <p><a href="modification.js.html#line198">core/dom/modification.js:198</a></p>
+            <div class="tab-pane active" id="tab-meta-5109621030278504006062620086595416">
+                <p><a href="modification.js.html#line205">core/dom/modification.js:205</a></p>
             </div>
 
         

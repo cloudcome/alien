@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -149,6 +168,12 @@
 
         
             
+                <blockquote class="description lead">URL 的 hash 部分解析与设置<br>
+支持的 hashbang 格式为<code>#!/foo/bar/?a=1&b=2&b=3</code><br>
+必须以<code>#!</code>开头，后续的 querystring 必须符合标准
+                    
+                </blockquote>
+            
 
             
 
@@ -172,7 +197,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4719157349318266747262122342363" data-toggle="tab">Source</a>
+                <a href="#tab-meta-14893853641115135643986973445863" data-toggle="tab">Source</a>
             </li>
 
         
@@ -193,7 +218,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4719157349318266747262122342363">
+            <div class="tab-pane active" id="tab-meta-14893853641115135643986973445863">
                 <p><a href="hashbang.js.html#line9">core/navigator/hashbang.js:9</a></p>
             </div>
 
@@ -537,7 +562,7 @@ hashbang.matches('#!/name/abc123/', '/id/:id/');
 
             
             <li class="active">
-                <a href="#tab-meta-42652257718145855033122198656201" data-toggle="tab">Source</a>
+                <a href="#tab-meta-60852362099103632464522619266063" data-toggle="tab">Source</a>
             </li>
 
         
@@ -558,8 +583,8 @@ hashbang.matches('#!/name/abc123/', '/id/:id/');
         
         
 
-            <div class="tab-pane active" id="tab-meta-42652257718145855033122198656201">
-                <p><a href="hashbang.js.html#line148">core/navigator/hashbang.js:148</a></p>
+            <div class="tab-pane active" id="tab-meta-60852362099103632464522619266063">
+                <p><a href="hashbang.js.html#line152">core/navigator/hashbang.js:152</a></p>
             </div>
 
         
@@ -776,7 +801,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-50842882576398555631600953638554" data-toggle="tab">Source</a>
+                <a href="#tab-meta-96579546527937055682878848165274" data-toggle="tab">Source</a>
             </li>
 
         
@@ -797,8 +822,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-50842882576398555631600953638554">
-                <p><a href="hashbang.js.html#line381">core/navigator/hashbang.js:381</a></p>
+            <div class="tab-pane active" id="tab-meta-96579546527937055682878848165274">
+                <p><a href="hashbang.js.html#line385">core/navigator/hashbang.js:385</a></p>
             </div>
 
         
@@ -1027,7 +1052,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-8451868121046573693461220478639" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6575379436835647760061809560284" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1048,8 +1073,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-8451868121046573693461220478639">
-                <p><a href="hashbang.js.html#line55">core/navigator/hashbang.js:55</a></p>
+            <div class="tab-pane active" id="tab-meta-6575379436835647760061809560284">
+                <p><a href="hashbang.js.html#line59">core/navigator/hashbang.js:59</a></p>
             </div>
 
         
@@ -1279,7 +1304,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-81593319214880475730301653966308" data-toggle="tab">Source</a>
+                <a href="#tab-meta-09179757372476169191495417617261" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1300,8 +1325,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-81593319214880475730301653966308">
-                <p><a href="hashbang.js.html#line105">core/navigator/hashbang.js:105</a></p>
+            <div class="tab-pane active" id="tab-meta-09179757372476169191495417617261">
+                <p><a href="hashbang.js.html#line109">core/navigator/hashbang.js:109</a></p>
             </div>
 
         
@@ -1532,7 +1557,7 @@ hashbang.un('query');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-563184041297063214200160838663578" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85775654064491399859600646886975" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1553,8 +1578,8 @@ hashbang.un('query');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-563184041297063214200160838663578">
-                <p><a href="hashbang.js.html#line444">core/navigator/hashbang.js:444</a></p>
+            <div class="tab-pane active" id="tab-meta-85775654064491399859600646886975">
+                <p><a href="hashbang.js.html#line448">core/navigator/hashbang.js:448</a></p>
             </div>
 
         

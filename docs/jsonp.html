@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: core/dom/animation - Alien documents</title>
+    <title>Module: core/communication/jsonp - Alien documents</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -67,19 +86,6 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 1</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#animate">animate</a>
-    
-</li>
-
-	                    
-	                
 
 	                
 
@@ -89,7 +95,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: core/dom/animation</h1>
+		            <h1 class="page-title">Module: core/communication/jsonp</h1>
 
 		            
 
@@ -100,7 +106,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            core/dom/animation
+            core/communication/jsonp
         
     
     </h2>
@@ -110,101 +116,11 @@
 <article>
     <div class="container-overview">
         
-
-        
             
-
-            
-
-            
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-430735040688887243406298088375479" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-430735040688887243406298088375479">
-                <p><a href="animation.js.html#line10">core/dom/animation.js:10</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-        
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li><a href="attribute.html">module:core/dom/attribute</a></li>
-        
-            <li><a href="data.html">module:util/data</a></li>
-        
-            <li><a href="compatible.html">module:core/navigator/compatible</a></li>
-        
-            <li><a href="base.html">module:core/event/base</a></li>
-        </ul>
-    
-
-    
-
-    
-
-    
-
-    
-        <section id="docs-methods">
-            <h3 class="subsection-title">Methods</h3>
-
-            <dl>
-                
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="animate">
-        <span class="type-signature">&lt;static> </span>animate<span class="signature">(element, to, <span class="optional">options</span>, <span class="optional">callback</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id="module-core/communication/jsonp">
+        <span class="type-signature"></span>require(core/communication/jsonp)<span class="signature">(options)</span><span class="type-signature"> 
     </h4>
 
     
@@ -213,7 +129,7 @@
 
         
         <div class="description lead">
-            <blockquote>动画
+            <blockquote>跨域 JSONP
                 
             </blockquote>
         </div>
@@ -237,8 +153,6 @@
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
 		
 
@@ -247,73 +161,6 @@
 	</thead>
 
 	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>element</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">元素</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>to</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">终点</td>
-        </tr>
-
 	
 
         <tr>
@@ -331,16 +178,6 @@
             
             </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -363,6 +200,8 @@
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -373,7 +212,7 @@
 
         <tr>
             
-                <td class="name"><code>easing</code></td>
+                <td class="name"><code>type</code></td>
             
 
             <td class="type">
@@ -399,21 +238,66 @@
             
 
             
+                <td class="default">
+                
+                    "function"
+                
+                </td>
+            
 
-            <td class="description last">缓冲类型，默认为`liner`</td>
+            <td class="description last">方式，分别为 var 或者 function</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>duration</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">请求地址，必须为`http://ydr.me/?callback=?`格式，与jquery 一致</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
         
     
 
@@ -433,21 +317,27 @@
             
 
             
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
 
-            <td class="description last">动画时间，默认789ms</td>
+            <td class="description last">请求参数</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>delay</code></td>
+                <td class="name"><code>isCache</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
         
     
 
@@ -467,8 +357,14 @@
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
-            <td class="description last">延迟时间，默认0</td>
+            <td class="description last">是否保留缓存，默认 false</td>
         </tr>
 
 	
@@ -479,54 +375,35 @@
         </tr>
 
 	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">回调</td>
-        </tr>
-
-	
 	</tbody>
 </table>
 
         
 
         
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Deferred</span>
+        
+    
+</td>
+            <td class="param-desc">返回 Deferred 实例</td>
+        </tr>
+    </tbody>
+</table>
+
+            
 
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>animation.animate(element, to);
-animation.animate(element, to, property);
-animation.animate(element, to, callback);
-animation.animate(element, to, property, callback);</code></pre>
+    <pre class="prettyprint"><code>jsonp(options);</code></pre>
 
         
 
@@ -550,7 +427,7 @@ animation.animate(element, to, property, callback);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-98526629735715697223605313338339" data-toggle="tab">Source</a>
+                <a href="#tab-meta-77892856765538459929486676119268" data-toggle="tab">Source</a>
             </li>
 
         
@@ -571,8 +448,8 @@ animation.animate(element, to, property, callback);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-98526629735715697223605313338339">
-                <p><a href="animation.js.html#line78">core/dom/animation.js:78</a></p>
+            <div class="tab-pane active" id="tab-meta-77892856765538459929486676119268">
+                <p><a href="jsonp.js.html#line45">core/communication/jsonp.js:45</a></p>
             </div>
 
         
@@ -593,8 +470,80 @@ animation.animate(element, to, property, callback);</code></pre>
     </dd>
 </section>
 
-            </dl>
-        </section>
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-95352381910197444626492459792644" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-95352381910197444626492459792644">
+                <p><a href="jsonp.js.html#line9">core/communication/jsonp.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     

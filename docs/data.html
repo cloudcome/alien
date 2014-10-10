@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -67,7 +86,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 4</li>
+	                    <li class="sidebar-header">Methods &times; 7</li>
 
 	                    
 	                        
@@ -84,6 +103,33 @@
 <li class="">
     
         <a class="" href="#extend">extend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#hasOwnProperty">hasOwnProperty</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#parseFloat">parseFloat</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#parseInt">parseInt</a>
     
 </li>
 
@@ -163,7 +209,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-2986794861499222953379382379353" data-toggle="tab">Source</a>
+                <a href="#tab-meta-41976565867662433807934573851526" data-toggle="tab">Source</a>
             </li>
 
         
@@ -184,7 +230,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-2986794861499222953379382379353">
+            <div class="tab-pane active" id="tab-meta-41976565867662433807934573851526">
                 <p><a href="data.js.html#line9">util/data.js:9</a></p>
             </div>
 
@@ -219,7 +265,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id="each">
-        <span class="type-signature">&lt;static> </span>each<span class="signature">(data, callback, <span class="optional">context</span>)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;static> </span>each<span class="signature">(list, callback, <span class="optional">context</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -266,7 +312,7 @@
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>list</code></td>
             
 
             <td class="type">
@@ -291,7 +337,7 @@
 
             
 
-            <td class="description last">数组</td>
+            <td class="description last">数组、可枚举对象</td>
         </tr>
 
 	
@@ -369,6 +415,13 @@
         
 
         
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 与 jQuery.each 一样
+// 返回 false 时将退出当前遍历
+data.each(list, function(key, val){});</code></pre>
+
+        
 
         
 
@@ -390,7 +443,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-981055108597502105726650869473815" data-toggle="tab">Source</a>
+                <a href="#tab-meta-358649557456374178440859878901392" data-toggle="tab">Source</a>
             </li>
 
         
@@ -411,8 +464,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-981055108597502105726650869473815">
-                <p><a href="data.js.html#line52">util/data.js:52</a></p>
+            <div class="tab-pane active" id="tab-meta-358649557456374178440859878901392">
+                <p><a href="data.js.html#line166">util/data.js:166</a></p>
             </div>
 
         
@@ -615,6 +668,25 @@
             
 
         
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 使用方法与 jQuery.extend 一样
+var o1 = {a: 1};
+var o2 = {b: 2};
+var o3 = data.extend(true, o1, o2);
+// => {a: 1, b: 2}
+o1 === o3
+// => true
+
+// 如果不想污染原始对象，可以传递一个空对象作为容器
+var o1 = {a: 1};
+var o2 = {b: 2};
+var o3 = data.extend(true, {}, o1, o2);
+// => {a: 1, b: 2}
+o1 === o3
+// => fale</code></pre>
+
+        
 
         
 
@@ -636,7 +708,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-79331418126821526210029821377248" data-toggle="tab">Source</a>
+                <a href="#tab-meta-630811757175251824374645738862455" data-toggle="tab">Source</a>
             </li>
 
         
@@ -657,8 +729,610 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-79331418126821526210029821377248">
-                <p><a href="data.js.html#line85">util/data.js:85</a></p>
+            <div class="tab-pane active" id="tab-meta-630811757175251824374645738862455">
+                <p><a href="data.js.html#line218">util/data.js:218</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="hasOwnProperty">
+        <span class="type-signature">&lt;static> </span>hasOwnProperty<span class="signature">(obj, prop)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>判断一个对象是否有属于自身的方法、属性，而不是原型链方法、属性以及其他继承来的方法、属性
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">判断对象</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>prop</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">方法、属性名称</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>var o = {a: 1};
+data.hasOwnProperty(o, 'a');
+// => true</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-132229214068502207665582047775388" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-132229214068502207665582047775388">
+                <p><a href="data.js.html#line297">util/data.js:297</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="parseFloat">
+        <span class="type-signature">&lt;static> </span>parseFloat<span class="signature">(obj, <span class="optional">dft</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>格式化数字，如果是非数字则返回默认值
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">待格式化对象</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>dft</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">非数字时的默认值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-29026376060210175587051676120609" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-29026376060210175587051676120609">
+                <p><a href="data.js.html#line135">util/data.js:135</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="parseInt">
+        <span class="type-signature">&lt;static> </span>parseInt<span class="signature">(obj, <span class="optional">dft</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>格式化数字，如果是非数字则返回默认值
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">待格式化对象</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>dft</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">非数字时的默认值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-4374930225312715765421346295625" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-4374930225312715765421346295625">
+                <p><a href="data.js.html#line148">util/data.js:148</a></p>
             </div>
 
         
@@ -822,6 +1496,20 @@
             
 
         
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>var o = {0:"foo", 1:"bar", length: 2}
+data.toArray(o);
+// => ["foo", "bar"]
+
+var a1 = [1, 2, 3];
+// 转换后的数组是之前的副本
+var a2 = data.toArray(a1);
+// => [1, 2, 3]
+a2 === a1;
+// => false</code></pre>
+
+        
 
         
 
@@ -843,7 +1531,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-876101171365007816436169552616775" data-toggle="tab">Source</a>
+                <a href="#tab-meta-07509032986126846953303869813681" data-toggle="tab">Source</a>
             </li>
 
         
@@ -864,8 +1552,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-876101171365007816436169552616775">
-                <p><a href="data.js.html#line121">util/data.js:121</a></p>
+            <div class="tab-pane active" id="tab-meta-07509032986126846953303869813681">
+                <p><a href="data.js.html#line268">util/data.js:268</a></p>
             </div>
 
         
@@ -900,7 +1588,8 @@
 
         
         <div class="description lead">
-            <blockquote>判断数据类型
+            <blockquote>判断数据类型，结果全部为小写<br>
+原始数据类型：boolean、number、string、undefined、symbol
                 
             </blockquote>
         </div>
@@ -953,7 +1642,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">任何对象</td>
         </tr>
 
 	
@@ -983,6 +1672,87 @@
             
 
         
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>data.type();
+// => "undefined"
+
+data.type(null);
+// => "null"
+
+data.type(1);
+// => "number"
+
+data.type("1");
+// => "string"
+
+data.type(!1);
+// => "boolean"
+
+data.type({});
+// => "object"
+
+data.type([]);
+// => "array"
+
+data.type(/./);
+// => "regexp"
+
+data.type(window);
+// => "window"
+
+data.type(document);
+// => "document"
+
+data.type(document);
+// => "document"
+
+data.type(NaN);
+// => "nan"
+
+data.type(Infinity);
+// => "number"
+
+data.type(function(){});
+// => "function"
+
+data.type(new Image);
+// => "element"
+
+data.type(new Date);
+// => "date"
+
+data.type(document.links);
+// => "htmlcollection"
+
+data.type(document.body.dataset);
+// => "domstringmap"
+
+data.type(document.body.classList);
+// => "domtokenlist"
+
+data.type(document.body.childNodes);
+// => "nodelist"
+
+data.type(document.createAttribute('abc'));
+// => "attr"
+
+data.type(document.createComment('abc'));
+// => "comment"
+
+data.type(new Event('abc'));
+// => "event"
+
+data.type(document.createExpression());
+// => "xpathexpression"
+
+data.type(document.createRange());
+// => "range"
+
+data.type(document.createTextNode(''));
+// => "text"</code></pre>
+
+        
 
         
 
@@ -1004,7 +1774,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-107517556287348276628527936991304" data-toggle="tab">Source</a>
+                <a href="#tab-meta-269186935154721145360487343277782" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1025,8 +1795,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-107517556287348276628527936991304">
-                <p><a href="data.js.html#line23">util/data.js:23</a></p>
+            <div class="tab-pane active" id="tab-meta-269186935154721145360487343277782">
+                <p><a href="data.js.html#line104">util/data.js:104</a></p>
             </div>
 
         

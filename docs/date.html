@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -67,7 +86,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 7</li>
+	                    <li class="sidebar-header">Methods &times; 8</li>
 
 	                    
 	                        
@@ -93,6 +112,15 @@
 <li class="">
     
         <a class="" href="#getDaysInMonth">getDaysInMonth</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#getDaysInYear">getDaysInYear</a>
     
 </li>
 
@@ -190,7 +218,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-94110175175592319887408171780407" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3782213963568210606075615878216922" data-toggle="tab">Source</a>
             </li>
 
         
@@ -211,7 +239,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-94110175175592319887408171780407">
+            <div class="tab-pane active" id="tab-meta-3782213963568210606075615878216922">
                 <p><a href="date.js.html#line9">util/date.js:9</a></p>
             </div>
 
@@ -261,7 +289,9 @@
 
         
         <div class="description lead">
-            <blockquote>格式化日志
+            <blockquote>格式化日期<br>
+主要参考ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ<br>
+其他参数参考自moment<br>
                 
             </blockquote>
         </div>
@@ -325,27 +355,31 @@
             
 
             <td class="description last">格式化字符串<br>
-假设当前时间为：2014年1月1日 19点9分9秒 周三<br>
-<code>YYYY</code> 2014<br>
-<code>YY</code> 14<br>
-<code>MM</code> 01<br>
-<code>M</code> 1<br>
-<code>DD</code> 01<br>
-<code>D</code> 1<br>
-<code>HH</code> 19<br>
-<code>hh</code> 07<br>
-<code>H</code> 19<br>
-<code>h</code> 7<br>
-<code>mm</code> 09<br>
-<code>m</code> 9<br>
-<code>ss</code> 09<br>
-<code>s</code> 9<br>
-<code>www</code> 星期三<br>
-<code>ww</code> 周三<br>
-<code>w</code> 三<br>
-<code>aaa</code> 下午<br>
-<code>AA</code> PM<br>
-<code>aa</code> pm<br></td>
+假设当前时间为：2014年1月1日 19点9分9秒9毫秒 周三<br>
+<strong>日期</strong><br>
+至少4位年份<code>YYYY</code> 2014<br>
+至少2位年份<code>YY</code> 14<br>
+至少2位月份<code>MM</code> 01<br>
+至少1位月份<code>M</code> 1<br>
+至少2位日期<code>DD</code> 01<br>
+至少1位日期<code>D</code> 1<br>
+
+<strong>时间</strong><br>
+至少2位24小时制小时<code>HH</code> 19<br>
+至少1位24小时制小时<code>H</code> 19<br>
+至少2位12小时制小时<code>hh</code> 07<br>
+至少1位12小时制小时<code>h</code> 7<br>
+至少2位分钟数<code>mm</code> 09<br>
+至少1位分钟数<code>m</code> 9<br>
+至少2位秒数<code>ss</code> 09<br>
+至少1位秒数<code>s</code> 9<br>
+至少3位毫秒数<code>SSS</code> 009<br>
+至少2位毫秒数<code>SS</code> 09<br>
+至少1位毫秒数<code>S</code> 9<br>
+
+<strong>时段</strong><br>
+星期<code>e</code> 三<br>
+上下午<code>a</code> 下午<br></td>
         </tr>
 
 	
@@ -457,8 +491,32 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>date.format('YYYY 年');
-// => "2014 年"</code></pre>
+    <pre class="prettyprint"><code>// 默认的格式化
+date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+// => "2014 年"
+date.format('YYYY 年');
+// => "2014 年"
+
+// 自定义格式化
+var month = {
+   "01": "January",
+   "02": "February",
+   "03": "March",
+   "04": "April",
+   "05": "May",
+   "06": "June",
+   "07": "July",
+   "08": "August",
+   "09": "September",
+   "10": "October",
+   "11": "November",
+   "12": "December",
+};
+date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
+   // 要替换的字段，以及要替换的值
+   'MM': month
+});
+// => "2014年October月04日 17:28:06.363 星期六 下午"</code></pre>
 
         
 
@@ -482,7 +540,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-61605191929265868834915086627007" data-toggle="tab">Source</a>
+                <a href="#tab-meta-197022019419819121905168225057423" data-toggle="tab">Source</a>
             </li>
 
         
@@ -503,8 +561,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-61605191929265868834915086627007">
-                <p><a href="date.js.html#line56">util/date.js:56</a></p>
+            <div class="tab-pane active" id="tab-meta-197022019419819121905168225057423">
+                <p><a href="date.js.html#line88">util/date.js:88</a></p>
             </div>
 
         
@@ -744,7 +802,7 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
 
             
             <li class="active">
-                <a href="#tab-meta-253122957423329359173253662884235" data-toggle="tab">Source</a>
+                <a href="#tab-meta-17075721966102728132593731861562" data-toggle="tab">Source</a>
             </li>
 
         
@@ -765,8 +823,8 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
         
         
 
-            <div class="tab-pane active" id="tab-meta-253122957423329359173253662884235">
-                <p><a href="date.js.html#line308">util/date.js:308</a></p>
+            <div class="tab-pane active" id="tab-meta-17075721966102728132593731861562">
+                <p><a href="date.js.html#line418">util/date.js:418</a></p>
             </div>
 
         
@@ -829,6 +887,8 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -863,6 +923,10 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">年</td>
         </tr>
@@ -894,6 +958,10 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">月份，默认序列月，即1月为第0月</td>
@@ -929,8 +997,14 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
-            <td class="description last">是否为自然月</td>
+            <td class="description last">是否为自然月，默认为 false</td>
         </tr>
 
 	
@@ -988,7 +1062,7 @@ date.getDaysInMonth(2014, 9);
 
             
             <li class="active">
-                <a href="#tab-meta-81651034997776156034018890932202" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9360171104781338107128792908043" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1009,8 +1083,297 @@ date.getDaysInMonth(2014, 9);
         
         
 
-            <div class="tab-pane active" id="tab-meta-81651034997776156034018890932202">
-                <p><a href="date.js.html#line197">util/date.js:197</a></p>
+            <div class="tab-pane active" id="tab-meta-9360171104781338107128792908043">
+                <p><a href="date.js.html#line288">util/date.js:288</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="getDaysInYear">
+        <span class="type-signature">&lt;static> </span>getDaysInYear<span class="signature">(year, month, date, <span class="optional">isNatualMonth</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获得某年某月某日在当年的第几天
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>year</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">年份</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>month</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">默认序列月</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>date</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">日期</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isNatualMonth</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">是否自然月，默认 false</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-79492259980179376652681578416377" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-79492259980179376652681578416377">
+                <p><a href="date.js.html#line301">util/date.js:301</a></p>
             </div>
 
         
@@ -1073,6 +1436,8 @@ date.getDaysInMonth(2014, 9);
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -1107,6 +1472,10 @@ date.getDaysInMonth(2014, 9);
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">年</td>
         </tr>
@@ -1139,6 +1508,10 @@ date.getDaysInMonth(2014, 9);
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">月</td>
         </tr>
@@ -1170,6 +1543,10 @@ date.getDaysInMonth(2014, 9);
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">日</td>
@@ -1204,6 +1581,12 @@ date.getDaysInMonth(2014, 9);
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last">是否为自然月</td>
@@ -1264,7 +1647,7 @@ date.getWeeksInMonth(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-4228296696674078722103478899225593" data-toggle="tab">Source</a>
+                <a href="#tab-meta-117221551015973095526858896482736" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1285,8 +1668,8 @@ date.getWeeksInMonth(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-4228296696674078722103478899225593">
-                <p><a href="date.js.html#line252">util/date.js:252</a></p>
+            <div class="tab-pane active" id="tab-meta-117221551015973095526858896482736">
+                <p><a href="date.js.html#line362">util/date.js:362</a></p>
             </div>
 
         
@@ -1540,7 +1923,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-393475732766091814527623681351542" data-toggle="tab">Source</a>
+                <a href="#tab-meta-393227903638035067765711310785264" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1561,8 +1944,8 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-393475732766091814527623681351542">
-                <p><a href="date.js.html#line227">util/date.js:227</a></p>
+            <div class="tab-pane active" id="tab-meta-393227903638035067765711310785264">
+                <p><a href="date.js.html#line337">util/date.js:337</a></p>
             </div>
 
         
@@ -1707,7 +2090,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-094597191549837595634316054638475" data-toggle="tab">Source</a>
+                <a href="#tab-meta-98436980810947726265091076493263" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1728,8 +2111,8 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-094597191549837595634316054638475">
-                <p><a href="date.js.html#line182">util/date.js:182</a></p>
+            <div class="tab-pane active" id="tab-meta-98436980810947726265091076493263">
+                <p><a href="date.js.html#line273">util/date.js:273</a></p>
             </div>
 
         
@@ -1877,7 +2260,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-19099442707374692010260428534820676" data-toggle="tab">Source</a>
+                <a href="#tab-meta-1665720283053815418855632096529007" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1898,8 +2281,8 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-19099442707374692010260428534820676">
-                <p><a href="date.js.html#line162">util/date.js:162</a></p>
+            <div class="tab-pane active" id="tab-meta-1665720283053815418855632096529007">
+                <p><a href="date.js.html#line253">util/date.js:253</a></p>
             </div>
 
         

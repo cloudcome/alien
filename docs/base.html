@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -67,7 +86,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 4</li>
+	                    <li class="sidebar-header">Methods &times; 5</li>
 
 	                    
 	                        
@@ -84,6 +103,15 @@
 <li class="">
     
         <a class="" href="#dispatch">dispatch</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#extend">extend</a>
     
 </li>
 
@@ -163,7 +191,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4138392929453403739159268559888" data-toggle="tab">Source</a>
+                <a href="#tab-meta-83200058457441633498010076582432" data-toggle="tab">Source</a>
             </li>
 
         
@@ -184,7 +212,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4138392929453403739159268559888">
+            <div class="tab-pane active" id="tab-meta-83200058457441633498010076582432">
                 <p><a href="base.js.html#line9">core/event/base.js:9</a></p>
             </div>
 
@@ -527,7 +555,7 @@ event.create('myclick', {
 
             
             <li class="active">
-                <a href="#tab-meta-84281026991084228036726950667799" data-toggle="tab">Source</a>
+                <a href="#tab-meta-90352610172703867169711999595165" data-toggle="tab">Source</a>
             </li>
 
         
@@ -548,8 +576,8 @@ event.create('myclick', {
         
         
 
-            <div class="tab-pane active" id="tab-meta-84281026991084228036726950667799">
-                <p><a href="base.js.html#line73">core/event/base.js:73</a></p>
+            <div class="tab-pane active" id="tab-meta-90352610172703867169711999595165">
+                <p><a href="base.js.html#line95">core/event/base.js:95</a></p>
             </div>
 
         
@@ -727,7 +755,7 @@ event.dispatch(ele, myclikEvent);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-231160622788593174295992807019502" data-toggle="tab">Source</a>
+                <a href="#tab-meta-29065480572171513593070150818676" data-toggle="tab">Source</a>
             </li>
 
         
@@ -748,8 +776,256 @@ event.dispatch(ele, myclikEvent);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-231160622788593174295992807019502">
-                <p><a href="base.js.html#line89">core/event/base.js:89</a></p>
+            <div class="tab-pane active" id="tab-meta-29065480572171513593070150818676">
+                <p><a href="base.js.html#line143">core/event/base.js:143</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="extend">
+        <span class="type-signature">&lt;static> </span>extend<span class="signature">(createEvent, copyEvent, <span class="optional">detail</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>createEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Event</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">创建事件</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>copyEvent</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Event</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">复制事件</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>detail</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Event</span>
+        
+    
+</td>
+            <td class="param-desc">创建事件</td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>event.extend('myclick', clickEvent, {
+    a: 1,
+    b: 2
+});</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-087210427038371568814871595241129" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-087210427038371568814871595241129">
+                <p><a href="base.js.html#line169">core/event/base.js:169</a></p>
             </div>
 
         
@@ -1029,7 +1305,7 @@ event.on(ele, 'click', 'li', fn, true):</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-0544670566450804547534639528021216" data-toggle="tab">Source</a>
+                <a href="#tab-meta-743297050008550318594220257364213" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1050,8 +1326,8 @@ event.on(ele, 'click', 'li', fn, true):</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-0544670566450804547534639528021216">
-                <p><a href="base.js.html#line114">core/event/base.js:114</a></p>
+            <div class="tab-pane active" id="tab-meta-743297050008550318594220257364213">
+                <p><a href="base.js.html#line212">core/event/base.js:212</a></p>
             </div>
 
         
@@ -1299,7 +1575,7 @@ event.un(ele, 'click');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-54643703950569031752944679465145" data-toggle="tab">Source</a>
+                <a href="#tab-meta-25768919009715327426221058703959" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1320,8 +1596,8 @@ event.un(ele, 'click');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-54643703950569031752944679465145">
-                <p><a href="base.js.html#line171">core/event/base.js:171</a></p>
+            <div class="tab-pane active" id="tab-meta-25768919009715327426221058703959">
+                <p><a href="base.js.html#line269">core/event/base.js:269</a></p>
             </div>
 
         

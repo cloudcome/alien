@@ -27,25 +27,44 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="index_.html">/index</a></li>
+<li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
 <li><a href="attribute.html">core/dom/attribute</a></li>
 <li><a href="modification.html">core/dom/modification</a></li>
-<li><a href="position.html">core/dom/position</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
-<li><a href="Emitter.html">core/event/Emitter</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
+<li><a href="wheel.html">core/event/wheel</a></li>
 <li><a href="compatible.html">core/navigator/compatible</a></li>
 <li><a href="hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
-<li><a href="index_.html">ui/drag/index</a></li>
-<li><a href="style.html">ui/drag/style</a></li>
+<li><a href="drag.html">parent/drag</a></li>
+<li><a href="Template.html">parent/Template</a></li>
+<li><a href="upload.html">parent/upload</a></li>
+<li><a href="index__.html">ui/banner/index</a></li>
+<li><a href="style.html">ui/banner/style</a></li>
+<li><a href="index___.html">ui/dialog/index</a></li>
+<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Drag_.html">ui/Drag</a></li>
+<li><a href="index____.html">ui/drag/index</a></li>
+<li><a href="style__.html">ui/drag/style</a></li>
+<li><a href="index_____.html">ui/msg/index</a></li>
+<li><a href="style___.html">ui/msg/style</a></li>
+<li><a href="index______.html">ui/scrollbar/index</a></li>
+<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
+<li><a href="Deferred.html">util/Deferred</a></li>
+<li><a href="easing.html">util/easing</a></li>
+<li><a href="Emitter.html">util/Emitter</a></li>
+<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
@@ -107,44 +126,77 @@ define(function (require, exports, module) {
 
     module.exports = {
         /**
-         * 格式化日志
+         * 格式化日期&lt;br>
+         * 主要参考ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ&lt;br>
+         * 其他参数参考自moment&lt;br>
+         *
          * @param {String} format 格式化字符串&lt;br>
-         * 假设当前时间为：2014年1月1日 19点9分9秒 周三&lt;br>
-         * &lt;code>YYYY&lt;/code> 2014&lt;br>
-         * &lt;code>YY&lt;/code> 14&lt;br>
-         * &lt;code>MM&lt;/code> 01&lt;br>
-         * &lt;code>M&lt;/code> 1&lt;br>
-         * &lt;code>DD&lt;/code> 01&lt;br>
-         * &lt;code>D&lt;/code> 1&lt;br>
-         * &lt;code>HH&lt;/code> 19&lt;br>
-         * &lt;code>hh&lt;/code> 07&lt;br>
-         * &lt;code>H&lt;/code> 19&lt;br>
-         * &lt;code>h&lt;/code> 7&lt;br>
-         * &lt;code>mm&lt;/code> 09&lt;br>
-         * &lt;code>m&lt;/code> 9&lt;br>
-         * &lt;code>ss&lt;/code> 09&lt;br>
-         * &lt;code>s&lt;/code> 9&lt;br>
-         * &lt;code>www&lt;/code> 星期三&lt;br>
-         * &lt;code>ww&lt;/code> 周三&lt;br>
-         * &lt;code>w&lt;/code> 三&lt;br>
-         * &lt;code>aaa&lt;/code> 下午&lt;br>
-         * &lt;code>AA&lt;/code> PM&lt;br>
-         * &lt;code>aa&lt;/code> pm&lt;br>
+         * 假设当前时间为：2014年1月1日 19点9分9秒9毫秒 周三&lt;br>
+         * &lt;strong>日期&lt;/strong>&lt;br>
+         * 至少4位年份&lt;code>YYYY&lt;/code> 2014&lt;br>
+         * 至少2位年份&lt;code>YY&lt;/code> 14&lt;br>
+         * 至少2位月份&lt;code>MM&lt;/code> 01&lt;br>
+         * 至少1位月份&lt;code>M&lt;/code> 1&lt;br>
+         * 至少2位日期&lt;code>DD&lt;/code> 01&lt;br>
+         * 至少1位日期&lt;code>D&lt;/code> 1&lt;br>
+         *
+         * &lt;strong>时间&lt;/strong>&lt;br>
+         * 至少2位24小时制小时&lt;code>HH&lt;/code> 19&lt;br>
+         * 至少1位24小时制小时&lt;code>H&lt;/code> 19&lt;br>
+         * 至少2位12小时制小时&lt;code>hh&lt;/code> 07&lt;br>
+         * 至少1位12小时制小时&lt;code>h&lt;/code> 7&lt;br>
+         * 至少2位分钟数&lt;code>mm&lt;/code> 09&lt;br>
+         * 至少1位分钟数&lt;code>m&lt;/code> 9&lt;br>
+         * 至少2位秒数&lt;code>ss&lt;/code> 09&lt;br>
+         * 至少1位秒数&lt;code>s&lt;/code> 9&lt;br>
+         * 至少3位毫秒数&lt;code>SSS&lt;/code> 009&lt;br>
+         * 至少2位毫秒数&lt;code>SS&lt;/code> 09&lt;br>
+         * 至少1位毫秒数&lt;code>S&lt;/code> 9&lt;br>
+         *
+         * &lt;strong>时段&lt;/strong>&lt;br>
+         * 星期&lt;code>e&lt;/code> 三&lt;br>
+         * 上下午&lt;code>a&lt;/code> 下午&lt;br>
+         *
          * @param {Date|Object|Number|String} [date] 日期
          * @param {Object} [config] 格式配置
          * @returns {null|string}
          *
          * @example
+         * // 默认的格式化
+         * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+         * // => "2014 年"
          * date.format('YYYY 年');
          * // => "2014 年"
+         *
+         * // 自定义格式化
+         * var month = {
+         *    "01": "January",
+         *    "02": "February",
+         *    "03": "March",
+         *    "04": "April",
+         *    "05": "May",
+         *    "06": "June",
+         *    "07": "July",
+         *    "08": "August",
+         *    "09": "September",
+         *    "10": "October",
+         *    "11": "November",
+         *    "12": "December",
+         * };
+         * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
+         *    // 要替换的字段，以及要替换的值
+         *    'MM': month
+         * });
+         * // => "2014年October月04日 17:28:06.363 星期六 下午"
          */
         format: function (format, date, config) {
             if (data.type(format) !== 'string') {
-                throw new Error('date format must string');
+                throw new Error('date format must be a string');
             }
 
             if (data.type(arguments[1]) === 'object') {
                 config = arguments[1];
+                date = new Date();
             }
 
             format = format || 'YYYY-MM-DD HH:mm:ss www';
@@ -161,76 +213,134 @@ define(function (require, exports, module) {
             var a = H > 12 ? 0 : 1;
             var m = String(date.getMinutes());
             var s = String(date.getSeconds());
-            var w = String(date.getDay());
+            var S = String(date.getMilliseconds());
+            var e = String(date.getDay());
             var formater = [
                 {
-                    YYYY: Y
+                    key: 'YYYY',
+                    val: Y,
+                    is: 'Y'
                 },
                 {
-                    YY: Y.slice(-2)
+                    key: 'YY',
+                    val: Y.slice(-2),
+                    is: 'Y'
                 },
                 {
-                    MM: _fixNumber(M)
+                    key: 'MM',
+                    val: _fixNumber(M),
+                    is: 'M'
                 },
                 {
-                    M: M
+                    key: 'M',
+                    val: M,
+                    is: 'M'
                 },
                 {
-                    DD: _fixNumber(D)
+                    key: 'DD',
+                    val: _fixNumber(D),
+                    is: 'D'
                 },
                 {
-                    D: D
+                    key: 'D',
+                    val: D,
+                    is: 'D'
                 },
                 {
-                    HH: _fixNumber(H)
+                    key: 'HH',
+                    val: _fixNumber(H),
+                    is: 'H'
                 },
                 {
-                    H: H
+                    key: 'H',
+                    val: H,
+                    is: 'H'
                 },
                 {
-                    hh: _fixNumber(h)
+                    key: 'hh',
+                    val: _fixNumber(h),
+                    is: 'h'
                 },
                 {
-                    h: h
+                    key: 'h',
+                    val: h,
+                    is: 'h'
                 },
                 {
-                    mm: _fixNumber(m)
+                    key: 'mm',
+                    val: _fixNumber(m),
+                    is: 'm'
                 },
                 {
-                    m: m
+                    key: 'm',
+                    val: m,
+                    is: 'm'
                 },
                 {
-                    ss: _fixNumber(s)
+                    key: 'ss',
+                    val: _fixNumber(s),
+                    is: 's'
                 },
                 {
-                    s: s
+                    key: 's',
+                    val: s,
+                    is: 's'
                 },
                 {
-                    www: '星期' + weeks[w]
+                    key: 'SSS',
+                    val: _fixNumber(S, 3),
+                    is: 'S'
                 },
                 {
-                    ww: '周' + weeks[w]
+                    key: 'SS',
+                    val: _fixNumber(S, 2),
+                    is: 'S'
                 },
                 {
-                    w: weeks[w]
+                    key: 'S',
+                    val: S,
+                    is: 'S'
                 },
                 {
-                    aaa: a ? '上午' : '下午'
+                    key: 'e',
+                    val: weeks[e],
+                    is: 'e'
                 },
                 {
-                    AA: a ? 'AM' : 'PM'
-                },
-                {
-                    aa: a ? 'am' : 'pm'
+                    key: 'a',
+                    val: a ? '上午' : '下午',
+                    is: 'a'
                 }
             ];
+            var hasFormat = {};
+            var configFormater= [];
 
+            // 年、月、日、时、分、秒、毫秒、星期、上下午
+            // 只保证每个字段只被格式化一次，防止误操作
             data.each(formater, function (index, fmt) {
-                var key = Object.keys(fmt)[0];
-                var val = config[key] || fmt[key];
-                var reg = new RegExp(key, 'mg');
+                var reg = new RegExp(fmt.key, 'mg');
 
-                format = format.replace(reg, val);
+                if (!hasFormat[fmt.is]) {
+                    if (config[fmt.key]) {
+                        hasFormat[fmt.is] = !0;
+                        configFormater.push({
+                            key: fmt.key,
+                            val: config[fmt.key][fmt.val],
+                            is: fmt.is
+                        });
+                    } else {
+                        if (reg.test(format)) {
+                            hasFormat[fmt.is] = !0;
+                            format = format.replace(reg, fmt.val);
+                        }
+                    }
+                }
+            });
+
+            // 自定义格式化
+            data.each(configFormater, function (index, fmt) {
+                var reg = new RegExp(fmt.key, 'mg');
+                format = format.replace(reg, fmt.val);
             });
 
             return format;
@@ -271,7 +381,7 @@ define(function (require, exports, module) {
          * 获得某年某月的天数
          * @param {Number} year 年
          * @param {Number} month 月份，默认序列月，即1月为第0月
-         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @param {Boolean} [isNatualMonth=false] 是否为自然月，默认为 false
          * @returns {Number} 天数
          *
          * @example
@@ -284,11 +394,30 @@ define(function (require, exports, module) {
 
             return  month === 1 ? (this.isLeapYear(year) ? 29 : 28) : monthDates[month];
         },
+        /**
+         * 获得某年某月某日在当年的第几天
+         * @param {Number} year 年份
+         * @param {Number} month 默认序列月
+         * @param {Number} date 日期
+         * @param {Boolean} [isNatualMonth=false] 是否自然月，默认 false
+         * @returns {Number}
+         */
+        getDaysInYear: function (year, month, date, isNatualMonth) {
+            month = isNatualMonth ? month - 1 : month;
+
+            var days = date;
+
+            while (month--) {
+                days += this.getDaysInMonth(year, month);
+            }
+
+            return days;
+        },
 //        /**
 //         * 获得某年某月1日星期几
 //         * @param {Number} year 年
 //         * @param {Number} month 月份，默认序列月，即1月为第0月
-//         * @param {Boolean} [isNatualMonth] 是否为自然月
+//         * @param {Boolean} [isNatualMonth=false] 是否为自然月
 //         * @returns {Number} 星期序号，即周日为0
 //         */
 //        getMonthFirstDateOfDay: function (year, month, isNatualMonth) {
@@ -326,7 +455,7 @@ define(function (require, exports, module) {
          * @param {Number} year 年
          * @param {Number} month 月
          * @param {Number} date 日
-         * @param {Boolean} [isNatualMonth] 是否为自然月
+         * @param {Boolean} [isNatualMonth=false] 是否为自然月
          * @returns {number}
          *
          * @example
@@ -484,12 +613,20 @@ define(function (require, exports, module) {
 
     /**
      * 修复十进制数字，4 => '04'
-     * @param {Number|String} num
+     * @param {Number|String} num 数字
+     * @param {Number} [length=2] 长度，默认2
      * @returns {Number|string}
      * @private
      */
-    function _fixNumber(num) {
-        return num &lt; 10 ? '0' + num : num;
+    function _fixNumber(num, length) {
+        num = String(num);
+        length = length || 2;
+
+        while (num.length &lt; length) {
+            num = '0' + num;
+        }
+
+        return num;
     }
 });</code></pre>
 
