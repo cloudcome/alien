@@ -23,16 +23,16 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('./style.js');
+    require('./dialog/style.js');
 
-    var klass = require('../../util/class.js');
-    var drag = require('../drag/index.js');
-    var modification = require('../../core/dom/modification.js');
-    var selector = require('../../core/dom/selector.js');
-    var attribute = require('../../core/dom/attribute.js');
-    var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/touch.js');
-    var data = require('../../util/data.js');
+    var klass = require('../util/class.js');
+    var drag = require('drag/index.js');
+    var modification = require('../core/dom/modification.js');
+    var selector = require('../core/dom/selector.js');
+    var attribute = require('../core/dom/attribute.js');
+    var animation = require('../core/dom/animation.js');
+    var event = require('../core/event/touch.js');
+    var data = require('../util/data.js');
     var index = 0;
     var zIndex = 9999;
 //    var html = document.documentElement;

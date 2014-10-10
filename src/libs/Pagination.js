@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./data.js');
-    var klass = require('./class.js');
+    var data = require('./../util/data.js');
+    var klass = require('./../util/class.js');
     var defaults = {};
     var Pagination = klass.create({
         STATIC: {

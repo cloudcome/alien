@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
-    var Deferred = require('../../util/Deferred.js');
+    var Deferred = require('../../libs/Deferred.js');
     var qs = require('../navigator/querystring.js');
     var modification = require('../../core/dom/modification.js');
     var defaults = {

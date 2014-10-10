@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
     var data = require('../../util/data.js');
     var qs = require('../navigator/querystring.js');
-    var Deferred = require('../../util/Deferred.js');
+    var Deferred = require('../../libs/Deferred.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
     var defaults = {
