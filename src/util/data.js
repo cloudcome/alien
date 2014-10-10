@@ -140,6 +140,19 @@ define(function (require, exports, module) {
 
 
         /**
+         * 格式化数字，如果是非数字则返回默认值
+         * @param {*} obj 待格式化对象
+         * @param {*} [dft] 非数字时的默认值
+         * @returns {*}
+         */
+        parseInt: function (obj, dft) {
+            obj = parseInt(obj);
+
+            return isNaN(obj) ? dft : obj;
+        },
+
+
+        /**
          * 遍历元素
          * @param {Array/Object} list  数组、可枚举对象
          * @param {Function(this:data, key, val)} callback  回调，返回false时停止遍历
