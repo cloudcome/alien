@@ -1,13 +1,13 @@
 /*!
  * Dialog.js
  * @author ydr.me
- * @create 2014-10-10 15:55
+ * @create 2014-10-10 22:36
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/dialog/Dialog
+     * @module ui/dialog/index
      * @requires ui/dialog/style
      * @requires ui/drag/index
      * @requires util/class
@@ -23,10 +23,8 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('./dialog/style.js');
-
     var klass = require('../util/class.js');
-    var drag = require('drag/index.js');
+    var Drag = require('./Drag.js');
     var modification = require('../core/dom/modification.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
@@ -75,8 +73,8 @@ define(function (require, exports, module) {
         },
 
         constructor: function (ele, options) {
-            this.ele = ele;
-            this.options = options;
+            this._ele = ele;
+            this._options = data.extend(!0, {}, defaults, options);
         },
 
 
@@ -85,11 +83,11 @@ define(function (require, exports, module) {
          * @returns {Dialog}
          * @private
          */
-        _init: function () {
+        init: function () {
             index++;
 
             var the = this;
-            var options = the.options;
+            var options = the._options;
             var bg = modification.create('div', {
                 id: 'alien-ui-dialog-bg-' + index,
                 'class': 'alien-ui-dialog-bg'
@@ -115,28 +113,28 @@ define(function (require, exports, module) {
 
             modification.insert(bg, body, 'beforeend');
             modification.insert(dialog, bg, 'beforeend');
-            the.bg = bg;
+            the._bg = bg;
 
-            the.dialog = dialog;
-            the.hasOpen = !1;
-            the.zIndex = 0;
-            the.id = index;
-            dialogsMap[the.id] = the;
+            the._dialog = dialog;
+            the._hasOpen = !1;
+            the._zIndex = 0;
+            the._id = index;
+            dialogsMap[the._id] = the;
 
             if (options.title !== null && options.canDrag && options.isWrap) {
-                drag(dialog, {
+                the._drag = new Drag(dialog, {
                     handle: '.' + titleClass,
-                    zIndex: the.zIndex
-                });
+                    zIndex: the._zIndex
+                }).init();
             }
 
-            modification.insert(the.ele, bd ? bd : dialog, 'beforeend');
+            modification.insert(the._ele, bd ? bd : dialog, 'beforeend');
 
             event.on(dialog, 'click tap', '.' + closeClass, function () {
                 the.close();
             });
 
-            event.on(the.bg, 'click tap', function (eve) {
+            event.on(the._bg, 'click tap', function (eve) {
                 eve.stopPropagation();
 
                 if (!selector.closest(eve.target, '.' + dialogClass).length) {
@@ -146,7 +144,6 @@ define(function (require, exports, module) {
 
             return the;
         },
-
 
         /**
          * 打开对话框
@@ -159,28 +156,28 @@ define(function (require, exports, module) {
 //            var winW = attribute.width(window);
 //            var winH = attribute.height(window);
             var the = this;
-            var bg = the.bg;
-            var dialog = the.dialog;
+            var bg = the._bg;
+            var dialog = the._dialog;
             var to;
-            var options = the.options;
+            var options = the._options;
             var findIndex;
 
-            if (the.hasOpen) {
+            if (the._hasOpen) {
                 return the;
             }
 
-            the.hasOpen = !0;
-            findIndex = openDialogs.indexOf(the.id);
+            the._hasOpen = !0;
+            findIndex = openDialogs.indexOf(the._id);
 
             if (findIndex > -1) {
                 openDialogs.splice(findIndex, 1);
             }
 
-            openDialogs.push(the.id);
+            openDialogs.push(the._id);
             attribute.addClass(body, overflowClass);
 
             if (options.content || options.remote) {
-                the.ele.innerHTML = '';
+                the._ele.innerHTML = '';
             }
 
             attribute.css(bg, {
@@ -196,7 +193,7 @@ define(function (require, exports, module) {
                 height: options.height
             });
 
-            the.zIndex = zIndex;
+            the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
             to.transform = 'scale(1)';
@@ -246,16 +243,16 @@ define(function (require, exports, module) {
          */
         close: function (callback) {
             var the = this;
-            var bg = the.bg;
-            var dialog = the.dialog;
-            var options = the.options;
+            var bg = the._bg;
+            var dialog = the._dialog;
+            var options = the._options;
 //            var theH = attribute.height(dialog);
 
-            if (!the.hasOpen) {
+            if (!the._hasOpen) {
                 return the;
             }
 
-            the.hasOpen = !1;
+            the._hasOpen = !1;
             openDialogs.pop();
 
             if (!openDialogs.length) {
@@ -296,10 +293,10 @@ define(function (require, exports, module) {
          */
         position: function (callback) {
             var the = this;
-            var options = the.options;
+            var options = the._options;
             var pos = the._position();
 
-            animation.animate(the.dialog, pos, {
+            animation.animate(the._dialog, pos, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
@@ -320,13 +317,13 @@ define(function (require, exports, module) {
             var the = this;
             var contentType = data.type(content);
 
-            the.ele.innerHTML = '';
+            the._ele.innerHTML = '';
 
             if (contentType === 'string') {
                 content = modification.create('#text', content);
             }
 
-            modification.insert(content, the.ele, 'beforeend');
+            modification.insert(content, the._ele, 'beforeend');
             the.position();
 
             return the;
@@ -342,7 +339,7 @@ define(function (require, exports, module) {
         setRemote: function (url, height) {
 
             var the = this;
-            var options = the.options;
+            var options = the._options;
             var iframe = modification.create('iframe', {
                 src: url,
                 'class': iframeClass,
@@ -351,8 +348,8 @@ define(function (require, exports, module) {
                 }
             });
 
-            the.ele.innerHTML = '';
-            modification.insert(iframe, the.ele, 'beforeend');
+            the._ele.innerHTML = '';
+            modification.insert(iframe, the._ele, 'beforeend');
             the.position();
 
             return the;
@@ -367,15 +364,15 @@ define(function (require, exports, module) {
             var the = this;
 
             if (the.shakeTimeid) {
-                the.shakeTimeid = 0
+                the.shakeTimeid = 0;
                 clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the.dialog, shakeClass);
+                attribute.removeClass(the._dialog, shakeClass);
             }
 
-            attribute.addClass(the.dialog, shakeClass);
+            attribute.addClass(the._dialog, shakeClass);
 
             the.shakeTimeid = setTimeout(function () {
-                attribute.removeClass(the.dialog, shakeClass);
+                attribute.removeClass(the._dialog, shakeClass);
             }, 500);
 
             return the;
@@ -392,17 +389,21 @@ define(function (require, exports, module) {
             // 关闭对话框
             the.close(function () {
                 // 从对话框 map 里删除
-                delete(dialogsMap[the.id]);
+                delete(dialogsMap[the._id]);
+
+                if (the._drag) {
+                    the._drag.destroy();
+                }
 
                 // 将内容放到 body 里
-                modification.insert(the.ele, body, 'beforeend');
+                modification.insert(the._ele, body, 'beforeend');
 
                 // 移除事件监听
-                event.un(the.dialog, 'click tap');
-                event.un(the.bg, 'click tap');
+                event.un(the._dialog, 'click tap');
+                event.un(the._bg, 'click tap');
 
                 // 在 DOM 里删除
-                modification.remove(the.bg);
+                modification.remove(the._bg);
 
                 if (data.type(callback) === 'function') {
                     callback.call(the);
@@ -419,20 +420,20 @@ define(function (require, exports, module) {
          */
         _position: function () {
             var the = this;
-            var options = the.options;
+            var options = the._options;
             var winW = attribute.width(window);
             var winH = attribute.height(window);
             var pos = {};
 
-            animation.stop(the.dialog, !0);
+            animation.stop(the._dialog, !0);
 
-            attribute.css(the.dialog, {
+            attribute.css(the._dialog, {
                 width: options.width,
                 height: options.height
             });
 
-            pos.width = attribute.width(the.dialog);
-            pos.height = attribute.height(the.dialog);
+            pos.width = attribute.width(the._dialog);
+            pos.height = attribute.height(the._dialog);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
@@ -451,7 +452,28 @@ define(function (require, exports, module) {
             return pos;
         }
     });
+    var style =
+        // 外层
+        '.alien-ui-dialog-overflow{position:relative;width:100%;height:100%;overflow:hidden}' +
+        // 背景
+        '.alien-ui-dialog-bg{display:none;position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(255,255,255,.3);overflow:auto;-webkit-overflow-scrolling:touch}' +
+        '.alien-ui-dialog{position:absolute;width:500px;background:#fff}' +
+        '.alien-ui-dialog-container{box-shadow:0 0 20px #A0A0A0;height:100%;overflow:hidden}' +
+        // 标题
+        '.alien-ui-dialog-header{position:relative;font-weight:normal;overflow:hidden;background:-moz-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%)}' +
+        '.alien-ui-dialog-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:10px;font-size:12px;text-align:center;line-height:12px;cursor:move;color:#444}' +
+        '.alien-ui-dialog-close{position:absolute;top:0;right:0;color:#ccc;width:32px;height:32px;text-align:center;cursor:pointer;font:normal normal normal 30px/32px Arial}' +
+        '.alien-ui-dialog-close:hover{color:#888}' +
+        '.alien-ui-dialog-body{position:relative;padding:20px;overflow:auto}' +
+        '.alien-ui-dialog-iframe{display:block;border:0;margin:0;padding:0;width:100%;height:400px}' +
+        // shake
+        '@-webkit-keyframes alien-ui-dialog-shake {0%, 100% {-webkit-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-webkit-transform:translateX(-10px)}20%, 40%, 60%, 80% {-webkit-transform:translateX(10px)}}' +
+        '@-moz-keyframes alien-ui-dialog-shake {0%, 100% {-moz-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-moz-transform:translateX(-10px)}20%, 40%, 60%, 80% {-moz-transform:translateX(10px)}}' +
+        '@-o-keyframes alien-ui-dialog-shake {0%, 100% {-o-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-o-transform:translateX(-10px)}20%, 40%, 60%, 80% {-o-transform:translateX(10px)}}' +
+        '@keyframes alien-ui-dialog-shake {0%, 100% {transform:translateX(0)}10%, 30%, 50%, 70%, 90% {transform:translateX(-10px)}20%, 40%, 60%, 80% {transform:translateX(10px)}}' +
+        '.alien-ui-dialog-shake{-webkit-animation:both 500ms alien-ui-dialog-shake;-moz-animation:both 500ms alien-ui-dialog-shake;-ms-animation:both 500ms alien-ui-dialog-shake;-o-animation:both 500ms alien-ui-dialog-shake;animation:both 500ms alien-ui-dialog-shake}';
 
+    modification.importStyle(style);
 
     event.on(document, 'keyup', function (eve) {
         var d;
@@ -484,14 +506,7 @@ define(function (require, exports, module) {
      * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
      * @param [options.onopen] {Function} 对话框打开时回调
      * @param [options.onclose] {Function} 对话框关闭时回调
-     * @returns {Dialog}
-     *
-     * @example
-     * var d1 = dialog(ele, options);
+     * @constructor
      */
-    module.exports = function (ele, options) {
-        options = data.extend(!0, {}, defaults, options);
-
-        return (new Dialog(ele, options))._init();
-    };
+    module.exports = Dialog;
 });

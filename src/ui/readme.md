@@ -1,12 +1,14 @@
-# UI库
-* dialog
-* confirm
-* msg
-* scroller
-* drag
-* drop
-* clip
-* progress
-* upload
-* datetimepicker
-* preview
+# 规范
+- 出口函数必须是一个构造函数，必须使用`util/class#create`方法创建类，详细参考该模块文档描述
+- 每个类都必须只有1个文件，首字母大写
+- 每个构造函数都必须包含以下原型方法：
+	1. `constructor` 构造函数
+	2. `init` 初始化函数，不能传递参数
+	3. `getOptions` 获取选项，类的创建会默认添加这个原型，以获取实例的`this._options`属性
+	4. `setOptions` 设置选项，类的创建会默认添加这个原型，以设置实例的`this._options`属性
+	5. `destroy` 销毁实例
+	6. 必须包含静态属性来引用当前类的默认属性，即`Constructo.defaults`
+- 开头为`_`（下划线）的属性、函数为私有属性、方法，原则上外部不要访问和修改
+- 开头为字母的属性、函数为公开属性、方法，外部可以访问和修改
+- 每个类都必须详细描述各个参数的用途和默认值，及注意事项
+- 使用类的时候，必须在实例化之后立即执行初始化方法，即`init`

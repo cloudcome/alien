@@ -29,8 +29,11 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var list = [];
-            var i = 1;
+            var i;
+            var j;
             var offset;
+            var remainLeft = 0;
+            var remainRight = 0;
 
             options.count = Math.abs(data.parseInt(options.count, 1));
             options.page = Math.abs(data.parseInt(options.page, 1));
@@ -41,7 +44,7 @@ define(function (require, exports, module) {
 
             // 小于可视范围
             if (options.count <= options.size) {
-                for (; i <= options.count; i++) {
+                for (i = 1; i <= options.count; i++) {
                     list.push({
                         page: i,
                         active: i === options.page
@@ -57,84 +60,76 @@ define(function (require, exports, module) {
                     });
                 }
 
-                // 左边
-                if (options.page < options.size) {
-                    for (; i <= options.size; i++) {
-                        list.push({
-                            page: i,
-                            active: i === options.page
-                        });
-                    }
+                // 先判断剩余在哪边
+                i = options.page - offset;
+                j = options.page + offset;
 
-                    if (i < options.count) {
-                        list.push({
-                            type: 'ellipsis'
-                        });
-                    }
 
-                    if (options.page < options.count) {
-                        list.push({
-                            page: options.count,
-                            active: !1
-                        });
+                // 剩左边
+                if (i < 1) {
+                    remainLeft = -i + 1;
+                    i = 1;
+                }
+                // 剩右边
+                else if (j > options.count) {
+                    remainRight = j - options.count;
+                    i -= remainRight;
+                    if (i < 1) {
+                        i = 1;
                     }
                 }
-                // 右边
-                else if (options.page > options.count - offset) {
+
+                // 首页
+                if (i !== 1) {
                     list.push({
-                        page: 1,
-                        active: !1
+                        page: 1
                     });
-
-                    i = options.page - options.size + 1;
-
-                    if (i - 1 > 1) {
-                        list.push({
-                            type: 'ellipsis'
-                        });
-                    }
-
-                    for (; i <= options.count; i++) {
-                        list.push({
-                            page: i,
-                            active: i === options.page
-                        });
-                    }
                 }
-                // 中间
-                else {
+
+                if(i > 2){
                     list.push({
-                        page: 1,
-                        active: !1
+                        type: 'ellipsis'
                     });
+                }
 
-                    i = options.page - offset;
+                // 当前之前
+                for (; i < options.page; i++) {
+                    list.push({
+                        page: i
+                    });
+                }
 
-                    if (i - 1 > 1) {
-                        list.push({
-                            type: 'ellipsis'
-                        });
-                    }
+                // 当前
+                list.push({
+                    page: options.page,
+                    active: !0
+                });
 
-                    for (; i <= options.page + offset; i++) {
-                        list.push({
-                            page: i,
-                            active: i === options.page
-                        });
-                    }
+                // 当前之后
+                i = options.page + 1;
+                j = i + offset + remainLeft;
 
-                    if (i < options.count) {
-                        list.push({
-                            type: 'ellipsis'
-                        });
-                    }
+                if (j > options.count) {
+                    j = options.count;
+                }
 
-                    if (options.page < options.count) {
-                        list.push({
-                            page: options.count,
-                            active: !1
-                        });
-                    }
+                for (; i < j; i++) {
+                    list.push({
+                        page: i
+                    });
+                }
+
+                if(i < options.count){
+                    list.push({
+                        type: 'ellipsis'
+                    });
+                }
+
+                // 尾页
+                if (i <= options.count) {
+                    list.push({
+                        page: options.count
+                    });
                 }
 
                 if (options.page < options.count) {

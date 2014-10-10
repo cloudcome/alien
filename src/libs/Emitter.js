@@ -7,25 +7,21 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/Emitter
+     * @module libs/Emitter
      * @require util/data
      */
     'use strict';
 
-    var data = require('./../util/data.js');
+    var data = require('../util/data.js');
+    var klass = require('../util/class.js');
     var regSpace = /\s+/g;
+    var Emitter = klass.create({
+        constructor: function () {
+            this.eventsPool = {};
+            this.maxLength = 999;
+        },
 
-    /**
-     * 事件构建函数
-     * @constructor
-     */
-    var Emitter = function () {
-        this.eventsPool = {};
-        this.maxLength = 999;
-    };
 
-    Emitter.prototype = {
-        constructor: Emitter,
         /**
          * 添加事件回调
          * @method on
@@ -57,6 +53,8 @@ define(function (require, exports, module) {
 
             return the;
         },
+
+
         /**
          * 移除事件回调
          * @method un
@@ -88,6 +86,8 @@ define(function (require, exports, module) {
 
             return the;
         },
+
+
         /**
          * 事件触发
          * @method emit
@@ -110,14 +110,14 @@ define(function (require, exports, module) {
             _middleware(eventType, function (et) {
                 if (the.eventsPool[et]) {
                     data.each(the.eventsPool[et], function (index, listener) {
-                        listener.apply(window, args);
+                        listener.apply(the, args);
                     });
                 }
             });
 
             return the;
         }
-    };
+    });
 
 
     /**
@@ -132,5 +132,9 @@ define(function (require, exports, module) {
         });
     }
 
+    /**
+     * @constructor
+     * @type {Emitter}
+     */
     module.exports = Emitter;
 });

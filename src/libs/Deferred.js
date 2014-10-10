@@ -7,14 +7,14 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/Deferred
+     * @module libs/Deferred
      * @requires util/class
      * @requires util/data
      */
     'use strict';
 
-    var klass = require('./../util/class.js');
-    var data = require('./../util/data.js');
+    var klass = require('../util/class.js');
+    var data = require('../util/data.js');
     var noop = function () {
         // ignore
     };

@@ -25,59 +25,54 @@
 
 # 示例
 1. 下载下来
-2. 然后使用 [sts](https://www.npmjs.org/package/sts) 启动根目录即可
-3. 打开`http://localhost:端口号/examples/ui/dialog.html`
+2. 然后使用 [sts](https://www.npmjs.org/package/sts) 全局安装之后，启动（命令`sts 18081`）根目录即可
+3. 打开`http://localhost:18081/examples/ui/dialog.html`
 
 
 # 内容
-* util
-	* data.js----------------------------------包含数据的遍历、判断
-	* date.js----------------------------------日期解析、处理
-	* Emitter.js-------------------------------事件机制
-	* promise.js-------------------------------promise
-	* validator.js-----------------------------数据验证
-	* filter.js--------------------------------数据过滤
-	* canvas.js--------------------------------2D画布
-	* svg.js-----------------------------------矢量作图
-* core
-	* dom
-		* selector.js--------------------------DOM 选择器
-		* attribute.js-------------------------DOM 属性操作
-		* modification.js----------------------DOM 修改操作
-		* animation.js-------------------------DOM 动画
-		* position.js--------------------------DOM 位置
-	* event
-		* base.js------------------------------浏览器事件基本
-		* touch.js-----------------------------触摸支持
-		* mousewheel.js------------------------鼠标滚轮支持
-		* fullscreen.js------------------------全屏事件支持
-	* communication
-		* xhr.js-------------------------------XHR通信
-		* upload.js----------------------------上传通信
-		* socket.js----------------------------socket通信
-		* crossdomain.js-----------------------跨域通信
-	* navigator
-		* ua.js--------------------------------浏览器UA检测
-		* support.js---------------------------浏览器特征检测
-		* compatible.js------------------------浏览器兼容支持
-		* hashbang.js--------------------------URL hashbang
-		* querystring.js-----------------------URL querystring
-* ui
-	* onepage----------------------------------单页系统
-	* notification-----------------------------桌面通知
-	* sortable---------------------------------排序
-	* scrollbar--------------------------------自定义滚动条
-	* banner-----------------------------------焦点图
-	* progress---------------------------------进度条
-	* drag-------------------------------------拖拽
-	* drop-------------------------------------释放
-	* dialog-----------------------------------对话框
-	* confirm----------------------------------确认框
-	* msg--------------------------------------消息框
-	* tips-------------------------------------提示框
-	* preview----------------------------------图片预览
-	* imgclip----------------------------------图片裁剪
-	* more
+- libs 库函数，构造方法
+	- Deferred
+	- Emitter
+	- Pagination
+	- Template
+	- Validate
+	- Filter
+- util 工具库，静态方法
+	- class
+	- data
+	- date
+	- easing
+	- howdo
+- core 核心库
+	- communication 通信
+		- jsonp
+		- upload
+		- xhr
+	- dom dom 操作
+		- attribute
+		- animation
+		- modification
+		- selector
+	- navigator 浏览器操作
+		- compatible
+		- hashbang
+		- querystring
+		- shell
+		- ua
+	- event 事件
+		- base
+		- drag
+		- ready
+		- touch
+		- wheel
+- ui
+	- Drag
+	- Dialog
+	- Msg
+	- Scrollbar
+	- Banner
+	- Pagination
+	- Tips
 
 
 # 开发与生产

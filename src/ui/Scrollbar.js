@@ -1,7 +1,7 @@
 /*!
- * index.js
+ * Scrollbar.js
  * @author ydr.me
- * @create 2014-10-06 16:11
+ * @create 2014-10-10 22:37
  */
 
 
@@ -20,26 +20,14 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('./style.js');
-    var data = require('../../util/data.js');
-    var klass = require('../../util/class.js');
-    var modification = require('../../core/dom/modification.js');
-    var attribute = require('../../core/dom/attribute.js');
-    var selector = require('../../core/dom/selector.js');
-    var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/wheel.js');
-    var drag = require('../drag/index.js');
-    var defaults = {
-        width: 700,
-        height: 300,
-        minX: 30,
-        minY: 30,
-        axis: 'y',
-        speed: 100,
-        duration: 456,
-        cssEasing: 'in-out',
-        jsEasing: 'swing'
-    };
+    var data = require('../util/data.js');
+    var klass = require('../util/class.js');
+    var modification = require('../core/dom/modification.js');
+    var attribute = require('../core/dom/attribute.js');
+    var selector = require('../core/dom/selector.js');
+    var animation = require('../core/dom/animation.js');
+    var event = require('../core/event/wheel.js');
+    var Drag = require('./Drag.js');
     var bodyClass = 'alien-ui-scrollbar-body';
     var trackXClass = 'alien-ui-scrollbar-track-x';
     var trackYClass = 'alien-ui-scrollbar-track-y';
@@ -52,6 +40,22 @@ define(function (require, exports, module) {
     // 这里不能用 DOMSubtreeModified，会导致IE卡死
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     var isPlaceholderScroll = _isPlaceholderScroll();
+    var noop = function () {
+        // ignore
+    };
+    var defaults = {
+        width: 700,
+        height: 300,
+        minX: 30,
+        minY: 30,
+        axis: 'y',
+        speed: 100,
+        duration: 456,
+        cssEasing: 'in-out',
+        jsEasing: 'swing',
+        onchangex: noop,
+        onchangey: noop
+    };
     var Scrollbar = klass.create({
         STATIC: {
             defaults: defaults
@@ -62,23 +66,23 @@ define(function (require, exports, module) {
             var the = this;
 
             the._ele = ele;
-            the._options = options;
-            the._options.easing = isPlaceholderScroll ? the._options.cssEasing : the._options.jsEasing;
-
-            if (data.type(options.width) !== 'number' || data.type(options.height) !== 'number') {
-                throw new Error('scrollbar require width and height px value');
-            }
+            the._options = data.extend(!0, {}, defaults, options);
         },
 
         /**
          * 初始化
          * @returns {Scrollbar}
-         * @private
          */
-        _init: function () {
+        init: function () {
             var the = this;
             var options = the._options;
             var wrap;
+
+            if (data.type(options.width) !== 'number' || data.type(options.height) !== 'number') {
+                throw new Error('scrollbar require width and height px value');
+            }
+
+            options.easing = isPlaceholderScroll ? options.cssEasing : options.jsEasing;
 
             if (isPlaceholderScroll) {
                 wrap = modification.wrap(the._ele, '<div class="alien-ui-scrollbar">' +
@@ -214,7 +218,7 @@ define(function (require, exports, module) {
                 });
 
                 // 拖拽支持
-                the._dragX = drag(the._thumbX, {
+                the._dragX = new Drag(the._thumbX, {
                     isClone: !1,
                     axis: 'x',
                     ondragstart: function (eve) {
@@ -238,15 +242,16 @@ define(function (require, exports, module) {
 
                         attribute.css(the._body, 'left', -the._scrollLeft);
                         attribute.css(the._thumbX, 'left', left);
+                        options.onchangex.call(the, the._scrollLeft);
 
                         return !1;
                     },
                     ondragend: function () {
                         attribute.removeClass(the._thumbX, thumbActiveClass);
                     }
-                });
+                }).init();
 
-                the._dragY = drag(the._thumbY, {
+                the._dragY = new Drag(the._thumbY, {
                     isClone: !1,
                     axis: 'y',
                     ondragstart: function (eve) {
@@ -270,17 +275,25 @@ define(function (require, exports, module) {
 
                         attribute.css(the._body, 'top', -the._scrollTop);
                         attribute.css(the._thumbY, 'top', top);
+                        options.onchangey.call(the, the._scrollTop);
 
                         return !1;
                     },
                     ondragend: function () {
                         attribute.removeClass(the._thumbY, thumbActiveClass);
                     }
-                });
+                }).init();
             }else{
                 event.on(the._wrap, 'scroll', function () {
-                    the._scrollLeft = the._wrap.scrollLeft;
-                    the._scrollTop = the._wrap.scrollTop;
+                    if(the._scrollLeft !== the._wrap.scrollLeft){
+                        the._scrollLeft = the._wrap.scrollLeft;
+                        options.onchangex.call(the, the._scrollLeft);
+                    }
+
+                    if(the._scrollTop !== the._wrap.scrollTop){
+                        the._scrollTop = the._wrap.scrollTop;
+                        options.onchangey.call(the, the._scrollTop);
+                    }
                 });
             }
         },
@@ -335,6 +348,8 @@ define(function (require, exports, module) {
                     y: the._scrollTop
                 }, the._animateOptions);
             }
+
+            options.onchangex.call(the, the._scrollLeft);
 
             return the;
         },
@@ -407,6 +422,8 @@ define(function (require, exports, module) {
                     y: the._scrollTop
                 }, the._animateOptions);
             }
+
+            options.onchangey.call(the, the._scrollTop);
 
             return the;
         },
@@ -499,18 +516,45 @@ define(function (require, exports, module) {
             modification.unwrap(the._ele, 'div div');
         }
     });
+    var duration = 456;
+    var style =
+        // 包裹
+        '.alien-ui-scrollbar{position:relative;overflow:hidden}' +
+        '.alien-ui-scrollbar *{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}' +
+        // 内容
+        '.alien-ui-scrollbar-body{position:relative;top:0;left:0}' +
+        // 滑道
+        '.alien-ui-scrollbar-track{position:absolute;bottom:0;right:0;border-width:0;border-style:solid;border-color:rgba(255,255,255,0);background:rgba(255,255,255,0);-webkit-transition-duration:' + duration + 'ms;-moz-transition-duration:' + duration + 'ms;transition-duration:' + duration + 'ms;-webkit-transition-property:background;-moz-transition-property:background;transition-property:background}' +
+        '.alien-ui-scrollbar-track-x{left:0;height:13px;border-top-width:1px}' +
+        '.alien-ui-scrollbar-track-y{top:0;width:13px;border-left-width:1px}' +
+        '.alien-ui-scrollbar-track:hover{border-color:#ccc;background:#f5f5f5}' +
+        '.alien-ui-scrollbar-track-x:hover{box-shadow:inset 0 1px 5px #C2BDBD}' +
+        '.alien-ui-scrollbar-track-y:hover{box-shadow:inset 1px 0 5px #C2BDBD}' +
+        // 滑块
+        '.alien-ui-scrollbar-thumb{position:absolute;background:rgba(0,0,0,.2);border-radius:10px;margin-top:3px;margin-left:3px;-webkit-transition-duration:' + duration + 'ms;-moz-transition-duration:' + duration + 'ms;transition-duration:' + duration + 'ms;-webkit-transition-property:background;-moz-transition-property:background;transition-property:background}' +
+        '.alien-ui-scrollbar-thumb-x{width:100%;height:8px;left:0}' +
+        '.alien-ui-scrollbar-thumb-y{width:8px;height:100%;top:0}' +
+        '.alien-ui-scrollbar-thumb:hover,.alien-ui-scrollbar-thumb-active{background:rgba(0,0,0,.6)}';
+
+    modification.importStyle(style);
 
     /**
      * 实例化一个自定义滚动条
-     * @param ele
-     * @param options
-     * @returns {Scrollbar}
+     * @param {Object} [optoions] 配置
+     * @param {Number} [optoions.width=700] 宽度
+     * @param {Number} [optoions.height=300] 宽度
+     * @param {Number} [optoions.minX=30] 横向滚动条最小宽度
+     * @param {Number} [optoions.minY=30] 纵向滚动条最小宽度
+     * @param {String} [optoions.axis="y"] 滚轮滚动绑定滚动条方向
+     * @param {Number} [optoions.speed=100] 滚轮滚动速度，单位 px
+     * @param {Number} [optoions.duration=456] 动画时间，单位 ms
+     * @param {String} [optoions.cssEasing="in-out"] CSS 动画缓冲类型
+     * @param {String} [optoions.jsEasing="iswing"] JS 动画缓冲类型
+     * @param {Function} [optoions.onchangex=noop] x 轴滚动条发生变化时回调
+     * @param {Function} [optoions.onchangey=noop] y 轴滚动条发生变化时回调
+     * @constructor
      */
-    module.exports = function (ele, options) {
-        options = data.extend(!0, {}, defaults, options);
-
-        return (new Scrollbar(ele, options))._init();
-    };
+    module.exports = Scrollbar;
 
 
     /**
@@ -520,9 +564,7 @@ define(function (require, exports, module) {
      */
     function _isPlaceholderScroll() {
         // 在 iframe 里操作的原因是，滚动条可以被样式修改，防止样式修改导致滚动条判断不正确
-        var iframe = modification.create('iframe', {
-            src: 'javascript:;'
-        });
+        var iframe = modification.create('iframe');
         var div;
         var clientWidth;
         var iframeDocument;

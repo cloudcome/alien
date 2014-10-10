@@ -113,6 +113,7 @@ define(function (require, exports, module) {
         create: function (property, superConstructor, isInheritStatic) {
             var type = data.type(property);
             var constructorType;
+//            var initType;
             var superConstructorType = data.type(superConstructor);
             var STATIC;
 
@@ -125,18 +126,29 @@ define(function (require, exports, module) {
                 throw new Error('property must be have a `constructor` function');
             }
 
+//            // 必须有初始化方法
+//            if (!data.hasOwnProperty(property, 'init')) {
+//                throw new Error('property must be have a `init` function');
+//            }
+
             constructorType = data.type(property.constructor);
 
             if (constructorType !== 'function') {
-                throw new Error('property constructor must be a function');
+                throw new Error('property `constructor` must be a function');
             }
+
+//            initType = data.type(property.init);
+//
+//            if (initType !== 'function') {
+//                throw new Error('property `init` must be a function');
+//            }
 
             if (superConstructorType !== 'undefined' && superConstructorType === 'function') {
                 this.inherit(property.constructor, superConstructor, isInheritStatic);
             }
 
             STATIC = property.STATIC || {};
-            delete(property.STATIC);
+            delete property.STATIC;
 
             // 必须静态对象
             if (data.type(STATIC) !== 'object') {
@@ -168,10 +180,10 @@ define(function (require, exports, module) {
                     var ret = [];
 
                     if (keyType === 'string' || keyType === 'number') {
-                        return the.options[key];
+                        return the._options[key];
                     } else if (keyType === 'array') {
                         data.each(key, function (index, k) {
-                            ret.push(the.options[k]);
+                            ret.push(the._options[k]);
                         });
 
                         return ret;
@@ -185,9 +197,9 @@ define(function (require, exports, module) {
                     var keyType = data.type(key);
 
                     if (keyType === 'string' || keyType === 'number') {
-                        return the.options[key] = val;
+                        return the._options[key] = val;
                     } else if (keyType === 'object') {
-                        data.extend(the.options, key);
+                        data.extend(the._options, key);
                     }
                 };
             }
