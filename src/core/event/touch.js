@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';
     var touchcancel = 'touchcancel MSPointerCancel pointercancel';
-    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
+//    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
     var options = {
         tap: {
             x: 30,
@@ -79,8 +79,8 @@ define(function (require, exports, module) {
             attribute.css(body, 'user-select', 'none');
             firstTouch = eve.touches[0];
             target = eve.target;
-            x0 = firstTouch.pageX;
-            y0 = firstTouch.pageY;
+            x0 = firstTouch.clientX;
+            y0 = firstTouch.clientY;
             t0 = Date.now();
 
             timeid = setTimeout(function () {
@@ -101,8 +101,8 @@ define(function (require, exports, module) {
         if (eve.touches && eve.touches.length === 1) {
             firstTouch = eve.touches[0];
             target = firstTouch.target;
-            deltaX = Math.abs(firstTouch.pageX - x0);
-            deltaY = Math.abs(firstTouch.pageY - y0);
+            deltaX = Math.abs(firstTouch.clientX - x0);
+            deltaY = Math.abs(firstTouch.clientY - y0);
             rect = target.getBoundingClientRect();
 
             // 在元素范围
@@ -129,8 +129,8 @@ define(function (require, exports, module) {
 
         if (eve.changedTouches && eve.changedTouches.length === 1) {
             firstTouch = eve.changedTouches[0];
-            x1 = firstTouch.pageX;
-            y1 = firstTouch.pageY;
+            x1 = firstTouch.clientX;
+            y1 = firstTouch.clientY;
             x = x1 - x0;
             y = y1 - y0;
             deltaX = Math.abs(x);
