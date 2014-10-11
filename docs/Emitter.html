@@ -4,30 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: util/Emitter - Alien documents</title>
+    <title>Module: libs/Emitter - Alien documents</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <script src="scripts/jquery.1.10.min.js"> </script>
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
 </head>
 
 <body>
 
 
 <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">Alien documents</a>
-    </div>
-    <nav role="navigation">
-		<ul class="nav navbar-nav">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
-<li><a href="index_.html">/index</a></li>
 <li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
@@ -43,32 +40,31 @@
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="Deferred.html">libs/Deferred</a></li>
+<li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
-<li><a href="index__.html">ui/banner/index</a></li>
-<li><a href="style.html">ui/banner/style</a></li>
-<li><a href="index___.html">ui/dialog/index</a></li>
-<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Banner.html">ui/Banner</a></li>
+<li><a href="index_.html">ui/dialog/index</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index____.html">ui/drag/index</a></li>
-<li><a href="style__.html">ui/drag/style</a></li>
-<li><a href="index_____.html">ui/msg/index</a></li>
-<li><a href="style___.html">ui/msg/style</a></li>
-<li><a href="index______.html">ui/scrollbar/index</a></li>
-<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Pagination.html">ui/Pagination</a></li>
+<li><a href="index___.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
-<li><a href="Deferred.html">util/Deferred</a></li>
 <li><a href="easing.html">util/easing</a></li>
-<li><a href="Emitter.html">util/Emitter</a></li>
-<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Pagination_.html">util/Pagination</a></li>
 <li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
-    </nav>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
   </div>
 </div>
 
@@ -126,7 +122,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: util/Emitter</h1>
+		            <h1 class="page-title">Module: libs/Emitter</h1>
 
 		            
 
@@ -137,7 +133,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            util/Emitter
+            libs/Emitter
         
     
     </h2>
@@ -146,6 +142,93 @@
 
 <article>
     <div class="container-overview">
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="module-libs/Emitter">
+        <span class="type-signature"></span>new require(libs/Emitter)<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-64476905809715394220351513940841" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-64476905809715394220351513940841">
+                <p><a href="Emitter.js.html#line139">libs/Emitter.js:139</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
         
 
         
@@ -173,7 +256,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-76460243645124148086159199010581" data-toggle="tab">Source</a>
+                <a href="#tab-meta-80342772020958368617759961634874" data-toggle="tab">Source</a>
             </li>
 
         
@@ -194,7 +277,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-76460243645124148086159199010581">
+            <div class="tab-pane active" id="tab-meta-80342772020958368617759961634874">
                 <p><a href="Emitter.js.html#line9">libs/Emitter.js:9</a></p>
             </div>
 
@@ -395,7 +478,7 @@ emitter.emit('hi');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-5482654953375459727076344192028" data-toggle="tab">Source</a>
+                <a href="#tab-meta-70258431369438772087248470634222" data-toggle="tab">Source</a>
             </li>
 
         
@@ -416,7 +499,7 @@ emitter.emit('hi');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-5482654953375459727076344192028">
+            <div class="tab-pane active" id="tab-meta-70258431369438772087248470634222">
                 <p><a href="Emitter.js.html#line91">libs/Emitter.js:91</a></p>
             </div>
 
@@ -586,7 +669,7 @@ emitter.on('hi', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-1215499993413686812856447487138212" data-toggle="tab">Source</a>
+                <a href="#tab-meta-181820581434294586170448972843587" data-toggle="tab">Source</a>
             </li>
 
         
@@ -607,8 +690,8 @@ emitter.on('hi', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-1215499993413686812856447487138212">
-                <p><a href="Emitter.js.html#line29">libs/Emitter.js:29</a></p>
+            <div class="tab-pane active" id="tab-meta-181820581434294586170448972843587">
+                <p><a href="Emitter.js.html#line25">libs/Emitter.js:25</a></p>
             </div>
 
         
@@ -798,7 +881,7 @@ emitter.un('hi');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-636893527815118443436364480294287" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5599610959179699043658833019435406" data-toggle="tab">Source</a>
             </li>
 
         
@@ -819,8 +902,8 @@ emitter.un('hi');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-636893527815118443436364480294287">
-                <p><a href="Emitter.js.html#line60">libs/Emitter.js:60</a></p>
+            <div class="tab-pane active" id="tab-meta-5599610959179699043658833019435406">
+                <p><a href="Emitter.js.html#line58">libs/Emitter.js:58</a></p>
             </div>
 
         
@@ -864,11 +947,13 @@ emitter.un('hi');</code></pre>
 
 </div>
 
-
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
 <script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-<script src="js/bootstrap.js"> </script>
-<script src="js/script.js"> </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
 
 </body>
 </html>

@@ -27,7 +27,7 @@
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
-        var Emitter = require('/src/util/Emitter.js');
+        var Emitter = require('/src/libs/Emitter.js');
         var emitter = new Emitter();
 
         emitter.on('hi', function (data) {

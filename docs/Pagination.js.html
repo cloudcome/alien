@@ -4,30 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: libs/Pagination.js - Alien documents</title>
+    <title>Source: ui/Pagination.js - Alien documents</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <script src="scripts/jquery.1.10.min.js"> </script>
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
 </head>
 
 <body>
 
 
 <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">Alien documents</a>
-    </div>
-    <nav role="navigation">
-		<ul class="nav navbar-nav">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
-<li><a href="index_.html">/index</a></li>
 <li><a href="jsonp.html">core/communication/jsonp</a></li>
 <li><a href="xhr.html">core/communication/xhr</a></li>
 <li><a href="animation.html">core/dom/animation</a></li>
@@ -43,32 +40,31 @@
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="Deferred.html">libs/Deferred</a></li>
+<li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
-<li><a href="index__.html">ui/banner/index</a></li>
-<li><a href="style.html">ui/banner/style</a></li>
-<li><a href="index___.html">ui/dialog/index</a></li>
-<li><a href="style_.html">ui/dialog/style</a></li>
+<li><a href="Banner.html">ui/Banner</a></li>
+<li><a href="index_.html">ui/dialog/index</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index____.html">ui/drag/index</a></li>
-<li><a href="style__.html">ui/drag/style</a></li>
-<li><a href="index_____.html">ui/msg/index</a></li>
-<li><a href="style___.html">ui/msg/style</a></li>
-<li><a href="index______.html">ui/scrollbar/index</a></li>
-<li><a href="style____.html">ui/scrollbar/style</a></li>
+<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Pagination.html">ui/Pagination</a></li>
+<li><a href="index___.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
-<li><a href="Deferred.html">util/Deferred</a></li>
 <li><a href="easing.html">util/easing</a></li>
-<li><a href="Emitter.html">util/Emitter</a></li>
-<li><a href="Pagination.html">util/Pagination</a></li>
+<li><a href="Pagination_.html">util/Pagination</a></li>
 <li><a href="Validate.html">util/Validate</a></li>
 </ul>
 </li>
 </ul>
-    </nav>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
   </div>
 </div>
 
@@ -95,7 +91,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: libs/Pagination.js</h1>
+		            <h1 class="page-title">Source: ui/Pagination.js</h1>
 
 		            
 
@@ -105,148 +101,160 @@
 <pre class="prettyprint source"><code>/*!
  * Pagination.js
  * @author ydr.me
- * @create 2014-10-09 18:36
+ * @create 2014-10-10 22:36
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module util/Pagination
+     * @module ui/Pagination
+     * @requires util/class
+     * @requires util/data
+     * @requires libs/Pagination
      */
     'use strict';
 
-    var data = require('./../util/data.js');
-    var klass = require('./../util/class.js');
+    var klass = require('../util/class.js');
+    var data = require('../util/data.js');
+    var List = require('../libs/Pagination.js');
+    var Emitter = require('../libs/Emitter.js');
+    var modification = require('../core/dom/modification.js');
+    var attribute = require('../core/dom/attribute.js');
+    var event = require('../core/event/touch.js');
+    var regPage = /{page}/g;
+    var regText = /{text}/g;
+    var regClass = /{class}/g;
+    var itemClass = 'alien-ui-pagination-item';
+    var normalClass = 'alien-ui-pagination-normal';
+    var template = {
+        prev: '上一页',
+        next: '下一页',
+        normal: '&lt;div class="' + itemClass + '{class}" data-page="{page}">{text}&lt;/div>',
+        disabled: '&lt;div class="' + itemClass + ' alien-ui-pagination-disabled">...&lt;/div>'
+    };
+    var noop = function () {
+        // ignore
+    };
     var defaults = {
         count: 1,
         page: 1,
-        size: 3
+        size: 3,
+        onchange: noop
     };
     var Pagination = klass.create({
-        STATIC: {
-            defaults: defaults
-        },
-        constructor: function (options) {
+        constructor: function (ele, options) {
+            Emitter.apply(this, arguments);
+            this._ele = ele;
             this._options = data.extend(!0, {}, defaults, options);
         },
+
+
+        /**
+         * 初始化
+         * @returns {Pagination}
+         */
         init: function () {
             var the = this;
-            var options = the._options;
-            var list = [];
-            var i;
-            var j;
-            var offset;
-            var remainLeft = 0;
-            var remainRight = 0;
 
-            options.count = Math.abs(data.parseInt(options.count, 1));
-            options.page = Math.abs(data.parseInt(options.page, 1));
-            options.page = options.page > options.count ? options.count : options.page;
-            options.size = Math.abs(data.parseInt(options.size, 3));
-            options.size += options.size % 2 ? 0 : 1;
-            offset = Math.floor(options.size / 2);
+            the._on();
+            the.render();
 
-            // 小于可视范围
-            if (options.count &lt;= options.size) {
-                for (i = 1; i &lt;= options.count; i++) {
-                    list.push({
-                        page: i,
-                        active: i === options.page
-                    });
+            return the;
+        },
+
+
+        _on: function () {
+            var the = this;
+
+            event.on(the._ele, 'click tap', '.' + normalClass, the._onEle.bind(the));
+        },
+
+        _onEle: function (eve) {
+            var page = attribute.data(eve.target, 'page');
+
+            this._options.onchange.call(this, page);
+            this.emit('change', page);
+        },
+
+        _un: function () {
+            var the = this;
+
+            event.un(the._ele, 'click tap', the._onEle);
+        },
+
+        /**
+         * 渲染
+         * @param {Object} [settings] 配置参数
+         * @param {Number} [settings.count] 重新配置总页数，默认为上一次配置的值
+         * @param {Number} [settings.page] 重新配置当前页数，默认为上一次配置的值
+         * @param {Number} [settings.size] 重新配置可视范围，默认为上一次配置的值
+         * @returns {Pagination}
+         */
+        render: function (settings) {
+            var the = this;
+            var options = data.extend(the._options, settings);
+            var list = new List(options).init();
+            var html = ['&lt;div class="alien-ui-pagination">'];
+
+            list.forEach(function (item) {
+                switch (item.type) {
+                    case 'ellipsis':
+                        html.push(template.disabled);
+                        break;
+
+                    case 'prev':
+                        html.push(template.normal
+                            .replace(regPage, item.page)
+                            .replace(regText, template.prev)
+                            .replace(regClass, ' '+normalClass));
+                        break;
+
+                    case 'next':
+                        html.push(template.normal
+                            .replace(regPage, item.page)
+                            .replace(regText, template.next)
+                            .replace(regClass, ' '+normalClass));
+                        break;
+
+                    default:
+                        html.push(template.normal
+                            .replace(regPage, item.page)
+                            .replace(regText, item.page)
+                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' '+normalClass));
+                        break;
                 }
-            }
-            // 大于可视范围
-            else {
-                if (options.page > 1) {
-                    list.push({
-                        type: 'prev',
-                        page: options.page - 1
-                    });
-                }
+            });
 
-                // 先判断剩余在哪边
-                i = options.page - offset;
-                j = options.page + offset;
+            html.push('&lt;/div>');
+
+            the._ele.innerHTML = html.join('');
+
+            return the;
+        },
 
 
-                // 剩左边
-                if (i &lt; 1) {
-                    remainLeft = -i + 1;
-                    i = 1;
-                }
-                // 剩右边
-                else if (j > options.count) {
-                    remainRight = j - options.count;
-                    i -= remainRight;
-                    if (i &lt; 1) {
-                        i = 1;
-                    }
-                }
+        /**
+         * 销毁
+         */
+        destroy: function () {
+            var the = this;
 
-                // 首页
-                if (i !== 1) {
-                    list.push({
-                        page: 1
-                    });
-                }
-
-                if(i > 2){
-                    list.push({
-                        type: 'ellipsis'
-                    });
-                }
-
-                // 当前之前
-                for (; i &lt; options.page; i++) {
-                    list.push({
-                        page: i
-                    });
-                }
-
-                // 当前
-                list.push({
-                    page: options.page,
-                    active: !0
-                });
-
-                // 当前之后
-                i = options.page + 1;
-                j = i + offset + remainLeft;
-
-                if (j > options.count) {
-                    j = options.count;
-                }
-
-                for (; i &lt; j; i++) {
-                    list.push({
-                        page: i
-                    });
-                }
-
-                if(i &lt; options.count){
-                    list.push({
-                        type: 'ellipsis'
-                    });
-                }
-
-                // 尾页
-                if (i &lt;= options.count) {
-                    list.push({
-                        page: options.count
-                    });
-                }
-
-                if (options.page &lt; options.count) {
-                    list.push({
-                        type: 'next',
-                        page: options.page + 1
-                    });
-                }
-            }
-
-            return list;
+            the._un();
+            the._ele.innerHTML = '';
         }
-    });
+    }, Emitter);
+    var style =
+        '.alien-ui-pagination *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}' +
+        '.alien-ui-pagination-item{display:inline-block;padding:10px;border:1px solid #ddd;min-width:20px;height:16px;line-height:16px;font-size:14px;font-weight:normal;border-right-width:0;color:#1E77B6;text-align:center;cursor:pointer}' +
+        '.alien-ui-pagination-item:first-child{border-radius:4px 0 0 4px}' +
+        '.alien-ui-pagination-item:last-child{border-right-width:1px;border-radius:0 4px 4px 0}' +
+        '.alien-ui-pagination-item:hover{background:#eee}' +
+        '.alien-ui-pagination-item:active{background:#ddd}' +
+        '.alien-ui-pagination-disabled,.alien-ui-pagination-disabled:hover,.alien-ui-pagination-disabled:active{background:#fff;cursor:not-allowed;color: #777;}' +
+        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}' +
+        '';
+
+    modification.importStyle(style);
 
     module.exports = Pagination;
 });</code></pre>
@@ -265,11 +273,13 @@ define(function (require, exports, module) {
 
 </div>
 
-
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
 <script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-<script src="js/bootstrap.js"> </script>
-<script src="js/script.js"> </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
 
 </body>
 </html>
