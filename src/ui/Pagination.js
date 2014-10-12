@@ -11,6 +11,10 @@ define(function (require, exports, module) {
      * @requires util/class
      * @requires util/data
      * @requires libs/Pagination
+     * @requires libs/Emitter
+     * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires core/event/touch
      */
     'use strict';
 

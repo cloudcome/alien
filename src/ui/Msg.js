@@ -7,21 +7,33 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/msg/index
+     * @module ui/Msg
      * @requires util/class
      * @requires util/data
+     * @requires libs/Emitter
      * @requires core/event/touch
      * @requires core/dom/selector
      * @requires core/dom/modification
-     * @requires ui/drag/index
-     * @requires ui/dialog/index
-     * @requires ui/msg/style
+     * @requires ui/dialog
      */
     'use strict';
 
-    var noop = function () {
-        // ignore
-    };
+
+    var klass = require('../util/class.js');
+    var data = require('../util/data.js');
+    var Emitter = require('../libs/Emitter.js');
+    var event = require('../core/event/touch.js');
+    var Dialog = require('./Dialog.js');
+    var selector = require('../core/dom/selector.js');
+    var modification = require('../core/dom/modification.js');
+    var attribute = require('../core/dom/attribute.js');
+    var index = 0;
+    var body = document.body;
+    var headerClass = 'alien-ui-msg-header';
+    var titleClass = 'alien-ui-msg-title';
+    var closeClass = 'alien-ui-msg-close';
+    var bodyClass = 'alien-ui-msg-body';
+    var buttonClass = 'alien-ui-msg-button';
     var defaults = {
         width: 300,
         height: 'auto',
@@ -31,21 +43,10 @@ define(function (require, exports, module) {
         content: 'Hello world!',
         buttons: null,
         style: 'muted',
-        onclose: noop
+        canDrag: !0,
+        timeout: -1
     };
-    var klass = require('../util/class.js');
-    var data = require('../util/data.js');
-    var event = require('../core/event/touch.js');
-    var Drag = require('./Drag.js');
-    var Dialog = require('./Dialog.js');
-    var selector = require('../core/dom/selector.js');
-    var modification = require('../core/dom/modification.js');
-    var index = 0;
-    var body = document.body;
-    var titleClass = 'alien-ui-msg-title';
-    var closeClass = 'alien-ui-msg-close';
-    var bodyClass = 'alien-ui-msg-body';
-    var buttonClass = 'alien-ui-msg-button';
+    var mouseevent = {};
     var Msg = klass.create({
         STATIC: {
             defaults: defaults
@@ -53,19 +54,23 @@ define(function (require, exports, module) {
 
 
         constructor: function (options) {
+            Emitter.apply(this, arguments);
             this._options = data.extend(!0, {}, defaults, options);
         },
 
 
         init: function () {
+            index++;
+
             var the = this;
             var options = the._options;
             var msg = modification.create('div', {
-                id: 'alien-ui-msg-' + (++index),
+                id: 'alien-ui-msg-' + index,
                 'class': 'alien-ui-msg alien-ui-msg-' + options.style
             });
             var buttons = '';
             var buttonsLength = 0;
+            var header;
 
             options.buttons = options.buttons || [];
 
@@ -91,7 +96,7 @@ define(function (require, exports, module) {
 
             msg.innerHTML =
                 (options.title === null ? '' :
-                    '<div class="alien-ui-msg-header">' +
+                    '<div class="' + headerClass + '">' +
                     '<div class="' + titleClass + '">' + options.title + '</div>' +
                     '<div class="' + closeClass + '">&times;</div>' +
                     '</div>') +
@@ -104,21 +109,52 @@ define(function (require, exports, module) {
                 height: options.height,
                 left: options.left,
                 top: options.top,
-                isWrap: !1
+                isWrap: !1,
+                title: null
             }).init().open();
 
-            if (options.title) {
-                the._drag = new Drag(the._dialog.dialog, {
-                    handle: '.' + titleClass,
-                    zIndex: the._dialog.zIndex
-                }).init();
+            if (options.canDrag) {
+                if (options.title) {
+                    header = selector.query('.' + headerClass, msg)[0];
+                    attribute.attr(header, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
+                } else {
+                    attribute.attr(msg, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
+                }
             }
 
+            the._timerId = 0;
+            the._timeout();
             the._event();
             the._msg = msg;
             the._body = selector.query('.' + bodyClass, the._msg)[0];
+            the._id = index;
 
             return the;
+        },
+
+        _timeout: function () {
+            var the = this;
+            var options = the._options;
+
+            if (options.timeout > 0) {
+                if (the._timerId) {
+                    clearTimeout(the._timerId);
+                }
+
+                the._timerId = setTimeout(function () {
+                    var dialog = the._dialog._dialog;
+                    var x0 = attribute.left(dialog);
+                    var y0 = attribute.top(dialog);
+                    var x1 = x0 + attribute.width(dialog);
+                    var y1 = y0 + attribute.height(dialog);
+                    var x = mouseevent.clientX;
+                    var y = mouseevent.clientY;
+
+                    if (!(x >= x0 && x <= x1 && y >= y0 && y <= y1)) {
+                        the.destroy();
+                    }
+                }, options.timeout);
+            }
         },
 
 
@@ -128,23 +164,34 @@ define(function (require, exports, module) {
          */
         _event: function () {
             var the = this;
-            var options = the._options;
 
             // 点击关闭对话框
             event.on(the._dialog._dialog, 'click tap', '.' + closeClass, function () {
-                if (options.onclose.call(the, -1) !== false) {
-                    the.destroy();
-                }
+                the.destroy();
+                the.emit('close', -1);
             });
 
             // 点击按钮响应事件
             event.on(the._dialog._dialog, 'click tap', '.' + buttonClass, function (eve) {
                 var index = selector.index(eve.target);
 
-                if (options.onclose.call(the, index) !== false) {
-                    the.destroy();
-                }
+                the.destroy();
+                the.emit('close', index);
             });
+
+            // 鼠标进入、离开
+            if (the._options.timeout > 0) {
+                event.on(the._dialog._dialog, 'mouseover dragstart drag', function () {
+                    if (the._timerId) {
+                        clearTimeout(the._timerId);
+                        the._timerId = 0;
+                    }
+                });
+
+                event.on(the._dialog._dialog, 'mouseout dragend', function () {
+                    the._timeout();
+                });
+            }
         },
 
 
@@ -182,7 +229,7 @@ define(function (require, exports, module) {
             var the = this;
 
             // 卸载事件
-            event.un(the._dialog._dialog, 'click tap');
+            event.un(the._dialog._dialog, 'click tap mouseover dragstart drag mouseout dragend');
 
             // 销毁对话框
             the._dialog.destroy(function () {
@@ -190,7 +237,7 @@ define(function (require, exports, module) {
                 modification.remove(the._msg);
             });
         }
-    });
+    }, Emitter);
     var style =
         // 包装
         '.alien-ui-msg{box-shadow:0 0 20px #666;border-radius:6px;color:#FFF;overflow:hidden}' +
@@ -244,6 +291,10 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
 
+    event.on(document, 'mousemove', function (eve) {
+        mouseevent = eve;
+    });
+
 
     /**
      * 实例化一个临时消息框
@@ -257,9 +308,8 @@ define(function (require, exports, module) {
      * @param [options.content="Hello world!"] {String} 消息框内容
      * @param [options.buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
      * @param [options.style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
-     * @param [options.onclose] {Function} 关闭对话框后的回调<br>
-     *     this: 消息框实例<br>
-     *     arguments[0]: {Number} index 即为选择的按钮索引，如果点关闭按钮的话，值为-1
+     * @param [options.canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
+     * @param [options.timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
      * @constructor
      */
     module.exports = Msg;

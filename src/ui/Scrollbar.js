@@ -22,6 +22,7 @@ define(function (require, exports, module) {
 
     var data = require('../util/data.js');
     var klass = require('../util/class.js');
+    var Emitter = require('../libs/Emitter.js');
     var modification = require('../core/dom/modification.js');
     var attribute = require('../core/dom/attribute.js');
     var selector = require('../core/dom/selector.js');
@@ -52,9 +53,7 @@ define(function (require, exports, module) {
         speed: 100,
         duration: 456,
         cssEasing: 'in-out',
-        jsEasing: 'swing',
-        onchangex: noop,
-        onchangey: noop
+        jsEasing: 'swing'
     };
     var Scrollbar = klass.create({
         STATIC: {
@@ -64,6 +63,8 @@ define(function (require, exports, module) {
 
         constructor: function (ele, options) {
             var the = this;
+
+            Emitter.apply(the, arguments);
 
             the._ele = ele;
             the._options = data.extend(!0, {}, defaults, options);
@@ -221,12 +222,15 @@ define(function (require, exports, module) {
                 the._dragX = new Drag(the._thumbX, {
                     isClone: !1,
                     axis: 'x',
-                    ondragstart: function (eve) {
+                    preventDefault: !0
+                })
+                    .init()
+                    .on('dragstart', function (eve) {
                         x0 = eve.pageX;
                         left0 = parseFloat(attribute.css(the._thumbX, 'left'));
                         attribute.addClass(the._thumbX, thumbActiveClass);
-                    },
-                    ondrag: function (eve) {
+                    })
+                    .on('drag', function (eve) {
                         var left = left0 + eve.pageX - x0;
                         var ratio;
 
@@ -242,24 +246,26 @@ define(function (require, exports, module) {
 
                         attribute.css(the._body, 'left', -the._scrollLeft);
                         attribute.css(the._thumbX, 'left', left);
-                        options.onchangex.call(the, the._scrollLeft);
+                        the.emit('changex', the._scrollLeft);
 
                         return !1;
-                    },
-                    ondragend: function () {
+                    })
+                    .on('dragend', function (eve) {
                         attribute.removeClass(the._thumbX, thumbActiveClass);
-                    }
-                }).init();
+                    });
 
                 the._dragY = new Drag(the._thumbY, {
                     isClone: !1,
                     axis: 'y',
-                    ondragstart: function (eve) {
+                    preventDefault: !0
+                })
+                    .init()
+                    .on('dragstart', function (eve) {
                         y0 = eve.pageY;
                         top0 = parseFloat(attribute.css(the._thumbY, 'top'));
                         attribute.addClass(the._thumbY, thumbActiveClass);
-                    },
-                    ondrag: function (eve) {
+                    })
+                    .on('drag', function (eve) {
                         var top = top0 + eve.pageY - y0;
                         var ratio;
 
@@ -275,24 +281,23 @@ define(function (require, exports, module) {
 
                         attribute.css(the._body, 'top', -the._scrollTop);
                         attribute.css(the._thumbY, 'top', top);
-                        options.onchangey.call(the, the._scrollTop);
+                        the.emit('changey', the._scrollTop);
 
                         return !1;
-                    },
-                    ondragend: function () {
+                    })
+                    .on('dragend', function () {
                         attribute.removeClass(the._thumbY, thumbActiveClass);
-                    }
-                }).init();
-            }else{
+                    });
+            } else {
                 event.on(the._wrap, 'scroll', function () {
-                    if(the._scrollLeft !== the._wrap.scrollLeft){
+                    if (the._scrollLeft !== the._wrap.scrollLeft) {
                         the._scrollLeft = the._wrap.scrollLeft;
-                        options.onchangex.call(the, the._scrollLeft);
+                        the.emit('changex', the._scrollLeft);
                     }
 
-                    if(the._scrollTop !== the._wrap.scrollTop){
+                    if (the._scrollTop !== the._wrap.scrollTop) {
                         the._scrollTop = the._wrap.scrollTop;
-                        options.onchangey.call(the, the._scrollTop);
+                        the.emit('changey', the._scrollTop);
                     }
                 });
             }
@@ -313,7 +318,7 @@ define(function (require, exports, module) {
             if (arguments.length) {
                 x = data.parseFloat(x, 0);
 
-                if (x < 0 || x> maxScrollWidth) {
+                if (x < 0 || x > maxScrollWidth) {
                     x = maxScrollWidth;
                 }
 
@@ -327,14 +332,14 @@ define(function (require, exports, module) {
             }
 
             if (isPlaceholderScroll) {
-                if(the._isWheel){
+                if (the._isWheel) {
                     attribute.css(the._body, {
                         left: -the._scrollLeft
                     });
                     attribute.css(the._thumbX, {
                         left: the._xLeft = track * the._scrollLeft / maxScrollWidth
                     });
-                }else{
+                } else {
                     animation.animate(the._body, {
                         left: -the._scrollLeft
                     }, the._animateOptions);
@@ -349,7 +354,7 @@ define(function (require, exports, module) {
                 }, the._animateOptions);
             }
 
-            options.onchangex.call(the, the._scrollLeft);
+            the.emit('changex', the._scrollLeft);
 
             return the;
         },
@@ -359,7 +364,7 @@ define(function (require, exports, module) {
          * 滚动左边缘
          * @returns {Scrollbar}
          */
-        scrollLeft: function(){
+        scrollLeft: function () {
             return this.scrollX(0);
         },
 
@@ -368,7 +373,7 @@ define(function (require, exports, module) {
          * 滚动到右边缘
          * @returns {Scrollbar}
          */
-        scrollRight: function(){
+        scrollRight: function () {
             return this.scrollX(-1);
         },
 
@@ -387,7 +392,7 @@ define(function (require, exports, module) {
             if (arguments.length) {
                 y = data.parseFloat(y, 0);
 
-                if (y < 0 || y> maxScrollHeight) {
+                if (y < 0 || y > maxScrollHeight) {
                     y = maxScrollHeight;
                 }
 
@@ -401,14 +406,14 @@ define(function (require, exports, module) {
             }
 
             if (isPlaceholderScroll) {
-                if(the._isWheel){
+                if (the._isWheel) {
                     attribute.css(the._body, {
                         top: -the._scrollTop
                     });
                     attribute.css(the._thumbY, {
                         top: the._yTop = track * the._scrollTop / maxScrollHeight
                     });
-                }else{
+                } else {
                     animation.animate(the._body, {
                         top: -the._scrollTop
                     }, the._animateOptions);
@@ -423,7 +428,7 @@ define(function (require, exports, module) {
                 }, the._animateOptions);
             }
 
-            options.onchangey.call(the, the._scrollTop);
+            the.emit('changey', the._scrollTop);
 
             return the;
         },
@@ -433,7 +438,7 @@ define(function (require, exports, module) {
          * 滚动到顶部
          * @returns {Scrollbar}
          */
-        scrollTop: function(){
+        scrollTop: function () {
             return this.scrollY(0);
         },
 
@@ -442,7 +447,7 @@ define(function (require, exports, module) {
          * 滚动都底部
          * @returns {Scrollbar}
          */
-        scrollBottom: function(){
+        scrollBottom: function () {
             return this.scrollY(-1);
         },
 
@@ -515,7 +520,7 @@ define(function (require, exports, module) {
             modification.remove(the._trackY);
             modification.unwrap(the._ele, 'div div');
         }
-    });
+    }, Emitter);
     var duration = 456;
     var style =
         // 包裹
@@ -550,8 +555,6 @@ define(function (require, exports, module) {
      * @param {Number} [optoions.duration=456] 动画时间，单位 ms
      * @param {String} [optoions.cssEasing="in-out"] CSS 动画缓冲类型
      * @param {String} [optoions.jsEasing="iswing"] JS 动画缓冲类型
-     * @param {Function} [optoions.onchangex=noop] x 轴滚动条发生变化时回调
-     * @param {Function} [optoions.onchangey=noop] y 轴滚动条发生变化时回调
      * @constructor
      */
     module.exports = Scrollbar;

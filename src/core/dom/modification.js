@@ -43,6 +43,7 @@ define(function (require, exports, module) {
          * 创建节点
          * @param {String}       nodeName       节点名称，可以为#text、#comment、tagName
          * @param {String|Object} [attributes]   节点属性
+         * @param {Object} [properties]   节点特性
          * @returns {Node}
          *
          * @example
@@ -55,15 +56,17 @@ define(function (require, exports, module) {
          * modification.create('div', {id:'id-123'});
          * // => DIVNode
          */
-        create: function (nodeName, attributes) {
+        create: function (nodeName, attributes, properties) {
             var node;
 
             switch (nodeName) {
                 case '#text':
-                    return document.createTextNode(attributes);
+                    node = document.createTextNode(attributes);
+                    break;
 
                 case '#comment':
-                    return document.createComment(attributes);
+                    node =document.createComment(attributes);
+                    break;
 
                 default:
                     node = document.createElement(nodeName);
@@ -92,8 +95,14 @@ define(function (require, exports, module) {
                         }
                     });
 
-                    return node;
+                    break;
             }
+
+            data.each(properties, function (key, val) {
+                node[key] = val;
+            });
+
+            return node;
         },
 
         /**

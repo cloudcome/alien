@@ -35,7 +35,26 @@ define(function (require, exports, module) {
         query: function (selector, context) {
             context = context || document;
 
-            return data.toArray(context.querySelectorAll(selector), !0);
+            var selectorType = data.type(selector);
+            var ret = [];
+
+            if (context && (context.nodeType === 1 || context.nodeType === 9)) {
+                switch (selectorType) {
+                    case 'string':
+                        selector = selector.trim();
+                        ret = selector ? context.querySelectorAll(selector): [];
+                        break;
+
+                    case 'element':
+                    case 'document':
+                        ret = context.contains(selector) ? [selector] : [];
+                        break;
+                }
+
+                return data.toArray(ret, !0);
+            } else {
+                throw new Error('query context must be an element');
+            }
         },
 
         /**

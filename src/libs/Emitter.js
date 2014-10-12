@@ -107,6 +107,10 @@ define(function (require, exports, module) {
             var the = this;
             var args = Array.prototype.slice.call(arguments, 1);
 
+            if(!the.eventsPool){
+                throw new Error('can not found emitter eventsPool');
+            }
+
             _middleware(eventType, function (et) {
                 if (the.eventsPool[et]) {
                     data.each(the.eventsPool[et], function (index, listener) {

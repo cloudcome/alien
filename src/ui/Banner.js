@@ -8,9 +8,6 @@
 
 define(function (require, exports, module) {
     /**
-     * 构建一个 banner，标准的 DOM 结构为：<br>
-     * <code>ul#banner1>li*N</code>
-     *
      * @module ui/Banner
      * @requires core/event/touch
      * @requires core/dom/modification
@@ -18,6 +15,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires util/class
      * @requires util/data
+     * @requires libs/Emitter
      */
 
     'use strict';
@@ -34,6 +32,7 @@ define(function (require, exports, module) {
     var animation = require('../core/dom/animation.js');
     var klass = require('../util/class.js');
     var data = require('../util/data.js');
+    var Emitter = require('../libs/Emitter.js');
     var navActiveClass = 'alien-ui-banner-nav-item-active';
     var navItemClass = 'alien-ui-banner-nav-item';
     var defaults = {
@@ -51,8 +50,7 @@ define(function (require, exports, module) {
         // "circle" "square" "transparent"
         navStyle: 'circle',
         // "number" ""
-        navText: '',
-        onchange: noop
+        navText: ''
     };
     var Banner = klass.create({
         STATIC: {
@@ -61,6 +59,7 @@ define(function (require, exports, module) {
 
 
         constructor: function (ele, options) {
+            Emitter.apply(this, arguments);
             this._ele = ele;
             this._options = data.extend(!0, {}, defaults, options);
         },
@@ -308,9 +307,7 @@ define(function (require, exports, module) {
 
                 the._showIndex = index;
 
-                if (data.type(options.onchange) === 'function') {
-                    options.onchange.call(the, index);
-                }
+                the.emit('change', index);
 
                 if (the._navItems) {
                     attribute.addClass(the._navItems[index], navActiveClass);
@@ -432,8 +429,9 @@ define(function (require, exports, module) {
 
         /**
          * 重置尺寸
-         * @param {Number} width 宽度
-         * @param {Number} height 高度
+         * @param {Object} size  尺寸对象
+         * @param {Number} [size.width]  宽度
+         * @param {Number} [size.height]  高度
          * @returns {Banner}
          */
         resize: function (size) {
@@ -498,7 +496,7 @@ define(function (require, exports, module) {
             modification.remove(the._nav);
             modification.unwrap(the._ele, 'div');
         }
-    });
+    }, Emitter);
     var style =
         // 导航
         '.alien-ui-banner-nav{position:absolute;right:10px;bottom:10px;overflow:hidden;background:rgba(0, 0, 0, 0.33);padding:6px 12px;border-radius:4px}' +
@@ -514,9 +512,10 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
 
-
     /**
-     * 实例化一个 banner
+     * 构建一个 banner，标准的 DOM 结构为：<br>
+     * <code>ul#banner1>li*N</code>
+     *
      * @param {HTMLElement|Node} ele 元素
      * @param {Object} [options] 配置
      * @param {Number} [options.width=700] banner 宽度，默认700
@@ -528,8 +527,8 @@ define(function (require, exports, module) {
      * @param {String} [options.addClass=""] banner 添加的 className
      * @param {String} [options.navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
      * @param {String} [options.navText=""] banner 导航的是否输出导航数字，内置有"number"
-     * @param {Function} [options.onchange=noop] banner 改变之后回调，参数为 index
-     * @construnctor
+     * @constructor
+     *
      */
     module.exports = Banner;
 });

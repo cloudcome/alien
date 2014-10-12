@@ -32,6 +32,7 @@
 <li><a href="modification.html">core/dom/modification</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
+<li><a href="drag.html">core/event/drag</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
 <li><a href="wheel.html">core/event/wheel</a></li>
@@ -42,15 +43,14 @@
 <li><a href="ua.html">core/navigator/ua</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
-<li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
-<li><a href="index_.html">ui/dialog/index</a></li>
+<li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index___.html">ui/scrollbar/index</a></li>
+<li><a href="index_.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -115,10 +115,16 @@
 
         
             
-                <blockquote class="description lead">文档准备完毕后回调
+                <blockquote class="description lead">监听准备完毕后回调或文档已准备立即回调
                     
                 </blockquote>
             
+
+            
+                <h4>Example</h4>
+                
+    <pre class="prettyprint"><code>var ready = require('/src/event/ready.js');
+ready(fn);</code></pre>
 
             
 
@@ -142,7 +148,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-20040029566735032055449872277677" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5793740653898567631378584774211" data-toggle="tab">Source</a>
             </li>
 
         
@@ -163,8 +169,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-20040029566735032055449872277677">
-                <p><a href="ready.js.html#line9">core/event/ready.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-5793740653898567631378584774211">
+                <p><a href="ready.js.html#line33">core/event/ready.js:33</a></p>
             </div>
 
         
@@ -181,14 +187,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li><a href="base.html">module:core/event/base</a></li>
-        
-            <li><a href="data.html">module:util/data</a></li>
-        </ul>
     
 
     
@@ -229,16 +227,10 @@
 
         
             
-                <blockquote class="description lead">监听准备完毕后回调或文档已准备立即回调
+                <blockquote class="description lead">文档准备完毕后回调
                     
                 </blockquote>
             
-
-            
-                <h4>Example</h4>
-                
-    <pre class="prettyprint"><code>var ready = require('/src/event/ready.js');
-ready(fn);</code></pre>
 
             
 
@@ -262,7 +254,7 @@ ready(fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-1858424441888928422565645957365632" data-toggle="tab">Source</a>
+                <a href="#tab-meta-71961402520537388695128876715899" data-toggle="tab">Source</a>
             </li>
 
         
@@ -283,8 +275,8 @@ ready(fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-1858424441888928422565645957365632">
-                <p><a href="ready.js.html#line33">core/event/ready.js:33</a></p>
+            <div class="tab-pane active" id="tab-meta-71961402520537388695128876715899">
+                <p><a href="ready.js.html#line9">core/event/ready.js:9</a></p>
             </div>
 
         
@@ -301,6 +293,14 @@ ready(fn);</code></pre>
 
     
 
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="base.html">module:core/event/base</a></li>
+        
+            <li><a href="data.html">module:util/data</a></li>
+        </ul>
     
 
     

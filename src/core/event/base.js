@@ -134,16 +134,23 @@ define(function (require, exports, module) {
          * 触发事件
          * @param {HTMLElement|Node|EventTarget} ele 元素
          * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
+         * @param {Event} [copyEvent] 需要复制的事件信息
          * @returns {Object} this
          *
          * @example
          * event.dispatch(ele, 'myclick');
          * event.dispatch(ele, myclikEvent);
+         * // 从当前事件 eve 上复制细节信息
+         * event.dispatch(ele, myclikEvent, eve);
          */
-        dispatch: function (ele, eventTypeOrEvent) {
+        dispatch: function (ele, eventTypeOrEvent, copyEvent) {
             var et = data.type(eventTypeOrEvent) === 'string' ?
                 this.create(eventTypeOrEvent) :
                 eventTypeOrEvent;
+
+            if(copyEvent){
+                et = this.extend(et, copyEvent);
+            }
 
             // 同时触发相同的原生事件会报错
             try {
@@ -210,7 +217,7 @@ define(function (require, exports, module) {
          * event.on(ele, 'click', 'li', fn, true):
          */
         on: function (element, eventType, selector, listener, isCapture) {
-            if (!element.addEventListener) {
+            if (!element || !element.addEventListener) {
                 return;
             }
 
@@ -267,7 +274,7 @@ define(function (require, exports, module) {
          * event.un(ele, 'click');
          */
         un: function (element, eventType, listener, isCapture) {
-            if (!element.addEventListener) {
+            if (!element || !element.addEventListener) {
                 return;
             }
 
@@ -278,6 +285,23 @@ define(function (require, exports, module) {
                 args.splice(1, 1, eventType);
                 _un.apply(window, args);
             });
+        },
+
+        /**
+         * 获得某元素的事件队列长度
+         * @param {window|HTMLElement|Node} ele 元素
+         * @param {String} eventType 事件类型
+         * @param {Boolean} [isCapture=false] 是否为捕获事件，默认为 false
+         * @returns {Number} 事件队列长度，最小值为0
+         */
+        length: function (ele, eventType, isCapture) {
+            var id = ele[key];
+
+            return isCapture ?
+                (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
+                    isCaptureOriginalListeners[id][eventType] || []).length:
+                (unCaptureOriginalListeners && unCaptureOriginalListeners[id] &&
+                    unCaptureOriginalListeners[id][eventType] || []).length;
         }
     };
 

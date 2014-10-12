@@ -11,11 +11,14 @@ define(function (require, exports, module) {
      * @create 2014-09-27 15:51
      *
      * @module ui/Drag
+     * @requires util/class
      * @requires util/data
+     * @requires libs/Emitter
      * @requires core/event/touch
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
+     * @requires core/dom/animation
      */
 
     'use strict';
@@ -23,25 +26,21 @@ define(function (require, exports, module) {
     var udf;
     var klass = require('../util/class.js');
     var data = require('../util/data.js');
+    var Emitter = require('../libs/Emitter.js');
     var event = require('../core/event/touch.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
+    var animation = require('../core/dom/animation.js');
     var start = 'mousedown taphold';
     var move = 'mousemove touchmove';
     var end = 'mouseup touchend touchcancel';
     var dragClass = 'alien-ui-drag';
     var body = document.body;
-    var noop = function () {
-        // ignore
-    };
     var defaults = {
         // 鼠标操作区域选择器，默认为 null，即整个元素
         // 参数为选择器字符串
         handle: null,
-
-        // 是否克隆一个副本作为参考对象，默认 true
-        isClone: !0,
 
         // 拖拽轴向，x：水平，y：垂直，xy：所有
         axis: 'xy',
@@ -54,23 +53,12 @@ define(function (require, exports, module) {
         // 参考于 document
         max: null,
 
-        // 拖拽时的层级值
-        zIndex: 99999,
+        // 是否阻止默认拖拽效果
+        preventDefault: !1,
 
-        // 拖拽开始后回调
-        // this: drag element
-        // arg0: event
-        ondragstart: noop,
+        duration: 300,
 
-        // 拖拽中回调
-        // this: drag element
-        // arg0: event
-        ondrag: noop,
-
-        // 拖拽结束后回调
-        // this: drag element
-        // arg0: event
-        ondragend: noop
+        easing: 'in-out'
     };
     var Drag = klass.create({
         STATIC: {
@@ -79,7 +67,14 @@ define(function (require, exports, module) {
 
 
         constructor: function (ele, options) {
-            this._ele = ele;
+            ele = selector.query(ele);
+
+            if(!ele.length){
+                throw new Error('element is not exist');
+            }
+
+            Emitter.apply(this, arguments);
+            this._ele = ele[0];
             this._options = data.extend(!0, {}, defaults, options);
         },
 
@@ -127,7 +122,7 @@ define(function (require, exports, module) {
                     width: attribute.width(the._ele) - 2,
                     height: attribute.height(the._ele) - 2,
                     left: attribute.left(the._ele),
-                    zIndex: the._options.zIndex - 1
+                    zIndex: 999999999999
                 }
             });
             the._clone = modification.insert(clone, body, 'beforeend', !0);
@@ -145,21 +140,28 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (!the._is && (type === 'mousedown' && eve.which === 1 || type === 'taphold')) {
+
+
+
                 the._is = !0;
-                the.pageX = eve.pageX;
-                the.pageY = eve.pageY;
-                the.top = attribute.top(the._ele);
-                the.left = attribute.left(the._ele);
-                the.zIndex = attribute.css(the._ele, 'z-index');
+                the._pageX = eve.pageX;
+                the._pageY = eve.pageY;
+                the._left = attribute.left(the._ele);
+                the._top = attribute.top(the._ele);
+
+                if(attribute.css(the._ele, 'position') === 'static'){
+                    attribute.css(the._ele, 'position', 'absolute');
+                }
+
+                attribute.left(the._ele, the._left);
+                attribute.top(the._ele, the._top);
+
                 attribute.addClass(the._ele, dragClass);
                 eve.preventDefault();
                 attribute.css(the._ele, 'z-index', options.zIndex);
-
-                if (options.isClone) {
                     the._copy();
-                }
 
-                the._options.ondragstart.call(the._ele, eve);
+                the.emit('dragstart', eve);
             }
         },
 
@@ -179,9 +181,9 @@ define(function (require, exports, module) {
                 if (eve.type === 'mousemove' && eve.which !== 1) {
                     event.dispatch(the._ele, 'mouseup');
                 } else {
-                    if (the._options.ondrag.call(the._ele, eve) !== false) {
+                    if (!options.preventDefault) {
                         if (options.axis.indexOf('x') > -1) {
-                            x = the.left + eve.pageX - the.pageX;
+                            x = the._left + eve.pageX - the._pageX;
 
                             if (options.min && options.min.x !== udf && x < options.min.x) {
                                 x = options.min.x;
@@ -191,11 +193,11 @@ define(function (require, exports, module) {
                                 x = options.max.x;
                             }
 
-                            attribute.left(the._ele, x);
+                            attribute.left(the._clone, x);
                         }
 
                         if (options.axis.indexOf('y') > -1) {
-                            y = the.top + eve.pageY - the.pageY;
+                            y = the._top + eve.pageY - the._pageY;
 
                             if (options.min && options.min.y !== udf && y < options.min.y) {
                                 y = options.min.y;
@@ -205,9 +207,11 @@ define(function (require, exports, module) {
                                 y = options.max.y;
                             }
 
-                            attribute.top(the._ele, y);
+                            attribute.top(the._clone, y);
                         }
                     }
+
+                    the.emit('drag', eve);
 
                     eve.preventDefault();
                 }
@@ -222,24 +226,39 @@ define(function (require, exports, module) {
          */
         _end: function (eve) {
             var the = this;
+            var options = the._options;
+            var from;
+            var to;
 
             if (the._is) {
                 the._is = !1;
+                from = {
+                    left: data.parseFloat(attribute.css(the._ele, 'left')),
+                    top: data.parseFloat(attribute.css(the._ele, 'top'))
+                };
+                attribute.left(the._ele, attribute.left(the._clone));
+                attribute.top(the._ele, attribute.top(the._clone));
+                to = {
+                    left: data.parseFloat(attribute.css(the._ele, 'left')),
+                    top: data.parseFloat(attribute.css(the._ele, 'top'))
+                };
+                attribute.css(the._ele, from);
+                animation.stop(the._ele);
+                animation.animate(the._ele, to, {
+                    duration: options.duration,
+                    easing: options.easing
+                });
                 attribute.removeClass(the._ele, dragClass);
                 eve.preventDefault();
-                attribute.css(the._ele, 'z-index', the.zIndex);
 
-                if (the._clone) {
-                    modification.remove(the._clone);
-                }
+                modification.remove(the._clone);
 
-                the._options.ondragend.call(the._ele, eve);
+                the.emit('dragend', eve);
             }
         }
-    });
+    }, Emitter);
     var style =
-        '.alien-ui-drag{opacity:.8}' +
-        '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#FEFFF3;border:1px dashed #F3DB7A}';
+        '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
 
     modification.importStyle(style);
 
@@ -249,15 +268,13 @@ define(function (require, exports, module) {
      * @param {HTMLElement} ele 元素
      * @param {Object} [options] 参数配置
      * @param {null|Object|String} [options.handle] 鼠标操作区域选择器，默认为 null，即整个元素
-     * @param {Boolean} [options.isClone] 是否克隆一个副本作为参考对象，默认 true
      * @param {String} [options.axis] 拖拽轴向，x：水平，y：垂直，xy：所有，默认为"xy"
      * @param {null|Object} [options.min] 拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document
      * @param {null|Object} [options.max] 拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document
      * @param {Number} [options.zIndex] 拖拽时的层级值，默认为99999
-     * @param {Function} [options.ondragstart] 拖拽开始后回调
-     * @param {Function} [options.ondrag] 拖拽中回调
-     * @param {Function} [options.ondragend] 拖拽结束后回调
-     * @returns {*}
+     * @param {Boolean} [options.preventDefault] 是否阻止默认拖拽行为，默认 false
+     * @param {Number} [options.duration=300] 运动到拖拽位置时间，默认为300ms
+     * @param {String} [options.easing="in-out"] 运动到拖拽位置缓冲效果
      * @constructor
      */
     module.exports = Drag;

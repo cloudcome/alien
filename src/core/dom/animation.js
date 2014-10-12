@@ -84,6 +84,11 @@ define(function (require, exports, module) {
             var hasDispatch = 0;
             var timeid = 0;
             var easing = '';
+            var fixTo = {};
+            var durationVal = [];
+            var delayVal = [];
+            var easingVal = [];
+            var i = 0;
 
             // 如果正在动画，取消后续操作
             if (animationMap[id]) {
@@ -137,17 +142,28 @@ define(function (require, exports, module) {
                 easing = options.easing;
             }
 
-            data.each(to, function (key) {
-                keys.push(key);
+            data.each(to, function (key, val) {
+                var obj = attribute.fixCss(key, val);
+                var temp = {};
+                temp[obj.key] = obj.val;
+
+                data.extend(fixTo, temp);
+                keys.push(obj.key);
             });
 
-            attribute.css(ele, 'transition-duration', options.duration + 'ms');
-            attribute.css(ele, 'transition-delay', options.delay + 'ms');
-            attribute.css(ele, 'transition-timing-function', easing);
+            for(; i <keys.length; i ++){
+                durationVal.push(options.duration + 'ms');
+                delayVal.push(options.delay + 'ms');
+                easingVal.push(easing);
+            }
+
+            attribute.css(ele, 'transition-duration', durationVal.join(','));
+            attribute.css(ele, 'transition-delay', delayVal.join(','));
+            attribute.css(ele, 'transition-timing-function', easingVal.join(','));
             attribute.css(ele, 'transition-property', keys.join(','));
 
             setTimeout(function () {
-                data.each(to, function (key, val) {
+                data.each(fixTo, function (key, val) {
                     attribute.css(ele, key, val);
                 });
             }, 0);

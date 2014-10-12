@@ -32,6 +32,7 @@
 <li><a href="modification.html">core/dom/modification</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
+<li><a href="drag.html">core/event/drag</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
 <li><a href="wheel.html">core/event/wheel</a></li>
@@ -42,15 +43,14 @@
 <li><a href="ua.html">core/navigator/ua</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
-<li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
-<li><a href="index_.html">ui/dialog/index</a></li>
+<li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index___.html">ui/scrollbar/index</a></li>
+<li><a href="index_.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -138,7 +138,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id="module-ui/Drag">
-        <span class="type-signature"></span>new require(ui/Drag)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"> 
+        <span class="type-signature"></span>new require(ui/Drag)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -262,6 +262,8 @@
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -304,42 +306,12 @@
             
 
             
-
-            <td class="description last">鼠标操作区域选择器，默认为 null，即整个元素</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>isClone</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
+                <td class="default">
                 
                 </td>
             
 
-            
-
-            <td class="description last">是否克隆一个副本作为参考对象，默认 true</td>
+            <td class="description last">鼠标操作区域选择器，默认为 null，即整个元素</td>
         </tr>
 
 	
@@ -371,6 +343,10 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">拖拽轴向，x：水平，y：垂直，xy：所有，默认为"xy"</td>
@@ -409,6 +385,10 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document</td>
         </tr>
@@ -446,6 +426,10 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document</td>
         </tr>
@@ -480,6 +464,10 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">拖拽时的层级值，默认为99999</td>
         </tr>
@@ -488,13 +476,13 @@
 
         <tr>
             
-                <td class="name"><code>ondragstart</code></td>
+                <td class="name"><code>preventDefault</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
         
     
 
@@ -514,21 +502,25 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">拖拽开始后回调</td>
+            <td class="description last">是否阻止默认拖拽行为，默认 false</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>ondrag</code></td>
+                <td class="name"><code>duration</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -548,21 +540,27 @@
             
 
             
+                <td class="default">
+                
+                    300
+                
+                </td>
+            
 
-            <td class="description last">拖拽中回调</td>
+            <td class="description last">运动到拖拽位置时间，默认为300ms</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>ondragend</code></td>
+                <td class="name"><code>easing</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -582,8 +580,14 @@
             
 
             
+                <td class="default">
+                
+                    "in-out"
+                
+                </td>
+            
 
-            <td class="description last">拖拽结束后回调</td>
+            <td class="description last">运动到拖拽位置缓冲效果</td>
         </tr>
 
 	
@@ -600,24 +604,6 @@
         
 
         
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">*</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
 
         
 
@@ -641,7 +627,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-7227980494499207291678425623104" data-toggle="tab">Source</a>
+                <a href="#tab-meta-141158831538632527889163442887366" data-toggle="tab">Source</a>
             </li>
 
         
@@ -662,8 +648,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-7227980494499207291678425623104">
-                <p><a href="Drag.js_.html#line263">ui/Drag.js:263</a></p>
+            <div class="tab-pane active" id="tab-meta-141158831538632527889163442887366">
+                <p><a href="Drag.js_.html#line280">ui/Drag.js:280</a></p>
             </div>
 
         
@@ -711,7 +697,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-8330386264715344464849560521543" data-toggle="tab">Source</a>
+                <a href="#tab-meta-71353931189514724174331850372255" data-toggle="tab">Source</a>
             </li>
 
         
@@ -732,7 +718,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-8330386264715344464849560521543">
+            <div class="tab-pane active" id="tab-meta-71353931189514724174331850372255">
                 <p><a href="Drag.js_.html#line9">ui/Drag.js:9</a></p>
             </div>
 
@@ -754,7 +740,11 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
+            <li><a href="class.html">module:util/class</a></li>
+        
             <li><a href="data.html">module:util/data</a></li>
+        
+            <li><a href="Emitter.html">module:libs/Emitter</a></li>
         
             <li><a href="touch.html">module:core/event/touch</a></li>
         
@@ -763,6 +753,8 @@
             <li><a href="attribute.html">module:core/dom/attribute</a></li>
         
             <li><a href="modification.html">module:core/dom/modification</a></li>
+        
+            <li><a href="animation.html">module:core/dom/animation</a></li>
         </ul>
     
 
@@ -826,7 +818,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-72360436711460353173295012675226" data-toggle="tab">Source</a>
+                <a href="#tab-meta-420247349422425036960016896482557" data-toggle="tab">Source</a>
             </li>
 
         
@@ -847,8 +839,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-72360436711460353173295012675226">
-                <p><a href="Drag.js_.html#line90">ui/Drag.js:90</a></p>
+            <div class="tab-pane active" id="tab-meta-420247349422425036960016896482557">
+                <p><a href="Drag.js_.html#line85">ui/Drag.js:85</a></p>
             </div>
 
         
@@ -919,7 +911,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-46646107663400474380795964971185" data-toggle="tab">Source</a>
+                <a href="#tab-meta-400443874066695579790265706833452" data-toggle="tab">Source</a>
             </li>
 
         
@@ -940,8 +932,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-46646107663400474380795964971185">
-                <p><a href="Drag.js_.html#line102">ui/Drag.js:102</a></p>
+            <div class="tab-pane active" id="tab-meta-400443874066695579790265706833452">
+                <p><a href="Drag.js_.html#line97">ui/Drag.js:97</a></p>
             </div>
 
         

@@ -7,9 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/dialog/index
-     * @requires ui/dialog/style
-     * @requires ui/drag/index
+     * @module ui/Dialog
      * @requires util/class
      * @requires util/data
      * @requires core/dom/modification
@@ -17,14 +15,17 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/animation
      * @requires core/event/touch
+     * @requires core/event/drag
+     *
      * @author ydr.me
      * @create 2014-10-04 02:33
      */
 
     'use strict';
 
+    require('../core/event/drag.js');
     var klass = require('../util/class.js');
-    var Drag = require('./Drag.js');
+    var Emitter = require('../libs/Emitter.js');
     var modification = require('../core/dom/modification.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
@@ -42,9 +43,6 @@ define(function (require, exports, module) {
     var closeClass = 'alien-ui-dialog-close';
     var iframeClass = 'alien-ui-dialog-iframe';
     var shakeClass = 'alien-ui-dialog-shake';
-    var noop = function () {
-        // ignore
-    };
     var defaults = {
         width: 500,
         height: 'auto',
@@ -60,9 +58,7 @@ define(function (require, exports, module) {
         // 优先级1
         content: null,
         // 优先级1
-        isWrap: !0,
-        onopen: noop,
-        onclose: noop
+        isWrap: !0
     };
     // 打开的对话框队列
     var openDialogs = [];
@@ -73,6 +69,7 @@ define(function (require, exports, module) {
         },
 
         constructor: function (ele, options) {
+            Emitter.apply(this, arguments);
             this._ele = ele;
             this._options = data.extend(!0, {}, defaults, options);
         },
@@ -95,14 +92,17 @@ define(function (require, exports, module) {
             var dialog = modification.create('div', {
                 id: 'alien-ui-dialog-' + index,
                 'class': dialogClass,
-                role: 'dialog'
+                role: 'dialog',
+                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + index : ''
             });
             var bd;
 
             if (options.isWrap) {
                 dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
                     (options.title === null ? '' :
-                        '<div class="alien-ui-dialog-header">' +
+                        '<div class="alien-ui-dialog-header"' +
+                        (options.canDrag ? ' draggablefor="alien-ui-dialog-' + index + '"' : '') +
+                        '>' +
                         '<div class="' + titleClass + '">' + options.title + '</div>' +
                         '<div class="' + closeClass + '">&times;</div>' +
                         '</div>') +
@@ -120,13 +120,6 @@ define(function (require, exports, module) {
             the._zIndex = 0;
             the._id = index;
             dialogsMap[the._id] = the;
-
-            if (options.title !== null && options.canDrag && options.isWrap) {
-                the._drag = new Drag(dialog, {
-                    handle: '.' + titleClass,
-                    zIndex: the._zIndex
-                }).init();
-            }
 
             modification.insert(the._ele, bd ? bd : dialog, 'beforeend');
 
@@ -151,10 +144,6 @@ define(function (require, exports, module) {
          * @returns {Dialog}
          */
         open: function (callback) {
-            callback = callback || noop;
-
-//            var winW = attribute.width(window);
-//            var winH = attribute.height(window);
             var the = this;
             var bg = the._bg;
             var dialog = the._dialog;
@@ -217,7 +206,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                options.onopen.call(dialog);
+                the.emit('open');
 
                 if (!options.content && options.remote) {
                     the.setRemote(options.remote);
@@ -275,7 +264,7 @@ define(function (require, exports, module) {
             }, function () {
                 attribute.css(bg, 'display', 'none');
                 attribute.css(dialog, 'transform', 'scale(1)');
-                options.onclose.call(dialog);
+                the.emit('close');
 
                 if (data.type(callback) === 'function') {
                     callback.call(the);
@@ -391,9 +380,6 @@ define(function (require, exports, module) {
                 // 从对话框 map 里删除
                 delete(dialogsMap[the._id]);
 
-                if (the._drag) {
-                    the._drag.destroy();
-                }
 
                 // 将内容放到 body 里
                 modification.insert(the._ele, body, 'beforeend');
@@ -451,7 +437,7 @@ define(function (require, exports, module) {
 
             return pos;
         }
-    });
+    }, Emitter);
     var style =
         // 外层
         '.alien-ui-dialog-overflow{position:relative;width:100%;height:100%;overflow:hidden}' +
@@ -497,15 +483,13 @@ define(function (require, exports, module) {
      * @param [options.left="center"] {Number|String} 对话框左距离，默认水平居中
      * @param [options.top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
      * @param [options.title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
-     * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，当有标题栏存在的时候
+     * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
      * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
      * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
      * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
      * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
      * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
      * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-     * @param [options.onopen] {Function} 对话框打开时回调
-     * @param [options.onclose] {Function} 对话框关闭时回调
      * @constructor
      */
     module.exports = Dialog;

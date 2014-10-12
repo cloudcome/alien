@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: ui/dialog/index - Alien documents</title>
+    <title>Module: ui/scrollbar/index - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -32,6 +32,7 @@
 <li><a href="modification.html">core/dom/modification</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
+<li><a href="drag.html">core/event/drag</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
 <li><a href="wheel.html">core/event/wheel</a></li>
@@ -42,15 +43,14 @@
 <li><a href="ua.html">core/navigator/ua</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
-<li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
-<li><a href="index_.html">ui/dialog/index</a></li>
+<li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index___.html">ui/scrollbar/index</a></li>
+<li><a href="index_.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -82,16 +82,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 7</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#close">close</a>
-    
-</li>
+	                    <li class="sidebar-header">Methods &times; 10</li>
 
 	                    
 	                        
@@ -107,7 +98,7 @@
 
 <li class="">
     
-        <a class="" href="#open">open</a>
+        <a class="" href="#init">init</a>
     
 </li>
 
@@ -116,7 +107,7 @@
 
 <li class="">
     
-        <a class="" href="#position">position</a>
+        <a class="" href="#resize">resize</a>
     
 </li>
 
@@ -125,7 +116,7 @@
 
 <li class="">
     
-        <a class="" href="#setContent">setContent</a>
+        <a class="" href="#scrollBottom">scrollBottom</a>
     
 </li>
 
@@ -134,7 +125,7 @@
 
 <li class="">
     
-        <a class="" href="#setRemote">setRemote</a>
+        <a class="" href="#scrollLeft">scrollLeft</a>
     
 </li>
 
@@ -143,7 +134,43 @@
 
 <li class="">
     
-        <a class="" href="#shake">shake</a>
+        <a class="" href="#scrollRight">scrollRight</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#scrollTop">scrollTop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#scrollX">scrollX</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#scrollY">scrollY</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#update">update</a>
     
 </li>
 
@@ -158,7 +185,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: ui/dialog/index</h1>
+		            <h1 class="page-title">Module: ui/scrollbar/index</h1>
 
 		            
 
@@ -169,7 +196,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            ui/dialog/index
+            ui/scrollbar/index
         
     
     </h2>
@@ -182,8 +209,8 @@
             
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="module-ui/dialog/index">
-        <span class="type-signature"></span>new require(ui/dialog/index)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id="module-ui/scrollbar/index">
+        <span class="type-signature"></span>new require(ui/scrollbar/index)<span class="signature">(<span class="optional">optoions</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -192,7 +219,7 @@
 
         
         <div class="description lead">
-            <blockquote>实例化一个模态交互对话框
+            <blockquote>实例化一个自定义滚动条
                 
             </blockquote>
         </div>
@@ -230,42 +257,7 @@
 
         <tr>
             
-                <td class="name"><code>ele</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">元素</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>optoions</code></td>
             
 
             <td class="type">
@@ -292,7 +284,7 @@
 
             
 
-            <td class="description last">
+            <td class="description last">配置
                 <h6>Properties</h6>
                 
 
@@ -329,9 +321,6 @@
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -353,12 +342,12 @@
             
                 <td class="default">
                 
-                    500
+                    700
                 
                 </td>
             
 
-            <td class="description last">对话框宽度</td>
+            <td class="description last">宽度</td>
         </tr>
 
 	
@@ -372,9 +361,6 @@
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -396,28 +382,25 @@
             
                 <td class="default">
                 
-                    "auto"
+                    300
                 
                 </td>
             
 
-            <td class="description last">对话框高度</td>
+            <td class="description last">宽度</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>left</code></td>
+                <td class="name"><code>minX</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -439,28 +422,25 @@
             
                 <td class="default">
                 
-                    "center"
+                    30
                 
                 </td>
             
 
-            <td class="description last">对话框左距离，默认水平居中</td>
+            <td class="description last">横向滚动条最小宽度</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>top</code></td>
+                <td class="name"><code>minY</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -482,28 +462,25 @@
             
                 <td class="default">
                 
-                    "center"
+                    30
                 
                 </td>
             
 
-            <td class="description last">对话框上距离，默认垂直居中（为了美观，表现为2/5处）</td>
+            <td class="description last">纵向滚动条最小宽度</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>title</code></td>
+                <td class="name"><code>axis</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
         
     
 
@@ -525,25 +502,25 @@
             
                 <td class="default">
                 
-                    "无标题对话框"
+                    "y"
                 
                 </td>
             
 
-            <td class="description last">对话框标题，为null时将隐藏标题栏</td>
+            <td class="description last">滚轮滚动绑定滚动条方向</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>canDrag</code></td>
+                <td class="name"><code>speed</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -565,12 +542,12 @@
             
                 <td class="default">
                 
-                    true
+                    100
                 
                 </td>
             
 
-            <td class="description last">对话框是否可以被拖拽，当有标题栏存在的时候</td>
+            <td class="description last">滚轮滚动速度，单位 px</td>
         </tr>
 
 	
@@ -605,19 +582,19 @@
             
                 <td class="default">
                 
-                    345
+                    456
                 
                 </td>
             
 
-            <td class="description last">对话框打开、关闭的动画时间，单位毫秒</td>
+            <td class="description last">动画时间，单位 ms</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>easing</code></td>
+                <td class="name"><code>cssEasing</code></td>
             
 
             <td class="type">
@@ -645,27 +622,24 @@
             
                 <td class="default">
                 
-                    "ease-in-out-back"
+                    "in-out"
                 
                 </td>
             
 
-            <td class="description last">对话框打开、关闭的动画缓冲函数</td>
+            <td class="description last">CSS 动画缓冲类型</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>remote</code></td>
+                <td class="name"><code>jsEasing</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
-        |
-    
 &nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
@@ -688,217 +662,12 @@
             
                 <td class="default">
                 
-                    null
+                    "iswing"
                 
                 </td>
             
 
-            <td class="description last">对话框打开远程地址，优先级2</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>remoteHeight</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    400
-                
-                </td>
-            
-
-            <td class="description last">对话框打开远程地址的高度，单位像素</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">设置对话框的内容，优先级1</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>isWrap</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">是否自动包裹对话框来，默认 true，优先级1</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>onopen</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">对话框打开时回调</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>onclose</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">对话框关闭时回调</td>
+            <td class="description last">JS 动画缓冲类型</td>
         </tr>
 
 	
@@ -938,7 +707,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-212508118245750678245378860738128" data-toggle="tab">Source</a>
+                <a href="#tab-meta-91372579638846228857042957097292" data-toggle="tab">Source</a>
             </li>
 
         
@@ -959,8 +728,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-212508118245750678245378860738128">
-                <p><a href="Dialog.js.html#line511">ui/Dialog.js:511</a></p>
+            <div class="tab-pane active" id="tab-meta-91372579638846228857042957097292">
+                <p><a href="Scrollbar.js.html#line560">ui/Scrollbar.js:560</a></p>
             </div>
 
         
@@ -1008,7 +777,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-97439568932168196376379479188472" data-toggle="tab">Source</a>
+                <a href="#tab-meta-92913222755305476630929831881076" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1029,8 +798,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-97439568932168196376379479188472">
-                <p><a href="Dialog.js.html#line9">ui/Dialog.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-92913222755305476630929831881076">
+                <p><a href="Scrollbar.js.html#line9">ui/Scrollbar.js:9</a></p>
             </div>
 
         
@@ -1051,23 +820,23 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li>module:ui/dialog/style</li>
-        
-            <li>module:ui/drag/index</li>
+            <li><a href="data.html">module:util/data</a></li>
         
             <li><a href="class.html">module:util/class</a></li>
         
-            <li><a href="data.html">module:util/data</a></li>
-        
             <li><a href="modification.html">module:core/dom/modification</a></li>
-        
-            <li><a href="selector.html">module:core/dom/selector</a></li>
         
             <li><a href="attribute.html">module:core/dom/attribute</a></li>
         
+            <li><a href="selector.html">module:core/dom/selector</a></li>
+        
             <li><a href="animation.html">module:core/dom/animation</a></li>
         
-            <li><a href="touch.html">module:core/event/touch</a></li>
+            <li><a href="wheel.html">module:core/event/wheel</a></li>
+        
+            <li>module:ui/drag/index</li>
+        
+            <li>module:ui/scrollbar/style</li>
         </ul>
     
 
@@ -1085,181 +854,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="close">
-        <span class="type-signature">&lt;inner> </span>close<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"> 
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>关闭对话框
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters:</h5>
-            
-
-<table class="params table table-bordered table-hover">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">打开之后回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-217254509218037135141829664353281" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-217254509218037135141829664353281">
-                <p><a href="Dialog.js.html#line244">ui/Dialog.js:244</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
     <h4 class="name alert alert-warning" id="destroy">
-        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
     </h4>
 
     
@@ -1268,7 +864,7 @@
 
         
         <div class="description lead">
-            <blockquote>销毁对话框
+            <blockquote>销毁实例
                 
             </blockquote>
         </div>
@@ -1277,68 +873,6 @@
         
 
         
-
-        
-            <h5>Parameters:</h5>
-            
-
-<table class="params table table-bordered table-hover">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">打开之后回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
 
         
 
@@ -1366,7 +900,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-390873764408752310579401045106351" data-toggle="tab">Source</a>
+                <a href="#tab-meta-1193084523547440847214416484348476" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1387,8 +921,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-390873764408752310579401045106351">
-                <p><a href="Dialog.js.html#line386">ui/Dialog.js:386</a></p>
+            <div class="tab-pane active" id="tab-meta-1193084523547440847214416484348476">
+                <p><a href="Scrollbar.js.html#line506">ui/Scrollbar.js:506</a></p>
             </div>
 
         
@@ -1413,8 +947,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="open">
-        <span class="type-signature">&lt;inner> </span>open<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="init">
+        <span class="type-signature">&lt;inner> </span>init<span class="signature">()</span><span class="type-signature"> 
     </h4>
 
     
@@ -1423,7 +957,7 @@
 
         
         <div class="description lead">
-            <blockquote>打开对话框
+            <blockquote>初始化
                 
             </blockquote>
         </div>
@@ -1432,68 +966,6 @@
         
 
         
-
-        
-            <h5>Parameters:</h5>
-            
-
-<table class="params table table-bordered table-hover">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">打开之后回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
 
         
 
@@ -1506,7 +978,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -1539,7 +1011,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-35831171693280346332651348784566" data-toggle="tab">Source</a>
+                <a href="#tab-meta-732702903449535449833474261686206" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1560,8 +1032,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-35831171693280346332651348784566">
-                <p><a href="Dialog.js.html#line153">ui/Dialog.js:153</a></p>
+            <div class="tab-pane active" id="tab-meta-732702903449535449833474261686206">
+                <p><a href="Scrollbar.js.html#line77">ui/Scrollbar.js:77</a></p>
             </div>
 
         
@@ -1586,8 +1058,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="position">
-        <span class="type-signature">&lt;inner> </span>position<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="resize">
+        <span class="type-signature">&lt;inner> </span>resize<span class="signature">(<span class="optional">size</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -1596,7 +1068,7 @@
 
         
         <div class="description lead">
-            <blockquote>重新定位对话框
+            <blockquote>更新当前框架尺寸
                 
             </blockquote>
         </div>
@@ -1634,13 +1106,13 @@
 
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
         
     
 
@@ -1661,7 +1133,7 @@
 
             
 
-            <td class="description last">打开之后回调</td>
+            <td class="description last">包含 width 和 height 的键值对</td>
         </tr>
 
 	
@@ -1679,7 +1151,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -1712,7 +1184,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-85951988142915075983219088520855" data-toggle="tab">Source</a>
+                <a href="#tab-meta-71398009033873685979292045813054" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1733,8 +1205,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-85951988142915075983219088520855">
-                <p><a href="Dialog.js.html#line294">ui/Dialog.js:294</a></p>
+            <div class="tab-pane active" id="tab-meta-71398009033873685979292045813054">
+                <p><a href="Scrollbar.js.html#line477">ui/Scrollbar.js:477</a></p>
             </div>
 
         
@@ -1759,8 +1231,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="setContent">
-        <span class="type-signature">&lt;inner> </span>setContent<span class="signature">()</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="scrollBottom">
+        <span class="type-signature">&lt;inner> </span>scrollBottom<span class="signature">()</span><span class="type-signature"> 
     </h4>
 
     
@@ -1769,7 +1241,7 @@
 
         
         <div class="description lead">
-            <blockquote>对话框添加内容，并重新定位
+            <blockquote>滚动都底部
                 
             </blockquote>
         </div>
@@ -1790,7 +1262,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -1823,7 +1295,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-144108606502413757519480152986944" data-toggle="tab">Source</a>
+                <a href="#tab-meta-71469835867173976606725337915123" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1844,8 +1316,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-144108606502413757519480152986944">
-                <p><a href="Dialog.js.html#line316">ui/Dialog.js:316</a></p>
+            <div class="tab-pane active" id="tab-meta-71469835867173976606725337915123">
+                <p><a href="Scrollbar.js.html#line450">ui/Scrollbar.js:450</a></p>
             </div>
 
         
@@ -1870,8 +1342,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="setRemote">
-        <span class="type-signature">&lt;inner> </span>setRemote<span class="signature">(url, <span class="optional">height</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="scrollLeft">
+        <span class="type-signature">&lt;inner> </span>scrollLeft<span class="signature">()</span><span class="type-signature"> 
     </h4>
 
     
@@ -1880,7 +1352,340 @@
 
         
         <div class="description lead">
-            <blockquote>对话框添加远程地址，并重新定位
+            <blockquote>滚动左边缘
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-796197760384529818401826033368707" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-796197760384529818401826033368707">
+                <p><a href="Scrollbar.js.html#line367">ui/Scrollbar.js:367</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="scrollRight">
+        <span class="type-signature">&lt;inner> </span>scrollRight<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>滚动到右边缘
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-41946205357089649022680195048451" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-41946205357089649022680195048451">
+                <p><a href="Scrollbar.js.html#line376">ui/Scrollbar.js:376</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="scrollTop">
+        <span class="type-signature">&lt;inner> </span>scrollTop<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>滚动到顶部
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-0122562295291572814500871659256518" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-0122562295291572814500871659256518">
+                <p><a href="Scrollbar.js.html#line441">ui/Scrollbar.js:441</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="scrollX">
+        <span class="type-signature">&lt;inner> </span>scrollX<span class="signature">(<span class="optional">x</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>x 轴滚动
                 
             </blockquote>
         </div>
@@ -1908,8 +1713,6 @@
 		
 
 		
-		<th class="th-dft">Default</th>
-		
 
 		<th class="last">Description</th>
 	</tr>
@@ -1920,43 +1723,7 @@
 
         <tr>
             
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">远程地址</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
@@ -1982,14 +1749,8 @@
             
 
             
-                <td class="default">
-                
-                    400
-                
-                </td>
-            
 
-            <td class="description last">高度</td>
+            <td class="description last">滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条</td>
         </tr>
 
 	
@@ -2007,7 +1768,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -2040,7 +1801,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-241729627130553132915446509141475" data-toggle="tab">Source</a>
+                <a href="#tab-meta-73265438410453514366182661615312" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2061,8 +1822,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-241729627130553132915446509141475">
-                <p><a href="Dialog.js.html#line339">ui/Dialog.js:339</a></p>
+            <div class="tab-pane active" id="tab-meta-73265438410453514366182661615312">
+                <p><a href="Scrollbar.js.html#line312">ui/Scrollbar.js:312</a></p>
             </div>
 
         
@@ -2087,8 +1848,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="shake">
-        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="scrollY">
+        <span class="type-signature">&lt;inner> </span>scrollY<span class="signature">(<span class="optional">y</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -2097,7 +1858,7 @@
 
         
         <div class="description lead">
-            <blockquote>晃动对话框以示提醒
+            <blockquote>y 轴滚动
                 
             </blockquote>
         </div>
@@ -2106,6 +1867,68 @@
         
 
         
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条</td>
+        </tr>
+
+	
+	</tbody>
+</table>
 
         
 
@@ -2118,7 +1941,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Dialog</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -2151,7 +1974,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-02595516969449818524207774316892" data-toggle="tab">Source</a>
+                <a href="#tab-meta-912645079195499446586750308051705" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2172,8 +1995,181 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-02595516969449818524207774316892">
-                <p><a href="Dialog.js.html#line363">ui/Dialog.js:363</a></p>
+            <div class="tab-pane active" id="tab-meta-912645079195499446586750308051705">
+                <p><a href="Scrollbar.js.html#line386">ui/Scrollbar.js:386</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="update">
+        <span class="type-signature">&lt;inner> </span>update<span class="signature">(<span class="optional">size</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>更新当前内容尺寸
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters:</h5>
+            
+
+<table class="params table table-bordered table-hover">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">包含 width 和 height 的键值对</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-217859916156157858283800452481955" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-217859916156157858283800452481955">
+                <p><a href="Scrollbar.js.html#line460">ui/Scrollbar.js:460</a></p>
             </div>
 
         

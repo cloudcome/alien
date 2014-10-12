@@ -32,6 +32,7 @@
 <li><a href="modification.html">core/dom/modification</a></li>
 <li><a href="selector.html">core/dom/selector</a></li>
 <li><a href="base.html">core/event/base</a></li>
+<li><a href="drag.html">core/event/drag</a></li>
 <li><a href="ready.html">core/event/ready</a></li>
 <li><a href="touch.html">core/event/touch</a></li>
 <li><a href="wheel.html">core/event/wheel</a></li>
@@ -42,15 +43,14 @@
 <li><a href="ua.html">core/navigator/ua</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
-<li><a href="drag.html">parent/drag</a></li>
 <li><a href="Template.html">parent/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
-<li><a href="index_.html">ui/dialog/index</a></li>
+<li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
-<li><a href="index__.html">ui/msg/index</a></li>
+<li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index___.html">ui/scrollbar/index</a></li>
+<li><a href="index_.html">ui/scrollbar/index</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -107,11 +107,177 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/drag
+     * 扩展拖拽事件支持
+     *
+     * @module core/event/drag
+     * @requires util/data
+     * @requires core/event/touch
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/dom/selector
+     *
+     * @example
+     * // dom结构
+     * // &amp;lt;div id="abc"&amp;gt;
+     * //     这里的 draggablefor 属性指向的是拖拽影响的元素
+     * //     &amp;lt;div draggablefor="abc"&amp;gt;&amp;lt;/div&amp;gt;
+     * // &amp;lt;/div&amp;gt;
+     * event.on(ele, 'dragstart', fn);
+     * event.on(ele, 'drag', fn);
+     * event.on(ele, 'dragend', fn);
      */
     'use strict';
 
-    module.exports = {};
+    var data = require('../../util/data.js');
+    var event = require('./touch.js');
+    var attribute = require('../dom/attribute.js');
+    var modification = require('../dom/modification.js');
+    var animation = require('../dom/animation.js');
+    var selector = require('../dom/selector.js');
+    var dragstart = 'mousedown taphold';
+    var drag = 'mousemove touchmove MSPointerMove pointermove';
+    var dragend = 'mouseup touchend MSPointerUp pointerup touchcancel MSPointerCancel pointercancel';
+    var x0 = null;
+    var y0 = null;
+    // 0 = 未开始拖动
+    // 1 = 开始拖动
+    // 2 = 拖动中
+    var state = 0;
+    // 触发元素
+    var ele;
+    // 克隆拖拽元素
+    var clone;
+    // 拖拽影响元素
+    var dragfor;
+    var left;
+    var top;
+    var style =
+        '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
+
+    modification.importStyle(style);
+
+    event.on(document, dragstart, function (eve) {
+        var _eve = eve.type === 'mousedown' &amp;&amp; eve.which === 1 ? eve : (
+                eve.touches &amp;&amp; eve.touches.length ? eve.touches[0] : null
+            );
+        var _dragfor;
+
+        ele = _getDragable(eve.target);
+
+        if (ele) {
+            _dragfor = selector.query('#' + attribute.attr(ele, 'draggablefor'));
+            x0 = _eve ? _eve.clientX : null;
+            y0 = _eve ? _eve.clientY : null;
+
+            if (x0 !== null &amp;&amp; y0 !== null &amp;&amp; state === 0 &amp;&amp;
+                ele !== document.body &amp;&amp; _dragfor.length &amp;&amp; _dragfor[0].contains(ele)) {
+                state = 1;
+                dragfor = _dragfor[0];
+                left = attribute.left(ele);
+                top = attribute.top(ele);
+            }
+        }
+    });
+
+    event.on(document, drag, function (eve) {
+        var _eve = eve.type === 'mousemove' &amp;&amp; eve.which === 1 ? eve : (
+                eve.touches &amp;&amp; eve.touches.length ? eve.touches[0] : null
+            );
+        var x1 = _eve ? _eve.clientX : null;
+        var y1 = _eve ? _eve.clientY : null;
+
+        // 发生了变化
+        if (state === 1 &amp;&amp; x0 !== null &amp;&amp; y0 !== null &amp;&amp; x1 !== null &amp;&amp; y1 !== null &amp;&amp; (x0 !== x1 || y0 !== y1)) {
+            state = 2;
+            event.dispatch(eve.target, 'dragstart', _eve);
+            clone = modification.create('div', {
+                style: {
+                    position: 'absolute',
+                    width: attribute.width(dragfor) - 2,
+                    height: attribute.height(dragfor) - 2,
+                    left: attribute.left(dragfor),
+                    top: attribute.top(dragfor),
+                    zIndex: 99999999999999
+                },
+                'class': 'alien-ui-drag-clone',
+                draggable: 'true'
+            }, {
+                draggable: true
+            });
+            modification.insert(clone, document.body, 'beforeend');
+        }
+
+        if (state === 2) {
+            attribute.left(clone, left + x1 - x0);
+            attribute.top(clone, top + y1 - y0);
+            event.dispatch(ele, 'drag', _eve);
+            eve.preventDefault();
+        }
+    });
+
+    event.on(document, dragend, function (eve) {
+        var _eve = eve.type === 'mousemove' &amp;&amp; eve.which === 1 ?
+            eve :
+            (eve.touches &amp;&amp; eve.touches.length ?
+                eve.touches[0] :
+                (eve.changedTouches &amp;&amp; eve.changedTouches.length ? eve.changedTouches[0] : null)
+                );
+        // 先记录初始值，最后还原，再动画
+        var from = {
+            left: attribute.css(dragfor, 'left'),
+            top: attribute.css(dragfor, 'top'),
+            marginLeft: attribute.css(dragfor, 'margin-left'),
+            marginTop: attribute.css(dragfor, 'margin-top')
+        };
+        var to;
+
+        if (state === 2) {
+            attribute.left(dragfor, attribute.left(clone));
+            attribute.top(dragfor, attribute.top(clone));
+            to = {
+                left: attribute.css(dragfor, 'left'),
+                top: attribute.css(dragfor, 'top'),
+                marginLeft: attribute.css(dragfor, 'margin-left'),
+                marginTop: attribute.css(dragfor, 'margin-top')
+            };
+            attribute.css(dragfor, from);
+            animation.stop(dragfor);
+            animation.animate(dragfor, to, {
+                duration: 300
+            });
+
+            modification.remove(clone);
+            clone = null;
+            event.dispatch(ele, 'dragend', _eve);
+        }
+
+        state = 0;
+        x0 = null;
+        y0 = null;
+    });
+
+
+    module.exports = event;
+
+
+    /**
+     * 获取当前作用元素最近的可拖拽元素
+     * @param ele
+     * @returns {*}
+     * @private
+     */
+    function _getDragable(ele) {
+        while (ele) {
+            if (attribute.attr(ele, 'draggablefor')) {
+                return ele;
+            }
+
+            ele = selector.parent(ele)[0];
+        }
+
+        return null;
+    }
 });</code></pre>
 
 
