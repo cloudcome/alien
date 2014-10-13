@@ -24,7 +24,7 @@
         textarea {
             display: block;
             width: 100%;
-            height: 200px;
+            height: 300px;
         }
 
         pre {
@@ -52,6 +52,12 @@
         Please login
         {{/if}}
     </p>
+
+    <ul>
+        {{each books as index,book }}
+        <li>第{{index+1}}本书：{{book}}</li>
+        {{/each}}
+    </ul>
 </textarea>
 
 <p class="text-center">+</p>
@@ -67,7 +73,11 @@
         var textarea = document.getElementById('template');
         var render = document.getElementById('render');
         var data = document.getElementById('data');
-        var dd = {name: 'cloudcome', love: 'FED'};
+        var dd = {
+            name: 'cloudcome',
+            love: 'FED',
+            books: ['JavaScript 语言精粹', '百年孤独']
+        };
         var t = new Template().init(textarea.value);
         data.innerHTML = JSON.stringify(dd);
         render.innerHTML = t(dd);

@@ -34,6 +34,8 @@ define(function (require, exports, module) {
     var regStringWrap = /([\\"])/g;
     var regBreakline1 = /\n/g;
     var regBreakline2 = /\r/g;
+    var regVar = /((?:[^'"])\b[a-z])/ig;
+    var regEachKeyVal = /\b[^,]+\b(\s*,\s*(\b[^,]+))?/;
     var defaults = {
         openTag: '{{',
         closeTag: '}}'
@@ -55,6 +57,7 @@ define(function (require, exports, module) {
                 var array = value.split(options.closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
+                var each;
 
                 // my name is
                 // 0 my name is
@@ -128,9 +131,23 @@ define(function (require, exports, module) {
      * @param data
      * @returns {string}
      * @private
+     * @TODO 要区别开关键词、保留词
      */
     function _varWrap(data) {
-        return data.replace(/((?:[^'"])\b[a-z])/ig, 'data.$1');
+        return data.replace(regVar, 'data.$1');
+    }
+
+
+    function _getEachKeyVal(data) {
+        var matches = data.slice(4).match(regEachKeyVal);
+        // key,val
+        if(matches[1]){
+
+        }
+        // val
+        else{
+
+        }
     }
 
 
