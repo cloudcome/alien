@@ -24,12 +24,18 @@
         textarea {
             display: block;
             width: 100%;
-            height: 300px;
+            height: 200px;
+            font-size: 14px;
+            resize: none;
         }
 
-        pre {
+        button{
+            padding: 10px 20px;
+        }
+
+        .pre {
             background: #eee;
-            padding: 10px;
+            padding: 20px;
         }
 
         .text-center {
@@ -44,10 +50,8 @@
     <div>my name is {{name}}, I love {{love}}.</div>
 
     <p>
-        {{if name ==="cloudcome"}}
+        {{if name === "Jane Yim"}}
         hi, {{name}}
-        {{else if name}}
-        welcome {{name}}
         {{else}}
         Please login
         {{/if}}
@@ -55,16 +59,17 @@
 
     <ul>
         {{each books as index,book }}
-        <li>第{{index+1}}本书：{{book}}</li>
+        <li>第{{index*1+1}}本书：{{book|test1|test2:'哈哈','呵呵'}}</li>
         {{/each}}
     </ul>
 </textarea>
+<button id="btn">render data</button>
 
 <p class="text-center">+</p>
-<pre id="data"></pre>
+<div class="pre" id="data"></div>
 <p class="text-center">=</p>
 
-<pre id="render"></pre>
+<div class="pre" id="render"></div>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
@@ -73,14 +78,26 @@
         var textarea = document.getElementById('template');
         var render = document.getElementById('render');
         var data = document.getElementById('data');
+        var btn = document.getElementById('btn');
         var dd = {
-            name: 'cloudcome',
-            love: 'FED',
+            name: 'Jane Yim',
+            love: '<b>FED</b>',
             books: ['JavaScript 语言精粹', '百年孤独']
         };
         var t = new Template().init(textarea.value);
+        t.addFilter('test1', function (val) {
+            return '【test1过滤' + val +'】'
+        });
+        t.addFilter('test2', function (val, bef, end) {
+            return '《test2过滤' + (bef ? bef : '默认before') + val+(end ? end : '默认end') +'》'
+        });
         data.innerHTML = JSON.stringify(dd);
-        render.innerHTML = t(dd);
+        render.innerHTML = t.render(dd).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        btn.onclick = function () {
+            var t = new Template().init(textarea.value);
+            render.innerHTML = t.render(dd).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
     });
     seajs.use('app');
 </script>
