@@ -150,7 +150,7 @@ define(function (require, exports, module) {
                 if (array.length === 1) {
                     output.push(_var + '+=' + the._lineWrap($0) + ';');
                     if(!(parseTimes%2)){
-                        throw new Error('find unclose tag');
+                        throw new Error('find unclose tag ' + options.openTag);
                     }
                 }
                 // name}}, I love
