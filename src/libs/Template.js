@@ -24,6 +24,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var regEach = /^each\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /<!--[\s\S]*?-->/g;
+    var regQuote = /['"]/;
+    var regIfElseIf = /^(else)?if/;
     var escapes = [
         {
             reg: /</g,
@@ -131,6 +133,10 @@ define(function (require, exports, module) {
             var fnStr = 'var ' + _var + '="";';
             var output = [];
             var parseTimes = 0;
+            // 是否进入忽略状态，1=进入，0=退出
+            var inIgnore = 0;
+            // 是否进入表达式
+            var inExp = 0;
 
             the._template = {
                 escape: _escape,
@@ -142,24 +148,50 @@ define(function (require, exports, module) {
                 var array = value.split(options.closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
-                var each;
                 parseTimes++;
 
                 // {{my name is
                 // 0 my name is
                 if (array.length === 1) {
-                    output.push(_var + '+=' + the._lineWrap($0) + ';');
-                    if(!(parseTimes%2)){
-                        throw new Error('find unclose tag ' + options.openTag);
+                    // 忽略开始
+                    if ($0.substr(-1) === '\\') {
+                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '{{') + ';');
+                        inIgnore = 1;
+                        parseTimes--;
+                    } else {
+                        if ((parseTimes % 2) === 0) {
+                            throw new Error('find unclose tag ' + options.openTag);
+                        }
+
+                        inIgnore = 0;
+                        inExp = 1;
+                        output.push(_var + '+=' + the._lineWrap($0) + ';');
                     }
                 }
                 // name}}, I love
                 // 0 name
                 // 1 , I love
-                else {
+                else if(array.length === 2) {
                     $0 = $0.trim();
-                    $1 = the._lineWrap($1);
+                    inExp = 0;
 
+                    if($0 === '\\'){
+                        return output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '}}' + $1) + ';');
+                    }
+
+                    // 忽略结束
+                    if (inIgnore) {
+                        output.push(_var + '+=' + the._lineWrap($0 + '}}' + $1) + ';');
+                        inIgnore = 0;
+                        return;
+                    }
+
+//                    // 表达式中发现引号 && 除了判断句
+//                    if(regQuote.test($0) && !regIfElseIf.test($0)){
+//                        throw new Error('unspport quotation marks in template expression');
+//                    }
+
+                    $1 = the._lineWrap($1);
                     // if abc
                     if ($0.indexOf('if ') === 0) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
@@ -190,6 +222,10 @@ define(function (require, exports, module) {
                         output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
                     }
                 }
+                // 3}}\}}\}}\}}...
+                else{
+                    inExp = 0;
+                }
             });
 
             fnStr += output.join('') + 'return ' + _var;
@@ -217,6 +253,7 @@ define(function (require, exports, module) {
                 escape: _escape,
                 filters: existFilters
             });
+            var ret;
 
             utilData.each(data, function (key) {
                 vars.push('var ' + key + '=' + _var + '["' + key + '"];');
@@ -236,7 +273,13 @@ define(function (require, exports, module) {
                 };
             }
 
-            return fn.call(self, data);
+            try {
+                ret = fn.call(self, data);
+            } catch (err) {
+                ret = err.message;
+            }
+
+            return String(ret);
         },
 
 
@@ -299,9 +342,9 @@ define(function (require, exports, module) {
                 throw new Error('parse error ' + str);
             }
 
-            ret = (matches[1] === '=' ? 'this.escape(' : '') +
+            ret = (matches[1] !== '=' ? 'this.escape(' : '') +
                 matches[2] +
-                (matches[1] === '=' ? ')' : '');
+                (matches[1] !== '=' ? ')' : '');
 
             if (!matches[3]) {
                 return ret;
@@ -371,9 +414,10 @@ define(function (require, exports, module) {
 
     /**
      * 模板引擎<br>
+     * <b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误</b><br>
      * 1. 编码输出变量<br>
      * {{data.name}}<br>
-     * 2. 取消编码输出变量
+     * 2. 取消编码输出变量<br>
      * {{=data.name}}<br>
      * 3. 判断语句（<code>if</code>）<br>
      * {{if data.name1}}<br>
@@ -386,6 +430,7 @@ define(function (require, exports, module) {
      * {{each list as val}}<br>
      * {{/each}}<br>
      * 5. 过滤（<code>|</code>）<br>
+     * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>
      * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>
      *
      * @param {Object} [options] 配置

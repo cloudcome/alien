@@ -5,7 +5,6 @@
  */
 
 
-
 define(function (require, exports, module) {
     /**
      * @module ui/Banner
@@ -53,7 +52,10 @@ define(function (require, exports, module) {
         navText: ''
     };
     var Banner = klass.create({
-        STATIC: {
+        STATIC: /** @lends Banner. */{
+            /**
+             * @static Banner.defaults
+             */
             defaults: defaults
         },
 
@@ -512,6 +514,7 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
 
+
     /**
      * 构建一个 banner，标准的 DOM 结构为：<br>
      * <code>ul#banner1>li*N</code>
@@ -528,6 +531,8 @@ define(function (require, exports, module) {
      * @param {String} [options.navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
      * @param {String} [options.navText=""] banner 导航的是否输出导航数字，内置有"number"
      * @constructor
+     *
+     * @emits open
      *
      */
     module.exports = Banner;

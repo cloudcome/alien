@@ -45,7 +45,7 @@
 <li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="Template.html">libs/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
-<li><a href="Banner.html">ui/Banner</a></li>
+<li><a href="Banner_.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
@@ -124,6 +124,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var regEach = /^each\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /&lt;!--[\s\S]*?-->/g;
+    var regQuote = /['"]/;
+    var regIfElseIf = /^(else)?if/;
     var escapes = [
         {
             reg: /&lt;/g,
@@ -151,9 +153,65 @@ define(function (require, exports, module) {
         closeTag: '}}',
         compress: !0
     };
+    var filters = {};
     var Template = klass.create({
         STATIC: {
-            defaults: defaults
+            /**
+             * 默认配置
+             * @type {Object}
+             * @static
+             */
+            defaults: defaults,
+
+
+            /**
+             * 静态过滤方法
+             * @type {Object}
+             * @static
+             */
+            filters: filters,
+
+
+            /**
+             * 添加过滤方法
+             * @param {String} name 过滤方法名称
+             * @param {Function} callback 方法
+             * @param {Boolean} [isOverride=false] 是否强制覆盖，默认 false
+             * @static
+             */
+            addFilter: function (name, callback, isOverride) {
+                if (utilData.type(name) !== 'string') {
+                    throw new Error('filter name must be a string');
+                }
+
+                // 未设置覆盖 &amp;&amp; 已经覆盖
+                if (!isOverride &amp;&amp; filters[name]) {
+                    throw new Error('override a exist filter');
+                }
+
+                if (utilData.type(callback) !== 'function') {
+                    throw new Error('filter callback must be a function');
+                }
+
+                filters[name] = callback;
+            },
+
+
+            /**
+             * 获取过滤方法
+             * @param {String} [name] 获取过滤方法的名称，为空表示获取全部过滤方法
+             * @returns {Function|Object} 放回过滤方法或过滤方法的集合
+             * @static
+             */
+            getFilter: function (name) {
+                if (!name) {
+                    return filters;
+                }
+
+                if (utilData.type(name) === 'string') {
+                    return filters[name];
+                }
+            }
         },
         constructor: function (options) {
             this._options = utilData.extend(!0, {}, defaults, options);
@@ -174,7 +232,11 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateOutput_' + Date.now();
             var fnStr = 'var ' + _var + '="";';
             var output = [];
-            var inEach;
+            var parseTimes = 0;
+            // 是否进入忽略状态，1=进入，0=退出
+            var inIgnore = 0;
+            // 是否进入表达式
+            var inExp = 0;
 
             the._template = {
                 escape: _escape,
@@ -186,21 +248,50 @@ define(function (require, exports, module) {
                 var array = value.split(options.closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
-                var each;
+                parseTimes++;
 
-
-                // my name is
+                // {{my name is
                 // 0 my name is
                 if (array.length === 1) {
-                    output.push(_var + '+=' + the._lineWrap($0) + ';');
+                    // 忽略开始
+                    if ($0.substr(-1) === '\\') {
+                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '{{') + ';');
+                        inIgnore = 1;
+                        parseTimes--;
+                    } else {
+                        if ((parseTimes % 2) === 0) {
+                            throw new Error('find unclose tag ' + options.openTag);
+                        }
+
+                        inIgnore = 0;
+                        inExp = 1;
+                        output.push(_var + '+=' + the._lineWrap($0) + ';');
+                    }
                 }
                 // name}}, I love
                 // 0 name
                 // 1 , I love
-                else {
+                else if(array.length === 2) {
                     $0 = $0.trim();
-                    $1 = the._lineWrap($1);
+                    inExp = 0;
 
+                    if($0 === '\\'){
+                        return output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '}}' + $1) + ';');
+                    }
+
+                    // 忽略结束
+                    if (inIgnore) {
+                        output.push(_var + '+=' + the._lineWrap($0 + '}}' + $1) + ';');
+                        inIgnore = 0;
+                        return;
+                    }
+
+//                    // 表达式中发现引号 &amp;&amp; 除了判断句
+//                    if(regQuote.test($0) &amp;&amp; !regIfElseIf.test($0)){
+//                        throw new Error('unspport quotation marks in template expression');
+//                    }
+
+                    $1 = the._lineWrap($1);
                     // if abc
                     if ($0.indexOf('if ') === 0) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
@@ -221,17 +312,19 @@ define(function (require, exports, module) {
                     // each list as val
                     else if ($0.indexOf('each ') === 0) {
                         output.push(the._parseEach($0) + _var + '+=' + $1 + ';');
-                        inEach = !0;
                     }
                     // /each
                     else if ($0.indexOf('/each') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
-                        inEach = !1;
                     }
                     // var
                     else {
                         output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
                     }
+                }
+                // 3}}\}}\}}\}}...
+                else{
+                    inExp = 0;
                 }
             });
 
@@ -255,13 +348,19 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
+            var existFilters = utilData.extend(!0, {}, filters, the._template.filters);
+            var self = utilData.extend(!0, {}, {
+                escape: _escape,
+                filters: existFilters
+            });
+            var ret;
 
             utilData.each(data, function (key) {
                 vars.push('var ' + key + '=' + _var + '["' + key + '"];');
             });
 
             utilData.each(the._useFilters, function (filter) {
-                if (!the._template.filters[filter]) {
+                if (!existFilters[filter]) {
                     throw new Error('can not found filter ' + filter);
                 }
             });
@@ -274,14 +373,21 @@ define(function (require, exports, module) {
                 };
             }
 
-            return fn.call(the._template, data);
+            try {
+                ret = fn.call(self, data);
+            } catch (err) {
+                ret = err.message;
+            }
+
+            return String(ret);
         },
 
 
         /**
          * 添加过滤函数，默认无任何过滤函数
          * @param {String} name 过滤函数名称
-         * @param {Function} fn 过滤方法
+         * @param {Function} callback 过滤方法
+         * @param {Boolean} [isOverride=false] 覆盖实例的过滤方法，默认为false
          *
          * @example
          * tp.addFilter('test', function(val, arg1, arg2){
@@ -290,9 +396,23 @@ define(function (require, exports, module) {
          *     // 后续参数自定义个数
          * });
          */
-        addFilter: function (name, fn) {
-            this._template.filters[name] = fn;
-            return this;
+        addFilter: function (name, callback, isOverride) {
+            var instanceFilters = this._template.filters;
+
+            if (utilData.type(name) !== 'string') {
+                throw new Error('filter name must be a string');
+            }
+
+            // 未设置覆盖 &amp;&amp; 已经覆盖
+            if (!isOverride &amp;&amp; instanceFilters[name]) {
+                throw new Error('override a exist instance filter');
+            }
+
+            if (utilData.type(callback) !== 'function') {
+                throw new Error('filter callback must be a function');
+            }
+
+            instanceFilters[name] = callback;
         },
 
         /**
@@ -309,7 +429,7 @@ define(function (require, exports, module) {
          */
         getFilter: function (name) {
             return utilData.type(name) === 'string' ?
-                this._template.filters[name]:
+                this._template.filters[name] :
                 this._template.filters;
         },
         _parseVar: function (str) {
@@ -322,9 +442,9 @@ define(function (require, exports, module) {
                 throw new Error('parse error ' + str);
             }
 
-            ret = (matches[1] === '=' ? 'this.escape(' : '') +
+            ret = (matches[1] !== '=' ? 'this.escape(' : '') +
                 matches[2] +
-                (matches[1] === '=' ? ')' : '');
+                (matches[1] !== '=' ? ')' : '');
 
             if (!matches[3]) {
                 return ret;
@@ -394,9 +514,10 @@ define(function (require, exports, module) {
 
     /**
      * 模板引擎&lt;br>
+     * &lt;b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误&lt;/b>&lt;br>
      * 1. 编码输出变量&lt;br>
      * {{data.name}}&lt;br>
-     * 2. 取消编码输出变量
+     * 2. 取消编码输出变量&lt;br>
      * {{=data.name}}&lt;br>
      * 3. 判断语句（&lt;code>if&lt;/code>）&lt;br>
      * {{if data.name1}}&lt;br>
@@ -409,6 +530,7 @@ define(function (require, exports, module) {
      * {{each list as val}}&lt;br>
      * {{/each}}&lt;br>
      * 5. 过滤（&lt;code>|&lt;/code>）&lt;br>
+     * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter&lt;br>
      * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}&lt;br>
      *
      * @param {Object} [options] 配置

@@ -5,7 +5,6 @@
     "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
     "script": {
         "jsdoc-dft": "node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/dft/ -d ./docs/",
-        "jsdoc-bs2": "node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs2/ -d ./docs/",
         "jsdoc-bs3": "node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/"
     },
     "preferGlobal": false,

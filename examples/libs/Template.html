@@ -47,7 +47,7 @@
 <body>
 
 <textarea id="template">
-    <div>my name is {{name}}, I love {{love}}.</div>
+    <div>my name is {{name}}, I love {{=love}}.</div>
 
     <p>
         {{if name === "Jane Yim"}}
@@ -101,5 +101,6 @@
     });
     seajs.use('app');
 </script>
+
 </body>
 </html>

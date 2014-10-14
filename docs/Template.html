@@ -45,7 +45,7 @@
 <li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="Template.html">libs/Template</a></li>
 <li><a href="upload.html">parent/upload</a></li>
-<li><a href="Banner.html">ui/Banner</a></li>
+<li><a href="Banner_.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
 <li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
@@ -166,9 +166,10 @@
         
         <div class="description lead">
             <blockquote>模板引擎<br>
+<b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误</b><br>
 1. 编码输出变量<br>
 {{data.name}}<br>
-2. 取消编码输出变量
+2. 取消编码输出变量<br>
 {{=data.name}}<br>
 3. 判断语句（<code>if</code>）<br>
 {{if data.name1}}<br>
@@ -181,6 +182,7 @@
 {{each list as val}}<br>
 {{/each}}<br>
 5. 过滤（<code>|</code>）<br>
+第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>
 {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>
                 
             </blockquote>
@@ -429,7 +431,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4760707397945225023203527787700295" data-toggle="tab">Source</a>
+                <a href="#tab-meta-889767558779567507082054507918656" data-toggle="tab">Source</a>
             </li>
 
         
@@ -450,8 +452,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4760707397945225023203527787700295">
-                <p><a href="Template.js.html#line320">libs/Template.js:320</a></p>
+            <div class="tab-pane active" id="tab-meta-889767558779567507082054507918656">
+                <p><a href="Template.js.html#line442">libs/Template.js:442</a></p>
             </div>
 
         
@@ -499,7 +501,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4570973000954836622794403927400708" data-toggle="tab">Source</a>
+                <a href="#tab-meta-130172515520825984569185732398182" data-toggle="tab">Source</a>
             </li>
 
         
@@ -520,7 +522,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4570973000954836622794403927400708">
+            <div class="tab-pane active" id="tab-meta-130172515520825984569185732398182">
                 <p><a href="Template.js.html#line9">libs/Template.js:9</a></p>
             </div>
 
@@ -563,7 +565,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id="addFilter">
-        <span class="type-signature">&lt;inner> </span>addFilter<span class="signature">(name, fn)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;inner> </span>addFilter<span class="signature">(name, callback, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -596,7 +598,11 @@
 		<th class="th-type">Type</th>
 
 		
+		<th class="th-arg">Argument</th>
+		
 
+		
+		<th class="th-dft">Default</th>
 		
 
 		<th class="last">Description</th>
@@ -622,7 +628,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">过滤函数名称</td>
@@ -632,7 +650,7 @@
 
         <tr>
             
-                <td class="name"><code>fn</code></td>
+                <td class="name"><code>callback</code></td>
             
 
             <td class="type">
@@ -646,10 +664,62 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">过滤方法</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isOverride</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">覆盖实例的过滤方法，默认为false</td>
         </tr>
 
 	
@@ -691,7 +761,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-5011192476376891790383183863014" data-toggle="tab">Source</a>
+                <a href="#tab-meta-95744884223677225285581641364843" data-toggle="tab">Source</a>
             </li>
 
         
@@ -712,8 +782,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-5011192476376891790383183863014">
-                <p><a href="Template.js.html#line193">libs/Template.js:193</a></p>
+            <div class="tab-pane active" id="tab-meta-95744884223677225285581641364843">
+                <p><a href="Template.js.html#line299">libs/Template.js:299</a></p>
             </div>
 
         
@@ -876,7 +946,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-0014718549791723494995571789331734" data-toggle="tab">Source</a>
+                <a href="#tab-meta-807007224531844306658061384223402" data-toggle="tab">Source</a>
             </li>
 
         
@@ -897,8 +967,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-0014718549791723494995571789331734">
-                <p><a href="Template.js.html#line210">libs/Template.js:210</a></p>
+            <div class="tab-pane active" id="tab-meta-807007224531844306658061384223402">
+                <p><a href="Template.js.html#line330">libs/Template.js:330</a></p>
             </div>
 
         
@@ -1042,7 +1112,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-3280862187966704404448986961506307" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5485067642293877025302816182375" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1063,8 +1133,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-3280862187966704404448986961506307">
-                <p><a href="Template.js.html#line71">libs/Template.js:71</a></p>
+            <div class="tab-pane active" id="tab-meta-5485067642293877025302816182375">
+                <p><a href="Template.js.html#line129">libs/Template.js:129</a></p>
             </div>
 
         
@@ -1208,7 +1278,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-375080948928371071133186467923224" data-toggle="tab">Source</a>
+                <a href="#tab-meta-56373327807523317278458876535296" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1229,8 +1299,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-375080948928371071133186467923224">
-                <p><a href="Template.js.html#line153">libs/Template.js:153</a></p>
+            <div class="tab-pane active" id="tab-meta-56373327807523317278458876535296">
+                <p><a href="Template.js.html#line246">libs/Template.js:246</a></p>
             </div>
 
         
