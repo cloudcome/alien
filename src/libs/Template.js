@@ -51,9 +51,65 @@ define(function (require, exports, module) {
         closeTag: '}}',
         compress: !0
     };
+    var filters = {};
     var Template = klass.create({
         STATIC: {
-            defaults: defaults
+            /**
+             * 默认配置
+             * @type {Object}
+             * @static
+             */
+            defaults: defaults,
+
+
+            /**
+             * 静态过滤方法
+             * @type {Object}
+             * @static
+             */
+            filters: filters,
+
+
+            /**
+             * 添加过滤方法
+             * @param {String} name 过滤方法名称
+             * @param {Function} callback 方法
+             * @param {Boolean} [isOverride=false] 是否强制覆盖，默认 false
+             * @static
+             */
+            addFilter: function (name, callback, isOverride) {
+                if (utilData.type(name) !== 'string') {
+                    throw new Error('filter name must be a string');
+                }
+
+                // 未设置覆盖 && 已经覆盖
+                if (!isOverride && filters[name]) {
+                    throw new Error('override a exist filter');
+                }
+
+                if (utilData.type(callback) !== 'function') {
+                    throw new Error('filter callback must be a function');
+                }
+
+                filters[name] = callback;
+            },
+
+
+            /**
+             * 获取过滤方法
+             * @param {String} [name] 获取过滤方法的名称，为空表示获取全部过滤方法
+             * @returns {Function|Object} 放回过滤方法或过滤方法的集合
+             * @static
+             */
+            getFilter: function (name) {
+                if (!name) {
+                    return filters;
+                }
+
+                if (utilData.type(name) === 'string') {
+                    return filters[name];
+                }
+            }
         },
         constructor: function (options) {
             this._options = utilData.extend(!0, {}, defaults, options);
@@ -74,7 +130,7 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateOutput_' + Date.now();
             var fnStr = 'var ' + _var + '="";';
             var output = [];
-            var inEach;
+            var parseTimes = 0;
 
             the._template = {
                 escape: _escape,
@@ -87,12 +143,15 @@ define(function (require, exports, module) {
                 var $0 = array[0];
                 var $1 = array[1];
                 var each;
+                parseTimes++;
 
-
-                // my name is
+                // {{my name is
                 // 0 my name is
                 if (array.length === 1) {
                     output.push(_var + '+=' + the._lineWrap($0) + ';');
+                    if(!(parseTimes%2)){
+                        throw new Error('find unclose tag');
+                    }
                 }
                 // name}}, I love
                 // 0 name
@@ -121,12 +180,10 @@ define(function (require, exports, module) {
                     // each list as val
                     else if ($0.indexOf('each ') === 0) {
                         output.push(the._parseEach($0) + _var + '+=' + $1 + ';');
-                        inEach = !0;
                     }
                     // /each
                     else if ($0.indexOf('/each') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
-                        inEach = !1;
                     }
                     // var
                     else {
@@ -155,13 +212,18 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
+            var existFilters = utilData.extend(!0, {}, filters, the._template.filters);
+            var self = utilData.extend(!0, {}, {
+                escape: _escape,
+                filters: existFilters
+            });
 
             utilData.each(data, function (key) {
                 vars.push('var ' + key + '=' + _var + '["' + key + '"];');
             });
 
             utilData.each(the._useFilters, function (filter) {
-                if (!the._template.filters[filter]) {
+                if (!existFilters[filter]) {
                     throw new Error('can not found filter ' + filter);
                 }
             });
@@ -174,14 +236,15 @@ define(function (require, exports, module) {
                 };
             }
 
-            return fn.call(the._template, data);
+            return fn.call(self, data);
         },
 
 
         /**
          * 添加过滤函数，默认无任何过滤函数
          * @param {String} name 过滤函数名称
-         * @param {Function} fn 过滤方法
+         * @param {Function} callback 过滤方法
+         * @param {Boolean} [isOverride=false] 覆盖实例的过滤方法，默认为false
          *
          * @example
          * tp.addFilter('test', function(val, arg1, arg2){
@@ -190,9 +253,23 @@ define(function (require, exports, module) {
          *     // 后续参数自定义个数
          * });
          */
-        addFilter: function (name, fn) {
-            this._template.filters[name] = fn;
-            return this;
+        addFilter: function (name, callback, isOverride) {
+            var instanceFilters = this._template.filters;
+
+            if (utilData.type(name) !== 'string') {
+                throw new Error('filter name must be a string');
+            }
+
+            // 未设置覆盖 && 已经覆盖
+            if (!isOverride && instanceFilters[name]) {
+                throw new Error('override a exist instance filter');
+            }
+
+            if (utilData.type(callback) !== 'function') {
+                throw new Error('filter callback must be a function');
+            }
+
+            instanceFilters[name] = callback;
         },
 
         /**
@@ -209,7 +286,7 @@ define(function (require, exports, module) {
          */
         getFilter: function (name) {
             return utilData.type(name) === 'string' ?
-                this._template.filters[name]:
+                this._template.filters[name] :
                 this._template.filters;
         },
         _parseVar: function (str) {
