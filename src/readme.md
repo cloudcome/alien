@@ -1,15 +1,10 @@
 # 参考的脚本（库）有: 
+- https://github.com/madrobby/zepto
+- https://github.com/jquery/jquery
+- https://github.com/chenmnkken/easyjs
+- https://github.com/joyent/node/tree/master/lib
+- https://github.com/aui/artTemplate
 
-
-  https://github.com/madrobby/zepto
-
-  https://github.com/jquery/jquery
-
-  https://github.com/chenmnkken/easyjs
-
-  https://github.com/joyent/node/tree/master/lib
-
-  https://github.com/aui/artTemplate
 
 # 文档注释变量
 

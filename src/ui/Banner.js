@@ -1,9 +1,9 @@
-/*!
+/**
  * Banner.js
  * @author ydr.me
  * @create 2014-10-10 22:36
+ *
  */
-
 
 define(function (require, exports, module) {
     /**
@@ -16,9 +16,7 @@ define(function (require, exports, module) {
      * @requires util/data
      * @requires libs/Emitter
      */
-
     'use strict';
-
 
     var noop = function () {
         // ignore
@@ -51,10 +49,21 @@ define(function (require, exports, module) {
         // "number" ""
         navText: ''
     };
+
     var Banner = klass.create({
-        STATIC: /** @lends Banner. */{
+        STATIC:{
             /**
-             * @static Banner.defaults
+             * 默认配置
+             * @name defaults
+             * @property {Number} [width=700] banner 宽度，默认700
+             * @property {Number} [height=300] banner 高度，默认300
+             * @property {String} [item="li"] banner 项目，默认"li"
+             * @property {Number} [duration=456] banner 播放动画时间，默认456，单位毫秒
+             * @property {String} [easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
+             * @property {Number} [autoPlay=1] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
+             * @property {String} [addClass=""] banner 添加的 className
+             * @property {String} [navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
+             * @property {String} [navText=""] banner 导航的是否输出导航数字，内置有"number"
              */
             defaults: defaults
         },
@@ -69,6 +78,7 @@ define(function (require, exports, module) {
 
         /**
          * 初始化
+         * @public
          * @returns {Banner}
          */
         init: function () {
@@ -517,7 +527,7 @@ define(function (require, exports, module) {
 
     /**
      * 构建一个 banner，标准的 DOM 结构为：<br>
-     * <code>ul#banner1>li*N</code>
+     *     <code>ul#banner1>li*N</code>
      *
      * @param {HTMLElement|Node} ele 元素
      * @param {Object} [options] 配置
@@ -531,9 +541,6 @@ define(function (require, exports, module) {
      * @param {String} [options.navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
      * @param {String} [options.navText=""] banner 导航的是否输出导航数字，内置有"number"
      * @constructor
-     *
-     * @emits open
-     *
      */
     module.exports = Banner;
 });

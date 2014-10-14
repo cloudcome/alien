@@ -18,7 +18,7 @@ name = name.replace(/['"']/g, '');
 ?>
 <section class="docs-method <?js= wrapClass.join(' ') ?>">
     <dt>
-    <h4 class="name alert alert-warning" id="<?js= id.replace(':', '-') ?>">
+    <h4 class="name alert alert-warning" id="<?js= id ?>">
         <?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? data.signature : ' : event') ?>
     </h4>
 
@@ -66,7 +66,7 @@ name = name.replace(/['"']/g, '');
         <?js } ?>
 
         <?js if (data.params && params.length) { ?>
-            <h5>Parameters:</h5>
+            <h5>Parameters/Arguments:</h5>
             <?js= this.partial('params.tmpl', params) ?>
         <?js } ?>
 
