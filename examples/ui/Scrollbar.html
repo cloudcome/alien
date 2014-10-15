@@ -58,7 +58,7 @@
     define('app', function (require) {
         var Scrollbar = require('/src/ui/Scrollbar.js');
         var demo = document.getElementById('demo');
-        var sl1 = new Scrollbar(demo).init();
+        var sl1 = new Scrollbar(demo);
 
         document.getElementById('scrollTop').onclick = function(){
             sl1.scrollTop();

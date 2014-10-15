@@ -98,13 +98,13 @@
                 style: 'danger',
                 content: '数一下这里一共出现了几个按钮？！',
                 buttons: ['一共1个按钮', '一共2个按钮', '一共3个按钮', '一共4个按钮', '算了，懒得数了']
-            }).init().on('close', function (index) {
+            }).on('close', function (index) {
                         new Msg({
                             style: 'danger',
                             title: null,
                             content: this.getOptions('buttons')[index],
                             timeout: 1000
-                        }).init();
+                        });
                     });
         }
     });

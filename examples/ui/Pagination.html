@@ -37,7 +37,7 @@
             count: count,
             page: current
         };
-        var pg1 = new Pagination(ret, settings).init();
+        var pg1 = new Pagination(ret, settings);
 
         pg1.on('change', function (page) {
             this.render({

@@ -32,18 +32,15 @@
 
         emitter.on('hi', function (data) {
             alert('hi ' + (data || 'who??'));
-        }).on('hey', function (data1, data2) {
-            alert('hey ' + data1 + ', ' + data2);
+            return !1;
         });
 
         setTimeout(function () {
-            emitter.emit('hi');
-            emitter.un('hi hey');
+            console.log(emitter.emit('hi'));
         }, 1000);
 
         setTimeout(function () {
-            emitter.emit('hi', '云淡然');
-            emitter.emit('hey', '云淡然', '鸣雪然');
+            console.log(emitter.emit('hi', '云淡然'));
         }, 2000);
     });
     seajs.use('app');

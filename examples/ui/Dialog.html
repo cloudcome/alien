@@ -65,17 +65,17 @@
         var demo2 = document.getElementById('demo2');
         var demo3 = document.getElementById('demo3');
 
-        var d1 = new Dialog(demo1).init();
+        var d1 = new Dialog(demo1);
         var d2 = new Dialog(demo2,{
             width: 350,
             height: 400,
             top: 0,
             title: null,
             wrap: false
-        }).init();
+        });
         var d3 = new Dialog(demo3, {
             remote: 'http://wap.baidu.com/'
-        }).init();
+        });
 
         document.getElementById('open1').onclick = function () {
             d1.open();

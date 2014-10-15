@@ -64,10 +64,17 @@ define(function (require, exports, module) {
         constructor: function (ele, options) {
             var the = this;
 
-            Emitter.apply(the, arguments);
 
-            the._ele = ele;
+            the._ele = selector.query(ele);
+
+            if(!the.ele){
+                throw new Error('instance element is empty');
+            }
+
+            the.ele = the.ele[0];
+            Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
         /**

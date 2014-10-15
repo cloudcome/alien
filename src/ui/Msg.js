@@ -49,17 +49,34 @@ define(function (require, exports, module) {
     var mouseevent = {};
     var Msg = klass.create({
         STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [width=300] {Number|String} 消息框宽度
+             * @property [height="auto"] {Number|String} 消息框高度
+             * @property [left="center"] {Number|String} 消息框左距离，默认水平居中
+             * @property [top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
+             * @property [title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
+             * @property [content="Hello world!"] {String} 消息框内容
+             * @property [buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
+             * @property [style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
+             * @property [canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
+             * @property [timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
+             */
             defaults: defaults
         },
 
 
         constructor: function (options) {
-            Emitter.apply(this, arguments);
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
-        init: function () {
+        _init: function () {
             index++;
 
             var the = this;

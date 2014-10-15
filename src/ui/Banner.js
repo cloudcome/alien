@@ -70,9 +70,19 @@ define(function (require, exports, module) {
 
 
         constructor: function (ele, options) {
-            Emitter.apply(this, arguments);
-            this._ele = ele;
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+
+            the._ele = selector.query(ele);
+
+            if(!the.ele){
+                throw new Error('instance element is empty');
+            }
+
+            the.ele = the.ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
@@ -80,8 +90,9 @@ define(function (require, exports, module) {
          * 初始化
          * @public
          * @returns {Banner}
+         * @private
          */
-        init: function () {
+        _init: function () {
             var the = this;
             var options = the._options;
 

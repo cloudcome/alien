@@ -65,13 +65,40 @@ define(function (require, exports, module) {
     var dialogsMap = {};
     var Dialog = klass.create({
         STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [width=500] {Number|String} 对话框宽度
+             * @property [height="auto"] {Number|String} 对话框高度
+             * @property [left="center"] {Number|String} 对话框左距离，默认水平居中
+             * @property [top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
+             * @property [title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
+             * @property [canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
+             * @property [duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
+             * @property [easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
+             * @property [remote=null] {null|String} 对话框打开远程地址，优先级2
+             * @property [remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
+             * @property [content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
+             * @property [isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
+
+             */
             defaults: defaults
         },
 
         constructor: function (ele, options) {
-            Emitter.apply(this, arguments);
-            this._ele = ele;
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+
+            the._ele = selector.query(ele);
+
+            if(!the.ele){
+                throw new Error('instance element is empty');
+            }
+
+            the.ele = the.ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
@@ -80,7 +107,7 @@ define(function (require, exports, module) {
          * @returns {Dialog}
          * @private
          */
-        init: function () {
+        _init: function () {
             index++;
 
             var the = this;

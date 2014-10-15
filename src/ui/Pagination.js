@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * @requires util/data
      * @requires libs/Pagination
      * @requires libs/Emitter
+     * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/touch
@@ -22,6 +23,7 @@ define(function (require, exports, module) {
     var data = require('../util/data.js');
     var List = require('../libs/Pagination.js');
     var Emitter = require('../libs/Emitter.js');
+    var selector = require('../core/dom/selector.js');
     var modification = require('../core/dom/modification.js');
     var attribute = require('../core/dom/attribute.js');
     var event = require('../core/event/touch.js');
@@ -42,22 +44,43 @@ define(function (require, exports, module) {
     var defaults = {
         count: 1,
         page: 1,
-        size: 3,
-        onchange: noop
+        size: 3
     };
     var Pagination = klass.create({
+        STATIC:{
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [count=1] {Number} 分页总数
+             * @property [page=1] {Number} 当前分数
+             * @property [size=3] {Number} 分页可见范围
+             */
+            defaults: defaults
+        },
+
+
         constructor: function (ele, options) {
-            Emitter.apply(this, arguments);
-            this._ele = ele;
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+
+            the._ele = selector.query(ele);
+
+            if(!the.ele){
+                throw new Error('instance element is empty');
+            }
+
+            the.ele = the.ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
         /**
          * 初始化
-         * @returns {Pagination}
+         * @private
          */
-        init: function () {
+        _init: function () {
             var the = this;
 
             the._on();
@@ -160,5 +183,15 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
 
+
+    /**
+     * 实例化一个分页控制器
+     * @param ele {Element} 元素，生成的分页将在此渲染
+     * @param [options] {Object} 配置
+     * @param [options.count=1] {Number} 分页总数
+     * @param [options.page=1] {Number} 当前分数
+     * @param [options.size=3] {Number} 分页可见范围
+     * @constructor
+     */
     module.exports = Pagination;
 });

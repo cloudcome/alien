@@ -173,6 +173,7 @@ define(function (require, exports, module) {
             Emitter.apply(this, arguments);
             this._ele = ele;
             this._options = data.extend(!0, {}, defaults, options);
+            this._init();
         },
 
 
@@ -180,8 +181,9 @@ define(function (require, exports, module) {
          * 初始化
          * @public
          * @returns {Banner}
+         * @private
          */
-        init: function () {
+        _init: function () {
             var the = this;
             var options = the._options;
 

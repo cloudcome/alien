@@ -62,22 +62,56 @@ define(function (require, exports, module) {
     };
     var Drag = klass.create({
         STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property {null|Object|String} [handle] 鼠标操作区域选择器，默认为 null，即整个元素
+             * @property {String} [axis] 拖拽轴向，x：水平，y：垂直，xy：所有，默认为"xy"
+             * @property {null|Object} [min] 拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document
+             * @property {null|Object} [max] 拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document
+             * @property {Number} [zIndex] 拖拽时的层级值，默认为99999
+             * @property {Boolean} [preventDefault] 是否阻止默认拖拽行为，默认 false
+             * @property {Number} [duration=300] 运动到拖拽位置时间，默认为300ms
+             * @property {String} [easing="in-out"] 运动到拖拽位置缓冲效果
+             */
             defaults: defaults
         },
 
 
         constructor: function (ele, options) {
-            ele = selector.query(ele);
+            var the = this;
 
-            if(!ele.length){
-                throw new Error('element is not exist');
+
+            the._ele = selector.query(ele);
+
+            if(!the.ele){
+                throw new Error('instance element is empty');
             }
 
-            Emitter.apply(this, arguments);
-            this._ele = ele[0];
-            this._options = data.extend(!0, {}, defaults, options);
+            the.ele = the.ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
+
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+            var ele = the._ele;
+            var options = the._options;
+            var handle = options.handle ? selector.query(options.handle, ele) : ele;
+
+            the._handle = handle.length ? handle[0] : ele;
+            event.on(the._handle, start, the._start.bind(the));
+            event.on(document, move, the._move.bind(the));
+            event.on(document, end, the._end.bind(the));
+
+            return the;
+        },
 
         /**
          * 销毁拖拽
@@ -91,22 +125,7 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 初始化
-         */
-        init: function () {
-            var the = this;
-            var ele = the._ele;
-            var options = the._options;
-            var handle = options.handle ? selector.query(options.handle, ele) : ele;
 
-            the._handle = handle.length ? handle[0] : ele;
-            event.on(the._handle, start, the._start.bind(the));
-            event.on(document, move, the._move.bind(the));
-            event.on(document, end, the._end.bind(the));
-
-            return the;
-        },
 
 
         /**

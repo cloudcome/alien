@@ -138,7 +138,6 @@ define(function (require, exports, module) {
 
     /**
      * @constructor
-     * @type {Emitter}
      */
     module.exports = Emitter;
 });
