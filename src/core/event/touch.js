@@ -84,7 +84,6 @@ define(function (require, exports, module) {
             t0 = Date.now();
 
             timeid = setTimeout(function () {
-//                _mergeEvent(options.taphold.event, eve);
                 event.extend(options.taphold.event, firstTouch);
                 event.dispatch(target, options.taphold.event);
             }, options.taphold.timeout);

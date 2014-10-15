@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @author ydr.me
      * @create 2014-09-27 15:51
      *
+     * @deprecated 准备废弃，因为已经有了事件支持了
      * @module ui/Drag
      * @requires util/class
      * @requires util/data
@@ -28,6 +29,7 @@ define(function (require, exports, module) {
     var data = require('../util/data.js');
     var Emitter = require('../libs/Emitter.js');
     var event = require('../core/event/touch.js');
+    var drag = require('../core/event/drag.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
@@ -37,6 +39,7 @@ define(function (require, exports, module) {
     var end = 'mouseup touchend touchcancel';
     var dragClass = 'alien-ui-drag';
     var body = document.body;
+    var index = 1;
     var defaults = {
         // 鼠标操作区域选择器，默认为 null，即整个元素
         // 参数为选择器字符串
@@ -51,14 +54,7 @@ define(function (require, exports, module) {
 
         // 拖拽对象的最大位置，格式为{left: 1000, top: 1000}
         // 参考于 document
-        max: null,
-
-        // 是否阻止默认拖拽效果
-        preventDefault: !1,
-
-        duration: 300,
-
-        easing: 'in-out'
+        max: null
     };
     var Drag = klass.create({
         STATIC: {
@@ -71,8 +67,6 @@ define(function (require, exports, module) {
              * @property {null|Object} [max] 拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document
              * @property {Number} [zIndex] 拖拽时的层级值，默认为99999
              * @property {Boolean} [preventDefault] 是否阻止默认拖拽行为，默认 false
-             * @property {Number} [duration=300] 运动到拖拽位置时间，默认为300ms
-             * @property {String} [easing="in-out"] 运动到拖拽位置缓冲效果
              */
             defaults: defaults
         },
@@ -81,10 +75,9 @@ define(function (require, exports, module) {
         constructor: function (ele, options) {
             var the = this;
 
-
             the._ele = selector.query(ele);
 
-            if(!the._ele.length){
+            if (!the._ele.length) {
                 throw new Error('instance element is empty');
             }
 
@@ -105,11 +98,18 @@ define(function (require, exports, module) {
             var options = the._options;
             var handle = options.handle ? selector.query(options.handle, ele) : ele;
 
-            the._handle = handle.length ? handle[0] : ele;
-            event.on(the._handle, start, the._start.bind(the));
-            event.on(document, move, the._move.bind(the));
-            event.on(document, end, the._end.bind(the));
+            if (!ele.id) {
+                ele.id = 'alien-ui-drag-' + index;
+                index++;
+            }
 
+            the._handle = handle.length ? handle[0] : ele;
+            attribute.attr(the._handle, 'draggablefor', ele.id);
+
+//            event.on(the._handle, start, the._start.bind(the));
+//            event.on(ele, 'drag', the._move.bind(the));
+//            event.on(document, end, the._end.bind(the));
+//
             return the;
         },
 
@@ -123,9 +123,6 @@ define(function (require, exports, module) {
             event.un(document, move, the._move);
             event.un(document, end, the._end);
         },
-
-
-
 
 
         /**
@@ -158,12 +155,12 @@ define(function (require, exports, module) {
             var type = eve.type;
             var options = the._options;
 
-            if (!the._is && (type === 'mousedown' && eve.which === 1 || type === 'taphold')) {
+            if (!the._is && (type === 'mousedown' && eve.button === 0 || type === 'taphold')) {
                 the._is = !0;
 
-                if(the.emit('beforedragstart', eve) === false){
+                if (the.emit('beforedragstart', eve) === false) {
                     the._preventDefault = !0;
-                }else{
+                } else {
                     the._preventDefault = !1;
                     eve.preventDefault();
                     the._pageX = eve.pageX;
@@ -171,7 +168,7 @@ define(function (require, exports, module) {
                     the._left = attribute.left(the._ele);
                     the._top = attribute.top(the._ele);
 
-                    if(attribute.css(the._ele, 'position') === 'static'){
+                    if (attribute.css(the._ele, 'position') === 'static') {
                         attribute.css(the._ele, 'position', 'absolute');
                     }
 
@@ -200,47 +197,39 @@ define(function (require, exports, module) {
             var x;
             var y;
 
-            if (the._is) {
-                if (eve.type === 'mousemove' && eve.which !== 1) {
-                    event.dispatch(the._ele, 'mouseup');
-                } else {
-                    the.emit('beforedrag', eve);
+            the.emit('beforedrag', eve);
 
-                    if (!the._preventDefault) {
-                        if (options.axis.indexOf('x') > -1) {
-                            x = the._left + eve.pageX - the._pageX;
+            if (!the._preventDefault) {
+                if (options.axis.indexOf('x') > -1) {
+                    x = the._left + eve.pageX - the._pageX;
 
-                            if (options.min && options.min.x !== udf && x < options.min.x) {
-                                x = options.min.x;
-                            }
-
-                            if (options.max && options.max.x !== udf && x > options.max.x) {
-                                x = options.max.x;
-                            }
-
-                            attribute.left(the._clone, x);
-                        }
-
-                        if (options.axis.indexOf('y') > -1) {
-                            y = the._top + eve.pageY - the._pageY;
-
-                            if (options.min && options.min.y !== udf && y < options.min.y) {
-                                y = options.min.y;
-                            }
-
-                            if (options.max && options.max.y !== udf && y > options.max.y) {
-                                y = options.max.y;
-                            }
-
-                            attribute.top(the._clone, y);
-                        }
+                    if (options.min && options.min.x !== udf && x < options.min.x) {
+                        x = options.min.x;
                     }
 
-                    the.emit('drag', eve);
+                    if (options.max && options.max.x !== udf && x > options.max.x) {
+                        x = options.max.x;
+                    }
 
-                    eve.preventDefault();
+                    attribute.left(the._clone, x);
+                }
+
+                if (options.axis.indexOf('y') > -1) {
+                    y = the._top + eve.pageY - the._pageY;
+
+                    if (options.min && options.min.y !== udf && y < options.min.y) {
+                        y = options.min.y;
+                    }
+
+                    if (options.max && options.max.y !== udf && y > options.max.y) {
+                        y = options.max.y;
+                    }
+
+                    attribute.top(the._clone, y);
                 }
             }
+
+            the.emit('drag', eve);
         },
 
 
@@ -259,7 +248,7 @@ define(function (require, exports, module) {
                 the._is = !1;
                 the.emit('beforedragend', eve);
 
-                if(!the._preventDefault){
+                if (!the._preventDefault) {
                     from = {
                         left: data.parseFloat(attribute.css(the._ele, 'left')),
                         top: data.parseFloat(attribute.css(the._ele, 'top'))

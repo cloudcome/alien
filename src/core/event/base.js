@@ -42,7 +42,28 @@ define(function (require, exports, module) {
         // 事情细节
         detail: {}
     };
-    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
+
+    /**
+     * @link http://www.w3school.com.cn/jsref/dom_obj_event.asp
+     * - altKey	        返回当事件被触发时，"ALT" 是否被按下。
+     * - button	        返回当事件被触发时，哪个鼠标按钮被点击。
+     * - clientX	    返回当事件被触发时，鼠标指针的水平坐标。
+     * - clientY	    返回当事件被触发时，鼠标指针的垂直坐标。
+     * - ctrlKey	    返回当事件被触发时，"CTRL" 键是否被按下。
+     * - metaKey	    返回当事件被触发时，"meta" 键是否被按下。
+     * - relatedTarget	返回与事件的目标节点相关的节点。
+     * - screenX	    返回当某个事件被触发时，鼠标指针的水平坐标。
+     * - screenY	    返回当某个事件被触发时，鼠标指针的垂直坐标。
+     * - shiftKey	    返回当事件被触发时，"SHIFT" 键是否被按下。
+     * - bubbles	    返回布尔值，指示事件是否是起泡事件类型。
+     * - cancelable	    返回布尔值，指示事件是否可拥可取消的默认动作。
+     * - currentTarget	返回其事件监听器触发该事件的元素。
+     * - eventPhase	    返回事件传播的当前阶段。0=结束或未开始，1=捕获，2=到底，3=冒泡
+     * - target	        返回触发此事件的元素（事件的目标节点）。
+     * - timeStamp	    返回事件生成的日期和时间。
+     * - type	        返回当前 Event 对象表示的事件的名称。
+     */
+    var mustEventProperties = 'altKey button which clientX clientY ctrlKey metaKey relatedTarget screenX screenY shiftKey bubbles cancelable currentTaget eventPhase target timeStamp'.split(' ');
     var eventTypeArr = ['Events', 'HTMLEvents', 'MouseEvents', 'UIEvents', 'MutationEvents'];
     var eventInitArr = ['', '', 'Mouse', 'UI', 'Mutation'];
 
@@ -59,6 +80,7 @@ define(function (require, exports, module) {
     var mouseEvents = /click|mouse|touch/;
     var uiEvents = /key|DOM(Active|Focus)/;
     var mutationEvents = /DOM(Attr|Node|Character|Subtree)/;
+
     // Any events specific to one element do not bubble: submit, focus, blur, load,
     // unload, change, reset, scroll, most of the DOM events (DOMFocusIn, DOMFocusOut, DOMNodeRemoved, etc),
     // mouseenter, mouseleave, etc
@@ -102,11 +124,11 @@ define(function (require, exports, module) {
             try {
                 // ie11+/chrome/firefox
                 et = new Event(eventType, properties);
-            } catch (err) {
+            } catch (err1) {
                 try {
                     // who?
                     et = new CustomEvent(eventType, properties);
-                } catch (err) {
+                } catch (err2) {
                     // <= 10
                     args = [eventType, !!properties.bubbles, !!properties.cancelable, window, {},
                         0, 0, 0, 0, !1, !1, !1, !1, 0, null
@@ -135,7 +157,7 @@ define(function (require, exports, module) {
          * @param {HTMLElement|Node|EventTarget} ele 元素
          * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
          * @param {Event} [copyEvent] 需要复制的事件信息
-         * @returns {Object} this
+         * @returns {Object} event
          *
          * @example
          * event.dispatch(ele, 'myclick');
@@ -148,7 +170,7 @@ define(function (require, exports, module) {
                 this.create(eventTypeOrEvent) :
                 eventTypeOrEvent;
 
-            if(copyEvent){
+            if (copyEvent) {
                 et = this.extend(et, copyEvent);
             }
 
@@ -158,6 +180,8 @@ define(function (require, exports, module) {
             } catch (err) {
                 // ignore
             }
+
+            return et;
         },
 
         /**
@@ -223,7 +247,7 @@ define(function (require, exports, module) {
 
             var callback;
             var eventTypes = eventType.trim().split(regSpace);
-            var isCapture = arguments[arguments.length - 1];
+            isCapture = arguments[arguments.length - 1];
 
             if (data.type(isCapture) !== 'boolean') {
                 isCapture = !1;
@@ -245,7 +269,7 @@ define(function (require, exports, module) {
                     if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
                         return listener.call(closestElement[0], eve);
                     }
-                }
+                };
             }
 
             if (callback) {
@@ -299,7 +323,7 @@ define(function (require, exports, module) {
 
             return isCapture ?
                 (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
-                    isCaptureOriginalListeners[id][eventType] || []).length:
+                    isCaptureOriginalListeners[id][eventType] || []).length :
                 (unCaptureOriginalListeners && unCaptureOriginalListeners[id] &&
                     unCaptureOriginalListeners[id][eventType] || []).length;
         }
@@ -347,7 +371,7 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     data.each(isCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (listener.call(the, eve) === !1) {
+                        if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();
@@ -372,7 +396,7 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     data.each(unCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (listener.call(the, eve) === !1) {
+                        if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();

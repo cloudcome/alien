@@ -20,11 +20,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>drag.html</title>
     <style>
-        pre{
+        pre {
             background: #eee;
             padding: 20px;
         }
-        #demo1{
+
+        #demo1 {
             position: absolute;
             top: 100px;
             left: 100px;
@@ -33,7 +34,8 @@
             background: #f5f5f5;
             border: 10px solid #ddd;
         }
-        #demo2{
+
+        #demo2 {
             position: absolute;
             top: 200px;
             left: 200px;
@@ -42,14 +44,16 @@
             background: #f57c3a;
             border: 10px solid #c96530;
         }
-        #handle2{
+
+        #handle2 {
             background: #932e3d;
             height: 30px;
             line-height: 30px;
             padding: 10px;
             color: #fff;
         }
-        #demo3{
+
+        #demo3 {
             background: #4c6750;
             padding: 20px;
         }
@@ -66,10 +70,12 @@
 然后像正常监听事件一样操作即可。
 </pre>
 
-<div id="demo1" draggablefor="#demo1">demo1</div>
+<div id="demo1" draggablefor="demo1">demo1</div>
 <div id="demo2">
     <div id="handle2" draggablefor="demo2">拖动这里</div>
     <div draggable="true" id="demo3">这里不能拖动</div>
+    第2次拖动我的时候，取消默认操作
+    并且，在clientX>430的时候取消默认拖动效果
 </div>
 
 <script src="/seajs/sea.js" id="script"></script>
@@ -79,10 +85,24 @@
         var demo1 = document.getElementById('demo1');
         var demo2 = document.getElementById('demo2');
         var demo3 = document.getElementById('demo3');
+        var times = 1;
 
+        event.on(demo2, 'dragstart', function (eve) {
+            times++;
+            if (times > 2) {
+                eve.preventDefault();
+            }
+        });
 
+        event.on(demo2, 'drag', function (eve) {
+            if(eve.clientX > 430){
+                eve.preventDefault();
+            }
+        });
 
-
+        event.on(demo2, 'dragend', function (eve) {
+            eve.preventDefault();
+        });
     });
     seajs.use('app');
 </script>

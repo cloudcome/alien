@@ -84,6 +84,7 @@ define(function (require, exports, module) {
             var hasDispatch = 0;
             var timeid = 0;
             var easing = '';
+            // 修正 CSS 终点
             var fixTo = {};
             var durationVal = [];
             var delayVal = [];
@@ -138,7 +139,7 @@ define(function (require, exports, module) {
             options = data.extend({}, cssDefaults, options);
             easing = eeeing.css3[options.easing];
 
-            if(!easing){
+            if (!easing) {
                 easing = options.easing;
             }
 
@@ -151,7 +152,21 @@ define(function (require, exports, module) {
                 keys.push(obj.key);
             });
 
-            for(; i <keys.length; i ++){
+            // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
+            // 因此，此时需要计算出 left、top 值
+            if (keys.indexOf('left') > -1) {
+                // 先定位好
+                attribute.left(ele, attribute.left(ele));
+                attribute.css(ele, 'left', data.parseFloat(attribute.css(ele, 'left'), 0));
+            }
+
+            if (keys.indexOf('top') > -1) {
+                // 先定位好
+                attribute.top(ele, attribute.top(ele));
+                attribute.css(ele, 'top', data.parseFloat(attribute.css(ele, 'top'), 0));
+            }
+
+            for (; i < keys.length; i++) {
                 durationVal.push(options.duration + 'ms');
                 delayVal.push(options.delay + 'ms');
                 easingVal.push(easing);
@@ -204,7 +219,6 @@ define(function (require, exports, module) {
                 event.dispatch(ele, et);
             });
         },
-
 
 
         /**
@@ -273,11 +287,11 @@ define(function (require, exports, module) {
 
                 // 时间超过 || 距离超过
                 if (pastTime >= options.duration) {
-                    if(totalDistance.x){
+                    if (totalDistance.x) {
                         attribute.scrollLeft(ele, to.x);
                     }
 
-                    if(totalDistance.y){
+                    if (totalDistance.y) {
                         attribute.scrollTop(ele, to.y);
                     }
 
@@ -297,11 +311,11 @@ define(function (require, exports, module) {
                         var x = from.x + (to.x - from.x) * easing(t);
                         var y = from.y + (to.y - from.y) * easing(t);
 
-                        if(totalDistance.x){
+                        if (totalDistance.x) {
                             attribute.scrollLeft(ele, x);
                         }
 
-                        if(totalDistance.y){
+                        if (totalDistance.y) {
                             attribute.scrollTop(ele, y);
                         }
 

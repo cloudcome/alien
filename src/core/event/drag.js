@@ -59,7 +59,7 @@ define(function (require, exports, module) {
     modification.importStyle(style);
 
     event.on(document, dragstart, function (eve) {
-        var _eve = eve.type === 'mousedown' && eve.which === 1 ? eve : (
+        var _eve = eve.type === 'mousedown' && eve.button === 0 ? eve : (
                 eve.touches && eve.touches.length ? eve.touches[0] : null
             );
         var _dragfor;
@@ -82,18 +82,23 @@ define(function (require, exports, module) {
     });
 
     event.on(document, drag, function (eve) {
-        var _eve = eve.type === 'mousemove' && eve.which === 1 ? eve : (
+        var _eve = eve.type === 'mousemove' && eve.button === 0 ? eve : (
                 eve.touches && eve.touches.length ? eve.touches[0] : null
             );
         var x1 = _eve ? _eve.clientX : null;
         var y1 = _eve ? _eve.clientY : null;
+        var dispatchDragstart;
+        var dispatchDrag;
 
         // 发生了变化
         if (state === 1 && x0 !== null && y0 !== null && x1 !== null && y1 !== null && (x0 !== x1 || y0 !== y1)) {
             state = 2;
-            if(event.dispatch(ele, 'dragstart', _eve) === false) {
+            dispatchDragstart = event.dispatch(ele, 'dragstart', _eve);
+
+            // 已经取消了默认事件
+            if (dispatchDragstart.defaultPrevented === true) {
                 preventDefault = !0;
-            }else{
+            } else {
                 preventDefault = !1;
                 clone = modification.create('div', {
                     style: {
@@ -114,47 +119,53 @@ define(function (require, exports, module) {
         }
 
         if (state === 2 && !preventDefault) {
-            attribute.left(clone, left + x1 - x0);
-            attribute.top(clone, top + y1 - y0);
-            event.dispatch(ele, 'drag', _eve);
+            dispatchDrag = event.dispatch(ele, 'drag', _eve);
+
+            if (dispatchDrag.defaultPrevented !== true) {
+                attribute.left(clone, left + x1 - x0);
+                attribute.top(clone, top + y1 - y0);
+            }
+
             eve.preventDefault();
         }
     });
 
     event.on(document, dragend, function (eve) {
-        var _eve = eve.type === 'mousemove' && eve.which === 1 ?
+        var _eve = eve.type === 'mousemove' && eve.button === 0 ?
             eve :
             (eve.touches && eve.touches.length ?
                 eve.touches[0] :
                 (eve.changedTouches && eve.changedTouches.length ? eve.changedTouches[0] : null)
                 );
         // 先记录初始值，最后还原，再动画
-        var from = {
-            left: attribute.css(dragfor, 'left'),
-            top: attribute.css(dragfor, 'top'),
-            marginLeft: attribute.css(dragfor, 'margin-left'),
-            marginTop: attribute.css(dragfor, 'margin-top')
-        };
+        var from;
         var to;
+        var dispatchDragend;
 
         if (state === 2 && !preventDefault) {
-            attribute.left(dragfor, attribute.left(clone));
-            attribute.top(dragfor, attribute.top(clone));
-            to = {
-                left: attribute.css(dragfor, 'left'),
-                top: attribute.css(dragfor, 'top'),
-                marginLeft: attribute.css(dragfor, 'margin-left'),
-                marginTop: attribute.css(dragfor, 'margin-top')
-            };
-            attribute.css(dragfor, from);
-            animation.stop(dragfor);
-            animation.animate(dragfor, to, {
-                duration: 300
-            });
+            dispatchDragend = event.dispatch(ele, 'dragend', _eve);
+
+            if (dispatchDragend.defaultPrevented !== true) {
+                from = attribute.css(dragfor, ['visibility', 'left', 'top', 'margin-left', 'margin-top']);
+
+                attribute.css(dragfor, 'visibility', 'hidden');
+                attribute.left(dragfor, attribute.left(clone));
+                attribute.top(dragfor, attribute.top(clone));
+                to = {
+                    left: attribute.css(dragfor, 'left'),
+                    top: attribute.css(dragfor, 'top'),
+                    marginLeft: attribute.css(dragfor, 'margin-left'),
+                    marginTop: attribute.css(dragfor, 'margin-top')
+                };
+                attribute.css(dragfor, from);
+                animation.stop(dragfor);
+                animation.animate(dragfor, to, {
+                    duration: 300
+                });
+            }
 
             modification.remove(clone);
             clone = null;
-            event.dispatch(ele, 'dragend', _eve);
         }
 
         state = 0;
