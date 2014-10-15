@@ -42,7 +42,11 @@ define(function (require, exports, module) {
                 switch (selectorType) {
                     case 'string':
                         selector = selector.trim();
-                        ret = selector ? context.querySelectorAll(selector): [];
+                        try {
+                            ret = selector ? context.querySelectorAll(selector) : [];
+                        } catch (err) {
+                            ret = [];
+                        }
                         break;
 
                     case 'element':
