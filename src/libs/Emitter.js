@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module libs/Emitter
      * @require util/data
+     * @require util/class
      */
     'use strict';
 
@@ -17,8 +18,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var Emitter = klass.create({
         constructor: function () {
-            this.eventsPool = {};
-            this.maxLength = 999;
+            this._eventsPool = {};
+            this._maxLength = 999;
         },
 
 
@@ -38,16 +39,16 @@ define(function (require, exports, module) {
             var the = this;
 
             _middleware(eventType, function (et) {
-                if (!the.eventsPool[et]) {
-                    the.eventsPool[et] = [];
+                if (!the._eventsPool[et]) {
+                    the._eventsPool[et] = [];
                 }
 
-                if (the.eventsPool[et].length === the.maxLength) {
+                if (the._eventsPool[et].length === the._maxLength) {
                     throw new Error('event `' + et + '` pool is full as 999');
                 }
 
                 if (data.type(listener) === 'function') {
-                    the.eventsPool[et].push(listener);
+                    the._eventsPool[et].push(listener);
                 }
             });
 
@@ -72,15 +73,15 @@ define(function (require, exports, module) {
             var the = this;
 
             _middleware(eventType, function (et) {
-                if (the.eventsPool[et] && listener) {
-                    data.each(this.eventsPool, function (index, _listener) {
+                if (the._eventsPool[et] && listener) {
+                    data.each(this._eventsPool, function (index, _listener) {
                         if (listener === _listener) {
-                            the.eventsPool.splice(index, 1);
+                            the._eventsPool.splice(index, 1);
                             return !1;
                         }
                     });
                 } else {
-                    the.eventsPool = [];
+                    the._eventsPool = [];
                 }
             });
 
@@ -89,12 +90,11 @@ define(function (require, exports, module) {
 
 
         /**
-         * 事件触发
+         * 事件触发，只要有一个事件返回false，那么就返回false，非链式调用
          * @method emit
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {...*} arg 事件传参，多个参数依次即可
          * @returns {Emitter}
-         * @chainable
          *
          * @example
          * var emitter = new Emitter();
@@ -106,20 +106,23 @@ define(function (require, exports, module) {
         emit: function (eventType) {
             var the = this;
             var args = Array.prototype.slice.call(arguments, 1);
+            var ret;
 
-            if(!the.eventsPool){
+            if (!the._eventsPool) {
                 throw new Error('can not found emitter eventsPool');
             }
 
             _middleware(eventType, function (et) {
-                if (the.eventsPool[et]) {
-                    data.each(the.eventsPool[et], function (index, listener) {
-                        listener.apply(the, args);
+                if (the._eventsPool[et]) {
+                    data.each(the._eventsPool[et], function (index, listener) {
+                        if (listener.apply(the, args) === false) {
+                            ret = !1;
+                        }
                     });
                 }
             });
 
-            return the;
+            return ret;
         }
     });
 
