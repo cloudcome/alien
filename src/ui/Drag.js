@@ -84,11 +84,11 @@ define(function (require, exports, module) {
 
             the._ele = selector.query(ele);
 
-            if(!the.ele){
+            if(!the._ele.length){
                 throw new Error('instance element is empty');
             }
 
-            the.ele = the.ele[0];
+            the._ele = the._ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
             the._init();
@@ -159,26 +159,30 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (!the._is && (type === 'mousedown' && eve.which === 1 || type === 'taphold')) {
-
-
-
                 the._is = !0;
-                the._pageX = eve.pageX;
-                the._pageY = eve.pageY;
-                the._left = attribute.left(the._ele);
-                the._top = attribute.top(the._ele);
 
-                if(attribute.css(the._ele, 'position') === 'static'){
-                    attribute.css(the._ele, 'position', 'absolute');
-                }
+                if(the.emit('beforedragstart', eve) === false){
+                    the._preventDefault = !0;
+                }else{
+                    the._preventDefault = !1;
+                    eve.preventDefault();
+                    the._pageX = eve.pageX;
+                    the._pageY = eve.pageY;
+                    the._left = attribute.left(the._ele);
+                    the._top = attribute.top(the._ele);
 
-                attribute.left(the._ele, the._left);
-                attribute.top(the._ele, the._top);
+                    if(attribute.css(the._ele, 'position') === 'static'){
+                        attribute.css(the._ele, 'position', 'absolute');
+                    }
 
-                attribute.addClass(the._ele, dragClass);
-                eve.preventDefault();
-                attribute.css(the._ele, 'z-index', options.zIndex);
+                    attribute.left(the._ele, the._left);
+                    attribute.top(the._ele, the._top);
+
+                    attribute.addClass(the._ele, dragClass);
+
+                    attribute.css(the._ele, 'z-index', options.zIndex);
                     the._copy();
+                }
 
                 the.emit('dragstart', eve);
             }
@@ -200,7 +204,9 @@ define(function (require, exports, module) {
                 if (eve.type === 'mousemove' && eve.which !== 1) {
                     event.dispatch(the._ele, 'mouseup');
                 } else {
-                    if (!options.preventDefault) {
+                    the.emit('beforedrag', eve);
+
+                    if (!the._preventDefault) {
                         if (options.axis.indexOf('x') > -1) {
                             x = the._left + eve.pageX - the._pageX;
 
@@ -251,26 +257,30 @@ define(function (require, exports, module) {
 
             if (the._is) {
                 the._is = !1;
-                from = {
-                    left: data.parseFloat(attribute.css(the._ele, 'left')),
-                    top: data.parseFloat(attribute.css(the._ele, 'top'))
-                };
-                attribute.left(the._ele, attribute.left(the._clone));
-                attribute.top(the._ele, attribute.top(the._clone));
-                to = {
-                    left: data.parseFloat(attribute.css(the._ele, 'left')),
-                    top: data.parseFloat(attribute.css(the._ele, 'top'))
-                };
-                attribute.css(the._ele, from);
-                animation.stop(the._ele);
-                animation.animate(the._ele, to, {
-                    duration: options.duration,
-                    easing: options.easing
-                });
-                attribute.removeClass(the._ele, dragClass);
-                eve.preventDefault();
+                the.emit('beforedragend', eve);
 
-                modification.remove(the._clone);
+                if(!the._preventDefault){
+                    from = {
+                        left: data.parseFloat(attribute.css(the._ele, 'left')),
+                        top: data.parseFloat(attribute.css(the._ele, 'top'))
+                    };
+                    attribute.left(the._ele, attribute.left(the._clone));
+                    attribute.top(the._ele, attribute.top(the._clone));
+                    to = {
+                        left: data.parseFloat(attribute.css(the._ele, 'left')),
+                        top: data.parseFloat(attribute.css(the._ele, 'top'))
+                    };
+                    attribute.css(the._ele, from);
+                    animation.stop(the._ele);
+                    animation.animate(the._ele, to, {
+                        duration: options.duration,
+                        easing: options.easing
+                    });
+                    attribute.removeClass(the._ele, dragClass);
+                    eve.preventDefault();
+
+                    modification.remove(the._clone);
+                }
 
                 the.emit('dragend', eve);
             }
@@ -291,7 +301,6 @@ define(function (require, exports, module) {
      * @param {null|Object} [options.min] 拖拽对象的最小位置，格式为{left: 10, top: 10}，参考于 document
      * @param {null|Object} [options.max] 拖拽对象的最大位置，格式为{left: 1000, top: 1000}，参考于 document
      * @param {Number} [options.zIndex] 拖拽时的层级值，默认为99999
-     * @param {Boolean} [options.preventDefault] 是否阻止默认拖拽行为，默认 false
      * @param {Number} [options.duration=300] 运动到拖拽位置时间，默认为300ms
      * @param {String} [options.easing="in-out"] 运动到拖拽位置缓冲效果
      * @constructor

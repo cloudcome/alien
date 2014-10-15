@@ -54,6 +54,7 @@ define(function (require, exports, module) {
     var top;
     var style =
         '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
+    var preventDefault = !1;
 
     modification.importStyle(style);
 
@@ -90,25 +91,29 @@ define(function (require, exports, module) {
         // 发生了变化
         if (state === 1 && x0 !== null && y0 !== null && x1 !== null && y1 !== null && (x0 !== x1 || y0 !== y1)) {
             state = 2;
-            event.dispatch(eve.target, 'dragstart', _eve);
-            clone = modification.create('div', {
-                style: {
-                    position: 'absolute',
-                    width: attribute.width(dragfor) - 2,
-                    height: attribute.height(dragfor) - 2,
-                    left: attribute.left(dragfor),
-                    top: attribute.top(dragfor),
-                    zIndex: 99999999999999
-                },
-                'class': 'alien-ui-drag-clone',
-                draggable: 'true'
-            }, {
-                draggable: true
-            });
-            modification.insert(clone, document.body, 'beforeend');
+            if(event.dispatch(ele, 'dragstart', _eve) === false) {
+                preventDefault = !0;
+            }else{
+                preventDefault = !1;
+                clone = modification.create('div', {
+                    style: {
+                        position: 'absolute',
+                        width: attribute.width(dragfor) - 2,
+                        height: attribute.height(dragfor) - 2,
+                        left: attribute.left(dragfor),
+                        top: attribute.top(dragfor),
+                        zIndex: 99999999999999
+                    },
+                    'class': 'alien-ui-drag-clone',
+                    draggable: 'true'
+                }, {
+                    draggable: true
+                });
+                modification.insert(clone, document.body, 'beforeend');
+            }
         }
 
-        if (state === 2) {
+        if (state === 2 && !preventDefault) {
             attribute.left(clone, left + x1 - x0);
             attribute.top(clone, top + y1 - y0);
             event.dispatch(ele, 'drag', _eve);
@@ -132,7 +137,7 @@ define(function (require, exports, module) {
         };
         var to;
 
-        if (state === 2) {
+        if (state === 2 && !preventDefault) {
             attribute.left(dragfor, attribute.left(clone));
             attribute.top(dragfor, attribute.top(clone));
             to = {

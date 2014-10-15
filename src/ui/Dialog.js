@@ -91,11 +91,11 @@ define(function (require, exports, module) {
 
             the._ele = selector.query(ele);
 
-            if(!the.ele){
+            if(!the._ele.length){
                 throw new Error('instance element is empty');
             }
 
-            the.ele = the.ele[0];
+            the._ele = the._ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
             the._init();
