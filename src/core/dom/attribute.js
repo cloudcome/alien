@@ -196,7 +196,7 @@ define(function (require, exports, module) {
 
                     key = temp[0];
                     pseudo = pseudo ? pseudo : null;
-                    return getComputedStyle(ele, pseudo)[_toSepString(key)];
+                    return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
                 },
                 set: function (key, val) {
                     key = key.split('::')[0];
