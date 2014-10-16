@@ -23,26 +23,34 @@ define(function (require, exports, module) {
     var fixCss = {
         'float': 'cssFloat'
     };
+    var regOn = /^on/;
 
     module.exports = {
         /**
          * 获取有浏览器前缀的方法名称
          * @param {String} standard 标准属性、方法名称
          * @param {Object} parent   标准方法父级
+         * @param {Boolean} [isEventType=false]   是否为事件类型
          * @returns {String} 私有属性、方法名称
          *
          * @example
          * compatible.html5('audioContext', window);
          * // => "webkitAudioContext"
          */
-        html5: function (standard, parent) {
+        html5: function (standard, parent, isEventType) {
             var html5Key = null;
             var find = !1;
 
-            data.each(html5Prefixs, function (index, prefix) {
-                html5Key = prefix ? prefix + _toUpperCaseFirstLetter(standard) : standard;
+            if(isEventType){
+                standard = standard.replace(regOn, '');
+            }
 
-                if (html5Key in parent) {
+            data.each(html5Prefixs, function (index, prefix) {
+                html5Key = isEventType ?
+                    (prefix + standard ):
+                    (prefix ? prefix + _toUpperCaseFirstLetter(standard) : standard);
+
+                if ((isEventType ? 'on':'') + html5Key in parent) {
                     find = !0;
                     return !1;
                 }

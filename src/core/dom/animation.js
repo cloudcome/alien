@@ -34,7 +34,7 @@ define(function (require, exports, module) {
         duration: 789,
         delay: 0
     };
-    var transitionendEventType = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd';
+    var transitionendEventType = compatible.html5('transitionend', window, !0);
     var noop = function () {
         // ignore
     };

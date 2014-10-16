@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/touch
      * @requires core/event/drag
+     * @requires core/navigator/compatible
      *
      * @author ydr.me
      * @create 2014-10-04 02:33
@@ -43,6 +44,8 @@ define(function (require, exports, module) {
     var closeClass = 'alien-ui-dialog-close';
     var iframeClass = 'alien-ui-dialog-iframe';
     var shakeClass = 'alien-ui-dialog-shake';
+    // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
+    var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
     var defaults = {
         width: 500,
         height: 'auto',
@@ -120,7 +123,7 @@ define(function (require, exports, module) {
                 id: 'alien-ui-dialog-' + index,
                 'class': dialogClass,
                 role: 'dialog',
-                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + index : ''
+                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + index : null
             });
             var bd;
 
@@ -160,6 +163,10 @@ define(function (require, exports, module) {
                 if (!selector.closest(eve.target, '.' + dialogClass).length) {
                     the.shake();
                 }
+            });
+
+            event.on(window, animationendEventType, function () {
+                attribute.removeClass(the._dialog, shakeClass);
             });
 
             return the;
@@ -387,10 +394,6 @@ define(function (require, exports, module) {
 
             attribute.addClass(the._dialog, shakeClass);
 
-            the.shakeTimeid = setTimeout(function () {
-                attribute.removeClass(the._dialog, shakeClass);
-            }, 500);
-
             return the;
         },
 
@@ -414,6 +417,7 @@ define(function (require, exports, module) {
                 // 移除事件监听
                 event.un(the._dialog, 'click tap');
                 event.un(the._bg, 'click tap');
+                event.un(the._dialog, animationendEventType);
 
                 // 在 DOM 里删除
                 modification.remove(the._bg);
@@ -482,7 +486,6 @@ define(function (require, exports, module) {
         // shake
         '@-webkit-keyframes alien-ui-dialog-shake {0%, 100% {-webkit-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-webkit-transform:translateX(-10px)}20%, 40%, 60%, 80% {-webkit-transform:translateX(10px)}}' +
         '@-moz-keyframes alien-ui-dialog-shake {0%, 100% {-moz-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-moz-transform:translateX(-10px)}20%, 40%, 60%, 80% {-moz-transform:translateX(10px)}}' +
-        '@-o-keyframes alien-ui-dialog-shake {0%, 100% {-o-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-o-transform:translateX(-10px)}20%, 40%, 60%, 80% {-o-transform:translateX(10px)}}' +
         '@keyframes alien-ui-dialog-shake {0%, 100% {transform:translateX(0)}10%, 30%, 50%, 70%, 90% {transform:translateX(-10px)}20%, 40%, 60%, 80% {transform:translateX(10px)}}' +
         '.alien-ui-dialog-shake{-webkit-animation:both 500ms alien-ui-dialog-shake;-moz-animation:both 500ms alien-ui-dialog-shake;-ms-animation:both 500ms alien-ui-dialog-shake;-o-animation:both 500ms alien-ui-dialog-shake;animation:both 500ms alien-ui-dialog-shake}';
 

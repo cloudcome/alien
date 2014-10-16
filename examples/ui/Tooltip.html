@@ -30,9 +30,34 @@
     </style>
 </head>
 <body>
+    <button id="btn-0">自动位置提示</button>
     <button id="btn-1">上边提示</button>
     <button id="btn-2">右边提示</button>
     <button id="btn-3">下边提示</button>
     <button id="btn-4">左边提示</button>
+
+
+    <script src="/seajs/sea.js" id="script"></script>
+    <script>
+        define('app', function (require) {
+            var Tooltip = require('/src/ui/Tooltip.js');
+            var btn0 = document.getElementById('btn-0');
+            var btn1 = document.getElementById('btn-1');
+            var btn2 = document.getElementById('btn-2');
+            var btn3 = document.getElementById('btn-3');
+            var btn4 = document.getElementById('btn-4');
+
+
+            btn0.onclick = function(){
+                this.times = (this.times || 0)+1;
+                if(this.times % 2){
+                    this.tooltip = new Tooltip(this);
+                }else{
+                    this.tooltip.destroy();
+                }
+            };
+        });
+        seajs.use('app');
+    </script>
 </body>
 </html>

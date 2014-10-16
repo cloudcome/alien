@@ -127,6 +127,10 @@ define(function (require, exports, module) {
          * modification.insert(source, target, 'afterend');
          */
         insert: function (source, target, position, isReturnSource) {
+            if(!source || !source.nodeType || !target || !target.nodeType){
+                return null;
+            }
+
             switch (position) {
                 // 源插入到目标外部之前
                 case 'beforebegin':
@@ -212,6 +216,10 @@ define(function (require, exports, module) {
          * modification.wrap(ele, '&lt;div/>');
          */
         wrap: function (source, htmlstring) {
+            if(!source || !source.nodeType){
+                return null;
+            }
+
             var target = this.parse(htmlstring);
             var wrap;
 

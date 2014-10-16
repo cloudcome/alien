@@ -246,7 +246,7 @@ define(function (require, exports, module) {
             }
 
             var callback;
-            var eventTypes = eventType.trim().split(regSpace);
+            var eventTypes = String(eventType).trim().split(regSpace);
             isCapture = arguments[arguments.length - 1];
 
             if (data.type(isCapture) !== 'boolean') {
@@ -274,7 +274,7 @@ define(function (require, exports, module) {
 
             if (callback) {
                 data.each(eventTypes, function (index, eventType) {
-                    if (data.type(listener) === 'function') {
+                    if (data.type(listener) === 'function' && eventType) {
                         _on(element, eventType, callback, listener, isCapture);
                     }
                 });
@@ -303,11 +303,13 @@ define(function (require, exports, module) {
             }
 
             var args = Array.prototype.slice.call(arguments);
-            var eventTypes = eventType.trim().split(regSpace);
+            var eventTypes = String(eventType).trim().split(regSpace);
 
             data.each(eventTypes, function (index, eventType) {
-                args.splice(1, 1, eventType);
-                _un.apply(window, args);
+                if(eventType){
+                    args.splice(1, 1, eventType);
+                    _un.apply(window, args);
+                }
             });
         },
 
@@ -320,6 +322,11 @@ define(function (require, exports, module) {
          */
         length: function (ele, eventType, isCapture) {
             var id = ele[key];
+            eventType = String(eventType).trim();
+
+            if(!eventType){
+                return 0;
+            }
 
             return isCapture ?
                 (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
