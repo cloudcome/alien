@@ -71,6 +71,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         siblings: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             var ret = [];
             var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
@@ -95,6 +99,10 @@ define(function (require, exports, module) {
          * // unfind => -1
          */
         index: function (ele) {
+            if(!ele.nodeType){
+                return -1;
+            }
+
             var ret = -1;
             var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
@@ -119,6 +127,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         prev: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             return data.toArray(ele.previousElementSibling, !0);
         },
         /**
@@ -131,6 +143,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         next: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             return data.toArray(ele.nextElementSibling, !0);
         },
         // prevAll: function(){
@@ -150,6 +166,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         closest: function (ele, selector) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             var the = this;
 
             while (data.type(ele) !== 'document' && data.type(ele) === 'element') {
@@ -172,6 +192,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         parent: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             return data.toArray(ele.parentNode || ele.parentElement, !0);
         },
         /**
@@ -184,6 +208,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         children: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             return data.toArray(ele.children, !0);
         },
 
@@ -197,6 +225,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         contents: function (ele) {
+            if(!ele.nodeType){
+                return [];
+            }
+
             return data.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
         },
 
