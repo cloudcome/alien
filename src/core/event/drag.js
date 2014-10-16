@@ -20,9 +20,10 @@ define(function (require, exports, module) {
      * @example
      * // dom结构
      * // &lt;div id="abc"&gt;
-     * //     这里的 draggablefor 属性指向的是拖拽影响的元素
+     * //     这里的 draggablefor 属性指向的是拖拽影响的元素，为空表示拖拽自身
      * //     &lt;div draggablefor="abc"&gt;&lt;/div&gt;
      * // &lt;/div&gt;
+     * // 可以在事件监听里取消默认行为，即 eve.preventDefault();
      * event.on(ele, 'dragstart', fn);
      * event.on(ele, 'drag', fn);
      * event.on(ele, 'dragend', fn);
@@ -63,11 +64,13 @@ define(function (require, exports, module) {
                 eve.touches && eve.touches.length ? eve.touches[0] : null
             );
         var _dragfor;
+        var attr;
 
         ele = _getDragable(eve.target);
 
         if (ele) {
-            _dragfor = selector.query('#' + attribute.attr(ele, 'draggablefor'));
+            attr = attribute.attr(ele, 'draggablefor');
+            _dragfor = selector.query(attr ? '#' + attribute.attr(ele, 'draggablefor') : ele);
             x0 = _eve ? _eve.clientX : null;
             y0 = _eve ? _eve.clientY : null;
 
@@ -118,7 +121,7 @@ define(function (require, exports, module) {
             }
         }
 
-        if (state === 2 && !preventDefault) {
+        if (state === 2) {
             dispatchDrag = event.dispatch(ele, 'drag', _eve);
 
             if (dispatchDrag.defaultPrevented !== true) {
@@ -142,7 +145,7 @@ define(function (require, exports, module) {
         var to;
         var dispatchDragend;
 
-        if (state === 2 && !preventDefault) {
+        if (state === 2) {
             dispatchDragend = event.dispatch(ele, 'dragend', _eve);
 
             if (dispatchDragend.defaultPrevented !== true) {
@@ -184,12 +187,20 @@ define(function (require, exports, module) {
      * @private
      */
     function _getDragable(ele) {
+        if (!ele || ele.nodeType !== 1 || ele === document.body || ele === document.documentElement) {
+            return null;
+        }
+
         while (ele) {
-            if (attribute.attr(ele, 'draggablefor')) {
+            if (attribute.attr(ele, 'draggablefor') !== null) {
                 return ele;
             }
 
             ele = selector.parent(ele)[0];
+
+            if (ele === document.body) {
+                return null;
+            }
         }
 
         return null;

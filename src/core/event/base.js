@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var unCaptureRealListeners = {};
     var isCaptureRealListeners = {};
     var domId = 0;
-    var key = 'alien-core-event-base-' + Date.now();
+    var key = 'alien-core-event-base-';
     var defaults = {
         // 是否冒泡
         bubbles: !0,
@@ -63,7 +63,7 @@ define(function (require, exports, module) {
      * - timeStamp	    返回事件生成的日期和时间。
      * - type	        返回当前 Event 对象表示的事件的名称。
      */
-    var mustEventProperties = 'altKey button which clientX clientY ctrlKey metaKey relatedTarget screenX screenY shiftKey bubbles cancelable currentTaget eventPhase target timeStamp'.split(' ');
+    var mustEventProperties = 'altKey button which clientX clientY ctrlKey metaKey relatedTarget pageX pageY screenX screenY shiftKey bubbles cancelable currentTaget eventPhase target timeStamp'.split(' ');
     var eventTypeArr = ['Events', 'HTMLEvents', 'MouseEvents', 'UIEvents', 'MutationEvents'];
     var eventInitArr = ['', '', 'Mouse', 'UI', 'Mutation'];
 

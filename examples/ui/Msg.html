@@ -28,7 +28,7 @@
 </head>
 <body>
 
-
+<p>这里使用了5个颜色来演示，实际颜色和按钮个数是没关系的</p>
 <button id="btn0">0个按钮的 msg</button>
 <button id="btn1">1个按钮的 msg</button>
 <button id="btn2">2个按钮的 msg</button>
@@ -47,7 +47,7 @@
                 style: 'inverse',
                 content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
                 buttons: []
-            }).init();
+            });
         }
 
 
@@ -56,7 +56,7 @@
                 style: 'muted',
                 content: '你在朋友圈里这么流弊，你家里人造吗？',
                 buttons: ['我去年买了个表']
-            }).init().on('close', function (index) {
+            }).on('close', function (index) {
                         alert(this.getOptions('buttons')[index]);
                     });
         }
@@ -66,7 +66,7 @@
                 style: 'success',
                 content: '你到底说不说，说不说，说不说？',
                 buttons: ['说', '不说']
-            }).init().on('close', function (index) {
+            }).on('close', function (index) {
                         alert(this.getOptions('buttons')[index]);
                     });
         }
@@ -78,7 +78,7 @@
                 buttons: [
                     '有吗', '有吧', '有的'
                 ]
-            }).init().on('close', function (index) {
+            }).on('close', function (index) {
                         alert(this.getOptions('buttons')[index]);
                     });
         }
@@ -88,7 +88,7 @@
                 style: 'warning',
                 content: '这么多按钮，确定是你需要的？',
                 buttons: ['不知道', '应该是我需要的', '我也不知道', '还是越多越好吧']
-            }).init().on('close', function (index) {
+            }).on('close', function (index) {
                         alert(this.getOptions('buttons')[index]);
                     });
         }

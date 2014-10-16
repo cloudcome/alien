@@ -71,7 +71,7 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         siblings: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -99,7 +99,7 @@ define(function (require, exports, module) {
          * // unfind => -1
          */
         index: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return -1;
             }
 
@@ -127,7 +127,7 @@ define(function (require, exports, module) {
          * // => [div];
          */
         prev: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -143,7 +143,7 @@ define(function (require, exports, module) {
          * // => [div];
          */
         next: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -166,7 +166,7 @@ define(function (require, exports, module) {
          * // => [div];
          */
         closest: function (ele, selector) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -192,7 +192,7 @@ define(function (require, exports, module) {
          * // => [div];
          */
         parent: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -208,7 +208,7 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         children: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 
@@ -225,7 +225,7 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         contents: function (ele) {
-            if(!ele.nodeType){
+            if (!ele || !ele.nodeType) {
                 return [];
             }
 

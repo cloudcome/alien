@@ -127,8 +127,9 @@ define(function (require, exports, module) {
                 left: options.left,
                 top: options.top,
                 isWrap: !1,
+                canDrag: !1,
                 title: null
-            }).init().open();
+            }).open();
 
             if (options.canDrag) {
                 if (options.title) {

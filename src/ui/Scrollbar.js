@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/scrollbar/index
+     * @module ui/Scrollbar
      * @requires util/data
      * @requires util/class
      * @requires core/dom/modification
@@ -15,8 +15,7 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/animation
      * @requires core/event/wheel
-     * @requires ui/drag/index
-     * @requires ui/scrollbar/style
+     * @requires core/event/drag
      */
     'use strict';
 
@@ -28,10 +27,12 @@ define(function (require, exports, module) {
     var selector = require('../core/dom/selector.js');
     var animation = require('../core/dom/animation.js');
     var event = require('../core/event/wheel.js');
-    var Drag = require('./Drag.js');
+    var drag = require('../core/event/drag.js');
     var bodyClass = 'alien-ui-scrollbar-body';
+    var trackClass = 'alien-ui-scrollbar-track';
     var trackXClass = 'alien-ui-scrollbar-track-x';
     var trackYClass = 'alien-ui-scrollbar-track-y';
+    var thumbClass = 'alien-ui-scrollbar-thumb';
     var thumbXClass = 'alien-ui-scrollbar-thumb-x';
     var thumbYClass = 'alien-ui-scrollbar-thumb-y';
     // var trackActiveClass = 'alien-ui-scrollbar-track-active';
@@ -41,9 +42,7 @@ define(function (require, exports, module) {
     // 这里不能用 DOMSubtreeModified，会导致IE卡死
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     var isPlaceholderScroll = _isPlaceholderScroll();
-    var noop = function () {
-        // ignore
-    };
+    var index = 1;
     var defaults = {
         width: 700,
         height: 300,
@@ -67,13 +66,14 @@ define(function (require, exports, module) {
 
             the._ele = selector.query(ele);
 
-            if(!the._ele.length){
+            if (!the._ele.length) {
                 throw new Error('instance element is empty');
             }
 
             the._ele = the._ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
+            the._id = index++;
             the._init();
         },
 
@@ -81,10 +81,11 @@ define(function (require, exports, module) {
          * 初始化
          * @returns {Scrollbar}
          */
-        init: function () {
+        _init: function () {
             var the = this;
             var options = the._options;
             var wrap;
+            var wrapStart = '<div class="alien-ui-scrollbar" id="alien-ui-scrollbar-' + index + '">';
 
             if (data.type(options.width) !== 'number' || data.type(options.height) !== 'number') {
                 throw new Error('scrollbar require width and height px value');
@@ -93,11 +94,13 @@ define(function (require, exports, module) {
             options.easing = isPlaceholderScroll ? options.cssEasing : options.jsEasing;
 
             if (isPlaceholderScroll) {
-                wrap = modification.wrap(the._ele, '<div class="alien-ui-scrollbar">' +
+                wrap = modification.wrap(the._ele, wrapStart +
                     '<div class="' + bodyClass + '"></div>' +
                     // wrap 插入的是第一个最底层元素里 ^️
-                    '<div class="alien-ui-scrollbar-track ' + trackXClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbXClass + '"></div></div>' +
-                    '<div class="alien-ui-scrollbar-track ' + trackYClass + '"><div class="alien-ui-scrollbar-thumb ' + thumbYClass + '"></div></div>' +
+                    '<div class="' + trackClass + ' ' + trackXClass + '"><div class="' + thumbClass + ' ' + thumbXClass +
+                    '" draggablefor></div></div>' +
+                    '<div class="' + trackClass + ' ' + trackYClass + '"><div class="' + thumbClass + ' ' + thumbYClass +
+                    '" draggablefor></div></div>' +
                     '</div>')[0];
 
                 the._animateOptions = {
@@ -113,7 +116,7 @@ define(function (require, exports, module) {
                 the._xOffset = the._thumbX.offsetLeft * 2;
                 the._yOffset = the._thumbY.offsetTop * 2;
             } else {
-                wrap = modification.wrap(the._ele, '<div class="alien-ui-scrollbar"/>')[0];
+                wrap = modification.wrap(the._ele, wrapStart + '</div>')[0];
                 the._xOffset = 0;
                 the._yOffset = 0;
 
@@ -226,75 +229,75 @@ define(function (require, exports, module) {
                 });
 
                 // 拖拽支持
-                the._dragX = new Drag(the._thumbX, {
-                    isClone: !1,
-                    axis: 'x',
-                    preventDefault: !0
-                })
-                    .init()
-                    .on('dragstart', function (eve) {
-                        x0 = eve.pageX;
-                        left0 = parseFloat(attribute.css(the._thumbX, 'left'));
-                        attribute.addClass(the._thumbX, thumbActiveClass);
-                    })
-                    .on('drag', function (eve) {
-                        var left = left0 + eve.pageX - x0;
-                        var ratio;
 
-                        if (left < 0) {
-                            left = 0;
-                        } else if (left > the._xLeftMax) {
-                            left = the._xLeftMax;
-                        }
+                event.on(the._thumbX, 'dragstart', function (eve) {
+                    eve.preventDefault();
 
-                        ratio = left / (options.width - the._xWidth - the._xOffset);
-                        the._xLeft = left;
-                        the._scrollLeft = (the._scrollWidth - options.width) * ratio;
+                    x0 = eve.pageX;
+                    left0 = parseFloat(attribute.css(the._thumbX, 'left'));
+                    attribute.addClass(the._thumbX, thumbActiveClass);
+                });
 
-                        attribute.css(the._body, 'left', -the._scrollLeft);
-                        attribute.css(the._thumbX, 'left', left);
-                        the.emit('changex', the._scrollLeft);
+                event.on(the._thumbX, 'drag', function (eve) {
+                    eve.preventDefault();
 
-                        return !1;
-                    })
-                    .on('dragend', function (eve) {
-                        attribute.removeClass(the._thumbX, thumbActiveClass);
-                    });
+                    var left = left0 + eve.pageX - x0;
+                    var ratio;
 
-                the._dragY = new Drag(the._thumbY, {
-                    isClone: !1,
-                    axis: 'y',
-                    preventDefault: !0
-                })
-                    .init()
-                    .on('dragstart', function (eve) {
-                        y0 = eve.pageY;
-                        top0 = parseFloat(attribute.css(the._thumbY, 'top'));
-                        attribute.addClass(the._thumbY, thumbActiveClass);
-                    })
-                    .on('drag', function (eve) {
-                        var top = top0 + eve.pageY - y0;
-                        var ratio;
+                    if (left < 0) {
+                        left = 0;
+                    } else if (left > the._xLeftMax) {
+                        left = the._xLeftMax;
+                    }
 
-                        if (top < 0) {
-                            top = 0;
-                        } else if (top > the._yTopMax) {
-                            top = the._yTopMax;
-                        }
+                    ratio = left / (options.width - the._xWidth - the._xOffset);
+                    the._xLeft = left;
+                    the._scrollLeft = (the._scrollWidth - options.width) * ratio;
 
-                        ratio = top / (options.height - the._yHeight - the._yOffset);
-                        the._yTop = top;
-                        the._scrollTop = (the._scrollHeight - options.height) * ratio;
+                    attribute.css(the._body, 'left', -the._scrollLeft);
+                    attribute.css(the._thumbX, 'left', left);
+                    the.emit('changex', the._scrollLeft);
+                });
 
-                        attribute.css(the._body, 'top', -the._scrollTop);
-                        attribute.css(the._thumbY, 'top', top);
-                        the.emit('changey', the._scrollTop);
+                event.on(the._thumbX, 'dragend', function (eve) {
+                    eve.preventDefault();
+                    attribute.removeClass(the._thumbX, thumbActiveClass);
+                });
 
-                        return !1;
-                    })
-                    .on('dragend', function () {
-                        attribute.removeClass(the._thumbY, thumbActiveClass);
-                    });
+                event.on(the._thumbY, 'dragstart', function (eve) {
+                    eve.preventDefault();
+
+                    y0 = eve.pageY;
+                    top0 = parseFloat(attribute.css(the._thumbY, 'top'));
+                    attribute.addClass(the._thumbY, thumbActiveClass);
+                });
+
+                event.on(the._thumbY, 'drag', function (eve) {
+                    eve.preventDefault();
+
+                    var top = top0 + eve.pageY - y0;
+                    var ratio;
+
+                    if (top < 0) {
+                        top = 0;
+                    } else if (top > the._yTopMax) {
+                        top = the._yTopMax;
+                    }
+
+                    ratio = top / (options.height - the._yHeight - the._yOffset);
+                    the._yTop = top;
+                    the._scrollTop = (the._scrollHeight - options.height) * ratio;
+
+                    attribute.css(the._body, 'top', -the._scrollTop);
+                    attribute.css(the._thumbY, 'top', top);
+                    the.emit('changey', the._scrollTop);
+                });
+
+                event.on(the._thumbY, 'dragend', function (eve) {
+                    eve.preventDefault();
+
+                    attribute.removeClass(the._thumbY, thumbActiveClass);
+                });
             } else {
                 event.on(the._wrap, 'scroll', function () {
                     if (the._scrollLeft !== the._wrap.scrollLeft) {
@@ -514,8 +517,8 @@ define(function (require, exports, module) {
             var the = this;
 
             // 清除拖拽
-            the._dragX.destroy();
-            the._dragY.destroy();
+            event.un(the._thumbX, 'dragsatrt drag dragend');
+            event.un(the._thumbY, 'dragsatrt drag dragend');
 
             // 清除监听
             event.un(the._wrap, updateEvent);

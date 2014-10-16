@@ -503,7 +503,7 @@ define(function (require, exports, module) {
     /**
      * 实例化一个模态交互对话框
      *
-     * @param ele {HTMLElement|Node} 元素
+     * @param ele {HTMLElement|Node|String} 元素或选择器
      * @param [options] {Object}
      * @param [options.width=500] {Number|String} 对话框宽度
      * @param [options.height="auto"] {Number|String} 对话框高度

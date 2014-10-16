@@ -47,7 +47,7 @@ define(function (require, exports, module) {
         size: 3
     };
     var Pagination = klass.create({
-        STATIC:{
+        STATIC: {
             /**
              * 默认配置
              * @name defaults
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
 
             the._ele = selector.query(ele);
 
-            if(!the._ele.length){
+            if (!the._ele.length) {
                 throw new Error('instance element is empty');
             }
 
@@ -99,7 +99,6 @@ define(function (require, exports, module) {
         _onEle: function (eve) {
             var page = attribute.data(eve.target, 'page');
 
-            this._options.onchange.call(this, page);
             this.emit('change', page);
         },
 
@@ -133,21 +132,21 @@ define(function (require, exports, module) {
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, template.prev)
-                            .replace(regClass, ' '+normalClass));
+                            .replace(regClass, ' ' + normalClass));
                         break;
 
                     case 'next':
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, template.next)
-                            .replace(regClass, ' '+normalClass));
+                            .replace(regClass, ' ' + normalClass));
                         break;
 
                     default:
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, item.page)
-                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' '+normalClass));
+                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' ' + normalClass));
                         break;
                 }
             });
@@ -171,6 +170,7 @@ define(function (require, exports, module) {
         }
     }, Emitter);
     var style =
+        '.alien-ui-pagination{display:inline-block}' +
         '.alien-ui-pagination *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}' +
         '.alien-ui-pagination-item{display:inline-block;padding:10px;border:1px solid #ddd;min-width:20px;height:16px;line-height:16px;font-size:14px;font-weight:normal;border-right-width:0;color:#1E77B6;text-align:center;cursor:pointer}' +
         '.alien-ui-pagination-item:first-child{border-radius:4px 0 0 4px}' +
@@ -178,8 +178,7 @@ define(function (require, exports, module) {
         '.alien-ui-pagination-item:hover{background:#eee}' +
         '.alien-ui-pagination-item:active{background:#ddd}' +
         '.alien-ui-pagination-disabled,.alien-ui-pagination-disabled:hover,.alien-ui-pagination-disabled:active{background:#fff;cursor:not-allowed;color: #777;}' +
-        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}' +
-        '';
+        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}';
 
     modification.importStyle(style);
 

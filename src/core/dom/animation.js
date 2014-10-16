@@ -38,7 +38,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var key = 'alien-core-animation-' + Date.now();
+    var key = 'alien-core-dom-animation-';
     var index = 0;
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
