@@ -92,13 +92,13 @@ define(function (require, exports, module) {
 
             switch (options.placement) {
                 case 'auto':
-                    // 顺时针判断，默认是在上边
+                    // 上下右左
                     if (eleL + eleW / 2 - tipW / 2 > scrL && eleT + eleH - tipH > scrT && eleL + eleW / 2 + tipW / 2 < vieW) {
                         at = 'top';
-                    } else if (eleT + eleH / 2 - tipH / 2 > scrT && eleL + eleW + tipW < vieW && eleT + eleH / 2 + tipH / 2 < vieH) {
-                        at = 'right';
                     } else if (eleL + eleW / 2 + tipW / 2 < vieW && eleT + eleH + tipH < vieH && eleL + eleW / 2 - tipW / 2 > scrL) {
                         at = 'bottom';
+                    } else if (eleT + eleH / 2 - tipH / 2 > scrT && eleL + eleW + tipW < vieW && eleT + eleH / 2 + tipH / 2 < vieH) {
+                        at = 'right';
                     } else if (eleT + eleH / 2 + tipH / 2 > vieH && eleL - tipW > scrL && eleT + eleH / 2 - tipH / 2 > scrT) {
                         at = 'left';
                     } else {
