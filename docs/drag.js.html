@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -120,9 +120,10 @@ define(function (require, exports, module) {
      * @example
      * // dom结构
      * // &amp;lt;div id="abc"&amp;gt;
-     * //     这里的 draggablefor 属性指向的是拖拽影响的元素
+     * //     这里的 draggablefor 属性指向的是拖拽影响的元素，为空表示拖拽自身
      * //     &amp;lt;div draggablefor="abc"&amp;gt;&amp;lt;/div&amp;gt;
      * // &amp;lt;/div&amp;gt;
+     * // 可以在事件监听里取消默认行为，即 eve.preventDefault();
      * event.on(ele, 'dragstart', fn);
      * event.on(ele, 'drag', fn);
      * event.on(ele, 'dragend', fn);
@@ -154,19 +155,22 @@ define(function (require, exports, module) {
     var top;
     var style =
         '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
+    var preventDefault = !1;
 
     modification.importStyle(style);
 
     event.on(document, dragstart, function (eve) {
-        var _eve = eve.type === 'mousedown' &amp;&amp; eve.which === 1 ? eve : (
+        var _eve = eve.type === 'mousedown' &amp;&amp; eve.button === 0 ? eve : (
                 eve.touches &amp;&amp; eve.touches.length ? eve.touches[0] : null
             );
         var _dragfor;
+        var attr;
 
         ele = _getDragable(eve.target);
 
         if (ele) {
-            _dragfor = selector.query('#' + attribute.attr(ele, 'draggablefor'));
+            attr = attribute.attr(ele, 'draggablefor');
+            _dragfor = selector.query(attr ? '#' + attribute.attr(ele, 'draggablefor') : ele);
             x0 = _eve ? _eve.clientX : null;
             y0 = _eve ? _eve.clientY : null;
 
@@ -181,75 +185,90 @@ define(function (require, exports, module) {
     });
 
     event.on(document, drag, function (eve) {
-        var _eve = eve.type === 'mousemove' &amp;&amp; eve.which === 1 ? eve : (
+        var _eve = eve.type === 'mousemove' &amp;&amp; eve.button === 0 ? eve : (
                 eve.touches &amp;&amp; eve.touches.length ? eve.touches[0] : null
             );
         var x1 = _eve ? _eve.clientX : null;
         var y1 = _eve ? _eve.clientY : null;
+        var dispatchDragstart;
+        var dispatchDrag;
 
         // 发生了变化
         if (state === 1 &amp;&amp; x0 !== null &amp;&amp; y0 !== null &amp;&amp; x1 !== null &amp;&amp; y1 !== null &amp;&amp; (x0 !== x1 || y0 !== y1)) {
             state = 2;
-            event.dispatch(eve.target, 'dragstart', _eve);
-            clone = modification.create('div', {
-                style: {
-                    position: 'absolute',
-                    width: attribute.width(dragfor) - 2,
-                    height: attribute.height(dragfor) - 2,
-                    left: attribute.left(dragfor),
-                    top: attribute.top(dragfor),
-                    zIndex: 99999999999999
-                },
-                'class': 'alien-ui-drag-clone',
-                draggable: 'true'
-            }, {
-                draggable: true
-            });
-            modification.insert(clone, document.body, 'beforeend');
+            dispatchDragstart = event.dispatch(ele, 'dragstart', _eve);
+
+            // 已经取消了默认事件
+            if (dispatchDragstart.defaultPrevented === true) {
+                preventDefault = !0;
+            } else {
+                preventDefault = !1;
+                clone = modification.create('div', {
+                    style: {
+                        position: 'absolute',
+                        width: attribute.width(dragfor) - 2,
+                        height: attribute.height(dragfor) - 2,
+                        left: attribute.left(dragfor),
+                        top: attribute.top(dragfor),
+                        zIndex: 99999999999999
+                    },
+                    'class': 'alien-ui-drag-clone',
+                    draggable: 'true'
+                }, {
+                    draggable: true
+                });
+                modification.insert(clone, document.body, 'beforeend');
+            }
         }
 
         if (state === 2) {
-            attribute.left(clone, left + x1 - x0);
-            attribute.top(clone, top + y1 - y0);
-            event.dispatch(ele, 'drag', _eve);
+            dispatchDrag = event.dispatch(ele, 'drag', _eve);
+
+            if (dispatchDrag.defaultPrevented !== true) {
+                attribute.left(clone, left + x1 - x0);
+                attribute.top(clone, top + y1 - y0);
+            }
+
             eve.preventDefault();
         }
     });
 
     event.on(document, dragend, function (eve) {
-        var _eve = eve.type === 'mousemove' &amp;&amp; eve.which === 1 ?
+        var _eve = eve.type === 'mousemove' &amp;&amp; eve.button === 0 ?
             eve :
             (eve.touches &amp;&amp; eve.touches.length ?
                 eve.touches[0] :
                 (eve.changedTouches &amp;&amp; eve.changedTouches.length ? eve.changedTouches[0] : null)
                 );
         // 先记录初始值，最后还原，再动画
-        var from = {
-            left: attribute.css(dragfor, 'left'),
-            top: attribute.css(dragfor, 'top'),
-            marginLeft: attribute.css(dragfor, 'margin-left'),
-            marginTop: attribute.css(dragfor, 'margin-top')
-        };
+        var from;
         var to;
+        var dispatchDragend;
 
         if (state === 2) {
-            attribute.left(dragfor, attribute.left(clone));
-            attribute.top(dragfor, attribute.top(clone));
-            to = {
-                left: attribute.css(dragfor, 'left'),
-                top: attribute.css(dragfor, 'top'),
-                marginLeft: attribute.css(dragfor, 'margin-left'),
-                marginTop: attribute.css(dragfor, 'margin-top')
-            };
-            attribute.css(dragfor, from);
-            animation.stop(dragfor);
-            animation.animate(dragfor, to, {
-                duration: 300
-            });
+            dispatchDragend = event.dispatch(ele, 'dragend', _eve);
+
+            if (dispatchDragend.defaultPrevented !== true) {
+                from = attribute.css(dragfor, ['visibility', 'left', 'top', 'margin-left', 'margin-top']);
+
+                attribute.css(dragfor, 'visibility', 'hidden');
+                attribute.left(dragfor, attribute.left(clone));
+                attribute.top(dragfor, attribute.top(clone));
+                to = {
+                    left: attribute.css(dragfor, 'left'),
+                    top: attribute.css(dragfor, 'top'),
+                    marginLeft: attribute.css(dragfor, 'margin-left'),
+                    marginTop: attribute.css(dragfor, 'margin-top')
+                };
+                attribute.css(dragfor, from);
+                animation.stop(dragfor);
+                animation.animate(dragfor, to, {
+                    duration: 300
+                });
+            }
 
             modification.remove(clone);
             clone = null;
-            event.dispatch(ele, 'dragend', _eve);
         }
 
         state = 0;
@@ -268,12 +287,20 @@ define(function (require, exports, module) {
      * @private
      */
     function _getDragable(ele) {
+        if (!ele || ele.nodeType !== 1 || ele === document.body || ele === document.documentElement) {
+            return null;
+        }
+
         while (ele) {
-            if (attribute.attr(ele, 'draggablefor')) {
+            if (attribute.attr(ele, 'draggablefor') !== null) {
                 return ele;
             }
 
             ele = selector.parent(ele)[0];
+
+            if (ele === document.body) {
+                return null;
+            }
         }
 
         return null;

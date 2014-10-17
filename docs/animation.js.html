@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -134,11 +134,11 @@ define(function (require, exports, module) {
         duration: 789,
         delay: 0
     };
-    var transitionendEventType = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd';
+    var transitionendEventType = compatible.html5('transitionend', window, !0);
     var noop = function () {
         // ignore
     };
-    var key = 'alien-core-animation-' + Date.now();
+    var key = 'alien-core-dom-animation-';
     var index = 0;
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
@@ -184,6 +184,7 @@ define(function (require, exports, module) {
             var hasDispatch = 0;
             var timeid = 0;
             var easing = '';
+            // 修正 CSS 终点
             var fixTo = {};
             var durationVal = [];
             var delayVal = [];
@@ -238,7 +239,7 @@ define(function (require, exports, module) {
             options = data.extend({}, cssDefaults, options);
             easing = eeeing.css3[options.easing];
 
-            if(!easing){
+            if (!easing) {
                 easing = options.easing;
             }
 
@@ -251,7 +252,21 @@ define(function (require, exports, module) {
                 keys.push(obj.key);
             });
 
-            for(; i &lt;keys.length; i ++){
+            // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
+            // 因此，此时需要计算出 left、top 值
+            if (keys.indexOf('left') > -1) {
+                // 先定位好
+                attribute.left(ele, attribute.left(ele));
+                attribute.css(ele, 'left', data.parseFloat(attribute.css(ele, 'left'), 0));
+            }
+
+            if (keys.indexOf('top') > -1) {
+                // 先定位好
+                attribute.top(ele, attribute.top(ele));
+                attribute.css(ele, 'top', data.parseFloat(attribute.css(ele, 'top'), 0));
+            }
+
+            for (; i &lt; keys.length; i++) {
                 durationVal.push(options.duration + 'ms');
                 delayVal.push(options.delay + 'ms');
                 easingVal.push(easing);
@@ -304,7 +319,6 @@ define(function (require, exports, module) {
                 event.dispatch(ele, et);
             });
         },
-
 
 
         /**
@@ -373,11 +387,11 @@ define(function (require, exports, module) {
 
                 // 时间超过 || 距离超过
                 if (pastTime >= options.duration) {
-                    if(totalDistance.x){
+                    if (totalDistance.x) {
                         attribute.scrollLeft(ele, to.x);
                     }
 
-                    if(totalDistance.y){
+                    if (totalDistance.y) {
                         attribute.scrollTop(ele, to.y);
                     }
 
@@ -397,11 +411,11 @@ define(function (require, exports, module) {
                         var x = from.x + (to.x - from.x) * easing(t);
                         var y = from.y + (to.y - from.y) * easing(t);
 
-                        if(totalDistance.x){
+                        if (totalDistance.x) {
                             attribute.scrollLeft(ele, x);
                         }
 
-                        if(totalDistance.y){
+                        if (totalDistance.y) {
                             attribute.scrollTop(ele, y);
                         }
 

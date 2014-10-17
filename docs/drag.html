@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -125,9 +125,10 @@
                 
     <pre class="prettyprint"><code>// dom结构
 // &lt;div id="abc"&gt;
-//     这里的 draggablefor 属性指向的是拖拽影响的元素
+//     这里的 draggablefor 属性指向的是拖拽影响的元素，为空表示拖拽自身
 //     &lt;div draggablefor="abc"&gt;&lt;/div&gt;
 // &lt;/div&gt;
+// 可以在事件监听里取消默认行为，即 eve.preventDefault();
 event.on(ele, 'dragstart', fn);
 event.on(ele, 'drag', fn);
 event.on(ele, 'dragend', fn);</code></pre>
@@ -154,7 +155,7 @@ event.on(ele, 'dragend', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-649896038696169917948503675870597" data-toggle="tab">Source</a>
+                <a href="#tab-meta-23383833165280526584758181124926" data-toggle="tab">Source</a>
             </li>
 
         
@@ -175,7 +176,7 @@ event.on(ele, 'dragend', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-649896038696169917948503675870597">
+            <div class="tab-pane active" id="tab-meta-23383833165280526584758181124926">
                 <p><a href="drag.js.html#line9">core/event/drag.js:9</a></p>
             </div>
 

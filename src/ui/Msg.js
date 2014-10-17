@@ -42,7 +42,6 @@ define(function (require, exports, module) {
         title: '提示',
         content: 'Hello world!',
         buttons: null,
-        style: 'muted',
         canDrag: !0,
         timeout: -1
     };
@@ -59,7 +58,6 @@ define(function (require, exports, module) {
              * @property [title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
              * @property [content="Hello world!"] {String} 消息框内容
              * @property [buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
-             * @property [style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
              * @property [canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
              * @property [timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
              */
@@ -83,7 +81,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var msg = modification.create('div', {
                 id: 'alien-ui-msg-' + index,
-                'class': 'alien-ui-msg alien-ui-msg-' + options.style
+                'class': 'alien-ui-msg'
             });
             var buttons = '';
             var buttonsLength = 0;
@@ -268,8 +266,8 @@ define(function (require, exports, module) {
         // 按钮
         '.alien-ui-msg-buttons{border-top:1px solid #ddd;overflow:hidden}' +
         '.alien-ui-msg-button{float:left;width:100%;height:36px;line-height:36px;text-align:center;cursor:pointer;font-size:14px;color: #2188FD;}' +
-            '.alien-ui-msg-button:hover{background:#f5f5f5;}' +
-            '.alien-ui-msg-button:active{background:#eee;}' +
+        '.alien-ui-msg-button:hover{background:#f5f5f5;}' +
+        '.alien-ui-msg-button:active{background:#eee;}' +
         '.alien-ui-msg-buttons-horizontal .alien-ui-msg-button{border-left:1px solid #ddd;margin-left:-1px}' +
         '.alien-ui-msg-buttons-vertical .alien-ui-msg-button{border-top:1px solid #ddd}' +
         '.alien-ui-msg-buttons-2 .alien-ui-msg-button{width:50%}' +
@@ -294,7 +292,6 @@ define(function (require, exports, module) {
      * @param [options.title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
      * @param [options.content="Hello world!"] {String} 消息框内容
      * @param [options.buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
-     * @param [options.style="muted"] {String} 消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code>
      * @param [options.canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
      * @param [options.timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
      * @constructor

@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -142,7 +142,11 @@ define(function (require, exports, module) {
                 switch (selectorType) {
                     case 'string':
                         selector = selector.trim();
-                        ret = selector ? context.querySelectorAll(selector): [];
+                        try {
+                            ret = selector ? context.querySelectorAll(selector) : [];
+                        } catch (err) {
+                            ret = [];
+                        }
                         break;
 
                     case 'element':
@@ -167,6 +171,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         siblings: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             var ret = [];
             var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
@@ -191,6 +199,10 @@ define(function (require, exports, module) {
          * // unfind => -1
          */
         index: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return -1;
+            }
+
             var ret = -1;
             var parent = ele.parentNode;
             var childrens = data.toArray(parent.children, !0);
@@ -215,6 +227,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         prev: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             return data.toArray(ele.previousElementSibling, !0);
         },
         /**
@@ -227,6 +243,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         next: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             return data.toArray(ele.nextElementSibling, !0);
         },
         // prevAll: function(){
@@ -246,6 +266,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         closest: function (ele, selector) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             var the = this;
 
             while (data.type(ele) !== 'document' &amp;&amp; data.type(ele) === 'element') {
@@ -268,6 +292,10 @@ define(function (require, exports, module) {
          * // => [div];
          */
         parent: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             return data.toArray(ele.parentNode || ele.parentElement, !0);
         },
         /**
@@ -280,6 +308,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         children: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             return data.toArray(ele.children, !0);
         },
 
@@ -293,6 +325,10 @@ define(function (require, exports, module) {
          * // => [div, div, ...];
          */
         contents: function (ele) {
+            if (!ele || !ele.nodeType) {
+                return [];
+            }
+
             return data.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
         },
 
@@ -334,7 +370,8 @@ define(function (require, exports, module) {
             return ret;
         }
     };
-});</code></pre>
+});
+</code></pre>
 
 
 

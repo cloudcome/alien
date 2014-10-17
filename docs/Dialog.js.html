@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -116,6 +116,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/touch
      * @requires core/event/drag
+     * @requires core/navigator/compatible
      *
      * @author ydr.me
      * @create 2014-10-04 02:33
@@ -143,6 +144,8 @@ define(function (require, exports, module) {
     var closeClass = 'alien-ui-dialog-close';
     var iframeClass = 'alien-ui-dialog-iframe';
     var shakeClass = 'alien-ui-dialog-shake';
+    // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
+    var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
     var defaults = {
         width: 500,
         height: 'auto',
@@ -165,13 +168,40 @@ define(function (require, exports, module) {
     var dialogsMap = {};
     var Dialog = klass.create({
         STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [width=500] {Number|String} 对话框宽度
+             * @property [height="auto"] {Number|String} 对话框高度
+             * @property [left="center"] {Number|String} 对话框左距离，默认水平居中
+             * @property [top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
+             * @property [title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
+             * @property [canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
+             * @property [duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
+             * @property [easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
+             * @property [remote=null] {null|String} 对话框打开远程地址，优先级2
+             * @property [remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
+             * @property [content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
+             * @property [isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
+
+             */
             defaults: defaults
         },
 
         constructor: function (ele, options) {
-            Emitter.apply(this, arguments);
-            this._ele = ele;
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+
+            the._ele = selector.query(ele);
+
+            if(!the._ele.length){
+                throw new Error('instance element is empty');
+            }
+
+            the._ele = the._ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
@@ -180,7 +210,7 @@ define(function (require, exports, module) {
          * @returns {Dialog}
          * @private
          */
-        init: function () {
+        _init: function () {
             index++;
 
             var the = this;
@@ -193,7 +223,7 @@ define(function (require, exports, module) {
                 id: 'alien-ui-dialog-' + index,
                 'class': dialogClass,
                 role: 'dialog',
-                draggablefor: options.title === null &amp;&amp; options.canDrag ? 'alien-ui-dialog-' + index : ''
+                draggablefor: options.title === null &amp;&amp; options.canDrag ? 'alien-ui-dialog-' + index : null
             });
             var bd;
 
@@ -233,6 +263,10 @@ define(function (require, exports, module) {
                 if (!selector.closest(eve.target, '.' + dialogClass).length) {
                     the.shake();
                 }
+            });
+
+            event.on(window, animationendEventType, function () {
+                attribute.removeClass(the._dialog, shakeClass);
             });
 
             return the;
@@ -460,10 +494,6 @@ define(function (require, exports, module) {
 
             attribute.addClass(the._dialog, shakeClass);
 
-            the.shakeTimeid = setTimeout(function () {
-                attribute.removeClass(the._dialog, shakeClass);
-            }, 500);
-
             return the;
         },
 
@@ -487,6 +517,7 @@ define(function (require, exports, module) {
                 // 移除事件监听
                 event.un(the._dialog, 'click tap');
                 event.un(the._bg, 'click tap');
+                event.un(the._dialog, animationendEventType);
 
                 // 在 DOM 里删除
                 modification.remove(the._bg);
@@ -555,7 +586,6 @@ define(function (require, exports, module) {
         // shake
         '@-webkit-keyframes alien-ui-dialog-shake {0%, 100% {-webkit-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-webkit-transform:translateX(-10px)}20%, 40%, 60%, 80% {-webkit-transform:translateX(10px)}}' +
         '@-moz-keyframes alien-ui-dialog-shake {0%, 100% {-moz-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-moz-transform:translateX(-10px)}20%, 40%, 60%, 80% {-moz-transform:translateX(10px)}}' +
-        '@-o-keyframes alien-ui-dialog-shake {0%, 100% {-o-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-o-transform:translateX(-10px)}20%, 40%, 60%, 80% {-o-transform:translateX(10px)}}' +
         '@keyframes alien-ui-dialog-shake {0%, 100% {transform:translateX(0)}10%, 30%, 50%, 70%, 90% {transform:translateX(-10px)}20%, 40%, 60%, 80% {transform:translateX(10px)}}' +
         '.alien-ui-dialog-shake{-webkit-animation:both 500ms alien-ui-dialog-shake;-moz-animation:both 500ms alien-ui-dialog-shake;-ms-animation:both 500ms alien-ui-dialog-shake;-o-animation:both 500ms alien-ui-dialog-shake;animation:both 500ms alien-ui-dialog-shake}';
 
@@ -576,7 +606,7 @@ define(function (require, exports, module) {
     /**
      * 实例化一个模态交互对话框
      *
-     * @param ele {HTMLElement|Node} 元素
+     * @param ele {HTMLElement|Node|String} 元素或选择器
      * @param [options] {Object}
      * @param [options.width=500] {Number|String} 对话框宽度
      * @param [options.height="auto"] {Number|String} 对话框高度

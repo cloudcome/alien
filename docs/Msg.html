@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -79,6 +79,19 @@
 	            
 
 	            <ul class="nav sidebar-list">
+	                
+	                    <li class="sidebar-header">Members &times; 1</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#defaults">defaults</a>
+    
+</li>
+
+	                    
 	                
 
 	                
@@ -549,46 +562,6 @@
 
         <tr>
             
-                <td class="name"><code>style</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "muted"
-                
-                </td>
-            
-
-            <td class="description last">消息框样式，内置的样式有<code>muted/info/success</code>、<code>warning/danger/error/inverse</code></td>
-        </tr>
-
-	
-
-        <tr>
-            
                 <td class="name"><code>canDrag</code></td>
             
 
@@ -698,7 +671,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-90644266013987365202470656950027" data-toggle="tab">Source</a>
+                <a href="#tab-meta-285751826362684373347326705697924" data-toggle="tab">Source</a>
             </li>
 
         
@@ -719,8 +692,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-90644266013987365202470656950027">
-                <p><a href="Msg.js.html#line315">ui/Msg.js:315</a></p>
+            <div class="tab-pane active" id="tab-meta-285751826362684373347326705697924">
+                <p><a href="Msg.js.html#line299">ui/Msg.js:299</a></p>
             </div>
 
         
@@ -768,7 +741,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-694372466299682917595796380192041" data-toggle="tab">Source</a>
+                <a href="#tab-meta-273240077309310445329578397795558" data-toggle="tab">Source</a>
             </li>
 
         
@@ -789,7 +762,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-694372466299682917595796380192041">
+            <div class="tab-pane active" id="tab-meta-273240077309310445329578397795558">
                 <p><a href="Msg.js.html#line9">ui/Msg.js:9</a></p>
             </div>
 
@@ -831,6 +804,477 @@
 
     
 
+    
+        <section id="docs-members">
+            <h3 class="subsection-title">Members</h3>
+
+            <dl>
+                
+<section class="docs-member ">
+    <dt>
+        <h4 class="name alert alert-info" id="defaults"><span class="type-signature">&lt;inner> </span>defaults</h4>
+
+        
+    </dt>
+    <dd>
+        
+        <div class="description lead">
+            <blockquote>
+                默认配置
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+		<th>Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    300
+                
+                </td>
+            
+
+            <td class="description last">消息框宽度</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "auto"
+                
+                </td>
+            
+
+            <td class="description last">消息框高度</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>left</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "center"
+                
+                </td>
+            
+
+            <td class="description last">消息框左距离，默认水平居中</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "center"
+                
+                </td>
+            
+
+            <td class="description last">消息框上距离，默认垂直居中（为了美观，表现为2/5处）</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "提示"
+                
+                </td>
+            
+
+            <td class="description last">消息框标题，为null时将隐藏标题栏</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "Hello world!"
+                
+                </td>
+            
+
+            <td class="description last">消息框内容</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>buttons</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">消息框按钮数组，如：<code>["确定", "取消"]</code></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>canDrag</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">消息框消失时间，默认为-1为不消失，单位 ms</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+</dl>
+
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-6386671536602084724690986331552" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-6386671536602084724690986331552">
+                <p><a href="Msg.js.html#line51">ui/Msg.js:51</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
     
 
     
@@ -887,7 +1331,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-82352216099388907385417679324746" data-toggle="tab">Source</a>
+                <a href="#tab-meta-105439682956784964560533461626619" data-toggle="tab">Source</a>
             </li>
 
         
@@ -908,8 +1352,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-82352216099388907385417679324746">
-                <p><a href="Msg.js.html#line228">ui/Msg.js:228</a></p>
+            <div class="tab-pane active" id="tab-meta-105439682956784964560533461626619">
+                <p><a href="Msg.js.html#line244">ui/Msg.js:244</a></p>
             </div>
 
         
@@ -1042,7 +1486,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-388538089115172632295378809794784" data-toggle="tab">Source</a>
+                <a href="#tab-meta-43027513124980033156888149678707" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1063,8 +1507,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-388538089115172632295378809794784">
-                <p><a href="Msg.js.html#line203">ui/Msg.js:203</a></p>
+            <div class="tab-pane active" id="tab-meta-43027513124980033156888149678707">
+                <p><a href="Msg.js.html#line219">ui/Msg.js:219</a></p>
             </div>
 
         
@@ -1153,7 +1597,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-746986099286004922677444340661168" data-toggle="tab">Source</a>
+                <a href="#tab-meta-96872750693000853308838405646384" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1174,8 +1618,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-746986099286004922677444340661168">
-                <p><a href="Msg.js.html#line218">ui/Msg.js:218</a></p>
+            <div class="tab-pane active" id="tab-meta-96872750693000853308838405646384">
+                <p><a href="Msg.js.html#line234">ui/Msg.js:234</a></p>
             </div>
 
         

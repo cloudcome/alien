@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -112,6 +112,7 @@ define(function (require, exports, module) {
      * @requires util/data
      * @requires libs/Pagination
      * @requires libs/Emitter
+     * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/touch
@@ -122,6 +123,7 @@ define(function (require, exports, module) {
     var data = require('../util/data.js');
     var List = require('../libs/Pagination.js');
     var Emitter = require('../libs/Emitter.js');
+    var selector = require('../core/dom/selector.js');
     var modification = require('../core/dom/modification.js');
     var attribute = require('../core/dom/attribute.js');
     var event = require('../core/event/touch.js');
@@ -142,22 +144,43 @@ define(function (require, exports, module) {
     var defaults = {
         count: 1,
         page: 1,
-        size: 3,
-        onchange: noop
+        size: 3
     };
     var Pagination = klass.create({
+        STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [count=1] {Number} 分页总数
+             * @property [page=1] {Number} 当前分数
+             * @property [size=3] {Number} 分页可见范围
+             */
+            defaults: defaults
+        },
+
+
         constructor: function (ele, options) {
-            Emitter.apply(this, arguments);
-            this._ele = ele;
-            this._options = data.extend(!0, {}, defaults, options);
+            var the = this;
+
+
+            the._ele = selector.query(ele);
+
+            if (!the._ele.length) {
+                throw new Error('instance element is empty');
+            }
+
+            the._ele = the._ele[0];
+            Emitter.apply(the, arguments);
+            the._options = data.extend(!0, {}, defaults, options);
+            the._init();
         },
 
 
         /**
          * 初始化
-         * @returns {Pagination}
+         * @private
          */
-        init: function () {
+        _init: function () {
             var the = this;
 
             the._on();
@@ -176,7 +199,6 @@ define(function (require, exports, module) {
         _onEle: function (eve) {
             var page = attribute.data(eve.target, 'page');
 
-            this._options.onchange.call(this, page);
             this.emit('change', page);
         },
 
@@ -210,21 +232,21 @@ define(function (require, exports, module) {
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, template.prev)
-                            .replace(regClass, ' '+normalClass));
+                            .replace(regClass, ' ' + normalClass));
                         break;
 
                     case 'next':
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, template.next)
-                            .replace(regClass, ' '+normalClass));
+                            .replace(regClass, ' ' + normalClass));
                         break;
 
                     default:
                         html.push(template.normal
                             .replace(regPage, item.page)
                             .replace(regText, item.page)
-                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' '+normalClass));
+                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' ' + normalClass));
                         break;
                 }
             });
@@ -248,6 +270,7 @@ define(function (require, exports, module) {
         }
     }, Emitter);
     var style =
+        '.alien-ui-pagination{display:inline-block}' +
         '.alien-ui-pagination *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}' +
         '.alien-ui-pagination-item{display:inline-block;padding:10px;border:1px solid #ddd;min-width:20px;height:16px;line-height:16px;font-size:14px;font-weight:normal;border-right-width:0;color:#1E77B6;text-align:center;cursor:pointer}' +
         '.alien-ui-pagination-item:first-child{border-radius:4px 0 0 4px}' +
@@ -255,11 +278,20 @@ define(function (require, exports, module) {
         '.alien-ui-pagination-item:hover{background:#eee}' +
         '.alien-ui-pagination-item:active{background:#ddd}' +
         '.alien-ui-pagination-disabled,.alien-ui-pagination-disabled:hover,.alien-ui-pagination-disabled:active{background:#fff;cursor:not-allowed;color: #777;}' +
-        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}' +
-        '';
+        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}';
 
     modification.importStyle(style);
 
+
+    /**
+     * 实例化一个分页控制器
+     * @param ele {Element} 元素，生成的分页将在此渲染
+     * @param [options] {Object} 配置
+     * @param [options.count=1] {Number} 分页总数
+     * @param [options.page=1] {Number} 当前分数
+     * @param [options.size=3] {Number} 分页可见范围
+     * @constructor
+     */
     module.exports = Pagination;
 });</code></pre>
 

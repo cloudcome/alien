@@ -29,12 +29,17 @@ define(function (require, exports, module) {
     var defaults = {
         zIndex: 9999,
         placement: 'auto',
-        content: 'Hello world!',
-        duration: 345,
-        easing: 'in-out'
+        content: 'Hello world!'
     };
     var Tooltip = klass.create({
         STATIC: {
+            /**
+             * 默认配置
+             * @name defaults
+             * @property [zIndex=9999] {Number} 层级
+             * @property [placement="auto"] {String} 所在位置，可选：top、bottom、right、left
+             * @property [content="Hello world!"] {String} 提示内容
+             */
             defaults: defaults
         },
 
@@ -135,12 +140,16 @@ define(function (require, exports, module) {
             });
             attribute.addClass(tip, tooltipClass + '-' + at + ' ' + tooltipClass + '-animation-' + at);
             attribute.css(tip, {
-                left: left +scrL,
+                left: left + scrL,
                 top: top + scrT
             });
         },
 
 
+        /**
+         * 销毁实例
+         * @public
+         */
         destroy: function () {
             var the = this;
             var tip = the._tooltip;
@@ -194,5 +203,17 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
 
+    /**
+     * 实例化一个 Tooltip
+     * @param ele {Node|Element|String} 参考元素或选择器
+     * @param [options] {Object} 配置
+     * @param [options.zIndex=9999] {Number} 层级
+     * @param [options.placement="auto"] {String} 所在位置，可选：top、bottom、right、left
+     * @param [options.content="Hello world!"] {String} 提示内容
+     * @constructor
+     *
+     * @example
+     * var tp = new Tooltip(ele, options);
+     */
     module.exports = Tooltip;
 });

@@ -47,10 +47,10 @@
 <li><a href="upload.html">parent/upload</a></li>
 <li><a href="Banner.html">ui/Banner</a></li>
 <li><a href="Dialog.html">ui/Dialog</a></li>
-<li><a href="Drag_.html">ui/Drag</a></li>
 <li><a href="Msg.html">ui/Msg</a></li>
 <li><a href="Pagination.html">ui/Pagination</a></li>
-<li><a href="index_.html">ui/scrollbar/index</a></li>
+<li><a href="Scrollbar.html">ui/Scrollbar</a></li>
+<li><a href="Tooltip.html">ui/Tooltip</a></li>
 <li><a href="class.html">util/class</a></li>
 <li><a href="data.html">util/data</a></li>
 <li><a href="date.html">util/date</a></li>
@@ -80,9 +80,22 @@
 
 	            <ul class="nav sidebar-list">
 	                
+	                    <li class="sidebar-header">Members &times; 1</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#defaults">defaults</a>
+    
+</li>
+
+	                    
+	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 3</li>
+	                    <li class="sidebar-header">Methods &times; 2</li>
 
 	                    
 	                        
@@ -90,15 +103,6 @@
 <li class="">
     
         <a class="" href="#destroy">destroy</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#init">init</a>
     
 </li>
 
@@ -143,6 +147,343 @@
 <article>
     <div class="container-overview">
         
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="module:ui/Pagination">
+        <span class="type-signature"></span>new require(ui/Pagination)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>实例化一个分页控制器
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Element</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素，生成的分页将在此渲染</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">配置
+                <h6>Properties</h6>
+                
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">分页总数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>page</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">当前分数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    3
+                
+                </td>
+            
+
+            <td class="description last">分页可见范围</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-8857542136684069243656410835683" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-8857542136684069243656410835683">
+                <p><a href="Pagination.js.html#line195">ui/Pagination.js:195</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
 
         
             
@@ -169,7 +510,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-251935398206114774979856403078884" data-toggle="tab">Source</a>
+                <a href="#tab-meta-80949963792227217646274538710713" data-toggle="tab">Source</a>
             </li>
 
         
@@ -190,7 +531,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-251935398206114774979856403078884">
+            <div class="tab-pane active" id="tab-meta-80949963792227217646274538710713">
                 <p><a href="Pagination.js.html#line9">ui/Pagination.js:9</a></p>
             </div>
 
@@ -220,6 +561,8 @@
         
             <li><a href="Emitter.html">module:libs/Emitter</a></li>
         
+            <li><a href="selector.html">module:core/dom/selector</a></li>
+        
             <li><a href="modification.html">module:core/dom/modification</a></li>
         
             <li><a href="attribute.html">module:core/dom/attribute</a></li>
@@ -232,6 +575,235 @@
 
     
 
+    
+        <section id="docs-members">
+            <h3 class="subsection-title">Members</h3>
+
+            <dl>
+                
+<section class="docs-member ">
+    <dt>
+        <h4 class="name alert alert-info" id="defaults"><span class="type-signature">&lt;inner> </span>defaults</h4>
+
+        
+    </dt>
+    <dd>
+        
+        <div class="description lead">
+            <blockquote>
+                默认配置
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+		<th>Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">分页总数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>page</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">当前分数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    3
+                
+                </td>
+            
+
+            <td class="description last">分页可见范围</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+</dl>
+
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-363084343960508708882802352309227" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-363084343960508708882802352309227">
+                <p><a href="Pagination.js.html#line51">ui/Pagination.js:51</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
     
 
     
@@ -288,7 +860,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-09729011915624142013583142077550292" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85608757962472749202805457171053" data-toggle="tab">Source</a>
             </li>
 
         
@@ -309,119 +881,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-09729011915624142013583142077550292">
-                <p><a href="Pagination.js.html#line143">ui/Pagination.js:143</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="init">
-        <span class="type-signature">&lt;inner> </span>init<span class="signature">()</span><span class="type-signature"> 
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>初始化
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Pagination</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-6227545833680779026433199644088745" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-6227545833680779026433199644088745">
-                <p><a href="Pagination.js.html#line60">ui/Pagination.js:60</a></p>
+            <div class="tab-pane active" id="tab-meta-85608757962472749202805457171053">
+                <p><a href="Pagination.js.html#line165">ui/Pagination.js:165</a></p>
             </div>
 
         
@@ -702,7 +1163,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-98128851852379744434617660008371" data-toggle="tab">Source</a>
+                <a href="#tab-meta-8673015369568022967196360696107" data-toggle="tab">Source</a>
             </li>
 
         
@@ -723,8 +1184,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-98128851852379744434617660008371">
-                <p><a href="Pagination.js.html#line97">ui/Pagination.js:97</a></p>
+            <div class="tab-pane active" id="tab-meta-8673015369568022967196360696107">
+                <p><a href="Pagination.js.html#line119">ui/Pagination.js:119</a></p>
             </div>
 
         
