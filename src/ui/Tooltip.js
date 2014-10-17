@@ -93,13 +93,13 @@ define(function (require, exports, module) {
             switch (options.placement) {
                 case 'auto':
                     // 上下右左
-                    if (eleL + eleW / 2 - tipW / 2 > scrL && eleT + eleH - tipH > scrT && eleL + eleW / 2 + tipW / 2 < vieW) {
+                    if (eleL + eleW / 2 - tipW / 2 > scrL && eleT - tipH > scrT && eleL + eleW / 2 + tipW / 2 < vieW) {
                         at = 'top';
                     } else if (eleL + eleW / 2 + tipW / 2 < vieW && eleT + eleH + tipH < vieH && eleL + eleW / 2 - tipW / 2 > scrL) {
                         at = 'bottom';
                     } else if (eleT + eleH / 2 - tipH / 2 > scrT && eleL + eleW + tipW < vieW && eleT + eleH / 2 + tipH / 2 < vieH) {
                         at = 'right';
-                    } else if (eleT + eleH / 2 + tipH / 2 > vieH && eleL - tipW > scrL && eleT + eleH / 2 - tipH / 2 > scrT) {
+                    } else if (eleT + eleH / 2 + tipH / 2 < vieH && eleL - tipW > scrL && eleT + eleH / 2 - tipH / 2 > scrT) {
                         at = 'left';
                     } else {
                         at = 'top';
@@ -135,8 +135,8 @@ define(function (require, exports, module) {
             });
             attribute.addClass(tip, tooltipClass + '-' + at + ' ' + tooltipClass + '-animation-' + at);
             attribute.css(tip, {
-                left: left,
-                top: top
+                left: left +scrL,
+                top: top + scrT
             });
         },
 
@@ -172,17 +172,23 @@ define(function (require, exports, module) {
         '@-moz-keyframes alien-ui-tooltip-left{0%{-webkit-transform:translateX(90%);opacity:0;}100%{-webkit-transform:translateX(0);opacity:1;}}' +
         '@keyframes alien-ui-tooltip-left{0%{-webkit-transform:translateX(90%);opacity:0;}100%{-webkit-transform:translateX(0);opacity:1;}}' +
         // wrap
-        '.alien-ui-tooltip{position:absolute;background:#000;color:#fff;padding:4px 8px;border-radius:4px;font-size:14px;font-weight:normal;line-height:20px;}' +
+        '.alien-ui-tooltip{position:absolute;background:#000;color:#fff;padding:4px 8px;border-radius:4px;font-size:14px;font-weight:normal;line-height:20px;max-width:300px;word-break:break-all}' +
         '.alien-ui-tooltip-arrow{position:absolute;width:0;height:0;border-color:transparent;border-style:solid}' +
         // 上提示
         '.alien-ui-tooltip-top{margin-top:-5px;}' +
         '.alien-ui-tooltip-top .alien-ui-tooltip-arrow{bottom:-5px;left:50%;margin-left:-5px;border-width:5px 5px 0;border-top-color:#000}' +
         '.alien-ui-tooltip-animation-top{-webkit-animation-duration:345ms;-moz-animation-duration:345ms;animation-duration:345ms;-webkit-animation-name:alien-ui-tooltip-top;-webkit-animation-name:alien-ui-tooltip-top;animation-name:alien-ui-tooltip-top}' +
-        // 右提示
-        '.alien-ui-tooltip-animation-right{-webkit-animation-duration:345ms;-moz-animation-duration:345ms;animation-duration:345ms;-webkit-animation-name:alien-ui-tooltip-right;-webkit-animation-name:alien-ui-tooltip-right;animation-name:alien-ui-tooltip-right}' +
         // 下提示
+        '.alien-ui-tooltip-bottom{margin-top:5px;}' +
+        '.alien-ui-tooltip-bottom .alien-ui-tooltip-arrow{top:-5px;left:50%;margin-left:-5px;border-width:0 5px 5px;border-bottom-color:#000}' +
         '.alien-ui-tooltip-animation-bottom{-webkit-animation-duration:345ms;-moz-animation-duration:345ms;animation-duration:345ms;-webkit-animation-name:alien-ui-tooltip-bottom;-webkit-animation-name:alien-ui-tooltip-bottom;animation-name:alien-ui-tooltip-bottom}' +
+        // 右提示
+        '.alien-ui-tooltip-right{margin-left:5px;}' +
+        '.alien-ui-tooltip-right .alien-ui-tooltip-arrow{left:-5px;top:50%;margin-top:-5px;border-width:5px 5px 5px 0;border-right-color:#000}' +
+        '.alien-ui-tooltip-animation-right{-webkit-animation-duration:345ms;-moz-animation-duration:345ms;animation-duration:345ms;-webkit-animation-name:alien-ui-tooltip-right;-webkit-animation-name:alien-ui-tooltip-right;animation-name:alien-ui-tooltip-right}' +
         // 左提示
+        '.alien-ui-tooltip-left{margin-left:-5px;}' +
+        '.alien-ui-tooltip-left .alien-ui-tooltip-arrow{right:-5px;top:50%;margin-top:-5px;border-width:5px 0 5px 5px;border-left-color:#000}' +
         '.alien-ui-tooltip-animation-left{-webkit-animation-duration:345ms;-moz-animation-duration:345ms;animation-duration:345ms;-webkit-animation-name:alien-ui-tooltip-left;-webkit-animation-name:alien-ui-tooltip-left;animation-name:alien-ui-tooltip-left}' +
         '';
 
