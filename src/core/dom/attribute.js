@@ -111,7 +111,7 @@ define(function (require, exports, module) {
          * 设置、获取元素的特性
          * @param {HTMLElement} ele 元素
          * @param {String/Object/Array} key 特性键、特性键值对、特性组
-         * @param {String} [val] 特性值
+         * @param {*} [val] 特性值
          * @returns {*}
          *
          * @example

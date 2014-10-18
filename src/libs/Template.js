@@ -171,11 +171,11 @@ define(function (require, exports, module) {
                 // name}}, I love
                 // 0 name
                 // 1 , I love
-                else if(array.length === 2) {
+                else if (array.length === 2) {
                     $0 = $0.trim();
                     inExp = 0;
 
-                    if($0 === '\\'){
+                    if ($0 === '\\') {
                         return output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '}}' + $1) + ';');
                     }
 
@@ -223,7 +223,7 @@ define(function (require, exports, module) {
                     }
                 }
                 // 3}}\}}\}}\}}...
-                else{
+                else {
                     inExp = 0;
                 }
             });
@@ -266,7 +266,7 @@ define(function (require, exports, module) {
             });
 
             try {
-                fn = new Function(_var, vars.join('') + this._fn);
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return err.message;}');
             } catch (err) {
                 fn = function () {
                     return err;

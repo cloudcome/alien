@@ -217,8 +217,9 @@ define(function (require, exports, module) {
          */
         extend: function (isExtendDeep, source, target) {
             var args = arguments;
-            var isExtendDeep = typeof(args[0]) === 'boolean' && args[0] === !0;
-            var current = isExtendDeep ? 1 : 0;
+            var firstArgIsBoolean = typeof(args[0]) === 'boolean';
+            var isExtendDeep = firstArgIsBoolean && args[0] === !0;
+            var current = firstArgIsBoolean ? 1 : 0;
             var length = args.length;
             var source = args[current++];
             var i;

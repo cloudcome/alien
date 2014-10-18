@@ -20,21 +20,105 @@
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>DDB.html</title>
+    <style>
+        .center {
+            font-size: 40px;
+            font-weight: 900;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            padding: 10px 20px;
+        }
+
+        #data,
+        #temp,
+        #demo {
+            padding: 10px;
+        }
+
+        #data {
+            background: #ecc6ae;
+        }
+
+        #temp {
+            white-space: pre-wrap;
+            background: #b3ecba;
+        }
+
+        #demo {
+            background: #F9F7FF;
+        }
+    </style>
 </head>
 <body>
 
+<p><b>DOM:</b></p>
+
+<div id="temp"></div>
+<p class="center">+</p>
+
+<p><b>DATA:</b></p>
+
+<div id="data"></div>
+<p class="center">
+    <button id="btn">=</button>
+</p>
+<p><b>BINDING:</b></p>
+
 <div id="demo">
-    <p>hi, <b al-html=""></b></p>
+    <input type="text" al-value="name"/>
+
+    <p al-class="{abc: name==='云淡然'}">hi, <b al-html="name"></b>，你的第一个爱好为<em al-html="love[0]"></em></p>
+    <ul al-style="{width: love.length+'px'}">
+        <li al-repeat="index,val in love">
+            <span al-html="index + 1"></span>
+            <span al-html="name + ' love ' + val"></span>
+        </li>
+    </ul>
 </div>
+<button id="btn2" disabled>随机改变love[0]</button>
 
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
     define('app', function (require) {
         var DDB = require('/src/libs/DDB.js');
-        var ddb = new DDB('#demo',{
-            name: '云淡然'
-        });
+        var data = {
+            name: '云淡然',
+            love: ['前端开发', '睡觉', '听歌']
+        };
+        var $data = document.getElementById('data');
+        var $demo = document.getElementById('demo');
+        var $btn = document.getElementById('btn');
+        var $btn2 = document.getElementById('btn2');
+        var ddb;
+
+        $data.innerHTML = JSON.stringify(data);
+        document.getElementById('temp').innerText = $demo.innerHTML.trim();
+
+        $btn.onclick = function () {
+            this.disabled = true;
+            $btn2.disabled = false;
+
+            // 实例化一个DDB（DOM-DATA-BINDING）
+            ddb = new DDB($demo, data);
+
+            ddb.on('change', function (data) {
+                // 数据发生变化回调
+                $data.innerHTML = JSON.stringify(data);
+            });
+        };
+
+        $btn2.onclick = function () {
+            // 手动更新数据
+            ddb.update(function (data, next) {
+                data.love[0] = '随机爱好' + String(Math.random()).slice(2);
+                next();
+            });
+        }
     });
     seajs.use('app');
 </script>
