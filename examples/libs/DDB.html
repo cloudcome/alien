@@ -29,6 +29,12 @@
             padding: 0;
         }
 
+        .abc{
+            background: #dd626a;
+            color: #fff;
+            padding: 4px;
+        }
+
         button {
             padding: 10px 20px;
         }
@@ -72,15 +78,17 @@
     <input type="text" al-value="name"/>
 
     <p al-class="{abc: name==='云淡然'}">hi, <b al-html="name"></b>，你的第一个爱好为<em al-html="love[0]"></em></p>
-    <ul al-style="{width: love.length+'px'}">
+    <ul al-style="{fontSize: love.length * 6+'px'}">
         <li al-repeat="index,val in love">
             <span al-html="index + 1"></span>
             <span al-html="name + ' love ' + val"></span>
         </li>
     </ul>
 </div>
+<hr/>
 <button id="btn2" disabled>随机改变love[0]</button>
-
+<button id="btn3" disabled>随机位置插入love元素</button>
+<button id="btn4" disabled>随机位置删除love元素</button>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
@@ -94,6 +102,8 @@
         var $demo = document.getElementById('demo');
         var $btn = document.getElementById('btn');
         var $btn2 = document.getElementById('btn2');
+        var $btn3 = document.getElementById('btn3');
+        var $btn4 = document.getElementById('btn4');
         var ddb;
 
         $data.innerHTML = JSON.stringify(data);
@@ -102,12 +112,14 @@
         $btn.onclick = function () {
             this.disabled = true;
             $btn2.disabled = false;
+            $btn3.disabled = false;
+            $btn4.disabled = false;
 
             // 实例化一个DDB（DOM-DATA-BINDING）
             ddb = new DDB($demo, data);
 
+            // 数据发生变化回调
             ddb.on('change', function (data) {
-                // 数据发生变化回调
                 $data.innerHTML = JSON.stringify(data);
             });
         };

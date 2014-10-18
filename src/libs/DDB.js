@@ -104,6 +104,8 @@ define(function (require, exports, module) {
 
                 utilData.each(eles, function (index, ele) {
                     var parseData = utilData.extend(!1, {}, the._data, data);
+                    var klass = attribute.attr(ele, 'al-class');
+                    var style = attribute.attr(ele, 'al-style');
                     var html = attribute.attr(ele, 'al-html');
                     var value = attribute.attr(ele, 'al-value');
                     var repeat = attribute.attr(ele, 'al-repeat');
@@ -117,69 +119,96 @@ define(function (require, exports, module) {
 
                     the._elesMap[alienIndex] = ele;
 
-                    if (html) {
-                        html = html.trim();
+                    // 属性
+                    if (klass || style) {
+                        if (klass) {
+                            klass = _parseJSON(klass);
 
-                        if (html && !_isIn(ele, repeatNodes)) {
-                            ele.innerHTML = _exe(html, parseData);
-                            the._renderMap[alienIndex] = {
-                                type: 'html',
-                                data: parseData,
-                                exp: html,
-                                repeat: keyValArr
-                            };
-
-
-                        }
-                    } else if (value) {
-                        value = value.trim();
-
-                        if (value && !_isIn(ele, repeatNodes)) {
-                            ele.value = _exe(value, parseData);
-                            the._renderMap[alienIndex] = {
-                                type: 'value',
-                                data: parseData,
-                                exp: value,
-                                repeat: keyValArr
-                            };
-
-                            the._eventsMap[alienIndex] = the._eventsMap[alienIndex] || [];
-                            the._eventsMap[alienIndex].push('input');
-                            the._eventsMap[alienIndex].push('change');
-                            event.on(ele, 'input change', function () {
-                                the._ignore = this;
-                                the._data[value] = this.value;
-                                the._reRender();
+                            utilData.each(klass, function (className, exp) {
+                                if (_exe(exp, parseData)) {
+                                    attribute.addClass(ele, className);
+                                } else {
+                                    attribute.removeClass(ele, className);
+                                }
                             });
                         }
-                    } else if (repeat) {
-                        repeat = repeat.trim();
 
-                        if (repeat) {
-                            repeatInfo = repeat.match(regRepeat);
+                        if (style) {
+                            style = _parseJSON(style);
 
-                            if (repeatInfo) {
-                                repeatKey = repeatInfo[2].trim();
-                                repeatVal = repeatInfo[3].trim();
-                                repeatList = repeatInfo[4].trim();
-                                repeatData = data[repeatList];
-                                repeatNodes.push(ele);
-                                repeatClone = ele.cloneNode(!0);
-                                utilData.each(repeatData, function (key, val) {
-                                    var d = {};
-                                    var e = ele;
+                            utilData.each(style, function (styleKey, exp) {
+                                var styleVal = _exe(exp, parseData);
+                                attribute.css(ele, styleKey, styleVal);
+                            });
+                        }
+                    }
+                    // 内容
+                    else {
+                        if (html) {
+                            html = html.trim();
 
-                                    d[repeatKey] = key;
-                                    d[repeatVal] = val;
+                            // 存在表达式 && 未被解析过的
+                            if (html && !_isIn(ele, repeatNodes)) {
+                                ele.innerHTML = _exe(html, parseData);
+                                the._renderMap[alienIndex] = {
+                                    type: 'html',
+                                    data: parseData,
+                                    exp: html,
+                                    repeat: keyValArr
+                                };
+                            }
+                        } else if (value) {
+                            value = value.trim();
 
-                                    if (repeatTimes++) {
-                                        e = modification.insert(repeatClone.cloneNode(!0), ele.parentNode, 'beforeend', !0);
-                                        _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
-                                    } else {
-                                        _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
-                                        attribute.prop(e, alienKey + 'hasrepeat', 1);
-                                    }
+                            // 存在表达式 && 未被解析过的
+                            if (value && !_isIn(ele, repeatNodes)) {
+                                ele.value = _exe(value, parseData);
+                                the._renderMap[alienIndex] = {
+                                    type: 'value',
+                                    data: parseData,
+                                    exp: value,
+                                    repeat: keyValArr
+                                };
+
+                                the._eventsMap[alienIndex] = the._eventsMap[alienIndex] || [];
+                                the._eventsMap[alienIndex].push('input');
+                                the._eventsMap[alienIndex].push('change');
+                                event.on(ele, 'input change', function () {
+                                    the._ignore = this;
+                                    the._data[value] = this.value;
+                                    the._reRender();
                                 });
+                            }
+                        } else if (repeat) {
+                            repeat = repeat.trim();
+
+                            if (repeat) {
+                                repeatInfo = repeat.match(regRepeat);
+
+                                if (repeatInfo) {
+                                    repeatKey = repeatInfo[2].trim();
+                                    repeatVal = repeatInfo[3].trim();
+                                    repeatList = repeatInfo[4].trim();
+                                    repeatData = data[repeatList];
+                                    repeatClone = ele.cloneNode(!0);
+
+                                    repeatNodes.push(ele);
+                                    utilData.each(repeatData, function (key, val) {
+                                        var d = {};
+                                        var e = ele;
+
+                                        d[repeatKey] = key;
+                                        d[repeatVal] = val;
+
+                                        if (repeatTimes++) {
+                                            e = modification.insert(repeatClone.cloneNode(!0), ele.parentNode, 'beforeend', !0);
+                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
+                                        } else {
+                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
+                                            attribute.prop(e, alienKey + 'hasrepeat', 1);
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
@@ -257,6 +286,30 @@ define(function (require, exports, module) {
             return the;
         }
     }, Emitter);
+
+
+    /**
+     * 解析 JSON 表达式
+     * @param str
+     * @returns {*}
+     * @private
+     */
+    function _parseJSON(str) {
+        var arr1 = str.trim().slice(1, -1).split(',');
+        var json = {};
+
+        utilData.each(arr1, function (index, val) {
+            var arr2 = val.split(':');
+            var name = arr2[0].trim();
+            var exp = arr2[1].trim();
+
+            if (arr2.length === 2 && name && exp) {
+                json[name] = exp;
+            }
+        });
+
+        return json;
+    }
 
 
     /**
