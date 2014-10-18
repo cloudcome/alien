@@ -58,9 +58,9 @@
     </p>
 
     <ul>
-        {{each books as index,book }}
+        {{list books as index,book }}
         <li>第{{index*1+1}}本书：{{book|test1|test2:'哈哈','呵呵'}}</li>
-        {{/each}}
+        {{/list}}
     </ul>
 </textarea>
 <button id="btn">render data</button>

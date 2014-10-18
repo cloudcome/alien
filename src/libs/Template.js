@@ -22,10 +22,10 @@ define(function (require, exports, module) {
     var regFilter = /^(.*?)(\s*:\s*(.+)\s*)?$/;
     var regIf = /^((else\s+)?if)\s+(.*)$/;
     var regSpace = /\s+/g;
-    var regEach = /^each\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
+    var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /<!--[\s\S]*?-->/g;
-    var regQuote = /['"]/;
-    var regIfElseIf = /^(else)?if/;
+//    var regQuote = /['"]/;
+//    var regIfElseIf = /^(else)?if/;
     var escapes = [
         {
             reg: /</g,
@@ -208,13 +208,13 @@ define(function (require, exports, module) {
                     else if ($0.indexOf('/if') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
-                    // each list as key,val
-                    // each list as val
-                    else if ($0.indexOf('each ') === 0) {
-                        output.push(the._parseEach($0) + _var + '+=' + $1 + ';');
+                    // list list as key,val
+                    // list list as val
+                    else if ($0.indexOf('list ') === 0) {
+                        output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
-                    // /each
-                    else if ($0.indexOf('/each') === 0) {
+                    // /list
+                    else if ($0.indexOf('/list') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // var
@@ -380,8 +380,8 @@ define(function (require, exports, module) {
 
             return matches[1] + '(' + matches[3] + '){';
         },
-        _parseEach: function (str) {
-            var matches = str.trim().match(regEach);
+        _parseList: function (str) {
+            var matches = str.trim().match(regList);
             var parse;
 
 
@@ -424,11 +424,11 @@ define(function (require, exports, module) {
      * {{else if data.name2}}<br>
      * {{else}}<br>
      * {{/if}}<br>
-     * 4. 循环语句（<code>each</code>）<br>
-     * {{each list as key,val}}<br>
-     * {{/each}}<br>
-     * {{each list as val}}<br>
-     * {{/each}}<br>
+     * 4. 循环语句（<code>list</code>）<br>
+     * {{list list as key,val}}<br>
+     * {{/list}}<br>
+     * {{list list as val}}<br>
+     * {{/list}}<br>
      * 5. 过滤（<code>|</code>）<br>
      * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>
      * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>
