@@ -100,6 +100,7 @@ define(function (require, exports, module) {
 
             function _parse(ele, data, keyValArr) {
                 var eles = selector.query('*', ele);
+                //
                 keyValArr = keyValArr || [];
 
                 utilData.each(eles, function (index, ele) {
@@ -130,6 +131,13 @@ define(function (require, exports, module) {
                                 } else {
                                     attribute.removeClass(ele, className);
                                 }
+                                the._renderMap[alienIndex] = {
+                                    type: 'class',
+                                    data: parseData,
+                                    className: className,
+                                    exp: exp,
+                                    repeat: keyValArr
+                                };
                             });
                         }
 
@@ -202,9 +210,9 @@ define(function (require, exports, module) {
 
                                         if (repeatTimes++) {
                                             e = modification.insert(repeatClone.cloneNode(!0), ele.parentNode, 'beforeend', !0);
-                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
+                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal,repeatClone]);
                                         } else {
-                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal]);
+                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal,repeatClone]);
                                             attribute.prop(e, alienKey + 'hasrepeat', 1);
                                         }
                                     });
@@ -232,6 +240,7 @@ define(function (require, exports, module) {
                 var ele = the._elesMap[key];
                 var val;
                 var repeatList;
+                var repeatClone;
 
                 if (the._ignore !== ele) {
                     the._ignore = null;
@@ -240,6 +249,7 @@ define(function (require, exports, module) {
                         repeatList = parse.data[parse.repeat[0]];
                         parse.data[parse.repeat[2]] = parse.repeat[1];
                         parse.data[parse.repeat[3]] = repeatList[parse.repeat[1]];
+                        repeatClone = parse.repeat[4];
                     }
 
                     val = _exe(parse.exp, utilData.extend(!1, {}, parse.data, the._data));
@@ -255,6 +265,10 @@ define(function (require, exports, module) {
                             if (val !== ele.value) {
                                 ele.value = val;
                             }
+                            break;
+
+                        case 'class':
+                            attribute[(val ? 'add':'remove')+'Class'](ele, parse.className);
                             break;
                     }
                 }

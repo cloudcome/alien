@@ -29,7 +29,7 @@
             padding: 0;
         }
 
-        .abc{
+        .abc {
             background: #dd626a;
             color: #fff;
             padding: 4px;
@@ -117,6 +117,7 @@
 
             // 实例化一个DDB（DOM-DATA-BINDING）
             ddb = new DDB($demo, data);
+            window.ddb = ddb;
 
             // 数据发生变化回调
             ddb.on('change', function (data) {
@@ -130,6 +131,44 @@
                 data.love[0] = '随机爱好' + String(Math.random()).slice(2);
                 next();
             });
+        };
+
+        $btn3.onclick = function () {
+            // 手动更新数据
+            ddb.update(function (data, next) {
+                var max = data.love.length;
+                var pos = _random(0, max);
+
+                data.love.splice(pos, 0, '>随机爱好<' + String(Math.random()).slice(2));
+                next();
+            });
+        };
+
+        $btn4.onclick = function () {
+            // 手动更新数据
+            ddb.update(function (data, next) {
+                var max = data.love.length;
+                var pos;
+
+                if (max > 0) {
+                    pos = _random(0, max);
+                    data.love.splice(pos, 1);
+                }
+
+                next();
+            });
+        };
+
+
+        /**
+         * 随机数
+         * @param min
+         * @param max
+         * @returns {number|*}
+         * @private
+         */
+        function _random(min, max) {
+            return Math.floor(Math.random() * (max - 1) + min);
         }
     });
     seajs.use('app');

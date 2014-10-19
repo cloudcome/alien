@@ -218,13 +218,14 @@ define(function (require, exports, module) {
         extend: function (isExtendDeep, source, target) {
             var args = arguments;
             var firstArgIsBoolean = typeof(args[0]) === 'boolean';
-            var isExtendDeep = firstArgIsBoolean && args[0] === !0;
             var current = firstArgIsBoolean ? 1 : 0;
             var length = args.length;
-            var source = args[current++];
             var i;
             var obj;
             var type;
+
+            isExtendDeep = firstArgIsBoolean && args[0] === true;
+            source = args[current++];
 
             for (; current < length; current++) {
                 obj = args[current];
