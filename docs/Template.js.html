@@ -41,6 +41,7 @@
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="DDB.html">libs/DDB</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="Template.html">libs/Template</a></li>
@@ -122,10 +123,10 @@ define(function (require, exports, module) {
     var regFilter = /^(.*?)(\s*:\s*(.+)\s*)?$/;
     var regIf = /^((else\s+)?if)\s+(.*)$/;
     var regSpace = /\s+/g;
-    var regEach = /^each\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
+    var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /&lt;!--[\s\S]*?-->/g;
-    var regQuote = /['"]/;
-    var regIfElseIf = /^(else)?if/;
+//    var regQuote = /['"]/;
+//    var regIfElseIf = /^(else)?if/;
     var escapes = [
         {
             reg: /&lt;/g,
@@ -271,11 +272,11 @@ define(function (require, exports, module) {
                 // name}}, I love
                 // 0 name
                 // 1 , I love
-                else if(array.length === 2) {
+                else if (array.length === 2) {
                     $0 = $0.trim();
                     inExp = 0;
 
-                    if($0 === '\\'){
+                    if ($0 === '\\') {
                         return output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '}}' + $1) + ';');
                     }
 
@@ -308,13 +309,13 @@ define(function (require, exports, module) {
                     else if ($0.indexOf('/if') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
-                    // each list as key,val
-                    // each list as val
-                    else if ($0.indexOf('each ') === 0) {
-                        output.push(the._parseEach($0) + _var + '+=' + $1 + ';');
+                    // list list as key,val
+                    // list list as val
+                    else if ($0.indexOf('list ') === 0) {
+                        output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
-                    // /each
-                    else if ($0.indexOf('/each') === 0) {
+                    // /list
+                    else if ($0.indexOf('/list') === 0) {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // var
@@ -323,7 +324,7 @@ define(function (require, exports, module) {
                     }
                 }
                 // 3}}\}}\}}\}}...
-                else{
+                else {
                     inExp = 0;
                 }
             });
@@ -366,7 +367,7 @@ define(function (require, exports, module) {
             });
 
             try {
-                fn = new Function(_var, vars.join('') + this._fn);
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return err.message;}');
             } catch (err) {
                 fn = function () {
                     return err;
@@ -480,8 +481,8 @@ define(function (require, exports, module) {
 
             return matches[1] + '(' + matches[3] + '){';
         },
-        _parseEach: function (str) {
-            var matches = str.trim().match(regEach);
+        _parseList: function (str) {
+            var matches = str.trim().match(regList);
             var parse;
 
 
@@ -524,11 +525,11 @@ define(function (require, exports, module) {
      * {{else if data.name2}}&lt;br>
      * {{else}}&lt;br>
      * {{/if}}&lt;br>
-     * 4. 循环语句（&lt;code>each&lt;/code>）&lt;br>
-     * {{each list as key,val}}&lt;br>
-     * {{/each}}&lt;br>
-     * {{each list as val}}&lt;br>
-     * {{/each}}&lt;br>
+     * 4. 循环语句（&lt;code>list&lt;/code>）&lt;br>
+     * {{list list as key,val}}&lt;br>
+     * {{/list}}&lt;br>
+     * {{list list as val}}&lt;br>
+     * {{/list}}&lt;br>
      * 5. 过滤（&lt;code>|&lt;/code>）&lt;br>
      * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter&lt;br>
      * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}&lt;br>

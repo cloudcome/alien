@@ -41,6 +41,7 @@
 <li><a href="querystring.html">core/navigator/querystring</a></li>
 <li><a href="shell.html">core/navigator/shell</a></li>
 <li><a href="ua.html">core/navigator/ua</a></li>
+<li><a href="DDB.html">libs/DDB</a></li>
 <li><a href="Deferred.html">libs/Deferred</a></li>
 <li><a href="Emitter.html">libs/Emitter</a></li>
 <li><a href="Template.html">libs/Template</a></li>
@@ -266,13 +267,12 @@ define(function (require, exports, module) {
         each: function (list, callback, context) {
             var i;
             var j;
-            var likeArray = this.toArray(list);
 
             // 数组 或 类似数组
-            if (likeArray.length) {
-                for (i = 0, j = likeArray.length; i &lt; j; i++) {
-                    context = context || likeArray[i];
-                    if (callback.call(context, i, likeArray[i]) === false) {
+            if (list &amp;&amp; list.length !== udf) {
+                for (i = 0, j = this.parseInt(list.length, 0); i &lt; j; i++) {
+                    context = context || list[i];
+                    if (callback.call(context, i, list[i]) === false) {
                         break;
                     }
                 }
@@ -317,13 +317,15 @@ define(function (require, exports, module) {
          */
         extend: function (isExtendDeep, source, target) {
             var args = arguments;
-            var isExtendDeep = typeof(args[0]) === 'boolean' &amp;&amp; args[0] === !0;
-            var current = isExtendDeep ? 1 : 0;
+            var firstArgIsBoolean = typeof(args[0]) === 'boolean';
+            var current = firstArgIsBoolean ? 1 : 0;
             var length = args.length;
-            var source = args[current++];
             var i;
             var obj;
             var type;
+
+            isExtendDeep = firstArgIsBoolean &amp;&amp; args[0] === true;
+            source = args[current++];
 
             for (; current &lt; length; current++) {
                 obj = args[current];
@@ -371,7 +373,7 @@ define(function (require, exports, module) {
             var j;
             var objType = this.type(obj);
 
-            if (canListTypeArr.indexOf(objType)> -1 &amp;&amp; this.type(obj.length) === 'number' &amp;&amp; obj.length >= 0) {
+            if (canListTypeArr.indexOf(objType) > -1 &amp;&amp; this.type(obj.length) === 'number' &amp;&amp; obj.length >= 0) {
                 for (j = obj.length; i &lt; j; i++) {
                     ret.push(obj[i]);
                 }
