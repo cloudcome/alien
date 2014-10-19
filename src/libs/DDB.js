@@ -28,6 +28,8 @@ define(function (require, exports, module) {
     var alienKey = 'alien-libs-DDB-';
     var alienIndex = 1;
     var regRepeat = /^(([^,]+)+\s*,\s*)?(.*)\s+in\s+(.*)$/;
+    var regAlien = /^al-/;
+    var regClass = /^alien-[\da-z]{10}$/;
     var DDB = klass.create({
         STATIC: {},
 
@@ -63,215 +65,326 @@ define(function (require, exports, module) {
             // 元素表
             the._elesMap = {};
             // 渲染表
-            the._renderMap = {};
-            // 事件表
-            the._eventsMap = {};
+            the._parseMap = {};
+            // 重复表
+            the._repeatItems = [];
+            the._repeatTemps = {};
             // 忽略渲染的节点
             the._ignore = null;
+            // 状态，0=初始化阶段，1=更新阶段
+            the._state = 0;
             // 解析
-            the._parse();
+            the._parse(the._ele);
+            // 事件监听
+            the._on();
+            // 渲染
+            the._render(the._parseMap, the._data);
         },
 
 
-        /**
-         * 解析
-         * @private
-         * 1、有个 elesMap
-         *
-         * 2、对应的赋值关系 renderMap
-         * {
-         *     1: {
-         *        type: 'html',
-         *        // 表达式
-         *        exp: 'html'
-         *     },
-         *     2: {
-         *        type: 'html',
-         *        // 表达式
-         *        exp: 'a.b.c.d.e.f'
-         *     }
-         * }
-         */
-        _parse: function () {
+        _parse: function (begin) {
             var the = this;
-            var repeatNodes = [];
+            var children = selector.children(begin);
+            var parser = [];
 
-            _parse(the._ele, the._data);
+            if (!children.length) {
+                return parser;
+            }
 
-            function _parse(ele, data, keyValArr) {
-                var eles = selector.query('*', ele);
-                //
-                keyValArr = keyValArr || [];
+            utilData.each(children, function (i, child) {
+                var attrs = child.attributes;
+                var className = 'alien-' + _randomString(10);
 
-                utilData.each(eles, function (index, ele) {
-                    var parseData = utilData.extend(!1, {}, the._data, data);
-                    var klass = attribute.attr(ele, 'al-class');
-                    var style = attribute.attr(ele, 'al-style');
-                    var html = attribute.attr(ele, 'al-html');
-                    var value = attribute.attr(ele, 'al-value');
-                    var repeat = attribute.attr(ele, 'al-repeat');
+                the._elesMap[alienIndex] = child;
+
+                child[alienKey + 'index'] = alienIndex;
+                attribute.addClass(child, className);
+
+                // 查找到所有符合的属性
+                utilData.each(attrs, function (j, attr) {
+                    var name = attr.name;
+                    var val = attr.value;
+                    var type;
+                    var json;
                     var repeatInfo;
-                    var repeatKey;
-                    var repeatVal;
-                    var repeatList;
-                    var repeatData;
-                    var repeatClone;
-                    var repeatTimes = 0;
+                    var closestRepeat;
+                    var closestRepeatIndex;
+                    var render;
 
-                    the._elesMap[alienIndex] = ele;
+                    if (regAlien.test(attr.name)) {
+                        type = name.slice(3);
 
-                    // 属性
-                    if (klass || style) {
-                        if (klass) {
-                            klass = _parseJSON(klass);
+                        if (type === 'repeat') {
+                            repeatInfo = val.match(regRepeat);
 
-                            utilData.each(klass, function (className, exp) {
-                                if (_exe(exp, parseData)) {
-                                    attribute.addClass(ele, className);
-                                } else {
-                                    attribute.removeClass(ele, className);
-                                }
-                                the._renderMap[alienIndex] = {
-                                    type: 'class',
-                                    data: parseData,
+                            if (repeatInfo) {
+                                the._parseMap[child[alienKey + 'index']] = {
+                                    index: alienIndex,
+                                    // 节点
+                                    node: child,
                                     className: className,
+                                    // 渲染数据
+                                    render: [],
+                                    // 子集
+                                    repeat: {
+                                        node: child,
+                                        index: alienIndex,
+                                        type: type,
+                                        exp: val,
+                                        data: the._data,
+                                        key: repeatInfo[2],
+                                        val: repeatInfo[3],
+                                        name: repeatInfo[4],
+                                        map: {}
+                                    }
+                                };
+                                the._repeatItems.push(alienIndex);
+                                // the._repeatTemps[alienIndex] = child.cloneNode(!0);
+                            }
+                        } else {
+                            closestRepeat = the._closestRepeat(child);
+
+                            if (closestRepeat) {
+                                closestRepeatIndex = closestRepeat[alienKey + 'index'];
+
+                                the._findFather(closestRepeatIndex)[alienIndex] = {
+                                    node: child,
+                                    className: className,
+                                    render: [],
+                                    repeat: {}
+                                };
+                                render = the._findFather(closestRepeatIndex)[alienIndex].render;
+                            }
+                        }
+
+                        if (!render && !the._parseMap[alienIndex]) {
+                            the._parseMap[alienIndex] = {
+                                index: alienIndex,
+                                node: child,
+                                className: className,
+                                render: [],
+                                repeat: {}
+                            };
+                        }
+
+                        if (!render) {
+                            render = the._parseMap[alienIndex].render;
+                        }
+
+                        if (type === 'class' || type === 'style') {
+                            json = _parseJSON(val);
+
+                            utilData.each(json, function (val, exp) {
+                                render.push({
+                                    index: alienIndex,
+                                    type: type,
                                     exp: exp,
-                                    repeat: keyValArr
-                                };
-                            });
-                        }
-
-                        if (style) {
-                            style = _parseJSON(style);
-
-                            utilData.each(style, function (styleKey, exp) {
-                                var styleVal = _exe(exp, parseData);
-                                attribute.css(ele, styleKey, styleVal);
-                            });
-                        }
-                    }
-                    // 内容
-                    else {
-                        if (html) {
-                            html = html.trim();
-
-                            // 存在表达式 && 未被解析过的
-                            if (html && !_isIn(ele, repeatNodes)) {
-                                ele.innerHTML = _exe(html, parseData);
-                                the._renderMap[alienIndex] = {
-                                    type: 'html',
-                                    data: parseData,
-                                    exp: html,
-                                    repeat: keyValArr
-                                };
-                            }
-                        } else if (value) {
-                            value = value.trim();
-
-                            // 存在表达式 && 未被解析过的
-                            if (value && !_isIn(ele, repeatNodes)) {
-                                ele.value = _exe(value, parseData);
-                                the._renderMap[alienIndex] = {
-                                    type: 'value',
-                                    data: parseData,
-                                    exp: value,
-                                    repeat: keyValArr
-                                };
-
-                                the._eventsMap[alienIndex] = the._eventsMap[alienIndex] || [];
-                                the._eventsMap[alienIndex].push('input');
-                                the._eventsMap[alienIndex].push('change');
-                                event.on(ele, 'input change', function () {
-                                    the._ignore = this;
-                                    the._data[value] = this.value;
-                                    the._reRender();
+                                    val: val,
+                                    data: the._data
                                 });
-                            }
-                        } else if (repeat) {
-                            repeat = repeat.trim();
-
-                            if (repeat) {
-                                repeatInfo = repeat.match(regRepeat);
-
-                                if (repeatInfo) {
-                                    repeatKey = repeatInfo[2].trim();
-                                    repeatVal = repeatInfo[3].trim();
-                                    repeatList = repeatInfo[4].trim();
-                                    repeatData = data[repeatList];
-                                    repeatClone = ele.cloneNode(!0);
-
-                                    repeatNodes.push(ele);
-                                    utilData.each(repeatData, function (key, val) {
-                                        var d = {};
-                                        var e = ele;
-
-                                        d[repeatKey] = key;
-                                        d[repeatVal] = val;
-
-                                        if (repeatTimes++) {
-                                            e = modification.insert(repeatClone.cloneNode(!0), ele.parentNode, 'beforeend', !0);
-                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal,repeatClone]);
-                                        } else {
-                                            _parse(e, d, [repeatList, key, repeatKey, repeatVal,repeatClone]);
-                                            attribute.prop(e, alienKey + 'hasrepeat', 1);
-                                        }
-                                    });
-                                }
-                            }
+                            });
+                        } else {
+                            render.push({
+                                index: alienIndex,
+                                type: type,
+                                exp: val,
+                                data: the._data
+                            });
                         }
                     }
+                });
 
-                    alienIndex++;
+                alienIndex++;
+                the._parse(child);
+
+            });
+        },
+
+        _closestRepeat: function (node) {
+            var ret = null;
+
+            while (node !== this._ele) {
+                node = node.parentNode;
+
+                if (attribute.attr(node, 'al-repeat')) {
+                    ret = node;
+                    break;
+                }
+            }
+
+            return ret;
+        },
+
+        _findFather: function (i) {
+            var find = null;
+            var src = this._parseMap;
+
+            i = utilData.parseInt(i, 0);
+
+            _each(src);
+
+            function _each(father) {
+                if (find) {
+                    return find;
+                }
+
+                utilData.each(father, function (j, obj) {
+                    if (obj.repeat && i === utilData.parseInt(obj.repeat.index, 0)) {
+                        find = obj.repeat.map;
+                        return !1;
+                    }
+
+                    if (i === utilData.parseInt(j, 0)) {
+                        find = father[j];
+                        return !1;
+                    }
+
+                    if (obj.repeat && obj.repeat.map) {
+                        _each(obj.repeat.map);
+                    }
                 });
             }
+
+            return find;
         },
 
-
-        /**
-         * 重新渲染
-         * @private
-         */
-        _reRender: function () {
+        _on: function () {
             var the = this;
+            var ele = the._ele;
 
+            event.on(ele, 'input change', function (eve) {
+                var node = eve.target;
+                var index = node[alienKey + 'index'];
+                var val = node.value;
+                var parser;
+
+                // 存在的元素
+                if (index) {
+                    parser = the._parseMap[index];
+
+                    utilData.each(parser.render, function (i, rd) {
+                        if (rd.type === 'model') {
+                            the._ignore = node;
+                            the._data[rd.exp] = val;
+                            the._render(the._parseMap, the._data);
+                            return !1;
+                        }
+                    });
+                }
+            });
+        },
+
+        _render: function (maps, data) {
+            var the = this;
+            var isFirstRender = the._state === 0;
+
+            the._state = 1;
             the.emit('change', the._data);
 
-            utilData.each(the._renderMap, function (key, parse) {
-                var ele = the._elesMap[key];
-                var val;
-                var repeatList;
-                var repeatClone;
+            utilData.each(maps, function (i, map) {
+                var node = map.node;
+                var repeatName = map.repeat.name;
+                var repeatKey = map.repeat.key;
+                var repeatVal = map.repeat.val;
+                var eachLength = repeatName ? Object.keys(data[repeatName]).length : 0;
+                var eachIndex = 0;
+                var childrenLength;
+                var repeatFather;
+                var repeatChild;
+                var isRepeat = the._repeatItems.indexOf(map.index) > -1;
 
-                if (the._ignore !== ele) {
-                    the._ignore = null;
-
-                    if (parse.repeat.length) {
-                        repeatList = parse.data[parse.repeat[0]];
-                        parse.data[parse.repeat[2]] = parse.repeat[1];
-                        parse.data[parse.repeat[3]] = repeatList[parse.repeat[1]];
-                        repeatClone = parse.repeat[4];
-                    }
-
-                    val = _exe(parse.exp, utilData.extend(!1, {}, parse.data, the._data));
-
-                    switch (parse.type) {
-                        case 'html':
-                            if (val !== ele.innerHTML) {
-                                ele.innerHTML = val;
-                            }
-                            break;
-
-                        case 'value':
-                            if (val !== ele.value) {
-                                ele.value = val;
-                            }
-                            break;
-
-                        case 'class':
-                            attribute[(val ? 'add':'remove')+'Class'](ele, parse.className);
-                            break;
-                    }
+                if (isFirstRender && isRepeat) {
+                    the._repeatTemps[map.index] = {
+                        parentClass: _getSignClass(node.parentNode),
+                        clone: node.cloneNode(!0)
+                    };
                 }
+
+                // 上次有数据，本次被清除
+                if (!eachLength && isRepeat && (!the._lastData || Object.keys(the._lastData[repeatName]).length)) {
+                    repeatFather = selector.query('.' + the._repeatTemps[map.index].parentClass, the._ele)[0];
+                    repeatFather.innerHTML = '';
+                }
+
+                if (map.repeat.map && eachLength) {
+                    childrenLength = selector.query('.' + map.className, the._ele).length;
+                    repeatFather = selector.query('.' + the._repeatTemps[map.index].parentClass, the._ele)[0];
+                    repeatChild = the._repeatTemps[map.index].clone;
+
+                    // repeat 项目不够
+                    if (eachLength > childrenLength) {
+                        while (eachLength > childrenLength) {
+                            modification.insert(repeatChild.cloneNode(!0), repeatFather, 'beforeend');
+                            childrenLength++;
+                        }
+                    }
+                    // repeat 项目超出
+                    else if (eachLength < childrenLength) {
+                        while (eachLength < childrenLength) {
+                            modification.remove(repeatFather.lastChild);
+                            childrenLength--;
+                        }
+                    }
+
+                    utilData.each(data[repeatName], function (key, val) {
+                        var d1 = {};
+                        var d2;
+
+                        if (repeatKey) {
+                            d1[repeatKey] = key;
+                        }
+
+                        d1[repeatVal] = val;
+                        d2 = utilData.extend(!0, {}, data, d1);
+                        d2[alienKey + 'index'] = eachIndex;
+                        the._render(map.repeat.map, d2);
+                        eachIndex++;
+                    });
+                }
+
+                utilData.each(map.render, function (j, rd) {
+                    var exeVal;
+                    var selectIndex = data[alienKey + 'index'] !== undefined ? data[alienKey + 'index'] : 0;
+                    var node = selector.query('.' + map.className, the._ele)[selectIndex];
+
+                    if (node !== the._ignore) {
+                        exeVal = rd.type === 'repeat' ?
+                            null :
+                            _exe(rd.exp, isFirstRender ? rd.data : data);
+
+                        switch (rd.type) {
+                            case 'html':
+                                if (node.innerHTML !== exeVal) {
+                                    node.innerHTML = exeVal;
+                                }
+
+                                break;
+
+                            case 'text':
+                                if (node.textContent !== exeVal) {
+                                    node.textContent = exeVal;
+                                }
+
+                                break;
+
+                            case 'value':
+                            case 'model':
+                                if (node.value !== exeVal) {
+                                    node.value = exeVal;
+                                }
+
+                                break;
+
+                            case 'class':
+                                attribute[(exeVal ? 'add' : 'remove') + 'Class'](node, rd.val);
+                                break;
+
+                            case 'style':
+                                attribute.css(node, rd.val, exeVal);
+                                break;
+                        }
+                    }
+                });
             });
         },
 
@@ -292,9 +405,10 @@ define(function (require, exports, module) {
         update: function (callback) {
             var the = this;
             var next = function () {
-                the._reRender();
+                the._render(the._parseMap, the._data);
             };
 
+            the._lastData = utilData.extend(!0, {}, the._data);
             callback.call(the, the._data, next);
 
             return the;
@@ -337,7 +451,9 @@ define(function (require, exports, module) {
         var fnStr = 'try{';
 
         utilData.each(data, function (key) {
-            fnStr += 'var ' + key + '=data.' + key + ';';
+            if (key.indexOf('-') === -1) {
+                fnStr += 'var ' + key + '=data.' + key + ';';
+            }
         });
 
         fnStr += 'return ' + exp + '}catch(err){return err.message;}';
@@ -351,23 +467,71 @@ define(function (require, exports, module) {
 
 
     /**
-     * 元素是否在父级集合里
-     * @param ele
-     * @param parents
-     * @returns {boolean}
+     * 随机范围数字
+     * @param min
+     * @param max
+     * @returns {number|*}
      * @private
      */
-    function _isIn(ele, parents) {
-        var ret = !1;
+    function _randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - 1) + min);
+    }
 
-        utilData.each(parents, function (index, parent) {
-            if (parent.contains(ele) && parent[alienKey + 'hasrepeat']) {
-                ret = !0;
+
+    /**
+     * 随机字符串
+     * @param length
+     * @returns {string}
+     * @private
+     */
+    function _randomString(length) {
+        var str = '';
+
+        while (length--) {
+            str += _randomNumber(0, 35).toString(36);
+        }
+
+        return str;
+    }
+
+
+    /**
+     * 获取标识class
+     * @param node
+     * @returns {string}
+     * @private
+     */
+    function _getSignClass(node) {
+        var list = node.classList;
+        var className = '';
+
+        utilData.each(list, function (i, cn) {
+            if (regClass.test(cn)) {
+                className = cn;
                 return !1;
             }
         });
 
-        return ret;
+        return className;
+    }
+
+
+    /**
+     * 为子节点添加ignore属性
+     * @param node
+     * @param ignore
+     * @private
+     */
+    function _ignoreNode(node, ignore) {
+        var children = selector.children(node);
+        var child;
+
+        while (children.length--) {
+            child = children[children.length];
+            child[alienKey + 'ignore'] = ignore;
+
+            _ignoreNode(child);
+        }
     }
 
 

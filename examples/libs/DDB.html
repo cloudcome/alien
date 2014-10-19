@@ -35,6 +35,12 @@
             padding: 4px;
         }
 
+        .def {
+            background: #17dd77;
+            color: #fff;
+            padding: 4px;
+        }
+
         button {
             padding: 10px 20px;
         }
@@ -61,6 +67,38 @@
 </head>
 <body>
 
+<h1>目前还是只支持一级repeat，加油！</h1>
+
+
+<button id="btn2" disabled>随机改变love[0]</button>
+<button id="btn3" disabled>随机位置插入love元素</button>
+<button id="btn4" disabled>随机位置删除love元素</button>
+<hr/>
+<p><b>BINDING:</b></p>
+
+<div id="demo">
+    <input type="text" al-model="name"/>
+
+    <p
+            al-class="{abc: name==='云淡然',def: name!=='云淡然'}"
+            al-style="{fontSize: loves.length + 10 + 'px'}">
+        hi, <b al-html="name ? name: 'GUEST'"></b>，
+        你的第一个爱好为<em al-html="loves[0]"></em>
+    </p>
+
+    <ul>
+        <li al-repeat="index,love in loves">
+            <b al-html="index+1"></b>
+            =&gt;
+            <span al-html="love"></span>
+        </li>
+    </ul>
+</div>
+<p class="center">
+    <button id="btn">=</button>
+</p>
+
+
 <p><b>DOM:</b></p>
 
 <div id="temp"></div>
@@ -69,26 +107,7 @@
 <p><b>DATA:</b></p>
 
 <div id="data"></div>
-<p class="center">
-    <button id="btn">=</button>
-</p>
-<p><b>BINDING:</b></p>
 
-<div id="demo">
-    <input type="text" al-value="name"/>
-
-    <p al-class="{abc: name==='云淡然'}">hi, <b al-html="name"></b>，你的第一个爱好为<em al-html="love[0]"></em></p>
-    <ul al-style="{fontSize: love.length * 6+'px'}">
-        <li al-repeat="index,val in love">
-            <span al-html="index + 1"></span>
-            <span al-html="name + ' love ' + val"></span>
-        </li>
-    </ul>
-</div>
-<hr/>
-<button id="btn2" disabled>随机改变love[0]</button>
-<button id="btn3" disabled>随机位置插入love元素</button>
-<button id="btn4" disabled>随机位置删除love元素</button>
 
 <script src="/seajs/sea.js" id="script"></script>
 <script>
@@ -96,8 +115,9 @@
         var DDB = require('/src/libs/DDB.js');
         var data = {
             name: '云淡然',
-            love: ['前端开发', '睡觉', '听歌']
+            loves: []
         };
+        var index = 1;
         var $data = document.getElementById('data');
         var $demo = document.getElementById('demo');
         var $btn = document.getElementById('btn');
@@ -128,7 +148,7 @@
         $btn2.onclick = function () {
             // 手动更新数据
             ddb.update(function (data, next) {
-                data.love[0] = '随机爱好' + String(Math.random()).slice(2);
+                data.loves[0] = '随机爱好' + (index++);
                 next();
             });
         };
@@ -136,10 +156,10 @@
         $btn3.onclick = function () {
             // 手动更新数据
             ddb.update(function (data, next) {
-                var max = data.love.length;
+                var max = data.loves.length;
                 var pos = _random(0, max);
 
-                data.love.splice(pos, 0, '>随机爱好<' + String(Math.random()).slice(2));
+                data.loves.splice(pos, 0, '随机爱好' + (index++));
                 next();
             });
         };
@@ -147,12 +167,12 @@
         $btn4.onclick = function () {
             // 手动更新数据
             ddb.update(function (data, next) {
-                var max = data.love.length;
+                var max = data.loves.length;
                 var pos;
 
                 if (max > 0) {
                     pos = _random(0, max);
-                    data.love.splice(pos, 1);
+                    data.loves.splice(pos, 1);
                 }
 
                 next();

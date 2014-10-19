@@ -166,13 +166,12 @@ define(function (require, exports, module) {
         each: function (list, callback, context) {
             var i;
             var j;
-            var likeArray = this.toArray(list);
 
             // 数组 或 类似数组
-            if (likeArray.length) {
-                for (i = 0, j = likeArray.length; i < j; i++) {
-                    context = context || likeArray[i];
-                    if (callback.call(context, i, likeArray[i]) === false) {
+            if (list && list.length !== udf) {
+                for (i = 0, j = this.parseInt(list.length, 0); i < j; i++) {
+                    context = context || list[i];
+                    if (callback.call(context, i, list[i]) === false) {
                         break;
                     }
                 }
@@ -273,7 +272,7 @@ define(function (require, exports, module) {
             var j;
             var objType = this.type(obj);
 
-            if (canListTypeArr.indexOf(objType)> -1 && this.type(obj.length) === 'number' && obj.length >= 0) {
+            if (canListTypeArr.indexOf(objType) > -1 && this.type(obj.length) === 'number' && obj.length >= 0) {
                 for (j = obj.length; i < j; i++) {
                     ret.push(obj[i]);
                 }

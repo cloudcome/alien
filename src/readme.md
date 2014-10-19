@@ -2,8 +2,9 @@
 - https://github.com/madrobby/zepto
 - https://github.com/jquery/jquery
 - https://github.com/chenmnkken/easyjs
-- https://github.com/joyent/node/tree/master/lib
+- https://github.com/joyent/node
 - https://github.com/aui/artTemplate
+- https://github.com/yyx990803/vue
 
 
 # 文档注释变量
