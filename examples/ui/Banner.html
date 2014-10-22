@@ -68,45 +68,11 @@
 <button id="destroy">销毁实例</button>
 
 
-<script src="/seajs/sea.js" id="script"></script>
+<script src="../../coolie.js" id="script"></script>
 <script>
-    define('app', function (require) {
-        var Banner = require('/src/ui/Banner.js');
-        var slider1 = document.getElementById('slider1');
-        var index = document.getElementById('index');
-        var bn = new Banner(slider1,{
-            addClass:'demo1',
-            onchange: function (i) {
-                index.innerHTML = i + 1;
-            }
-        });
-
-        document.getElementById('prev').onclick = function () {
-            bn.prev();
-        }
-
-        document.getElementById('next').onclick = function () {
-            bn.next();
-        }
-
-        document.getElementById('play1').onclick = function () {
-            bn.play(1);
-        }
-
-        document.getElementById('play2').onclick = function () {
-            bn.play(-1);
-        }
-
-        document.getElementById('pause').onclick = function () {
-            bn.pause();
-        }
-
-        document.getElementById('destroy').onclick = function () {
-            bn.destroy();
-            bn = null;
-        }
-    });
-    seajs.use('app');
+    coolie.config({
+        base: './examples/'
+    }).use('./ui/Banner.js');
 </script>
 </body>
 </html>
