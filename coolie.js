@@ -11,19 +11,18 @@
     var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
     var REG_SLASH = /\\\\/g;
     var REG_UP_PATH = /\.\.\//g;
-    var REG_READY_STATE_CHANGE = /loaded|complete/;
     var REG_FILE_BASENAME = /\/([^\/]+)$/;
     var REG_BEGIN_TYPE = /^.*?\//;
     var REG_END_PART = /[^\/]+\/$/;
     var REG_HOST = /^.*\/\/[^\/]*/;
     // 入口模块
-    var mainMoule;
-    // 入口模块是否为匿名模块
-    var isMainAnonymous;
+    var mainFile;
+    var execModule;
     // 当前脚本
     var currentScript = _getCurrentScript();
     var containerNode = currentScript.parentNode;
-    var mePath = _getPathname(_pathJoin(location.pathname, currentScript.getAttribute('src')));
+    var mePath = _getPathname(_pathJoin(_getPathname(location.pathname), currentScript.getAttribute('src')));
+    var meMain = _getMain(currentScript);
     // 配置
     var config = {
         base: mePath
@@ -49,8 +48,8 @@
         var args = arguments;
         var isAnonymous = args.length === 1;
 
-        if (isMainAnonymous === undefined) {
-            isMainAnonymous = isAnonymous;
+        if (execModule === undefined) {
+            execModule = isAnonymous ? mainFile : id;
         }
 
         // define(fn);
@@ -77,13 +76,9 @@
             throw new Error('module factory must be a function');
         }
 
-
         deps = isAnonymous ? _parseRequires(factory.toString()) : deps;
-        factory = factory;
-
         dependencies.push([id, deps, factory]);
     };
-
 
 
     /**
@@ -93,7 +88,7 @@
     window.coolie = {
         /**
          * 配置 coolie
-         * @param cnf {Object} 配置
+         * @param [cnf] {Object} 配置
          * @returns {coolie}
          */
         config: function (cnf) {
@@ -108,25 +103,32 @@
 
         /**
          * 执行入口模块
-         * @param main {String} 入口模块ID
+         * @param [main] {String} 入口模块ID，为空时读取`data-main`
          * @returns {coolie}
          */
         use: function (main) {
+            if (mainFile) {
+                throw new Error('can not  execute `coolie.use` twice more');
+            }
+
             if (!_isString(config.base)) {
                 throw new Error('coolie config `base` property must be a string');
             }
 
-            if (!_isString(main)) {
+            if (main && !_isString(main)) {
                 throw new Error('main module must be a string');
             }
 
-            // 模块已经载入了
-            if (modules[main]) {
-//                _execModule(main);
-            } else {
-                mainMoule = _pathJoin(config.base, main);
-                _loadScript(mainMoule);
+            if (meMain && meMain !== main) {
+                if (main) {
+                    console.log('inline main is `' + meMain + '`, use main is `' + main + '`');
+                }
+
+                main = meMain;
             }
+
+            mainFile = _pathJoin(config.base, main);
+            _loadScript(mainFile);
 
             return this;
         }
@@ -145,11 +147,26 @@
         if (dependencies.length) {
             // 总是按照添加的脚本顺序执行，因此这里取出依赖的第0个元素
             meta = dependencies.shift();
-            module.id = script.getAttribute('src');
+
+            // 是否为匿名模块
+            module.isAnonymous = meta[0] === '';
+
+            // 模块ID
+            // 匿名：模块加载的路径
+            // 具名：模块的ID
+            module.id = meta[0] || script.id;
+
+            // 模块所在路径
+            module.path = module.isAnonymous ? _getPathname(module.id) : '';
+
+            // 模块依赖数组
             module.deps = meta[1];
+
+            // 模块出厂函数
             module.factory = meta[2];
 
             // 包装
+            // 添加 module.exec 执行函数
             _wrapModule(module);
 
             if (!modules[module.id]) {
@@ -157,30 +174,52 @@
             }
 
             if (module.deps.length) {
-                _loadRequeire(module.id, module.deps);
+                _each(module.deps, function (i, dep) {
+                    // 匿名模块：依赖采用相对路径方式
+                    // 具名模块：依赖采用绝对路径方式
+                    var depId = module.isAnonymous ? _pathJoin(module.path, dep) : dep;
+
+                    if (_isDepCircle(module.id, depId)) {
+                        throw new Error('`' + module.id + '` and `' + depId + '` make up a circular dependencies relationship');
+                    }
+
+                    module.deps[i] = depId;
+                    _loadScript(depId);
+                });
             }
         }
 
-        // （依赖全部加载完成 || 入口同步机制） && 解析完成
+        // 依赖全部加载完成
         if (requireLength === doneLength) {
-            _execModule(mainMoule);
+            _execModule(execModule);
         }
     }
 
 
     /**
-     * 加载依赖，拉到外面来构造独立作用域，防止执行define切换路径影响到路径匹配
-     * @param relativeTo
-     * @param deps
+     * 判断是否构成循环引用
+     * @param src
+     * @param dep
+     * @returns {boolean}
      * @private
      */
-    function _loadRequeire(relativeTo, deps) {
-        var path = _getPathname(relativeTo);
+    function _isDepCircle(src, dep) {
+        var ret = !1;
 
-        _each(deps, function (i, dep) {
-            var id = _pathJoin(path, dep);
-            _loadScript(id);
+        if (!modules[dep]) {
+            return ret;
+        }
+
+        var deps = modules[dep].deps;
+
+        _each(deps, function (i, _dep) {
+            if (src === _dep) {
+                ret = !0;
+                return !1;
+            }
         });
+
+        return ret;
     }
 
 
@@ -192,9 +231,10 @@
      * @private
      */
     function _wrapModule(module) {
+        module.exports = {};
         module.exec = (function () {
             var require = function (dep) {
-                var depId = _pathJoin(_getPathname(module.id), dep);
+                var depId = module.isAnonymous ? _pathJoin(_getPathname(module.id), dep) : dep;
 
                 if (!modules[depId]) {
                     throw new Error('can not found module `' + depId + '`, require in `' + module.id + '`');
@@ -229,12 +269,15 @@
      * 异步加载并执行脚本
      * @param src {String} 脚本完整路径
      * @private
+     *
+     * @example
+     * src为相对、绝对路径的都会被加载，如“./”、“../”、“/”、“//”或“http://”
      */
     function _loadScript(src) {
-        var cleanSrc = '';
         var script;
-        var time;
+        var time = Date.now();
         var complete;
+        var srcType = _getPathType(src);
 
         if (modulesCache[src]) {
             return !1;
@@ -242,19 +285,33 @@
 
         modulesCache[src] = 1;
         requireLength++;
+
+        // 非路径型地址，主动触发 _saveModule
+        if (!srcType) {
+            // 这里使用延迟函数原因：
+            // 1. 与 onload 有相同效果了
+            // 2. 不再是同步函数了，不会递归执行，导致计数错误
+            return setTimeout(function () {
+                console.log('import', src, '0ms');
+                doneLength++;
+                _saveModule(script);
+            }, 1);
+        }
+
         script = document.createElement('script');
-        time = Date.now();
         complete = function (err) {
+            script.onload = script.onerror = null;
+
             if (!err) {
-                console.log(src, (Date.now() - time) + 'ms');
+                console.log('load', src, (Date.now() - time) + 'ms');
                 doneLength++;
                 _saveModule(script);
             }
 
-            script.onload = script.onerror = script.onreadystatechange = null;
             containerNode.removeChild(script);
         };
 
+        script.id = src;
         script.async = true;
         script.defer = true;
         script.src = _addRequestVersion(src);
@@ -263,11 +320,6 @@
         };
         script.onerror = function (err) {
             complete(err);
-        };
-        script.onreadystatechange = function () {
-            if (REG_READY_STATE_CHANGE.test(script.readyState)) {
-                complete();
-            }
         };
         containerNode.appendChild(script);
     }
@@ -284,17 +336,6 @@
 
 
     /**
-     * 或者文件路径的文件名
-     * @param filepath
-     * @returns {*|string}
-     * @private
-     */
-    function _getBasename(filepath) {
-        return (filepath.match(REG_FILE_BASENAME) || ['', ''])[1];
-    }
-
-
-    /**
      * 切换路径，必须是路径
      * @param {String} from 文件夹起始路径，路径结尾是文件夹名
      * @param {String} to 文件终点路径
@@ -305,11 +346,10 @@
      * to   ../de.js
      * =>   /de.js
      */
-
     function _pathJoin(from, to) {
         var fromHost = (from.match(REG_HOST) || [''])[0];
-        var fromBeiginType = from.replace(REG_HOST, '').match(REG_BEGIN_TYPE);
-        var toBeginType = to.replace(REG_HOST, '').match(REG_BEGIN_TYPE);
+        var fromBeiginType = _getPathType(from);
+        var toBeginType = _getPathType(to);
         var toDepth = 0;
         var from2 = from.replace(REG_HOST, '');
         var to2 = to;
@@ -322,9 +362,7 @@
             from2 += '/';
         }
 
-        if (toBeginType) {
-            toBeginType = toBeginType[0];
-        } else {
+        if (!toBeginType) {
             to2 = './' + to2;
             toBeginType = './';
         }
@@ -354,7 +392,7 @@
 
     /**
      * 解析出当前文本中的依赖信息，返回依赖数组
-     * @param data
+     * @param code {String} 源码
      * @returns {Array}
      * @private
      */
@@ -374,7 +412,7 @@
     /**
      * 判断是否为数组
      * @param obj
-     * @returns {*|boolean}
+     * @returns {Boolean}
      * @private
      */
     function _isArray(obj) {
@@ -385,7 +423,7 @@
     /**
      * 判断是否为函数
      * @param obj
-     * @returns {boolean}
+     * @returns {Boolean}
      * @private
      */
     function _isFunction(obj) {
@@ -396,7 +434,7 @@
     /**
      * 判断是否为字符串
      * @param obj
-     * @returns {boolean}
+     * @returns {Boolean}
      * @private
      */
     function _isString(obj) {
@@ -407,7 +445,7 @@
     /**
      * 遍历
      * @param list
-     * @param callback
+     * @param callback {Function} 返回 false，中断当前循环
      * @private
      */
     function _each(list, callback) {
@@ -416,12 +454,16 @@
 
         if (_isArray(list)) {
             for (i = 0, j = list.length; i < j; i++) {
-                callback(i, list[i]);
+                if (callback(i, list[i]) === false) {
+                    break;
+                }
             }
         } else if (typeof list === 'object') {
             for (i in list) {
                 if (list.hasOwnProperty(i)) {
-                    callback(i, list[i]);
+                    if (callback(i, list[i]) === false) {
+                        break;
+                    }
                 }
             }
         }
@@ -450,6 +492,32 @@
         var scripts = document.getElementsByTagName('script');
 
         return scripts[scripts.length - 1];
+    }
+
+
+    /**
+     * 获取 data-main 属性值
+     * @param node
+     * @returns {String}
+     * @private
+     */
+    function _getMain(node) {
+        if (node.dataset) {
+            return node.dataset.main;
+        }
+
+        return node.getAttribute('data-main');
+    }
+
+
+    /**
+     * 获取路径类型
+     * @param path
+     * @returns {String} 返回值有 “./”、“/”、“../”和“”（空字符串）
+     * @private
+     */
+    function _getPathType(path) {
+        return (path.replace(REG_HOST, '').match(REG_BEGIN_TYPE) || [''])[0];
     }
 })();
 
