@@ -1,8 +1,8 @@
 /*!
- * coolie 苦力
- * @author ydr.me
- * @create 2014-10-21 14:52
- */
+* coolie 苦力
+* @author ydr.me
+* @create 2014-10-21 14:52
+*/
 
 (function () {
     'use strict';
@@ -478,7 +478,7 @@
      */
     function _addRequestVersion(str) {
         return config.version ?
-            str + (str.indexOf('?') > -1 ? '&' : '?') + '_=' + encodeURIComponent(config.version) :
+        str + (str.indexOf('?') > -1 ? '&' : '?') + '_=' + encodeURIComponent(config.version) :
             str;
     }
 
@@ -520,4 +520,3 @@
         return (path.replace(REG_HOST, '').match(REG_BEGIN_TYPE) || [''])[0];
     }
 })();
-
