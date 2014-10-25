@@ -78,33 +78,11 @@
     并且，在clientX>430的时候取消默认拖动效果
 </div>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var event = require('/src/core/event/drag.js');
-        var demo1 = document.getElementById('demo1');
-        var demo2 = document.getElementById('demo2');
-        var demo3 = document.getElementById('demo3');
-        var times = 1;
 
-        event.on(demo2, 'dragstart', function (eve) {
-            times++;
-            if (times > 2) {
-                eve.preventDefault();
-            }
-        });
 
-        event.on(demo2, 'drag', function (eve) {
-            if(eve.clientX > 430){
-                eve.preventDefault();
-            }
-        });
+<script src="../../coolie.min.js" data-main="./core/event/drag.js"></script>
+<script src="../../coolie-config.js"></script>
 
-        event.on(demo2, 'dragend', function (eve) {
-            eve.preventDefault();
-        });
-    });
-    seajs.use('app');
-</script>
+
 </body>
 </html>

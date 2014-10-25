@@ -22,27 +22,12 @@
 </head>
 <body>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var jsonp = require('/src/core/communication/jsonp.js');
-        jsonp({
-            type: 'function',
-            url: 'http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?',
-            query: {
-                tags: "mount rainier",
-                tagmode: "any",
-                format: "json"
-            },
-            onsuccess: function (data) {
-                console.log(data);
-            },
-            onerror: function (err) {
-                console.log(err);
-            }
-        });
-    });
-    seajs.use('app');
-</script>
+
+
+
+<script src="../../coolie.min.js" data-main="./core/communication/jsonp.js"></script>
+<script src="../../coolie-config.js"></script>
+
+
 </body>
 </html>

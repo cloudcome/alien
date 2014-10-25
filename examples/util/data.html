@@ -21,13 +21,9 @@
     <title>data.html</title>
 </head>
 <body>
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var data = require('/src/util/data.js');
-        window.data = data;
-    });
-    seajs.use('app');
-</script>
+
+<script src="../coolie.min.js" data-main="./util/data.js"></script>
+<script src="../coolie-config.js"></script>
+
 </body>
 </html>

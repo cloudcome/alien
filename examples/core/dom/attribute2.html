@@ -87,31 +87,10 @@
     </div>
 </div>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var attribute = require('/src/core/dom/attribute.js');
-        var ret = document.getElementById('ret');
-        var demo = document.getElementById('demo');
-        var div3 = document.getElementById('div3');
-        var str = '';
-        var key = 'width';
 
-        window.attribute = attribute;
-        window.demo = demo;
+<script src="../../coolie.min.js" data-main="./core/dom/attribute2.js"></script>
+<script src="../../coolie-config.js"></script>
 
-        str += key + ' = ' + attribute[key](demo);
-        str += '<br>' + key + '设置为 200<br>';
-        attribute[key](demo, 200);
-        str += key + ' = ' + attribute[key](demo);
 
-        console.log(attribute.width(div3));
-//        console.log(attribute.state(div3));
-//        console.log(attribute.state(div3, 'show'));
-
-        ret.innerHTML = str;
-    });
-    seajs.use('app');
-</script>
 </body>
 </html>

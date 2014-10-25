@@ -53,31 +53,10 @@
     </div>
 </div>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Scrollbar = require('/src/ui/Scrollbar.js');
-        var demo = document.getElementById('demo');
-        var sl1 = new Scrollbar(demo);
 
-        document.getElementById('scrollTop').onclick = function(){
-            sl1.scrollTop();
-        };
+<script src="../coolie.min.js" data-main="./ui/Scrollbar.js"></script>
+<script src="../coolie-config.js"></script>
 
-        document.getElementById('scrollBottom').onclick = function(){
-            sl1.scrollBottom();
-        };
-
-        document.getElementById('scrollLeft').onclick = function(){
-            sl1.scrollLeft();
-        };
-
-        document.getElementById('scrollRight').onclick = function(){
-            sl1.scrollRight();
-        };
-    });
-    seajs.use('app');
-</script>
 
 </body>
 </html>

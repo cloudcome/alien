@@ -24,28 +24,12 @@
 
 <input type="file" name="file" id="file"/>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var upload = require('/src/core/communication/upload.js');
 
-        document.getElementById('file').onchange = function(){
-            if(this.files && this.files.length){
-                upload({
-                    url: './data.json',
-                    file: this
-                }).done(function (json) {
-                    console.log(json);
-                }).fail(function (err) {
-                    console.log(err);
-                }).progress(function (eve) {
-                    console.log(eve.alienDetail.complete);
-                });
-            }
-        };
-    });
-    seajs.use('app');
-</script>
+
+<script src="../../coolie.min.js" data-main="./core/communication/upload.js"></script>
+<script src="../../coolie-config.js"></script>
+
+
 
 </body>
 </html>

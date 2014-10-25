@@ -50,27 +50,8 @@
     <p>限制了拖动范围：0,0 => 400,400</p>
 </div>
 
+<script src="../coolie.min.js" data-main="./ui/Drag.js"></script>
+<script src="../coolie-config.js"></script>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Drag = require('/src/ui/Drag.js');
-        var demo = document.getElementById('demo');
-        var drag1 = new Drag(demo, {
-            min: {
-                x: 0,
-                y: 0
-            },
-            max: {
-                x: 400,
-                y: 400
-            },
-            handle: '#handle'
-        });
-
-        drag1;
-    });
-    seajs.use('app');
-</script>
 </body>
 </html>

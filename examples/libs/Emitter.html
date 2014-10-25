@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
- - emitter.html
+ - Emitter.html
  - @author ydr.me
  - 2014-09-20 11:14
  -->
@@ -19,31 +19,12 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>emitter.html</title>
+    <title>Emitter.html</title>
 </head>
 <body>
 
+<script src="../coolie.min.js" data-main="./libs/Emitter.js"></script>
+<script src="../coolie-config.js"></script>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Emitter = require('/src/libs/Emitter.js');
-        var emitter = new Emitter();
-
-        emitter.on('hi', function (data) {
-            alert('hi ' + (data || 'who??'));
-            return !1;
-        });
-
-        setTimeout(function () {
-            console.log(emitter.emit('hi'));
-        }, 1000);
-
-        setTimeout(function () {
-            console.log(emitter.emit('hi', '云淡然'));
-        }, 2000);
-    });
-    seajs.use('app');
-</script>
 </body>
 </html>

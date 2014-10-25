@@ -35,73 +35,8 @@
 <button id="btn4">4个按钮的 msg</button>
 <button id="btn5">5个按钮的 msg</button>
 
+<script src="../coolie.min.js" data-main="./ui/Msg.js"></script>
+<script src="../coolie-config.js"></script>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Msg = require('/src/ui/Msg.js');
-
-        document.getElementById('btn0').onclick = function () {
-            new Msg({
-                content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
-                buttons: []
-            });
-        }
-
-
-        document.getElementById('btn1').onclick = function () {
-            new Msg({
-                content: '你在朋友圈里这么流弊，你家里人造吗？',
-                buttons: ['我去年买了个表']
-            }).on('close', function (index) {
-                        alert(this.getOptions('buttons')[index]);
-                    });
-        }
-
-        document.getElementById('btn2').onclick = function () {
-            new Msg({
-                content: '你到底说不说，说不说，说不说？',
-                buttons: ['说', '不说']
-            }).on('close', function (index) {
-                        alert(this.getOptions('buttons')[index]);
-                    });
-        }
-
-        document.getElementById('btn3').onclick = function () {
-            new Msg({
-                content: '有你这么逗比的吗？',
-                buttons: [
-                    '有吗', '有吧', '有的'
-                ]
-            }).on('close', function (index) {
-                        alert(this.getOptions('buttons')[index]);
-                    });
-        }
-
-        document.getElementById('btn4').onclick = function () {
-            new Msg({
-                content: '这么多按钮，确定是你需要的？',
-                buttons: ['不知道', '应该是我需要的', '我也不知道', '还是越多越好吧']
-            }).on('close', function (index) {
-                        alert(this.getOptions('buttons')[index]);
-                    });
-        }
-
-        document.getElementById('btn5').onclick = function () {
-            new Msg({
-                content: '数一下这里一共出现了几个按钮？！',
-                buttons: ['一共1个按钮', '一共2个按钮', '一共3个按钮', '一共4个按钮', '算了，懒得数了']
-            }).on('close', function (index) {
-                        new Msg({
-                            style: 'danger',
-                            title: null,
-                            content: this.getOptions('buttons')[index],
-                            timeout: 1000
-                        });
-                    });
-        }
-    });
-    seajs.use('app');
-</script>
 </body>
 </html>

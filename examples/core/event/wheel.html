@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>mousewheel.html</title>
+    <title>wheel.html</title>
     <style>
         .ret {
             color: #ff2b63;
@@ -46,28 +46,10 @@
 <div id="demo">mousewheel here</div>
 
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var event = require('/src/core/event/wheel.js');
-        var ret1 = document.getElementById('ret1');
-        var ret2 = document.getElementById('ret2');
-        var ret3 = document.getElementById('ret3');
-        var demo = document.getElementById('demo');
 
-        event.on(demo, 'wheelstart', function (eve) {
-            ret1.innerHTML = 'event = on' + eve.type + '; ' + 'time = ' + Date.now();
-        });
+<script src="../../coolie.min.js" data-main="./core/event/wheel.js"></script>
+<script src="../../coolie-config.js"></script>
 
-        event.on(demo, 'wheelchange', function (eve) {
-            ret2.innerHTML = 'event = on' + eve.type + '; eve.alienDetail.deltaY = ' + eve.alienDetail.deltaY + '; ' + 'time = ' +  Date.now();
-        });
 
-        event.on(demo, 'wheelend', function (eve) {
-            ret3.innerHTML = 'event = on' + eve.type + '; ' + 'time = ' +  Date.now();
-        });
-    });
-    seajs.use('app');
-</script>
 </body>
 </html>

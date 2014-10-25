@@ -25,26 +25,11 @@
 
 <pre id="pre" style="font-size: 20px;line-height: 30px;background: #eee;padding: 20px;"></pre>
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Pagination = require('/src/libs/Pagination.js');
 
-        var p = new Pagination({
-            count: 99,
-            page: 67
-        });
-        var list = p.init();
-        var html = '';
+<script src="../coolie.min.js" data-main="./libs/Pagination.js"></script>
+<script src="../coolie-config.js"></script>
 
-        list.forEach(function (item) {
-            html += JSON.stringify(item) + '\n';
-        });
 
-        document.getElementById('pre').innerHTML = html;
-    });
-    seajs.use('app');
-</script>
 
 </body>
 </html>

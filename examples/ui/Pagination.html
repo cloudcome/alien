@@ -26,30 +26,9 @@
 <div id="ret"></div>
 
 
-<script src="/seajs/sea.js" id="script"></script>
-<script>
-    define('app', function (require) {
-        var Pagination = require('/src/ui/Pagination.js');
-        var ret = document.getElementById('ret');
-        var count = 1299;
-        var current = 1;
-        var settings = {
-            count: count,
-            page: current
-        };
-        var pg1 = new Pagination(ret, settings);
+<script src="../coolie.min.js" data-main="./ui/Pagination.js"></script>
+<script src="../coolie-config.js"></script>
 
-        pg1.on('change', function (page) {
-            this.render({
-                count: count,
-                page: page
-            });
-        }).on('change', function (page) {
-            console.log(page);
-        });
-    });
-    seajs.use('app');
-</script>
 
 </body>
 </html>
