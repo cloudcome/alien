@@ -45,23 +45,23 @@ define(function (require, exports, module) {
 
     /**
      * @link http://www.w3school.com.cn/jsref/dom_obj_event.asp
-     * - altKey	        返回当事件被触发时，"ALT" 是否被按下。
-     * - button	        返回当事件被触发时，哪个鼠标按钮被点击。
-     * - clientX	    返回当事件被触发时，鼠标指针的水平坐标。
-     * - clientY	    返回当事件被触发时，鼠标指针的垂直坐标。
-     * - ctrlKey	    返回当事件被触发时，"CTRL" 键是否被按下。
-     * - metaKey	    返回当事件被触发时，"meta" 键是否被按下。
-     * - relatedTarget	返回与事件的目标节点相关的节点。
-     * - screenX	    返回当某个事件被触发时，鼠标指针的水平坐标。
-     * - screenY	    返回当某个事件被触发时，鼠标指针的垂直坐标。
-     * - shiftKey	    返回当事件被触发时，"SHIFT" 键是否被按下。
-     * - bubbles	    返回布尔值，指示事件是否是起泡事件类型。
-     * - cancelable	    返回布尔值，指示事件是否可拥可取消的默认动作。
-     * - currentTarget	返回其事件监听器触发该事件的元素。
-     * - eventPhase	    返回事件传播的当前阶段。0=结束或未开始，1=捕获，2=到底，3=冒泡
-     * - target	        返回触发此事件的元素（事件的目标节点）。
-     * - timeStamp	    返回事件生成的日期和时间。
-     * - type	        返回当前 Event 对象表示的事件的名称。
+     * - altKey            返回当事件被触发时，"ALT" 是否被按下。
+     * - button            返回当事件被触发时，哪个鼠标按钮被点击。
+     * - clientX        返回当事件被触发时，鼠标指针的水平坐标。
+     * - clientY        返回当事件被触发时，鼠标指针的垂直坐标。
+     * - ctrlKey        返回当事件被触发时，"CTRL" 键是否被按下。
+     * - metaKey        返回当事件被触发时，"meta" 键是否被按下。
+     * - relatedTarget    返回与事件的目标节点相关的节点。
+     * - screenX        返回当某个事件被触发时，鼠标指针的水平坐标。
+     * - screenY        返回当某个事件被触发时，鼠标指针的垂直坐标。
+     * - shiftKey        返回当事件被触发时，"SHIFT" 键是否被按下。
+     * - bubbles        返回布尔值，指示事件是否是起泡事件类型。
+     * - cancelable        返回布尔值，指示事件是否可拥可取消的默认动作。
+     * - currentTarget    返回其事件监听器触发该事件的元素。
+     * - eventPhase        返回事件传播的当前阶段。0=结束或未开始，1=捕获，2=到底，3=冒泡
+     * - target            返回触发此事件的元素（事件的目标节点）。
+     * - timeStamp        返回事件生成的日期和时间。
+     * - type            返回当前 Event 对象表示的事件的名称。
      */
     var mustEventProperties = 'altKey button which clientX clientY ctrlKey metaKey relatedTarget pageX pageY screenX screenY shiftKey bubbles cancelable currentTaget eventPhase target timeStamp'.split(' ');
     var eventTypeArr = ['Events', 'HTMLEvents', 'MouseEvents', 'UIEvents', 'MutationEvents'];
@@ -285,8 +285,8 @@ define(function (require, exports, module) {
          * 移除事件监听
          * @param {window|HTMLElement|Node} element 元素
          * @param {String} eventType 事件类型
-         * @param {Function} [listener] 回调，回调为空表示删除所有已经在 alien 中注册的事件
-         * @param {Boolean} [isCapture] 是否事件捕获，默认false
+         * @param {Function} [listener=null] 回调，回调为空表示删除所有已经在 alien 中注册的事件
+         * @param {Boolean} [isCapture=false] 是否事件捕获，默认false
          *
          * @example
          * // remove one listener
@@ -306,7 +306,7 @@ define(function (require, exports, module) {
             var eventTypes = String(eventType).trim().split(regSpace);
 
             data.each(eventTypes, function (index, eventType) {
-                if(eventType){
+                if (eventType) {
                     args.splice(1, 1, eventType);
                     _un.apply(window, args);
                 }
@@ -316,23 +316,30 @@ define(function (require, exports, module) {
         /**
          * 获得某元素的事件队列长度
          * @param {window|HTMLElement|Node} ele 元素
-         * @param {String} eventType 事件类型
+         * @param {String} eventType 单个事件类型
          * @param {Boolean} [isCapture=false] 是否为捕获事件，默认为 false
          * @returns {Number} 事件队列长度，最小值为0
+         *
+         * @example
+         * event.length(ele, 'click');
+         * // => 0 or more
+         *
+         * event.length(ele, 'click', true);
+         * // => 0 or more
          */
         length: function (ele, eventType, isCapture) {
             var id = ele[key];
             eventType = String(eventType).trim();
 
-            if(!eventType){
+            if (!eventType) {
                 return 0;
             }
 
             return isCapture ?
                 (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
-                    isCaptureOriginalListeners[id][eventType] || []).length :
+                isCaptureOriginalListeners[id][eventType] || []).length :
                 (unCaptureOriginalListeners && unCaptureOriginalListeners[id] &&
-                    unCaptureOriginalListeners[id][eventType] || []).length;
+                unCaptureOriginalListeners[id][eventType] || []).length;
         }
     };
 
