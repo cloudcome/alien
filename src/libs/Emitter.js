@@ -92,9 +92,10 @@ define(function (require, exports, module) {
         /**
          * 事件触发，只要有一个事件返回false，那么就返回false，非链式调用
          * @method emit
-         * @param {String} eventType 事件类型，多个事件类型使用空格分开
+         * @param {Object} context 指定上下文，默认为 Emitter 实例对象
+         * @param {String|Object} [eventType] 事件类型，多个事件类型使用空格分开
          * @param {...*} arg 事件传参，多个参数依次即可
-         * @returns {Emitter}
+         * @returns {*} 函数执行结果
          *
          * @example
          * var emitter = new Emitter();
@@ -102,11 +103,22 @@ define(function (require, exports, module) {
          * emitter.emit('hi', 1, 2);
          * emitter.emit('hi', 1);
          * emitter.emit('hi');
+         * emitter.emit(window, 'hi');
+         * emitter.emit(window, 'hi', 1);
+         * emitter.emit(window, 'hi', 1, 2);
+         * emitter.emit(window, 'hi', 1, 2, 3);
          */
-        emit: function (eventType) {
+        emit: function (context, eventType) {
             var the = this;
-            var args = Array.prototype.slice.call(arguments, 1);
+            var args = arguments;
+            var arg0 = args[0];
+            var arg0IsObject = data.type(arg0) !== 'string';
+            var arg1 = args[1];
+            var emitArgs = Array.prototype.slice.call(arguments, arg0IsObject ? 2 : 1);
             var ret;
+
+            context = arg0IsObject ? arg0 : the;
+            eventType = arg0IsObject ? arg1 : arg0;
 
             if (!the._eventsPool) {
                 throw new Error('can not found emitter eventsPool');
@@ -115,7 +127,7 @@ define(function (require, exports, module) {
             _middleware(eventType, function (et) {
                 if (the._eventsPool[et]) {
                     data.each(the._eventsPool[et], function (index, listener) {
-                        if (listener.apply(the, args) === false) {
+                        if (listener.apply(context, emitArgs) === false) {
                             ret = !1;
                         }
                     });

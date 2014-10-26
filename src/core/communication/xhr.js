@@ -14,8 +14,9 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('../../util/data.js');
+    var klass = require('../../util/class.js');
     var qs = require('../navigator/querystring.js');
-    var Deferred = require('../../libs/Deferred.js');
+    var Emitter = require('../../libs/Emitter.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
     var defaults = {
@@ -44,23 +45,13 @@ define(function (require, exports, module) {
     };
     var index = 0;
     var regProtocol = /^([\w-]+:)\/\//;
+    var XHR = klass.create({
+        STATIC: {},
+        constructor: function (options) {
+            var the = this;
 
-    module.exports = {
-        /**
-         * ajax 请求
-         * @param {Object} [options] 配置参数
-         * @param {String} [options.url] 请求地址
-         * @param {String} [options.method] 请求方法，默认 GET
-         * @param {String} [options.dataType] 数据类型，默认 json
-         * @param {String|Object} [options.query] URL querstring
-         * @param {*} [options.data] 请求数据
-         * @param {Boolean} [options.isAsync] 是否异步，默认 true
-         * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
-         * @param {String} [options.username] 请求鉴权用户名
-         * @param {String} [options.password] 请求鉴权密码
-         * @returns {Deferred} 返回一个 Deferred 实例
-         */
-        ajax: function (options) {
+            Emitter.apply(the);
+
             options = data.extend(!0, {}, defaults, options);
 
             if (!options.headers) {
@@ -74,7 +65,7 @@ define(function (require, exports, module) {
             options.method = options.method.toUpperCase();
 
             var xhr = new XMLHttpRequest();
-            var df = new Deferred();
+
             var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
 
             xhr.onload = function () {
@@ -83,40 +74,39 @@ define(function (require, exports, module) {
 
                 // 200 - 300
                 if ((xhr.status >= 200 && xhr.status < 300) ||
-                    // 304
+                        // 304
                     xhr.status === 304 ||
-                    // file
+                        // file
                     (xhr.status === 0 && protocol === 'file:')) {
                     switch (options.dataType) {
                         case 'json':
                             try {
                                 json = JSON.parse(responseText);
-                                return df.resolve(json, xhr);
+                                return the.emit(xhr, 'success', json);
                             } catch (err) {
-                                return df.reject(err, xhr);
+                                return the.emit(xhr, 'error', err);
                             }
 
                             break;
 
                         default:
-                            df.resolve(responseText, xhr);
-                            break;
+                            return the.emit(xhr, 'success', responseText);
                     }
                 } else {
-                    df.reject(new Error('transmission status error'), xhr);
+                    return the.emit(xhr, 'error', new Error('transmission status error'));
                 }
             };
 
             xhr.onabort = function () {
-                df.reject(new Error('transmission is aborted'), xhr);
+                the.emit(xhr, 'error', new Error('transmission is aborted'));
             };
 
             xhr.ontimeout = function () {
-                df.reject(new Error('transmission has expired'), xhr);
+                the.emit(xhr, 'error', new Error('transmission has expired'));
             };
 
             xhr.onerror = function (err) {
-                df.reject(err, xhr);
+                the.emit(xhr, 'error', err);
             };
 
             xhr.upload.onprogress = function (eve) {
@@ -129,7 +119,7 @@ define(function (require, exports, module) {
                     eve.alienDetail.percent = (eve.alienDetail.complete * 100) + '%';
                 }
 
-                df.notify(eve, xhr);
+                the.emit(xhr, 'progress', eve);
             };
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
@@ -143,7 +133,39 @@ define(function (require, exports, module) {
             });
             xhr.send(_buildData(options));
 
-            return df;
+            the._xhr = xhr;
+            return the;
+        },
+        abort: function () {
+            var the = this;
+
+            the._xhr.abort();
+
+            return the;
+        }
+    }, Emitter);
+
+
+    module.exports = {
+        /**
+         * ajax 请求
+         * @param {Object} [options] 配置参数
+         * @param {String} [options.url] 请求地址
+         * @param {String} [options.method] 请求方法，默认 GET
+         * @param {Object} [options.headers] 请求头
+         * @param {String} [options.dataType=json] 数据类型，默认 json
+         * @param {String|Object} [options.query] URL querstring
+         * @param {*} [options.data] 请求数据
+         * @param {Boolean} [options.isAsync] 是否异步，默认 true
+         * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+         * @param {String} [options.username] 请求鉴权用户名
+         * @param {String} [options.password] 请求鉴权密码
+         *
+         * @example
+         * xhr.ajax().on('success', fn).on('error', fn);
+         */
+        ajax: function (options) {
+            return new XHR(options);
         },
         get: function (url, query) {
             return this.ajax({
@@ -156,7 +178,7 @@ define(function (require, exports, module) {
             return this.ajax({
                 method: 'POST',
                 url: url,
-                data: data,
+                data: data
             });
         }
     };
@@ -178,10 +200,10 @@ define(function (require, exports, module) {
         url = options.isCache ? url : url.replace(regCache, '').replace(regEnd, '');
 
         return (url +
-            (url.indexOf('?') > -1 ? '&' : '?') +
-            cache +
-            (cache ? '&' : '') +
-            querystring).replace(regEnd, '');
+        (url.indexOf('?') > -1 ? '&' : '?') +
+        cache +
+        (cache ? '&' : '') +
+        querystring).replace(regEnd, '');
     }
 
 

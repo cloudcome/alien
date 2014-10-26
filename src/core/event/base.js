@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var unCaptureRealListeners = {};
     var isCaptureRealListeners = {};
     var domId = 0;
-    var key = 'alien-core-event-base-';
+    var key = 'alien-core-event-base';
     var defaults = {
         // 是否冒泡
         bubbles: !0,

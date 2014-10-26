@@ -4,6 +4,7 @@
  * @author ydr.me
  * 2014年7月26日19:28:27
  * 2014年8月26日13:09:31
+ * 2014年10月24日00:24:32
  */
 
 
@@ -26,14 +27,14 @@
     'use strict';
 
     var _global = typeof global === 'undefined' ? window : global;
-
+    var slice = Array.prototype.slice;
     var _howdo = {
         task: function () {
             if (this.constructor === Howdo) {
                 return this;
             }
 
-            var args = [].slice.call(arguments);
+            var args = slice.call(arguments);
             var howdo = new Howdo();
 
             return howdo.task.apply(howdo, args);
@@ -43,7 +44,7 @@
                 return this;
             }
 
-            var args = [].slice.call(arguments);
+            var args = slice.call(arguments);
             var howdo = new Howdo();
 
             return howdo.each.apply(howdo, args);
@@ -69,6 +70,8 @@
         this.tasks = [];
         // 是否已经开始执行任务了
         this.hasStart = !1;
+        // 标识任务序号
+        this.index = 0;
     }
 
     Howdo.prototype = {
@@ -93,9 +96,16 @@
          * });
          */
         task: function (fn) {
-            this.tasks.push(fn);
+            var the = this;
 
-            return this;
+            if (typeof fn !== "function") {
+                throw new Error('howdo `task` must be a function');
+            }
+
+            fn.index = the.index++;
+            the.tasks.push(fn);
+
+            return the;
         },
 
 
@@ -137,18 +147,22 @@
                 for (i = 0, j = object.length; i < j; i++) {
                     task(i, object[i]);
                 }
-            } else {
+            } else if (typeof object === "object") {
                 for (i in object) {
-                    if (object.hasOwnProperty(i)) {
+                    if (object.hasOwnProperty && object.hasOwnProperty(i)) {
+                        task(i, object[i]);
+                    } else {
                         task(i, object[i]);
                     }
                 }
+            } else {
+                throw new Error('can not call each on' + object);
             }
 
             function task(key, val) {
                 howdo = howdo.task(function () {
                     var args = [key, val];
-                    args = args.concat([].slice.call(arguments));
+                    args = args.concat(slice.call(arguments));
                     callback.apply(val, args);
                 });
             }
@@ -186,22 +200,28 @@
                 return;
             }
 
+            if (typeof callback !== "function") {
+                throw new Error('howdo `follow` arguments[0] must be a function');
+            }
+
+
             this.hasStart = !0;
 
             var current = 0;
             var tasks = this.tasks;
             var count = tasks.length;
             var args = [];
+            var doneTask = {};
 
-            if(!count){
+            if (!count) {
                 return callback();
             }
 
             (function _follow() {
                 var fn = function () {
-                    args = [].slice.call(arguments);
+                    args = slice.call(arguments);
 
-                    if (args[0] !== null && args[0] !== undefined && args[0].constructor === Error) {
+                    if (args[0]) {
                         return callback.call(_global, args[0]);
                     }
 
@@ -209,7 +229,7 @@
 
                     if (current === count) {
                         callback.apply(_global, args);
-                    } else {
+                    } else if (current < count) {
                         args.shift();
                         _follow();
                     }
@@ -250,16 +270,20 @@
                 return;
             }
 
+            if (typeof callback !== "function") {
+                throw new Error('howdo `together` arguments[0] must be a function');
+            }
+
             this.hasStart = !0;
 
             var done = 0;
             var tasks = this.tasks;
             var count = tasks.length;
-            var data = {};
+            var taskData = [];
             var hasCallback = !1;
             var i = 0;
 
-            if(!count){
+            if (!count) {
                 return callback();
             }
 
@@ -273,23 +297,23 @@
                         return;
                     }
 
-                    var args = [].slice.call(arguments);
+                    var args = slice.call(arguments);
+                    var ret = [];
+                    var i = 0;
 
-                    if (args[0] !== null && args[0] !== undefined && args[0].constructor === Error) {
+                    if (args[0]) {
                         hasCallback = !0;
                         return callback.call(_global, args[0]);
                     }
 
-                    data[index] = args.slice(1);
+                    taskData[index] = args.slice(1);
                     done++;
 
                     if (done === count) {
-                        var ret = [];
-                        for (var i in data) {
-                            if (data.hasOwnProperty(i)) {
-                                ret = ret.concat(data[i]);
-                            }
+                        for (; i < taskData.length; i++) {
+                            ret = ret.concat(taskData[i]);
                         }
+
                         ret.unshift(null);
                         callback.apply(_global, ret);
                     }

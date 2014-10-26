@@ -180,10 +180,10 @@ define(function (require, exports, module) {
                     var ret = [];
 
                     if (keyType === 'string' || keyType === 'number') {
-                        return the._options[key];
+                        return the._options && the._options[key];
                     } else if (keyType === 'array') {
                         data.each(key, function (index, k) {
-                            ret.push(the._options[k]);
+                            ret.push(the._options && the._options[k]);
                         });
 
                         return ret;
@@ -197,7 +197,7 @@ define(function (require, exports, module) {
                     var keyType = data.type(key);
 
                     if (keyType === 'string' || keyType === 'number') {
-                        return the._options[key] = val;
+                        return the._options ? the._options[key] = val : undefined;
                     } else if (keyType === 'object') {
                         data.extend(the._options, key);
                     }
