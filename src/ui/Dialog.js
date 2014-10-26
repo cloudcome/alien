@@ -449,8 +449,8 @@ define(function (require, exports, module) {
                 height: options.height
             });
 
-            pos.width = attribute.width(the._dialog);
-            pos.height = attribute.height(the._dialog);
+            pos.width = attribute.outerWidth(the._dialog);
+            pos.height = attribute.outerHeight(the._dialog);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;

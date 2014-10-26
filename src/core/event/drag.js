@@ -106,7 +106,7 @@ define(function (require, exports, module) {
                 clone = modification.create('div', {
                     style: {
                         position: 'absolute',
-                        width: attribute.width(dragfor) - 2,
+                        width: attribute.outerWidth(dragfor) - 2,
                         height: attribute.height(dragfor) - 2,
                         left: attribute.left(dragfor),
                         top: attribute.top(dragfor),

@@ -161,8 +161,8 @@ define(function (require, exports, module) {
                     var dialog = the._dialog._dialog;
                     var x0 = attribute.left(dialog);
                     var y0 = attribute.top(dialog);
-                    var x1 = x0 + attribute.width(dialog);
-                    var y1 = y0 + attribute.height(dialog);
+                    var x1 = x0 + attribute.outerWidth(dialog);
+                    var y1 = y0 + attribute.outerHeight(dialog);
                     var x = mouseevent.clientX;
                     var y = mouseevent.clientY;
 

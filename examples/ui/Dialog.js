@@ -10,7 +10,8 @@ define(function (require) {
         height: 400,
         top: 0,
         title: null,
-        wrap: false
+        wrap: false,
+        canDrag: false
     });
     var d3 = new Dialog(demo3, {
         remote: 'http://wap.baidu.com/'

@@ -26,6 +26,10 @@ define(function (require, exports, module) {
     // -123.456
     var regNum = /^[+\-]?\d+(\.\d*)?$/;
     var regEndPoint = /\.$/;
+    var innerWidth = ['borderLeftWidth', 'borderRightWidth'];
+    var width = innerWidth.concat(['paddingLeft', 'paddingRight']);
+    var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
+    var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
 
     var attribute = module.exports = {
         /**
@@ -48,7 +52,7 @@ define(function (require, exports, module) {
          * attribute.attr(ele, ['href', 'title']);
          */
         attr: function (ele, key, val) {
-            if(!ele || ele.nodeType !== 1 || !key) {
+            if (!ele || ele.nodeType !== 1 || !key) {
                 return;
             }
 
@@ -62,7 +66,7 @@ define(function (require, exports, module) {
             });
         },
 
-        
+
         /**
          * 判断元素是否包含某个属性
          * @param {HTMLElement} ele 元素
@@ -75,7 +79,7 @@ define(function (require, exports, module) {
          * // => true
          */
         hasAttr: function (ele, key) {
-            if(!ele || ele.nodeType !== 1 || !key) {
+            if (!ele || ele.nodeType !== 1 || !key) {
                 return !1;
             }
 
@@ -93,7 +97,7 @@ define(function (require, exports, module) {
          * attribute.removeAttr(ele, 'href');
          */
         removeAttr: function (ele, key) {
-            if(!ele || ele.nodeType !== 1 ) {
+            if (!ele || ele.nodeType !== 1) {
                 return;
             }
 
@@ -183,7 +187,7 @@ define(function (require, exports, module) {
          * attribute.css(ele, ['width','height']);
          */
         css: function (ele, key, val, isImportant) {
-            if(!ele || ele.nodeType !== 1 || !key) {
+            if (!ele || ele.nodeType !== 1 || !key) {
                 return;
             }
 
@@ -206,7 +210,7 @@ define(function (require, exports, module) {
                     // ele.style[fix.key] = fix.val;
                     // 样式名, 样式值, 优先级
                     // object.setProperty (propertyName, propertyValue, priority);
-                    ele.style.setProperty(fix.key, fix.val, isImportant ? 'important': null);
+                    ele.style.setProperty(fix.key, fix.val, isImportant ? 'important' : null);
                 }
             });
         },
@@ -291,7 +295,7 @@ define(function (require, exports, module) {
          * // => {a: 1, b: 2}
          */
         data: function (ele, key, val) {
-            if(!ele || ele.nodeType !== 1 || !key) {
+            if (!ele || ele.nodeType !== 1 || !key) {
                 return;
             }
 
@@ -333,7 +337,7 @@ define(function (require, exports, module) {
          * attribute.html(ele);
          */
         html: function (ele, html) {
-            if(!ele || ele.nodeType !== 1) {
+            if (!ele || ele.nodeType !== 1) {
                 return;
             }
 
@@ -362,7 +366,7 @@ define(function (require, exports, module) {
          * attribute.text(ele);
          */
         text: function (ele, text) {
-            if(!ele || ele.nodeType !== 1) {
+            if (!ele || ele.nodeType !== 1) {
                 return;
             }
 
@@ -388,7 +392,7 @@ define(function (require, exports, module) {
          * attribute.addClass(ele, 'class1 class2');
          */
         addClass: function (ele, className) {
-            if(!ele || ele.nodeType !== 1) {
+            if (!ele || ele.nodeType !== 1) {
                 return;
             }
 
@@ -409,7 +413,7 @@ define(function (require, exports, module) {
          * attribute.removeClass(ele, 'class1 class2');
          */
         removeClass: function (ele, className) {
-            if(!ele || ele.nodeType !== 1) {
+            if (!ele || ele.nodeType !== 1) {
                 return;
             }
 
@@ -427,7 +431,7 @@ define(function (require, exports, module) {
          * attribute.hasClass(ele, 'class');
          */
         hasClass: function (ele, className) {
-            if(!ele || ele.nodeType !== 1) {
+            if (!ele || ele.nodeType !== 1) {
                 return !1;
             }
 
@@ -449,20 +453,20 @@ define(function (require, exports, module) {
             var block = 'block';
 
             // get
-            if(!state){
-                if(!ele || ele.nodeType !== 1) {
+            if (!state) {
+                if (!ele || ele.nodeType !== 1) {
                     return 'hide';
                 }
 
                 // 本身就是隐藏的
-                if(this.css(ele, key) === none) {
+                if (this.css(ele, key) === none) {
                     return 'hide';
                 }
 
-                while((temp = selector.parent(ele)) && temp.length){
+                while ((temp = selector.parent(ele)) && temp.length) {
                     ele = temp[0];
 
-                    if(this.css(ele, key) === none) {
+                    if (this.css(ele, key) === none) {
                         return 'hide';
                     }
                 }
@@ -473,20 +477,20 @@ define(function (require, exports, module) {
             // set
             nowState = this.state(ele);
 
-            if(nowState === state || !ele || ele.nodeType !== 1) {
+            if (nowState === state || !ele || ele.nodeType !== 1) {
                 return ret;
             }
 
-            if(nowState === 'show'){
+            if (nowState === 'show') {
                 ele.style.display = none;
-            }else{
-                while(this.state(ele)!== state ){
-                    if(this.css(ele, key) === none){
+            } else {
+                while (this.state(ele) !== state) {
+                    if (this.css(ele, key) === none) {
                         this.css(ele, key, block);
                         ret.push(ele);
                     }
 
-                    if((temp = selector.parent(ele)) && temp.length){
+                    if ((temp = selector.parent(ele)) && temp.length) {
                         ele = temp[0];
                     }
                 }
@@ -547,8 +551,17 @@ define(function (require, exports, module) {
          * // get
          * position.width(ele);
          */
-        width: function () {
+        outerWidth: function () {
             return _middleware('width', arguments);
+        },
+
+
+        innerWidth: function () {
+            return _middleware('width', arguments, innerWidth);
+        },
+
+        width: function () {
+            return _middleware('width', arguments, width);
         },
 
 
@@ -567,8 +580,14 @@ define(function (require, exports, module) {
          * // get
          * position.height(ele);
          */
-        height: function () {
+        outerHeight: function () {
             return _middleware('height', arguments);
+        },
+        innerHeight: function () {
+            return _middleware('height', arguments, innerHeight);
+        },
+        height: function () {
+            return _middleware('height', arguments, height);
         }
     };
 
@@ -729,23 +748,29 @@ define(function (require, exports, module) {
     }
 
 
-
     /**
      * 中间件
      * @param {String} key 求值类型
      * @param {Array} args 参数数组
-     * @param {Object} getSet 函数对象
+     * @param {Array} extraKey 额外附加
      * @returns {Number|undefined|*}
      * @private
      */
-    function _middleware(key, args) {
+    function _middleware(key, args, extraKey) {
         var ele;
         var eleType;
         var argsLength = args.length;
+        var extraVal = 0;
 
         if (argsLength) {
             ele = args[0];
             eleType = data.type(ele);
+
+            if (extraKey && eleType === 'element') {
+                data.each(extraKey, function (i, key) {
+                    extraVal += data.parseFloat(attribute.css(ele, key), 0);
+                });
+            }
 
             // 切换显隐
             return _swap(ele, function () {
@@ -753,10 +778,10 @@ define(function (require, exports, module) {
                 if (argsLength === 1) {
                     switch (eleType) {
                         case 'element':
-                            return ele.getBoundingClientRect()[key];
+                            return ele.getBoundingClientRect()[key] - extraVal;
 
                         case 'window':
-                            return window['inner' + (key === 'width'?'Width':'Height')];
+                            return window['inner' + (key === 'width' ? 'Width' : 'Height')];
 
                         case 'document':
                             return document.documentElement.getBoundingClientRect()[key];
@@ -764,7 +789,7 @@ define(function (require, exports, module) {
                 }
                 // set
                 else if (argsLength === 2 && eleType === 'element' && data.type(args[1]) === 'number') {
-                    _setBoundingClientRect(ele, key, args[1]);
+                    _setBoundingClientRect(ele, key, args[1] + extraVal);
                 }
             });
         }
@@ -822,9 +847,9 @@ define(function (require, exports, module) {
         var eles;
         var ret;
 
-        if(attribute.state(ele) === 'show'){
+        if (attribute.state(ele) === 'show') {
             return doWhat(ele);
-        }else{
+        } else {
             eles = attribute.state(ele, 'show');
 
             ret = doWhat(ele);

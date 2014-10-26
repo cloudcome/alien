@@ -79,12 +79,12 @@ define(function (require, exports, module) {
             var ele = the._ele;
             var tip = the._tooltip;
             var options = the._options;
-            var eleW = attribute.width(ele);
-            var eleH = attribute.height(ele);
+            var eleW = attribute.outerWidth(ele);
+            var eleH = attribute.outerHeight(ele);
             var eleL = attribute.left(ele);
             var eleT = attribute.top(ele);
-            var tipW = attribute.width(tip);
-            var tipH = attribute.height(tip);
+            var tipW = attribute.outerWidth(tip);
+            var tipH = attribute.outerHeight(tip);
             var winW = attribute.width(window);
             var winH = attribute.height(window);
             var scrL = attribute.scrollLeft(window);

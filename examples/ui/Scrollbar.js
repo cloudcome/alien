@@ -1,21 +1,26 @@
 define(function (require) {
-    var Scrollbar = require('/src/ui/Scrollbar.js');
+    'use strict';
+
+    var Scrollbar = require('/src/ui/Scrollbar/index.js');
     var demo = document.getElementById('demo');
-    var sl1 = new Scrollbar(demo);
+    var scrollbar1 = new Scrollbar('#demo');
+    var scrollbar2 = new Scrollbar('#textarea');
 
-    document.getElementById('scrollTop').onclick = function(){
-        sl1.scrollTop();
-    };
-
-    document.getElementById('scrollBottom').onclick = function(){
-        sl1.scrollBottom();
-    };
-
-    document.getElementById('scrollLeft').onclick = function(){
-        sl1.scrollLeft();
-    };
-
-    document.getElementById('scrollRight').onclick = function(){
-        sl1.scrollRight();
-    };
+    //document.getElementById('scrollTop').onclick = function(){
+    //    scrollbar1.scrollTop();
+    //};
+    //
+    //document.getElementById('scrollBottom').onclick = function(){
+    //    scrollbar1.scrollBottom();
+    //};
+    //
+    //document.getElementById('scrollLeft').onclick = function(){
+    //    scrollbar1.scrollLeft();
+    //};
+    //
+    //document.getElementById('scrollRight').onclick = function(){
+    //    scrollbar1.scrollRight();
+    //};
+    //
+    //window.scrollbar1 = scrollbar1;
 });
