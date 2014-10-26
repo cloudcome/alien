@@ -7,7 +7,7 @@
 define(function (require) {
     'use strict';
 
-    var Banner = require('../../src/ui/Banner.js');
+    var Banner = require('/src/ui/Banner/index.js');
     var slider1 = document.getElementById('slider1');
     var index = document.getElementById('index');
     var bn = new Banner(slider1,{

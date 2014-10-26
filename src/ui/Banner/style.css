@@ -1,0 +1,60 @@
+.alien-ui-banner-nav {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.33);
+    padding: 6px 12px;
+    border-radius: 4px
+}
+
+.alien-ui-banner-nav-item {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    padding: 0;
+    margin: 0 6px;
+    text-align: center;
+    background: #666;
+    cursor: default
+}
+
+.alien-ui-banner-nav-item-active {
+    background: #fff
+}
+
+.alien-ui-banner-nav-text .alien-ui-banner-nav-item {
+    width: auto;
+    height: 20px;
+    line-height: 22px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #EEE;
+    padding: 0 6px
+}
+
+.alien-ui-banner-nav-text .alien-ui-banner-nav-item-active {
+    color: #000
+}
+
+.alien-ui-banner-nav-square .alien-ui-banner-nav-item {
+}
+
+.alien-ui-banner-nav-circle .alien-ui-banner-nav-item {
+    border-radius: 100%
+}
+
+.alien-ui-banner-nav-transparent {
+    background: transparent
+}
+
+.alien-ui-banner-nav-transparent .alien-ui-banner-nav-item {
+    background: transparent;
+    color: #999
+}
+
+.alien-ui-banner-nav-transparent .alien-ui-banner-nav-item-active {
+    color: #fff;
+    font-weight: 900
+}

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Tooltip = require('/src/ui/Tooltip.js');
+    var Tooltip = require('/src/ui/Tooltip/index.js');
     var btn0 = document.getElementById('btn-0');
     var btn1 = document.getElementById('btn-1');
     var btn2 = document.getElementById('btn-2');

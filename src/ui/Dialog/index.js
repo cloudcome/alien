@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Dialog
+     * @module ui/Dialog/index
      * @requires util/class
      * @requires util/data
      * @requires core/dom/modification
@@ -24,16 +24,18 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../core/event/drag.js');
-    var klass = require('../util/class.js');
-    var Emitter = require('../libs/Emitter.js');
-    var modification = require('../core/dom/modification.js');
-    var selector = require('../core/dom/selector.js');
-    var attribute = require('../core/dom/attribute.js');
-    var animation = require('../core/dom/animation.js');
-    var event = require('../core/event/touch.js');
-    var data = require('../util/data.js');
-    var index = 0;
+
+    require('../../core/event/drag.js');
+    var style = require('text!./style.css');
+    var klass = require('../../util/class.js');
+    var Emitter = require('../../libs/Emitter.js');
+    var modification = require('../../core/dom/modification.js');
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var animation = require('../../core/dom/animation.js');
+    var event = require('../../core/event/touch.js');
+    var data = require('../../util/data.js');
+    var alienIndex = 0;
     var zIndex = 9999;
 //    var html = document.documentElement;
     var body = document.body;
@@ -92,13 +94,13 @@ define(function (require, exports, module) {
             var the = this;
 
 
-            the._ele = selector.query(ele);
+            the._$ele = selector.query(ele);
 
-            if(!the._ele.length){
+            if (!the._$ele.length) {
                 throw new Error('instance element is empty');
             }
 
-            the._ele = the._ele[0];
+            the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
             the._init();
@@ -111,53 +113,53 @@ define(function (require, exports, module) {
          * @private
          */
         _init: function () {
-            index++;
+            alienIndex++;
 
             var the = this;
             var options = the._options;
-            var bg = modification.create('div', {
-                id: 'alien-ui-dialog-bg-' + index,
+            var $bg = modification.create('div', {
+                id: 'alien-ui-dialog-bg-' + alienIndex,
                 'class': 'alien-ui-dialog-bg'
             });
-            var dialog = modification.create('div', {
-                id: 'alien-ui-dialog-' + index,
+            var $dialog = modification.create('div', {
+                id: 'alien-ui-dialog-' + alienIndex,
                 'class': dialogClass,
                 role: 'dialog',
-                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + index : null
+                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + alienIndex : null
             });
-            var bd;
+            var $bd;
 
             if (options.isWrap) {
-                dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
-                    (options.title === null ? '' :
-                        '<div class="alien-ui-dialog-header"' +
-                        (options.canDrag ? ' draggablefor="alien-ui-dialog-' + index + '"' : '') +
-                        '>' +
-                        '<div class="' + titleClass + '">' + options.title + '</div>' +
-                        '<div class="' + closeClass + '">&times;</div>' +
-                        '</div>') +
-                    '<div class="' + bodyClass + '"></div>' +
-                    '</div>';
-                bd = selector.query('.' + bodyClass, dialog)[0];
+                $dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
+                (options.title === null ? '' :
+                '<div class="alien-ui-dialog-header"' +
+                (options.canDrag ? ' draggablefor="alien-ui-dialog-' + alienIndex + '"' : '') +
+                '>' +
+                '<div class="' + titleClass + '">' + options.title + '</div>' +
+                '<div class="' + closeClass + '">&times;</div>' +
+                '</div>') +
+                '<div class="' + bodyClass + '"></div>' +
+                '</div>';
+                $bd = selector.query('.' + bodyClass, $dialog)[0];
             }
 
-            modification.insert(bg, body, 'beforeend');
-            modification.insert(dialog, bg, 'beforeend');
-            the._bg = bg;
+            modification.insert($bg, body, 'beforeend');
+            modification.insert($dialog, $bg, 'beforeend');
+            the._$bg = $bg;
 
-            the._dialog = dialog;
+            the._$dialog = $dialog;
             the._hasOpen = !1;
             the._zIndex = 0;
-            the._id = index;
+            the._id = alienIndex;
             dialogsMap[the._id] = the;
 
-            modification.insert(the._ele, bd ? bd : dialog, 'beforeend');
+            modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
 
-            event.on(dialog, 'click tap', '.' + closeClass, function () {
+            event.on($dialog, 'click tap', '.' + closeClass, function () {
                 the.close();
             });
 
-            event.on(the._bg, 'click tap', function (eve) {
+            event.on(the._$bg, 'click tap', function (eve) {
                 eve.stopPropagation();
 
                 if (!selector.closest(eve.target, '.' + dialogClass).length) {
@@ -166,7 +168,7 @@ define(function (require, exports, module) {
             });
 
             event.on(window, animationendEventType, function () {
-                attribute.removeClass(the._dialog, shakeClass);
+                attribute.removeClass(the._$dialog, shakeClass);
             });
 
             return the;
@@ -179,8 +181,8 @@ define(function (require, exports, module) {
          */
         open: function (callback) {
             var the = this;
-            var bg = the._bg;
-            var dialog = the._dialog;
+            var $bg = the._$bg;
+            var $dialog = the._$dialog;
             var to;
             var options = the._options;
             var findIndex;
@@ -200,16 +202,16 @@ define(function (require, exports, module) {
             attribute.addClass(body, overflowClass);
 
             if (options.content || options.remote) {
-                the._ele.innerHTML = '';
+                the._$ele.innerHTML = '';
             }
 
-            attribute.css(bg, {
+            attribute.css($bg, {
                 display: 'block',
                 zIndex: ++zIndex,
                 opacity: 0
             });
 
-            attribute.css(dialog, {
+            attribute.css($dialog, {
                 display: 'block',
                 visibility: 'hidden',
                 width: options.width,
@@ -221,7 +223,7 @@ define(function (require, exports, module) {
             to.opacity = '';
             to.transform = 'scale(1)';
 
-            attribute.css(dialog, {
+            attribute.css($dialog, {
                 opacity: 0,
                 visibility: 'visible',
                 left: to.left,
@@ -229,14 +231,14 @@ define(function (require, exports, module) {
                 transform: 'scale(0)'
             });
 
-            animation.animate(bg, {
+            animation.animate($bg, {
                 opacity: 1
             }, {
                 duration: options.duration,
                 easing: options.easing
             });
 
-            animation.animate(dialog, to, {
+            animation.animate($dialog, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
@@ -266,8 +268,8 @@ define(function (require, exports, module) {
          */
         close: function (callback) {
             var the = this;
-            var bg = the._bg;
-            var dialog = the._dialog;
+            var $bg = the._$bg;
+            var $dialog = the._$dialog;
             var options = the._options;
 //            var theH = attribute.height(dialog);
 
@@ -282,7 +284,7 @@ define(function (require, exports, module) {
                 attribute.removeClass(body, overflowClass);
             }
 
-            animation.animate(dialog, {
+            animation.animate($dialog, {
                 opacity: 0,
                 transform: 'scale(0)'
             }, {
@@ -290,14 +292,14 @@ define(function (require, exports, module) {
                 easing: options.easing
             });
 
-            animation.animate(bg, {
+            animation.animate($bg, {
                 opacity: 0
             }, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                attribute.css(bg, 'display', 'none');
-                attribute.css(dialog, 'transform', 'scale(1)');
+                attribute.css($bg, 'display', 'none');
+                attribute.css($dialog, 'transform', 'scale(1)');
                 the.emit('close');
 
                 if (data.type(callback) === 'function') {
@@ -319,7 +321,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var pos = the._position();
 
-            animation.animate(the._dialog, pos, {
+            animation.animate(the._$dialog, pos, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
@@ -340,13 +342,13 @@ define(function (require, exports, module) {
             var the = this;
             var contentType = data.type(content);
 
-            the._ele.innerHTML = '';
+            the._$ele.innerHTML = '';
 
             if (contentType === 'string') {
                 content = modification.create('#text', content);
             }
 
-            modification.insert(content, the._ele, 'beforeend');
+            modification.insert(content, the._$ele, 'beforeend');
             the.position();
 
             return the;
@@ -363,7 +365,7 @@ define(function (require, exports, module) {
 
             var the = this;
             var options = the._options;
-            var iframe = modification.create('iframe', {
+            var $iframe = modification.create('iframe', {
                 src: url,
                 'class': iframeClass,
                 style: {
@@ -371,8 +373,8 @@ define(function (require, exports, module) {
                 }
             });
 
-            the._ele.innerHTML = '';
-            modification.insert(iframe, the._ele, 'beforeend');
+            the._$ele.innerHTML = '';
+            modification.insert($iframe, the._$ele, 'beforeend');
             the.position();
 
             return the;
@@ -389,10 +391,10 @@ define(function (require, exports, module) {
             if (the.shakeTimeid) {
                 the.shakeTimeid = 0;
                 clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the._dialog, shakeClass);
+                attribute.removeClass(the._$dialog, shakeClass);
             }
 
-            attribute.addClass(the._dialog, shakeClass);
+            attribute.addClass(the._$dialog, shakeClass);
 
             return the;
         },
@@ -412,15 +414,15 @@ define(function (require, exports, module) {
 
 
                 // 将内容放到 body 里
-                modification.insert(the._ele, body, 'beforeend');
+                modification.insert(the._$ele, body, 'beforeend');
 
                 // 移除事件监听
-                event.un(the._dialog, 'click tap');
-                event.un(the._bg, 'click tap');
-                event.un(the._dialog, animationendEventType);
+                event.un(the._$dialog, 'click tap');
+                event.un(the._$bg, 'click tap');
+                event.un(the._$dialog, animationendEventType);
 
                 // 在 DOM 里删除
-                modification.remove(the._bg);
+                modification.remove(the._$bg);
 
                 if (data.type(callback) === 'function') {
                     callback.call(the);
@@ -432,7 +434,6 @@ define(function (require, exports, module) {
         /**
          * 获取对话框需要定位的终点位置
          * @returns {Object}
-         * @type {{width:Number,height:Number,left:Number,top:Number}}
          * @private
          */
         _position: function () {
@@ -442,15 +443,15 @@ define(function (require, exports, module) {
             var winH = attribute.height(window);
             var pos = {};
 
-            animation.stop(the._dialog, !0);
+            animation.stop(the._$dialog, !0);
 
-            attribute.css(the._dialog, {
+            attribute.css(the._$dialog, {
                 width: options.width,
                 height: options.height
             });
 
-            pos.width = attribute.outerWidth(the._dialog);
-            pos.height = attribute.outerHeight(the._dialog);
+            pos.width = attribute.outerWidth(the._$dialog);
+            pos.height = attribute.outerHeight(the._$dialog);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
@@ -469,25 +470,7 @@ define(function (require, exports, module) {
             return pos;
         }
     }, Emitter);
-    var style =
-        // 外层
-        '.alien-ui-dialog-overflow{position:relative;width:100%;overflow:hidden}' +
-        // 背景
-        '.alien-ui-dialog-bg{display:none;position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(255,255,255,.3);overflow:auto;-webkit-overflow-scrolling:touch}' +
-        '.alien-ui-dialog{position:absolute;width:500px;background:#fff}' +
-        '.alien-ui-dialog-container{box-shadow:0 0 20px #A0A0A0;height:100%;overflow:hidden}' +
-        // 标题
-        '.alien-ui-dialog-header{position:relative;font-weight:normal;overflow:hidden;background:-moz-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:-ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);background:linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%)}' +
-        '.alien-ui-dialog-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:10px;font-size:12px;text-align:center;line-height:12px;cursor:move;color:#444}' +
-        '.alien-ui-dialog-close{position:absolute;top:0;right:0;color:#ccc;width:32px;height:32px;text-align:center;cursor:pointer;font:normal normal normal 30px/32px Arial}' +
-        '.alien-ui-dialog-close:hover{color:#888}' +
-        '.alien-ui-dialog-body{position:relative;padding:20px;overflow:auto}' +
-        '.alien-ui-dialog-iframe{display:block;border:0;margin:0;padding:0;width:100%;height:400px}' +
-        // shake
-        '@-webkit-keyframes alien-ui-dialog-shake {0%, 100% {-webkit-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-webkit-transform:translateX(-10px)}20%, 40%, 60%, 80% {-webkit-transform:translateX(10px)}}' +
-        '@-moz-keyframes alien-ui-dialog-shake {0%, 100% {-moz-transform:translateX(0)}10%, 30%, 50%, 70%, 90% {-moz-transform:translateX(-10px)}20%, 40%, 60%, 80% {-moz-transform:translateX(10px)}}' +
-        '@keyframes alien-ui-dialog-shake {0%, 100% {transform:translateX(0)}10%, 30%, 50%, 70%, 90% {transform:translateX(-10px)}20%, 40%, 60%, 80% {transform:translateX(10px)}}' +
-        '.alien-ui-dialog-shake{-webkit-animation:both 500ms alien-ui-dialog-shake;-moz-animation:both 500ms alien-ui-dialog-shake;-ms-animation:both 500ms alien-ui-dialog-shake;-o-animation:both 500ms alien-ui-dialog-shake;animation:both 500ms alien-ui-dialog-shake}';
+
 
     modification.importStyle(style);
 

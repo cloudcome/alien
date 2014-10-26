@@ -1,5 +1,7 @@
 define(function (require) {
-    var Pagination = require('/src/ui/Pagination.js');
+    'use strict';
+
+    var Pagination = require('/src/ui/Pagination/index.js');
     var ret = document.getElementById('ret');
     var count = 1299;
     var current = 1;

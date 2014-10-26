@@ -1,12 +1,14 @@
 define(function (require) {
-    var Msg = require('/src/ui/Msg.js');
+    'use strict';
+
+    var Msg = require('/src/ui/Msg/index.js');
 
     document.getElementById('btn0').onclick = function () {
         new Msg({
             content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
             buttons: []
         });
-    }
+    };
 
 
     document.getElementById('btn1').onclick = function () {
@@ -16,7 +18,7 @@ define(function (require) {
         }).on('close', function (index) {
                 alert(this.getOptions('buttons')[index]);
             });
-    }
+    };
 
     document.getElementById('btn2').onclick = function () {
         new Msg({
@@ -25,7 +27,7 @@ define(function (require) {
         }).on('close', function (index) {
                 alert(this.getOptions('buttons')[index]);
             });
-    }
+    };
 
     document.getElementById('btn3').onclick = function () {
         new Msg({
@@ -36,7 +38,7 @@ define(function (require) {
         }).on('close', function (index) {
                 alert(this.getOptions('buttons')[index]);
             });
-    }
+    };
 
     document.getElementById('btn4').onclick = function () {
         new Msg({
@@ -45,7 +47,7 @@ define(function (require) {
         }).on('close', function (index) {
                 alert(this.getOptions('buttons')[index]);
             });
-    }
+    };
 
     document.getElementById('btn5').onclick = function () {
         new Msg({
@@ -59,5 +61,5 @@ define(function (require) {
                     timeout: 1000
                 });
             });
-    }
+    };
 });

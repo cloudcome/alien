@@ -19,14 +19,15 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var klass = require('../util/class.js');
-    var data = require('../util/data.js');
-    var List = require('../libs/Pagination.js');
-    var Emitter = require('../libs/Emitter.js');
-    var selector = require('../core/dom/selector.js');
-    var modification = require('../core/dom/modification.js');
-    var attribute = require('../core/dom/attribute.js');
-    var event = require('../core/event/touch.js');
+    var style = require('text!./style.css');
+    var klass = require('../../util/class.js');
+    var data = require('../../util/data.js');
+    var List = require('../../libs/Pagination.js');
+    var Emitter = require('../../libs/Emitter.js');
+    var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var event = require('../../core/event/touch.js');
     var regPage = /{page}/g;
     var regText = /{text}/g;
     var regClass = /{class}/g;
@@ -37,9 +38,6 @@ define(function (require, exports, module) {
         next: '下一页',
         normal: '<div class="' + itemClass + '{class}" data-page="{page}">{text}</div>',
         disabled: '<div class="' + itemClass + ' alien-ui-pagination-disabled">...</div>'
-    };
-    var noop = function () {
-        // ignore
     };
     var defaults = {
         count: 1,
@@ -169,16 +167,6 @@ define(function (require, exports, module) {
             the._ele.innerHTML = '';
         }
     }, Emitter);
-    var style =
-        '.alien-ui-pagination{display:inline-block}' +
-        '.alien-ui-pagination *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}' +
-        '.alien-ui-pagination-item{display:inline-block;padding:10px;border:1px solid #ddd;min-width:20px;height:16px;line-height:16px;font-size:14px;font-weight:normal;border-right-width:0;color:#1E77B6;text-align:center;cursor:pointer}' +
-        '.alien-ui-pagination-item:first-child{border-radius:4px 0 0 4px}' +
-        '.alien-ui-pagination-item:last-child{border-right-width:1px;border-radius:0 4px 4px 0}' +
-        '.alien-ui-pagination-item:hover{background:#eee}' +
-        '.alien-ui-pagination-item:active{background:#ddd}' +
-        '.alien-ui-pagination-disabled,.alien-ui-pagination-disabled:hover,.alien-ui-pagination-disabled:active{background:#fff;cursor:not-allowed;color: #777;}' +
-        '.alien-ui-pagination-active,.alien-ui-pagination-active:hover,.alien-ui-pagination-active:active{background:#428bca;border-color:#428bca;color:#fff;cursor:default}';
 
     modification.importStyle(style);
 

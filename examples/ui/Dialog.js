@@ -1,5 +1,7 @@
 define(function (require) {
-    var Dialog = require('/src/ui/Dialog.js');
+    'use strict';
+
+    var Dialog = require('/src/ui/Dialog/index.js');
     var demo1 = document.getElementById('demo1');
     var demo2 = document.getElementById('demo2');
     var demo3 = document.getElementById('demo3');

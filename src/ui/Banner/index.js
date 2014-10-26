@@ -22,14 +22,15 @@ define(function (require, exports, module) {
         // ignore
     };
     var index = 0;
-    var event = require('../core/event/touch.js');
-    var modification = require('../core/dom/modification.js');
-    var selector = require('../core/dom/selector.js');
-    var attribute = require('../core/dom/attribute.js');
-    var animation = require('../core/dom/animation.js');
-    var klass = require('../util/class.js');
-    var data = require('../util/data.js');
-    var Emitter = require('../libs/Emitter.js');
+    var style = require('text!./style.css');
+    var event = require('../../core/event/touch.js');
+    var modification = require('../../core/dom/modification.js');
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var animation = require('../../core/dom/animation.js');
+    var klass = require('../../util/class.js');
+    var data = require('../../util/data.js');
+    var Emitter = require('../../libs/Emitter.js');
     var navActiveClass = 'alien-ui-banner-nav-item-active';
     var navItemClass = 'alien-ui-banner-nav-item';
     var defaults = {
@@ -51,7 +52,7 @@ define(function (require, exports, module) {
     };
 
     var Banner = klass.create({
-        STATIC:{
+        STATIC: {
             /**
              * 默认配置
              * @name defaults
@@ -72,14 +73,13 @@ define(function (require, exports, module) {
         constructor: function (ele, options) {
             var the = this;
 
+            ele = selector.query(ele);
 
-            the._ele = selector.query(ele);
-
-            if(!the._ele.length){
+            if (!ele.length) {
                 throw new Error('instance element is empty');
             }
 
-            the._ele = the._ele[0];
+            the._$ele = ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
             the._init();
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
 
             the._id = ++index;
             the._showIndex = 0;
-            the._items = selector.query(options.item, the._ele);
+            the._$items = selector.query(options.item, the._$ele);
             the._wrap();
             the.resize(options);
             the.play(options.autoPlay);
@@ -121,35 +121,35 @@ define(function (require, exports, module) {
 
             if (options.navStyle) {
                 nav = '<div class="alien-ui-banner-nav alien-ui-banner-nav-' + options.navStyle + '' +
-                    (options.navText === 'number' ? ' alien-ui-banner-nav-text' : '') +
-                    '">';
+                (options.navText === 'number' ? ' alien-ui-banner-nav-text' : '') +
+                '">';
 
-                data.each(the._items, function (index) {
+                data.each(the._$items, function (index) {
                     nav += '<div class="alien-ui-banner-nav-item' +
-                        (index === 0 ? ' ' + navActiveClass : '') +
-                        '" data-index=' + index + '>' +
-                        (options.navText === 'number' ? index + 1 : '&nbsp;') +
-                        '</div>';
+                    (index === 0 ? ' ' + navActiveClass : '') +
+                    '" data-index=' + index + '>' +
+                    (options.navText === 'number' ? index + 1 : '&nbsp;') +
+                    '</div>';
                 });
 
                 nav += '</div>';
             }
 
-            if (the._items.length > 1) {
+            if (the._$items.length > 1) {
                 // 复制头尾项目
-                clone0 = the._items[0].cloneNode(!0);
-                clone1 = the._items[the._items.length - 1].cloneNode(!0);
+                clone0 = the._$items[0].cloneNode(!0);
+                clone1 = the._$items[the._$items.length - 1].cloneNode(!0);
 
-                modification.insert(clone1, the._ele, 'afterbegin');
-                modification.insert(clone0, the._ele, 'beforeend');
-                the._items.unshift(clone1);
-                the._items.push(clone0);
+                modification.insert(clone1, the._$ele, 'afterbegin');
+                modification.insert(clone0, the._$ele, 'beforeend');
+                the._$items.unshift(clone1);
+                the._$items.push(clone0);
             }
 
             // 包裹一层
-            modification.wrap(the._ele, '<div id="alien-ui-banner-' + the._id + '" class="alien-ui-banner"/>');
+            modification.wrap(the._$ele, '<div id="alien-ui-banner-' + the._id + '" class="alien-ui-banner"/>');
 
-            the._banner = selector.parent(the._ele)[0];
+            the._banner = selector.parent(the._$ele)[0];
             nav = modification.parse(nav);
             the._nav = nav;
 
@@ -179,9 +179,9 @@ define(function (require, exports, module) {
                     var index = attribute.data(this, 'index');
                     var type = index > the._showIndex ? 'next' : 'prev';
 
-                    if (the._showIndex === the._items.length - 3 && index === 0) {
+                    if (the._showIndex === the._$items.length - 3 && index === 0) {
                         type = 'next';
-                    } else if (the._showIndex === 0 && index === the._items.length - 3) {
+                    } else if (the._showIndex === 0 && index === the._$items.length - 3) {
                         type = 'prev';
                     }
 
@@ -203,9 +203,9 @@ define(function (require, exports, module) {
             event.on(the._banner, 'touchstart', function (eve) {
                 if (eve.touches && eve.touches.length === 1) {
                     the.pause();
-                    attribute.css(the._items[0], 'visibility', 'hidden');
-                    attribute.css(the._items[the._items.length - 1], 'visibility', 'hidden');
-                    left = parseInt(attribute.css(the._ele, 'left'));
+                    attribute.css(the._$items[0], 'visibility', 'hidden');
+                    attribute.css(the._$items[the._$items.length - 1], 'visibility', 'hidden');
+                    left = parseInt(attribute.css(the._$ele, 'left'));
                     x0 = eve.touches[0].pageX;
                 }
 
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
             event.on(the._banner, 'touchmove', function (eve) {
                 if (eve.touches && eve.touches.length === 1) {
                     x1 = eve.touches[0].pageX;
-                    attribute.css(the._ele, 'left', left + x1 - x0);
+                    attribute.css(the._$ele, 'left', left + x1 - x0);
                 }
 
                 eve.preventDefault();
@@ -228,7 +228,7 @@ define(function (require, exports, module) {
                     index = the._getIndex();
 
                     if (index === the._showIndex) {
-                        animation.animate(the._ele, {
+                        animation.animate(the._$ele, {
                             left: -(index + 1) * options.width
                         }, {
                             duration: options.duration,
@@ -242,8 +242,8 @@ define(function (require, exports, module) {
 
             // 触摸结束
             function _touchdone() {
-                attribute.css(the._items[0], 'visibility', 'visible');
-                attribute.css(the._items[the._items.length - 1], 'visibility', 'visible');
+                attribute.css(the._$items[0], 'visibility', 'visible');
+                attribute.css(the._$items[the._$items.length - 1], 'visibility', 'visible');
             }
         },
 
@@ -256,15 +256,15 @@ define(function (require, exports, module) {
         _getIndex: function () {
             var the = this;
             var options = the._options;
-            var left = -parseFloat(attribute.css(the._ele, 'left')) - options.width;
+            var left = -parseFloat(attribute.css(the._$ele, 'left')) - options.width;
 
             // 左尽头
             if (left <= 0) {
                 return 0;
             }
             // 右尽头
-            else if (left >= options.width * (the._items.length - 3)) {
-                return the._items.length - 3;
+            else if (left >= options.width * (the._$items.length - 3)) {
+                return the._$items.length - 3;
             }
             // 中间
             else {
@@ -284,7 +284,7 @@ define(function (require, exports, module) {
             var argL = args.length;
             var the = this;
             var options = the._options;
-            var count = the._items.length - 2;
+            var count = the._$items.length - 2;
             var playIndex;
 
             if (count < 2 || index === the._showIndex) {
@@ -303,15 +303,15 @@ define(function (require, exports, module) {
             }
 
             playIndex =
-                    type === 'next' ?
-                (the._showIndex === count - 1 ? count + 1 : index + 1) :
-                (the._showIndex === 0 ? 0 : index + 1);
+                type === 'next' ?
+                    (the._showIndex === count - 1 ? count + 1 : index + 1) :
+                    (the._showIndex === 0 ? 0 : index + 1);
 
             if (playIndex > count + 1) {
                 throw new Error('can not go to ' + type + ' ' + index);
             }
 
-            animation.animate(the._ele, {
+            animation.animate(the._$ele, {
                 left: -options.width * playIndex
             }, {
                 duration: options.duration,
@@ -321,11 +321,11 @@ define(function (require, exports, module) {
 
                 // 替换结尾
                 if (type !== 'next' && the._showIndex === 0) {
-                    attribute.css(the._ele, 'left', -options.width * count);
+                    attribute.css(the._$ele, 'left', -options.width * count);
                 }
                 // 替换开头
                 else if (type === 'next' && the._showIndex === count - 1) {
-                    attribute.css(the._ele, 'left', -options.width);
+                    attribute.css(the._$ele, 'left', -options.width);
                 }
 
                 the._showIndex = index;
@@ -355,7 +355,7 @@ define(function (require, exports, module) {
             var the = this;
             var index = the._showIndex;
 
-            if (the._items.length < 4) {
+            if (the._$items.length < 4) {
                 return the;
             }
 
@@ -363,7 +363,7 @@ define(function (require, exports, module) {
 
             // 到达左边缘
             if (index < 0) {
-                index = the._items.length - 3;
+                index = the._$items.length - 3;
             }
 
             the.index('prev', index, callback);
@@ -381,14 +381,14 @@ define(function (require, exports, module) {
             var the = this;
             var index = the._showIndex;
 
-            if (the._items.length < 4) {
+            if (the._$items.length < 4) {
                 return the;
             }
 
             index++;
 
             // 到达右边缘
-            if (index === the._items.length - 2) {
+            if (index === the._$items.length - 2) {
                 index = 0;
             }
 
@@ -407,7 +407,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if (the._items.length < 4) {
+            if (the._$items.length < 4) {
                 return the;
             }
 
@@ -437,7 +437,7 @@ define(function (require, exports, module) {
         pause: function () {
             var the = this;
 
-            if (the._items.length < 4) {
+            if (the._$items.length < 4) {
                 return the;
             }
 
@@ -464,7 +464,7 @@ define(function (require, exports, module) {
             options.width = size.width || options.width;
             options.height = size.height || options.height;
 
-            data.each(the._items, function (index, item) {
+            data.each(the._$items, function (index, item) {
                 attribute.css(item, {
                     width: options.width,
                     height: options.height,
@@ -472,10 +472,10 @@ define(function (require, exports, module) {
                 });
             });
 
-            attribute.css(the._ele, {
+            attribute.css(the._$ele, {
                 position: 'relative',
-                left: the._items.length > 3 ? -(the._showIndex + 1) * options.width : 0,
-                width: options.width * the._items.length,
+                left: the._$items.length > 3 ? -(the._showIndex + 1) * options.width : 0,
+                width: options.width * the._$items.length,
                 height: options.height
             });
 
@@ -502,14 +502,14 @@ define(function (require, exports, module) {
             // 停止动画
             the.pause();
 
-            data.each(the._items, function (index, item) {
+            data.each(the._$items, function (index, item) {
                 attribute.css(item, {
                     width: '',
                     height: '',
                     float: ''
                 });
             });
-            attribute.css(the._ele, {
+            attribute.css(the._$ele, {
                 width: '',
                 height: '',
                 left: ''
@@ -517,21 +517,9 @@ define(function (require, exports, module) {
 
             // 移除 wrap
             modification.remove(the._nav);
-            modification.unwrap(the._ele, 'div');
+            modification.unwrap(the._$ele, 'div');
         }
     }, Emitter);
-    var style =
-        // 导航
-        '.alien-ui-banner-nav{position:absolute;right:10px;bottom:10px;overflow:hidden;background:rgba(0, 0, 0, 0.33);padding:6px 12px;border-radius:4px}' +
-        '.alien-ui-banner-nav-item{display:inline-block;width:10px;height:10px;line-height:10px;padding:0;margin:0 6px;text-align:center;background:#666;cursor:default}' +
-        '.alien-ui-banner-nav-item-active{background:#fff}' +
-        '.alien-ui-banner-nav-text .alien-ui-banner-nav-item{width:auto;height:20px;line-height:22px;font-size:12px;font-weight:normal;color:#EEE;padding:0 6px}' +
-        '.alien-ui-banner-nav-text .alien-ui-banner-nav-item-active{color:#000}' +
-        '.alien-ui-banner-nav-square .alien-ui-banner-nav-item{}' +
-        '.alien-ui-banner-nav-circle .alien-ui-banner-nav-item{border-radius:100%}' +
-        '.alien-ui-banner-nav-transparent{background:transparent}' +
-        '.alien-ui-banner-nav-transparent .alien-ui-banner-nav-item{background:transparent;color:#999}' +
-        '.alien-ui-banner-nav-transparent .alien-ui-banner-nav-item-active{color:#fff;font-weight:900}';
 
     modification.importStyle(style);
 

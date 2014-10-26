@@ -1,0 +1,54 @@
+.alien-ui-pagination {
+    display: inline-block
+}
+
+.alien-ui-pagination * {
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box
+}
+
+.alien-ui-pagination-item {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    min-width: 20px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 14px;
+    font-weight: normal;
+    border-right-width: 0;
+    color: #1E77B6;
+    text-align: center;
+    cursor: pointer
+}
+
+.alien-ui-pagination-item:first-child {
+    border-radius: 4px 0 0 4px
+}
+
+.alien-ui-pagination-item:last-child {
+    border-right-width: 1px;
+    border-radius: 0 4px 4px 0
+}
+
+.alien-ui-pagination-item:hover {
+    background: #eee
+}
+
+.alien-ui-pagination-item:active {
+    background: #ddd
+}
+
+.alien-ui-pagination-disabled, .alien-ui-pagination-disabled:hover, .alien-ui-pagination-disabled:active {
+    background: #fff;
+    cursor: not-allowed;
+    color: #777;
+}
+
+.alien-ui-pagination-active, .alien-ui-pagination-active:hover, .alien-ui-pagination-active:active {
+    background: #428bca;
+    border-color: #428bca;
+    color: #fff;
+    cursor: default
+}
