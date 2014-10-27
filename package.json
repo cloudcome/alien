@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "private": true,
     "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
-    "script": {
+    "scripts": {
         "jsdoc-dft": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/dft/ -d ./docs/",
         "jsdoc-bs3": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/"
     },
