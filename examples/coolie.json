@@ -1,5 +1,4 @@
 {
-    "src": "./",
     "dest": "./dest/",
     "main": ["./ui/Banner.js"],
     "coolie-config.js": "./coolie-config.js",

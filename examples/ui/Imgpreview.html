@@ -21,14 +21,14 @@
     <title>Imgpreview.html</title>
     <style>
 
-        #preview{
+        #preview {
             min-width: 108px;
             height: 108px;
             line-height: 100px;
             border: 4px solid #ddd;
         }
 
-        #preview img{
+        #preview img {
             vertical-align: middle;
             max-width: 100px;
             height: auto;
@@ -38,9 +38,52 @@
 </head>
 <body>
 
-<input type="file" name="file" id="file"/>
+<input type="file" name="file" id="file" multiple/>
 
 <div id="preview">图片</div>
+
+<script>
+    var data = [
+        {
+            name: 'name 1',
+            loves: ['love 1', 'love 2', 'love 3']
+        },
+        {
+            name: 'name 2',
+            loves: ['love 1', 'love 2', 'love 3', 'love 4', 'love 5']
+        }
+    ];
+</script>
+
+<ul ng-peat="item in data">
+    <li>
+        <p>{{item.name}}</p>
+        <ul ng-repeat="lv in item.loves">
+            <li>lv</li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
+    <li>
+        <p>name 1</p>
+        <ul>
+            <li>love 1</li>
+            <li>love 2</li>
+            <li>love 3</li>
+        </ul>
+    </li>
+    <li>
+        <p>name 2</p>
+        <ul>
+            <li>love 1</li>
+            <li>love 2</li>
+            <li>love 3</li>
+            <li>love 4</li>
+            <li>love 5</li>
+        </ul>
+    </li>
+</ul>
 
 <script src="../coolie.min.js" data-main="./ui/Imgpreview.js"></script>
 <script src="../coolie-config.js"></script>

@@ -5,6 +5,8 @@
 - https://github.com/joyent/node
 - https://github.com/aui/artTemplate
 - https://github.com/yyx990803/vue
+- https://github.com/barretlee/javascript-multiple-download/blob/master/lib.
+- https://github.com/enyojs/canvas
 
 
 # 文档注释变量
