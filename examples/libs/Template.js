@@ -11,7 +11,7 @@ define(function (require) {
         love: '<b>FED</b>',
         books: ['JavaScript 语言精粹', '百年孤独']
     };
-    var t = new Template().init(textarea.value);
+    var t = new Template(textarea.value);
     Template.addFilter('test1', function (val) {
         return '【test1过滤' + val +'】'
     });
@@ -22,7 +22,7 @@ define(function (require) {
     render.innerHTML = t.render(dd).replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     btn.onclick = function () {
-        var t = new Template().init(textarea.value);
+        var t = new Template(textarea.value);
         render.innerHTML = t.render(dd).replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 });

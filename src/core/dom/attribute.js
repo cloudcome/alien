@@ -797,23 +797,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 格式化字符串为数字
-     * @param {*} number
-     * @returns {Number} NaN 返回0，其他正常返回
-     * @private
-     */
-    function _parseFloat(number) {
-        number = parseFloat(number);
-
-        if (isNaN(number)) {
-            return 0;
-        }
-
-        return number;
-    }
-
-
-    /**
      * 设置元素的位置
      * @param {Element} ele 元素
      * @param {String} key 键名
@@ -821,18 +804,33 @@ define(function (require, exports, module) {
      * @private
      */
     function _setBoundingClientRect(ele, key, val) {
-        var rect = ele.getBoundingClientRect();
-        var now = rect[key];
-        var width = rect.width;
-        var height = rect.height;
-        var deleta = val - now;
+        var elePos = attribute.css(ele, 'position');
+        var rect;
+        var now;
+        var width;
+        var height;
+        var deleta;
         var css;
 
+        // 绝对定位的元素，先设置其 top、left值
+        if (elePos === 'absolute') {
+            attribute.css(ele, {
+                top: ele.offsetTop,
+                left: ele.offsetLeft
+            });
+        }
+
+        rect = ele.getBoundingClientRect();
+        now = rect[key];
+        width = rect.width;
+        height = rect.height;
+        deleta = val - now;
+
         if (attribute.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
-            css = _parseFloat(attribute.css(ele, 'margin-' + key));
+            css = data.parseFloat(attribute.css(ele, 'margin-' + key), 0);
             attribute.css(ele, 'margin-' + key, css + deleta);
         } else {
-            css = _parseFloat(attribute.css(ele, key));
+            css = data.parseFloat(attribute.css(ele, key), 0);
             attribute.css(ele, key, css + deleta);
         }
     }

@@ -113,8 +113,9 @@ define(function (require, exports, module) {
                 }
             }
         },
-        constructor: function (options) {
+        constructor: function (tmplate, options) {
             this._options = utilData.extend(!0, {}, defaults, options);
+            this._init(tmplate);
         },
 
 
@@ -122,11 +123,12 @@ define(function (require, exports, module) {
          * 初始化一个模板引擎
          * @param {String} template 模板字符串
          * @returns {Template}
+         * @private
          *
          * @example
          * tp.init("{{name}}");
          */
-        init: function (template) {
+        _init: function (template) {
             var the = this;
             var options = the._options;
             var _var = 'alienTemplateOutput_' + Date.now();
@@ -438,6 +440,11 @@ define(function (require, exports, module) {
      * @param {String} [options.closeTag="}}"] 结束标记，默认为"}}"
      * @param {Boolean} [options.compress=true] 是否压缩，默认为 true
      * @constructor
+     *
+     * @example
+     * var tpl = new Template('{{name}}');
+     * tpl.render({name: 'yundanran'});
+     * // => 'yundanran'
      */
     module.exports = Template;
 
