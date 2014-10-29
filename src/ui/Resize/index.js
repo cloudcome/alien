@@ -117,6 +117,10 @@ define(function (require, exports, module) {
                     inDrag = !0;
                     x0 = eve.pageX;
                     y0 = eve.pageY;
+                    the._pos = {
+                        width: attribute.innerWidth(the._$ele),
+                        height: attribute.innerHeight(the._$ele)
+                    };
                     val0 = the._pos[prop];
                     min = options['min' + upperCase];
                     max = options['max' + upperCase];
