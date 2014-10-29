@@ -134,6 +134,7 @@ define(function (require, exports, module) {
             event.on($drag, 'drag', function (eve) {
                 var delta;
                 var val;
+                var val2;
 
                 eve.preventDefault();
 
@@ -155,7 +156,8 @@ define(function (require, exports, module) {
                     attribute['inner' + upperCase](the._$ele, val);
 
                     if (options.ratio) {
-                        attribute['inner' + upperCase2](the._$ele, isWidth ? val / options.ratio : val * options.ratio);
+                        attribute['inner' + upperCase2](the._$ele, val2 = isWidth ? val / options.ratio : val * options.ratio);
+                        the._pos[prop2] = val2;
                     }
 
                     the.emit('resize', the._pos);
