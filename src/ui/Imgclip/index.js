@@ -15,7 +15,9 @@ define(function (require, exports, module) {
      * @module core/dom/selector
      * @module core/dom/modification
      * @module core/dom/attribute
-     * @module core/dom/drag
+     * @module core/dom/animation
+     * @module core/event/drag
+     * @module ui/Resize/index
      */
     'use strict';
 
@@ -28,8 +30,12 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
+    var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/drag.js');
     var Resize = require('../Resize/index.js');
+    var animationOptions = {
+        duration: 345
+    };
     var alienIndex = 1;
     var defaults = {
         minWidth: 0,
@@ -102,13 +108,8 @@ define(function (require, exports, module) {
             the._$in = selector.query('.alien-ui-imgclip-in', $wrap)[0];
             modification.insert($img, the._$sele, 'afterbegin');
             the._$img = $img;
-            // 选区的位置
-            the._selection = {
-                top: 0,
-                left: 0,
-                width: 0,
-                height: 0
-            };
+            // 重置选区
+            the._reset();
             the._resize = new Resize(the._$sele, the._options);
             the._on();
             the.on('clipstart clipend', the._updateClipRange);
@@ -133,31 +134,49 @@ define(function (require, exports, module) {
                 maxHeight: the._maxHeight = adjust[1]
             });
         },
+        /**
+         * 重置选区
+         * @private
+         */
+        _reset: function () {
+            var the = this;
+
+            the._selection = {
+                top: 0,
+                left: 0,
+                width: 0,
+                height: 0
+            };
+        },
         _on: function () {
             var the = this;
             var x0;
             var y0;
             var left0;
             var top0;
-            // 0 未拖动
-            // 1 正在拖动
+            // 0 无选区
+            // 1 正在选区
             // 2 已有选区
             // 3 移动选区
-            // 4 伸缩选区
+            // 4 缩放选区
             var state = 0;
+            var isReset = !1;
             var options = the._options;
 
             event.on(the._$wrap, 'dragstart', function (eve) {
-                eve.preventDefault();
                 var left;
                 var top;
 
-                if (state === 0) {
+                eve.preventDefault();
+
+                // 开始新选区
+                if (state === 0 || state === 2) {
+                    isReset = state === 2;
+                    state = 1;
                     left = attribute.left(the._$wrap);
                     top = attribute.top(the._$wrap);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
-                    state = 1;
                     attribute.css(the._$bg, 'display', 'block');
                     attribute.css(the._$sele, {
                         display: 'block',
@@ -207,6 +226,8 @@ define(function (require, exports, module) {
             event.on(the._$wrap, 'dragend', function (eve) {
                 var deltaLeft;
                 var deltaTop;
+                var selectionProp = {};
+                var imgProp = {};
 
                 eve.preventDefault();
 
@@ -215,21 +236,29 @@ define(function (require, exports, module) {
 
                     // 1. 调整尺寸
                     if (the._selection.width < options.minWidth) {
-                        attribute.css(the._$sele, 'width', the._selection.width = options.minWidth);
+                        selectionProp.width = the._selection.width = options.minWidth;
+                        //animation.animate(the._$sele, {
+                        //    width: the._selection.width = options.minWidth
+                        //}, animationOptions);
                     }
 
                     if (the._selection.height < options.minHeight) {
-                        attribute.css(the._$sele, 'height', the._selection.height = options.minHeight);
+                        selectionProp.height = the._selection.height = options.minHeight;
                     }
 
                     // 2. 调整位置
                     if ((deltaLeft = the._selection.width + the._selection.left - the._wrapWidth) > 0) {
-                        attribute.css(the._$sele, 'left', the._selection.left -= deltaLeft);
+                        selectionProp.left = the._selection.left -= deltaLeft;
+                        imgProp.left = -the._selection.left;
                     }
 
                     if ((deltaTop = the._selection.height + the._selection.top - the._wrapHeight) > 0) {
-                        attribute.css(the._$sele, 'top', the._selection.top -= deltaTop);
+                        selectionProp.top = the._selection.top -= deltaTop;
+                        imgProp.top = -the._selection.top;
                     }
+
+                    animation.animate(the._$sele, selectionProp, animationOptions);
+                    animation.animate(the._$img, imgProp, animationOptions);
 
                     the.emit('clipend', the._selection);
                 }
@@ -318,16 +347,15 @@ define(function (require, exports, module) {
 
             event.on(the._$bg, 'click', function () {
                 if (state === 2) {
-                    state = 0;
-                    attribute.css(the._$bg, 'display', 'none');
-                    attribute.css(the._$sele, 'display', 'none');
-                    the._selection = {
-                        top: 0,
-                        left: 0,
-                        width: 0,
-                        height: 0
-                    };
-                    the.emit('destroy', the._selection);
+                    if (isReset) {
+                        isReset = !1;
+                    } else {
+                        state = 0;
+                        attribute.css(the._$bg, 'display', 'none');
+                        attribute.css(the._$sele, 'display', 'none');
+                        the._reset();
+                        the.emit('destroy', the._selection);
+                    }
                 }
             });
         },
@@ -385,7 +413,7 @@ define(function (require, exports, module) {
         }
 
         return width / height > ratio ?
-            (isReferToSmaller ? [width, width / ratio] : [height * ratio, height]):
+            (isReferToSmaller ? [width, width / ratio] : [height * ratio, height]) :
             (isReferToSmaller ? [height * ratio, height] : [width, width / ratio]);
     }
 });
