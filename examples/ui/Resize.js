@@ -5,7 +5,8 @@ define(function (require) {
         minWidth: 100,
         minHeight: 100,
         maxWidth: 500,
-        maxHeight: 500
+        maxHeight: 500,
+        ratio: 1
     });
 
     resize.on('resize', function (size) {
