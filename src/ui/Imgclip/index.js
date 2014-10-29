@@ -113,6 +113,8 @@ define(function (require, exports, module) {
             the._resize = new Resize(the._$sele, the._options);
             the._on();
             the.on('clipstart clipend', the._updateClipRange);
+
+            return the;
         },
         /**
          * 更新选区的范围
