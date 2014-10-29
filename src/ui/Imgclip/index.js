@@ -7,7 +7,6 @@
 
 define(function (require, exports, module) {
     /**
-     * @todo 增加 ui/Resize，独立出来
      * @module ui/Imgclip/index
      * @module libs/Template
      * @module libs/Emitter
@@ -30,13 +29,14 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/drag.js');
+    var Resize = require('../Resize/index.js');
     var alienIndex = 1;
     var defaults = {
-        minWidth: 100,
-        minHeight: 100,
-        maxWidth: null,
-        maxHeight: null,
-        ratio: 1
+        minWidth: 0,
+        minHeight: 0,
+        maxWidth: 0,
+        maxHeight: 0,
+        ratio: 0
     };
     var Imgclip = klass.create({
         STATIC: {
@@ -44,6 +44,7 @@ define(function (require, exports, module) {
         },
         constructor: function ($ele, options) {
             var the = this;
+            var adjust;
 
             $ele = selector.query($ele);
 
@@ -53,7 +54,11 @@ define(function (require, exports, module) {
 
             Emitter.apply(the);
             the._$ele = $ele[0];
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = options = data.extend(!0, {}, defaults, options);
+
+            adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
+            options.minWidth = adjust[0];
+            options.minHeight = adjust[1];
 
             if (the._$ele.complete) {
                 the._init();
@@ -76,10 +81,19 @@ define(function (require, exports, module) {
 
             $wrap = the._$wrap = modification.parse(wrap)[0];
             modification.insert($wrap, $ele, 'afterend');
+
+            // 外围尺寸
+            the._wrapWidth = attribute.width($ele);
+            the._wrapHeight = attribute.height($ele);
+
+            // 选区最大尺寸
+            the._maxWidth = the._wrapWidth;
+            the._maxHeight = the._wrapHeight;
+
             attribute.css($wrap, {
                 position: 'absolute',
-                width: the._width = attribute.width($ele),
-                height: the._height = attribute.height($ele)
+                width: the._wrapWidth,
+                height: the._wrapHeight
             });
             attribute.top($wrap, attribute.top($ele));
             attribute.left($wrap, attribute.left($ele));
@@ -88,25 +102,50 @@ define(function (require, exports, module) {
             the._$in = selector.query('.alien-ui-imgclip-in', $wrap)[0];
             modification.insert($img, the._$sele, 'afterbegin');
             the._$img = $img;
-            the.x0 = 0;
-            the.y0 = 0;
-            the.x1 = 0;
-            the.y1 = 0;
+            // 选区的位置
+            the._selection = {
+                top: 0,
+                left: 0,
+                width: 0,
+                height: 0
+            };
+            the._resize = new Resize(the._$sele, the._options);
             the._on();
+            the.on('clipstart clipend', the._updateClipRange);
+        },
+        /**
+         * 更新选区的范围
+         * @private
+         */
+        _updateClipRange: function () {
+            var the = this;
+            var options = the._options;
+            var maxWidth = the._wrapWidth - the._selection.left;
+            var maxHeight = the._wrapHeight - the._selection.top;
+            var adjust = _adjustSize(maxWidth, maxHeight, options.ratio);
+
+            the._maxLeft = the._wrapWidth - the._selection.width;
+            the._maxTop = the._wrapHeight - the._selection.height;
+            the._resize.setOptions({
+                minWidth: options.minWidth,
+                minHeight: options.minHeight,
+                maxWidth: the._maxWidth = adjust[0],
+                maxHeight: the._maxHeight = adjust[1]
+            });
         },
         _on: function () {
             var the = this;
-            var left0;
-            var top0;
-            var width0;
-            var height0;
             var x0;
             var y0;
+            var left0;
+            var top0;
             // 0 未拖动
             // 1 正在拖动
             // 2 已有选区
-            // 3 改变选区
+            // 3 移动选区
+            // 4 伸缩选区
             var state = 0;
+            var options = the._options;
 
             event.on(the._$wrap, 'dragstart', function (eve) {
                 eve.preventDefault();
@@ -114,95 +153,125 @@ define(function (require, exports, module) {
                 var top;
 
                 if (state === 0) {
-                    left0 = attribute.left(the._$wrap);
-                    top0 = attribute.top(the._$wrap);
+                    left = attribute.left(the._$wrap);
+                    top = attribute.top(the._$wrap);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
                     state = 1;
                     attribute.css(the._$bg, 'display', 'block');
                     attribute.css(the._$sele, {
                         display: 'block',
-                        left: left = x0 - left0,
-                        top: top = y0 - top0,
+                        left: the._selection.left = x0 - left,
+                        top: the._selection.top = y0 - top,
                         width: 0,
                         height: 0
                     });
                     attribute.css(the._$img, {
-                        left: -left,
-                        top: -top
+                        left: -the._selection.left,
+                        top: -the._selection.top
                     });
+                    the.emit('clipstart', the._selection);
                 }
             });
 
             event.on(the._$wrap, 'drag', function (eve) {
-                var deltaX;
-                var deltaY;
-
                 eve.preventDefault();
+                var width;
+                var height;
+                var adjust;
 
                 if (state === 1) {
-                    deltaX = eve.pageX - x0;
-                    deltaY = eve.pageY - y0;
-                    attribute.css(the._$sele, {
-                        width: deltaX,
-                        height: deltaY
-                    });
-                } else if (state === 2) {
+                    width = eve.pageX - x0;
+                    height = eve.pageY - y0;
 
+                    if (width > the._maxWidth) {
+                        width = the._maxWidth;
+                    }
+
+                    if (height > the._maxHeight) {
+                        height = the._maxHeight;
+                    }
+
+                    adjust = _adjustSize(width, height, options.ratio);
+                    width = adjust[0];
+                    height = adjust[1];
+
+                    attribute.css(the._$sele, {
+                        width: the._selection.width = width,
+                        height: the._selection.height = height
+                    });
+                    the.emit('clip', the._selection);
                 }
             });
 
             event.on(the._$wrap, 'dragend', function (eve) {
+                var deltaLeft;
+                var deltaTop;
+
                 eve.preventDefault();
 
                 if (state === 1) {
                     state = 2;
+
+                    // 1. 调整尺寸
+                    if (the._selection.width < options.minWidth) {
+                        attribute.css(the._$sele, 'width', the._selection.width = options.minWidth);
+                    }
+
+                    if (the._selection.height < options.minHeight) {
+                        attribute.css(the._$sele, 'height', the._selection.height = options.minHeight);
+                    }
+
+                    // 2. 调整位置
+                    if ((deltaLeft = the._selection.width + the._selection.left - the._wrapWidth) > 0) {
+                        attribute.css(the._$sele, 'left', the._selection.left -= deltaLeft);
+                    }
+
+                    if ((deltaTop = the._selection.height + the._selection.top - the._wrapHeight) > 0) {
+                        attribute.css(the._$sele, 'top', the._selection.top -= deltaTop);
+                    }
+
+                    the.emit('clipend', the._selection);
                 }
             });
 
-            event.on(the._$in, 'dragstart', function (eve) {
+            event.on(the._$sele, 'dragstart', function (eve) {
                 eve.preventDefault();
 
                 if (state === 2) {
                     state = 3;
                     left0 = data.parseFloat(attribute.css(the._$sele, 'left'), 0);
                     top0 = data.parseFloat(attribute.css(the._$sele, 'top'), 0);
-                    width0 = data.parseFloat(attribute.css(the._$sele, 'width'), 0);
-                    height0 = data.parseFloat(attribute.css(the._$sele, 'height'), 0);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
-                    console.log('x0 => ' + x0);
+                    the.emit('clipstart', the._selection);
                 }
             });
-            event.on(the._$in, 'drag', function (eve) {
+
+            event.on(the._$sele, 'drag', function (eve) {
                 eve.preventDefault();
 
-                var deltaX;
-                var deltaY;
                 var left;
                 var top;
-                var maxLeft;
-                var maxTop;
 
                 if (state === 3) {
-                    deltaX = eve.pageX - x0;
-                    deltaY = eve.pageY - y0;
-                    left = left0 + deltaX;
-                    top = top0 + deltaY;
-                    maxLeft = the._width - width0;
-                    maxTop = the._height - height0;
+                    left = left0 + eve.pageX - x0;
+                    top = top0 + eve.pageY - y0;
 
                     if (left <= 0) {
                         left = 0;
-                    } else if (left >= maxLeft) {
-                        left = maxLeft;
+                    } else if (left >= the._maxLeft) {
+                        left = the._maxLeft;
                     }
 
                     if (top <= 0) {
                         top = 0;
-                    } else if (top >= maxTop) {
-                        top = maxTop;
+                    } else if (top >= the._maxTop) {
+                        top = the._maxTop;
                     }
+
+                    the._selection.left = left;
+                    the._selection.top = top;
 
                     attribute.css(the._$sele, {
                         left: left,
@@ -212,13 +281,38 @@ define(function (require, exports, module) {
                         left: -left,
                         top: -top
                     });
+                    the.emit('clip', the._selection);
                 }
             });
-            event.on(the._$in, 'dragend', function (eve) {
+
+            event.on(the._$sele, 'dragend', function (eve) {
                 eve.preventDefault();
 
                 if (state === 3) {
                     state = 2;
+                    the.emit('clipend', the._selection);
+                }
+            });
+
+            the._resize.on('resizestart', function () {
+                if (state === 2) {
+                    state = 4;
+                    the.emit('clipstart', the._selection);
+                }
+            });
+
+            the._resize.on('resize', function (size) {
+                if (state === 4) {
+                    the._selection.width = size.width;
+                    the._selection.height = size.height;
+                    the.emit('clip', the._selection);
+                }
+            });
+
+            the._resize.on('resizeend', function () {
+                if (state === 4) {
+                    state = 2;
+                    the.emit('clipend', the._selection);
                 }
             });
 
@@ -227,19 +321,71 @@ define(function (require, exports, module) {
                     state = 0;
                     attribute.css(the._$bg, 'display', 'none');
                     attribute.css(the._$sele, 'display', 'none');
+                    the._selection = {
+                        top: 0,
+                        left: 0,
+                        width: 0,
+                        height: 0
+                    };
+                    the.emit('destroy', the._selection);
                 }
             });
         },
         _un: function () {
+            var the = this;
 
+            event.un(the._$wrap, 'dragstart');
+            event.un(the._$wrap, 'drag');
+            event.un(the._$wrap, 'dragend');
+            event.un(the._$sele, 'dragstart');
+            event.un(the._$sele, 'drag');
+            event.un(the._$sele, 'dragend');
+            event.un(the._$bg, 'click');
         },
+        /**
+         * 销毁实例
+         */
         destroy: function () {
             var the = this;
 
             the._un();
+            the._resize.destroy();
+            modification.remove(the._$wrap);
         }
     }, Emitter);
 
     modification.importStyle(style);
     module.exports = Imgclip;
+
+
+    /**
+     * 按比例校准尺寸
+     * @param width
+     * @param height
+     * @param ratio
+     * @param [isReferToSmaller=false] {Boolean} 是否参照小边，默认false
+     * @returns {Array}
+     * @private
+     */
+    function _adjustSize(width, height, ratio, isReferToSmaller) {
+        if (!ratio) {
+            return [width, height];
+        }
+
+        if (!width && !height) {
+            return [0, 0];
+        }
+
+        if (!width) {
+            return [height * ratio, height];
+        }
+
+        if (!height) {
+            return [width, width / ratio];
+        }
+
+        return width / height > ratio ?
+            (isReferToSmaller ? [width, width / ratio] : [height * ratio, height]):
+            (isReferToSmaller ? [height * ratio, height] : [width, width / ratio]);
+    }
 });
