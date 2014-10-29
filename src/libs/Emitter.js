@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var Emitter = klass.create({
         constructor: function () {
             this._eventsPool = {};
-            this._maxLength = 999;
+            this._eventsLimit = 999;
         },
 
 
@@ -43,8 +43,8 @@ define(function (require, exports, module) {
                     the._eventsPool[et] = [];
                 }
 
-                if (the._eventsPool[et].length === the._maxLength) {
-                    throw new Error('event `' + et + '` pool is full as 999');
+                if (the._eventsPool[et].length === the._eventsLimit) {
+                    throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
                 }
 
                 if (data.type(listener) === 'function') {
