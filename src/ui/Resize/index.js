@@ -33,10 +33,11 @@ define(function (require, exports, module) {
     var alienIndex = 1;
     var alienPrefix = 'alien-ui-resize';
     var defaults = {
-        minWidth: 100,
+        minWidth: 0,
         minHeight: 0,
         maxWidth: 0,
-        maxHeight: 0
+        maxHeight: 0,
+        ratio: 0
     };
     var Resize = klass.create({
         STATIC: {
@@ -86,8 +87,8 @@ define(function (require, exports, module) {
             var the = this;
 
             // 2向: 东、南
-            the._onresize(the._$e, 'x', 'width');
-            the._onresize(the._$s, 'y', 'height');
+            the._onresize(the._$e, 'x', 'width', 'y', 'height');
+            the._onresize(the._$s, 'y', 'height', 'x', 'width');
         },
         _un: function () {
             var the = this;
@@ -99,7 +100,7 @@ define(function (require, exports, module) {
             event.un('dragend', the._$e);
             event.un('dragend', the._$s);
         },
-        _onresize: function ($drag, axis, prop) {
+        _onresize: function ($drag, axis, prop, axis2, prop2) {
             var the = this;
             var x0;
             var y0;
@@ -109,6 +110,8 @@ define(function (require, exports, module) {
             var min;
             var max;
             var upperCase = _upCaseFirstWord(prop);
+            var isWidth = prop === 'width';
+            var upperCase2 = _upCaseFirstWord(prop2);
 
             event.on($drag, 'dragstart', function (eve) {
                 eve.preventDefault();
@@ -150,6 +153,11 @@ define(function (require, exports, module) {
 
                     the._pos[prop] = val;
                     attribute['inner' + upperCase](the._$ele, val);
+
+                    if (options.ratio) {
+                        attribute['inner' + upperCase2](the._$ele, isWidth ? val / options.ratio : val * options.ratio);
+                    }
+
                     the.emit('resize', the._pos);
                 }
             });
