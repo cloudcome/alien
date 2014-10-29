@@ -120,6 +120,7 @@ define(function (require, exports, module) {
                     val0 = the._pos[prop];
                     min = options['min' + upperCase];
                     max = options['max' + upperCase];
+                    the.emit('resizestart', the._pos);
                 }
             });
 
@@ -154,6 +155,7 @@ define(function (require, exports, module) {
 
                 if (inDrag) {
                     inDrag = !1;
+                    the.emit('resizeend', the._pos);
                 }
             });
         },
