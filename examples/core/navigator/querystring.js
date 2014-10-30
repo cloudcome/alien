@@ -2,22 +2,8 @@ define(function (require) {
     'use strict';
 
     var qs = require('/src/core/navigator/querystring.js');
-    var str;
 
     window.querystring = qs;
-
-    console.log(str = qs.stringify({
-        a: 1,
-        b: 2,
-        c: [0, 1, 2],
-        d: {
-            a: 1,
-            b: 2,
-            c: 3
-        }
-    }));
-
-    console.log(qs.parse(str));
 
     document.getElementById('set1').onclick = function () {
         qs.set('a', '1');
