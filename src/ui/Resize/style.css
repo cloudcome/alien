@@ -1,0 +1,27 @@
+.alien-ui-resize,
+.alien-ui-resize * {
+    position: absolute;
+}
+
+.alien-ui-resize {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.alien-ui-resize-e {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 8px;
+    cursor: e-resize;
+}
+
+.alien-ui-resize-s {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    cursor: s-resize;
+}

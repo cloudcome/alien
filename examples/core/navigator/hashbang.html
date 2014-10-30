@@ -20,17 +20,23 @@
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>hashbang.html</title>
+    <style>
+        button{
+            padding: 4px 10px;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<ul>
-    <li>路由1：/index/</li>
-    <li>路由2：/user/:userId/</li>
+<ul id="routers">
+
 </ul>
 
 <button id="btn1">设置为 #!/index/</button><br>
 <button id="btn2">设置为 #!/user/:userId/</button><br>
 <button id="btn3">设置为 #!/dmin/:adminId/page/:pageNo</button><br>
+<button id="btn4">设置为随机地址，未匹配到路由，将返回 #!/index/</button><br>
 <div>监听结果：
     <p id="ret"></p>
 </div>
