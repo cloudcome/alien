@@ -57,14 +57,16 @@ define(function (require, exports, module) {
          * // }
          */
         parse: function (hashbangString, sep, eq) {
+            var dftRet = {path: [], query: {}};
+
             if (data.type(hashbangString) !== 'string') {
-                return {};
+                return dftRet;
             }
 
             hashbangString = (hashbangString.match(regHash) || [''])[0];
 
             if (!regHashbang.test(hashbangString)) {
-                return {};
+                return dftRet;
             }
 
             sep = sep || '&';
