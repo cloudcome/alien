@@ -47,7 +47,8 @@ define(function (require, exports, module) {
          *
          * @example
          * hashbang.parse('#!/a/b/c?a=1&b=2');
-         * // => {
+         * // =>
+         * // {
          * //    path: ["a", "b", "c"],
          * //    query: {
          * //        a: "1",
@@ -138,11 +139,9 @@ define(function (require, exports, module) {
          *
          * @example
          * hashbang.matches('#!/id/abc123/', '/id/:id/');
-         * // => {
-         * //     params: {
-         * //        id: "abc123"
-         * //     },
-         * //     route: "/id/:id/"
+         * // =>
+         * // {
+         * //   id: "abc123"
          * // }
          *
          * hashbang.matches('#!/name/abc123/', '/id/:id/');
@@ -194,10 +193,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            return {
-                route: routeSource,
-                params: ret
-            };
+            return ret;
         },
 
         /**
@@ -328,8 +324,8 @@ define(function (require, exports, module) {
     event.on(window, 'hashchange', function (eve) {
         var newObject = hashbang.parse(eve.newURL);
         var oldObject = hashbang.parse(eve.oldURL);
-        var pathDifferentKeys = _differentKeys(newObject.path, oldObject.path);
-        var queryDifferentKeys = _differentKeys(newObject.query, oldObject.query);
+        var pathDifferentKeys = data.compare(newObject.path || [], oldObject.path || []).different;
+        var queryDifferentKeys = data.compare(newObject.query || {}, oldObject.query || {}).different;
         var args = [eve, newObject, oldObject];
 
         if (pathDifferentKeys.length) {
@@ -395,30 +391,5 @@ define(function (require, exports, module) {
         } catch (err) {
             return '';
         }
-    }
-
-    /**
-     * 比较两个对象的一级键值，返回不全等值的键
-     * @param {Object} obj1 对象1
-     * @param {Object} obj2 对象2
-     * @returns {Array}
-     * @private
-     */
-    function _differentKeys(obj1, obj2) {
-        var keys = [];
-
-        data.each(obj1, function (key, val) {
-            if (!obj2 || val !== obj2[key]) {
-                keys.push(key);
-            }
-        });
-
-        data.each(obj2, function (key, val) {
-            if (val !== obj1[key] && keys.indexOf(key) === -1) {
-                keys.push(key);
-            }
-        });
-
-        return keys;
     }
 });
