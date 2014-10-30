@@ -314,7 +314,8 @@ define(function (require, exports, module) {
      * //    only: [
      * //       ["b", "c"],
      * //       ["d"]
-     * //    ]
+     * //    ],
+     * //    different: ["b", "c", "d"]
      * // }
      */
     exports.compare = function (obj1, obj2) {
@@ -350,7 +351,8 @@ define(function (require, exports, module) {
                 only: [
                     obj1Only,
                     obj2Only
-                ]
+                ],
+                different: obj1Only.concat(obj2Only)
             };
         } else {
             throw 'only compare two array or object';
