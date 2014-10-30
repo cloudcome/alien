@@ -358,4 +358,14 @@ define(function (require, exports, module) {
             throw 'only compare two array or object';
         }
     };
+
+
+    /**
+     * 修正正则字符串
+     * @param regExpString
+     * @returns {string}
+     */
+    exports.fixRegExp = function (regExpString) {
+        return regExpString.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&');
+    };
 });
