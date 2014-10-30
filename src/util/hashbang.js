@@ -24,9 +24,10 @@ define(function (require, exports, module) {
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
     var regColon = /:([^\/]+)/g;
+    var regStar = /\*/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    var regOther = /[.*+^=!${}()|[\]\\]/g;
+    var regOther = /[.+^=!${}()|[\]\\]/g;
     var pathListenerMap = {};
     var pathAllListener = [];
     var queryListenerMap = {};
@@ -36,6 +37,41 @@ define(function (require, exports, module) {
         isIgnoreCase: !1,
         // 是否忽略末尾斜杠，默认 true
         isIgnoreEndSlash: !0
+    };
+    var hashchangeCallback = function (eve) {
+        var newObject = exports.parse(eve.newURL);
+        var oldObject = exports.parse(eve.oldURL);
+        var pathDifferentKeys = data.compare(newObject.path || [], oldObject.path || []).different;
+        var queryDifferentKeys = data.compare(newObject.query || {}, oldObject.query || {}).different;
+        var args = [eve, newObject, oldObject];
+
+        if (pathDifferentKeys.length) {
+            data.each(pathAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
+
+        data.each(pathDifferentKeys, function (i, key) {
+            if (pathListenerMap[key]) {
+                data.each(pathListenerMap[key], function (j, listener) {
+                    listener.apply(window, args);
+                });
+            }
+        });
+
+        if (queryDifferentKeys.length) {
+            data.each(queryAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
+
+        data.each(queryDifferentKeys, function (i, key) {
+            if (queryListenerMap[key]) {
+                data.each(queryListenerMap[key], function (j, listener) {
+                    listener.apply(window, args);
+                });
+            }
+        });
     };
 
     /**
@@ -175,13 +211,13 @@ define(function (require, exports, module) {
             route += regEndSlash.test(route) ? '?' : '/?';
         }
 
-        route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/');
+        route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/').replace(regStar, '.*');
         route.replace(regOther, '\\$&');
 
         try {
             reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');
         } catch (err) {
-            throw err;
+            return ret;
         }
 
         while ((matched = regColon.exec(routeSource)) !== null) {
@@ -256,6 +292,21 @@ define(function (require, exports, module) {
         }
     };
 
+
+    /**
+     * 主动触发 hashchange 回调，
+     * 但不能真实触发 window 的 hashchange 事件，
+     * 防止影响其他监听
+     * 通常用于页面初始化的时候触发，以匹配当前路由
+     */
+    exports.emit = function () {
+        hashchangeCallback({
+            newURL: location.href,
+            oldURL: ''
+        });
+    };
+
+
     /**
      * 移除监听 hashbang
      * @param {String} part 监听部分，可以为`query`或`path`
@@ -329,41 +380,7 @@ define(function (require, exports, module) {
         }
     };
 
-    event.on(window, 'hashchange', function (eve) {
-        var newObject = exports.parse(eve.newURL);
-        var oldObject = exports.parse(eve.oldURL);
-        var pathDifferentKeys = data.compare(newObject.path || [], oldObject.path || []).different;
-        var queryDifferentKeys = data.compare(newObject.query || {}, oldObject.query || {}).different;
-        var args = [eve, newObject, oldObject];
-
-        if (pathDifferentKeys.length) {
-            data.each(pathAllListener, function (i, listener) {
-                listener.apply(window, args);
-            });
-        }
-
-        data.each(pathDifferentKeys, function (i, key) {
-            if (pathListenerMap[key]) {
-                data.each(pathListenerMap[key], function (j, listener) {
-                    listener.apply(window, args);
-                });
-            }
-        });
-
-        if (queryDifferentKeys.length) {
-            data.each(queryAllListener, function (i, listener) {
-                listener.apply(window, args);
-            });
-        }
-
-        data.each(queryDifferentKeys, function (i, key) {
-            if (queryListenerMap[key]) {
-                data.each(queryListenerMap[key], function (j, listener) {
-                    listener.apply(window, args);
-                });
-            }
-        });
-    });
+    event.on(window, 'hashchange', hashchangeCallback);
 
 
     /**
