@@ -364,6 +364,10 @@ define(function (require, exports, module) {
      * 修正正则字符串
      * @param regExpString
      * @returns {string}
+     *
+     * @example
+     * data.fixRegExp('/');
+     * // => '\/'
      */
     exports.fixRegExp = function (regExpString) {
         return regExpString.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&');
