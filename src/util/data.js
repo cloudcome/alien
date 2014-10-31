@@ -14,6 +14,9 @@ define(function (require, exports, module) {
 
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection'.split(' ');
+    //var RE_URL = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/;
+    var RE_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
+    var RE_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
 
 
     /**
@@ -385,7 +388,7 @@ define(function (require, exports, module) {
      * // => 5
      */
     exports.bytes = function (string, doubleLength) {
-        string = String(string);
+        string += '';
         doubleLength = this.parseInt(doubleLength, 2);
 
         var i = 0,
@@ -400,4 +403,34 @@ define(function (require, exports, module) {
 
         return k;
     };
+
+
+    /**
+     * 判断是否为 URL 格式
+     * @param string
+     * @returns {boolean}
+     *
+     * @example
+     * data.isURL('http://123.com/123/456/?a=3#00');
+     * // => true
+     */
+    exports.isURL = function (string) {
+        return RE_URL.test(string + '');
+    };
+
+
+    /**
+     * 判断是否为 email 格式
+     * @param string
+     * @returns {boolean}
+     *
+     * @example
+     * data.isEmail('abc@def.com');
+     * // => true
+     */
+    exports.isEmail = function (string) {
+        return RE_EMAIL.test(string + '');
+    };
+
+
 });
