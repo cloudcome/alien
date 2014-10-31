@@ -372,4 +372,32 @@ define(function (require, exports, module) {
     exports.fixRegExp = function (regExpString) {
         return regExpString.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&');
     };
+
+
+    /**
+     * 计算字节长度
+     * @param string {String} 原始字符串
+     * @param [doubleLength=2] {Number} 双字节长度，默认为2
+     * @returns {number}
+     *
+     * @example
+     * data.bytes('我123');
+     * // => 5
+     */
+    exports.bytes = function (string, doubleLength) {
+        string = String(string);
+        doubleLength = this.parseInt(doubleLength, 2);
+
+        var i = 0,
+            j = string.length,
+            k = 0,
+            c;
+
+        for (; i < j; i++) {
+            c = string.charCodeAt(i);
+            k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : doubleLength;
+        }
+
+        return k;
+    };
 });
