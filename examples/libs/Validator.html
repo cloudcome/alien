@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2014-10-31 10:59
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Validator.html</title>
+</head>
+<body ontouchstart="">
+
+<ul id="form">
+    <li>
+        <p class="label">用户名</p>
+        <p class="input"><input type="text" name="username" id="username"/></p>
+        <p class="desc">最小4个字符，最长12个字符，正则格式为/^[a-z]\w{3,11}$/</p>
+    </li>
+    <li>
+        <p class="label">密码</p>
+        <p class="input"><input type="text" name="password" id="password"/></p>
+        <p class="desc">最小4个字符，最长12个字符</p>
+    </li>
+    <li>
+        <p class="label">邮箱</p>
+        <p class="input"><input type="email" name="email" id="email"/></p>
+        <p>必须是邮箱格式，且小于255个字符</p>
+    </li>
+    <li>
+        <p class="label">网址</p>
+        <p class="input"><input type="url" name="url" id="url"/></p>
+        <p>必须是网址格式，且小于255个字符</p>
+    </li>
+    <li>
+        <p class="label">年龄</p>
+        <p class="input"><input type="number" name="number" id="number"/></p>
+        <p class="desc">18-60岁之间</p>
+    </li>
+    <li>
+        <p class="action"><button id="submit">验证</button></p>
+        <ul id="msg"></ul>
+    </li>
+</ul>
+
+<script src="../coolie.min.js" data-main="./libs/Validator.js"></script>
+<script src="../coolie-config.js"></script>
+
+</body>
+</html>

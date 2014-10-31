@@ -8,25 +8,10 @@
  */
 
 
-(function (factory) {
+define(function (require, exports, module) {
     'use strict';
 
-    // CommonJS
-    if (typeof require === 'function' && typeof exports === "object" && typeof module === "object") {
-        factory(require, exports, module);
-    }
-    // CMD
-    else if (typeof define === "function") {
-        define(factory);
-    }
-    // window
-    else {
-        factory();
-    }
-})(function (require, exports, module) {
-    'use strict';
-
-    var _global = typeof global === 'undefined' ? window : global;
+    var _global = window;
     var slice = Array.prototype.slice;
     var _howdo = {
         task: function () {
@@ -52,12 +37,7 @@
     };
 
 
-    if (require) {
-        module.exports = _howdo;
-    }
-    else {
-        window.howdo = _howdo;
-    }
+    module.exports = _howdo;
 
 
     //////////////////////////////////////////////////////////////////////
