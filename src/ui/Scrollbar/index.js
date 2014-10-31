@@ -60,7 +60,6 @@ define(function (require, exports, module) {
             defaults: defaults
         },
 
-
         constructor: function (ele, options) {
             var the = this;
 
@@ -143,11 +142,10 @@ define(function (require, exports, module) {
             // 内容区域的尺寸
             the._scrollLeft = the._$ele.scrollLeft;
             the._scrollTop = the._$ele.scrollTop;
-            the._scrollWidth = the._$ele.scrollWidth;
-            the._scrollHeight = the._$ele.scrollHeight;
+            the._calContentSize('xy');
             //// 滚动区域最大值
-            the._scrollLeftMax = the._scrollWidth - the._sizeWidth;
-            the._scrollTopMax = the._scrollHeight - the._sizeHeight;
+            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
+            the._scrollTopMax = the._contentHeight - the._sizeHeight;
             // 水平滚动条的左位移
             the._xLeft = 0;
             // 水平滚动条的最大距离
@@ -157,7 +155,9 @@ define(function (require, exports, module) {
             the._yTop = 0;
             the._yTopMax = 0;
             the._yHeight = 0;
-            the._isWheel = !1;
+            the._isWheel = false;
+            the._isDrag = false;
+            the._isTrigger = false;
             the.update();
 
             the._bind();
@@ -166,22 +166,30 @@ define(function (require, exports, module) {
 
 
         /**
+         * 计算内容尺寸
+         * @param axis 方向
+         * @private
+         */
+        _calContentSize: function (axis) {
+            var the = this;
+
+            if (axis.indexOf('x') > -1) {
+                the._contentWidth = the._$ele[(the._isTextarea ? 'scroll' : 'offset') + 'Width'];
+            }
+
+            if (axis.indexOf('y') > -1) {
+                the._contentHeight = the._$ele[(the._isTextarea ? 'scroll' : 'offset') + 'Height'];
+            }
+        },
+
+
+        /**
          * 更新当前内容尺寸
          * @param {Object} [scrollSize] 包含 width 和 height 的键值对
          * @returns {Scrollbar}
          */
-        update: function (scrollSize) {
+        update: function () {
             var the = this;
-
-            scrollSize = scrollSize || {};
-
-            if (scrollSize.width && scrollSize.width !== the._scrollWidth) {
-                the._scrollWidth = the._$ele.scrollWidth = scrollSize.width;
-            }
-
-            if (scrollSize.height && scrollSize.height !== the._scrollHeight) {
-                the._scrollHeight = the._$ele.scrollHeight = scrollSize.height;
-            }
 
             the.resize({
                 width: the._sizeWidth,
@@ -236,13 +244,13 @@ define(function (require, exports, module) {
 
             // 计算滚动条的x轴的宽、y轴的高
             // 6等于滚动条的左边距3 + 右边距3
-            the._xWidth = (sizeWidth - the._xOffset) * sizeWidth / the._scrollWidth;
+            the._xWidth = (sizeWidth - the._xOffset) * sizeWidth / the._contentWidth;
 
             if (the._xWidth < options.minX) {
                 the._xWidth = options.minX;
             }
 
-            the._yHeight = (sizeHeight - the._yOffset) * sizeHeight / the._scrollHeight;
+            the._yHeight = (sizeHeight - the._yOffset) * sizeHeight / the._contentHeight;
 
             if (the._yHeight < options.minY) {
                 the._yHeight = options.minY;
@@ -275,7 +283,6 @@ define(function (require, exports, module) {
         },
 
 
-
         /**
          * 设置滚动距离
          * @param key
@@ -286,10 +293,16 @@ define(function (require, exports, module) {
             var isHorizontal = key === 'x';
             var val = isHorizontal ? the._scrollLeft : the._scrollTop;
 
-            the._$size['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
+            if (the._isTrigger) {
+                animation.stop(the._$size);
+                animation.scrollTo(the._$size, {
+                    x: the._scrollLeft,
+                    y: the._scrollTop
+                });
+            } else {
+                the._$size['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
+            }
         },
-
-
 
 
         /**
@@ -315,7 +328,7 @@ define(function (require, exports, module) {
                 // 自身滚动
                 event.on(the._$size, 'scroll', the._onscroll.bind(the));
 
-                if(the._isTextarea){
+                if (the._isTextarea) {
                     event.on(the._$size, 'input', the._oninput.bind(the));
                 }
 
@@ -323,7 +336,6 @@ define(function (require, exports, module) {
                 event.on(the._$size, 'wheelstart', function () {
                     attribute.addClass(thumb, thumbActiveClass);
                     the._isWheel = !0;
-                    the._isTrigger = !0;
                 });
 
                 event.on(the._$size, 'wheelchange', function (eve) {
@@ -336,7 +348,6 @@ define(function (require, exports, module) {
 
                 event.on(the._$size, 'wheelend', function () {
                     the._isWheel = !1;
-                    the._isTrigger = !1;
                     attribute.removeClass(thumb, thumbActiveClass);
                 });
 
@@ -363,7 +374,7 @@ define(function (require, exports, module) {
 
                     the._xLeft = left;
                     the._scrollLeft = the._scrollLeftMax * left / the._xLeftMax;
-                    the._isTrigger = !0;
+                    the._isDrag = !0;
                     the._setScroll('x');
                     attribute.css(the._$thumbX, 'left', left);
                     the.emit('changex', the._scrollLeft);
@@ -371,7 +382,7 @@ define(function (require, exports, module) {
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
                     eve.preventDefault();
-                    the._isTrigger = !1;
+                    the._isDrag = !1;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
                 });
 
@@ -396,7 +407,7 @@ define(function (require, exports, module) {
 
                     the._yTop = top;
                     the._scrollTop = the._scrollTopMax * top / the._yTopMax;
-                    the._isTrigger = !0;
+                    the._isDrag = !0;
                     the._setScroll('y');
                     attribute.css(the._$thumbY, 'top', top);
                     the.emit('changey', the._scrollTop);
@@ -405,7 +416,7 @@ define(function (require, exports, module) {
                 event.on(the._$thumbY, 'dragend', function (eve) {
                     eve.preventDefault();
 
-                    the._isTrigger = !1;
+                    the._isDrag = !1;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
             } else {
@@ -431,7 +442,11 @@ define(function (require, exports, module) {
         _onscroll: function () {
             var the = this;
 
-            if (the._isTrigger) {
+            if (the._isWheel || the._isDrag) {
+                the._isTrigger = false;
+            }
+
+            if (the._isWheel || the._isDrag || the._isTrigger) {
                 return;
             }
 
@@ -454,15 +469,14 @@ define(function (require, exports, module) {
         _oninput: function () {
             var the = this;
 
-            if (the._isTrigger) {
+            if (the._isWheel || the._isDrag || the._isTrigger) {
+                the._isTrigger = false;
                 return;
             }
 
-            the._scrollWidth = the._$size.scrollWidth;
-            the._scrollHeight = the._$size.scrollHeight;
-            the._scrollLeftMax = the._scrollWidth - the._sizeWidth;
-            the._scrollTopMax = the._scrollHeight - the._sizeHeight;
-
+            the._calContentSize('xy');
+            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
+            the._scrollTopMax = the._contentHeight - the._sizeHeight;
             the.update();
         },
 
@@ -480,10 +494,11 @@ define(function (require, exports, module) {
             }
 
             if (arguments.length) {
+                the._isTrigger = true;
                 x = data.parseFloat(x, 0);
 
-                if (x < 0 || x > the._scrollWidth) {
-                    x = the._scrollWidth;
+                if (x < 0 || x > the._contentWidth) {
+                    x = the._contentWidth;
                 }
 
                 the._scrollLeft = x;
@@ -498,18 +513,18 @@ define(function (require, exports, module) {
             the._xLeft = the._xLeftMax * the._scrollLeft / the._scrollLeftMax;
 
             if (isPlaceholderScroll) {
-                the._setScroll('x');
-
                 if (the._isTrigger) {
-                    attribute.css(the._$thumbX, {
-                        left: the._xLeft
-                    });
-                } else {
                     animation.stop(the._$thumbX);
                     animation.animate(the._$thumbX, {
                         left: the._xLeft
                     }, the._cssAnimateOptions);
+                } else {
+                    attribute.css(the._$thumbX, {
+                        left: the._xLeft
+                    });
                 }
+
+                the._setScroll('x');
             } else {
                 animation.scrollTo(the._$wrap, {
                     x: the._scrollLeft,
@@ -537,7 +552,7 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollRight: function () {
-            return this.scrollX(-1);
+            return this.scrollX(this._scrollLeftMax);
         },
 
 
@@ -554,10 +569,11 @@ define(function (require, exports, module) {
             }
 
             if (arguments.length) {
+                the._isTrigger = true;
                 y = data.parseFloat(y, 0);
 
-                if (y < 0 || y > the._scrollHeight) {
-                    y = the._scrollHeight;
+                if (y < 0 || y > the._contentHeight) {
+                    y = the._contentHeight;
                 }
 
                 the._scrollTop = y;
@@ -575,14 +591,14 @@ define(function (require, exports, module) {
                 the._setScroll('y');
 
                 if (the._isTrigger) {
-                    attribute.css(the._$thumbY, {
-                        top: the._yTop
-                    });
-                } else {
                     animation.stop(the._$thumbY);
                     animation.animate(the._$thumbY, {
                         top: the._yTop
                     }, the._cssAnimateOptions);
+                } else {
+                    attribute.css(the._$thumbY, {
+                        top: the._yTop
+                    });
                 }
             } else {
                 animation.scrollTo(the._$wrap, {
@@ -611,7 +627,7 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollBottom: function () {
-            return this.scrollY(-1);
+            return this.scrollY(this._scrollTopMax);
         },
 
 

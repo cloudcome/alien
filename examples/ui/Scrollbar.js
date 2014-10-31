@@ -3,8 +3,9 @@ define(function (require) {
 
     var Scrollbar = require('/src/ui/Scrollbar/index.js');
     var demo = document.getElementById('demo');
-    var scrollbar1 = new Scrollbar('#demo');
-    var scrollbar2 = new Scrollbar('#textarea');
+    //var scrollbar1 = new Scrollbar('#demo');
+    //var scrollbar2 = new Scrollbar('#textarea');
+    var scrollbar3 = new Scrollbar('#table');
 
     //document.getElementById('scrollTop').onclick = function(){
     //    scrollbar1.scrollTop();
@@ -21,6 +22,4 @@ define(function (require) {
     //document.getElementById('scrollRight').onclick = function(){
     //    scrollbar1.scrollRight();
     //};
-    //
-    //window.scrollbar1 = scrollbar1;
 });

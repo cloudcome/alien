@@ -21,14 +21,20 @@
     <title>Scrollbar.html</title>
 
     <style>
-        #container{
+        hr{
+            border-top: 0;
+            border-bottom: 1px solid #f57c3a;
+            margin: 20px 0;
+        }
+        #container {
             position: relative;
             width: 700px;
             height: 300px;
             border: 4px solid #627106;
             overflow: hidden;
         }
-        #demo{
+
+        #demo {
             width: 2000px;
             line-height: 300px;
             font-size: 300px;
@@ -36,13 +42,15 @@
             color: #778606;
         }
 
-        #textwrap{
+        #textwrap {
+            position: relative;
             display: block;
             border: 4px solid #627106;
             padding: 0;
+            overflow: hidden;
         }
 
-        #textarea{
+        #textarea {
             display: block;
             border: 0;
             width: 100%;
@@ -55,11 +63,33 @@
             color: #778606;
             font-size: 30px;
         }
+
+        .table-wrap{
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table th {
+            text-align: center;
+            background: #f5f5f5;
+        }
     </style>
 
 </head>
 <body>
-
 
 
 <button id="scrollTop">scrollTop</button>
@@ -79,6 +109,36 @@
     <textarea name="textarea" id="textarea" placeholder="尝试在这里输入文字"></textarea>
 </div>
 
+<hr/>
+
+<div class="table-wrap">
+    <table id="table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>爱好</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <script>
+            var i = 1;
+            var j = 30;
+            var trs = '';
+
+            for (; i <= j; i++) {
+                trs += '<tr>' +
+                '<td>' + i + '</td>' +
+                '<td>王大锤' + i + '号</td>' +
+                '<td>爱好第' + i + '个</td>' +
+                '</tr>';
+            }
+
+            document.write(trs);
+        </script>
+        </tbody>
+    </table>
+</div>
 
 <script src="../coolie.min.js" data-main="./ui/Scrollbar.js"></script>
 <script src="../coolie-config.js"></script>
