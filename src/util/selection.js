@@ -11,50 +11,34 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var doc = document;
-    var abc = require('./abc.js');
-
+    var selector = require('../core/dom/selector.js');
 
     /**
      * 获取选区
-     * @param  {Object} $ele  输入框对象
+     * @param  {Object} $ele 元素
      * @return {Array} [开始位置, 结束位置]
      */
-    exports.gtSelection = function ($ele) {
-        var pos = [];
-        var ae;
+    exports.get = function ($ele) {
+        var focusNode;
 
-        try {
-            $ele.focus();
-        } catch (err) {
-            // ignore
+        if ($ele.selectionStart) {
+            return [$ele.selectionStart, $ele.selectionEnd];
+        }else{
+            focusNode = window.getSelection().focusNode;
+
         }
-
-        if (doc.activeElement && doc.activeElement === $ele) {
-            ae = doc.activeElement;
-            pos.push(ae.selectionStart, ae.selectionEnd);
-            return pos;
-        }
-
-        return [0, 0];
     };
 
 
     /**
      * 设置选区
-     * @param $ele {HTMLTextAreaElement} 文本域
+     * @param $ele {Object} 元素
      * @param start {Number} 开始位置
      * @param end {Number} 结束位置
      */
-    exports.setSelection = function ($ele, start, end) {
-        if (doc.activeElement && doc.activeElement === $ele) {
+    exports.set = function ($ele, start, end) {
+        if ($ele.setSelectionRange) {
             $ele.setSelectionRange(start, end);
-
-            try {
-                $ele.focus();
-            } catch (err) {
-                // ignore
-            }
         }
     };
 });
