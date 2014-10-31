@@ -301,7 +301,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 对象1级比较
+     * 对象1级比较，找出相同和不同的键
      * @param obj1 {Object|Array}
      * @param obj2 {Object|Array}
      * @returns {Object}
@@ -327,7 +327,7 @@ define(function (require, exports, module) {
 
         // 类型不同
         if (obj1Type !== obj2Type) {
-            throw 'can not compare different type object';
+            return null;
         }
 
         // 对象
@@ -355,7 +355,7 @@ define(function (require, exports, module) {
                 different: obj1Only.concat(obj2Only)
             };
         } else {
-            throw 'only compare two array or object';
+            return null;
         }
     };
 
