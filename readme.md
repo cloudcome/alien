@@ -2,12 +2,6 @@
 一个为现代浏览器而生的前端解决方案。
 
 
-# 作者
-* [模块书写约定](https://github.com/cloudcome/alien/blob/master/help/module-convention.md)
-* [cloudcome](http://github.com/cloudcome/)
-* you
-
-
 # 特点
 * 易使用，接口清晰，职责单一
 * 易理解，模块化编程，颗粒化分解
@@ -29,56 +23,60 @@
 3. 打开`http://localhost:18081/examples/ui/dialog.html`
 
 
+# 使用
+- 生产环境：使用[coolie](http://github.com/cloudcome/coolie)（模块加载器）来加载模块。
+- 开发环境：使用[coolie builder](http://github.com/cloudcome/nodejs-coolie)来进行生产环境的模块构建。
+- [模块书写约定](https://github.com/cloudcome/alien/blob/master/help/module-convention.md)
+
+
 # 内容
-- libs 库函数，构造方法
-	- Deferred
-	- Emitter
-	- Pagination
-	- Template
-	- Validate
-	- Filter
-- util 工具库，静态方法
-	- class
-	- data
-	- date
-	- easing
-	- howdo
 - core 核心库
 	- communication 通信
 		- jsonp
 		- upload
 		- xhr
 	- dom dom 操作
-		- attribute
 		- animation
+		- attribute
+		- canvas
 		- modification
 		- selector
-	- navigator 浏览器操作
-		- compatible
-		- hashbang
-		- querystring
-		- shell
-		- ua
 	- event 事件
 		- base
 		- drag
 		- ready
 		- touch
 		- wheel
-- ui
-	- Drag
-	- Dialog
-	- Msg
-	- Scrollbar
-	- Banner
+	- navigator 浏览器操作
+		- compatible
+		- cookie
+		- hashbang
+		- querystring
+		- shell
+		- ua
+- libs 库函数，构造方法
+	- DDB Data DOM Binding
+	- Emitter
 	- Pagination
-	- Tips
-
-
-# 开发与生产
-* 开发环境：使用seajs配合模块加载
-* 生产环境：使用<https://www.npmjs.org/package/apb>配合模块构建
-
-
-# 更多
-* AMDJS规范：<https://github.com/amdjs/amdjs-api/wiki/AMD-(%E4%B8%AD%E6%96%87%E7%89%88)#%E4%BD%BF%E7%94%A8-require-%E5%92%8C-exports>
+	- Template
+	- Validate
+- ui
+	- Banner
+	- Dialog
+	- Imgclip
+	- Msg
+	- Pagination
+	- Resize
+	- Scrollbar
+	- Tooltip
+- util 工具库，静态方法
+	- canvas
+	- class
+	- data
+	- date
+	- easing
+	- hashbang
+	- howdo
+	- querystring
+	- random
+	- selection
