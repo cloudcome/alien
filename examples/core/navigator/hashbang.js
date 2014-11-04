@@ -37,19 +37,19 @@ define(function (require) {
 
     document.getElementById('btn1').onclick = function () {
         hashbang.set('path', ['index']);
-    }
+    };
 
     document.getElementById('btn2').onclick = function () {
         hashbang.set('path', ['user', random.number(1, 9999)]);
-    }
+    };
 
     document.getElementById('btn3').onclick = function () {
         hashbang.set('path', ['admin', random.number(1, 9999), 'page', random.number(1, 9999)]);
-    }
+    };
 
     document.getElementById('btn4').onclick = function () {
         hashbang.set('path', [random.string(10, 'aA0!')]);
-    }
+    };
 
     hashbang.routers(routes);
 });
