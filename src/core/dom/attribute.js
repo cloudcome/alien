@@ -611,9 +611,11 @@ define(function (require, exports, module) {
      * @private
      */
     function _toSepString(string) {
-        return string.replace(regSep, '').replace(regSplit, function ($0) {
-            return '-' + $0.toLowerCase();
-        });
+        return regHump.test(string) ?
+            string :
+            string.replace(regSep, '').replace(regSplit, function ($0) {
+                return '-' + $0.toLowerCase();
+            });
     }
 
 
