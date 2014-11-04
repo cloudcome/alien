@@ -19,6 +19,6 @@ define(function (require) {
     });
 
     event.on(demo2, 'dragend', function (eve) {
-        eve.preventDefault();
+        //eve.preventDefault();
     });
 });

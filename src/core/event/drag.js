@@ -61,8 +61,8 @@ define(function (require, exports, module) {
 
     event.on(document, dragstart, function (eve) {
         var _eve = eve.type === 'mousedown' && eve.button === 0 ? eve : (
-                eve.touches && eve.touches.length ? eve.touches[0] : null
-            );
+            eve.touches && eve.touches.length ? eve.touches[0] : null
+        );
         var _dragfor;
         var attr;
 
@@ -80,14 +80,15 @@ define(function (require, exports, module) {
                 dragfor = _dragfor[0];
                 left = attribute.left(ele);
                 top = attribute.top(ele);
+                eve.preventDefault();
             }
         }
     });
 
     event.on(document, drag, function (eve) {
         var _eve = eve.type === 'mousemove' && eve.button === 0 ? eve : (
-                eve.touches && eve.touches.length ? eve.touches[0] : null
-            );
+            eve.touches && eve.touches.length ? eve.touches[0] : null
+        );
         var x1 = _eve ? _eve.clientX : null;
         var y1 = _eve ? _eve.clientY : null;
         var dispatchDragstart;
@@ -112,10 +113,7 @@ define(function (require, exports, module) {
                         top: attribute.top(dragfor),
                         zIndex: 99999999999999
                     },
-                    'class': 'alien-ui-drag-clone',
-                    draggable: 'true'
-                }, {
-                    draggable: true
+                    'class': 'alien-ui-drag-clone'
                 });
                 modification.insert(clone, document.body, 'beforeend');
             }
@@ -139,7 +137,7 @@ define(function (require, exports, module) {
             (eve.touches && eve.touches.length ?
                 eve.touches[0] :
                 (eve.changedTouches && eve.changedTouches.length ? eve.changedTouches[0] : null)
-                );
+            );
         // 先记录初始值，最后还原，再动画
         var from;
         var to;
@@ -160,6 +158,7 @@ define(function (require, exports, module) {
                     marginLeft: attribute.css(dragfor, 'margin-left'),
                     marginTop: attribute.css(dragfor, 'margin-top')
                 };
+
                 attribute.css(dragfor, from);
                 animation.stop(dragfor);
                 animation.animate(dragfor, to, {
