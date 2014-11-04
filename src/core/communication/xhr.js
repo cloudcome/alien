@@ -33,9 +33,12 @@ define(function (require, exports, module) {
         // 请求头
         headers: null,
         // 是否异步
-        isAsync: !0,
+        isAsync: true,
         // 是否保留缓存
-        isCache: !1,
+        isCache: false,
+        // 是否进行跨域请求，Cross-Origin Resource Sharing
+        // http://www.w3.org/TR/cors/
+        isCORS: false,
         // 请求鉴权用户名
         username: null,
         // 请求鉴权密码
@@ -123,6 +126,10 @@ define(function (require, exports, module) {
             };
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
+
+            if(options.isCORS){
+                xhr.withCredentials = true;
+            }
 
             if (options.mimeType) {
                 xhr.overrideMimeType(options.mimeType);
