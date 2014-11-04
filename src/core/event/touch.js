@@ -138,7 +138,6 @@ define(function (require, exports, module) {
             target = firstTouch.target;
 
             if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
-//                _mergeEvent(options.tap.event, eve);
                 event.extend(options.tap.event, firstTouch);
                 event.dispatch(target, options.tap.event);
             }
@@ -146,11 +145,6 @@ define(function (require, exports, module) {
             if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
                 setTimeout(function () {
                     var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
-
-//                    _mergeEvent(options.swipe.event, eve, {
-//                        direction: dir
-//                    });
-//                    _mergeEvent(options['swipe' + dir].event, eve);
 
                     event.extend(options.swipe.event, firstTouch, {
                         direction: dir
@@ -183,49 +177,6 @@ define(function (require, exports, module) {
         }
     }
 
-//
-//    /**
-//     * 合并必要的信息到创建的事件对象上
-//     * @param  {Event} createEvent    创建的事件对象
-//     * @param  {Event} originalEvent  原始的事件对象
-//     * @param  {Object} [detail]     事件信息
-//     * @return {Event} 合并后的事件对象
-//     * @version 1.0
-//     * 2014年7月12日13:36:11
-//     */
-//    function _mergeEvent(createEvent, originalEvent, detail) {
-//        var copyEvent = originalEvent;
-//
-//        _copy();
-//
-//        if (copyEvent.touches && copyEvent.touches.length === 1) {
-//            copyEvent = copyEvent.touches[0];
-//            _copy();
-//        } else if (copyEvent.changedTouches && copyEvent.changedTouches.length === 1) {
-//            copyEvent = copyEvent.changedTouches[0];
-//            _copy();
-//        }
-//
-//        data.each(detail, function (key, val) {
-//            createEvent.detail = createEvent.detail || {};
-//            createEvent.detail[key] = val;
-//        });
-//
-//        function _copy() {
-//            data.each(mustEventProperties, function (index, prototype) {
-//                if (prototype in copyEvent) {
-//                    try{
-//                        // 某些浏览器不允许重写只读属性，如 iPhone safari
-//                        createEvent[prototype] = copyEvent[prototype];
-//                    }catch(err){
-//                        // ignore
-//                    }
-//                }
-//            });
-//        }
-//
-//        return createEvent;
-//    }
 
     /**
      * 出口
