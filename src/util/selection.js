@@ -34,7 +34,9 @@ define(function (require, exports) {
      * @param [start] {Number} 开始位置，默认为0
      * @param [end] {Number} 结束位置，默认等于start
      *
-     * @
+     * @example
+     * selection.setPos($ele, 1);
+     * selection.setPos($ele, 1, 10);
      */
     exports.setPos = function ($ele, start, end) {
         start = data.parseInt(start, 0);
