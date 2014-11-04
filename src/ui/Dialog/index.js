@@ -221,7 +221,7 @@ define(function (require, exports, module) {
             the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
-            to.transform = 'scale(1)';
+            to.transform = '';
 
             attribute.css($dialog, {
                 opacity: 0,

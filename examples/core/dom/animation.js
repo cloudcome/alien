@@ -11,7 +11,7 @@ define(function (require) {
         animation.animate(demo, {
             width: 500,
             height: 500,
-            background: '#FF8B8B'
+            transform: 'scale(1)'
         }, {
             duration: 3000,
             delay: 0
