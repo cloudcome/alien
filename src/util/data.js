@@ -135,6 +135,19 @@ define(function (require, exports, module) {
      * @param {*} [dft] 非数字时的默认值
      * @returns {*}
      */
+    exports.parseInt = function (obj, dft) {
+        obj = parseInt(obj, 10);
+
+        return isNaN(obj) ? dft : obj;
+    };
+
+
+    /**
+     * 格式化数字，如果是非数字则返回默认值
+     * @param {*} obj 待格式化对象
+     * @param {*} [dft] 非数字时的默认值
+     * @returns {*}
+     */
     exports.parseFloat = function (obj, dft) {
         obj = parseFloat(obj);
 
@@ -177,19 +190,6 @@ define(function (require, exports, module) {
                 }
             }
         }
-    };
-
-
-    /**
-     * 格式化数字，如果是非数字则返回默认值
-     * @param {*} obj 待格式化对象
-     * @param {*} [dft] 非数字时的默认值
-     * @returns {*}
-     */
-    exports.parseInt = function (obj, dft) {
-        obj = parseInt(obj);
-
-        return isNaN(obj) ? dft : obj;
     };
 
 
