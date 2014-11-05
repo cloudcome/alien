@@ -19,11 +19,14 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var style = require('text!./style.css');
+    var style = require('css!./style.css');
     var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
-    var List = require('../../libs/Pagination.js');
+    var libsPagination = require('../../libs/Pagination.js');
     var Emitter = require('../../libs/Emitter.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -61,13 +64,13 @@ define(function (require, exports, module) {
             var the = this;
 
 
-            the._ele = selector.query(ele);
+            the._$ele = selector.query(ele);
 
-            if (!the._ele.length) {
+            if (!the._$ele.length) {
                 throw new Error('instance element is empty');
             }
 
-            the._ele = the._ele[0];
+            the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
             the._init();
@@ -91,7 +94,7 @@ define(function (require, exports, module) {
         _on: function () {
             var the = this;
 
-            event.on(the._ele, 'click tap', '.' + normalClass, the._onEle.bind(the));
+            event.on(the._$ele, 'click tap', '.' + normalClass, the._onEle.bind(the));
         },
 
         _onEle: function (eve) {
@@ -103,7 +106,7 @@ define(function (require, exports, module) {
         _un: function () {
             var the = this;
 
-            event.un(the._ele, 'click tap', the._onEle);
+            event.un(the._$ele, 'click tap', the._onEle);
         },
 
         /**
@@ -117,41 +120,45 @@ define(function (require, exports, module) {
         render: function (settings) {
             var the = this;
             var options = data.extend(the._options, settings);
-            var list = new List(options).init();
-            var html = ['<div class="alien-ui-pagination">'];
+            var list = new libsPagination(options);
 
-            list.forEach(function (item) {
-                switch (item.type) {
-                    case 'ellipsis':
-                        html.push(template.disabled);
-                        break;
-
-                    case 'prev':
-                        html.push(template.normal
-                            .replace(regPage, item.page)
-                            .replace(regText, template.prev)
-                            .replace(regClass, ' ' + normalClass));
-                        break;
-
-                    case 'next':
-                        html.push(template.normal
-                            .replace(regPage, item.page)
-                            .replace(regText, template.next)
-                            .replace(regClass, ' ' + normalClass));
-                        break;
-
-                    default:
-                        html.push(template.normal
-                            .replace(regPage, item.page)
-                            .replace(regText, item.page)
-                            .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' ' + normalClass));
-                        break;
-                }
+            the._$ele.innerHTML = tpl.render({
+                pagination: list
             });
 
-            html.push('</div>');
-
-            the._ele.innerHTML = html.join('');
+            //var html = ['<div class="alien-ui-pagination">'];
+            //list.forEach(function (item) {
+            //    switch (item.type) {
+            //        case 'ellipsis':
+            //            html.push(template.disabled);
+            //            break;
+            //
+            //        case 'prev':
+            //            html.push(template.normal
+            //                .replace(regPage, item.page)
+            //                .replace(regText, template.prev)
+            //                .replace(regClass, ' ' + normalClass));
+            //            break;
+            //
+            //        case 'next':
+            //            html.push(template.normal
+            //                .replace(regPage, item.page)
+            //                .replace(regText, template.next)
+            //                .replace(regClass, ' ' + normalClass));
+            //            break;
+            //
+            //        default:
+            //            html.push(template.normal
+            //                .replace(regPage, item.page)
+            //                .replace(regText, item.page)
+            //                .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' ' + normalClass));
+            //            break;
+            //    }
+            //});
+            //
+            //html.push('</div>');
+            //
+            //the._$ele.innerHTML = html.join('');
 
             return the;
         },
@@ -164,7 +171,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._un();
-            the._ele.innerHTML = '';
+            the._$ele.innerHTML = '';
         }
     }, Emitter);
 
