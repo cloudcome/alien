@@ -15,6 +15,7 @@ define(function (require, exports, module) {
      * @requires util/class
      * @requires util/data
      * @requires libs/Emitter
+     * @requires libs/Template
      */
     'use strict';
 
@@ -22,7 +23,8 @@ define(function (require, exports, module) {
         // ignore
     };
     var index = 0;
-    var style = require('text!./style.css');
+    var style = require('css!./style.css');
+    var template = require('html!./template.html');
     var event = require('../../core/event/touch.js');
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
@@ -31,8 +33,9 @@ define(function (require, exports, module) {
     var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
-    var navActiveClass = 'alien-ui-banner-nav-item-active';
-    var navItemClass = 'alien-ui-banner-nav-item';
+    var Template = require('../../libs/Template.js');
+    var tpl = new Template(template);
+    var alienClass = 'alien-ui-banner';
     var defaults = {
         width: 700,
         height: 300,
@@ -44,11 +47,8 @@ define(function (require, exports, module) {
         // -1 自动向前播放
         // 1 自动向后播放
         autoPlay: 1,
-        addClass: '',
-        // "circle" "square" "transparent"
-        navStyle: 'circle',
-        // "number" ""
-        navText: ''
+        // 导航生成器
+        navGenerator: null
     };
 
     var Banner = klass.create({
@@ -63,8 +63,7 @@ define(function (require, exports, module) {
              * @property {String} [easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
              * @property {Number} [autoPlay=1] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
              * @property {String} [addClass=""] banner 添加的 className
-             * @property {String} [navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
-             * @property {String} [navText=""] banner 导航的是否输出导航数字，内置有"number"
+             * @property {null|Function} [navGenerator=null] 使用一个函数生成导航，参数1为导航索引值
              */
             defaults: defaults
         },
@@ -117,23 +116,22 @@ define(function (require, exports, module) {
             var options = the._options;
             var clone0;
             var clone1;
-            var nav = '';
+            var bannerData = {
+                id: the._id,
+                nav: []
+            };
+            var navFilter = data.type(options.nav) === 'function' ? options.nav : function () {
+                return '';
+            };
+            var $bannerWrap;
 
-            if (options.navStyle) {
-                nav = '<div class="alien-ui-banner-nav alien-ui-banner-nav-' + options.navStyle + '' +
-                (options.navText === 'number' ? ' alien-ui-banner-nav-text' : '') +
-                '">';
+            data.each(the._$items, function (index) {
+                bannerData.nav.push(navFilter(index));
+            });
 
-                data.each(the._$items, function (index) {
-                    nav += '<div class="alien-ui-banner-nav-item' +
-                    (index === 0 ? ' ' + navActiveClass : '') +
-                    '" data-index=' + index + '>' +
-                    (options.navText === 'number' ? index + 1 : '&nbsp;') +
-                    '</div>';
-                });
-
-                nav += '</div>';
-            }
+            $bannerWrap = modification.parse(tpl.render(bannerData))[0];
+            modification.insert($bannerWrap, the._$ele, 'afterend');
+            modification.insert(the._$ele, $bannerWrap, 'afterbegin');
 
             if (the._$items.length > 1) {
                 // 复制头尾项目
@@ -146,19 +144,14 @@ define(function (require, exports, module) {
                 the._$items.push(clone0);
             }
 
-            // 包裹一层
-            modification.wrap(the._$ele, '<div id="alien-ui-banner-' + the._id + '" class="alien-ui-banner"/>');
+            the._$banner = $bannerWrap;
+            the._$nav = selector.query('.' + alienClass + '-nav', $bannerWrap)[0];
 
-            the._banner = selector.parent(the._$ele)[0];
-            nav = modification.parse(nav);
-            the._nav = nav;
-
-            if (nav && nav.length) {
-                the._navItems = selector.children(nav[0]);
-                modification.insert(nav[0], the._banner, 'beforeend');
+            if (the._$nav) {
+                the._$navItems = selector.children(the._$nav);
+            }else{
+                the._$navItems = [];
             }
-
-            attribute.addClass(the._banner, the._options.addClass);
         },
 
 
@@ -174,8 +167,8 @@ define(function (require, exports, module) {
             var x1;
 
             // 单击导航
-            if (the._navItems) {
-                event.on(the._banner, 'click tap', '.' + navItemClass, function () {
+            if (the._$navItems.length) {
+                event.on(the._$banner, 'click tap', '.' + alienClass + '-nav-item', function () {
                     var index = attribute.data(this, 'index');
                     var type = index > the._showIndex ? 'next' : 'prev';
 
@@ -191,16 +184,16 @@ define(function (require, exports, module) {
             }
 
             // 鼠标悬停
-            event.on(the._banner, 'mouseenter', function () {
+            event.on(the._$banner, 'mouseenter', function () {
                 the.pause();
             });
 
-            event.on(the._banner, 'mouseleave', function () {
+            event.on(the._$banner, 'mouseleave', function () {
                 the.play(the._options.autoPlay);
             });
 
             // 触摸
-            event.on(the._banner, 'touchstart', function (eve) {
+            event.on(the._$banner, 'touchstart', function (eve) {
                 if (eve.touches && eve.touches.length === 1) {
                     the.pause();
                     attribute.css(the._$items[0], 'visibility', 'hidden');
@@ -212,7 +205,7 @@ define(function (require, exports, module) {
                 eve.preventDefault();
             });
 
-            event.on(the._banner, 'touchmove', function (eve) {
+            event.on(the._$banner, 'touchmove', function (eve) {
                 if (eve.touches && eve.touches.length === 1) {
                     x1 = eve.touches[0].pageX;
                     attribute.css(the._$ele, 'left', left + x1 - x0);
@@ -221,7 +214,7 @@ define(function (require, exports, module) {
                 eve.preventDefault();
             });
 
-            event.on(the._banner, 'touchend touchcancel', function (eve) {
+            event.on(the._$banner, 'touchend touchcancel', function (eve) {
                 var index;
 
                 if (eve.changedTouches && eve.changedTouches.length === 1) {
@@ -332,12 +325,12 @@ define(function (require, exports, module) {
 
                 the.emit('change', index);
 
-                if (the._navItems) {
-                    attribute.addClass(the._navItems[index], navActiveClass);
-                    siblings = selector.siblings(the._navItems[index]);
+                if (the._$navItems) {
+                    attribute.addClass(the._$navItems[index], alienClass + '-nav-item-active');
+                    siblings = selector.siblings(the._$navItems[index]);
 
                     data.each(siblings, function (i, sibling) {
-                        attribute.removeClass(sibling, navActiveClass);
+                        attribute.removeClass(sibling, alienClass + '-nav-item-active');
                     });
                 }
 
@@ -479,7 +472,7 @@ define(function (require, exports, module) {
                 height: options.height
             });
 
-            attribute.css(the._banner, {
+            attribute.css(the._$banner, {
                 position: 'relative',
                 width: options.width,
                 height: options.height,
@@ -497,7 +490,7 @@ define(function (require, exports, module) {
             var the = this;
 
             // 移除所有事件
-            event.un(the._banner, 'touchstart touchmove touchend touchcancel tap click mouseenter mouseleave');
+            event.un(the._$banner, 'touchstart touchmove touchend touchcancel tap click mouseenter mouseleave');
 
             // 停止动画
             the.pause();
