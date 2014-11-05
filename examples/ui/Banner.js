@@ -8,13 +8,14 @@ define(function (require) {
     'use strict';
 
     var Banner = require('/src/ui/Banner/index.js');
-    var slider1 = document.getElementById('slider1');
-    var index = document.getElementById('index');
-    var bn = new Banner(slider1,{
-        addClass:'demo1',
-        onchange: function (i) {
-            index.innerHTML = i + 1;
-        }
+    var $index = document.getElementById('index');
+    var bn = new Banner('#slider1', {
+        width: 700,
+        height: 300
+    });
+
+    bn.on('change', function (index) {
+        $index.innerHTML = index + 1;
     });
 
     document.getElementById('prev').onclick = function () {

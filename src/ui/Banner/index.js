@@ -58,11 +58,10 @@ define(function (require, exports, module) {
              * @name defaults
              * @property {Number} [width=700] banner 宽度，默认700
              * @property {Number} [height=300] banner 高度，默认300
-             * @property {String} [item="li"] banner 项目，默认"li"
+             * @property {String} [item="li"] banner 项目选择器，默认"li"
              * @property {Number} [duration=456] banner 播放动画时间，默认456，单位毫秒
              * @property {String} [easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
              * @property {Number} [autoPlay=1] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
-             * @property {String} [addClass=""] banner 添加的 className
              * @property {null|Function} [navGenerator=null] 使用一个函数生成导航，参数1为导航索引值
              */
             defaults: defaults
@@ -149,7 +148,7 @@ define(function (require, exports, module) {
 
             if (the._$nav) {
                 the._$navItems = selector.children(the._$nav);
-            }else{
+            } else {
                 the._$navItems = [];
             }
         },
@@ -304,6 +303,8 @@ define(function (require, exports, module) {
                 throw new Error('can not go to ' + type + ' ' + index);
             }
 
+            the.emit('beforechange', the._showIndex, index);
+
             animation.animate(the._$ele, {
                 left: -options.width * playIndex
             }, {
@@ -321,9 +322,8 @@ define(function (require, exports, module) {
                     attribute.css(the._$ele, 'left', -options.width);
                 }
 
+                the.emit('change', index, the._showIndex);
                 the._showIndex = index;
-
-                the.emit('change', index);
 
                 if (the._$navItems) {
                     attribute.addClass(the._$navItems[index], alienClass + '-nav-item-active');
@@ -508,9 +508,10 @@ define(function (require, exports, module) {
                 left: ''
             });
 
-            // 移除 wrap
-            modification.remove(the._nav);
-            modification.unwrap(the._$ele, 'div');
+            modification.insert(the._$ele, the._$banner, 'afterend');
+            modification.remove(the._$items[the._$items.length - 1]);
+            modification.remove(the._$items[0]);
+            modification.remove(the._$banner);
         }
     }, Emitter);
 
