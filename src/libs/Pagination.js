@@ -26,7 +26,7 @@ define(function (require, exports, module) {
         },
         constructor: function (options) {
             this._options = data.extend(!0, {}, defaults, options);
-            this._init();
+            return this._init();
         },
         _init: function () {
             var the = this;
