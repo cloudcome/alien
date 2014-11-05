@@ -31,17 +31,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
-    var regPage = /{page}/g;
-    var regText = /{text}/g;
-    var regClass = /{class}/g;
-    var itemClass = 'alien-ui-pagination-item';
     var normalClass = 'alien-ui-pagination-normal';
-    var template = {
-        prev: '上一页',
-        next: '下一页',
-        normal: '<div class="' + itemClass + '{class}" data-page="{page}">{text}</div>',
-        disabled: '<div class="' + itemClass + ' alien-ui-pagination-disabled">...</div>'
-    };
     var defaults = {
         count: 1,
         page: 1,
@@ -125,40 +115,6 @@ define(function (require, exports, module) {
             the._$ele.innerHTML = tpl.render({
                 pagination: list
             });
-
-            //var html = ['<div class="alien-ui-pagination">'];
-            //list.forEach(function (item) {
-            //    switch (item.type) {
-            //        case 'ellipsis':
-            //            html.push(template.disabled);
-            //            break;
-            //
-            //        case 'prev':
-            //            html.push(template.normal
-            //                .replace(regPage, item.page)
-            //                .replace(regText, template.prev)
-            //                .replace(regClass, ' ' + normalClass));
-            //            break;
-            //
-            //        case 'next':
-            //            html.push(template.normal
-            //                .replace(regPage, item.page)
-            //                .replace(regText, template.next)
-            //                .replace(regClass, ' ' + normalClass));
-            //            break;
-            //
-            //        default:
-            //            html.push(template.normal
-            //                .replace(regPage, item.page)
-            //                .replace(regText, item.page)
-            //                .replace(regClass, item.active ? ' alien-ui-pagination-active' : ' ' + normalClass));
-            //            break;
-            //    }
-            //});
-            //
-            //html.push('</div>');
-            //
-            //the._$ele.innerHTML = html.join('');
 
             return the;
         },
