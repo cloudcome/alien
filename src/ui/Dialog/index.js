@@ -139,7 +139,6 @@ define(function (require, exports, module) {
             the._$dialog = $dialog;
             the._hasOpen = !1;
             the._zIndex = 0;
-            the._id = alienIndex;
             dialogsMap[the._id] = the;
 
             modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
