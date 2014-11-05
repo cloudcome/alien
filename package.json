@@ -4,8 +4,8 @@
     "private": true,
     "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
     "scripts": {
-        "jsdoc-dft": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/dft/ -d ./docs/",
-        "jsdoc-bs3": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/"
+        "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+        "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/"
     },
     "preferGlobal": false,
     "bin": {},
@@ -35,6 +35,6 @@
     },
     "licenses": "MIT",
     "dependencies": {
-        "jsdoc": "^3.3.0-alpha9"
+        "jsdoc": "^3.3.0-alpha10"
     }
 }

@@ -5,6 +5,10 @@
  * @create 2014-10-03 17:00
  */
 
+body,input,button,textarea{
+    font-family: Helvetica,Roboto Slab,tahoma,Arial,"Lucida Grande", "Microsoft JhengHei","华文细黑",STXihei,"Microsoft YaHei","微软雅黑",Heiti,"黑体",SimSun,"宋体",sans-serif;
+}
+
 body{
     position: relative;
 }
