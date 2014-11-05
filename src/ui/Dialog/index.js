@@ -17,6 +17,8 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires core/event/drag
      * @requires core/navigator/compatible
+     * @requires libs/Emitter
+     * @requires libs/Template
      *
      * @author ydr.me
      * @create 2014-10-04 02:33
@@ -26,9 +28,12 @@ define(function (require, exports, module) {
 
 
     require('../../core/event/drag.js');
-    var style = require('text!./style.css');
+    var style = require('css!./style.css');
     var klass = require('../../util/class.js');
     var Emitter = require('../../libs/Emitter.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -40,14 +45,11 @@ define(function (require, exports, module) {
 //    var html = document.documentElement;
     var body = document.body;
     var overflowClass = 'alien-ui-dialog-overflow';
-    var dialogClass = 'alien-ui-dialog';
-    var bodyClass = 'alien-ui-dialog-body';
-    var titleClass = 'alien-ui-dialog-title';
-    var closeClass = 'alien-ui-dialog-close';
     var iframeClass = 'alien-ui-dialog-iframe';
     var shakeClass = 'alien-ui-dialog-shake';
     // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
     var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
+    var alienClass = 'alien-ui-dialog';
     var defaults = {
         width: 500,
         height: 'auto',
@@ -63,7 +65,7 @@ define(function (require, exports, module) {
         // 优先级1
         content: null,
         // 优先级1
-        isWrap: !0
+        isWrap: true
     };
     // 打开的对话框队列
     var openDialogs = [];
@@ -93,13 +95,13 @@ define(function (require, exports, module) {
         constructor: function (ele, options) {
             var the = this;
 
-
             the._$ele = selector.query(ele);
 
             if (!the._$ele.length) {
                 throw new Error('instance element is empty');
             }
 
+            the._id = alienIndex++;
             the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
@@ -113,40 +115,27 @@ define(function (require, exports, module) {
          * @private
          */
         _init: function () {
-            alienIndex++;
-
             var the = this;
             var options = the._options;
-            var $bg = modification.create('div', {
-                id: 'alien-ui-dialog-bg-' + alienIndex,
-                'class': 'alien-ui-dialog-bg'
-            });
-            var $dialog = modification.create('div', {
-                id: 'alien-ui-dialog-' + alienIndex,
-                'class': dialogClass,
-                role: 'dialog',
-                draggablefor: options.title === null && options.canDrag ? 'alien-ui-dialog-' + alienIndex : null
-            });
+            var dialogData = {
+                id: the._id,
+                title: options.title,
+                wrap: options.isWrap,
+                canDrag: options.canDrag
+            };
+            var $bg = modification.parse(tpl.render(dialogData))[0];
             var $bd;
-
-            if (options.isWrap) {
-                $dialog.innerHTML = '<div class="alien-ui-dialog-container">' +
-                (options.title === null ? '' :
-                '<div class="alien-ui-dialog-header"' +
-                (options.canDrag ? ' draggablefor="alien-ui-dialog-' + alienIndex + '"' : '') +
-                '>' +
-                '<div class="' + titleClass + '">' + options.title + '</div>' +
-                '<div class="' + closeClass + '">&times;</div>' +
-                '</div>') +
-                '<div class="' + bodyClass + '"></div>' +
-                '</div>';
-                $bd = selector.query('.' + bodyClass, $dialog)[0];
-            }
+            var $dialog = selector.query('.' + alienClass, $bg)[0];
 
             modification.insert($bg, body, 'beforeend');
-            modification.insert($dialog, $bg, 'beforeend');
-            the._$bg = $bg;
 
+            if (options.isWrap) {
+                $dialog = selector.query('.' + alienClass, $bg)[0];
+                $bd = selector.query('.' + alienClass + '-body', $bg)[0];
+            }
+
+            the._$bg = $bg;
+            the._$bd = $bd;
             the._$dialog = $dialog;
             the._hasOpen = !1;
             the._zIndex = 0;
@@ -155,14 +144,14 @@ define(function (require, exports, module) {
 
             modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
 
-            event.on($dialog, 'click tap', '.' + closeClass, function () {
+            event.on($dialog, 'click tap', '.' + alienClass + '-close', function () {
                 the.close();
             });
 
             event.on(the._$bg, 'click tap', function (eve) {
                 eve.stopPropagation();
 
-                if (!selector.closest(eve.target, '.' + dialogClass).length) {
+                if (!selector.closest(eve.target, '.' + alienClass).length) {
                     the.shake();
                 }
             });
@@ -367,7 +356,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var $iframe = modification.create('iframe', {
                 src: url,
-                'class': iframeClass,
+                'class': alienClass + '-iframe',
                 style: {
                     height: height || options.remoteHeight
                 }
