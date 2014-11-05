@@ -15,22 +15,28 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var style =require('text!./style.css');
+    var style = require('css!./style.css');
     var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var index = 1;
+    var alienIndex = 0;
     var tooltipClass = 'alien-ui-tooltip';
     // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
     var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
     var defaults = {
+        duration: 234,
+        easing: 'ease-out-quart',
         zIndex: 9999,
         placement: 'auto',
-        content: 'Hello world!'
+        body: 'Hello world!'
     };
     var Tooltip = klass.create({
         STATIC: {
@@ -56,23 +62,24 @@ define(function (require, exports, module) {
             the._$ele = ele[0];
             Emitter.apply(the, arguments);
             the._options = data.extend(!0, {}, defaults, options);
-            the._id = index++;
+            the._id = alienIndex++;
             the._init();
         },
 
 
         _init: function () {
             var the = this;
-            var $tooltip = modification.parse('<div class="' + tooltipClass + '" id="' + tooltipClass + '-' + index + '">' +
-            '<div class="' + tooltipClass + '-arrow"></div>' +
-            '<div class="' + tooltipClass + '-content">' + the._options.content + '</div>' +
-            '</div>')[0];
-            modification.insert($tooltip, document.body, 'beforeend');
+            var tooltip = tpl.render({
+                id: the._id
+            });
+            var $tooltip = modification.parse(tooltip)[0];
+            var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
 
+            $body.innerHTML = the._options.body;
+            modification.insert($tooltip, document.body, 'beforeend');
             the._$tooltip = $tooltip;
             the._position(1);
             the._position(2);
-            index++;
         },
 
         _position: function (times) {
@@ -136,13 +143,12 @@ define(function (require, exports, module) {
 
             the._at = at;
 
-            if(times === 2){
+            if (times === 2) {
                 attribute.css($tip, 'visibility', 'visible');
-                event.on($tip, animationendEventType, function () {
-                    event.un($tip, animationendEventType);
-                    attribute.removeClass($tip, 'alien-ui-tooltip-animation-' + the._at);
+                attribute.addClass($tip, tooltipClass + '-' + at);
+                the._animate(true, function () {
+                    the.emit('open');
                 });
-                attribute.addClass($tip, tooltipClass + '-' + at + ' ' + tooltipClass + '-animation-' + at);
             }
 
             attribute.css($tip, {
@@ -153,22 +159,52 @@ define(function (require, exports, module) {
 
 
         /**
+         * 动画
+         * @param isShow
+         * @param callback
+         * @private
+         */
+        _animate: function (isShow, callback) {
+            var the = this;
+            var options = the._options;
+            var at = the._at;
+            var from = {
+                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+                '(' +
+                (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
+                ')',
+                opacity: isShow ? 0 : 1
+            };
+            var to = {
+                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+                '(' +
+                (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
+                ')',
+                opacity: isShow ? 1 : 0
+            };
+            var $tip = the._$tooltip;
+
+            attribute.css($tip, from);
+            animation.animate($tip, to, {
+                duration: options.duration,
+                easing: options.easing
+            }, callback);
+        },
+
+
+        /**
          * 销毁实例
          * @public
          */
         destroy: function () {
             var the = this;
-            var $tip = the._$tooltip;
 
-            event.on($tip, animationendEventType, function () {
-                event.un($tip, animationendEventType);
-                modification.remove($tip);
+            the._animate(false, function () {
+                the.emit('close');
+                modification.remove(the._$tooltip);
             });
-
-            attribute.css($tip, 'animation-direction', 'reverse');
-            attribute.addClass($tip, 'alien-ui-tooltip-animation-' + the._at);
         }
-    });
+    }, Emitter);
 
     modification.importStyle(style);
 
@@ -178,7 +214,7 @@ define(function (require, exports, module) {
      * @param [options] {Object} 配置
      * @param [options.zIndex=9999] {Number} 层级
      * @param [options.placement="auto"] {String} 所在位置，可选：top、bottom、right、left
-     * @param [options.content="Hello world!"] {String} 提示内容
+     * @param [options.body="Hello world!"] {String} 提示内容
      * @constructor
      *
      * @example

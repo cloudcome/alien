@@ -148,8 +148,7 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-color: transparent;
-    border-style: solid;
+    border: solid transparent;
 }
 
 .alien-ui-tooltip-top {
@@ -164,10 +163,16 @@
     border-top-color: #000;
 }
 
+.alien-ui-tooltip-animation-top,
+.alien-ui-tooltip-animation-right,
+.alien-ui-tooltip-animation-bottom,
+.alien-ui-tooltip-animation-left {
+    -webkit-animation-duration: 234ms;
+    -moz-animation-duration: 234ms;
+    animation-duration: 234ms;
+}
+
 .alien-ui-tooltip-animation-top {
-    -webkit-animation-duration: 345ms;
-    -moz-animation-duration: 345ms;
-    animation-duration: 345ms;
     -webkit-animation-name: alien-ui-tooltip-top;
     -webkit-animation-name: alien-ui-tooltip-top;
     animation-name: alien-ui-tooltip-top;
@@ -186,9 +191,6 @@
 }
 
 .alien-ui-tooltip-animation-bottom {
-    -webkit-animation-duration: 345ms;
-    -moz-animation-duration: 345ms;
-    animation-duration: 345ms;
     -webkit-animation-name: alien-ui-tooltip-bottom;
     -webkit-animation-name: alien-ui-tooltip-bottom;
     animation-name: alien-ui-tooltip-bottom;
@@ -207,9 +209,6 @@
 }
 
 .alien-ui-tooltip-animation-right {
-    -webkit-animation-duration: 345ms;
-    -moz-animation-duration: 345ms;
-    animation-duration: 345ms;
     -webkit-animation-name: alien-ui-tooltip-right;
     -webkit-animation-name: alien-ui-tooltip-right;
     animation-name: alien-ui-tooltip-right;
@@ -228,9 +227,6 @@
 }
 
 .alien-ui-tooltip-animation-left {
-    -webkit-animation-duration: 345ms;
-    -moz-animation-duration: 345ms;
-    animation-duration: 345ms;
     -webkit-animation-name: alien-ui-tooltip-left;
     -webkit-animation-name: alien-ui-tooltip-left;
     animation-name: alien-ui-tooltip-left;
