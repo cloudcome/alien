@@ -174,6 +174,12 @@ define(function (require, exports, module) {
         ajax: function (options) {
             return new XHR(options);
         },
+        /**
+         * ajax GET 请求
+         * @param url {String} 请求地址
+         * @param query {String|Object} 请求参数
+         * @returns {*}
+         */
         get: function (url, query) {
             return this.ajax({
                 method: 'GET',
