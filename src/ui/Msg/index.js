@@ -18,10 +18,13 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var style = require('text!./style.css');
+    var style = require('css!./style.css');
     var klass = require('../../util/class.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
     var event = require('../../core/event/touch.js');
     var Dialog = require('../Dialog/index.js');
     var selector = require('../../core/dom/selector.js');
@@ -29,11 +32,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var alienIndex = 0;
     var $body = document.body;
-    var headerClass = 'alien-ui-msg-header';
-    var titleClass = 'alien-ui-msg-title';
-    var closeClass = 'alien-ui-msg-close';
-    var bodyClass = 'alien-ui-msg-body';
-    var buttonClass = 'alien-ui-msg-button';
+    var alienClass = 'alien-ui-msg';
     var defaults = {
         width: 300,
         height: 'auto',
@@ -42,7 +41,7 @@ define(function (require, exports, module) {
         title: '提示',
         content: 'Hello world!',
         buttons: null,
-        canDrag: !0,
+        canDrag: true,
         timeout: -1
     };
     var mouseevent = {};
@@ -69,83 +68,78 @@ define(function (require, exports, module) {
             var the = this;
 
             Emitter.apply(the, arguments);
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = data.extend(true, {}, defaults, options);
+            the._id = alienIndex++;
             the._init();
         },
 
 
+        /**
+         * 初始化
+         * @returns {Msg}
+         * @private
+         */
         _init: function () {
-            alienIndex++;
-
             var the = this;
             var options = the._options;
-            var $msg = modification.create('div', {
-                id: 'alien-ui-msg-' + alienIndex,
-                'class': 'alien-ui-msg'
-            });
-            var buttons = '';
-            var buttonsLength = 0;
-            var header;
 
             options.buttons = options.buttons || [];
+            the._wrap();
+            the._timerId = 0;
+            the._timeout();
+            the._event();
 
-            //buttons: ["确定", "取消"]
-            //<=3个按钮水平排列
-            //>3个按钮将纵向排列
+            return the;
+        },
 
-            if (data.type(options.buttons) === 'array' && options.buttons.length) {
-                buttonsLength = options.buttons.length;
-                buttons = '<div class="alien-ui-msg-buttons alien-ui-msg-buttons-' +
-                (buttonsLength > 3 ? 'vertical' : 'horizontal') +
-                ' alien-ui-msg-buttons-' + buttonsLength + '">';
 
-                data.each(options.buttons, function (alienIndex, text) {
-                    buttons += '<div class="' + buttonClass + ' alien-ui-msg-button-' + alienIndex +
-                    '">' + text + '</div>';
-                });
+        /**
+         * 包裹
+         * @private
+         */
+        _wrap: function () {
+            var the = this;
+            var options = the._options;
+            var msgData = {
+                title: options.title,
+                canDrag: options.canDrag,
+                buttons: options.buttons,
+                id: the._id,
+                body: options.content
+            };
+            var $msg = tpl.render(msgData);
+            var $header;
 
-                buttons += '</div>';
-            }
-
-            $msg.innerHTML =
-                (options.title === null ? '' :
-                '<div class="' + headerClass + '">' +
-                '<div class="' + titleClass + '">' + options.title + '</div>' +
-                '<div class="' + closeClass + '">&times;</div>' +
-                '</div>') +
-                '<div class="' + bodyClass + '">' + options.content + '</div>' +
-                buttons;
-
+            $msg = modification.parse($msg)[0];
             modification.insert($msg, $body, 'beforeend');
+
             the._dialog = new Dialog($msg, {
                 width: options.width,
                 height: options.height,
                 left: options.left,
                 top: options.top,
-                isWrap: !1,
-                canDrag: !1,
+                isWrap: false,
+                canDrag: false,
                 title: null
             }).open();
 
             if (options.canDrag) {
                 if (options.title) {
-                    header = selector.query('.' + headerClass, $msg)[0];
-                    attribute.attr(header, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
+                    $header = selector.query('.' + alienClass + '-header', $msg)[0];
+                    attribute.attr($header, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
                 } else {
                     attribute.attr($msg, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
                 }
             }
 
-            the._timerId = 0;
-            the._timeout();
-            the._event();
             the._$msg = $msg;
-            the._$body = selector.query('.' + bodyClass, the._$msg)[0];
-            the._id = alienIndex;
-
-            return the;
+            the._$body = selector.query('.' + alienClass + '-body', $msg)[0];
         },
 
+        /**
+         * 超时处理
+         * @private
+         */
         _timeout: function () {
             var the = this;
             var options = the._options;
@@ -180,15 +174,15 @@ define(function (require, exports, module) {
             var the = this;
 
             // 点击关闭对话框
-            event.on(the._dialog._$dialog, 'click tap', '.' + closeClass, function () {
+            event.on(the._dialog._$dialog, 'click tap', '.' + alienClass + '-close', function () {
                 the.destroy();
                 the.emit('close', -1);
             });
 
             // 点击按钮响应事件
-            event.on(the._dialog._$dialog, 'click tap', '.' + buttonClass, function (eve) {
+            event.on(the._dialog._$dialog, 'click tap', '.' + alienClass + '-button', function (eve) {
                 the.destroy();
-                the.emit('close', selector.index(eve.target));
+                the.emit('close', attribute.data(eve.target, 'index'));
             });
 
             // 鼠标进入、离开
@@ -250,6 +244,7 @@ define(function (require, exports, module) {
             });
         }
     }, Emitter);
+
     modification.importStyle(style);
 
     event.on(document, 'mousemove', function (eve) {
