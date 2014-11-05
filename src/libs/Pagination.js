@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/Pagination
+     * @module libs/Pagination
+     * @requires util/data
+     * @requires util/class
      */
     'use strict';
 
@@ -24,8 +26,9 @@ define(function (require, exports, module) {
         },
         constructor: function (options) {
             this._options = data.extend(!0, {}, defaults, options);
+            this._init();
         },
-        init: function () {
+        _init: function () {
             var the = this;
             var options = the._options;
             var list = [];
@@ -144,5 +147,15 @@ define(function (require, exports, module) {
         }
     });
 
+    /**
+     * 实例化一个分页器
+     * @param [options] {Object} 配置
+     * @param [options.count=1] {Number} 总分页数量
+     * @param [options.page=1] {Number} 当前页码
+     * @param [options.size=3] {Number} 可视范围
+     *
+     * @example
+     * var pagination = new Pagination(options);
+     */
     module.exports = Pagination;
 });
