@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/wheel
      * @requires core/event/drag
+     * @requires libs/Template
      */
     'use strict';
 
