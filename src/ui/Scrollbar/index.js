@@ -19,10 +19,13 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var style = require('text!./style.css');
+    var style = require('css!./style.css');
     var data = require('../../util/data.js');
     var klass = require('../../util/class.js');
     var Emitter = require('../../libs/Emitter.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var selector = require('../../core/dom/selector.js');
@@ -36,6 +39,8 @@ define(function (require, exports, module) {
     var thumbClass = 'alien-ui-scrollbar-thumb';
     var thumbXClass = 'alien-ui-scrollbar-thumb-x';
     var thumbYClass = 'alien-ui-scrollbar-thumb-y';
+    var alienClass = 'alien-ui-scrollbar';
+    var alienIndex = 0;
     // var trackActiveClass = 'alien-ui-scrollbar-track-active';
     var thumbActiveClass = 'alien-ui-scrollbar-thumb-active';
     // @link http://en.wikipedia.org/wiki/DOM_binds#Common.2FW3C_binds
@@ -43,7 +48,6 @@ define(function (require, exports, module) {
     // 这里不能用 DOMSubtreeModified，会导致IE卡死
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     var isPlaceholderScroll = _isPlaceholderScroll();
-    var alienIndex = 1;
     var defaults = {
         width: 700,
         height: 300,
@@ -83,8 +87,13 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
             var options = the._options;
+            var scrollbarData = {
+                id: the._id,
+                isPlaceholderScroll: isPlaceholderScroll
+            };
+            var wrapText = tpl.render(scrollbarData);
             var $wrap;
-            var wrapStart = '<div class="alien-ui-scrollbar" id="alien-ui-scrollbar-' + the._id + '">';
+            var $body;
 
             the._isTextarea = the._$ele.tagName === 'TEXTAREA';
 
@@ -93,16 +102,12 @@ define(function (require, exports, module) {
                 the._sizeHeight = attribute.height(the._$ele.parentNode);
             }
 
-            if (isPlaceholderScroll) {
-                $wrap = modification.wrap(the._$ele, wrapStart +
-                '<div class="' + bodyClass + '"></div>' +
-                    // wrap 插入的是第一个最底层元素里 ^️
-                '<div class="' + trackClass + ' ' + trackXClass + '"><div class="' + thumbClass + ' ' + thumbXClass +
-                '" draggablefor></div></div>' +
-                '<div class="' + trackClass + ' ' + trackYClass + '"><div class="' + thumbClass + ' ' + thumbYClass +
-                '" draggablefor></div></div>' +
-                '</div>')[0];
+            $wrap = modification.parse(wrapText)[0];
+            modification.insert($wrap, the._$ele, 'afterend');
+            $body = selector.query('.' + alienClass+'-body', $wrap)[0];
+            modification.insert(the._$ele, $body, 'afterbegin');
 
+            if (isPlaceholderScroll) {
                 the._jsAnimateOptions = {
                     duration: options.duration,
                     easing: options.jsEasing
@@ -121,7 +126,6 @@ define(function (require, exports, module) {
                 the._xOffset = the._$thumbX.offsetLeft * 2;
                 the._yOffset = the._$thumbY.offsetTop * 2;
             } else {
-                $wrap = modification.wrap(the._$ele, wrapStart + '</div>')[0];
                 the._xOffset = 0;
                 the._yOffset = 0;
 
@@ -159,8 +163,8 @@ define(function (require, exports, module) {
             the._isDrag = false;
             the._isTrigger = false;
             the.update();
-
             the._bind();
+
             return the;
         },
 
