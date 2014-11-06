@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     var data = require('../../util/data.js');
     var klass = require('../../util/class.js');
     var Emitter = require('../../libs/Emitter.js');
-    var alienClass = 'alien-ui-editor';
+    //var alienClass = 'alien-ui-editor';
     var alienIndex = 0;
     var defaults = {
         // tab 长度
