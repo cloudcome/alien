@@ -18,9 +18,8 @@
 
 
 # 示例
-1. 下载下来
-2. 然后使用 [sts](https://www.npmjs.org/package/sts) 全局安装之后，启动（命令`sts 18081`）根目录即可
-3. 打开`http://localhost:18081/examples/ui/dialog.html`
+- 在线演示 <http://alien.ydr.me>
+- 本地演示 使用 <https://www.npmjs.org/package/sts>
 
 
 # 使用
