@@ -35,6 +35,12 @@ define(function (require, exports, module) {
             defaults: defaults
         },
 
+
+        /**
+         * 构造函数
+         * @param ele
+         * @param options
+         */
         constructor: function (ele, options) {
             var the = this;
 
@@ -51,6 +57,12 @@ define(function (require, exports, module) {
             the._options = data.extend(true, {}, defaults, options);
             the._init();
         },
+
+
+        /**
+         * 初始化
+         * @private
+         */
         _init: function () {
             var the = this;
 
@@ -66,6 +78,12 @@ define(function (require, exports, module) {
             the._selection = [0, 0];
             the._on();
         },
+
+
+        /**
+         * 计算备份ID
+         * @private
+         */
         _calStoreId: function () {
             var the = this;
             var $ele = the._$ele;
@@ -76,18 +94,36 @@ define(function (require, exports, module) {
                 attrList.push(attr.name + '=' + attr.value);
             });
 
-            the._storeId =  pathname +
+            the._storeId = pathname +
             '<' + the._$ele.tagName + '>#' +
             the._$ele.id + '.' +
-            the._$ele.className+
+            the._$ele.className +
             '[' + attrList.join(';') + ']';
         },
+
+
+        /**
+         * 读取本地备份
+         * @private
+         */
         _getLocal: function () {
             this._$ele.value = window.localStorage.getItem(this._storeId) || '';
         },
+
+
+        /**
+         * 写入本地备份
+         * @private
+         */
         _saveLocal: function () {
             window.localStorage.setItem(this._storeId, this._$ele.value);
         },
+
+
+        /**
+         * 事件监听
+         * @private
+         */
         _on: function () {
             var the = this;
             var $ele = the._$ele;
@@ -99,6 +135,12 @@ define(function (require, exports, module) {
             event.on($ele, 'input', the._oninput.bind(the));
         },
 
+
+        /**
+         * 按键回调
+         * @param eve
+         * @private
+         */
         _onkeydown: function (eve) {
             var the = this;
             var options = the._options;
@@ -106,8 +148,6 @@ define(function (require, exports, module) {
             var keyCode = eve.keyCode;
             var isShift = eve.shiftKey;
             var isCtrl = eve.ctrlKey;
-
-            console.log(keyCode);
 
             // shift + tab
             if (isShift && keyCode === 9) {
@@ -144,6 +184,11 @@ define(function (require, exports, module) {
             }
         },
 
+
+        /**
+         * 输入回调
+         * @private
+         */
         _oninput: function () {
             var the = this;
 
@@ -152,6 +197,11 @@ define(function (require, exports, module) {
             the._historyIndex = -1;
         },
 
+
+        /**
+         * 取消事件监听
+         * @private
+         */
         _un: function () {
             var the = this;
             var $ele = the._$ele;
@@ -160,6 +210,11 @@ define(function (require, exports, module) {
             event.un($ele, 'keydown', the._onkeydown);
         },
 
+
+        /**
+         * 历史入栈
+         * @private
+         */
         _pushHistory: function () {
             var the = this;
             var options = the._options;
@@ -172,26 +227,69 @@ define(function (require, exports, module) {
             history.push(the._$ele.value);
             the._saveLocal();
         },
+
+
+        /**
+         * 历史出栈
+         * @private
+         */
         _shiftHistory: function () {
             this._history.shift();
         },
+
+
+        /**
+         * 保存光标记录
+         * @private
+         */
         _savePos: function () {
             var the = this;
             var $ele = the._$ele;
             the._selection = editor.getPos($ele);
         },
+
+
+        /**
+         * 恢复光标记录
+         * @private
+         */
         _restorePos: function () {
             var the = this;
             var $ele = the._$ele;
 
             editor.setPos($ele, the._selection[0], the._selection[1]);
         },
+
+
+        /**
+         * 销毁实例
+         */
         destroy: function () {
             var the = this;
 
             the._un();
+        },
+
+
+        /**
+         * 清除本地备份记录
+         */
+        clearStore: function () {
+            window.localStorage.setItem(this._storeId, '');
         }
     }, Emitter);
 
+
+    /**
+     * 实例化一个 markdown 文本编辑器
+     * @param $ele {HTMLTextAreaElement} 文本域输入框
+     * @param [options] {Object} 配置
+     * @param [options.tabSize=4] {Number} tab长度，默认为4个空格
+     * @param [options.historyLength=20] {Number} 历史长度，默认为20
+     *
+     * @example
+     * // 推荐使用ID来标识文本域输入框，因为会根据id来保存文本内容到本地的，当多个编辑器在同一个页面时尤为重要
+     * var editor = new Editor('#id');
+     */
     module.exports = Editor;
 });
