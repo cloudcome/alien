@@ -141,11 +141,11 @@ define(function (require, exports, module) {
 
         for (var i in external) {
             if (reg.test(type ? external[i] : i)) {
-                return !0
+                return true;
             }
         }
 
-        return !1;
+        return false;
     }
 
 
@@ -184,7 +184,7 @@ define(function (require, exports, module) {
         }
 
         // chrome
-        if (window.chrome && window.chrome.runtime) {
+        if (window.clientInformation && window.clientInformation.languages && window.clientInformation.languages.length > 2) {
             return 'chrome';
         }
 
