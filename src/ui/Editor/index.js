@@ -1,5 +1,6 @@
 /*!
  * 编辑器
+ * @todo 支持图片拖拽、粘贴上传
  * @author ydr.me
  * @create 2014-11-06 11:07
  */
@@ -10,7 +11,9 @@ define(function (require, exports, module) {
      * @module ui/Editor/index
      * @requires core/dom/selector
      * @requires core/dom/modification
-     * @requires util/selection
+     * @requires ui/Editor/editor
+     * @requires util/data
+     * @requires util/class
      */
     'use strict';
 
@@ -20,7 +23,6 @@ define(function (require, exports, module) {
     var editor = require('./editor.js');
     var data = require('../../util/data.js');
     var klass = require('../../util/class.js');
-    var Emitter = require('../../libs/Emitter.js');
     //var alienClass = 'alien-ui-editor';
     var alienIndex = 0;
     var defaults = {
@@ -53,7 +55,6 @@ define(function (require, exports, module) {
             the._id = alienIndex++;
 
             the._$ele = the._$ele[0];
-            Emitter.apply(the, arguments);
             the._options = data.extend(true, {}, defaults, options);
             the._init();
         },
@@ -212,6 +213,26 @@ define(function (require, exports, module) {
 
 
         /**
+         * 手动设置编辑器内容
+         * @param value
+         */
+        setContent: function (value) {
+            var the = this;
+            the._$ele.value = value;
+            the._pushHistory();
+        },
+
+
+        /**
+         * 获得当前编辑器内容
+         * @returns {*}
+         */
+        getContent: function () {
+            return this._$ele.value;
+        },
+
+
+        /**
          * 历史入栈
          * @private
          */
@@ -277,7 +298,7 @@ define(function (require, exports, module) {
         clearStore: function () {
             window.localStorage.setItem(this._storeId, '');
         }
-    }, Emitter);
+    });
 
 
     /**
