@@ -17,9 +17,11 @@
 * 适合桌面现代浏览器、手机现代浏览器
 
 
-# 示例
-- 在线演示 <http://alien.ydr.me>
-- 本地演示 使用 <https://www.npmjs.org/package/sts>
+# 文档及示例
+- 在线主页 <http://alien.ydr.me/>
+- 在线文档 <http://alien.ydr.me/docs/>
+- 在线演示 <http://alien.ydr.me/examples/>
+- 本地演示 使用 <https://www.npmjs.org/package/sts>，根目录执行`sts 18081`即可。
 
 
 # 使用
