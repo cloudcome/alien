@@ -22,8 +22,14 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var editor = require('./editor.js');
     var data = require('../../util/data.js');
+    var random = require('../../util/random.js');
     var klass = require('../../util/class.js');
-    //var alienClass = 'alien-ui-editor';
+    var Dialog = require('../Dialog/index.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var tpl = new Template(template);
+    var alienClass = 'alien-ui-editor';
+    var RE_IMG_TYPE = /^image\//;
     var alienIndex = 0;
     var defaults = {
         // tab 长度
@@ -53,7 +59,6 @@ define(function (require, exports, module) {
             }
 
             the._id = alienIndex++;
-
             the._$ele = the._$ele[0];
             the._options = data.extend(true, {}, defaults, options);
             the._init();
@@ -68,16 +73,49 @@ define(function (require, exports, module) {
             var the = this;
 
             the._calStoreId();
+
             if (!the._$ele.value) {
                 the._getLocal();
                 editor.focusEnd(the._$ele);
             }
 
-            the._timerId = 0;
+            the._uploadList = [];
             the._history = [the._$ele.value];
             the._historyIndex = -1;
             the._selection = [0, 0];
             the._on();
+        },
+
+
+        /**
+         * 上传对话框
+         * @private
+         */
+        _uploadDialog: function () {
+            var the = this;
+            var dt = {
+                id: the._id,
+                urls: the._uploadList
+            };
+            var $dialog;
+
+            if(the._dialog){
+                the._dialog.destroy();
+                modification.remove(the._$dialog);
+                the._dialog = null;
+            }
+
+            $dialog = modification.parse(tpl.render(dt))[0];
+            modification.insert($dialog, document.body, 'beforeend');
+            the._$dialog = $dialog;
+            the._dialog = new Dialog('#'+alienClass + '-upload-' + the._id, {
+                isWrap: false,
+                canDrag: false,
+                width: '100%',
+                height: '100%',
+                top: 0,
+                left: 0
+            }).open();
         },
 
 
@@ -90,16 +128,20 @@ define(function (require, exports, module) {
             var $ele = the._$ele;
             var atts = $ele.attributes;
             var attrList = [];
+            var id = $ele.id;
 
-            data.each(atts, function (i, attr) {
-                attrList.push(attr.name + '=' + attr.value);
-            });
+            if (id) {
+                the._storeId = pathname + '#' + id;
+            } else {
+                data.each(atts, function (i, attr) {
+                    attrList.push(attr.name + '=' + attr.value);
+                });
 
-            the._storeId = pathname +
-            '<' + the._$ele.tagName + '>#' +
-            the._$ele.id + '.' +
-            the._$ele.className +
-            '[' + attrList.join(';') + ']';
+                the._storeId = pathname +
+                '<' + the._$ele.tagName + '>.' +
+                the._$ele.className +
+                '[' + attrList.join(';') + ']';
+            }
         },
 
 
@@ -129,11 +171,10 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
 
-            //每 10 秒自动保存一次到本地
-            //the._timerId = setInterval(the._saveLocal.bind(the), 10000);
-
             event.on($ele, 'keydown', the._onkeydown.bind(the));
             event.on($ele, 'input', the._oninput.bind(the));
+            event.on($ele, 'drop', the._ondrop.bind(the));
+            event.on($ele, 'paste', the._onpaste.bind(the));
         },
 
 
@@ -158,7 +199,7 @@ define(function (require, exports, module) {
             }
             // tab
             else if (keyCode === 9) {
-                editor.insert($ele, editor.repeatString(' ', options.tabSize));
+                the.insert(editor.repeatString(' ', options.tabSize));
                 the._pushHistory();
                 eve.preventDefault();
             }
@@ -200,6 +241,40 @@ define(function (require, exports, module) {
 
 
         /**
+         * 拖拽回调
+         * @private
+         */
+        _ondrop: function (eve) {
+            debugger;
+        },
+
+
+        /**
+         * 粘贴回调
+         * @param eve
+         * @private
+         */
+        _onpaste: function (eve) {
+            var the = this;
+
+            if (eve.clipboardData && eve.clipboardData.items && eve.clipboardData.items.length) {
+                data.each(eve.clipboardData.items, function (index, item) {
+                    if (RE_IMG_TYPE.test(item.type)) {
+                        the._uploadList.push({
+                            url: window.URL.createObjectURL(item.getAsFile()),
+                            file: item.getAsFile()
+                        });
+                    }
+                });
+            }
+
+            if(the._uploadList.length){
+                the._upload();
+            }
+        },
+
+
+        /**
          * 取消事件监听
          * @private
          */
@@ -208,13 +283,22 @@ define(function (require, exports, module) {
             var $ele = the._$ele;
 
             event.un($ele, 'keydown', the._onkeydown);
-            event.un($ele, 'keydown', the._onkeydown);
+            event.un($ele, 'input', the._oninput);
+            event.un($ele, 'drop', the._ondrop);
+            event.un($ele, 'paste', the._onpaste);
+        },
+
+
+        _upload: function () {
+            var the = this;
+
+            the._uploadDialog();
         },
 
 
         /**
          * 手动设置编辑器内容
-         * @param value
+         * @param value {String} 待覆盖的字符串
          */
         setContent: function (value) {
             var the = this;
@@ -224,8 +308,20 @@ define(function (require, exports, module) {
 
 
         /**
+         * 当前位置插入字符串
+         * @param string {String} 待插入字符串
+         *
+         * @example
+         * editor.insert('hehe');
+         */
+        insert: function (string) {
+            editor.insert(this._$ele, string);
+        },
+
+
+        /**
          * 获得当前编辑器内容
-         * @returns {*}
+         * @returns {*} {String} 当前编辑器内容
          */
         getContent: function () {
             return this._$ele.value;
