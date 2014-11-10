@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                     break;
 
                 case '#comment':
-                    node =document.createComment(attributes);
+                    node = document.createComment(attributes);
                     break;
 
                 default:
@@ -127,7 +127,7 @@ define(function (require, exports, module) {
          * modification.insert(source, target, 'afterend');
          */
         insert: function (source, target, position, isReturnSource) {
-            if(!source || !source.nodeType || !target || !target.nodeType){
+            if (!source || !source.nodeType || !target || !target.nodeType) {
                 return null;
             }
 
@@ -189,20 +189,14 @@ define(function (require, exports, module) {
          * modification.remove(ele);
          */
         remove: function (ele) {
-            var parent = domSelector.parent(ele);
+            if (!ele || !ele.nodeType) {
+                return false;
+            }
 
-            if (parent.length) {
-                try{
-                    parent[0].removeChild(ele);
-                }catch(err){
-                    // ignore
-                }
-            } else {
-                try {
-                    ele.remove();
-                } catch (err) {
-                    // ignore
-                }
+            try {
+                ele.remove();
+            } catch (err) {
+                document.removeChild(ele);
             }
         },
 
@@ -216,7 +210,7 @@ define(function (require, exports, module) {
          * modification.wrap(ele, '&lt;div/>');
          */
         wrap: function (source, htmlstring) {
-            if(!source || !source.nodeType){
+            if (!source || !source.nodeType) {
                 return null;
             }
 
@@ -286,7 +280,7 @@ define(function (require, exports, module) {
          * modification.importStyle('body{padding: 10px;}');
          */
         importStyle: function (styleText) {
-            var style =  this.create('style');
+            var style = this.create('style');
 
             styleText = String(styleText);
 
