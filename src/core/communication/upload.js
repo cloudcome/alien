@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     };
 
     exports.defaults = defaults;
-    module.exports = function (options, callback) {
+    module.exports = function (options) {
         options = data.extend(!0, {}, defaults, options);
 
         if (!options.file) {
