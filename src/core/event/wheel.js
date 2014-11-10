@@ -33,6 +33,7 @@ define(function (require, exports, module) {
     event.on(document, mousewheel, function (eve) {
         var ele = eve.target;
         var deltaY = 0;
+        var dispatchDragend;
 
         if (timeid) {
             clearTimeout(timeid);
@@ -69,7 +70,11 @@ define(function (require, exports, module) {
             deltaY: deltaY,
             deltaZ: 0
         });
-        event.dispatch(ele, changeEvent);
+        dispatchDragend = event.dispatch(ele, changeEvent);
+
+        if (dispatchDragend.defaultPrevented === true) {
+            eve.preventDefault();
+        }
     });
 
     module.exports = event;
