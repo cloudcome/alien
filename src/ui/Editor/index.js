@@ -19,23 +19,36 @@ define(function (require, exports, module) {
 
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var editor = require('./editor.js');
     var data = require('../../util/data.js');
     var random = require('../../util/random.js');
     var klass = require('../../util/class.js');
+    var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
+    var Msg = require('../Msg/index.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
+    var style = require('css!./style.css');
     var alienClass = 'alien-ui-editor';
     var RE_IMG_TYPE = /^image\//;
     var alienIndex = 0;
     var defaults = {
+        width: '100%',
+        height: 300,
         // tab 长度
         tabSize: 4,
         // 历史长度
-        historyLength: 20
+        historyLength: 20,
+        // 上传操作
+        // uploadCallback 约定：
+        // arg0: err 对象
+        // arg1: 进度回调
+        // arg2: list 上传成功JSON数组对象
+        // [{url:'1.jpg',width:100,height:100}]
+        uploadCallback: null
     };
     var pathname = location.pathname;
     var Editor = klass.create({
@@ -54,6 +67,7 @@ define(function (require, exports, module) {
 
             the._$ele = selector.query(ele);
 
+
             if (!the._$ele.length) {
                 throw new Error('instance element is empty');
             }
@@ -71,12 +85,26 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+            var options = the._options;
 
             the._calStoreId();
+            attribute.css(the._$ele, {
+                border: 0,
+                width: options.width,
+                height: options.height,
+                padding: 10,
+                margin: 0
+            });
+            attribute.addClass(the._$ele, alienClass + '-textarea');
+            modification.wrap(the._$ele, '<div class="' + alienClass +
+            '"><div class="' + alienClass + '-inner"></div></div>');
+            the._$wrap = selector.closest(the._$ele, '.' + alienClass)[0];
+            the._scrollbar = new Scrollbar(the._$ele);
 
             if (!the._$ele.value) {
                 the._getLocal();
                 editor.focusEnd(the._$ele);
+                the._scrollbar.update();
             }
 
             the._uploadList = [];
@@ -84,6 +112,36 @@ define(function (require, exports, module) {
             the._historyIndex = -1;
             the._selection = [0, 0];
             the._on();
+            the._isFullscreen = false;
+
+            return the;
+        },
+
+
+        /**
+         * 切换编辑器的全屏模式
+         */
+        toggleFullscreen: function () {
+            var the = this;
+            var options = the._options;
+
+            if (the._isFullscreen) {
+                the._isFullscreen = false;
+                attribute.css(document.body, 'overflow', '');
+                attribute.removeClass(the._$wrap, alienClass + '-fullscreen');
+                the._scrollbar.resize({
+                    width: options.width,
+                    height: options.height
+                });
+            } else {
+                the._isFullscreen = true;
+                attribute.css(document.body, 'overflow', 'hidden');
+                attribute.addClass(the._$wrap, alienClass + '-fullscreen');
+                the._scrollbar.resize({
+                    width: attribute.innerWidth(window) - 20,
+                    height: attribute.innerHeight(window) - 20
+                });
+            }
         },
 
 
@@ -95,27 +153,75 @@ define(function (require, exports, module) {
             var the = this;
             var dt = {
                 id: the._id,
-                urls: the._uploadList
+                uploads: the._uploadList
             };
             var $dialog;
+            var imgLoad = function () {
+                event.un($dialog, 'load');
 
-            if(the._dialog){
+                if (the._dialog) {
+                    the._dialog.position();
+                }
+            };
+            var options = the._options;
+
+            if (data.type(options.uploadCallback) !== 'function') {
+                return new Msg({
+                    content: '尚未配置上传回调'
+                });
+            }
+
+            if (the._dialog) {
                 the._dialog.destroy();
                 modification.remove(the._$dialog);
                 the._dialog = null;
             }
 
             $dialog = modification.parse(tpl.render(dt))[0];
+            event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
-            the._dialog = new Dialog('#'+alienClass + '-upload-' + the._id, {
-                isWrap: false,
-                canDrag: false,
-                width: '100%',
-                height: '100%',
-                top: 0,
-                left: 0
+            the._dialog = new Dialog('#' + alienClass + '-upload-' + the._id, {
+                width: 500,
+                title: '上传' + the._uploadList.length + '张图片（0%）',
+                hideClose: true
             }).open();
+            the._$dialog = $dialog;
+            the._doUpload();
+        },
+
+
+        /**
+         * 上传
+         * @private
+         */
+        _doUpload: function () {
+            var the = this;
+            var dialog = the._dialog;
+            var list = the._uploadList;
+            var onprogress = function (percent) {
+                dialog.setTitle('上传' + list.length + '张图片（' + percent + '）');
+            };
+            var ondone = function (err, list) {
+                var html = [];
+
+                if (err) {
+                    return new Msg({
+                        content: err.message
+                    });
+                }
+
+                data.each(list, function (index, img) {
+                    html.push('![img](' + img.url + ')');
+                });
+
+                the.insert(html.join('\n'));
+                dialog.destroy(function () {
+                    modification.remove(the._$dialog);
+                });
+            };
+
+            the._options.uploadCallback(list, onprogress, ondone);
         },
 
 
@@ -224,6 +330,10 @@ define(function (require, exports, module) {
 
                 eve.preventDefault();
             }
+            // ctrl + esc
+            else if (isCtrl && keyCode === 27) {
+                the.toggleFullscreen();
+            }
         },
 
 
@@ -258,18 +368,27 @@ define(function (require, exports, module) {
             var the = this;
 
             if (eve.clipboardData && eve.clipboardData.items && eve.clipboardData.items.length) {
+                the._uploadList = [];
+
                 data.each(eve.clipboardData.items, function (index, item) {
-                    if (RE_IMG_TYPE.test(item.type)) {
-                        the._uploadList.push({
-                            url: window.URL.createObjectURL(item.getAsFile()),
-                            file: item.getAsFile()
-                        });
+                    var file;
+
+                    if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
+                        file = item.getAsFile();
+
+                        if (file && file.size > 0) {
+                            the._uploadList.push({
+                                url: window.URL.createObjectURL(item.getAsFile()),
+                                file: item.getAsFile()
+                            });
+                        }
                     }
                 });
             }
 
-            if(the._uploadList.length){
+            if (the._uploadList.length) {
                 the._upload();
+                eve.preventDefault();
             }
         },
 
@@ -304,6 +423,9 @@ define(function (require, exports, module) {
             var the = this;
             the._$ele.value = value;
             the._pushHistory();
+            the._scrollbar.update();
+
+            return the;
         },
 
 
@@ -315,7 +437,12 @@ define(function (require, exports, module) {
          * editor.insert('hehe');
          */
         insert: function (string) {
+            var the = this;
+
             editor.insert(this._$ele, string);
+            the._pushHistory();
+
+            return the;
         },
 
 
@@ -385,6 +512,8 @@ define(function (require, exports, module) {
             var the = this;
 
             the._un();
+            the._scrollbar.destroy();
+            the._$ele.unwrap('div > div');
         },
 
 
@@ -392,10 +521,16 @@ define(function (require, exports, module) {
          * 清除本地备份记录
          */
         clearStore: function () {
-            window.localStorage.setItem(this._storeId, '');
+            var the = this;
+
+            window.localStorage.setItem(the._storeId, '');
+
+            return the;
         }
     });
 
+
+    modification.importStyle(style);
 
     /**
      * 实例化一个 markdown 文本编辑器
