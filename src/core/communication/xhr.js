@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         // 响应数据类型：json、text
         dataType: 'json',
         // 请求 querystring
-        query: null,
+        query: {},
         // 请求数据
         data: null,
         // 请求头
