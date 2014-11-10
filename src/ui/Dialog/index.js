@@ -56,7 +56,8 @@ define(function (require, exports, module) {
         left: 'center',
         top: 'center',
         title: '无标题对话框',
-        canDrag: !0,
+        canDrag: true,
+        hideClose: false,
         duration: 345,
         easing: 'ease-in-out-back',
         // 优先级2
@@ -118,6 +119,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var dialogData = {
+                hideClose: options.hideClose,
                 id: the._id,
                 title: options.title,
                 wrap: options.isWrap,
@@ -137,6 +139,7 @@ define(function (require, exports, module) {
             the._$bg = $bg;
             the._$bd = $bd;
             the._$dialog = $dialog;
+            the._$title = selector.query('.alien-ui-dialog-title', $dialog)[0];
             the._hasOpen = !1;
             the._zIndex = 0;
             dialogsMap[the._id] = the;
@@ -272,6 +275,7 @@ define(function (require, exports, module) {
                 attribute.removeClass(body, overflowClass);
             }
 
+            animation.stop($dialog);
             animation.animate($dialog, {
                 opacity: 0,
                 transform: 'scale(0)'
@@ -323,8 +327,23 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置对话框标题
+         * @param title {String}
+         */
+        setTitle: function (title) {
+            var the = this;
+
+            the._options.title = title;
+
+            if (the._$title) {
+                the._$title.innerHTML = title;
+            }
+        },
+
+
+        /**
          * 对话框添加内容，并重新定位
-         * @returns {Dialog}
+         * @param content {String}
          */
         setContent: function (content) {
             var the = this;
