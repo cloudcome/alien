@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
     var data = require('../../util/data.js');
     var klass = require('../../util/class.js');
-    var qs = require('../navigator/querystring.js');
+    var qs = require('../../util/querystring.js');
     var Emitter = require('../../libs/Emitter.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
