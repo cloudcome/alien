@@ -105,7 +105,7 @@ define(function (require, exports, module) {
 
             $wrap = modification.parse(wrapText)[0];
             modification.insert($wrap, the._$ele, 'afterend');
-            $body = selector.query('.' + alienClass+'-body', $wrap)[0];
+            $body = selector.query('.' + alienClass + '-body', $wrap)[0];
             modification.insert(the._$ele, $body, 'afterbegin');
 
             if (isPlaceholderScroll) {
@@ -185,6 +185,12 @@ define(function (require, exports, module) {
             if (axis.indexOf('y') > -1) {
                 the._contentHeight = the._$ele[(the._isTextarea ? 'scroll' : 'offset') + 'Height'];
             }
+
+            // 内容区域的尺寸
+            the._scrollLeft = the._$ele.scrollLeft;
+            the._scrollTop = the._$ele.scrollTop;
+            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
+            the._scrollTopMax = the._contentHeight - the._sizeHeight;
         },
 
 
@@ -225,6 +231,8 @@ define(function (require, exports, module) {
 
             attribute.width(the._$size, the._sizeWidth);
             attribute.height(the._$size, the._sizeHeight);
+            // 内容尺寸
+            the._calContentSize('xy');
             the._resize();
             the.scrollX();
             the.scrollY();
@@ -265,15 +273,15 @@ define(function (require, exports, module) {
             the._yTopMax = sizeHeight - the._yHeight - the._yOffset;
 
             if (the._xLeftMax <= 0) {
-                attribute.css(the._$trackX, 'opacity', 0);
+                attribute.css(the._$trackX, 'display', 'none');
             } else {
-                attribute.css(the._$trackX, 'opacity', 1);
+                attribute.css(the._$trackX, 'display', 'block');
             }
 
             if (the._yTopMax <= 0) {
-                attribute.css(the._$trackY, 'opacity', 0);
+                attribute.css(the._$trackY, 'display', 'none');
             } else {
-                attribute.css(the._$trackY, 'opacity', 1);
+                attribute.css(the._$trackY, 'display', 'block');
             }
 
             animation.stop(the._$thumbX);
@@ -338,9 +346,10 @@ define(function (require, exports, module) {
                 }
 
                 // 鼠标滚动
-                event.on(the._$size, 'wheelstart', function () {
+                event.on(the._$size, 'wheelstart', function (eve) {
                     attribute.addClass(thumb, thumbActiveClass);
                     the._isWheel = !0;
+                    eve.preventDefault();
                 });
 
                 event.on(the._$size, 'wheelchange', function (eve) {
@@ -349,6 +358,7 @@ define(function (require, exports, module) {
 
                     the['_scroll' + key] += d;
                     the['scroll' + options.axis.toUpperCase()]();
+                    eve.preventDefault();
                 });
 
                 event.on(the._$size, 'wheelend', function () {
