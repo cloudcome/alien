@@ -33,7 +33,8 @@ define(function (require, exports, module) {
     event.on(document, mousewheel, function (eve) {
         var ele = eve.target;
         var deltaY = 0;
-        var dispatchDragend;
+        var dispatchStart;
+        var dispatchChange;
 
         if (timeid) {
             clearTimeout(timeid);
@@ -49,7 +50,11 @@ define(function (require, exports, module) {
             isStart = !0;
 
             event.extend(startEvent, eve);
-            event.dispatch(ele, startEvent);
+            dispatchStart = event.dispatch(ele, startEvent);
+            
+            if (dispatchStart.defaultPrevented === true) {
+                eve.preventDefault();
+            }
         }
 
         // chrome
@@ -70,9 +75,9 @@ define(function (require, exports, module) {
             deltaY: deltaY,
             deltaZ: 0
         });
-        dispatchDragend = event.dispatch(ele, changeEvent);
+        dispatchChange = event.dispatch(ele, changeEvent);
 
-        if (dispatchDragend.defaultPrevented === true) {
+        if (dispatchChange.defaultPrevented === true) {
             eve.preventDefault();
         }
     });
