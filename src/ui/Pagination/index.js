@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var data = require('../../util/data.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = klass.create({
+    var Pagination = ui({
         STATIC: {
             /**
              * 默认配置

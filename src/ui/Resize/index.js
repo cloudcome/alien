@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 
     var style = require('text!./style.css');
     var template = require('text!./template.html');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -39,7 +39,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Resize = klass.create({
+    var Resize = ui({
         STATIC: {
             defaults: defaults
         },

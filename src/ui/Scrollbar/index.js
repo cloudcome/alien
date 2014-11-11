@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
     var style = require('css!./style.css');
     var data = require('../../util/data.js');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
         cssEasing: 'in-out',
         jsEasing: 'swing'
     };
-    var Scrollbar = klass.create({
+    var Scrollbar = ui({
         STATIC: {
             defaults: defaults
         },

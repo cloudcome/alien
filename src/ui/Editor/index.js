@@ -11,9 +11,16 @@ define(function (require, exports, module) {
      * @module ui/Editor/index
      * @requires core/dom/selector
      * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires core/event/base
      * @requires ui/Editor/editor
      * @requires util/data
-     * @requires util/class
+     * @requires util/random
+     * @requires ui/base
+     * @requires ui/Scrollbar/index
+     * @requires ui/Dialog/index
+     * @requires ui/Msg/index
+     * @requires libs/Template
      */
     'use strict';
 
@@ -24,7 +31,7 @@ define(function (require, exports, module) {
     var editor = require('./editor.js');
     var data = require('../../util/data.js');
     var random = require('../../util/random.js');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
@@ -51,7 +58,7 @@ define(function (require, exports, module) {
         uploadCallback: null
     };
     var pathname = location.pathname;
-    var Editor = klass.create({
+    var Editor = ui({
         STATIC: {
             defaults: defaults
         },
@@ -177,6 +184,7 @@ define(function (require, exports, module) {
                 the._dialog = null;
             }
 
+            the._savePos();
             $dialog = modification.parse(tpl.render(dt))[0];
             event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
@@ -188,6 +196,20 @@ define(function (require, exports, module) {
             }).open();
             the._$dialog = $dialog;
             the._doUpload();
+        },
+
+
+        /**
+         * 销毁上传实例
+         * @private
+         */
+        _uploadDestroy: function(){
+            var the = this;
+
+            the._dialog.destroy(function () {
+                modification.remove(the._$dialog);
+                the._restorePos();
+            });
         },
 
 
@@ -204,11 +226,16 @@ define(function (require, exports, module) {
             };
             var ondone = function (err, list) {
                 var html = [];
+                var msg;
 
                 if (err) {
-                    return new Msg({
+                    msg = new Msg({
                         content: err.message
                     });
+                    msg.on('close', function () {
+                        the._uploadDestroy();
+                    });
+                    return;
                 }
 
                 data.each(list, function (index, img) {
@@ -216,9 +243,7 @@ define(function (require, exports, module) {
                 });
 
                 the.insert(html.join('\n'));
-                dialog.destroy(function () {
-                    modification.remove(the._$dialog);
-                });
+                the._uploadDestroy();
             };
 
             the._options.uploadCallback(list, onprogress, ondone);
@@ -387,6 +412,7 @@ define(function (require, exports, module) {
             }
 
             if (the._uploadList.length) {
+                the._$ele.blur();
                 the._upload();
                 eve.preventDefault();
             }

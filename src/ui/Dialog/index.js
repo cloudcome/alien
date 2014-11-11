@@ -29,7 +29,7 @@ define(function (require, exports, module) {
 
     require('../../core/event/drag.js');
     var style = require('css!./style.css');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -71,7 +71,7 @@ define(function (require, exports, module) {
     // 打开的对话框队列
     var openDialogs = [];
     var dialogsMap = {};
-    var Dialog = klass.create({
+    var Dialog = ui({
         STATIC: {
             /**
              * 默认配置

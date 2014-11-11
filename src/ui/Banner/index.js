@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -51,7 +51,7 @@ define(function (require, exports, module) {
         navGenerator: null
     };
 
-    var Banner = klass.create({
+    var Banner = ui({
         STATIC: {
             /**
              * 默认配置

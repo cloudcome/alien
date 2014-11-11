@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var Template = require('../../libs/Template.js');
     var Emitter = require('../../libs/Emitter.js');
     var data = require('../../util/data.js');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Imgclip = klass.create({
+    var Imgclip = ui({
         STATIC: {
             defaults: defaults
         },

@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -38,7 +38,7 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = klass.create({
+    var Tooltip = ui({
         STATIC: {
             /**
              * 默认配置

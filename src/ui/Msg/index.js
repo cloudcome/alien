@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var klass = require('../../util/class.js');
+    var ui = require('../base.js');
     var data = require('../../util/data.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         timeout: -1
     };
     var mouseevent = {};
-    var Msg = klass.create({
+    var Msg = ui({
         STATIC: {
             /**
              * 默认配置
