@@ -21,6 +21,7 @@ define(function (require, exports, module) {
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
      * @requires libs/Template
+     * @requires libs/Emitter
      */
     'use strict';
 
@@ -30,7 +31,9 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var editor = require('./editor.js');
     var data = require('../../util/data.js');
+    var date = require('../../util/date.js');
     var random = require('../../util/random.js');
+    var Emitter = require('../../libs/Emitter.js');
     var ui = require('../base.js');
     var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
@@ -79,6 +82,7 @@ define(function (require, exports, module) {
                 throw new Error('instance element is empty');
             }
 
+            Emitter.apply(the, arguments);
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
             the._options = data.extend(true, {}, defaults, options);
@@ -107,21 +111,50 @@ define(function (require, exports, module) {
             '"><div class="' + alienClass + '-inner"></div></div>');
             the._$wrap = selector.closest(the._$ele, '.' + alienClass)[0];
             the._scrollbar = new Scrollbar(the._$ele);
-
-            if (!the._$ele.value) {
-                the._getLocal();
-                editor.focusEnd(the._$ele);
-                the._scrollbar.update();
-            }
-
             the._uploadList = [];
             the._history = [the._$ele.value];
             the._historyIndex = -1;
-            the._selection = [0, 0];
             the._on();
             the._isFullscreen = false;
+            the._initVal();
 
             return the;
+        },
+
+
+        /**
+         * 初始化编辑框内容
+         * @private
+         */
+        _initVal: function () {
+            var the = this;
+            var local = the._getLocal();
+            var minTime = 24 * 60 * 60 * 1000;
+            var deltaTime = Date.now() - local.ver;
+            var humanTime = date.from(local.ver);
+            var done = function _done() {
+                the._scrollbar.update();
+                editor.focusEnd(the._$ele);
+                the._savePos();
+            };
+
+            // 1天之内的本地记录 && 内容不一致
+            if (deltaTime < minTime && local.val !== the._$ele.value) {
+                new Msg({
+                    content: '是否恢复本地的历史记录？<br>本地记录时间为：<b>' + humanTime + '</b>。',
+                    buttons: ['确定', '取消']
+                })
+                    .on('close', function (index) {
+                        if (index === 0) {
+                            the._$ele.value = local.val;
+                        } else {
+                            the._saveLocal();
+                        }
+                        done();
+                    });
+            } else {
+                done();
+            }
         },
 
 
@@ -239,10 +272,11 @@ define(function (require, exports, module) {
                 }
 
                 data.each(list, function (index, img) {
-                    html.push('![img](' + img.url + ')');
+                    html.push('![' + img.name + '](' + img.url + ')');
                 });
 
-                the.insert(html.join('\n'));
+                the.insert(html = html.join(' '));
+                the._selection[1] += html.length;
                 the._uploadDestroy();
             };
 
@@ -281,7 +315,10 @@ define(function (require, exports, module) {
          * @private
          */
         _getLocal: function () {
-            this._$ele.value = window.localStorage.getItem(this._storeId) || '';
+            return {
+                val: window.localStorage.getItem(this._storeId + '>val') || '',
+                ver: data.parseInt(window.localStorage.getItem(this._storeId + '>ver') || 0, 0)
+            };
         },
 
 
@@ -290,7 +327,8 @@ define(function (require, exports, module) {
          * @private
          */
         _saveLocal: function () {
-            window.localStorage.setItem(this._storeId, this._$ele.value);
+            window.localStorage.setItem(this._storeId + '>val', this._$ele.value);
+            window.localStorage.setItem(this._storeId + '>ver', Date.now());
         },
 
 
@@ -377,11 +415,43 @@ define(function (require, exports, module) {
 
 
         /**
+         * 解析拖拽、粘贴里的图片信息
+         * @param items
+         * @private
+         */
+        _parseImgList: function (eve, items) {
+            var the = this;
+
+            the._uploadList = [];
+            data.each(items, function (index, item) {
+                var file;
+
+                if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
+                    file = item.getAsFile();
+
+                    if (file && file.size > 0) {
+                        the._uploadList.push({
+                            url: window.URL.createObjectURL(item.getAsFile()),
+                            file: item.getAsFile()
+                        });
+                    }
+                }
+            });
+
+            if (the._uploadList.length) {
+                the._$ele.blur();
+                the._uploadDialog();
+                eve.preventDefault();
+            }
+        },
+
+
+        /**
          * 拖拽回调
          * @private
          */
         _ondrop: function (eve) {
-            debugger;
+            this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
         },
 
 
@@ -391,32 +461,7 @@ define(function (require, exports, module) {
          * @private
          */
         _onpaste: function (eve) {
-            var the = this;
-
-            if (eve.clipboardData && eve.clipboardData.items && eve.clipboardData.items.length) {
-                the._uploadList = [];
-
-                data.each(eve.clipboardData.items, function (index, item) {
-                    var file;
-
-                    if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
-                        file = item.getAsFile();
-
-                        if (file && file.size > 0) {
-                            the._uploadList.push({
-                                url: window.URL.createObjectURL(item.getAsFile()),
-                                file: item.getAsFile()
-                            });
-                        }
-                    }
-                });
-            }
-
-            if (the._uploadList.length) {
-                the._$ele.blur();
-                the._upload();
-                eve.preventDefault();
-            }
+            this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
         },
 
 
@@ -432,13 +477,6 @@ define(function (require, exports, module) {
             event.un($ele, 'input', the._oninput);
             event.un($ele, 'drop', the._ondrop);
             event.un($ele, 'paste', the._onpaste);
-        },
-
-
-        _upload: function () {
-            var the = this;
-
-            the._uploadDialog();
         },
 
 
@@ -503,6 +541,7 @@ define(function (require, exports, module) {
 
             history.push(now);
             the._saveLocal();
+            the.emit('change', now);
         },
 
 
@@ -560,7 +599,7 @@ define(function (require, exports, module) {
 
             return the;
         }
-    });
+    }, Emitter);
 
 
     modification.importStyle(style);

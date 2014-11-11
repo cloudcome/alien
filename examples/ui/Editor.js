@@ -14,7 +14,7 @@ define(function (require, exports, module) {
                 fd.append('img[]', item.file);
             });
 
-            xhr.post('./upload.json2', fd).on('success', function (json) {
+            xhr.get('./upload.json', fd).on('success', function (json) {
                 setTimeout(function () {
                     done(null, json);
                 }, 2000);

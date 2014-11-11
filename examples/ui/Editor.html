@@ -29,17 +29,36 @@
             padding: 2px 6px;
             margin: 0 5px;
         }
+
+        textarea{
+            font-size: 16px;
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body ontouchstart="">
-<h1>markdown 编辑器</h1>
-<p>此处为了演示，将上传等待时间延长了2s，并且伪造了上传图片地址</p>
 <textarea name="editor" id="editor">
+# markdown 编辑器
+
+> 这是一个`textarea`文本域。
+
 - `ctrl + tab` 设置 tab
 - `shift + tab` 取消 tab
-- `ctrl + z` 撤销操作
-- `ctrl + r` 恢复操作
-- `ctrl + esc` 切换全屏
+- `ctrl/meta + z` 撤销操作
+- `ctrl + r / meta + shift + r` 恢复操作
+- `ctrl/meta + esc` 切换全屏
+- 可以拖拽、复制图片到编辑器里以上传图片
+
+```
+// 代码格式
+var abc = 123;
+
+alert(abc);
+```
+
+此处为了演示，将上传等待时间延长了2s，并且伪造了上传图片地址
+
+nginx静态服务器禁止了post提交，此处已用get演示，因此没有进度提示，实际项目必须用post
 </textarea>
 
 
