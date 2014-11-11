@@ -103,7 +103,7 @@ define(function (require, exports, module) {
                 border: 0,
                 width: options.width,
                 height: options.height,
-                padding: 10,
+                padding: 0,
                 margin: 0
             });
             attribute.addClass(the._$ele, alienClass + '-textarea');
@@ -178,8 +178,8 @@ define(function (require, exports, module) {
                 attribute.css(document.body, 'overflow', 'hidden');
                 attribute.addClass(the._$wrap, alienClass + '-fullscreen');
                 the._scrollbar.resize({
-                    width: attribute.innerWidth(window) - 20,
-                    height: attribute.innerHeight(window) - 20
+                    width: attribute.innerWidth(window) - 30,
+                    height: attribute.innerHeight(window) - 24
                 });
             }
         },
