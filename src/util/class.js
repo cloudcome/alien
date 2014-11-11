@@ -14,6 +14,14 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('./data.js');
+    var defaults = {
+        STATIC: {},
+        PUBLIC: {},
+        PRIVATE: {},
+        PROTECTED: {}
+    };
+    var udf;
+
 
     module.exports = {
         /**
@@ -69,8 +77,8 @@ define(function (require, exports, module) {
          * @param {Object} property
          * @param {Function} property.constructor 构造函数
          * @param {Object} [property.STATIC]  静态属性
-         * @param {Function} [superConstructor] 父类
-         * @param {Boolean} [isInheritStatic] 是否继承父类的静态方法
+         * @param {Function} [superConstructor=null] 父类
+         * @param {Boolean} [isInheritStatic=false] 是否继承父类的静态方法
          *
          * @example
          * var Father = klass.create({
@@ -113,7 +121,6 @@ define(function (require, exports, module) {
         create: function (property, superConstructor, isInheritStatic) {
             var type = data.type(property);
             var constructorType;
-//            var initType;
             var superConstructorType = data.type(superConstructor);
             var STATIC;
 
@@ -121,15 +128,11 @@ define(function (require, exports, module) {
                 throw new Error('property must be an object');
             }
 
+
             // 必须有构造函数
             if (!data.hasOwnProperty(property, 'constructor')) {
                 throw new Error('property must be have a `constructor` function');
             }
-
-//            // 必须有初始化方法
-//            if (!data.hasOwnProperty(property, 'init')) {
-//                throw new Error('property must be have a `init` function');
-//            }
 
             constructorType = data.type(property.constructor);
 
@@ -137,18 +140,13 @@ define(function (require, exports, module) {
                 throw new Error('property `constructor` must be a function');
             }
 
-//            initType = data.type(property.init);
-//
-//            if (initType !== 'function') {
-//                throw new Error('property `init` must be a function');
-//            }
-
             if (superConstructorType !== 'undefined' && superConstructorType === 'function') {
                 this.inherit(property.constructor, superConstructor, isInheritStatic);
             }
 
+
             STATIC = property.STATIC || {};
-            delete property.STATIC;
+            delete(property.STATIC);
 
             // 必须静态对象
             if (data.type(STATIC) !== 'object') {
@@ -157,12 +155,12 @@ define(function (require, exports, module) {
 
             // 不能重写静态`super_`属性，保留字段
             if (STATIC.super_) {
-                throw new Error('unable to rewrite constructor static property super_ value');
+                throw new Error('unable to rewrite constructor static property `super_` value');
             }
 
             // 添加静态方法、属性
             data.each(STATIC, function (key, val) {
-                if (key !== 'prototype') {
+                if (key !== 'prototype' && key !== 'constructor') {
                     property.constructor[key] = val;
                 }
             });
@@ -171,38 +169,6 @@ define(function (require, exports, module) {
             data.each(property, function (key, val) {
                 property.constructor.prototype[key] = val;
             });
-
-            // 添加默认方法
-            if (property.constructor.prototype.getOptions === undefined) {
-                property.constructor.prototype.getOptions = function (key) {
-                    var the = this;
-                    var keyType = data.type(key);
-                    var ret = [];
-
-                    if (keyType === 'string' || keyType === 'number') {
-                        return the._options && the._options[key];
-                    } else if (keyType === 'array') {
-                        data.each(key, function (index, k) {
-                            ret.push(the._options && the._options[k]);
-                        });
-
-                        return ret;
-                    }
-                };
-            }
-
-            if (property.constructor.prototype.setOptions === undefined) {
-                property.constructor.prototype.setOptions = function (key, val) {
-                    var the = this;
-                    var keyType = data.type(key);
-
-                    if (keyType === 'string' || keyType === 'number') {
-                        return the._options ? the._options[key] = val : undefined;
-                    } else if (keyType === 'object') {
-                        data.extend(the._options, key);
-                    }
-                };
-            }
 
             return property.constructor;
         }
