@@ -203,7 +203,7 @@ define(function (require, exports, module) {
          * 销毁上传实例
          * @private
          */
-        _uploadDestroy: function(){
+        _uploadDestroy: function () {
             var the = this;
 
             the._dialog.destroy(function () {
@@ -321,6 +321,7 @@ define(function (require, exports, module) {
             var keyCode = eve.keyCode;
             var isShift = eve.shiftKey;
             var isCtrl = eve.ctrlKey;
+            var isMetaKey = eve.metaKey;
 
             // shift + tab
             if (isShift && keyCode === 9) {
@@ -334,8 +335,8 @@ define(function (require, exports, module) {
                 the._pushHistory();
                 eve.preventDefault();
             }
-            // ctrl + z
-            else if (isCtrl && keyCode === 90) {
+            // ctrl/meta + z
+            else if ((isCtrl || isMetaKey) && keyCode === 90) {
                 the._savePos();
                 the._historyIndex = the._historyIndex === -1 ?
                     (the._history.length >= 2 ? the._history.length - 2 : 0) :
@@ -344,8 +345,8 @@ define(function (require, exports, module) {
                 the._restorePos();
                 eve.preventDefault();
             }
-            // ctrl + r
-            else if (isCtrl && keyCode === 82) {
+            // ctrl + r / meta + shift + z
+            else if (isCtrl && keyCode === 82 || isMetaKey && isShift && keyCode === 90) {
                 if (the._history.length > the._historyIndex + 1) {
                     the._savePos();
                     the._historyIndex += 1;
@@ -355,8 +356,8 @@ define(function (require, exports, module) {
 
                 eve.preventDefault();
             }
-            // ctrl + esc
-            else if (isCtrl && keyCode === 27) {
+            // ctrl/meta + esc
+            else if ((isCtrl || isMetaKey) && keyCode === 27) {
                 the.toggleFullscreen();
             }
         },
@@ -489,12 +490,18 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var history = the._history;
+            var now = the._$ele.value;
+
+            // 如果与最后一次相同，则取消入栈历史记录
+            if (history.length && history[history.length - 1] === now) {
+                return;
+            }
 
             if (history.length >= options.historyLength) {
                 the._shiftHistory();
             }
 
-            history.push(the._$ele.value);
+            history.push(now);
             the._saveLocal();
         },
 
