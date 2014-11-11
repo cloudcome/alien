@@ -252,8 +252,10 @@ define(function (require, exports, module) {
 
             var the = this;
             var options = the._options;
-            var sizeWidth = the._isTextarea ? attribute.outerWidth(the._$size) : the._sizeWidth;
-            var sizeHeight = the._isTextarea ? attribute.outerHeight(the._$size) : the._sizeHeight;
+            //var sizeWidth = the._isTextarea ? attribute.outerWidth(the._$size) : the._sizeWidth;
+            //var sizeHeight = the._isTextarea ? attribute.outerHeight(the._$size) : the._sizeHeight;
+            var sizeWidth = attribute.height(the._$trackX);
+            var sizeHeight = attribute.height(the._$trackY);
 
             // 计算滚动条的x轴的宽、y轴的高
             // 6等于滚动条的左边距3 + 右边距3

@@ -1,13 +1,11 @@
 .alien-ui-scrollbar {
     position: relative;
-    overflow: hidden;
     margin: 0;
     padding: 0;
 }
 
 .alien-ui-scrollbar-body {
     position: relative;
-    overflow: hidden;
     margin: 0;
     padding: 0;
 }
