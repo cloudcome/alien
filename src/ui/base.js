@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * UI 类创建文件
  * @author ydr.me
  * @create 2014-11-11 20:07
  */
@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/base
+     * @module ui/base
+     * @requires util/data
+     * @requires util/class
      */
     'use strict';
 
