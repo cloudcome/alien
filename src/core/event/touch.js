@@ -63,6 +63,15 @@ define(function (require, exports, module) {
         },
         swipeleft: {
             event: event.create('swipeleft')
+        },
+        touch1start: {
+            event: event.create('touch1start')
+        },
+        touch1move: {
+            event: event.create('touch1move')
+        },
+        touch1end: {
+            event: event.create('touch1end')
         }
     };
     var x0;
@@ -87,6 +96,12 @@ define(function (require, exports, module) {
                 event.extend(options.taphold.event, firstTouch);
                 event.dispatch(target, options.taphold.event);
             }, options.taphold.timeout);
+
+            event.extend(options.touch1start.event, firstTouch, {
+                startX: x0,
+                startY: y0
+            });
+            event.dispatch(target, options.touch1start.event);
         }
     });
 
@@ -110,6 +125,12 @@ define(function (require, exports, module) {
                     _reset(eve);
                 }
             }
+
+            event.extend(options.touch1move.event, firstTouch, {
+                deltaX: deltaX,
+                deltaY: deltaY
+            });
+            event.dispatch(target, options.touch1move.event);
         }
     });
 
@@ -155,6 +176,14 @@ define(function (require, exports, module) {
                     event.dispatch(target, options['swipe' + dir].event);
                 }, 0);
             }
+
+            event.extend(options.touch1end.event, firstTouch, {
+                endX: x1,
+                endY: y1,
+                deltaX: x,
+                deltaY: y
+            });
+            event.dispatch(target, options.touch1end.event);
         }
     });
 
