@@ -127,8 +127,10 @@ define(function (require, exports, module) {
             }
 
             event.extend(options.touch1move.event, firstTouch, {
-                deltaX: deltaX,
-                deltaY: deltaY
+                moveX: firstTouch.clientX,
+                moveY: firstTouch.clientY,
+                deltaX: firstTouch.clientX - x0,
+                deltaY: firstTouch.clientY - y0
             });
             event.dispatch(target, options.touch1move.event);
         }
