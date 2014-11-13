@@ -132,9 +132,6 @@ define(function (require, exports, module) {
          * @param {String} template 模板字符串
          * @returns {Template}
          * @private
-         *
-         * @example
-         * tp.init("{{name}}");
          */
         _init: function (template) {
             var the = this;
