@@ -232,7 +232,7 @@ define(function (require, exports, module) {
         for (; current < length; current++) {
             obj = args[current];
             for (i in obj) {
-                if (this.hasOwnProperty(obj, i) && obj[i] !== undefined) {
+                if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
                     type = this.type(obj[i]);
                     if (type === 'object' && isExtendDeep) {
                         source[i] = {};
@@ -287,20 +287,20 @@ define(function (require, exports, module) {
     };
 
 
-    /**
-     * 判断一个对象是否有属于自身的方法、属性，而不是原型链方法、属性以及其他继承来的方法、属性
-     * @param obj {Object} 判断对象
-     * @param prop {String} 方法、属性名称
-     * @returns {Boolean}
-     *
-     * @example
-     * var o = {a: 1};
-     * data.hasOwnProperty(o, 'a');
-     * // => true
-     */
-    exports.hasOwnProperty = function (obj, prop) {
-        return Object.prototype.hasOwnProperty.call(obj, prop);
-    };
+    ///**
+    // * 判断一个对象是否有属于自身的方法、属性，而不是原型链方法、属性以及其他继承来的方法、属性
+    // * @param obj {Object} 判断对象
+    // * @param prop {String} 方法、属性名称
+    // * @returns {Boolean}
+    // *
+    // * @example
+    // * var o = {a: 1};
+    // * data.hasOwnProperty(o, 'a');
+    // * // => true
+    // */
+    //exports.hasOwnProperty = function (obj, prop) {
+    //    return Object.prototype.hasOwnProperty.call(obj, prop);
+    //};
 
 
     /**

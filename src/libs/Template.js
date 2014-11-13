@@ -211,11 +211,11 @@ define(function (require, exports, module) {
                         output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else
-                    else if ($0.indexOf('else') === 0) {
+                    else if ($0==='else') {
                         output.push('}else{' + _var + '+=' + $1 + ';');
                     }
                     // /if
-                    else if ($0.indexOf('/if') === 0) {
+                    else if ($0==='/if') {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // list list as key,val
@@ -224,7 +224,7 @@ define(function (require, exports, module) {
                         output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
                     // /list
-                    else if ($0.indexOf('/list') === 0) {
+                    else if ($0==='/list') {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // var

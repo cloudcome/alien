@@ -14,14 +14,6 @@ define(function (require, exports, module) {
     'use strict';
 
     var data = require('./data.js');
-    var defaults = {
-        STATIC: {},
-        PUBLIC: {},
-        PRIVATE: {},
-        PROTECTED: {}
-    };
-    var udf;
-
 
     module.exports = {
         /**
@@ -130,7 +122,7 @@ define(function (require, exports, module) {
 
 
             // 必须有构造函数
-            if (!data.hasOwnProperty(property, 'constructor')) {
+            if (!property.hasOwnProperty('constructor')) {
                 throw new Error('property must be have a `constructor` function');
             }
 
