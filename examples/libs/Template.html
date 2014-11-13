@@ -47,27 +47,47 @@
 <body>
 
 <textarea id="template">
-    <div>my name is {{name}}, I love {{=love}}.</div>
-
     <p>
         {{if name === "Jane Yim"}}
-        hi, {{name}}
+        {{name}}
         {{else}}
         Please login
         {{/if}}
+        喜欢的书有：
     </p>
 
     <ul>
         {{list books as index,book }}
-        <li>第{{index*1+1}}本书：{{book|test1|test2:'哈哈','呵呵'}}</li>
+        <li>
+            <p>{{book.type}}类：</p>
+            <ol>
+                {{list book.list as item}}
+                <li>《{{item}}》</li>
+                {{/list}}
+            </ol>
+        </li>
         {{/list}}
     </ul>
 </textarea>
-<button id="btn">render data</button>
+
 
 <p class="text-center">+</p>
-<div class="pre" id="data"></div>
-<p class="text-center">=</p>
+<pre class="pre" id="data">
+{
+    name: 'Jane Yim',
+    love: '&lt;b&gt;FED&lt;/b&gt;',
+    books: [{
+        type: '科技',
+        list: ['JavaScript']
+    },{
+        type: '文学',
+        list: ['百年孤独', '飘']
+    }]
+}
+</pre>
+<p class="text-center">
+    <button id="btn">=</button>
+</p>
 
 <div class="pre" id="render"></div>
 

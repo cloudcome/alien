@@ -113,6 +113,14 @@ define(function (require, exports, module) {
                 }
             }
         },
+
+
+        /**
+         * 构造函数
+         * @constructor
+         * @param tmplate {String} 模板内容
+         * @param [options] {Object} 模板配置
+         */
         constructor: function (tmplate, options) {
             this._options = utilData.extend(!0, {}, defaults, options);
             this._init(tmplate);
@@ -334,6 +342,14 @@ define(function (require, exports, module) {
                 this._template.filters[name] :
                 this._template.filters;
         },
+
+
+        /**
+         * 解析变量
+         * @param str
+         * @returns {string}
+         * @private
+         */
         _parseVar: function (str) {
             var the = this;
             var matches = str.trim().match(regVar);
@@ -345,8 +361,8 @@ define(function (require, exports, module) {
             }
 
             ret = (matches[1] !== '=' ? 'this.escape(' : '') +
-                matches[2] +
-                (matches[1] !== '=' ? ')' : '');
+            matches[2] +
+            (matches[1] !== '=' ? ')' : '');
 
             if (!matches[3]) {
                 return ret;
@@ -373,6 +389,14 @@ define(function (require, exports, module) {
 
             return ret;
         },
+
+
+        /**
+         * 解析条件判断
+         * @param str
+         * @returns {string}
+         * @private
+         */
         _parseIfAndElseIf: function (str) {
             var matches = str.trim().match(regIf);
 
@@ -382,6 +406,14 @@ define(function (require, exports, module) {
 
             return matches[1] + '(' + matches[3] + '){';
         },
+
+
+        /**
+         * 解析列表
+         * @param str
+         * @returns {string}
+         * @private
+         */
         _parseList: function (str) {
             var matches = str.trim().match(regList);
             var parse;
@@ -400,6 +432,14 @@ define(function (require, exports, module) {
             return 'for(var ' + parse.key + ' in ' + parse.list + '){var ' +
                 parse.val + '=' + parse.list + '[' + parse.key + '];';
         },
+
+
+        /**
+         * 行包裹，删除多余空白、注释，替换换行符、双引号
+         * @param str
+         * @returns {string}
+         * @private
+         */
         _lineWrap: function (str) {
             var optioons = this._options;
 
