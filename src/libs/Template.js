@@ -24,8 +24,6 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /<!--[\s\S]*?-->/g;
-//    var regQuote = /['"]/;
-//    var regIfElseIf = /^(else)?if/;
     var escapes = [
         {
             reg: /</g,
@@ -48,10 +46,10 @@ define(function (require, exports, module) {
             rep: '&#38;'
         }
     ];
+    var openTag = '{{';
+    var closeTag = '}}';
     var defaults = {
-        openTag: '{{',
-        closeTag: '}}',
-        compress: !0
+        compress: true
     };
     var filters = {};
     var Template = klass.create({
@@ -140,10 +138,10 @@ define(function (require, exports, module) {
             var fnStr = 'var ' + _var + '="";';
             var output = [];
             var parseTimes = 0;
-            // 是否进入忽略状态，1=进入，0=退出
-            var inIgnore = 0;
+            // 是否进入忽略状态，true=进入，false=退出
+            var inIgnore = false;
             // 是否进入表达式
-            var inExp = 0;
+            var inExp = false;
 
             the._template = {
                 escape: _escape,
@@ -151,54 +149,51 @@ define(function (require, exports, module) {
             };
             the._useFilters = {};
 
-            template.split(options.openTag).forEach(function (value) {
-                var array = value.split(options.closeTag);
+            template.split(openTag).forEach(function (value) {
+                var array = value.split(closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
+                var parseVar;
+
                 parseTimes++;
 
-                // {{my name is
-                // 0 my name is
+                // 1个开始符
                 if (array.length === 1) {
+                    // 多个连续开始符号
+                    if (!$0 || $0 === '{') {
+                        if (inIgnore) {
+                            output.push(_var + '+=' + the._lineWrap(openTag) + ';');
+                        }
+                    }
                     // 忽略开始
-                    if ($0.substr(-1) === '\\') {
-                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '{{') + ';');
-                        inIgnore = 1;
+                    else if ($0.slice(-1) === '\\') {
+                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + openTag) + ';');
+                        inIgnore = true;
                         parseTimes--;
                     } else {
                         if ((parseTimes % 2) === 0) {
-                            throw new Error('find unclose tag ' + options.openTag);
+                            throw new Error('find unclose tag ' + openTag);
                         }
 
-                        inIgnore = 0;
-                        inExp = 1;
+                        inIgnore = false;
+                        inExp = true;
                         output.push(_var + '+=' + the._lineWrap($0) + ';');
                     }
                 }
-                // name}}, I love
-                // 0 name
-                // 1 , I love
+                // 1个结束符
                 else if (array.length === 2) {
                     $0 = $0.trim();
-                    inExp = 0;
-
-                    if ($0 === '\\') {
-                        return output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + '}}' + $1) + ';');
-                    }
+                    inExp = false;
 
                     // 忽略结束
                     if (inIgnore) {
-                        output.push(_var + '+=' + the._lineWrap($0 + '}}' + $1) + ';');
-                        inIgnore = 0;
+                        output.push(_var + '+=' + the._lineWrap($0 + closeTag + $1) + ';');
+                        inIgnore = false;
                         return;
                     }
 
-//                    // 表达式中发现引号 && 除了判断句
-//                    if(regQuote.test($0) && !regIfElseIf.test($0)){
-//                        throw new Error('unspport quotation marks in template expression');
-//                    }
-
                     $1 = the._lineWrap($1);
+
                     // if abc
                     if ($0.indexOf('if ') === 0) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
@@ -208,11 +203,11 @@ define(function (require, exports, module) {
                         output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else
-                    else if ($0==='else') {
+                    else if ($0 === 'else') {
                         output.push('}else{' + _var + '+=' + $1 + ';');
                     }
                     // /if
-                    else if ($0==='/if') {
+                    else if ($0 === '/if') {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // list list as key,val
@@ -221,17 +216,24 @@ define(function (require, exports, module) {
                         output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
                     // /list
-                    else if ($0==='/list') {
+                    else if ($0 === '/list') {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // var
                     else {
-                        output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
+                        parseVar = the._parseVar($0);
+
+                        if (parseVar) {
+                            output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
+                        }
                     }
+
                 }
-                // 3}}\}}\}}\}}...
+                // 多个结束符
                 else {
-                    inExp = 0;
+                    output.push(_var + '+=' + the._lineWrap(value) + ';');
+                    inExp = false;
+                    inIgnore = false;
                 }
             });
 
@@ -354,7 +356,7 @@ define(function (require, exports, module) {
             var ret;
 
             if (!matches) {
-                throw new Error('parse error ' + str);
+                return '';
             }
 
             ret = (matches[1] !== '=' ? 'this.escape(' : '') +
@@ -471,10 +473,10 @@ define(function (require, exports, module) {
      * 5. 过滤（<code>|</code>）<br>
      * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>
      * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>
+     * 6. 反斜杠转义，原样输出<br>
+     * \{{}} => {{}}<br>
      *
      * @param {Object} [options] 配置
-     * @param {String} [options.openTag="{{"] 开始标记，默认为"{{"
-     * @param {String} [options.closeTag="}}"] 结束标记，默认为"}}"
      * @param {Boolean} [options.compress=true] 是否压缩，默认为 true
      * @constructor
      *
