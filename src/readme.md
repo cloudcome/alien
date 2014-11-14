@@ -8,6 +8,7 @@
 - https://github.com/barretlee/javascript-multiple-download/blob/master/lib.
 - https://github.com/enyojs/canvas
 - https://github.com/AlloyTeam/JM/tree/master/src
+- https://github.com/visionmedia/page.js
 
 
 # 文档注释变量
