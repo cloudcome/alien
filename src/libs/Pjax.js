@@ -93,14 +93,14 @@ define(function (require, exports, module) {
                 the.url = the._getURL(this);
                 the.state = attribute.data(this, options.stateData);
                 history.pushState(the.state, null, the.url);
-                the._ajax();
+                the._render();
                 eve.preventDefault();
             });
 
             event.on(window, 'popstate', function () {
                 the.url = the._getURL(location);
                 the.state = history.state;
-                the._ajax();
+                the._render();
             });
         },
 
@@ -157,7 +157,6 @@ define(function (require, exports, module) {
                 the._xhr.abort();
             }
 
-            the.emit('beforechange');
             the._xhr = xhr.ajax(dato.extend(true, {}, options.ajax, {
                 url: the.url
             })).on('success', function (html) {
@@ -185,8 +184,11 @@ define(function (require, exports, module) {
                 }
             };
 
+            the.isCache = cache && Date.now() - cache.timeStamp < expires;
+            the.emit('beforechange');
+
             // 有效期内
-            if (cache && Date.now() - cache.timeStamp < expires) {
+            if (the.isCache) {
                 _render(true, cache.data);
             } else {
                 the._ajax(function (isSuccess, html) {

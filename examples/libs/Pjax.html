@@ -35,22 +35,20 @@
 </head>
 <body ontouchstart="">
 
+<p>此处为了演示：URL变化：1-4，缓存期为：10s</p>
+<p>状态：<span id="status"></span></p>
 
 <div id="container">
     这里的内容将会变化
 </div>
 
-<script>
-
-    var pathname = location.pathname;
-
-    document.write('<a href="' + pathname + '?s=' + String(Math.random()).slice(2) + '" data-state=\'{"a":1}\'>点我点我</a>');
-    document.write('<br><br>');
-    document.write('<a href="' + pathname + '?s=' + String(Math.random()).slice(2) + '" data-state=\'{"b":2}\'>点我吧点我吧</a>');
-    document.write('<br><br>');
-
-</script>
-<button id="btn">单击我以切换URL</button>
+<a href="/examples/libs/3.html" data-state='{"a":1}'>3.html</a>
+<br/>
+<br/>
+<a href="/examples/libs/4.html" data-state='{"b":2}'>4.html</a>
+<br/>
+<br/>
+<button id="btn">单击我以切换URL：1.html/2.html</button>
 
 
 <script src="../coolie.min.js" data-main="./libs/Pjax.js"></script>
