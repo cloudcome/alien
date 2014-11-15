@@ -160,11 +160,11 @@ define(function (require, exports, module) {
             the._yTop = 0;
             the._yTopMax = 0;
             the._yHeight = 0;
-            the._isWheel = false;
-            the._isDrag = false;
-            the._isTrigger = false;
+            // 私有、公有触发
+            the._isPrivateTrigger = false;
+            the._isPublicTrigger = false;
             the.update();
-            the._bind();
+            the._initEvent();
 
             return the;
         },
@@ -229,13 +229,14 @@ define(function (require, exports, module) {
                 the._sizeHeight = boxSize.height;
             }
 
-            attribute.width(the._$size, the._sizeWidth);
-            attribute.height(the._$size, the._sizeHeight);
+
+            attribute[(the._isTextarea ? 'innerW' : 'w') + 'idth'](the._$size, the._sizeWidth);
+            attribute[(the._isTextarea ? 'innerH' : 'h') + 'eight'](the._$size, the._sizeHeight);
             // 内容尺寸
             the._calContentSize('xy');
             the._resize();
-            the.scrollX();
-            the.scrollY();
+            the._scrollX();
+            the._scrollY();
 
             return the;
         },
@@ -252,10 +253,8 @@ define(function (require, exports, module) {
 
             var the = this;
             var options = the._options;
-            //var sizeWidth = the._isTextarea ? attribute.outerWidth(the._$size) : the._sizeWidth;
-            //var sizeHeight = the._isTextarea ? attribute.outerHeight(the._$size) : the._sizeHeight;
-            var sizeWidth = attribute.height(the._$trackX);
-            var sizeHeight = attribute.height(the._$trackY);
+            var sizeWidth = the._isTextarea ? attribute.innerWidth(the._$size) : the._sizeWidth;
+            var sizeHeight = the._isTextarea ? attribute.innerHeight(the._$size) : the._sizeHeight;
 
             // 计算滚动条的x轴的宽、y轴的高
             // 6等于滚动条的左边距3 + 右边距3
@@ -308,11 +307,13 @@ define(function (require, exports, module) {
             var isHorizontal = key === 'x';
             var val = isHorizontal ? the._scrollLeft : the._scrollTop;
 
-            if (the._isTrigger) {
+            if (the._isPrivateTrigger || the._isPublicTrigger) {
                 animation.stop(the._$size);
                 animation.scrollTo(the._$size, {
                     x: the._scrollLeft,
                     y: the._scrollTop
+                }, function () {
+                    the._isPrivateTrigger = the._isPublicTrigger = false;
                 });
             } else {
                 the._$size['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
@@ -324,10 +325,10 @@ define(function (require, exports, module) {
          * 事件监听
          * @private
          */
-        _bind: function () {
+        _initEvent: function () {
             var the = this;
             var options = the._options;
-            var thumb = options.axis === 'y' ? the._$thumbY : the._$thumbX;
+            var $thumb = options.axis === 'y' ? the._$thumbY : the._$thumbX;
             var key = options.axis === 'y' ? 'Top' : 'Left';
             var x0;
             var left0;
@@ -348,25 +349,25 @@ define(function (require, exports, module) {
                 }
 
                 // 鼠标滚动
-                event.on(the._$size, 'wheelstart', function (eve) {
-                    attribute.addClass(thumb, thumbActiveClass);
-                    the._isWheel = !0;
-                    eve.preventDefault();
+                event.on(the._$wrap, 'wheelstart', function () {
+                    attribute.addClass($thumb, thumbActiveClass);
                 });
 
-                event.on(the._$size, 'wheelchange', function (eve) {
+                event.on(the._$wrap, 'wheelchange', function (eve) {
                     var y = eve.alienDetail.deltaY;
                     var d = -y * options.speed;
 
-                    the['_scroll' + key] += d;
-                    the['scroll' + options.axis.toUpperCase()]();
-                    eve.preventDefault();
+                    d = the['_scroll' + key] + d;
+
+                    if (d >= 0 && d <= the['_scroll' + key + 'Max']) {
+                        eve.preventDefault();
+                    }
+
+                    the['_scroll' + key] = d;
+                    the['_scroll' + options.axis.toUpperCase()]();
                 });
 
-                event.on(the._$size, 'wheelend', function () {
-                    the._isWheel = !1;
-                    attribute.removeClass(thumb, thumbActiveClass);
-                });
+                event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
 
                 // 拖拽支持
 
@@ -391,7 +392,6 @@ define(function (require, exports, module) {
 
                     the._xLeft = left;
                     the._scrollLeft = the._scrollLeftMax * left / the._xLeftMax;
-                    the._isDrag = !0;
                     the._setScroll('x');
                     attribute.css(the._$thumbX, 'left', left);
                     the.emit('changex', the._scrollLeft);
@@ -399,7 +399,6 @@ define(function (require, exports, module) {
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
                     eve.preventDefault();
-                    the._isDrag = !1;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
                 });
 
@@ -424,7 +423,6 @@ define(function (require, exports, module) {
 
                     the._yTop = top;
                     the._scrollTop = the._scrollTopMax * top / the._yTopMax;
-                    the._isDrag = !0;
                     the._setScroll('y');
                     attribute.css(the._$thumbY, 'top', top);
                     the.emit('changey', the._scrollTop);
@@ -433,7 +431,6 @@ define(function (require, exports, module) {
                 event.on(the._$thumbY, 'dragend', function (eve) {
                     eve.preventDefault();
 
-                    the._isDrag = !1;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
             } else {
@@ -453,28 +450,34 @@ define(function (require, exports, module) {
 
 
         /**
+         * 滚动结束
+         * @param $thumb
+         * @private
+         */
+        _onwheelend: function ($thumb) {
+            attribute.removeClass($thumb, thumbActiveClass);
+        },
+
+
+        /**
          * 滚动时回调
          * @private
          */
         _onscroll: function () {
             var the = this;
 
-            if (the._isWheel || the._isDrag) {
-                the._isTrigger = false;
-            }
-
-            if (the._isWheel || the._isDrag || the._isTrigger) {
+            if (the._isPrivateTrigger || the._isPublicTrigger) {
                 return;
             }
 
-            if (the._$ele.scrollLeft !== the._scrollLeft) {
-                the._scrollLeft = the._$ele.scrollLeft;
-                the.scrollX();
+            if (the._$size.scrollLeft !== the._scrollLeft) {
+                the._scrollLeft = the._$size.scrollLeft;
+                the._scrollX();
             }
 
-            if (the._$ele.scrollTop !== the._scrollTop) {
-                the._scrollTop = the._$ele.scrollTop;
-                the.scrollY();
+            if (the._$size.scrollTop !== the._scrollTop) {
+                the._scrollTop = the._$size.scrollTop;
+                the._scrollY();
             }
         },
 
@@ -486,8 +489,8 @@ define(function (require, exports, module) {
         _oninput: function () {
             var the = this;
 
-            if (the._isWheel || the._isDrag || the._isTrigger) {
-                the._isTrigger = false;
+            if (the._isPrivateTrigger) {
+                the._isPrivateTrigger = false;
                 return;
             }
 
@@ -503,7 +506,7 @@ define(function (require, exports, module) {
          * @param {Number} [x] 滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条
          * @returns {Scrollbar}
          */
-        scrollX: function (x) {
+        _scrollX: function (x) {
             var the = this;
 
             if (the._scrollLeftMax <= 0) {
@@ -511,7 +514,10 @@ define(function (require, exports, module) {
             }
 
             if (arguments.length) {
-                the._isTrigger = true;
+                if (!the._isPublicTrigger) {
+                    the._isPrivateTrigger = true;
+                }
+
                 x = dato.parseFloat(x, 0);
 
                 if (x < 0 || x > the._contentWidth) {
@@ -529,12 +535,18 @@ define(function (require, exports, module) {
 
             the._xLeft = the._xLeftMax * the._scrollLeft / the._scrollLeftMax;
 
+            if (the._isPublicTrigger) {
+                attribute.addClass(the._$thumbX, thumbActiveClass);
+            }
+
             if (isPlaceholderScroll) {
-                if (the._isTrigger) {
+                if (the._isPrivateTrigger || the._isPublicTrigger) {
                     animation.stop(the._$thumbX);
                     animation.animate(the._$thumbX, {
                         left: the._xLeft
-                    }, the._cssAnimateOptions);
+                    }, the._cssAnimateOptions, function () {
+                        attribute.removeClass(the._$thumbX, thumbActiveClass);
+                    });
                 } else {
                     attribute.css(the._$thumbX, {
                         left: the._xLeft
@@ -546,10 +558,13 @@ define(function (require, exports, module) {
                 animation.scrollTo(the._$wrap, {
                     x: the._scrollLeft,
                     y: the._scrollTop
-                }, the._jsAnimateOptions);
+                }, the._jsAnimateOptions, function () {
+                    attribute.removeClass(the._$thumbX, thumbActiveClass);
+                });
             }
 
             the.emit('changex', the._scrollLeft);
+
 
             return the;
         },
@@ -560,7 +575,10 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollLeft: function () {
-            return this.scrollX(0);
+            var the = this;
+
+            the._isPublicTrigger = true;
+            return the._scrollX(0);
         },
 
 
@@ -569,7 +587,10 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollRight: function () {
-            return this.scrollX(this._scrollLeftMax);
+            var the = this;
+
+            the._isPublicTrigger = true;
+            return the._scrollX(the._scrollLeftMax);
         },
 
 
@@ -578,7 +599,7 @@ define(function (require, exports, module) {
          * @param {Number} [y] 滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条
          * @returns {Scrollbar}
          */
-        scrollY: function (y) {
+        _scrollY: function (y) {
             var the = this;
 
             if (the._scrollTopMax <= 0) {
@@ -586,7 +607,10 @@ define(function (require, exports, module) {
             }
 
             if (arguments.length) {
-                the._isTrigger = true;
+                if (!the._isPublicTrigger) {
+                    the._isPrivateTrigger = true;
+                }
+
                 y = dato.parseFloat(y, 0);
 
                 if (y < 0 || y > the._contentHeight) {
@@ -604,27 +628,36 @@ define(function (require, exports, module) {
 
             the._yTop = the._yTopMax * the._scrollTop / the._scrollTopMax;
 
-            if (isPlaceholderScroll) {
-                the._setScroll('y');
+            if (the._isPublicTrigger) {
+                attribute.addClass(the._$thumbY, thumbActiveClass);
+            }
 
-                if (the._isTrigger) {
+            if (isPlaceholderScroll) {
+                if (the._isPrivateTrigger || the._isPublicTrigger) {
                     animation.stop(the._$thumbY);
                     animation.animate(the._$thumbY, {
                         top: the._yTop
-                    }, the._cssAnimateOptions);
+                    }, the._cssAnimateOptions, function () {
+                        attribute.removeClass(the._$thumbY, thumbActiveClass);
+                    });
                 } else {
                     attribute.css(the._$thumbY, {
                         top: the._yTop
                     });
                 }
+
+                the._setScroll('y');
             } else {
                 animation.scrollTo(the._$wrap, {
                     x: the._scrollLeft,
                     y: the._scrollTop
-                }, the._jsAnimateOptions);
+                }, the._jsAnimateOptions, function () {
+                    attribute.removeClass(the._$thumbY, thumbActiveClass);
+                });
             }
 
             the.emit('changey', the._scrollTop);
+
 
             return the;
         },
@@ -635,7 +668,10 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollTop: function () {
-            return this.scrollY(0);
+            var the = this;
+
+            the._isPublicTrigger = true;
+            return the._scrollY(0);
         },
 
 
@@ -644,7 +680,10 @@ define(function (require, exports, module) {
          * @returns {Scrollbar}
          */
         scrollBottom: function () {
-            return this.scrollY(this._scrollTopMax);
+            var the = this;
+
+            the._isPublicTrigger = true;
+            return the._scrollY(the._scrollTopMax);
         },
 
 
@@ -660,9 +699,9 @@ define(function (require, exports, module) {
 
             // 清除监听
             event.un(the._$size, updateEvent);
-            event.un(the._$size, 'wheelstart');
-            event.un(the._$size, 'wheelchange');
-            event.un(the._$size, 'wheelend');
+            event.un(the._$wrap, 'wheelstart');
+            event.un(the._$wrap, 'wheelchange');
+            event.un(document, 'wheelend', the._onwheelend);
             event.un(the._$size, 'scroll', the._onscroll);
             event.un(the._$size, 'input', the._oninput);
 

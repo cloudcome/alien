@@ -36,40 +36,16 @@ define(function (require, exports, module) {
         tap: {
             x: 30,
             y: 30,
-            timeout: 500,
-            event: event.create('tap')
+            timeout: 500
         },
         taphold: {
             x: 30,
             y: 30,
-            timeout: 750,
-            event: event.create('taphold')
+            timeout: 750
         },
         swipe: {
             x: 30,
-            y: 30,
-            event: event.create('swipe')
-        },
-        swipeup: {
-            event: event.create('swipeup')
-        },
-        swiperight: {
-            event: event.create('swiperight')
-        },
-        swipedown: {
-            event: event.create('swipedown')
-        },
-        swipeleft: {
-            event: event.create('swipeleft')
-        },
-        touch1start: {
-            event: event.create('touch1start')
-        },
-        touch1move: {
-            event: event.create('touch1move')
-        },
-        touch1end: {
-            event: event.create('touch1end')
+            y: 30
         }
     };
     var x0;
@@ -80,6 +56,7 @@ define(function (require, exports, module) {
     event.on(document, touchstart, function (eve) {
         var firstTouch;
         var target;
+        var touch1Event;
 
         if (eve.touches && eve.touches.length === 1) {
             attribute.css(body, 'touch-callout', 'none');
@@ -91,15 +68,17 @@ define(function (require, exports, module) {
             t0 = Date.now();
 
             timeid = setTimeout(function () {
-                event.extend(options.taphold.event, firstTouch);
-                event.dispatch(target, options.taphold.event);
+                var tapholdEvent = event.create('taphold');
+                event.extend(tapholdEvent, firstTouch);
+                event.dispatch(target, tapholdEvent);
             }, options.taphold.timeout);
 
-            event.extend(options.touch1start.event, firstTouch, {
+            touch1Event = event.create('touch1start');
+            event.extend(touch1Event, firstTouch, {
                 startX: x0,
                 startY: y0
             });
-            event.dispatch(target, options.touch1start.event);
+            event.dispatch(target, touch1Event);
         }
     });
 
@@ -109,6 +88,7 @@ define(function (require, exports, module) {
         var deltaX;
         var deltaY;
         var rect;
+        var touch1Event;
 
         if (eve.touches && eve.touches.length === 1) {
             firstTouch = eve.touches[0];
@@ -124,13 +104,14 @@ define(function (require, exports, module) {
                 }
             }
 
-            event.extend(options.touch1move.event, firstTouch, {
+            touch1Event = event.create('touch1move');
+            event.extend(touch1Event, firstTouch, {
                 moveX: firstTouch.clientX,
                 moveY: firstTouch.clientY,
                 deltaX: firstTouch.clientX - x0,
                 deltaY: firstTouch.clientY - y0
             });
-            event.dispatch(target, options.touch1move.event);
+            event.dispatch(target, touch1Event);
         }
     });
 
@@ -146,6 +127,8 @@ define(function (require, exports, module) {
         var deltaY;
         var deltaT;
         var target;
+        var tapEvent;
+        var touch1Event;
 
         if (eve.changedTouches && eve.changedTouches.length === 1) {
             firstTouch = eve.changedTouches[0];
@@ -159,31 +142,35 @@ define(function (require, exports, module) {
             target = firstTouch.target;
 
             if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
-                event.extend(options.tap.event, firstTouch);
-                event.dispatch(target, options.tap.event);
+                tapEvent = event.create('tap');
+                event.extend(tapEvent, firstTouch);
+                event.dispatch(target, tapEvent);
             }
 
             if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
                 setTimeout(function () {
                     var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
+                    var swipeDirEvent = event.create('swipe' + dir);
+                    var swipeEvent = event.create('swipe');
 
-                    event.extend(options.swipe.event, firstTouch, {
+                    event.extend(swipeDirEvent, firstTouch, {
                         direction: dir
                     });
-                    event.extend(options['swipe' + dir].event, firstTouch);
+                    event.extend(swipeEvent, firstTouch);
 
-                    event.dispatch(target, options.swipe.event);
-                    event.dispatch(target, options['swipe' + dir].event);
+                    event.dispatch(target, swipeEvent);
+                    event.dispatch(target, swipeDirEvent);
                 }, 0);
             }
 
-            event.extend(options.touch1end.event, firstTouch, {
+            touch1Event = event.create('touch1end');
+            event.extend(touch1Event, firstTouch, {
                 endX: x1,
                 endY: y1,
                 deltaX: x,
                 deltaY: y
             });
-            event.dispatch(target, options.touch1end.event);
+            event.dispatch(target, touch1Event);
         }
     });
 

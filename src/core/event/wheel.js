@@ -26,11 +26,11 @@ define(function (require, exports, module) {
     var timeout = 500;
     var timeid = 0;
     var isStart = !1;
-    var startEvent = event.create('wheelstart');
-    var changeEvent = event.create('wheelchange');
-    var endEvent = event.create('wheelend');
 
     event.on(document, mousewheel, function (eve) {
+        var startEvent = event.create('wheelstart');
+        var changeEvent = event.create('wheelchange');
+        var endEvent = event.create('wheelend');
         var ele = eve.target;
         var deltaY = 0;
         var dispatchStart;
@@ -51,7 +51,7 @@ define(function (require, exports, module) {
 
             event.extend(startEvent, eve);
             dispatchStart = event.dispatch(ele, startEvent);
-            
+
             if (dispatchStart.defaultPrevented === true) {
                 eve.preventDefault();
             }

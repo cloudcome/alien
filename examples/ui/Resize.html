@@ -22,17 +22,27 @@
     <title>Resize.html</title>
     <style>
         #resize{
-            border: 10px solid #ddd;
             padding: 10px;
-            margin: 100px 0 0 100px;
             width: 100px;
             height: 100px;
+            background: #f5ba4c;
+        }
+
+        #inner{
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border: 10px solid #f57c3a;
         }
     </style>
 </head>
 <body ontouchstart="">
 
-<div id="resize"></div>
+<div id="resize">
+    <div id="inner"></div>
+</div>
 
 <script src="../coolie.min.js" data-main="./ui/Resize.js"></script>
 <script src="../coolie-config.js"></script>
