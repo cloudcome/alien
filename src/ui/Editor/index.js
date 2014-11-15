@@ -47,6 +47,8 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-editor';
     var RE_IMG_TYPE = /^image\//;
     var alienIndex = 0;
+    var localStorage = window.localStorage;
+    var pathname = location.pathname;
     var defaults = {
         width: '100%',
         height: 300,
@@ -62,7 +64,6 @@ define(function (require, exports, module) {
         // [{url:'1.jpg',width:100,height:100}]
         uploadCallback: null
     };
-    var pathname = location.pathname;
     var Editor = ui({
         STATIC: {
             defaults: defaults
@@ -297,14 +298,16 @@ define(function (require, exports, module) {
             var attrList = [];
             var id = $ele.id;
 
+            the._storeId = 'alien-ui-editor';
+
             if (id) {
-                the._storeId = pathname + '#' + id;
+                the._storeId += pathname + '#' + id;
             } else {
                 dato.each(atts, function (i, attr) {
                     attrList.push(attr.name + '=' + attr.value);
                 });
 
-                the._storeId = pathname +
+                the._storeId += pathname +
                 '<' + the._$ele.tagName + '>.' +
                 the._$ele.className +
                 '[' + attrList.join(';') + ']';
@@ -317,10 +320,17 @@ define(function (require, exports, module) {
          * @private
          */
         _getLocal: function () {
-            return {
-                val: window.localStorage.getItem(this._storeId + '>val') || '',
-                ver: dato.parseInt(window.localStorage.getItem(this._storeId + '>ver') || 0, 0)
-            };
+            var the = this;
+            var local = localStorage.getItem(the._storeId);
+
+            try {
+                return JSON.parse(local);
+            } catch (err) {
+                return {
+                    val: '',
+                    ver: 0
+                };
+            }
         },
 
 
@@ -329,8 +339,12 @@ define(function (require, exports, module) {
          * @private
          */
         _saveLocal: function () {
-            window.localStorage.setItem(this._storeId + '>val', this._$ele.value);
-            window.localStorage.setItem(this._storeId + '>ver', Date.now());
+            var the = this;
+
+            localStorage.setItem(the._storeId, JSON.stringify({
+                val: the._$ele.value,
+                ver: Date.now()
+            }));
         },
 
 
