@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 
     var typeis = require('../../util/typeis.js');
     var dato = require('../../util/dato.js');
-    var type = require('../../util/type.js');
+    var typeis = require('../../util/typeis.js');
     var klass = require('../../util/class.js');
     var qs = require('../../util/querystring.js');
     var Emitter = require('../../libs/Emitter.js');

@@ -117,7 +117,7 @@ define(function (require, exports, module) {
             var arg0IsObject = typeis(arg0) !== 'string';
             var arg1 = args[1];
             var emitArgs = Array.prototype.slice.call(arguments, arg0IsObject ? 2 : 1);
-            var ret;
+            var ret = true;
 
             context = arg0IsObject ? arg0 : the;
             eventType = arg0IsObject ? arg1 : arg0;
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
                 if (the._eventsPool[et]) {
                     dato.each(the._eventsPool[et], function (index, listener) {
                         if (listener.apply(context, emitArgs) === false) {
-                            ret = !1;
+                            ret = false;
                         }
                     });
                 }
