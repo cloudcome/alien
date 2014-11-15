@@ -9,10 +9,12 @@ define(function (require, exports) {
     /**
      * @module core/navigator/cookie
      * @requires util/dato
+     * @requires util/typeis
      */
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var defaults = {
         // 是否以严格模式读取和设置cookie，默认true
         // 严格模式下，将在读之后、写之前都会进行<code>encodeURIComponent</code>、<code>decodeURIComponent</code>操作
@@ -56,7 +58,7 @@ define(function (require, exports) {
      * @returns {Boolean} true
      */
     exports.set = function (key, val, options) {
-        var arg0Type = dato.type(arguments[0]);
+        var arg0Type = typeis(arguments[0]);
         var setMap = {};
 
         if (arg0Type === 'string') {
@@ -115,7 +117,7 @@ define(function (require, exports) {
     exports.remove = function (key, options) {
         var map = {};
 
-        if (dato.type(key) === 'array') {
+        if (typeis(key) === 'array') {
             dato.each(key, function (i, k) {
                 map[k] = '';
             });

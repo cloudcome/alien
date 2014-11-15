@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module ui/Dialog/index
      * @requires util/class
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/dom/modification
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -40,6 +41,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var alienIndex = 0;
     var zIndex = 9999;
 //    var html = document.documentElement;
@@ -239,7 +241,7 @@ define(function (require, exports, module) {
                     the.setRemote(options.remote);
                 }
 
-                if (dato.type(callback) === 'function') {
+                if (typeis(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -294,7 +296,7 @@ define(function (require, exports, module) {
                 attribute.css($dialog, 'transform', 'scale(1)');
                 the.emit('close');
 
-                if (dato.type(callback) === 'function') {
+                if (typeis(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -317,7 +319,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                if (dato.type(callback) === 'function') {
+                if (typeis(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -347,7 +349,7 @@ define(function (require, exports, module) {
          */
         setContent: function (content) {
             var the = this;
-            var contentType = dato.type(content);
+            var contentType = typeis(content);
 
             the._$ele.innerHTML = '';
 
@@ -431,7 +433,7 @@ define(function (require, exports, module) {
                 // 在 DOM 里删除
                 modification.remove(the._$bg);
 
-                if (dato.type(callback) === 'function') {
+                if (typeis(callback) === 'function') {
                     callback.call(the);
                 }
             });

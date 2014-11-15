@@ -17,6 +17,7 @@ define(function (require, exports) {
     'use strict';
 
     var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
     var regSp = /\+/g;
     var regQ = /^\?+/;
 
@@ -36,7 +37,7 @@ define(function (require, exports) {
         sep = sep || '&';
         eq = eq || '=';
 
-        if (dato.type(object) !== 'object') {
+        if (typeis(object) !== 'object') {
             return '';
         }
 
@@ -73,7 +74,7 @@ define(function (require, exports) {
         eq = eq || '=';
 
         var ret = {};
-        var type = dato.type(querystring);
+        var type = typeis(querystring);
         var arr;
 
         if (type !== 'string') {
@@ -92,7 +93,7 @@ define(function (require, exports) {
                 if (!ret[key]) {
                     ret[key] = val;
                 } else {
-                    if (dato.type(ret[key]) !== 'array') {
+                    if (typeis(ret[key]) !== 'array') {
                         ret[key] = [ret[key]];
                     }
 
@@ -136,7 +137,7 @@ define(function (require, exports) {
      * @private
      */
     function _isSafe(object) {
-        var type = dato.type(object);
+        var type = typeis(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
         return ret === true ? !0 : type;

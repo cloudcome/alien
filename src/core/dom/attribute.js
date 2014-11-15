@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * 处理有关 dom 属性的 API
      * @module core/dom/attribute
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/navigator/compatible
      */
     'use strict';
@@ -19,6 +20,7 @@ define(function (require, exports, module) {
     var regSplit = /[A-Z]/g;
     var regSpace = /\s+/;
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
@@ -105,7 +107,7 @@ define(function (require, exports, module) {
 
             dato.each(attrKeys, function (index, key) {
                 if (key) {
-                    ele.removeAttribute(dato.type(key) === 'attr' ? key.nodeName : key);
+                    ele.removeAttribute(typeis(key) === 'attr' ? key.nodeName : key);
                 }
             });
         },
@@ -310,7 +312,7 @@ define(function (require, exports, module) {
                     }
                 },
                 set: function (key, val) {
-                    if (dato.type(val) === 'object') {
+                    if (typeis(val) === 'object') {
                         try {
                             val = JSON.stringify(val);
                         } catch (err) {
@@ -663,7 +665,7 @@ define(function (require, exports, module) {
     function _getSet(args, getSet, argumentsSetLength) {
         args = [].slice.call(args, 1);
         argumentsSetLength = argumentsSetLength || 2;
-        var arg0Type = dato.type(args[0]);
+        var arg0Type = typeis(args[0]);
         var ret = {};
         var argsLength = args.length;
 
@@ -707,7 +709,7 @@ define(function (require, exports, module) {
      */
     function _class(ele, type, className) {
 
-        if (dato.type(ele) !== 'element') {
+        if (typeis(ele) !== 'element') {
             return;
         }
 
@@ -766,7 +768,7 @@ define(function (require, exports, module) {
 
         if (argsLength) {
             ele = args[0];
-            eleType = dato.type(ele);
+            eleType = typeis(ele);
 
             if (extraKey && eleType === 'element') {
                 dato.each(extraKey, function (i, key) {
@@ -790,7 +792,7 @@ define(function (require, exports, module) {
                     }
                 }
                 // set
-                else if (argsLength === 2 && eleType === 'element' && dato.type(args[1]) === 'number') {
+                else if (argsLength === 2 && eleType === 'element' && typeis(args[1])==='number') {
                     _setBoundingClientRect(ele, key, args[1] + extraVal);
                 }
             });

@@ -9,10 +9,12 @@ define(function (require, exports, module) {
     /**
      * @module parent/upload
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/communication/xhr
      */
     'use strict';
 
+    var typeis = require('../../util/typeis.js');
     var dato = require('../../util/dato.js');
     var xhr = require('./xhr.js');
     var defaults = {
@@ -33,7 +35,7 @@ define(function (require, exports, module) {
             throw new Error('require param `file`');
         }
 
-        var fileType = dato.type(options.file);
+        var fileType = typeis(options.file);
         var files;
         var fd = new FormData();
         var name = options.blobName;

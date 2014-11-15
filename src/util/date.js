@@ -9,10 +9,12 @@ define(function (require, exports, module) {
     /**
      * @module util/date
      * @requires util/dato
+     * @requires util/typeis
      */
     'use strict';
 
     var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
     var regInvalid = /invalid/i;
     var regSep = /-/g;
     var regChinese = /[\u4e00-\u9fa5]/g;
@@ -86,17 +88,17 @@ define(function (require, exports, module) {
          * // => "2014年October月04日 17:28:06.363 星期六 下午"
          */
         format: function (format, date, config) {
-            if (dato.type(format) !== 'string') {
+            if (typeis(format) !== 'string') {
                 throw new Error('date format must be a string');
             }
 
-            if (dato.type(arguments[1]) === 'object') {
+            if (typeis(arguments[1]) === 'object') {
                 config = arguments[1];
                 date = new Date();
             }
 
             format = format || 'YYYY-MM-DD HH:mm:ss www';
-            date = dato.type(date) === 'date' ? date : new Date(date || Date.now());
+            date = typeis(date) === 'date' ? date : new Date(date || Date.now());
             date = this.parse(date);
             date = date || new Date();
             config = config || {};
@@ -498,7 +500,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _parseDate(date) {
-        var type = dato.type(date);
+        var type = typeis(date);
 
         if (type !== 'date') {
             date = new Date(date)

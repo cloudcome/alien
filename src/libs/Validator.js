@@ -10,12 +10,14 @@ define(function (require, exports, module) {
      * @module libs/Validator
      * @requires util/class
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/howdo
      */
     'use strict';
 
     var klass = require('../util/class.js');
     var dato = require('../util/dato.js');
+    var typeis = require('../util/typeis.js');
     var howdo = require('../util/howdo.js');
     var types = 'string,number,email,url,boolean'.split(',');
     var noop = function () {
@@ -135,9 +137,9 @@ define(function (require, exports, module) {
          */
         pushRule: function (rule, isOverride) {
             var the = this;
-            var ruleType = dato.type(rule);
+            var ruleType = typeis(rule);
 
-            if (ruleType === 'object' && rule.name && dato.type(rule.name) === 'string') {
+            if (ruleType === 'object' && rule.name && typeis(rule.name) === 'string') {
                 if (!the._ruleNames[rule.name] || isOverride) {
                     // 是否存在并且覆盖
                     var isExistAndIsOverride = the._ruleNames[rule.name] && isOverride;
@@ -168,43 +170,43 @@ define(function (require, exports, module) {
 
                     rule.trim = !!rule.trim;
 
-                    if (rule.length && dato.type(rule.length) !== 'number') {
+                    if (rule.length && typeis(rule.length) !== 'number') {
                         throw '`rule.length`规则必须是数值类型';
                     }
 
-                    if (rule.minLength && dato.type(rule.minLength) !== 'number') {
+                    if (rule.minLength && typeis(rule.minLength) !== 'number') {
                         throw '`rule.minLength`规则必须是数值类型';
                     }
 
-                    if (rule.maxLength && dato.type(rule.maxLength) !== 'number') {
+                    if (rule.maxLength && typeis(rule.maxLength) !== 'number') {
                         throw '`rule.maxLength`规则必须是数值类型';
                     }
 
-                    if (rule.bytes && dato.type(rule.bytes) !== 'number') {
+                    if (rule.bytes && typeis(rule.bytes) !== 'number') {
                         throw '`rule.bytes`规则必须是数值类型';
                     }
 
-                    if (rule.minBytes && dato.type(rule.minBytes) !== 'number') {
+                    if (rule.minBytes && typeis(rule.minBytes) !== 'number') {
                         throw '`rule.minBytes`规则必须是数值类型';
                     }
 
-                    if (rule.maxBytes && dato.type(rule.maxBytes) !== 'number') {
+                    if (rule.maxBytes && typeis(rule.maxBytes) !== 'number') {
                         throw '`rule.maxBytes`规则必须是数值类型';
                     }
 
-                    if (rule.min && dato.type(rule.min) !== 'number') {
+                    if (rule.min && typeis(rule.min) !== 'number') {
                         throw '`rule.min`规则必须是数值类型';
                     }
 
-                    if (rule.max && dato.type(rule.max) !== 'number') {
+                    if (rule.max && typeis(rule.max) !== 'number') {
                         throw '`rule.max`规则必须是数值类型';
                     }
 
-                    if (rule.regexp && dato.type(rule.regexp) !== 'regexp') {
+                    if (rule.regexp && typeis(rule.regexp) !== 'regexp') {
                         throw '`rule.regexp`必须是正则表达式';
                     }
 
-                    if (rule.function && dato.type(rule.function) !== 'function') {
+                    if (rule.function && typeis(rule.function) !== 'function') {
                         throw '`rule.function`规则必须是回调函数';
                     }
 
@@ -212,7 +214,7 @@ define(function (require, exports, module) {
                         throw '`rule.function`函数必须有2个形参';
                     }
 
-                    if (rule.inArray && dato.type(rule.inArray) !== 'array') {
+                    if (rule.inArray && typeis(rule.inArray) !== 'array') {
                         throw '`rule.inArray`规则必须是数组';
                     }
 
@@ -248,8 +250,8 @@ define(function (require, exports, module) {
             var isBreakOnInvalid = the._options.isBreakOnInvalid;
             var errList = [];
 
-            data = dato.type(data) === 'object' ? data : {};
-            callback = dato.type(callback) === 'function' ? callback : noop;
+            data = typeis(data) === 'object' ? data : {};
+            callback = typeis(callback) === 'function' ? callback : noop;
 
             howdo.each(the._ruleList, function (key, rule, next) {
                 the._validate(rule, data, function (err) {
@@ -293,7 +295,7 @@ define(function (require, exports, module) {
             var findIndex = -1;
             var name = Object.keys(data)[0];
 
-            callback = dato.type(callback) === 'function' ? callback : noop;
+            callback = typeis(callback) === 'function' ? callback : noop;
 
             if (name) {
                 dato.each(the._ruleList, function (index, rule) {
@@ -326,25 +328,25 @@ define(function (require, exports, module) {
             var type;
             var over = function (err) {
                 // onafter
-                if (dato.type(rule.onafter) === 'function') {
+                if (typeis(rule.onafter) === 'function') {
                     val = rule.onafter(err, val, data);
                 }
 
                 data[rule.name] = val;
 
                 // callback
-                if (dato.type(callback) === 'function') {
+                if (typeis(callback) === 'function') {
                     callback(err, data);
                 }
             };
             var functionLength;
 
             // onbefore
-            if (dato.type(rule.onbefore) === 'function') {
+            if (typeis(rule.onbefore) === 'function') {
                 val = rule.onbefore(val, data);
             }
 
-            type = dato.type(val);
+            type = typeis(val);
 
             // trim
             if (type === 'string' && rule.trim) {
@@ -489,7 +491,7 @@ define(function (require, exports, module) {
                 if (rule.equal !== undefined) {
                     var msg = '';
 
-                    switch (dato.type(rule.equal)) {
+                    switch (typeis(rule.equal)) {
                         case 'string':
                         case 'email':
                         case 'url':
@@ -513,7 +515,7 @@ define(function (require, exports, module) {
                 }
 
                 // function
-                if (dato.type(rule.function) === 'function') {
+                if (typeis(rule.function) === 'function') {
                     functionLength = rule.function.length;
 
                     if (functionLength === 3) {
@@ -542,7 +544,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _getDataInfo(data) {
-        var type = dato.type(data);
+        var type = typeis(data);
         var ret = {};
 
         switch (type) {
@@ -581,7 +583,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _isEqual(data, equal) {
-        var type = dato.type(data);
+        var type = typeis(data);
         var compare;
 
         switch (type) {

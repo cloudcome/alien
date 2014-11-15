@@ -15,6 +15,7 @@ define(function (require, exports, module) {
      * @requires core/event/base
      * @requires ui/Editor/editor
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/random
      * @requires ui/base
      * @requires ui/Scrollbar/index
@@ -31,6 +32,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var editor = require('./editor.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -205,7 +207,7 @@ define(function (require, exports, module) {
             };
             var options = the._options;
 
-            if (dato.type(options.uploadCallback) !== 'function') {
+            if (typeis(options.uploadCallback) !== 'function') {
                 return new Msg({
                     content: '尚未配置上传回调'
                 });

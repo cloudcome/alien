@@ -9,11 +9,14 @@ define(function (require, exports, module) {
     /**
      * @module core/communication/xhr
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/navigator/querystring
      */
     'use strict';
 
-    var datao = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
+    var dato = require('../../util/dato.js');
+    var type = require('../../util/type.js');
     var klass = require('../../util/class.js');
     var qs = require('../../util/querystring.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -206,7 +209,7 @@ define(function (require, exports, module) {
     function _buildURL(options) {
         var url = options.url;
         var query = options.query;
-        var querystring = dato.type(query) === 'string' ? query : qs.stringify(query);
+        var querystring = typeis.string(query) === 'string' ? query : qs.stringify(query);
         var cache = options.isCache ? '' : '_=' + (++index);
 
         // 删除原有的缓存字符串

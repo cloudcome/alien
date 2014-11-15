@@ -9,11 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module core/event/base
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/dom/selector
      */
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var domSelector = require('../dom/selector.js');
     var regSpace = /\s+/g;
     // 原始事件：用户传入的事件
@@ -166,7 +168,7 @@ define(function (require, exports, module) {
          * event.dispatch(ele, myclikEvent, eve);
          */
         dispatch: function (ele, eventTypeOrEvent, copyEvent) {
-            var et = dato.type(eventTypeOrEvent) === 'string' ?
+            var et = typeis(eventTypeOrEvent) === 'string' ?
                 this.create(eventTypeOrEvent) :
                 eventTypeOrEvent;
 
@@ -198,7 +200,7 @@ define(function (require, exports, module) {
          * });
          */
         extend: function (createEvent, copyEvent, detail) {
-            if (dato.type(createEvent) === 'string') {
+            if (typeis(createEvent) === 'string') {
                 createEvent = this.create(createEvent);
             }
 
@@ -249,19 +251,19 @@ define(function (require, exports, module) {
             var eventTypes = String(eventType).trim().split(regSpace);
             isCapture = arguments[arguments.length - 1];
 
-            if (dato.type(isCapture) !== 'boolean') {
+            if (typeis(isCapture) !== 'boolean') {
                 isCapture = !1;
             }
 
             // on self
             // .on(body, 'click', fn);
-            if (dato.type(arguments[2]) === 'function') {
+            if (typeis(arguments[2]) === 'function') {
                 callback = arguments[2];
                 listener = arguments[2];
             }
             // delegate
             // .on(body, 'click', 'p', fn)
-            else if (dato.type(listener) === 'function') {
+            else if (typeis(listener) === 'function') {
                 callback = function (eve) {
                     // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                     var closestElement = domSelector.closest(eve.target, selector);
@@ -274,7 +276,7 @@ define(function (require, exports, module) {
 
             if (callback) {
                 dato.each(eventTypes, function (index, eventType) {
-                    if (dato.type(listener) === 'function' && eventType) {
+                    if (typeis(listener) === 'function' && eventType) {
                         _on(element, eventType, callback, listener, isCapture);
                     }
                 });
@@ -442,7 +444,7 @@ define(function (require, exports, module) {
 
         if (argL === 3) {
             // _un(ele, 'click', true);
-            if (dato.type(args[2]) === 'boolean') {
+            if (typeis(args[2]) === 'boolean') {
                 isCapture = args[2];
                 originalEvent = null;
             }
@@ -454,7 +456,7 @@ define(function (require, exports, module) {
 
         if (domId) {
             if (isCapture) {
-                if (dato.type(originalEvent) === 'function') {
+                if (typeis(originalEvent) === 'function') {
                     findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {
@@ -466,7 +468,7 @@ define(function (require, exports, module) {
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if (dato.type(originalEvent) === 'function') {
+                if (typeis(originalEvent) === 'function') {
                     findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {

@@ -13,11 +13,13 @@ define(function (require, exports, module) {
      *
      * @module core/navigator/querystring
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/querystring
      */
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var qs = require('../../util/querystring.js');
 
 
@@ -34,7 +36,7 @@ define(function (require, exports, module) {
     exports.get = function (key) {
         var parse = qs.parse(location.search);
         var ret;
-        var keyType = dato.type(key);
+        var keyType = typeis(key);
 
         switch (keyType) {
             case 'array':
@@ -107,7 +109,7 @@ define(function (require, exports, module) {
         var clone = dato.extend(true, {}, parse);
         var compare;
 
-        if (dato.type(key) !== 'array') {
+        if (typeis(key) !== 'array') {
             key = [key];
         }
 

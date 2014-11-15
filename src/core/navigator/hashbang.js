@@ -13,11 +13,13 @@ define(function (require, exports) {
      *
      * @module core/navigator/hashbang
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/hashbang
      */
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var hashbang = require('../../util/hashbang.js');
     var hasEmit = false;
 
@@ -46,7 +48,7 @@ define(function (require, exports) {
 
         var parse = hashbang.parse(location.hash);
         var map;
-        var keyType = dato.type(key);
+        var keyType = typeis(key);
         var valSafe = _isSafeVal(val);
 
         if (part === 'query') {
@@ -94,7 +96,7 @@ define(function (require, exports) {
             throw new Error('hashbang `part` must be `path` or `query`');
         }
 
-        var keyType = dato.type(key);
+        var keyType = typeis(key);
         var removeKeys = [];
         var parse = hashbang.parse(location.hash);
 
@@ -106,7 +108,7 @@ define(function (require, exports) {
             }
 
             dato.each(removeKeys, function (index, key) {
-                if (dato.type(key) === 'number') {
+                if (typeis(key) === 'number') {
                     parse.path.splice(key - index, 1);
                 }
             });
@@ -118,7 +120,7 @@ define(function (require, exports) {
             }
 
             dato.each(removeKeys, function (index, key) {
-                if (dato.type(key) === 'string') {
+                if (typeis(key) === 'string') {
                     delete(parse.query[key]);
                 }
             });
@@ -151,7 +153,7 @@ define(function (require, exports) {
      * // => "2"
      */
     exports.get = function (part, key) {
-        var keyType = dato.type(key);
+        var keyType = typeis(key);
         var argL = arguments.length;
         var parse = hashbang.parse(location.hash);
 
@@ -237,7 +239,7 @@ define(function (require, exports) {
      * @private
      */
     function _isSafeVal(object) {
-        var type = dato.type(object);
+        var type = typeis(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
         return ret === !0 ? !0 : type;

@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires util/class
      * @requires util/dato
+     * @requires util/typeis
      * @requires libs/Emitter
      * @requires libs/Template
      */
@@ -32,6 +33,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var ui = require('../base.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -119,7 +121,7 @@ define(function (require, exports, module) {
                 id: the._id,
                 nav: []
             };
-            var navFilter = dato.type(options.nav) === 'function' ? options.nav : function () {
+            var navFilter = typeis(options.nav) === 'function' ? options.nav : function () {
                 return '';
             };
             var $bannerWrap;
@@ -283,14 +285,14 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            if (dato.type(args[0]) === 'number') {
+            if (typeis(args[0]) === 'number') {
                 type = 'next';
                 index = args[0];
             }
 
             callback = args[argL - 1];
 
-            if (dato.type(callback) !== 'function') {
+            if (typeis(callback) !== 'function') {
                 callback = noop;
             }
 

@@ -11,11 +11,13 @@ define(function (require, exports, module) {
      *
      * @module core/dom/selector
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/navigator/compatible
      */
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
 
@@ -35,7 +37,7 @@ define(function (require, exports, module) {
         query: function (selector, context) {
             context = context || document;
 
-            var selectorType = dato.type(selector);
+            var selectorType = typeis(selector);
             var ret = [];
 
             if (context && (context.nodeType === 1 || context.nodeType === 9)) {
@@ -172,7 +174,7 @@ define(function (require, exports, module) {
 
             var the = this;
 
-            while (dato.type(ele) !== 'document' && dato.type(ele) === 'element') {
+            while (typeis(ele) !== 'document' && typeis(ele) === 'element') {
                 if (the.isMatched(ele, selector)) {
                     return dato.toArray(ele, !0);
                 }
@@ -243,7 +245,7 @@ define(function (require, exports, module) {
          * // => true OR false
          */
         isMatched: function (ele, selector) {
-            return dato.type(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
+            return typeis(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
         },
 
         /**

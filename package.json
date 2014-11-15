@@ -1,40 +1,46 @@
 {
-    "name": "alien",
-    "version": "0.0.1",
-    "private": true,
-    "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
-    "scripts": {
-        "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
-        "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/"
-    },
-    "preferGlobal": false,
-    "bin": {},
-    "main": "index.js",
-    "keywords": [
-        "cloudcome",
-        "javascript",
-        "library",
-        "modern",
-        "html5",
-        "css3",
-        "alien",
-        "alienjs"
-    ],
-    "author": {
-        "name": "cloudcome",
-        "email": "cloudcome@163.com",
-        "url": "http://ydr.me"
-    },
-    "homepage": "http://cloudcome.github.io/alien/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/cloudcome/alien"
-    },
-    "bugs": {
-        "url": "https://github.com/cloudcome/alien/issues"
-    },
-    "licenses": "MIT",
-    "dependencies": {
-        "jsdoc": "^3.3.0-alpha10"
-    }
+  "name": "alien",
+  "version": "0.0.1",
+  "private": true,
+  "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
+  "scripts": {
+    "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+    "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+    "test": "node ./node_modules/mocha/bin/mocha -R spec -t 10000 ./test/**/*.test.js"
+  },
+  "preferGlobal": false,
+  "bin": {},
+  "main": "index.js",
+  "keywords": [
+    "cloudcome",
+    "javascript",
+    "library",
+    "modern",
+    "html5",
+    "css3",
+    "alien",
+    "alienjs"
+  ],
+  "author": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com",
+    "url": "http://ydr.me"
+  },
+  "homepage": "http://cloudcome.github.io/alien/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudcome/alien"
+  },
+  "bugs": {
+    "url": "https://github.com/cloudcome/alien/issues"
+  },
+  "licenses": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc": "^3.3.0-alpha10",
+    "karma": "^0.12.25",
+    "karma-mocha": "^0.1.9",
+    "mocha": "^2.0.1",
+    "should": "^4.3.0"
+  }
 }

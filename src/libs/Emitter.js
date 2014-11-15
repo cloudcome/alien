@@ -9,11 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module libs/Emitter
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/class
      */
     'use strict';
 
     var dato = require('../util/dato.js');
+    var typeis = require('../util/typeis.js');
     var klass = require('../util/class.js');
     var regSpace = /\s+/g;
     var Emitter = klass.create({
@@ -47,7 +49,7 @@ define(function (require, exports, module) {
                     throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
                 }
 
-                if (dato.type(listener) === 'function') {
+                if (typeis(listener) === 'function') {
                     the._eventsPool[et].push(listener);
                 }
             });
@@ -112,7 +114,7 @@ define(function (require, exports, module) {
             var the = this;
             var args = arguments;
             var arg0 = args[0];
-            var arg0IsObject = dato.type(arg0) !== 'string';
+            var arg0IsObject = typeis(arg0) !== 'string';
             var arg1 = args[1];
             var emitArgs = Array.prototype.slice.call(arguments, arg0IsObject ? 2 : 1);
             var ret;

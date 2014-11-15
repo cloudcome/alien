@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @module core/dom/animation
      * @requires core/dom/attribute
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/navigator/compatible
      * @requires core/event/base
      */
@@ -21,6 +22,7 @@ define(function (require, exports, module) {
     var udf;
     var attribute = require('./attribute.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var eeeing = require('../../util/easing.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
@@ -101,7 +103,7 @@ define(function (require, exports, module) {
 
             if (argL === 3) {
                 // .animate(element, to, callback);
-                if (dato.type(args[2]) === 'function') {
+                if (typeis(args[2]) === 'function') {
                     options = {};
                 }
                 // .animate(element, to, property);
@@ -260,7 +262,7 @@ define(function (require, exports, module) {
             var pastTime = 0;
             var beginTimestamp;
 
-            if (dato.type(args[3]) !== 'function') {
+            if (typeis(args[3]) !== 'function') {
                 callback = noop;
             }
 

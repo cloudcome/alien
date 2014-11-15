@@ -13,12 +13,14 @@ define(function (require, exports, module) {
      *
      * @module core/navigator/hashbang
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/navigator/querystring
      * @requires core/event/base
      */
     'use strict';
 
     var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
     var qs = require('./querystring.js');
     var event = require('../core/event/base.js');
     var regHash = /#.*$/;
@@ -96,7 +98,7 @@ define(function (require, exports, module) {
     exports.parse = function (hashbangString, sep, eq) {
         var dftRet = {path: [], query: {}};
 
-        if (dato.type(hashbangString) !== 'string') {
+        if (typeis(hashbangString) !== 'string') {
             return dftRet;
         }
 
@@ -154,7 +156,7 @@ define(function (require, exports, module) {
         var hashPath = [];
         var hashQuerystring = qs.stringify(hashbangObject.query, sep, eq);
 
-        if (dato.type(hashbangObject.path) === 'string') {
+        if (typeis(hashbangObject.path) === 'string') {
             return '#!' + hashbangObject.path +
                 (hashQuerystring ? '?' + hashQuerystring : '');
         }
@@ -198,7 +200,7 @@ define(function (require, exports, module) {
         var reg;
         var ret = null;
 
-        if (dato.type(hashbangString) !== 'string') {
+        if (typeis(hashbangString) !== 'string') {
             return ret;
         }
 
@@ -268,7 +270,7 @@ define(function (require, exports, module) {
         if (argL === 2) {
             listener = args[1];
 
-            if (dato.type(listener) === 'function') {
+            if (typeis(listener) === 'function') {
                 if (part === 'query') {
                     queryAllListener.push(listener);
                 } else {
@@ -278,14 +280,14 @@ define(function (require, exports, module) {
         } else if (argL === 3) {
             listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
-            if (dato.type(key) !== 'array') {
+            if (typeis(key) !== 'array') {
                 key = [key];
             }
 
             dato.each(key, function (index, k) {
                 listenerMap[k] = listenerMap[k] || [];
 
-                if (dato.type(listener) === 'function') {
+                if (typeis(listener) === 'function') {
                     listenerMap[k].push(listener);
                 }
             });
@@ -342,8 +344,8 @@ define(function (require, exports, module) {
         var args = arguments;
         var argL = args.length;
         var findIndex;
-        var arg1Type = dato.type(args[1]);
-        var arg2Type = dato.type(args[2]);
+        var arg1Type = typeis(args[1]);
+        var arg2Type = typeis(args[2]);
         var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
         if (argL === 1) {

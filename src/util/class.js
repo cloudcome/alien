@@ -10,10 +10,12 @@ define(function (require, exports, module) {
      * 类方法
      * @module util/class
      * @requires util/dato
+     * @requires util/typeis
      */
     'use strict';
 
     var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
 
     module.exports = {
         /**
@@ -111,9 +113,9 @@ define(function (require, exports, module) {
          *
          */
         create: function (property, superConstructor, isInheritStatic) {
-            var type = dato.type(property);
+            var type = typeis(property);
             var constructorType;
-            var superConstructorType = dato.type(superConstructor);
+            var superConstructorType = typeis(superConstructor);
             var STATIC;
 
             if (type !== 'object') {
@@ -126,7 +128,7 @@ define(function (require, exports, module) {
                 throw new Error('property must be have a `constructor` function');
             }
 
-            constructorType = dato.type(property.constructor);
+            constructorType = typeis(property.constructor);
 
             if (constructorType !== 'function') {
                 throw new Error('property `constructor` must be a function');
@@ -141,7 +143,7 @@ define(function (require, exports, module) {
             delete(property.STATIC);
 
             // 必须静态对象
-            if (dato.type(STATIC) !== 'object') {
+            if (typeis(STATIC) !== 'object') {
                 throw new Error('constructor static property must be an object');
             }
 

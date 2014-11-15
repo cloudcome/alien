@@ -9,11 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module libs/Template
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/class
      */
     'use strict';
 
     var dato = require('../util/dato.js');
+    var typeis = require('../util/typeis.js');
     var klass = require('../util/class.js');
     var regStringWrap = /([\\"])/g;
     var regBreakLineMac = /\n/g;
@@ -78,7 +80,7 @@ define(function (require, exports, module) {
              * @static
              */
             addFilter: function (name, callback, isOverride) {
-                if (dato.type(name) !== 'string') {
+                if (typeis(name) !== 'string') {
                     throw new Error('filter name must be a string');
                 }
 
@@ -87,7 +89,7 @@ define(function (require, exports, module) {
                     throw new Error('override a exist filter');
                 }
 
-                if (dato.type(callback) !== 'function') {
+                if (typeis(callback) !== 'function') {
                     throw new Error('filter callback must be a function');
                 }
 
@@ -106,7 +108,7 @@ define(function (require, exports, module) {
                     return filters;
                 }
 
-                if (dato.type(name) === 'string') {
+                if (typeis(name) === 'string') {
                     return filters[name];
                 }
             }
@@ -308,7 +310,7 @@ define(function (require, exports, module) {
         addFilter: function (name, callback, isOverride) {
             var instanceFilters = this._template.filters;
 
-            if (dato.type(name) !== 'string') {
+            if (typeis(name) !== 'string') {
                 throw new Error('filter name must be a string');
             }
 
@@ -317,7 +319,7 @@ define(function (require, exports, module) {
                 throw new Error('override a exist instance filter');
             }
 
-            if (dato.type(callback) !== 'function') {
+            if (typeis(callback) !== 'function') {
                 throw new Error('filter callback must be a function');
             }
 
@@ -337,7 +339,7 @@ define(function (require, exports, module) {
          * // => return test filter function
          */
         getFilter: function (name) {
-            return dato.type(name) === 'string' ?
+            return typeis(name) === 'string' ?
                 this._template.filters[name] :
                 this._template.filters;
         },

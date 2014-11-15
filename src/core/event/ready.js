@@ -12,12 +12,14 @@ define(function (require, exports, module) {
      * @module core/event/ready
      * @requires core/event/base
      * @requires util/dato
+     * @requires util/typeis
      */
 
     'use strict';
 
     var event = require('./base.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var callbacks = [];
     var isReady;
 
@@ -33,7 +35,7 @@ define(function (require, exports, module) {
     module.exports = function (callback) {
         if(document.readyState === 'complete' || isReady){
             callback();
-        }else if(dato.type(callback) === 'function'){
+        }else if(typeis(callback) === 'function'){
             callbacks.push(callback);
         }
     };

@@ -9,11 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module ui/base
      * @requires util/dato
+     * @requires util/typeis
      * @requires util/class
      */
     'use strict';
 
     var dato = require('../util/dato.js');
+    var typeis = require('../util/typeis.js');
     var klass = require('../util/class.js');
     var udf;
 
@@ -33,11 +35,11 @@ define(function (require, exports, module) {
      * });
      */
     module.exports = function (property, superConstructor, isInheritStatic) {
-        if (dato.type(property) !== 'object') {
+        if (typeis(property) !== 'object') {
             throw 'UI class property must be an obejct';
         }
 
-        if (dato.type(property.constructor) !== 'function') {
+        if (typeis(property.constructor) !== 'function') {
             throw 'UI class property.constructor must be a function';
         }
 
@@ -45,7 +47,7 @@ define(function (require, exports, module) {
         if (property.getOptions === udf) {
             property.getOptions = function (key) {
                 var the = this;
-                var keyType = dato.type(key);
+                var keyType = typeis(key);
                 var ret = [];
 
                 if (keyType === 'string' || keyType === 'number') {
@@ -63,7 +65,7 @@ define(function (require, exports, module) {
         if (property.setOptions === udf) {
             property.setOptions = function (key, val) {
                 var the = this;
-                var keyType = dato.type(key);
+                var keyType = typeis(key);
 
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options ? the._options[key] = val : udf;
