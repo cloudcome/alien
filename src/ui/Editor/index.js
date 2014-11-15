@@ -106,7 +106,7 @@ define(function (require, exports, module) {
                 border: 0,
                 width: options.width,
                 height: options.height,
-                padding: 0,
+                padding: 10,
                 margin: 0
             });
             attribute.addClass(the._$ele, alienClass + '-textarea');
@@ -181,8 +181,8 @@ define(function (require, exports, module) {
                 attribute.css(document.body, 'overflow', 'hidden');
                 attribute.addClass(the._$wrap, alienClass + '-fullscreen');
                 the._scrollbar.resize({
-                    width: attribute.innerWidth(window) - 30,
-                    height: attribute.innerHeight(window) - 24
+                    width: attribute.innerWidth(window),
+                    height: attribute.innerHeight(window)
                 });
             }
         },
@@ -322,15 +322,15 @@ define(function (require, exports, module) {
         _getLocal: function () {
             var the = this;
             var local = localStorage.getItem(the._storeId);
+            var ret;
 
             try {
-                return JSON.parse(local);
+                ret = JSON.parse(local);
             } catch (err) {
-                return {
-                    val: '',
-                    ver: 0
-                };
+                // ignore
             }
+
+            return ret || {ver: 0};
         },
 
 
