@@ -262,8 +262,8 @@ define(function (require, exports, module) {
             var pastTime = 0;
             var beginTimestamp;
 
-            if (typeis(args[3]) !== 'function') {
-                callback = noop;
+            if (typeis(args[2]) === 'function') {
+                callback = args[2];
             }
 
             to = to || {};
