@@ -1,9 +1,8 @@
 <div id="alien-ui-dialog-bg-{{id}}" class="alien-ui-dialog-bg">
     <div id="alien-ui-dialog-{{id}}" class="alien-ui-dialog"
-         draggablefor="{{title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
+         draggablefor="{{!title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
 
         {{if wrap}}
-        <div class="alien-ui-dialog-container">
             {{if title}}
             <div class="alien-ui-dialog-header" draggablefor="{{title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
                 <div class="alien-ui-dialog-title">{{title}}</div>
@@ -13,8 +12,7 @@
             </div>
             {{/if}}
             <div class="alien-ui-dialog-body"></div>
-        </div>
         {{/if}}
-        
+
     </div>
 </div>

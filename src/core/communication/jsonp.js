@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var dato = require('../../util/dato.js');
     var klass = require('../../util/class.js');
     var Emitter = require('../../libs/Emitter.js');
-    var qs = require('../navigator/querystring.js');
+    var qs = require('../../util/querystring.js');
     var modification = require('../../core/dom/modification.js');
     var defaults = {
         // 可选 var 和 function

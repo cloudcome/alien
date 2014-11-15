@@ -23,7 +23,8 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
-    var regPx = /margin|width|height|padding|top|right|bottom|left/i;
+    var REG_PX = /margin|width|height|padding|top|right|bottom|left/i;
+    var REG_TRANSFORM = /translate|scale|skew|rotate|matrix|perspective/i;
     // +123.456
     // -123.456
     var regNum = /^[+\-]?\d+(\.\d*)?$/;
@@ -147,7 +148,7 @@ define(function (require, exports, module) {
         /**
          * 修正 css 键值
          * @param {String} key css 键
-         * @param {*} val css 值
+         * @param {*} [val] css 值
          * @returns {{key: String, val: *}}
          *
          * @example
@@ -158,6 +159,11 @@ define(function (require, exports, module) {
          * // }
          */
         fixCss: function (key, val) {
+            if (REG_TRANSFORM.test(key)) {
+                val = key + '(' + val + ')';
+                key = 'transform';
+            }
+
             return {
                 key: compatible.css3(_toSepString(key)),
                 val: _toCssVal(key, val)
@@ -198,7 +204,7 @@ define(function (require, exports, module) {
             return _getSet(arguments, {
                 get: function (key) {
                     var temp = key.split('::');
-                    var pseudo = temp[temp.length - 1];
+                    var pseudo = temp.length === 1 ? null : temp[temp.length - 1];
 
                     key = temp[0];
                     pseudo = pseudo ? pseudo : null;
@@ -629,7 +635,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _toCssVal(key, val) {
-        if (!regPx.test(key)) {
+        if (!REG_PX.test(key)) {
             return val;
         }
 
@@ -792,7 +798,7 @@ define(function (require, exports, module) {
                     }
                 }
                 // set
-                else if (argsLength === 2 && eleType === 'element' && typeis(args[1])==='number') {
+                else if (argsLength === 2 && eleType === 'element' && typeis(args[1]) === 'number') {
                     _setBoundingClientRect(ele, key, args[1] + extraVal);
                 }
             });

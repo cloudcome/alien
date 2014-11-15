@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var hashbang = require('/src/core/navigator/hashbang.js');
-    var data = require('/src/util/data.js');
+    var dato = require('/src/util/dato.js');
     var random = require('../../../src/util/random.js');
     var $routers = document.getElementById('routers');
     var $ret = document.getElementById('ret');
@@ -30,7 +30,7 @@ define(function (require) {
     }];
 
     var lis = '';
-    data.each(routes, function (index, config) {
+    dato.each(routes, function (index, config) {
         lis += '<li>路由' + (index + 1) + '：' + config.router + '</li>';
     });
     $routers.innerHTML = lis;

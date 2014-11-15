@@ -1,224 +1,52 @@
-/*!
- * touch.js
- * @author ydr.me
- * @create 2014-09-27 16:07
- */
-
-
-define(function (require, exports, module) {
-    /**
-     * 扩展触摸事件支持
-     *
-     * @module core/event/touch
-     * @requires core/event/base
-     * @requires core/dom/attribute
-     * @requires util/data
-     *
-     * @example
-     * // 单指触摸
-     * event.on(ele, 'touch1start', fn);
-     * event.on(ele, 'touch1move', fn);
-     * event.on(ele, 'touch1end', fn);
-     * // 轻击
-     * event.on(ele, 'tap', fn);
-     * // 长按
-     * event.on(ele, 'taphold', fn);
-     * // 滑动
-     * event.on(ele, 'swipe', fn);
-     * event.on(ele, 'swipeup', fn);
-     * event.on(ele, 'swiperight', fn);
-     * event.on(ele, 'swipebottom', fn);
-     * event.on(ele, 'swipeleft', fn);
-     */
+define(function (require) {
     'use strict';
 
-    var event = require('./base.js');
-    var attribute = require('../dom/attribute.js');
-    var data = require('../../util/data.js');
-    var body = document.body;
-    var touchstart = 'touchstart MSPointerDown pointerdown';
-    var touchmove = 'touchmove MSPointerMove pointermove';
-    var touchend = 'touchend MSPointerUp pointerup';
-    var touchcancel = 'touchcancel MSPointerCancel pointercancel';
-//    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
-    var options = {
-        tap: {
-            x: 30,
-            y: 30,
-            timeout: 500,
-            event: event.create('tap')
-        },
-        taphold: {
-            x: 30,
-            y: 30,
-            timeout: 750,
-            event: event.create('taphold')
-        },
-        swipe: {
-            x: 30,
-            y: 30,
-            event: event.create('swipe')
-        },
-        swipeup: {
-            event: event.create('swipeup')
-        },
-        swiperight: {
-            event: event.create('swiperight')
-        },
-        swipedown: {
-            event: event.create('swipedown')
-        },
-        swipeleft: {
-            event: event.create('swipeleft')
-        },
-        touch1start: {
-            event: event.create('touch1start')
-        },
-        touch1move: {
-            event: event.create('touch1move')
-        },
-        touch1end: {
-            event: event.create('touch1end')
-        }
-    };
-    var x0;
-    var y0;
-    var t0;
-    var timeid;
+    var event = require('/src/core/event/base.js');
+    var demo = document.getElementById('demo');
+    var demo2 = document.getElementById('demo2');
+    var ret1 = document.getElementById('ret1');
+    var ret2 = document.getElementById('ret2');
 
-    event.on(document, touchstart, function (eve) {
-        var firstTouch;
-        var target;
+    require('/src/core/event/touch.js');
 
-        if (eve.touches && eve.touches.length === 1) {
-            attribute.css(body, 'touch-callout', 'none');
-            attribute.css(body, 'user-select', 'none');
-            firstTouch = eve.touches[0];
-            target = eve.target;
-            x0 = firstTouch.clientX;
-            y0 = firstTouch.clientY;
-            t0 = Date.now();
-
-            timeid = setTimeout(function () {
-                event.extend(options.taphold.event, firstTouch);
-                event.dispatch(target, options.taphold.event);
-            }, options.taphold.timeout);
-
-            event.extend(options.touch1start.event, firstTouch, {
-                startX: x0,
-                startY: y0
-            });
-            event.dispatch(target, options.touch1start.event);
-        }
+    event.on(document, 'tap', 'div', function(){
+        console.log('>>');
     });
 
-    event.on(document, touchmove, function (eve) {
-        var firstTouch;
-        var target;
-        var deltaX;
-        var deltaY;
-        var rect;
-
-        if (eve.touches && eve.touches.length === 1) {
-            firstTouch = eve.touches[0];
-            target = firstTouch.target;
-            deltaX = Math.abs(firstTouch.clientX - x0);
-            deltaY = Math.abs(firstTouch.clientY - y0);
-            rect = target.getBoundingClientRect();
-
-            // 在元素范围
-            if (firstTouch.clientX > rect.left && firstTouch.clientY > rect.top && firstTouch.clientX < rect.right && firstTouch.clientY < rect.bottom) {
-                if (timeid && (deltaX > options.taphold.x || deltaY > options.taphold.y)) {
-                    _reset(eve);
-                }
-            }
-
-            event.extend(options.touch1move.event, firstTouch, {
-                moveX: firstTouch.clientX,
-                moveY: firstTouch.clientY,
-                deltaX: firstTouch.clientX - x0,
-                deltaY: firstTouch.clientY - y0
-            });
-            event.dispatch(target, options.touch1move.event);
-        }
+    event.on(demo, 'tap', function (eve) {
+        ret1.innerHTML += 'tap it<br>';
+        demo.style.display = 'none';
+        console.log(eve);
+        //eve.stopPropagation();
     });
 
-    event.on(document, touchend, function (eve) {
-        _reset(eve);
-
-        var firstTouch;
-        var x1;
-        var y1;
-        var x;
-        var y;
-        var deltaX;
-        var deltaY;
-        var deltaT;
-        var target;
-
-        if (eve.changedTouches && eve.changedTouches.length === 1) {
-            firstTouch = eve.changedTouches[0];
-            x1 = firstTouch.clientX;
-            y1 = firstTouch.clientY;
-            x = x1 - x0;
-            y = y1 - y0;
-            deltaX = Math.abs(x);
-            deltaY = Math.abs(y);
-            deltaT = Date.now() - t0;
-            target = firstTouch.target;
-
-            if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
-                event.extend(options.tap.event, firstTouch);
-                event.dispatch(target, options.tap.event);
-            }
-
-            if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
-                setTimeout(function () {
-                    var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
-
-                    event.extend(options.swipe.event, firstTouch, {
-                        direction: dir
-                    });
-                    event.extend(options['swipe' + dir].event, firstTouch);
-
-                    event.dispatch(target, options.swipe.event);
-                    event.dispatch(target, options['swipe' + dir].event);
-                }, 0);
-            }
-
-            event.extend(options.touch1end.event, firstTouch, {
-                endX: x1,
-                endY: y1,
-                deltaX: x,
-                deltaY: y
-            });
-            event.dispatch(target, options.touch1end.event);
-        }
+    event.on(demo2, 'click', function (eve) {
+        ret1.innerHTML += 'click demo2';
+        console.log(eve);
     });
 
-    event.on(document, touchcancel, _reset);
+    event.on(demo, 'swipe', function (eve) {
+        ret1.innerHTML += 'swipe it';
+        console.log(eve);
+    });
 
-    event.on(window, 'scroll', _reset);
+    event.on(demo, 'swipeup', function () {
+        ret2.innerHTML += 'swipeup it';
+    });
 
+    event.on(demo, 'swiperight', function () {
+        ret2.innerHTML += 'swiperight it';
+    });
 
-    /**
-     * 重置定时器
-     * @param {Event} eve 事件对象
-     * @private
-     */
-    function _reset(eve) {
-        if (eve.changedTouches && eve.changedTouches.length === 1 || eve.touches && eve.touches.length === 1) {
-            if (timeid) {
-                clearTimeout(timeid);
-            }
-            timeid = 0;
-        }
-    }
+    event.on(demo, 'swipedown', function () {
+        ret2.innerHTML = 'swipedown it';
+    });
 
+    event.on(demo, 'swipeleft', function () {
+        ret2.innerHTML = 'swipeleft it';
+    });
 
-    /**
-     * 出口
-     * @type {*|exports}
-     */
-    module.exports = event;
+    event.on(demo, 'taphold', function () {
+        ret1.innerHTML = 'taphold it';
+    });
 });
