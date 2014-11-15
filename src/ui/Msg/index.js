@@ -20,7 +20,7 @@ define(function (require, exports, module) {
 
     var style = require('css!./style.css');
     var ui = require('../base.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -68,7 +68,7 @@ define(function (require, exports, module) {
             var the = this;
 
             Emitter.apply(the, arguments);
-            the._options = data.extend(true, {}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._id = alienIndex++;
             the._init();
         },

@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var selection = require('../../util/selection.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var REG_LINEEND = /\n/g;
     var REG_START_SPACE = /^\s+/;
     var udf;
@@ -108,7 +108,7 @@ define(function (require, exports, module) {
         var spaceLength = 0;
         var newValue = '';
 
-        data.each(startOfLinePos, function (i, pos) {
+        dato.each(startOfLinePos, function (i, pos) {
             if (selectionStart >= pos && (startOfLinePos[i + 1] === udf || selectionStart < startOfLinePos[i + 1])) {
                 lineStart = pos;
                 findIndex = i;

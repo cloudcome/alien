@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var event = require('./base.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var callbacks = [];
     var isReady;
 
@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     module.exports = function (callback) {
         if(document.readyState === 'complete' || isReady){
             callback();
-        }else if(data.type(callback) === 'function'){
+        }else if(dato.type(callback) === 'function'){
             callbacks.push(callback);
         }
     };
@@ -42,7 +42,7 @@ define(function (require, exports, module) {
     event.on(document, 'DOMContentLoaded', function () {
         isReady = 1;
 
-        data.each(callbacks, function(index, callback){
+        dato.each(callbacks, function(index, callback){
             callback();
         });
 

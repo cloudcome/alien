@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var xhr = require('./xhr.js');
     var defaults = {
         url: location.href,
@@ -27,13 +27,13 @@ define(function (require, exports, module) {
 
     exports.defaults = defaults;
     module.exports = function (options) {
-        options = data.extend(!0, {}, defaults, options);
+        options = dato.extend(!0, {}, defaults, options);
 
         if (!options.file) {
             throw new Error('require param `file`');
         }
 
-        var fileType = data.type(options.file);
+        var fileType = dato.type(options.file);
         var files;
         var fd = new FormData();
         var name = options.blobName;
@@ -50,7 +50,7 @@ define(function (require, exports, module) {
                 if (files.length === 1) {
                     fd.append(name, files[0]);
                 } else {
-                    data.each(options.file.files, function (index, file) {
+                    dato.each(options.file.files, function (index, file) {
                         fd.append(name + '[]', file);
                     });
                 }
@@ -66,7 +66,7 @@ define(function (require, exports, module) {
                 break;
         }
 
-        data.each(options.data, function (key, val) {
+        dato.each(options.data, function (key, val) {
             fd.append(key, val);
         });
 

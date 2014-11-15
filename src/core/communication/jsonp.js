@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var klass = require('../../util/class.js');
     var Emitter = require('../../libs/Emitter.js');
     var qs = require('../navigator/querystring.js');
@@ -34,7 +34,7 @@ define(function (require, exports, module) {
             var the = this;
 
             Emitter.call(the);
-            options = data.extend(!0, {}, defaults, options);
+            options = dato.extend(!0, {}, defaults, options);
 
             options.url = String(options.url);
 

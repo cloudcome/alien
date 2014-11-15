@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var datao = require('../../util/dato.js');
     var klass = require('../../util/class.js');
     var qs = require('../../util/querystring.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
 
             Emitter.apply(the);
 
-            options = data.extend(!0, {}, defaults, options);
+            options = dato.extend(!0, {}, defaults, options);
 
             if (!options.headers) {
                 options.headers = {};
@@ -135,7 +135,7 @@ define(function (require, exports, module) {
                 xhr.overrideMimeType(options.mimeType);
             }
 
-            data.each(options.headers, function (key, val) {
+            dato.each(options.headers, function (key, val) {
                 xhr.setRequestHeader(key, val);
             });
             xhr.send(_buildData(options));
@@ -206,7 +206,7 @@ define(function (require, exports, module) {
     function _buildURL(options) {
         var url = options.url;
         var query = options.query;
-        var querystring = data.type(query) === 'string' ? query : qs.stringify(query);
+        var querystring = dato.type(query) === 'string' ? query : qs.stringify(query);
         var cache = options.isCache ? '' : '_=' + (++index);
 
         // 删除原有的缓存字符串

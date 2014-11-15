@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var ui = require('../base.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 
             the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = dato.extend(!0, {}, defaults, options);
             the._id = alienIndex++;
             the._init();
         },
@@ -512,7 +512,7 @@ define(function (require, exports, module) {
 
             if (arguments.length) {
                 the._isTrigger = true;
-                x = data.parseFloat(x, 0);
+                x = dato.parseFloat(x, 0);
 
                 if (x < 0 || x > the._contentWidth) {
                     x = the._contentWidth;
@@ -587,7 +587,7 @@ define(function (require, exports, module) {
 
             if (arguments.length) {
                 the._isTrigger = true;
-                y = data.parseFloat(y, 0);
+                y = dato.parseFloat(y, 0);
 
                 if (y < 0 || y > the._contentHeight) {
                     y = the._contentHeight;

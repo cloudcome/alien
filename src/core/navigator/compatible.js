@@ -12,7 +12,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
     var regCss3 = /^-(webkit|moz|ms)-/i;
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
                 standard = standard.replace(regOn, '');
             }
 
-            data.each(html5Prefixs, function (index, prefix) {
+            dato.each(html5Prefixs, function (index, prefix) {
                 html5Key = isEventType ?
                     (prefix + standard ):
                     (prefix ? prefix + _toUpperCaseFirstLetter(standard) : standard);
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
 
             standard = _toSepString(standard.trim().replace(regCss3, ''));
 
-            data.each(css3Prefixs, function (index, prefix) {
+            dato.each(css3Prefixs, function (index, prefix) {
                 cssKey = prefix ? prefix + '-' + standard : standard;
 
                 var testCssKey = fixCss[cssKey] ? fixCss[cssKey]: cssKey;

@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../util/data.js');
+    var dato = require('../util/dato.js');
     var klass = require('../util/class.js');
     var udf;
 
@@ -33,11 +33,11 @@ define(function (require, exports, module) {
      * });
      */
     module.exports = function (property, superConstructor, isInheritStatic) {
-        if (data.type(property) !== 'object') {
+        if (dato.type(property) !== 'object') {
             throw 'UI class property must be an obejct';
         }
 
-        if (data.type(property.constructor) !== 'function') {
+        if (dato.type(property.constructor) !== 'function') {
             throw 'UI class property.constructor must be a function';
         }
 
@@ -45,13 +45,13 @@ define(function (require, exports, module) {
         if (property.getOptions === udf) {
             property.getOptions = function (key) {
                 var the = this;
-                var keyType = data.type(key);
+                var keyType = dato.type(key);
                 var ret = [];
 
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options && the._options[key];
                 } else if (keyType === 'array') {
-                    data.each(key, function (index, k) {
+                    dato.each(key, function (index, k) {
                         ret.push(the._options && the._options[k]);
                     });
 
@@ -63,12 +63,12 @@ define(function (require, exports, module) {
         if (property.setOptions === udf) {
             property.setOptions = function (key, val) {
                 var the = this;
-                var keyType = data.type(key);
+                var keyType = dato.type(key);
 
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options ? the._options[key] = val : udf;
                 } else if (keyType === 'object') {
-                    data.extend(the._options, key);
+                    dato.extend(the._options, key);
                 }
             };
         }

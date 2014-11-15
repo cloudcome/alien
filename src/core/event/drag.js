@@ -10,7 +10,6 @@ define(function (require, exports, module) {
      * 扩展拖拽事件支持
      *
      * @module core/event/drag
-     * @requires util/data
      * @requires core/event/touch
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -30,7 +29,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
     var event = require('./touch.js');
     var attribute = require('../dom/attribute.js');
     var modification = require('../dom/modification.js');

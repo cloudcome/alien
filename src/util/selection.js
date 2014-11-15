@@ -12,7 +12,7 @@ define(function (require, exports) {
     'use strict';
 
     var selector = require('../core/dom/selector.js');
-    var data = require('./data.js');
+    var dato = require('./dato.js');
 
     /**
      * 获取选区
@@ -39,8 +39,8 @@ define(function (require, exports) {
      * selection.setPos($ele, 1, 10);
      */
     exports.setPos = function ($ele, start, end) {
-        start = data.parseInt(start, 0);
-        end = end ? data.parseInt(end, 0): start;
+        start = dato.parseInt(start, 0);
+        end = end ? dato.parseInt(end, 0): start;
 
         if ($ele && $ele.setSelectionRange) {
             $ele.setSelectionRange(start, end);

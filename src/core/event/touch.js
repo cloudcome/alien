@@ -12,7 +12,6 @@ define(function (require, exports, module) {
      * @module core/event/touch
      * @requires core/event/base
      * @requires core/dom/attribute
-     * @requires util/data
      *
      * @example
      * event.on(ele, 'tap', fn);
@@ -27,7 +26,6 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
-    var data = require('../../util/data.js');
     var body = document.body;
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';

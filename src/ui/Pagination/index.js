@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 
     var style = require('css!./style.css');
     var ui = require('../base.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -62,7 +62,7 @@ define(function (require, exports, module) {
 
             the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = dato.extend(!0, {}, defaults, options);
             the._init();
         },
 
@@ -109,7 +109,7 @@ define(function (require, exports, module) {
          */
         render: function (settings) {
             var the = this;
-            var options = data.extend(the._options, settings);
+            var options = dato.extend(the._options, settings);
             var list = new libsPagination(options);
 
             the._$ele.innerHTML = tpl.render({

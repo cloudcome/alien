@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var ui = require('../base.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -54,7 +54,7 @@ define(function (require, exports, module) {
 
             Emitter.apply(the);
             the._$ele = $ele[0];
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = dato.extend(!0, {}, defaults, options);
             the._init();
         },
         _init: function () {

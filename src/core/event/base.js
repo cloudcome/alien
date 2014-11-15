@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var domSelector = require('../dom/selector.js');
     var regSpace = /\s+/g;
     // 原始事件：用户传入的事件
@@ -115,7 +115,7 @@ define(function (require, exports, module) {
          * });
          */
         create: function (eventType, properties) {
-            properties = data.extend({}, defaults, properties);
+            properties = dato.extend({}, defaults, properties);
 
             var et;
             var args;
@@ -166,7 +166,7 @@ define(function (require, exports, module) {
          * event.dispatch(ele, myclikEvent, eve);
          */
         dispatch: function (ele, eventTypeOrEvent, copyEvent) {
-            var et = data.type(eventTypeOrEvent) === 'string' ?
+            var et = dato.type(eventTypeOrEvent) === 'string' ?
                 this.create(eventTypeOrEvent) :
                 eventTypeOrEvent;
 
@@ -198,11 +198,11 @@ define(function (require, exports, module) {
          * });
          */
         extend: function (createEvent, copyEvent, detail) {
-            if (data.type(createEvent) === 'string') {
+            if (dato.type(createEvent) === 'string') {
                 createEvent = this.create(createEvent);
             }
 
-            data.each(mustEventProperties, function (index, prototype) {
+            dato.each(mustEventProperties, function (index, prototype) {
                 if (prototype in copyEvent) {
                     try {
                         // 某些浏览器不允许重写只读属性，如 iPhone safari
@@ -216,7 +216,7 @@ define(function (require, exports, module) {
             detail = detail || {};
             createEvent.alienDetail = createEvent.alienDetail || {};
 
-            data.each(detail, function (key, val) {
+            dato.each(detail, function (key, val) {
                 createEvent.alienDetail[key] = val;
             });
 
@@ -249,19 +249,19 @@ define(function (require, exports, module) {
             var eventTypes = String(eventType).trim().split(regSpace);
             isCapture = arguments[arguments.length - 1];
 
-            if (data.type(isCapture) !== 'boolean') {
+            if (dato.type(isCapture) !== 'boolean') {
                 isCapture = !1;
             }
 
             // on self
             // .on(body, 'click', fn);
-            if (data.type(arguments[2]) === 'function') {
+            if (dato.type(arguments[2]) === 'function') {
                 callback = arguments[2];
                 listener = arguments[2];
             }
             // delegate
             // .on(body, 'click', 'p', fn)
-            else if (data.type(listener) === 'function') {
+            else if (dato.type(listener) === 'function') {
                 callback = function (eve) {
                     // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                     var closestElement = domSelector.closest(eve.target, selector);
@@ -273,8 +273,8 @@ define(function (require, exports, module) {
             }
 
             if (callback) {
-                data.each(eventTypes, function (index, eventType) {
-                    if (data.type(listener) === 'function' && eventType) {
+                dato.each(eventTypes, function (index, eventType) {
+                    if (dato.type(listener) === 'function' && eventType) {
                         _on(element, eventType, callback, listener, isCapture);
                     }
                 });
@@ -305,7 +305,7 @@ define(function (require, exports, module) {
             var args = Array.prototype.slice.call(arguments);
             var eventTypes = String(eventType).trim().split(regSpace);
 
-            data.each(eventTypes, function (index, eventType) {
+            dato.each(eventTypes, function (index, eventType) {
                 if (eventType) {
                     args.splice(1, 1, eventType);
                     _un.apply(window, args);
@@ -384,7 +384,7 @@ define(function (require, exports, module) {
                     var domId = the[key];
                     var eventType = eve.type;
 
-                    data.each(isCaptureActualListeners[domId][eventType], function (index, listener) {
+                    dato.each(isCaptureActualListeners[domId][eventType], function (index, listener) {
                         if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
@@ -409,7 +409,7 @@ define(function (require, exports, module) {
                     var domId = the[key];
                     var eventType = eve.type;
 
-                    data.each(unCaptureActualListeners[domId][eventType], function (index, listener) {
+                    dato.each(unCaptureActualListeners[domId][eventType], function (index, listener) {
                         if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
@@ -442,7 +442,7 @@ define(function (require, exports, module) {
 
         if (argL === 3) {
             // _un(ele, 'click', true);
-            if (data.type(args[2]) === 'boolean') {
+            if (dato.type(args[2]) === 'boolean') {
                 isCapture = args[2];
                 originalEvent = null;
             }
@@ -454,7 +454,7 @@ define(function (require, exports, module) {
 
         if (domId) {
             if (isCapture) {
-                if (data.type(originalEvent) === 'function') {
+                if (dato.type(originalEvent) === 'function') {
                     findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {
@@ -466,7 +466,7 @@ define(function (require, exports, module) {
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if (data.type(originalEvent) === 'function') {
+                if (dato.type(originalEvent) === 'function') {
                     findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
 
                     if (findIndex > -1) {

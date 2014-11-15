@@ -17,7 +17,7 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var hashbang = require('../../util/hashbang.js');
     var hasEmit = false;
 
@@ -46,7 +46,7 @@ define(function (require, exports) {
 
         var parse = hashbang.parse(location.hash);
         var map;
-        var keyType = data.type(key);
+        var keyType = dato.type(key);
         var valSafe = _isSafeVal(val);
 
         if (part === 'query') {
@@ -58,7 +58,7 @@ define(function (require, exports) {
                     map[key] = val;
                 }
 
-                parse.query = data.extend({}, parse.query, map);
+                parse.query = dato.extend({}, parse.query, map);
             } else {
                 throw new Error('`key` must be a object or `key` must b a string, ' +
                 '`val` must be a string/number/boolean');
@@ -94,7 +94,7 @@ define(function (require, exports) {
             throw new Error('hashbang `part` must be `path` or `query`');
         }
 
-        var keyType = data.type(key);
+        var keyType = dato.type(key);
         var removeKeys = [];
         var parse = hashbang.parse(location.hash);
 
@@ -105,8 +105,8 @@ define(function (require, exports) {
                 removeKeys.push(key);
             }
 
-            data.each(removeKeys, function (index, key) {
-                if (data.type(key) === 'number') {
+            dato.each(removeKeys, function (index, key) {
+                if (dato.type(key) === 'number') {
                     parse.path.splice(key - index, 1);
                 }
             });
@@ -117,8 +117,8 @@ define(function (require, exports) {
                 removeKeys.push(key);
             }
 
-            data.each(removeKeys, function (index, key) {
-                if (data.type(key) === 'string') {
+            dato.each(removeKeys, function (index, key) {
+                if (dato.type(key) === 'string') {
                     delete(parse.query[key]);
                 }
             });
@@ -151,7 +151,7 @@ define(function (require, exports) {
      * // => "2"
      */
     exports.get = function (part, key) {
-        var keyType = data.type(key);
+        var keyType = dato.type(key);
         var argL = arguments.length;
         var parse = hashbang.parse(location.hash);
 
@@ -197,7 +197,7 @@ define(function (require, exports) {
             var matched;
             var matchIndex = -1;
 
-            data.each(routerConfig, function (index, config) {
+            dato.each(routerConfig, function (index, config) {
                 matched = hashbang.matches(eve.newURL, config.router, options);
                 matchIndex = index;
 
@@ -237,7 +237,7 @@ define(function (require, exports) {
      * @private
      */
     function _isSafeVal(object) {
-        var type = data.type(object);
+        var type = dato.type(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
         return ret === !0 ? !0 : type;

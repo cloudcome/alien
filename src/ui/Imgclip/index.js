@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
     var Emitter = require('../../libs/Emitter.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 
             Emitter.apply(the);
             the._$ele = $ele[0];
-            the._options = options = data.extend(!0, {}, defaults, options);
+            the._options = options = dato.extend(!0, {}, defaults, options);
 
             adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
             options.minWidth = adjust[0];
@@ -271,8 +271,8 @@ define(function (require, exports, module) {
 
                 if (state === 2) {
                     state = 3;
-                    left0 = data.parseFloat(attribute.css(the._$sele, 'left'), 0);
-                    top0 = data.parseFloat(attribute.css(the._$sele, 'top'), 0);
+                    left0 = dato.parseFloat(attribute.css(the._$sele, 'left'), 0);
+                    top0 = dato.parseFloat(attribute.css(the._$sele, 'top'), 0);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
                     the.emit('clipstart', the._selection);

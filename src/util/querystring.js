@@ -16,7 +16,7 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
     var regSp = /\+/g;
     var regQ = /^\?+/;
 
@@ -36,18 +36,18 @@ define(function (require, exports) {
         sep = sep || '&';
         eq = eq || '=';
 
-        if (data.type(object) !== 'object') {
+        if (dato.type(object) !== 'object') {
             return '';
         }
 
         var ret = [];
 
-        data.each(object, function (key, val) {
+        dato.each(object, function (key, val) {
             var type = _isSafe(val);
             if (type === true) {
                 ret.push(_encode(key) + eq + _clean(val));
             } else if (type === 'array') {
-                data.each(val, function (k, v) {
+                dato.each(val, function (k, v) {
                     ret.push(_encode(key) + eq + _clean(v));
                 });
             }
@@ -73,7 +73,7 @@ define(function (require, exports) {
         eq = eq || '=';
 
         var ret = {};
-        var type = data.type(querystring);
+        var type = dato.type(querystring);
         var arr;
 
         if (type !== 'string') {
@@ -83,7 +83,7 @@ define(function (require, exports) {
         // 最大长度100
         arr = querystring.replace(regQ, '').split(sep).slice(0, 100);
 
-        data.each(arr, function (index, item) {
+        dato.each(arr, function (index, item) {
             var temp = item.split(eq);
             var key = _decode(temp[0].replace(regSp, ' '));
             var val = _decode(temp.slice(1).join(''));
@@ -92,7 +92,7 @@ define(function (require, exports) {
                 if (!ret[key]) {
                     ret[key] = val;
                 } else {
-                    if (data.type(ret[key]) !== 'array') {
+                    if (dato.type(ret[key]) !== 'array') {
                         ret[key] = [ret[key]];
                     }
 
@@ -136,7 +136,7 @@ define(function (require, exports) {
      * @private
      */
     function _isSafe(object) {
-        var type = data.type(object);
+        var type = dato.type(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
         return ret === true ? !0 : type;

@@ -11,7 +11,7 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
     var modification = require('../core/dom/modification.js');
     var compatible = require('../core/navigator/compatible.js');
     var URL = window[compatible.html5('URL', window)];
@@ -46,7 +46,7 @@ define(function (require, exports) {
         var $canvas;
         var context;
 
-        options = data.extend(!0, {}, defaults, options);
+        options = dato.extend(!0, {}, defaults, options);
 
         if (options.srcWidth === udf) {
             options.srcWidth = $img.width;
@@ -101,7 +101,7 @@ define(function (require, exports) {
         var $canvas;
         var base64;
 
-        options = data.extend(!0, {}, defaults, options);
+        options = dato.extend(!0, {}, defaults, options);
 
         // moz
         if (supportToBlob) {
@@ -146,7 +146,7 @@ define(function (require, exports) {
      * @param [options.quality=1] {Number} 图片质量
      */
     exports.saveAs = function ($canvas, name, options) {
-        options = data.extend(!0, {}, defaults, options);
+        options = dato.extend(!0, {}, defaults, options);
 
         var base64 = $canvas.toDataURL(options.type, options.quality);
         var link = modification.create('a', {

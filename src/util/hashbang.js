@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
     var qs = require('./querystring.js');
     var event = require('../core/event/base.js');
     var regHash = /#.*$/;
@@ -41,33 +41,33 @@ define(function (require, exports, module) {
     var hashchangeCallback = function (eve) {
         var newObject = exports.parse(eve.newURL);
         var oldObject = exports.parse(eve.oldURL);
-        var pathDifferentKeys = data.compare(newObject.path || [], oldObject.path || []).different;
-        var queryDifferentKeys = data.compare(newObject.query || {}, oldObject.query || {}).different;
+        var pathDifferentKeys = dato.compare(newObject.path || [], oldObject.path || []).different;
+        var queryDifferentKeys = dato.compare(newObject.query || {}, oldObject.query || {}).different;
         var args = [eve, newObject, oldObject];
 
         if (pathDifferentKeys.length) {
-            data.each(pathAllListener, function (i, listener) {
+            dato.each(pathAllListener, function (i, listener) {
                 listener.apply(window, args);
             });
         }
 
-        data.each(pathDifferentKeys, function (i, key) {
+        dato.each(pathDifferentKeys, function (i, key) {
             if (pathListenerMap[key]) {
-                data.each(pathListenerMap[key], function (j, listener) {
+                dato.each(pathListenerMap[key], function (j, listener) {
                     listener.apply(window, args);
                 });
             }
         });
 
         if (queryDifferentKeys.length) {
-            data.each(queryAllListener, function (i, listener) {
+            dato.each(queryAllListener, function (i, listener) {
                 listener.apply(window, args);
             });
         }
 
-        data.each(queryDifferentKeys, function (i, key) {
+        dato.each(queryDifferentKeys, function (i, key) {
             if (queryListenerMap[key]) {
-                data.each(queryListenerMap[key], function (j, listener) {
+                dato.each(queryListenerMap[key], function (j, listener) {
                     listener.apply(window, args);
                 });
             }
@@ -96,7 +96,7 @@ define(function (require, exports, module) {
     exports.parse = function (hashbangString, sep, eq) {
         var dftRet = {path: [], query: {}};
 
-        if (data.type(hashbangString) !== 'string') {
+        if (dato.type(hashbangString) !== 'string') {
             return dftRet;
         }
 
@@ -114,7 +114,7 @@ define(function (require, exports, module) {
         var hashGroup = hashbangGroup.split('?');
         var hashPathStack = [];
 
-        data.each(hashGroup[0].split('/'), function (index, item) {
+        dato.each(hashGroup[0].split('/'), function (index, item) {
             item = _decode(item);
             if (item.length) {
                 hashPathStack.push(_decode(item));
@@ -154,12 +154,12 @@ define(function (require, exports, module) {
         var hashPath = [];
         var hashQuerystring = qs.stringify(hashbangObject.query, sep, eq);
 
-        if (data.type(hashbangObject.path) === 'string') {
+        if (dato.type(hashbangObject.path) === 'string') {
             return '#!' + hashbangObject.path +
                 (hashQuerystring ? '?' + hashQuerystring : '');
         }
 
-        data.each(hashbangObject.path, function (index, path) {
+        dato.each(hashbangObject.path, function (index, path) {
             hashPath.push(_encode(path));
         });
 
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
     exports.matches = function (hashbangString, route, options) {
         // /id/:id/ => /id/abc123/   √
 
-        options = data.extend({}, matchesDefaults, options);
+        options = dato.extend({}, matchesDefaults, options);
 
         var temp;
         var keys = [0];
@@ -198,7 +198,7 @@ define(function (require, exports, module) {
         var reg;
         var ret = null;
 
-        if (data.type(hashbangString) !== 'string') {
+        if (dato.type(hashbangString) !== 'string') {
             return ret;
         }
 
@@ -232,7 +232,7 @@ define(function (require, exports, module) {
 
         ret = {};
 
-        data.each(keys, function (index, key) {
+        dato.each(keys, function (index, key) {
             if (index && matched[index]) {
                 ret[key] = matched[index];
             }
@@ -268,7 +268,7 @@ define(function (require, exports, module) {
         if (argL === 2) {
             listener = args[1];
 
-            if (data.type(listener) === 'function') {
+            if (dato.type(listener) === 'function') {
                 if (part === 'query') {
                     queryAllListener.push(listener);
                 } else {
@@ -278,14 +278,14 @@ define(function (require, exports, module) {
         } else if (argL === 3) {
             listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
-            if (data.type(key) !== 'array') {
+            if (dato.type(key) !== 'array') {
                 key = [key];
             }
 
-            data.each(key, function (index, k) {
+            dato.each(key, function (index, k) {
                 listenerMap[k] = listenerMap[k] || [];
 
-                if (data.type(listener) === 'function') {
+                if (dato.type(listener) === 'function') {
                     listenerMap[k].push(listener);
                 }
             });
@@ -342,8 +342,8 @@ define(function (require, exports, module) {
         var args = arguments;
         var argL = args.length;
         var findIndex;
-        var arg1Type = data.type(args[1]);
-        var arg2Type = data.type(args[2]);
+        var arg1Type = dato.type(args[1]);
+        var arg2Type = dato.type(args[2]);
         var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
 
         if (argL === 1) {
@@ -364,13 +364,13 @@ define(function (require, exports, module) {
         } else if (argL === 2 && (arg1Type === 'string' || arg1Type === 'array')) {
             key = arg1Type === 'array' ? key : [key];
 
-            data.each(key, function (index, k) {
+            dato.each(key, function (index, k) {
                 listenerMap[k] = [];
             });
         } else if (argL === 3 && (arg1Type === 'string' || arg1Type === 'array') && arg2Type === 'function') {
             key = arg1Type === 'array' ? key : [key];
 
-            data.each(key, function (index, k) {
+            dato.each(key, function (index, k) {
                 var findIndex = listenerMap.indexOf(listener);
 
                 if (findIndex > -1) {

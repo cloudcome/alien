@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var utilData = require('../util/data.js');
+    var dato = require('../util/dato.js');
     var klass = require('../util/class.js');
     var regStringWrap = /([\\"])/g;
     var regBreakLineMac = /\n/g;
@@ -78,7 +78,7 @@ define(function (require, exports, module) {
              * @static
              */
             addFilter: function (name, callback, isOverride) {
-                if (utilData.type(name) !== 'string') {
+                if (dato.type(name) !== 'string') {
                     throw new Error('filter name must be a string');
                 }
 
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
                     throw new Error('override a exist filter');
                 }
 
-                if (utilData.type(callback) !== 'function') {
+                if (dato.type(callback) !== 'function') {
                     throw new Error('filter callback must be a function');
                 }
 
@@ -106,7 +106,7 @@ define(function (require, exports, module) {
                     return filters;
                 }
 
-                if (utilData.type(name) === 'string') {
+                if (dato.type(name) === 'string') {
                     return filters[name];
                 }
             }
@@ -120,7 +120,7 @@ define(function (require, exports, module) {
          * @param [options] {Object} 模板配置
          */
         constructor: function (tmplate, options) {
-            this._options = utilData.extend(!0, {}, defaults, options);
+            this._options = dato.extend(!0, {}, defaults, options);
             this._init(tmplate);
         },
 
@@ -257,18 +257,18 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
-            var existFilters = utilData.extend(!0, {}, filters, the._template.filters);
-            var self = utilData.extend(!0, {}, {
+            var existFilters = dato.extend(!0, {}, filters, the._template.filters);
+            var self = dato.extend(!0, {}, {
                 escape: _escape,
                 filters: existFilters
             });
             var ret;
 
-            utilData.each(data, function (key) {
+            dato.each(data, function (key) {
                 vars.push('var ' + key + '=' + _var + '["' + key + '"];');
             });
 
-            utilData.each(the._useFilters, function (filter) {
+            dato.each(the._useFilters, function (filter) {
                 if (!existFilters[filter]) {
                     throw new Error('can not found filter ' + filter);
                 }
@@ -308,7 +308,7 @@ define(function (require, exports, module) {
         addFilter: function (name, callback, isOverride) {
             var instanceFilters = this._template.filters;
 
-            if (utilData.type(name) !== 'string') {
+            if (dato.type(name) !== 'string') {
                 throw new Error('filter name must be a string');
             }
 
@@ -317,7 +317,7 @@ define(function (require, exports, module) {
                 throw new Error('override a exist instance filter');
             }
 
-            if (utilData.type(callback) !== 'function') {
+            if (dato.type(callback) !== 'function') {
                 throw new Error('filter callback must be a function');
             }
 
@@ -337,7 +337,7 @@ define(function (require, exports, module) {
          * // => return test filter function
          */
         getFilter: function (name) {
-            return utilData.type(name) === 'string' ?
+            return dato.type(name) === 'string' ?
                 this._template.filters[name] :
                 this._template.filters;
         },
@@ -497,7 +497,7 @@ define(function (require, exports, module) {
     function _escape(str) {
         str = String(str);
 
-        utilData.each(escapes, function (index, obj) {
+        dato.each(escapes, function (index, obj) {
             str = str.replace(obj.reg, obj.rep);
         });
 

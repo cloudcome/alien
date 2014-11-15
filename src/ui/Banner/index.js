@@ -31,7 +31,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var ui = require('../base.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -79,7 +79,7 @@ define(function (require, exports, module) {
 
             the._$ele = ele[0];
             Emitter.apply(the, arguments);
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = dato.extend(!0, {}, defaults, options);
             the._init();
         },
 
@@ -119,12 +119,12 @@ define(function (require, exports, module) {
                 id: the._id,
                 nav: []
             };
-            var navFilter = data.type(options.nav) === 'function' ? options.nav : function () {
+            var navFilter = dato.type(options.nav) === 'function' ? options.nav : function () {
                 return '';
             };
             var $bannerWrap;
 
-            data.each(the._$items, function (index) {
+            dato.each(the._$items, function (index) {
                 bannerData.nav.push(navFilter(index));
             });
 
@@ -283,14 +283,14 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            if (data.type(args[0]) === 'number') {
+            if (dato.type(args[0]) === 'number') {
                 type = 'next';
                 index = args[0];
             }
 
             callback = args[argL - 1];
 
-            if (data.type(callback) !== 'function') {
+            if (dato.type(callback) !== 'function') {
                 callback = noop;
             }
 
@@ -329,7 +329,7 @@ define(function (require, exports, module) {
                     attribute.addClass(the._$navItems[index], alienClass + '-nav-item-active');
                     siblings = selector.siblings(the._$navItems[index]);
 
-                    data.each(siblings, function (i, sibling) {
+                    dato.each(siblings, function (i, sibling) {
                         attribute.removeClass(sibling, alienClass + '-nav-item-active');
                     });
                 }
@@ -457,7 +457,7 @@ define(function (require, exports, module) {
             options.width = size.width || options.width;
             options.height = size.height || options.height;
 
-            data.each(the._$items, function (index, item) {
+            dato.each(the._$items, function (index, item) {
                 attribute.css(item, {
                     width: options.width,
                     height: options.height,
@@ -495,7 +495,7 @@ define(function (require, exports, module) {
             // 停止动画
             the.pause();
 
-            data.each(the._$items, function (index, item) {
+            dato.each(the._$items, function (index, item) {
                 attribute.css(item, {
                     width: '',
                     height: '',

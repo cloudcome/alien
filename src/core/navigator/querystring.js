@@ -17,7 +17,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var qs = require('../../util/querystring.js');
 
 
@@ -34,12 +34,12 @@ define(function (require, exports, module) {
     exports.get = function (key) {
         var parse = qs.parse(location.search);
         var ret;
-        var keyType = data.type(key);
+        var keyType = dato.type(key);
 
         switch (keyType) {
             case 'array':
                 ret = {};
-                data.each(key, function (i, k) {
+                dato.each(key, function (i, k) {
                     ret[k] = parse[k];
                 });
 
@@ -78,10 +78,10 @@ define(function (require, exports, module) {
             setter = key;
         }
 
-        data.extend(!0, ret, setter);
+        dato.extend(!0, ret, setter);
 
         location.search = qs.stringify(ret);
-    }
+    };
 
 
     /**
@@ -104,18 +104,18 @@ define(function (require, exports, module) {
         }
 
         var parse = qs.parse(location.search);
-        var clone = data.extend(true, {}, parse);
+        var clone = dato.extend(true, {}, parse);
         var compare;
 
-        if (data.type(key) !== 'array') {
+        if (dato.type(key) !== 'array') {
             key = [key];
         }
 
-        data.each(key, function (index, k) {
+        dato.each(key, function (index, k) {
             delete(parse[k]);
         });
 
-        compare = data.compare(clone, parse);
+        compare = dato.compare(clone, parse);
 
         // 没有第一个对象独有的键
         if (!compare.only[0].length) {

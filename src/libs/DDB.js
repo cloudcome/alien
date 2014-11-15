@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var klass = require('../util/class.js');
-    var utilData = require('../util/data.js');
+    var dato = require('../util/dato.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
@@ -91,7 +91,7 @@ define(function (require, exports, module) {
                 return parser;
             }
 
-            utilData.each(children, function (i, child) {
+            dato.each(children, function (i, child) {
                 var attrs = child.attributes;
                 var className = 'alien-' + _randomString(10);
 
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
                 attribute.addClass(child, className);
 
                 // 查找到所有符合的属性
-                utilData.each(attrs, function (j, attr) {
+                dato.each(attrs, function (j, attr) {
                     var name = attr.name;
                     var val = attr.value;
                     var type;
@@ -174,7 +174,7 @@ define(function (require, exports, module) {
                         if (type === 'class' || type === 'style') {
                             json = _parseJSON(val);
 
-                            utilData.each(json, function (val, exp) {
+                            dato.each(json, function (val, exp) {
                                 render.push({
                                     index: alienIndex,
                                     type: type,
@@ -219,7 +219,7 @@ define(function (require, exports, module) {
             var find = null;
             var src = this._parseMap;
 
-            i = utilData.parseInt(i, 0);
+            i = dato.parseInt(i, 0);
 
             _each(src);
 
@@ -228,13 +228,13 @@ define(function (require, exports, module) {
                     return find;
                 }
 
-                utilData.each(father, function (j, obj) {
-                    if (obj.repeat && i === utilData.parseInt(obj.repeat.index, 0)) {
+                dato.each(father, function (j, obj) {
+                    if (obj.repeat && i === dato.parseInt(obj.repeat.index, 0)) {
                         find = obj.repeat.map;
                         return !1;
                     }
 
-                    if (i === utilData.parseInt(j, 0)) {
+                    if (i === dato.parseInt(j, 0)) {
                         find = father[j];
                         return !1;
                     }
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
                 if (index) {
                     parser = the._parseMap[index];
 
-                    utilData.each(parser.render, function (i, rd) {
+                    dato.each(parser.render, function (i, rd) {
                         if (rd.type === 'model') {
                             the._ignore = node;
                             the._data[rd.exp] = val;
@@ -281,7 +281,7 @@ define(function (require, exports, module) {
             the._state = 1;
             the.emit('change', the._data);
 
-            utilData.each(maps, function (i, map) {
+            dato.each(maps, function (i, map) {
                 var node = map.node;
                 var repeatName = map.repeat.name;
                 var repeatKey = map.repeat.key;
@@ -326,7 +326,7 @@ define(function (require, exports, module) {
                         }
                     }
 
-                    utilData.each(data[repeatName], function (key, val) {
+                    dato.each(data[repeatName], function (key, val) {
                         var d1 = {};
                         var d2;
 
@@ -335,14 +335,14 @@ define(function (require, exports, module) {
                         }
 
                         d1[repeatVal] = val;
-                        d2 = utilData.extend(!0, {}, data, d1);
+                        d2 = dato.extend(!0, {}, data, d1);
                         d2[alienKey + 'index'] = eachIndex;
                         the._render(map.repeat.map, d2);
                         eachIndex++;
                     });
                 }
 
-                utilData.each(map.render, function (j, rd) {
+                dato.each(map.render, function (j, rd) {
                     var exeVal;
                     var selectIndex = data[alienKey + 'index'] !== undefined ? data[alienKey + 'index'] : 0;
                     var node = selector.query('.' + map.className, the._ele)[selectIndex];
@@ -408,7 +408,7 @@ define(function (require, exports, module) {
                 the._render(the._parseMap, the._data);
             };
 
-            the._lastData = utilData.extend(!0, {}, the._data);
+            the._lastData = dato.extend(!0, {}, the._data);
             callback.call(the, the._data, next);
 
             return the;
@@ -426,7 +426,7 @@ define(function (require, exports, module) {
         var arr1 = str.trim().slice(1, -1).split(',');
         var json = {};
 
-        utilData.each(arr1, function (index, val) {
+        dato.each(arr1, function (index, val) {
             var arr2 = val.split(':');
             var name = arr2[0].trim();
             var exp = arr2[1].trim();
@@ -450,7 +450,7 @@ define(function (require, exports, module) {
     function _exe(exp, data) {
         var fnStr = 'try{';
 
-        utilData.each(data, function (key) {
+        dato.each(data, function (key) {
             if (key.indexOf('-') === -1) {
                 fnStr += 'var ' + key + '=data.' + key + ';';
             }
@@ -505,7 +505,7 @@ define(function (require, exports, module) {
         var list = node.classList;
         var className = '';
 
-        utilData.each(list, function (i, cn) {
+        dato.each(list, function (i, cn) {
             if (regClass.test(cn)) {
                 className = cn;
                 return !1;

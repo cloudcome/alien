@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
 
     module.exports = {
         /**
@@ -61,7 +61,7 @@ define(function (require, exports, module) {
             });
 
             if (isCopyStatic) {
-                data.extend(!0, constructor, superConstructor);
+                dato.extend(!0, constructor, superConstructor);
             }
         },
         /**
@@ -111,9 +111,9 @@ define(function (require, exports, module) {
          *
          */
         create: function (property, superConstructor, isInheritStatic) {
-            var type = data.type(property);
+            var type = dato.type(property);
             var constructorType;
-            var superConstructorType = data.type(superConstructor);
+            var superConstructorType = dato.type(superConstructor);
             var STATIC;
 
             if (type !== 'object') {
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
                 throw new Error('property must be have a `constructor` function');
             }
 
-            constructorType = data.type(property.constructor);
+            constructorType = dato.type(property.constructor);
 
             if (constructorType !== 'function') {
                 throw new Error('property `constructor` must be a function');
@@ -141,7 +141,7 @@ define(function (require, exports, module) {
             delete(property.STATIC);
 
             // 必须静态对象
-            if (data.type(STATIC) !== 'object') {
+            if (dato.type(STATIC) !== 'object') {
                 throw new Error('constructor static property must be an object');
             }
 
@@ -151,14 +151,14 @@ define(function (require, exports, module) {
             }
 
             // 添加静态方法、属性
-            data.each(STATIC, function (key, val) {
+            dato.each(STATIC, function (key, val) {
                 if (key !== 'prototype' && key !== 'constructor') {
                     property.constructor[key] = val;
                 }
             });
 
             // 添加原型链方法、属性
-            data.each(property, function (key, val) {
+            dato.each(property, function (key, val) {
                 property.constructor.prototype[key] = val;
             });
 

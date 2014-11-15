@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./../util/data.js');
+    var dato = require('./../util/dato.js');
     var klass = require('./../util/class.js');
     var defaults = {
         count: 1,
@@ -25,7 +25,7 @@ define(function (require, exports, module) {
             defaults: defaults
         },
         constructor: function (options) {
-            this._options = data.extend(!0, {}, defaults, options);
+            this._options = dato.extend(!0, {}, defaults, options);
             return this._init();
         },
         _init: function () {
@@ -38,10 +38,10 @@ define(function (require, exports, module) {
             var remainLeft = 0;
             var remainRight = 0;
 
-            options.count = Math.abs(data.parseInt(options.count, 1));
-            options.page = Math.abs(data.parseInt(options.page, 1));
+            options.count = Math.abs(dato.parseInt(options.count, 1));
+            options.page = Math.abs(dato.parseInt(options.page, 1));
             options.page = options.page > options.count ? options.count : options.page;
-            options.size = Math.abs(data.parseInt(options.size, 3));
+            options.size = Math.abs(dato.parseInt(options.size, 3));
             options.size += options.size % 2 ? 0 : 1;
             offset = Math.floor(options.size / 2);
 

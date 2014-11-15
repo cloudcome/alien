@@ -20,7 +20,7 @@ define(function (require, exports, module) {
 
     var udf;
     var attribute = require('./attribute.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var eeeing = require('../../util/easing.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
 
             if (argL === 3) {
                 // .animate(element, to, callback);
-                if (data.type(args[2]) === 'function') {
+                if (dato.type(args[2]) === 'function') {
                     options = {};
                 }
                 // .animate(element, to, property);
@@ -136,19 +136,19 @@ define(function (require, exports, module) {
             };
 
             event.on(ele, transitionendEventType, listener);
-            options = data.extend({}, cssDefaults, options);
+            options = dato.extend({}, cssDefaults, options);
             easing = eeeing.css3[options.easing];
 
             if (!easing) {
                 easing = options.easing;
             }
 
-            data.each(to, function (key, val) {
+            dato.each(to, function (key, val) {
                 var obj = attribute.fixCss(key, val);
                 var temp = {};
                 temp[obj.key] = obj.val;
 
-                data.extend(fixTo, temp);
+                dato.extend(fixTo, temp);
                 keys.push(obj.key);
             });
 
@@ -157,13 +157,13 @@ define(function (require, exports, module) {
             if (keys.indexOf('left') > -1) {
                 // 先定位好
                 attribute.left(ele, attribute.left(ele));
-                attribute.css(ele, 'left', data.parseFloat(attribute.css(ele, 'left'), 0));
+                attribute.css(ele, 'left', dato.parseFloat(attribute.css(ele, 'left'), 0));
             }
 
             if (keys.indexOf('top') > -1) {
                 // 先定位好
                 attribute.top(ele, attribute.top(ele));
-                attribute.css(ele, 'top', data.parseFloat(attribute.css(ele, 'top'), 0));
+                attribute.css(ele, 'top', dato.parseFloat(attribute.css(ele, 'top'), 0));
             }
 
             for (; i < keys.length; i++) {
@@ -178,7 +178,7 @@ define(function (require, exports, module) {
             attribute.css(ele, 'transition-property', keys.join(','));
 
             setTimeout(function () {
-                data.each(fixTo, function (key, val) {
+                dato.each(fixTo, function (key, val) {
                     attribute.css(ele, key, val);
                 });
             }, 0);
@@ -206,7 +206,7 @@ define(function (require, exports, module) {
             }
 
             if (!toEnd) {
-                data.each(to, function (key) {
+                dato.each(to, function (key) {
                     attribute.css(ele, key, attribute.css(ele, key));
                 });
             }
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
             attribute.css(ele, 'transition-delay', '');
             attribute.css(ele, 'transition-timing-function', '');
             attribute.css(ele, 'transition-property', '');
-            data.each(transitionendEventType.split(' '), function (i, et) {
+            dato.each(transitionendEventType.split(' '), function (i, et) {
                 event.dispatch(ele, et);
             });
         },
@@ -260,14 +260,14 @@ define(function (require, exports, module) {
             var pastTime = 0;
             var beginTimestamp;
 
-            if (data.type(args[3]) !== 'function') {
+            if (dato.type(args[3]) !== 'function') {
                 callback = noop;
             }
 
             to = to || {};
             to.x = to.x === udf ? from.x : to.x;
             to.y = to.y === udf ? from.y : to.y;
-            options = data.extend(!0, {}, jsDefaults, options);
+            options = dato.extend(!0, {}, jsDefaults, options);
 
             totalDistance = {
                 x: to.x - from.x,

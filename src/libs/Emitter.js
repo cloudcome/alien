@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../util/data.js');
+    var dato = require('../util/dato.js');
     var klass = require('../util/class.js');
     var regSpace = /\s+/g;
     var Emitter = klass.create({
@@ -47,7 +47,7 @@ define(function (require, exports, module) {
                     throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
                 }
 
-                if (data.type(listener) === 'function') {
+                if (dato.type(listener) === 'function') {
                     the._eventsPool[et].push(listener);
                 }
             });
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
 
             _middleware(eventType, function (et) {
                 if (the._eventsPool[et] && listener) {
-                    data.each(this._eventsPool, function (index, _listener) {
+                    dato.each(this._eventsPool, function (index, _listener) {
                         if (listener === _listener) {
                             the._eventsPool.splice(index, 1);
                             return !1;
@@ -112,7 +112,7 @@ define(function (require, exports, module) {
             var the = this;
             var args = arguments;
             var arg0 = args[0];
-            var arg0IsObject = data.type(arg0) !== 'string';
+            var arg0IsObject = dato.type(arg0) !== 'string';
             var arg1 = args[1];
             var emitArgs = Array.prototype.slice.call(arguments, arg0IsObject ? 2 : 1);
             var ret;
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
 
             _middleware(eventType, function (et) {
                 if (the._eventsPool[et]) {
-                    data.each(the._eventsPool[et], function (index, listener) {
+                    dato.each(the._eventsPool[et], function (index, listener) {
                         if (listener.apply(context, emitArgs) === false) {
                             ret = !1;
                         }
@@ -146,7 +146,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _middleware(eventTypes, callback) {
-        data.each(eventTypes.trim().split(regSpace), function (index, eventType) {
+        dato.each(eventTypes.trim().split(regSpace), function (index, eventType) {
             callback(eventType);
         });
     }

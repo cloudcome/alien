@@ -12,7 +12,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
     var regInvalid = /invalid/i;
     var regSep = /-/g;
     var regChinese = /[\u4e00-\u9fa5]/g;
@@ -86,17 +86,17 @@ define(function (require, exports, module) {
          * // => "2014年October月04日 17:28:06.363 星期六 下午"
          */
         format: function (format, date, config) {
-            if (data.type(format) !== 'string') {
+            if (dato.type(format) !== 'string') {
                 throw new Error('date format must be a string');
             }
 
-            if (data.type(arguments[1]) === 'object') {
+            if (dato.type(arguments[1]) === 'object') {
                 config = arguments[1];
                 date = new Date();
             }
 
             format = format || 'YYYY-MM-DD HH:mm:ss www';
-            date = data.type(date) === 'date' ? date : new Date(date || Date.now());
+            date = dato.type(date) === 'date' ? date : new Date(date || Date.now());
             date = this.parse(date);
             date = date || new Date();
             config = config || {};
@@ -213,7 +213,7 @@ define(function (require, exports, module) {
 
             // 年、月、日、时、分、秒、毫秒、星期、上下午
             // 只保证每个字段只被格式化一次，防止误操作
-            data.each(formater, function (index, fmt) {
+            dato.each(formater, function (index, fmt) {
                 var reg = new RegExp(fmt.key, 'mg');
 
                 if (!hasFormat[fmt.is]) {
@@ -234,7 +234,7 @@ define(function (require, exports, module) {
             });
 
             // 自定义格式化
-            data.each(configFormater, function (index, fmt) {
+            dato.each(configFormater, function (index, fmt) {
                 var reg = new RegExp(fmt.key, 'mg');
                 format = format.replace(reg, fmt.val);
             });
@@ -498,7 +498,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _parseDate(date) {
-        var type = data.type(date);
+        var type = dato.type(date);
 
         if (type !== 'date') {
             date = new Date(date)

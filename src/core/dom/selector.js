@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
 
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
         query: function (selector, context) {
             context = context || document;
 
-            var selectorType = data.type(selector);
+            var selectorType = dato.type(selector);
             var ret = [];
 
             if (context && (context.nodeType === 1 || context.nodeType === 9)) {
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
                         break;
                 }
 
-                return data.toArray(ret, !0);
+                return dato.toArray(ret, !0);
             } else {
                 throw new Error('query context must be an element');
             }
@@ -77,9 +77,9 @@ define(function (require, exports, module) {
 
             var ret = [];
             var parent = ele.parentNode;
-            var childrens = data.toArray(parent.children, !0);
+            var childrens = dato.toArray(parent.children, !0);
 
-            data.each(childrens, function (index, child) {
+            dato.each(childrens, function (index, child) {
                 if (child !== ele) {
                     ret.push(child);
                 }
@@ -105,9 +105,9 @@ define(function (require, exports, module) {
 
             var ret = -1;
             var parent = ele.parentNode;
-            var childrens = data.toArray(parent.children, !0);
+            var childrens = dato.toArray(parent.children, !0);
 
-            data.each(childrens, function (index, child) {
+            dato.each(childrens, function (index, child) {
                 if (child === ele) {
                     ret = index;
                     return !1;
@@ -131,7 +131,7 @@ define(function (require, exports, module) {
                 return [];
             }
 
-            return data.toArray(ele.previousElementSibling, !0);
+            return dato.toArray(ele.previousElementSibling, !0);
         },
         /**
          * 获取元素的下一个兄弟元素
@@ -147,7 +147,7 @@ define(function (require, exports, module) {
                 return [];
             }
 
-            return data.toArray(ele.nextElementSibling, !0);
+            return dato.toArray(ele.nextElementSibling, !0);
         },
         // prevAll: function(){
         //
@@ -172,15 +172,15 @@ define(function (require, exports, module) {
 
             var the = this;
 
-            while (data.type(ele) !== 'document' && data.type(ele) === 'element') {
+            while (dato.type(ele) !== 'document' && dato.type(ele) === 'element') {
                 if (the.isMatched(ele, selector)) {
-                    return data.toArray(ele, !0);
+                    return dato.toArray(ele, !0);
                 }
 
                 ele = this.parent(ele)[0];
             }
 
-            return data.toArray();
+            return dato.toArray();
         },
         /**
          * 获得父级元素
@@ -196,7 +196,7 @@ define(function (require, exports, module) {
                 return [];
             }
 
-            return data.toArray(ele.parentNode || ele.parentElement, !0);
+            return dato.toArray(ele.parentNode || ele.parentElement, !0);
         },
         /**
          * 获取子元素
@@ -212,7 +212,7 @@ define(function (require, exports, module) {
                 return [];
             }
 
-            return data.toArray(ele.children, !0);
+            return dato.toArray(ele.children, !0);
         },
 
         /**
@@ -229,7 +229,7 @@ define(function (require, exports, module) {
                 return [];
             }
 
-            return data.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
+            return dato.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
         },
 
         /**
@@ -243,7 +243,7 @@ define(function (require, exports, module) {
          * // => true OR false
          */
         isMatched: function (ele, selector) {
-            return data.type(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
+            return dato.type(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
         },
 
         /**
@@ -261,7 +261,7 @@ define(function (require, exports, module) {
         filter: function (nodeList, filter) {
             var ret = [];
 
-            data.each(nodeList, function (index, node) {
+            dato.each(nodeList, function (index, node) {
                 if (filter.call(node)) {
                     ret.push(node);
                 }

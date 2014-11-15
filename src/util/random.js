@@ -11,7 +11,7 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var data = require('./data.js');
+    var dato = require('./dato.js');
     var regExist = /[aA0]/g;
     var dictionaryMap = {
         a: 'abcdefghijklmnopqrstuvwxyz',
@@ -32,8 +32,8 @@ define(function (require, exports) {
     exports.number = function (min, max) {
         var temp;
 
-        min = data.parseInt(min, 0);
-        max = data.parseInt(max, 0);
+        min = dato.parseInt(min, 0);
+        max = dato.parseInt(max, 0);
 
         if (min === max) {
             return min;
@@ -70,7 +70,7 @@ define(function (require, exports) {
         var pool = '';
         var max;
 
-        length = Math.abs(data.parseInt(length, 6));
+        length = Math.abs(dato.parseInt(length, 6));
         dictionary = String(dictionary || 'a');
 
         if (dictionary.indexOf('a') > -1) {

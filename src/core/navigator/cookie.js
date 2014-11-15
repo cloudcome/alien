@@ -11,7 +11,7 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var defaults = {
         // 是否以严格模式读取和设置cookie，默认true
         // 严格模式下，将在读之后、写之前都会进行<code>encodeURIComponent</code>、<code>decodeURIComponent</code>操作
@@ -34,7 +34,7 @@ define(function (require, exports) {
      * @returns {String|Object}
      */
     exports.get = function (key, options) {
-        options = data.extend(true, {}, defaults, options);
+        options = dato.extend(true, {}, defaults, options);
 
         var ret = _parse(options.isStrict);
 
@@ -55,22 +55,22 @@ define(function (require, exports) {
      * @returns {Boolean} true
      */
     exports.set = function (key, val, options) {
-        var arg0Type = data.type(arguments[0]);
+        var arg0Type = dato.type(arguments[0]);
         var setMap = {};
 
         if (arg0Type === 'string') {
             setMap[key] = val;
-            options = data.extend(true, {}, defaults, options);
+            options = dato.extend(true, {}, defaults, options);
         } else {
             setMap = key;
-            options = data.extend(true, {}, defaults, val);
+            options = dato.extend(true, {}, defaults, val);
         }
 
         if (options.domain === 'localhost') {
             options.domain = '';
         }
 
-        data.each(setMap, function (key, val) {
+        dato.each(setMap, function (key, val) {
             if (options.isStrict) {
                 key = _encode(key);
                 val = _encode(val);
@@ -114,15 +114,15 @@ define(function (require, exports) {
     exports.remove = function (key, options) {
         var map = {};
 
-        if (data.type(key) === 'array') {
-            data.each(key, function (i, k) {
+        if (dato.type(key) === 'array') {
+            dato.each(key, function (i, k) {
                 map[k] = '';
             });
         } else {
             map[key] = '';
         }
 
-        options = data.extend(true, {}, defaults, options, {
+        options = dato.extend(true, {}, defaults, options, {
             expires: -1
         });
 
@@ -139,7 +139,7 @@ define(function (require, exports) {
         var arr = document.cookie.split(';');
         var ret = {};
 
-        data.each(arr, function (i, chunk) {
+        dato.each(arr, function (i, chunk) {
             var part = chunk.split('=');
 
             part[0] = part[0].trim();

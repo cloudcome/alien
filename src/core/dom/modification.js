@@ -14,7 +14,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var domSelector = require('./selector.js');
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
@@ -70,12 +70,12 @@ define(function (require, exports, module) {
 
                 default:
                     node = document.createElement(nodeName);
-                    data.each(attributes, function (key, val) {
+                    dato.each(attributes, function (key, val) {
                         var styles = [];
 
                         if (typeof val === 'object') {
                             if (key === 'style') {
-                                data.each(val, function (k, v) {
+                                dato.each(val, function (k, v) {
                                     var fix = attribute.fixCss(k, v);
                                     styles.push(fix.key + ':' + fix.val);
                                 });
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
                     break;
             }
 
-            data.each(properties, function (key, val) {
+            dato.each(properties, function (key, val) {
                 node[key] = val;
             });
 
@@ -220,7 +220,7 @@ define(function (require, exports, module) {
             if (target.length && target[0].nodeType === 1) {
                 // 这里必须复制对象
                 // 因为后面的 DOM 修改会影响这里，因为 target 是一个对象引用
-                wrap = data.extend([], target);
+                wrap = dato.extend([], target);
                 target = this.insert(wrap[0], source, 'beforebegin', !0);
 
                 if (target) {
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
 
             // .div1 .p1 .div2
             // => .div2 .p1 .div1
-            data.each(selectors.reverse(), function (index, selector) {
+            dato.each(selectors.reverse(), function (index, selector) {
                 if (domSelector.isMatched(source.parentNode, selector)) {
                     _removeParent(source);
                 } else {

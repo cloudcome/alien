@@ -39,7 +39,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var alienIndex = 0;
     var zIndex = 9999;
 //    var html = document.documentElement;
@@ -105,7 +105,7 @@ define(function (require, exports, module) {
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
-            the._options = data.extend(!0, {}, defaults, options);
+            the._options = dato.extend(!0, {}, defaults, options);
             the._init();
         },
 
@@ -239,7 +239,7 @@ define(function (require, exports, module) {
                     the.setRemote(options.remote);
                 }
 
-                if (data.type(callback) === 'function') {
+                if (dato.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -294,7 +294,7 @@ define(function (require, exports, module) {
                 attribute.css($dialog, 'transform', 'scale(1)');
                 the.emit('close');
 
-                if (data.type(callback) === 'function') {
+                if (dato.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -317,7 +317,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                if (data.type(callback) === 'function') {
+                if (dato.type(callback) === 'function') {
                     callback.call(the);
                 }
             });
@@ -347,7 +347,7 @@ define(function (require, exports, module) {
          */
         setContent: function (content) {
             var the = this;
-            var contentType = data.type(content);
+            var contentType = dato.type(content);
 
             the._$ele.innerHTML = '';
 
@@ -431,7 +431,7 @@ define(function (require, exports, module) {
                 // 在 DOM 里删除
                 modification.remove(the._$bg);
 
-                if (data.type(callback) === 'function') {
+                if (dato.type(callback) === 'function') {
                     callback.call(the);
                 }
             });

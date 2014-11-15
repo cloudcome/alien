@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var editor = require('./editor.js');
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -85,7 +85,7 @@ define(function (require, exports, module) {
             Emitter.apply(the, arguments);
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
-            the._options = data.extend(true, {}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
@@ -205,7 +205,7 @@ define(function (require, exports, module) {
             };
             var options = the._options;
 
-            if (data.type(options.uploadCallback) !== 'function') {
+            if (dato.type(options.uploadCallback) !== 'function') {
                 return new Msg({
                     content: '尚未配置上传回调'
                 });
@@ -271,7 +271,7 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                data.each(list, function (index, img) {
+                dato.each(list, function (index, img) {
                     html.push('![' + img.name + '](' + img.url + ')');
                 });
 
@@ -298,7 +298,7 @@ define(function (require, exports, module) {
             if (id) {
                 the._storeId = pathname + '#' + id;
             } else {
-                data.each(atts, function (i, attr) {
+                dato.each(atts, function (i, attr) {
                     attrList.push(attr.name + '=' + attr.value);
                 });
 
@@ -317,7 +317,7 @@ define(function (require, exports, module) {
         _getLocal: function () {
             return {
                 val: window.localStorage.getItem(this._storeId + '>val') || '',
-                ver: data.parseInt(window.localStorage.getItem(this._storeId + '>ver') || 0, 0)
+                ver: dato.parseInt(window.localStorage.getItem(this._storeId + '>ver') || 0, 0)
             };
         },
 
@@ -423,7 +423,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._uploadList = [];
-            data.each(items, function (index, item) {
+            dato.each(items, function (index, item) {
                 var file;
 
                 if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {

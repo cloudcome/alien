@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var regSep = /^-+|-+$/g;
     var regSplit = /[A-Z]/g;
     var regSpace = /\s+/;
-    var data = require('../../util/data.js');
+    var dato = require('../../util/dato.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
     var regPx = /margin|width|height|padding|top|right|bottom|left/i;
@@ -103,9 +103,9 @@ define(function (require, exports, module) {
 
             var attrKeys = key ? key.split(regSpace) : ele.attributes;
 
-            data.each(attrKeys, function (index, key) {
+            dato.each(attrKeys, function (index, key) {
                 if (key) {
-                    ele.removeAttribute(data.type(key) === 'attr' ? key.nodeName : key);
+                    ele.removeAttribute(dato.type(key) === 'attr' ? key.nodeName : key);
                 }
             });
         },
@@ -310,7 +310,7 @@ define(function (require, exports, module) {
                     }
                 },
                 set: function (key, val) {
-                    if (data.type(val) === 'object') {
+                    if (dato.type(val) === 'object') {
                         try {
                             val = JSON.stringify(val);
                         } catch (err) {
@@ -663,7 +663,7 @@ define(function (require, exports, module) {
     function _getSet(args, getSet, argumentsSetLength) {
         args = [].slice.call(args, 1);
         argumentsSetLength = argumentsSetLength || 2;
-        var arg0Type = data.type(args[0]);
+        var arg0Type = dato.type(args[0]);
         var ret = {};
         var argsLength = args.length;
 
@@ -677,13 +677,13 @@ define(function (require, exports, module) {
         }
         // .fn(ele, {name: 1, id: 2});
         else if (argsLength === 1 && arg0Type === 'object' && argumentsSetLength === 2) {
-            data.each(args[0], function (key, val) {
+            dato.each(args[0], function (key, val) {
                 getSet.set(key, val);
             });
         }
         // .fn(ele, ['name', 'id']);
         else if (argsLength === 1 && arg0Type === 'array' && argumentsSetLength === 2) {
-            data.each(args[0], function (index, key) {
+            dato.each(args[0], function (index, key) {
                 ret[key] = getSet.get(key);
             });
             return ret;
@@ -707,7 +707,7 @@ define(function (require, exports, module) {
      */
     function _class(ele, type, className) {
 
-        if (data.type(ele) !== 'element') {
+        if (dato.type(ele) !== 'element') {
             return;
         }
 
@@ -722,7 +722,7 @@ define(function (require, exports, module) {
         switch (type) {
             // addClass
             case 0:
-                data.each(classNames, function (index, klass) {
+                dato.each(classNames, function (index, klass) {
                     if (klass) {
                         classList.add(klass);
                     }
@@ -732,7 +732,7 @@ define(function (require, exports, module) {
             // removeClass
             case 1:
                 if (classNames && classNames.length) {
-                    data.each(classNames, function (index, klass) {
+                    dato.each(classNames, function (index, klass) {
                         if (klass) {
                             classList.remove(klass);
                         }
@@ -766,11 +766,11 @@ define(function (require, exports, module) {
 
         if (argsLength) {
             ele = args[0];
-            eleType = data.type(ele);
+            eleType = dato.type(ele);
 
             if (extraKey && eleType === 'element') {
-                data.each(extraKey, function (i, key) {
-                    extraVal += data.parseFloat(attribute.css(ele, key), 0);
+                dato.each(extraKey, function (i, key) {
+                    extraVal += dato.parseFloat(attribute.css(ele, key), 0);
                 });
             }
 
@@ -790,7 +790,7 @@ define(function (require, exports, module) {
                     }
                 }
                 // set
-                else if (argsLength === 2 && eleType === 'element' && data.type(args[1]) === 'number') {
+                else if (argsLength === 2 && eleType === 'element' && dato.type(args[1]) === 'number') {
                     _setBoundingClientRect(ele, key, args[1] + extraVal);
                 }
             });
@@ -829,10 +829,10 @@ define(function (require, exports, module) {
         deleta = val - now;
 
         if (attribute.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
-            css = data.parseFloat(attribute.css(ele, 'margin-' + key), 0);
+            css = dato.parseFloat(attribute.css(ele, 'margin-' + key), 0);
             attribute.css(ele, 'margin-' + key, css + deleta);
         } else {
-            css = data.parseFloat(attribute.css(ele, key), 0);
+            css = dato.parseFloat(attribute.css(ele, key), 0);
             attribute.css(ele, key, css + deleta);
         }
     }
@@ -854,7 +854,7 @@ define(function (require, exports, module) {
 
             ret = doWhat(ele);
 
-            data.each(eles, function (index, ele) {
+            dato.each(eles, function (index, ele) {
                 ele.style.display = '';
             });
 
