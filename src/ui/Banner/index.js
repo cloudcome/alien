@@ -194,43 +194,36 @@ define(function (require, exports, module) {
             });
 
             // 触摸
-            event.on(the._$banner, 'touchstart', function (eve) {
-                if (eve.touches && eve.touches.length === 1) {
-                    the.pause();
-                    attribute.css(the._$items[0], 'visibility', 'hidden');
-                    attribute.css(the._$items[the._$items.length - 1], 'visibility', 'hidden');
-                    left = parseInt(attribute.css(the._$ele, 'left'));
-                    x0 = eve.touches[0].pageX;
-                }
+            event.on(the._$banner, 'touch1start', function (eve) {
+                the.pause();
+                attribute.css(the._$items[0], 'visibility', 'hidden');
+                attribute.css(the._$items[the._$items.length - 1], 'visibility', 'hidden');
+                left = parseInt(attribute.css(the._$ele, 'left'));
+                x0 = eve.pageX;
 
                 eve.preventDefault();
             });
 
-            event.on(the._$banner, 'touchmove', function (eve) {
-                if (eve.touches && eve.touches.length === 1) {
-                    x1 = eve.touches[0].pageX;
-                    attribute.css(the._$ele, 'left', left + x1 - x0);
-                }
 
+
+            event.on(the._$banner, 'touch1move', function (eve) {
+                x1 = eve.pageX;
+                attribute.css(the._$ele, 'left', left + x1 - x0);
                 eve.preventDefault();
             });
 
-            event.on(the._$banner, 'touchend touchcancel', function (eve) {
-                var index;
+            event.on(the._$banner, 'touch1end touchcancel', function () {
+                var index = the._getIndex();
 
-                if (eve.changedTouches && eve.changedTouches.length === 1) {
-                    index = the._getIndex();
-
-                    if (index === the._showIndex) {
-                        animation.animate(the._$ele, {
-                            left: -(index + 1) * options.width
-                        }, {
-                            duration: options.duration,
-                            easing: options.easing
-                        }, _touchdone);
-                    } else {
-                        the.index(x1 <= x0 ? 'next' : 'prev', index, _touchdone);
-                    }
+                if (index === the._showIndex) {
+                    animation.animate(the._$ele, {
+                        left: -(index + 1) * options.width
+                    }, {
+                        duration: options.duration,
+                        easing: options.easing
+                    }, _touchdone);
+                } else {
+                    the.index(x1 <= x0 ? 'next' : 'prev', index, _touchdone);
                 }
             });
 

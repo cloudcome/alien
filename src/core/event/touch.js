@@ -57,6 +57,7 @@ define(function (require, exports, module) {
         var firstTouch;
         var target;
         var touch1Event;
+        var dispatchTouch1;
 
         if (eve.touches && eve.touches.length === 1) {
             attribute.css(body, 'touch-callout', 'none');
@@ -78,7 +79,11 @@ define(function (require, exports, module) {
                 startX: x0,
                 startY: y0
             });
-            event.dispatch(target, touch1Event);
+            dispatchTouch1 = event.dispatch(target, touch1Event);
+
+            if (dispatchTouch1.defaultPrevented === true) {
+                eve.preventDefault();
+            }
         }
     });
 
@@ -89,6 +94,7 @@ define(function (require, exports, module) {
         var deltaY;
         var rect;
         var touch1Event;
+        var dispatchTouch1;
 
         if (eve.touches && eve.touches.length === 1) {
             firstTouch = eve.touches[0];
@@ -111,7 +117,11 @@ define(function (require, exports, module) {
                 deltaX: firstTouch.clientX - x0,
                 deltaY: firstTouch.clientY - y0
             });
-            event.dispatch(target, touch1Event);
+            dispatchTouch1 = event.dispatch(target, touch1Event);
+
+            if (dispatchTouch1.defaultPrevented === true) {
+                eve.preventDefault();
+            }
         }
     });
 
@@ -129,6 +139,10 @@ define(function (require, exports, module) {
         var target;
         var tapEvent;
         var touch1Event;
+        var dispatchTap;
+        var dispatchTouch1;
+        var dispatchSwipe;
+        var dispatchSwipedir;
 
         if (eve.changedTouches && eve.changedTouches.length === 1) {
             firstTouch = eve.changedTouches[0];
@@ -144,23 +158,21 @@ define(function (require, exports, module) {
             if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
                 tapEvent = event.create('tap');
                 event.extend(tapEvent, firstTouch);
-                event.dispatch(target, tapEvent);
+                dispatchTap = event.dispatch(target, tapEvent);
             }
 
             if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
-                setTimeout(function () {
-                    var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
-                    var swipeDirEvent = event.create('swipe' + dir);
-                    var swipeEvent = event.create('swipe');
+                var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
+                var swipeDirEvent = event.create('swipe' + dir);
+                var swipeEvent = event.create('swipe');
 
-                    event.extend(swipeDirEvent, firstTouch, {
-                        direction: dir
-                    });
-                    event.extend(swipeEvent, firstTouch);
+                event.extend(swipeDirEvent, firstTouch, {
+                    direction: dir
+                });
+                event.extend(swipeEvent, firstTouch);
 
-                    event.dispatch(target, swipeEvent);
-                    event.dispatch(target, swipeDirEvent);
-                }, 0);
+                dispatchSwipe = event.dispatch(target, swipeEvent);
+                dispatchSwipedir = event.dispatch(target, swipeDirEvent);
             }
 
             touch1Event = event.create('touch1end');
@@ -170,7 +182,14 @@ define(function (require, exports, module) {
                 deltaX: x,
                 deltaY: y
             });
-            event.dispatch(target, touch1Event);
+            dispatchTouch1 = event.dispatch(target, touch1Event);
+
+            if (dispatchTap.defaultPrevented === true ||
+                dispatchSwipe.defaultPrevented === true ||
+                dispatchSwipedir.defaultPrevented === true ||
+                dispatchTouch1.defaultPrevented === true) {
+                eve.preventDefault();
+            }
         }
     });
 
