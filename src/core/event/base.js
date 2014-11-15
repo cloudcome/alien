@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/event/base
-     * @requires util/data
+     * @requires util/dato
      * @requires core/dom/selector
      */
     'use strict';

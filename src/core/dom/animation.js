@@ -12,7 +12,7 @@ define(function (require, exports, module) {
      *
      * @module core/dom/animation
      * @requires core/dom/attribute
-     * @requires util/data
+     * @requires util/dato
      * @requires core/navigator/compatible
      * @requires core/event/base
      */

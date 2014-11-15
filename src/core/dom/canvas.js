@@ -7,12 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/canvas
+     * @module core/dom/canvas
      */
     'use strict';
-
-    var abc = require('./abc.js');
-
 
     exports.drawLine = function () {};
     exports.drawRect = function () {};

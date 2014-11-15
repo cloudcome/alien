@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/animation
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires libs/Emitter
      * @requires libs/Template
      */

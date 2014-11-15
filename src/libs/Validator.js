@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module libs/Validator
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires util/howdo
      */
     'use strict';

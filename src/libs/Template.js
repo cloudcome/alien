@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Template
-     * @requires util/data
+     * @requires util/dato
      * @requires util/class
      */
     'use strict';

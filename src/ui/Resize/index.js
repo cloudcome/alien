@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Resize/index
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires libs/Emitter
      * @requires libs/Template
      * @requires core/dom/selector

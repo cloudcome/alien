@@ -12,7 +12,7 @@ define(function (require, exports) {
      * 合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
      *
      * @module util/querystring
-     * @requires util/data
+     * @requires util/dato
      */
     'use strict';
 

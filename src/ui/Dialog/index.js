@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Dialog/index
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires core/dom/modification
      * @requires core/dom/selector
      * @requires core/dom/attribute

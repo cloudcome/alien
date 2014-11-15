@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * DOM-DATA-Binding
      * @module libs/DDB
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification

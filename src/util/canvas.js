@@ -8,6 +8,9 @@
 define(function (require, exports) {
     /**
      * @module util/canvas
+     * @requires util/dato
+     * @requires core/dom/modification
+     * @requires core/navigator/compatible
      */
     'use strict';
 

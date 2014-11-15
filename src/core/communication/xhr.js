@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/xhr
-     * @requires util/data
+     * @requires util/dato
      * @requires core/navigator/querystring
      */
     'use strict';

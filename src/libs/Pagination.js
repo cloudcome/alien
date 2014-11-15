@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Pagination
-     * @requires util/data
+     * @requires util/dato
      * @requires util/class
      */
     'use strict';

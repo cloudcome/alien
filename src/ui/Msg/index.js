@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Msg/index
      * @requires util/class
-     * @requires util/data
+     * @requires util/dato
      * @requires libs/Emitter
      * @requires core/event/touch
      * @requires core/dom/selector

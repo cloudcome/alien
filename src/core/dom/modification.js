@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/modification
-     * @requires util/data
+     * @requires util/dato
      * @requires core/dom/selector
      * @requires core/dom/attribute
      */

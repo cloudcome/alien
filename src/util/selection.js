@@ -8,10 +8,10 @@
 define(function (require, exports) {
     /**
      * @module util/selection
+     * @require util/dato
      */
     'use strict';
 
-    var selector = require('../core/dom/selector.js');
     var dato = require('./dato.js');
 
     /**

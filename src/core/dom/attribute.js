@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * 处理有关 dom 属性的 API
      * @module core/dom/attribute
-     * @requires util/data
+     * @requires util/dato
      * @requires core/navigator/compatible
      */
     'use strict';

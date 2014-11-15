@@ -8,16 +8,16 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/index
-     * @module libs/Template
-     * @module libs/Emitter
-     * @module util/data
-     * @module util/class
-     * @module core/dom/selector
-     * @module core/dom/modification
-     * @module core/dom/attribute
-     * @module core/dom/animation
-     * @module core/event/drag
-     * @module ui/Resize/index
+     * @requires libs/Template
+     * @requires libs/Emitter
+     * @requires util/dato
+     * @requires util/class
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires core/dom/animation
+     * @requires core/event/drag
+     * @requires ui/Resize/index
      */
     'use strict';
 

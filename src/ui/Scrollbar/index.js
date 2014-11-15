@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Scrollbar/index
-     * @requires util/data
+     * @requires util/dato
      * @requires util/class
      * @requires core/dom/modification
      * @requires core/dom/attribute

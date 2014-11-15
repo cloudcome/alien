@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * 类方法
      * @module util/class
-     * @requires util/data
+     * @requires util/dato
      */
     'use strict';
 

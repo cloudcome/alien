@@ -8,6 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module ui/editor
+     * @requires util/selection
+     * @requires util/dato
      */
     'use strict';
 

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/compatible
-     * @requires util/data
+     * @requires util/dato
      */
     'use strict';
 

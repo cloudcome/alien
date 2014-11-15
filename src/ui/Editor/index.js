@@ -14,7 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/base
      * @requires ui/Editor/editor
-     * @requires util/data
+     * @requires util/dato
      * @requires util/random
      * @requires ui/base
      * @requires ui/Scrollbar/index
