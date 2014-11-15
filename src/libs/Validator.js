@@ -383,11 +383,11 @@ define(function (require, exports, module) {
                             return over(err);
                         }
 
-                        if (rule.type === 'email' && !dato.isEmail(val)) {
+                        if (rule.type === 'email' && !typeis.email(val)) {
                             return over(err);
                         }
 
-                        if (rule.type === 'url' && !dato.isURL(val)) {
+                        if (rule.type === 'url' && !typeis.url(val)) {
                             return over(err);
                         }
                         break;

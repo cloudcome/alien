@@ -12,6 +12,9 @@ define(function (require, exports, module) {
     'use strict';
 
     var udf = 'undefined';
+    var REG_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
+    var REG_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
+
 
     /**
      * 判断数据类型，结果全部为小写<br>
@@ -121,19 +124,18 @@ define(function (require, exports, module) {
 
         return ret;
     };
-    //var i = 0;
-    //var jud = 'String Number Function Object Undefined Null Nan Element Regexp Boolean Array Window Document Global'.split(' ');
-    //var makeStatic = function (tp) {
-    //    type['is' + tp] = function (obj) {
-    //        return typeis(obj) === tp.toLowerCase();
-    //    };
-    //};
-    //
-    //
-    //
-    //for (; i < jud.length; i++) {
-    //    makeStatic(jud[i]);
-    //}
+    var i = 0;
+    var jud = 'string number function object undefined null nan element regexp boolean array window document global'.split(' ');
+    var makeStatic = function (tp) {
+        typeis[tp] = function (obj) {
+            return typeis(obj) === tp;
+        };
+    };
+
+
+    for (; i < jud.length; i++) {
+        makeStatic(jud[i]);
+    }
 
 
     /**
@@ -146,7 +148,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.plainObject = function (obj) {
-        return this.isObject(obj) && Object.getPrototypeOf(obj) === Object.prototype;
+        return this(obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
     };
 
 
@@ -155,8 +157,54 @@ define(function (require, exports, module) {
      * @param obj {*}
      */
     typeis.emptyObject = function (obj) {
-        return this.isObject(obj) && this.isPlainObject(obj) && Object.keys(obj).length === 0;
+        return this.plainObject(obj) && Object.keys(obj).length === 0;
     };
 
+
+    /**
+     * 判断是否为 URL 格式
+     * @param string
+     * @returns {Boolean}
+     *
+     * @example
+     * typeis.url('http://123.com/123/456/?a=3#00');
+     * // => true
+     */
+    typeis.url = function (string) {
+        return this(string) === 'string' && REG_URL.test(string);
+    };
+
+
+    /**
+     * 判断是否为 email 格式
+     * @param string
+     * @returns {Boolean}
+     *
+     * @example
+     * typeis.email('abc@def.com');
+     * // => true
+     */
+    typeis.email = function (string) {
+        return this(string) === 'string' && REG_EMAIL.test(string);
+    };
+
+
+    /**
+     * @name string
+     * @name number
+     * @name function
+     * @name object
+     * @name undefined
+     * @name null
+     * @name nan
+     * @name element
+     * @name regexp
+     * @name boolean
+     * @name array
+     * @name window
+     * @name document
+     * @name global
+     * @type {Function}
+     */
     module.exports = typeis;
 });

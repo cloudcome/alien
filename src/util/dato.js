@@ -8,125 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module util/data
+     * @requires util/typeis
      */
 
     'use strict';
 
+    var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection'.split(' ');
-    //var RE_URL = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/;
-    var RE_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
-    var RE_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
-
-
-    /**
-     * 判断数据类型，结果全部为小写<br>
-     * 原始数据类型：boolean、number、string、undefined、symbol
-     * @param {*} object 任何对象
-     * @returns {string}
-     *
-     * @example
-     * data.type();
-     * // => "undefined"
-     *
-     * data.type(null);
-     * // => "null"
-     *
-     * data.type(1);
-     * // => "number"
-     *
-     * data.type("1");
-     * // => "string"
-     *
-     * data.type(!1);
-     * // => "boolean"
-     *
-     * data.type({});
-     * // => "object"
-     *
-     * data.type([]);
-     * // => "array"
-     *
-     * data.type(/./);
-     * // => "regexp"
-     *
-     * data.type(window);
-     * // => "window"
-     *
-     * data.type(document);
-     * // => "document"
-     *
-     * data.type(document);
-     * // => "document"
-     *
-     * data.type(NaN);
-     * // => "nan"
-     *
-     * data.type(Infinity);
-     * // => "number"
-     *
-     * data.type(function(){});
-     * // => "function"
-     *
-     * data.type(new Image);
-     * // => "element"
-     *
-     * data.type(new Date);
-     * // => "date"
-     *
-     * data.type(document.links);
-     * // => "htmlcollection"
-     *
-     * data.type(document.body.dataset);
-     * // => "domstringmap"
-     *
-     * data.type(document.body.classList);
-     * // => "domtokenlist"
-     *
-     * data.type(document.body.childNodes);
-     * // => "nodelist"
-     *
-     * data.type(document.createAttribute('abc'));
-     * // => "attr"
-     *
-     * data.type(document.createComment('abc'));
-     * // => "comment"
-     *
-     * data.type(new Event('abc'));
-     * // => "event"
-     *
-     * data.type(document.createExpression());
-     * // => "xpathexpression"
-     *
-     * data.type(document.createRange());
-     * // => "range"
-     *
-     * data.type(document.createTextNode(''));
-     * // => "text"
-     */
-    exports.type = function (object) {
-        if (typeof window !== 'undefined' && object === window) {
-            return 'window';
-        } else if (typeof global !== 'undefined' && object === global) {
-            return 'global';
-        } else if (typeof document !== 'undefined' && object === document) {
-            return 'document';
-        } else if (object === udf) {
-            return 'undefined';
-        } else if (object === null) {
-            return 'null';
-        }
-
-        var ret = Object.prototype.toString.call(object).match(/\s(.*)\]/)[1].toLowerCase();
-
-        if (/element/.test(ret)) {
-            return 'element';
-        } else if (isNaN(object) && ret === 'number') {
-            return 'nan';
-        }
-
-        return ret;
-    };
 
 
     /**
@@ -233,7 +122,7 @@ define(function (require, exports, module) {
             obj = args[current];
             for (i in obj) {
                 if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
-                    type = this.type(obj[i]);
+                    type = typeis(obj[i]);
                     if (type === 'object' && isExtendDeep) {
                         source[i] = {};
                         this.extend.call(this, isExtendDeep, source[i], obj[i]);
@@ -273,9 +162,9 @@ define(function (require, exports, module) {
         var ret = [];
         var i = 0;
         var j;
-        var objType = this.type(obj);
+        var objType = typeis(obj);
 
-        if (canListTypeArr.indexOf(objType) > -1 && this.type(obj.length) === 'number' && obj.length >= 0) {
+        if (canListTypeArr.indexOf(objType) > -1 && typeis(obj.length) === 'number' && obj.length >= 0) {
             for (j = obj.length; i < j; i++) {
                 ret.push(obj[i]);
             }
@@ -322,8 +211,8 @@ define(function (require, exports, module) {
      * // }
      */
     exports.compare = function (obj1, obj2) {
-        var obj1Type = this.type(obj1);
-        var obj2Type = this.type(obj2);
+        var obj1Type = typeis(obj1);
+        var obj2Type = typeis(obj2);
         var obj1Only = [];
         var obj2Only = [];
         var same = [];
@@ -403,34 +292,4 @@ define(function (require, exports, module) {
 
         return k;
     };
-
-
-    /**
-     * 判断是否为 URL 格式
-     * @param string
-     * @returns {boolean}
-     *
-     * @example
-     * data.isURL('http://123.com/123/456/?a=3#00');
-     * // => true
-     */
-    exports.isURL = function (string) {
-        return RE_URL.test(string + '');
-    };
-
-
-    /**
-     * 判断是否为 email 格式
-     * @param string
-     * @returns {boolean}
-     *
-     * @example
-     * data.isEmail('abc@def.com');
-     * // => true
-     */
-    exports.isEmail = function (string) {
-        return RE_EMAIL.test(string + '');
-    };
-
-
 });
