@@ -1,5 +1,5 @@
 /*!
- * UI 类创建文件
+ * UI 类生成器
  * @author ydr.me
  * @create 2014-11-11 20:07
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/base
+     * @module ui/generator
      * @requires util/dato
      * @requires util/typeis
      * @requires util/class

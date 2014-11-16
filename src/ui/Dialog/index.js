@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Dialog/index
+     * @requires ui/generator
      * @requires util/class
      * @requires util/dato
      * @requires util/typeis
@@ -30,7 +31,7 @@ define(function (require, exports, module) {
 
     require('../../core/event/drag.js');
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -73,7 +74,7 @@ define(function (require, exports, module) {
     // 打开的对话框队列
     var openDialogs = [];
     var dialogsMap = {};
-    var Dialog = ui({
+    var Dialog = uiGenerator({
         STATIC: {
             /**
              * 默认配置

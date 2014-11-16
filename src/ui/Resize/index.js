@@ -16,12 +16,13 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/drag
+     * @requires ui/generator
      */
     'use strict';
 
     var style = require('text!./style.css');
     var template = require('text!./template.html');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -39,7 +40,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Resize = ui({
+    var Resize = uiGenerator({
         STATIC: {
             defaults: defaults
         },

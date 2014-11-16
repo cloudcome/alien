@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Banner
+     * @module ui/Banner/index
      * @requires core/event/touch
      * @requires core/dom/modification
      * @requires core/dom/selector
@@ -17,6 +17,7 @@ define(function (require, exports, module) {
      * @requires util/typeis
      * @requires libs/Emitter
      * @requires libs/Template
+     * @requires ui/generator
      */
     'use strict';
 
@@ -31,7 +32,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -53,7 +54,7 @@ define(function (require, exports, module) {
         navGenerator: null
     };
 
-    var Banner = ui({
+    var Banner = uiGenerator({
         STATIC: {
             /**
              * 默认配置

@@ -17,12 +17,13 @@ define(function (require, exports, module) {
      * @requires core/event/wheel
      * @requires core/event/drag
      * @requires libs/Template
+     * @requires ui/generator
      */
     'use strict';
 
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -34,10 +35,10 @@ define(function (require, exports, module) {
     var event = require('../../core/event/wheel.js');
     var drag = require('../../core/event/drag.js');
     var bodyClass = 'alien-ui-scrollbar-body';
-    var trackClass = 'alien-ui-scrollbar-track';
+    //var trackClass = 'alien-ui-scrollbar-track';
     var trackXClass = 'alien-ui-scrollbar-track-x';
     var trackYClass = 'alien-ui-scrollbar-track-y';
-    var thumbClass = 'alien-ui-scrollbar-thumb';
+    //var thumbClass = 'alien-ui-scrollbar-thumb';
     var thumbXClass = 'alien-ui-scrollbar-thumb-x';
     var thumbYClass = 'alien-ui-scrollbar-thumb-y';
     var alienClass = 'alien-ui-scrollbar';
@@ -60,7 +61,7 @@ define(function (require, exports, module) {
         cssEasing: 'in-out',
         jsEasing: 'swing'
     };
-    var Scrollbar = ui({
+    var Scrollbar = uiGenerator({
         STATIC: {
             defaults: defaults
         },

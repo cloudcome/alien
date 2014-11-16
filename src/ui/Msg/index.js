@@ -15,11 +15,12 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires ui/dialog
+     * @requires ui/generator
      */
     'use strict';
 
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -45,7 +46,7 @@ define(function (require, exports, module) {
         timeout: -1
     };
     var mouseevent = {};
-    var Msg = ui({
+    var Msg = uiGenerator({
         STATIC: {
             /**
              * 默认配置

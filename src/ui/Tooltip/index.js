@@ -12,11 +12,12 @@ define(function (require, exports, module) {
      * @requires util/dato
      * @requires libs/Emitter
      * @requires core/dom/selector
+     * @requires ui/generator
      */
     'use strict';
 
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -38,7 +39,7 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = ui({
+    var Tooltip = uiGenerator({
         STATIC: {
             /**
              * 默认配置

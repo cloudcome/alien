@@ -16,11 +16,12 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/touch
+     * @requires ui/generator
      */
     'use strict';
 
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Emitter = require('../../libs/Emitter.js');

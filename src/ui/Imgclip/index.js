@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/drag
      * @requires ui/Resize/index
+     * @requires ui/generator
      */
     'use strict';
 
@@ -26,7 +27,7 @@ define(function (require, exports, module) {
     var Template = require('../../libs/Template.js');
     var Emitter = require('../../libs/Emitter.js');
     var dato = require('../../util/dato.js');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -44,7 +45,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Imgclip = ui({
+    var Imgclip = uiGenerator({
         STATIC: {
             defaults: defaults
         },

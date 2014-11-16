@@ -17,7 +17,7 @@ define(function (require, exports, module) {
      * @requires util/dato
      * @requires util/typeis
      * @requires util/random
-     * @requires ui/base
+     * @requires ui/generator
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -36,7 +36,7 @@ define(function (require, exports, module) {
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
     var Emitter = require('../../libs/Emitter.js');
-    var ui = require('../base.js');
+    var uiGenerator = require('../generator.js');
     var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
         // [{url:'1.jpg',width:100,height:100}]
         uploadCallback: null
     };
-    var Editor = ui({
+    var Editor = uiGenerator({
         STATIC: {
             defaults: defaults
         },
