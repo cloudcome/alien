@@ -122,7 +122,6 @@ define(function (require, exports, module) {
                 throw new Error('property must be an object');
             }
 
-
             // 必须有构造函数
             if (!property.hasOwnProperty('constructor')) {
                 throw new Error('property must be have a `constructor` function');
@@ -137,7 +136,6 @@ define(function (require, exports, module) {
             if (superConstructorType !== 'undefined' && superConstructorType === 'function') {
                 this.inherit(property.constructor, superConstructor, isInheritStatic);
             }
-
 
             STATIC = property.STATIC || {};
             delete(property.STATIC);
