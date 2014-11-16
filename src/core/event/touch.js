@@ -184,9 +184,9 @@ define(function (require, exports, module) {
             });
             dispatchTouch1 = event.dispatch(target, touch1Event);
 
-            if (dispatchTap.defaultPrevented === true ||
-                dispatchSwipe.defaultPrevented === true ||
-                dispatchSwipedir.defaultPrevented === true ||
+            if (dispatchTap && dispatchTap.defaultPrevented === true ||
+                dispatchSwipe && dispatchSwipe.defaultPrevented === true ||
+                dispatchSwipedir && dispatchSwipedir.defaultPrevented === true ||
                 dispatchTouch1.defaultPrevented === true) {
                 eve.preventDefault();
             }
