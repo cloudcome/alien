@@ -1,8 +1,10 @@
+{{if isModal}}
 <div id="alien-ui-dialog-bg-{{id}}" class="alien-ui-dialog-bg">
+{{/if}}
     <div id="alien-ui-dialog-{{id}}" class="alien-ui-dialog"
          draggablefor="{{!title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
 
-        {{if wrap}}
+        {{if isWrap}}
             {{if title}}
             <div class="alien-ui-dialog-header" draggablefor="{{title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
                 <div class="alien-ui-dialog-title">{{title}}</div>
@@ -15,4 +17,6 @@
         {{/if}}
 
     </div>
+{{if isModal}}
 </div>
+{{/if}}

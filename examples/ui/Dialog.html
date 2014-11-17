@@ -20,15 +20,17 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>Dialog.html</title>
     <style>
-        body{
+        body {
             padding: 0;
             margin: 0;
             height: 2000px;
         }
-        button{
+
+        button {
             padding: 10px 20px;
         }
-        #open1{
+
+        #open1 {
             position: fixed;
             top: 40px;
             left: 10px;
@@ -44,18 +46,22 @@
 <div style="display: none;">
     <div id="demo1">
         <h1>这是第1个对话框</h1>
+
         <p>这是个默认宽度，自适应高度的对话框，默认水平居中（1/2）、垂直居中（为了美观实际为2/5处），可以拖动，适宜做对话框、消息框、输入框等交互。</p>
         <button id="close1">关闭当前对话框</button>
         <button id="open2">打开第2个对话框</button>
     </div>
     <div id="demo2">
         <h1>这是第2个对话框</h1>
-        <p>这个对话框固定宽度：350px，固定高度：400px，水平居中，垂直顶部，而且不能拖动，并且没有对话框包裹的，适宜做提示框等消息提醒用，非交互对话框。</p>
+
+        <p>这是个非模态对话框固定宽度：350px，固定高度：400px，水平居中，垂直顶部，而且不能拖动，并且没有对话框包裹的，适宜做提示框等消息提醒用，非交互对话框。</p>
         <button id="close2">关闭当前对话框</button>
         <button id="open3">打开第3个对话框，远程加载`wap.baidu.com`</button>
     </div>
     <div id="demo3"></div>
 </div>
+
+<p>很多设计师喜欢用英文，因为中文排版真的不太容易搞。中文字符多、不同字符的笔画差异也很大，使用英文时高大上的设计稿，替换成中文以后，可能会大打折扣。网页设计中，针对中文排版的研究很少，没有太多现成的结论供参考。Amaze UI 只能根据一些经验，在字体设置、字号上做一些更适合中文的设置。</p>
 
 <script src="../coolie.min.js" data-main="./ui/Dialog.js"></script>
 <script src="../coolie-config.js"></script>

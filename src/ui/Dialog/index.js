@@ -45,14 +45,11 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var alienIndex = 0;
     var zIndex = 9999;
-//    var html = document.documentElement;
     var body = document.body;
-    var overflowClass = 'alien-ui-dialog-overflow';
-    var iframeClass = 'alien-ui-dialog-iframe';
-    var shakeClass = 'alien-ui-dialog-shake';
+    var alienClass = 'alien-ui-dialog';
+    var scrollbarWidth = _getScrollWidth();
     // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
     var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
-    var alienClass = 'alien-ui-dialog';
     var defaults = {
         width: 500,
         height: 'auto',
@@ -69,7 +66,8 @@ define(function (require, exports, module) {
         // 优先级1
         content: null,
         // 优先级1
-        isWrap: true
+        isWrap: true,
+        isModal: true
     };
     // 打开的对话框队列
     var openDialogs = [];
@@ -91,7 +89,7 @@ define(function (require, exports, module) {
              * @property [remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
              * @property [content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
              * @property [isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-
+             * @property [isModal=true] {Boolean} 是否模态，默认 true
              */
             defaults: defaults
         },
@@ -108,7 +106,7 @@ define(function (require, exports, module) {
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
             Emitter.apply(the, arguments);
-            the._options = dato.extend(!0, {}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
@@ -120,40 +118,69 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+
+            the._hasOpen = false;
+            the._zIndex = 0;
+            dialogsMap[the._id] = the;
+            the._initNode();
+            the._initEvent();
+
+            return the;
+        },
+
+
+        /**
+         * 初始化节点
+         * @returns {Dialog}
+         * @private
+         */
+        _initNode: function () {
+            var the = this;
             var options = the._options;
             var dialogData = {
                 hideClose: options.hideClose,
                 id: the._id,
                 title: options.title,
-                wrap: options.isWrap,
+                isWrap: options.isWrap,
+                isModal: options.isModal,
                 canDrag: options.canDrag
             };
-            var $bg = modification.parse(tpl.render(dialogData))[0];
+            var $tpl = modification.parse(tpl.render(dialogData))[0];
+            var $bg = options.isModal ? $tpl : null;
             var $bd;
-            var $dialog = selector.query('.' + alienClass, $bg)[0];
+            var $dialog = options.isModal ? selector.query('.' + alienClass, $bg)[0] : $tpl;
 
-            modification.insert($bg, body, 'beforeend');
+            modification.insert($bg ? $bg : $dialog, body, 'beforeend');
 
             if (options.isWrap) {
-                $dialog = selector.query('.' + alienClass, $bg)[0];
-                $bd = selector.query('.' + alienClass + '-body', $bg)[0];
+                $dialog = $dialog ? $dialog : selector.query('.' + alienClass, $bg)[0];
+                $bd = selector.query('.' + alienClass + '-body', $dialog)[0];
             }
 
             the._$bg = $bg;
             the._$bd = $bd;
             the._$dialog = $dialog;
-            the._$title = selector.query('.alien-ui-dialog-title', $dialog)[0];
-            the._hasOpen = !1;
-            the._zIndex = 0;
-            dialogsMap[the._id] = the;
-
+            the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
             modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
+        },
+
+
+        /**
+         * 初始化事件
+         * @returns {Dialog}
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
+            var $dialog = the._$dialog;
+            var $bg = the._$bg;
 
             event.on($dialog, 'click tap', '.' + alienClass + '-close', function () {
                 the.close();
             });
 
-            event.on(the._$bg, 'click tap', function (eve) {
+            event.on($bg, 'click tap', function (eve) {
                 eve.stopPropagation();
 
                 if (!selector.closest(eve.target, '.' + alienClass).length) {
@@ -161,12 +188,13 @@ define(function (require, exports, module) {
                 }
             });
 
-            event.on(window, animationendEventType, function () {
-                attribute.removeClass(the._$dialog, shakeClass);
-            });
-
-            return the;
+            if (options.isModal) {
+                event.on(window, animationendEventType, function () {
+                    attribute.removeClass(the._$dialog, alienClass + '-shake');
+                });
+            }
         },
+
 
         /**
          * 打开对话框
@@ -180,12 +208,18 @@ define(function (require, exports, module) {
             var to;
             var options = the._options;
             var findIndex;
+            var dialogStyle = {
+                display: 'block',
+                visibility: 'hidden',
+                width: options.width,
+                height: options.height
+            };
 
             if (the._hasOpen) {
                 return the;
             }
 
-            the._hasOpen = !0;
+            the._hasOpen = true;
             findIndex = openDialogs.indexOf(the._id);
 
             if (findIndex > -1) {
@@ -193,25 +227,23 @@ define(function (require, exports, module) {
             }
 
             openDialogs.push(the._id);
-            attribute.addClass(body, overflowClass);
+            attribute.addClass(body, alienClass + '-overflow');
 
             if (options.content || options.remote) {
                 the._$ele.innerHTML = '';
             }
 
-            attribute.css($bg, {
-                display: 'block',
-                zIndex: ++zIndex,
-                opacity: 0
-            });
+            if ($bg) {
+                attribute.css($bg, {
+                    display: 'block',
+                    zIndex: ++zIndex,
+                    opacity: 0
+                });
+            } else {
+                dialogStyle.zIndex = ++zIndex;
+            }
 
-            attribute.css($dialog, {
-                display: 'block',
-                visibility: 'hidden',
-                width: options.width,
-                height: options.height
-            });
-
+            attribute.css($dialog, dialogStyle);
             the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
@@ -222,15 +254,17 @@ define(function (require, exports, module) {
                 visibility: 'visible',
                 left: to.left,
                 top: to.top,
-                transform: 'scale(0)'
+                scale: 0
             });
 
-            animation.animate($bg, {
-                opacity: 1
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            });
+            if ($bg) {
+                animation.animate($bg, {
+                    opacity: 1
+                }, {
+                    duration: options.duration,
+                    easing: options.easing
+                });
+            }
 
             animation.animate($dialog, to, {
                 duration: options.duration,
@@ -265,36 +299,42 @@ define(function (require, exports, module) {
             var $bg = the._$bg;
             var $dialog = the._$dialog;
             var options = the._options;
-//            var theH = attribute.height(dialog);
 
             if (!the._hasOpen) {
                 return the;
             }
 
-            the._hasOpen = !1;
+            the._hasOpen = false;
             openDialogs.pop();
 
             if (!openDialogs.length) {
-                attribute.removeClass(body, overflowClass);
+                attribute.removeClass(body, alienClass + '-overflow');
+            }
+
+            if ($bg) {
+                animation.stop($bg);
+                animation.animate($bg, {
+                    opacity: 0
+                }, {
+                    duration: options.duration,
+                    easing: options.easing
+                }, function () {
+                    attribute.css($bg, 'display', 'none');
+                });
             }
 
             animation.stop($dialog);
             animation.animate($dialog, {
                 opacity: 0,
-                transform: 'scale(0)'
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            });
-
-            animation.animate($bg, {
-                opacity: 0
+                scale: 0
             }, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                attribute.css($bg, 'display', 'none');
-                attribute.css($dialog, 'transform', 'scale(1)');
+                attribute.css($dialog, {
+                    scale: 1,
+                    display: 'none'
+                });
                 the.emit('close');
 
                 if (typeis(callback) === 'function') {
@@ -401,10 +441,10 @@ define(function (require, exports, module) {
             if (the.shakeTimeid) {
                 the.shakeTimeid = 0;
                 clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the._$dialog, shakeClass);
+                attribute.removeClass(the._$dialog, alienClass + '-shake');
             }
 
-            attribute.addClass(the._$dialog, shakeClass);
+            attribute.addClass(the._$dialog, alienClass + '-shake');
 
             return the;
         },
@@ -453,7 +493,7 @@ define(function (require, exports, module) {
             var winH = attribute.height(window);
             var pos = {};
 
-            animation.stop(the._$dialog, !0);
+            animation.stop(the._$dialog, true);
 
             attribute.css(the._$dialog, {
                 width: options.width,
@@ -461,8 +501,7 @@ define(function (require, exports, module) {
             });
 
             pos.width = attribute.outerWidth(the._$dialog);
-            //pos.height = attribute.outerHeight(the._$dialog);
-            pos.height = '';
+            pos.height = attribute.outerHeight(the._$dialog);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
@@ -483,6 +522,7 @@ define(function (require, exports, module) {
     }, Emitter);
 
 
+    style += '.alien-ui-dialog-overflow{padding-right:' + scrollbarWidth + 'px;}';
     modification.importStyle(style);
 
     event.on(document, 'keyup', function (eve) {
@@ -496,6 +536,31 @@ define(function (require, exports, module) {
             }
         }
     });
+
+
+    /**
+     * 获取当前页面的滚动条宽度
+     * @return {Number}
+     */
+    function _getScrollWidth() {
+        var $div = modification.create('div', {
+            style: {
+                width: 100,
+                height: 100,
+                position: 'absolute',
+                padding: 0,
+                margin: 0,
+                overflow: 'scroll'
+            }
+        });
+        var clientWidth;
+
+        modification.insert($div, body, 'beforeend');
+        clientWidth = $div.clientWidth;
+        modification.remove($div);
+
+        return 100 - clientWidth;
+    }
 
     /**
      * 实例化一个模态交互对话框

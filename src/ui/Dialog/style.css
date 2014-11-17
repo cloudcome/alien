@@ -1,7 +1,5 @@
 .alien-ui-dialog-overflow {
-    position: relative;
-    width: 100%;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .alien-ui-dialog-bg {
@@ -13,15 +11,16 @@
     left: 0;
     background: rgba(255, 255, 255, .3);
     overflow: auto;
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
 }
 
 .alien-ui-dialog {
+    display: none;
     position: absolute;
     width: 500px;
     background: #fff;
     box-shadow: 0 0 20px #A0A0A0;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .alien-ui-dialog-header {
@@ -32,7 +31,7 @@
     background: -webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
     background: -o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
     background: -ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
-    background: linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%)
+    background: linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
 }
 
 .alien-ui-dialog-title {
@@ -44,7 +43,7 @@
     text-align: center;
     line-height: 12px;
     cursor: move;
-    color: #444
+    color: #444;
 }
 
 .alien-ui-dialog-close {
@@ -56,17 +55,21 @@
     height: 32px;
     text-align: center;
     cursor: pointer;
-    font: normal normal normal 30px/32px Arial
+    font: normal normal normal 30px/32px Arial;
+    -webkit-transition: all .3s;
+    transition: all .3s;
 }
 
 .alien-ui-dialog-close:hover {
-    color: #888
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    color: #555;
 }
 
 .alien-ui-dialog-body {
     position: relative;
     padding: 20px;
-    overflow: auto
+    overflow: auto;
 }
 
 .alien-ui-dialog-iframe {
@@ -75,42 +78,42 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 400px
+    height: 400px;
 }
 
 @-webkit-keyframes alien-ui-dialog-shake {
     0%, 100% {
-        -webkit-transform: translateX(0)
+        -webkit-transform: translateX(0);
     }
     10%, 30%, 50%, 70%, 90% {
-        -webkit-transform: translateX(-10px)
+        -webkit-transform: translateX(-10px);
     }
     20%, 40%, 60%, 80% {
-        -webkit-transform: translateX(10px)
+        -webkit-transform: translateX(10px);
     }
 }
 
 @-moz-keyframes alien-ui-dialog-shake {
     0%, 100% {
-        -moz-transform: translateX(0)
+        -moz-transform: translateX(0);
     }
     10%, 30%, 50%, 70%, 90% {
-        -moz-transform: translateX(-10px)
+        -moz-transform: translateX(-10px);
     }
     20%, 40%, 60%, 80% {
-        -moz-transform: translateX(10px)
+        -moz-transform: translateX(10px);
     }
 }
 
 @keyframes alien-ui-dialog-shake {
     0%, 100% {
-        transform: translateX(0)
+        transform: translateX(0);
     }
     10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-10px)
+        transform: translateX(-10px);
     }
     20%, 40%, 60%, 80% {
-        transform: translateX(10px)
+        transform: translateX(10px);
     }
 }
 
