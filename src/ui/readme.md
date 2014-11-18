@@ -9,6 +9,18 @@ var defaults = {
 var dato = require('../../util/dato.js');
 var generator = require('../generator.js');
 var MyUI = generator({
+    // 构造函数的静态属性、方法
+    STATIC: {
+        /**
+         * 默认配置
+         * @name defaults
+         * @property width {Number} 宽度
+         * @property height {Number} 高度
+         */
+        defaults: defaults
+    },
+
+
     /**
      * 构造函数
      * @param $ele {Object} 节点
