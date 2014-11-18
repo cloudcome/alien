@@ -11,13 +11,16 @@ define(function (require, exports, module) {
      * @requires util/dato
      * @requires util/typeis
      * @requires util/class
+     * @requires libs/Emitter
      */
     'use strict';
 
     var dato = require('../util/dato.js');
     var typeis = require('../util/typeis.js');
     var klass = require('../util/class.js');
+    var Emitter = require('../libs/Emitter.js');
     var udf;
+    var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
 
     /**
      * 创建一个 UI 类
@@ -34,7 +37,9 @@ define(function (require, exports, module) {
      *     myClassName: fn
      * });
      */
-    module.exports = function (property, superConstructor, isInheritStatic) {
+    module.exports = function (property, isInheritSuperStatic) {
+        var proto = {};
+
         if (typeis(property) !== 'object') {
             throw 'UI class property must be an obejct';
         }
@@ -43,9 +48,22 @@ define(function (require, exports, module) {
             throw 'UI class property.constructor must be a function';
         }
 
+        dato.each(property, function (key, val) {
+            proto[key] = val;
+
+            if (warningPropertyList.indexOf(key) > -1) {
+                console.warn(property.constructor.toString() + ' rewrite Emitter\' property in prototype of `' + key + '`');
+            }
+        });
+
+        proto.constructor = function () {
+            Emitter.apply(this, arguments);
+            property.constructor.apply(this, arguments);
+        };
+
         // 添加默认方法
         if (property.getOptions === udf) {
-            property.getOptions = function (key) {
+            proto.getOptions = function (key) {
                 var the = this;
                 var keyType = typeis(key);
                 var ret = [];
@@ -58,12 +76,14 @@ define(function (require, exports, module) {
                     });
 
                     return ret;
+                } else {
+                    return the._options;
                 }
             };
         }
 
         if (property.setOptions === udf) {
-            property.setOptions = function (key, val) {
+            proto.setOptions = function (key, val) {
                 var the = this;
                 var keyType = typeis(key);
 
@@ -75,6 +95,6 @@ define(function (require, exports, module) {
             };
         }
 
-        return klass.create(property, superConstructor, isInheritStatic);
+        return klass.create(proto, Emitter, isInheritSuperStatic);
     };
 });
