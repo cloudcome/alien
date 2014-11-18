@@ -15,7 +15,6 @@ define(function (require, exports, module) {
      * @requires util/class
      * @requires util/dato
      * @requires util/typeis
-     * @requires libs/Emitter
      * @requires libs/Template
      * @requires ui/generator
      */
@@ -24,7 +23,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var index = 0;
+    var alienIndex = 0;
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var event = require('../../core/event/touch.js');
@@ -32,10 +31,9 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var alienClass = 'alien-ui-banner';
@@ -43,18 +41,23 @@ define(function (require, exports, module) {
         width: 700,
         height: 300,
         item: 'li',
-        duration: 456,
+        duration: 678,
         timeout: 3456,
         easing: 'ease-in-out-back',
-        // 0 不自动播放
-        // -1 自动向前播放
-        // 1 自动向后播放
-        autoPlay: 1,
+        autoPlay: true,
+        // 运动方向
+        // -x x 轴向左
+        // +x x 轴向右
+        // -y y 轴向下
+        // +y y 轴向上
+        axis: '+x',
+        // 触摸超过边界多少比例的时候切换
+        boundaryRatio: 0.3,
         // 导航生成器
         navGenerator: null
     };
 
-    var Banner = uiGenerator({
+    var Banner = generator({
         STATIC: {
             /**
              * 默认配置
@@ -64,7 +67,8 @@ define(function (require, exports, module) {
              * @property {String} [item="li"] banner 项目选择器，默认"li"
              * @property {Number} [duration=456] banner 播放动画时间，默认456，单位毫秒
              * @property {String} [easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
-             * @property {Number} [autoPlay=1] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
+             * @property {Boolean} [autoPlay=true] banner 是否自动播放
+             * @property {String} [axis="+x"] banner 正序方向
              * @property {null|Function} [navGenerator=null] 使用一个函数生成导航，参数1为导航索引值
              */
             defaults: defaults
@@ -81,8 +85,7 @@ define(function (require, exports, module) {
             }
 
             the._$ele = ele[0];
-            Emitter.apply(the, arguments);
-            the._options = dato.extend(!0, {}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
@@ -95,29 +98,45 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
-            var options = the._options;
 
-            the._id = ++index;
-            the._showIndex = 0;
-            the._$items = selector.query(options.item, the._$ele);
-            the._wrap();
-            the.resize(options);
-            the.play(options.autoPlay);
-            the._event();
+            the._initData();
+            the._initNode();
+            the._initEvent();
 
             return the;
         },
 
 
         /**
-         * 包裹
+         * 初始化数据
          * @private
          */
-        _wrap: function () {
+        _initData: function () {
             var the = this;
             var options = the._options;
-            var clone0;
-            var clone1;
+
+            the._id = ++alienIndex;
+            the._showIndex = 0;
+            the._translate = 0;
+            the._direction = options.axis.indexOf('x') > -1 ? 'X' : 'Y';
+            the._increase = options.axis.indexOf('-') > -1 ? -1 : 1;
+            the._distance = the._direction === 'X' ? options.width : options.height;
+            the._isPrivatePlay = false;
+            the._playTimeID = 0;
+        },
+
+
+        /**
+         * 初始化节点
+         * @private
+         */
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var $cloneStart0;
+            var $cloneStart1;
+            var $cloneEnd0;
+            var $cloneEnd1;
             var bannerData = {
                 id: the._id,
                 nav: []
@@ -131,19 +150,33 @@ define(function (require, exports, module) {
                 bannerData.nav.push(navFilter(index));
             });
 
+            the._$items = selector.query(options.item, the._$ele);
             $bannerWrap = modification.parse(tpl.render(bannerData))[0];
             modification.insert($bannerWrap, the._$ele, 'afterend');
             modification.insert(the._$ele, $bannerWrap, 'afterbegin');
 
             if (the._$items.length > 1) {
-                // 复制头尾项目
-                clone0 = the._$items[0].cloneNode(!0);
-                clone1 = the._$items[the._$items.length - 1].cloneNode(!0);
+                // clone
+                $cloneStart0 = the._$items[0].cloneNode(true);
+                $cloneStart1 = the._$items[0].cloneNode(true);
+                $cloneEnd0 = the._$items[the._$items.length - 1].cloneNode(true);
+                $cloneEnd1 = the._$items[the._$items.length - 1].cloneNode(true);
 
-                modification.insert(clone1, the._$ele, 'afterbegin');
-                modification.insert(clone0, the._$ele, 'beforeend');
-                the._$items.unshift(clone1);
-                the._$items.push(clone0);
+                // addClass
+                attribute.addClass($cloneStart0, alienClass + '-clone');
+                attribute.addClass($cloneStart1, alienClass + '-clone');
+                attribute.addClass($cloneEnd0, alienClass + '-clone');
+                attribute.addClass($cloneEnd1, alienClass + '-clone');
+
+                // insert
+                modification.insert($cloneEnd0, the._$ele, 'afterbegin');
+                modification.insert($cloneStart1, the._$ele, 'afterbegin');
+                modification.insert($cloneStart0, the._$ele, 'beforeend');
+                modification.insert($cloneEnd1, the._$ele, 'beforeend');
+                the._$items.unshift($cloneEnd0);
+                the._$items.unshift($cloneStart1);
+                the._$items.push($cloneStart0);
+                the._$items.push($cloneEnd1);
             }
 
             the._$banner = $bannerWrap;
@@ -154,19 +187,35 @@ define(function (require, exports, module) {
             } else {
                 the._$navItems = [];
             }
+
+            the._$clones = [$cloneStart0, $cloneStart1, $cloneEnd0, $cloneEnd1];
         },
 
 
         /**
-         * 添加事件监听
+         * 切换克隆元素显隐
+         * @param isDisplay
          * @private
          */
-        _event: function () {
+        _toggleClone: function (isDisplay) {
+            attribute[(isDisplay ? 'remove' : 'add') + 'Class'](this._$banner, alienClass + '-touch');
+        },
+
+
+        /**
+         * 初始化事件监听
+         * @private
+         */
+        _initEvent: function () {
             var the = this;
             var options = the._options;
-            var left;
-            var x0;
-            var x1;
+            var translate;
+            var touch0;
+            var touch1;
+            // 触摸结束
+            var _touchdone = function _touchdone() {
+                the._toggleClone(true);
+            };
 
             // 单击导航
             if (the._$navItems.length) {
@@ -180,83 +229,210 @@ define(function (require, exports, module) {
                         type = 'prev';
                     }
 
-                    the.pause();
+                    the._clear();
                     the.index(type, index);
                 });
             }
 
             // 鼠标悬停
             event.on(the._$banner, 'mouseenter', function () {
-                the.pause();
+                the._isPrivatePlay = false;
+                the._clear();
             });
 
             event.on(the._$banner, 'mouseleave', function () {
-                the.play(the._options.autoPlay);
+                if (options.autoPlay) {
+                    the._isPrivatePlay = true;
+                    the.play();
+                }
             });
 
             // 触摸
             event.on(the._$banner, 'touch1start', function (eve) {
                 the.pause();
-                attribute.css(the._$items[0], 'visibility', 'hidden');
-                attribute.css(the._$items[the._$items.length - 1], 'visibility', 'hidden');
-                left = parseInt(attribute.css(the._$ele, 'left'));
-                x0 = eve.pageX;
-
+                the._toggleClone(false);
+                translate = the._translate;
+                touch0 = eve['page' + the._direction];
                 eve.preventDefault();
             });
-
-
 
             event.on(the._$banner, 'touch1move', function (eve) {
-                x1 = eve.pageX;
-                attribute.css(the._$ele, 'left', left + x1 - x0);
+                touch1 = eve['page' + the._direction];
+                attribute.css(the._$ele, the._calTranslate(translate + touch1 - touch0, false));
                 eve.preventDefault();
             });
 
-            event.on(the._$banner, 'touch1end touchcancel', function () {
-                var index = the._getIndex();
+            event.on(the._$banner, 'touch1end', function () {
+                var index = the._getIndex(touch1 - touch0, translate + touch1 - touch0);
+                var type = touch1 <= touch0 && the._increase > 0 ||
+                touch1 >= touch0 && the._increase < 0 ? 'next' : 'prev';
 
                 if (index === the._showIndex) {
-                    animation.animate(the._$ele, {
-                        left: -(index + 1) * options.width
-                    }, {
+                    animation.animate(the._$ele, the._calTranslate(the._translate), {
                         duration: options.duration,
                         easing: options.easing
                     }, _touchdone);
                 } else {
-                    the.index(x1 <= x0 ? 'next' : 'prev', index, _touchdone);
+                    the.index(type, index, _touchdone);
                 }
             });
 
-            // 触摸结束
-            function _touchdone() {
-                attribute.css(the._$items[0], 'visibility', 'visible');
-                attribute.css(the._$items[the._$items.length - 1], 'visibility', 'visible');
+            the.resize(options);
+
+            if (options.autoPlay) {
+                the._isPrivatePlay = true;
+                the.play();
             }
         },
 
 
         /**
          * 根据当前宽度计算索引值
+         * @returns order
+         * @returns distance
          * @returns {number}
          * @private
          */
-        _getIndex: function () {
+        _getIndex: function (order, distance) {
             var the = this;
             var options = the._options;
-            var left = -parseFloat(attribute.css(the._$ele, 'left')) - options.width;
+            var ratio;
+
+            distance = Math.abs(distance);
+            distance -= the._distance * 2;
 
             // 左尽头
-            if (left <= 0) {
+            if (distance <= 0) {
                 return 0;
             }
             // 右尽头
-            else if (left >= options.width * (the._$items.length - 3)) {
-                return the._$items.length - 3;
+            else if (distance >= the._distance * (the._$items.length - 5)) {
+                return the._$items.length - 5;
             }
             // 中间
             else {
-                return Math.round(left / options.width);
+                ratio = distance % the._distance / the._distance;
+
+                if (order > 0) {
+                    ratio = 1 - ratio;
+                }
+
+                return Math[order > 0 ? 'ceil' : 'floor'](distance / the._distance) +
+                    (ratio > options.boundaryRatio ? (order > 0 ? -1 : 1) : 0);
+            }
+        },
+
+
+        /**
+         * 计算偏移量
+         * @param val
+         * @param [isOverWrite=true]
+         * @private
+         */
+        _calTranslate: function (val, isOverWrite) {
+            var the = this;
+            var set = {};
+
+            if (isOverWrite !== false) {
+                the._translate = val;
+            }
+
+            set['translate' + the._direction] = val + 'px';
+
+            return set;
+        },
+
+
+        /**
+         * 重置尺寸
+         * @param {Object} size  尺寸对象
+         * @param {Number} [size.width]  宽度
+         * @param {Number} [size.height]  高度
+         * @returns {Banner}
+         */
+        resize: function (size) {
+            var the = this;
+            var options = the._options;
+            var set = the._calTranslate(the._$items.length > 5 ? -(the._showIndex + 2) * the._distance : 0);
+            var width = options.width * (the._direction === 'X' ? the._$items.length : 1);
+            var height = options.height * (the._direction === 'Y' ? the._$items.length : 1);
+
+            dato.extend(true, set, {
+                position: 'relative',
+                width: width,
+                height: height
+            });
+            options.width = size.width || options.width;
+            options.height = size.height || options.height;
+            dato.each(the._$items, function (index, item) {
+                attribute.css(item, {
+                    position: 'relative',
+                    width: options.width,
+                    height: options.height,
+                    float: 'left',
+                    overflow: 'hidden'
+                });
+            });
+            attribute.css(the._$ele, set);
+            attribute.css(the._$banner, {
+                position: 'relative',
+                width: options.width,
+                height: options.height,
+                overflow: 'hidden'
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 运动前的索引值计算
+         * @param move -1：反序，1：正序
+         * @param index
+         * @returns {*}
+         * @private
+         */
+        _beforeShowIndex: function (move, showIndex) {
+            var the = this;
+            var length = the._$items.length;
+
+            // ++
+            if (the._increase > 0 && move === 1 ||
+                the._increase < 0 && move === -1) {
+                showIndex = showIndex === length - 5 ? 0 : showIndex + 1;
+            }
+            // --
+            else {
+                showIndex = showIndex === 0 ? length - 5 : showIndex - 1;
+            }
+
+            return showIndex;
+        },
+
+
+        /**
+         * 显示之前的定位与计算下一帧的位置
+         * @param type
+         * @param showIndex
+         * @returns {*}
+         * @private
+         */
+        _beforeDisplayIndex: function (type, showIndex) {
+            var the = this;
+            var length = the._$items.length;
+            var count = length - 4;
+            var _showIndex = the._showIndex;
+            var $ele = the._$ele;
+            var distance = the._distance;
+            var isPlusPlus = the._increase < 0 && type === 'prev' ||
+                the._increase > 0 && type === 'next';
+            var isMinusMinus = the._increase < 0 && type === 'next' ||
+                the._increase > 0 && type === 'prev';
+
+            if (isPlusPlus && _showIndex === count - 1) {
+                attribute.css($ele, the._calTranslate(-1 * distance));
+            } else if (isMinusMinus && _showIndex === 0) {
+                attribute.css($ele, the._calTranslate(-(count + 2) * distance));
             }
         },
 
@@ -273,7 +449,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var count = the._$items.length - 2;
-            var playIndex;
+            var set;
 
             if (count < 2 || index === the._showIndex) {
                 return the;
@@ -290,33 +466,20 @@ define(function (require, exports, module) {
                 callback = noop;
             }
 
-            playIndex =
-                type === 'next' ?
-                    (the._showIndex === count - 1 ? count + 1 : index + 1) :
-                    (the._showIndex === 0 ? 0 : index + 1);
+            the._beforeDisplayIndex(type, index);
 
-            if (playIndex > count + 1) {
+            if (index >= count) {
                 throw new Error('can not go to ' + type + ' ' + index);
             }
 
+            set = the._calTranslate(-the._distance * (index + 2));
             the.emit('beforechange', the._showIndex, index);
 
-            animation.animate(the._$ele, {
-                left: -options.width * playIndex
-            }, {
+            animation.animate(the._$ele, set, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
                 var siblings;
-
-                // 替换结尾
-                if (type !== 'next' && the._showIndex === 0) {
-                    attribute.css(the._$ele, 'left', -options.width * count);
-                }
-                // 替换开头
-                else if (type === 'next' && the._showIndex === count - 1) {
-                    attribute.css(the._$ele, 'left', -options.width);
-                }
 
                 the.emit('change', index, the._showIndex);
                 the._showIndex = index;
@@ -342,20 +505,14 @@ define(function (require, exports, module) {
          */
         prev: function (callback) {
             var the = this;
-            var index = the._showIndex;
+            var showIndex = the._showIndex;
 
             if (the._$items.length < 4) {
                 return the;
             }
 
-            index--;
-
-            // 到达左边缘
-            if (index < 0) {
-                index = the._$items.length - 3;
-            }
-
-            the.index('prev', index, callback);
+            showIndex = the._beforeShowIndex(-1, showIndex);
+            the.index('prev', showIndex, callback);
 
             return the;
         },
@@ -368,20 +525,14 @@ define(function (require, exports, module) {
          */
         next: function (callback) {
             var the = this;
-            var index = the._showIndex;
+            var showIndex = the._showIndex;
 
             if (the._$items.length < 4) {
                 return the;
             }
 
-            index++;
-
-            // 到达右边缘
-            if (index === the._$items.length - 2) {
-                index = 0;
-            }
-
-            the.index('next', index, callback);
+            showIndex = the._beforeShowIndex(1, showIndex);
+            the.index('next', showIndex, callback);
 
             return the;
         },
@@ -389,10 +540,9 @@ define(function (require, exports, module) {
 
         /**
          * 自动播放
-         * @param {Number} [autoPlay] 默认向后播放，-1为向前播放，1为向后播放
          * @returns {Banner}
          */
-        play: function (autoPlay) {
+        play: function () {
             var the = this;
             var options = the._options;
 
@@ -400,22 +550,32 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            if (autoPlay === 1 || autoPlay === -1) {
-                the.pause();
-                options.autoPlay = autoPlay;
+            the._clear();
 
-                the.timeid = setTimeout(function () {
-                    if (autoPlay === 1) {
-                        the.next();
-                    } else if (autoPlay === -1) {
-                        the.prev();
-                    }
-
-                    the.play(autoPlay);
-                }, options.timeout);
+            if (!the._isPrivatePlay) {
+                options.autoPlay = true;
             }
 
+            the._playTimeID = setTimeout(function () {
+                the.next();
+                the.play();
+            }, options.timeout);
+
             return the;
+        },
+
+
+        /**
+         * 清除播放定时器
+         * @private
+         */
+        _clear: function () {
+            var the = this;
+
+            if (the._playTimeID) {
+                clearTimeout(the._playTimeID);
+                the._playTimeID = 0;
+            }
         },
 
 
@@ -430,50 +590,8 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            if (the.timeid) {
-                clearTimeout(the.timeid);
-                the.timeid = 0;
-            }
-
-            return the;
-        },
-
-
-        /**
-         * 重置尺寸
-         * @param {Object} size  尺寸对象
-         * @param {Number} [size.width]  宽度
-         * @param {Number} [size.height]  高度
-         * @returns {Banner}
-         */
-        resize: function (size) {
-            var the = this;
-            var options = the._options;
-
-            options.width = size.width || options.width;
-            options.height = size.height || options.height;
-
-            dato.each(the._$items, function (index, item) {
-                attribute.css(item, {
-                    width: options.width,
-                    height: options.height,
-                    float: 'left'
-                });
-            });
-
-            attribute.css(the._$ele, {
-                position: 'relative',
-                left: the._$items.length > 3 ? -(the._showIndex + 1) * options.width : 0,
-                width: options.width * the._$items.length,
-                height: options.height
-            });
-
-            attribute.css(the._$banner, {
-                position: 'relative',
-                width: options.width,
-                height: options.height,
-                overflow: 'hidden'
-            });
+            the._options.autoPlay = false;
+            the._clear();
 
             return the;
         },
@@ -484,32 +602,38 @@ define(function (require, exports, module) {
          */
         destroy: function () {
             var the = this;
+            var set = the._calTranslate(0);
+
+            dato.extend(set, {
+                position: '',
+                overflow: '',
+                width: '',
+                height: ''
+            });
 
             // 移除所有事件
-            event.un(the._$banner, 'touchstart touchmove touchend touchcancel tap click mouseenter mouseleave');
+            event.un(the._$banner, 'touch1start touch1move touch1end tap click mouseenter mouseleave');
 
             // 停止动画
             the.pause();
 
             dato.each(the._$items, function (index, item) {
                 attribute.css(item, {
+                    position: '',
+                    overflow: '',
                     width: '',
                     height: '',
                     float: ''
                 });
             });
-            attribute.css(the._$ele, {
-                width: '',
-                height: '',
-                left: ''
-            });
-
+            attribute.css(the._$ele, set);
             modification.insert(the._$ele, the._$banner, 'afterend');
-            modification.remove(the._$items[the._$items.length - 1]);
-            modification.remove(the._$items[0]);
+            dato.each(the._$clones, function (index, $clone) {
+                modification.remove($clone);
+            });
             modification.remove(the._$banner);
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
 
