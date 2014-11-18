@@ -1,18 +1,71 @@
-# 规范
-- 出口函数必须是一个构造函数，必须使用`util/class#create`方法创建类，详细参考该模块文档描述
-- 每个类都必须有一个文件夹
-	1. 如`Scrollbar`
-	2. 里面包含入口文件`index.js`
-	3. 包含样式文件`style.css`，请勿在样式文件里中使用本地图片，项目构建时无法将图片构建进去
-	   可以使用 CDN 上的图片文件
-- 每个构造函数都必须包含以下原型方法：
-	1. `constructor` 构造函数
-	2. `init` 初始化函数，不能传递参数
-	3. `getOptions` 获取选项，类的创建会默认添加这个原型，以获取实例的`this._options`属性
-	4. `setOptions` 设置选项，类的创建会默认添加这个原型，以设置实例的`this._options`属性
-	5. `destroy` 销毁实例
-	6. 必须包含静态属性来引用当前类的默认属性，即`Constructo.defaults`
-- 开头为`_`（下划线）的属性、函数为私有属性、方法，原则上外部不要访问和修改
-- 开头为字母的属性、函数为公开属性、方法，外部可以访问和修改
-- 每个类都必须详细描述各个参数的用途和默认值，及注意事项
-- 使用类的时候，必须在实例化之后立即执行初始化方法，即`init`
+# 1、规范
+
+```js
+var generator = require('/src/ui/generator.js');
+var MyUI = generator({
+    /**
+     * 构造函数
+     */
+    constructor: function () {
+        var the = this;
+
+        // 自动初始化
+        the._init();
+    },
+
+
+    /**
+     * 初始化
+     * @private
+     */
+    _init: function () {
+        var the = this;
+
+        the._initData();
+        the._initNode();
+        the._initEvent();
+    },
+
+
+    /**
+     * 初始化数据
+     * @private
+     */
+    _initData: function () {
+        // code
+    },
+
+
+    /**
+     * 初始化节点
+     * @private
+     */
+    _initNode: function () {
+        // code
+    },
+
+
+    /**
+     * 初始化事件
+     * @private
+     */
+    _initEvent: function () {
+        // code
+    },
+
+
+    /**
+     * 销毁实例
+     */
+    destroy: function () {
+        // 1、节点的还原归位
+        // 2、事件的解除绑定
+    }
+});
+```
+
+# 2、说明
+
+- UI 构造函数已经默认继承了`Emitter`类。因此它具有了事件的发布（`emit`）和订阅（`on`）功能，以及事件解除（`un`）。
+- 销毁实例的做法是，先执行原型上的`destroy`方法，然后赋值为`null`。
+
