@@ -1,13 +1,24 @@
 # 1、规范
 
 ```js
-var generator = require('/src/ui/generator.js');
+// 默认参数
+var defaults = {
+    width: 700,
+    height: 300
+};
+var dato = require('../../util/dato.js');
+var generator = require('../generator.js');
 var MyUI = generator({
     /**
      * 构造函数
+     * @param $ele {Object} 节点
+     * @param [options] {Object} 初始化参数
      */
-    constructor: function () {
+    constructor: function ($ele, options) {
         var the = this;
+
+        // 参数
+        the._options = dato.extend(true, {}, defaults, options);
 
         // 自动初始化
         the._init();
