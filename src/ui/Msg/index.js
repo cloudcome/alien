@@ -10,7 +10,6 @@ define(function (require, exports, module) {
      * @module ui/Msg/index
      * @requires util/class
      * @requires util/dato
-     * @requires libs/Emitter
      * @requires core/event/touch
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -20,9 +19,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -46,7 +44,7 @@ define(function (require, exports, module) {
         timeout: -1
     };
     var mouseevent = {};
-    var Msg = uiGenerator({
+    var Msg = generator({
         STATIC: {
             /**
              * 默认配置
@@ -68,7 +66,6 @@ define(function (require, exports, module) {
         constructor: function (options) {
             var the = this;
 
-            Emitter.apply(the, arguments);
             the._options = dato.extend(true, {}, defaults, options);
             the._id = alienIndex++;
             the._init();
@@ -244,7 +241,7 @@ define(function (require, exports, module) {
                 modification.remove(the._$msg);
             });
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
 

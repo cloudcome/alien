@@ -10,7 +10,6 @@ define(function (require, exports, module) {
      * @module ui/Resize/index
      * @requires util/class
      * @requires util/dato
-     * @requires libs/Emitter
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -22,7 +21,7 @@ define(function (require, exports, module) {
 
     var style = require('text!./style.css');
     var template = require('text!./template.html');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
@@ -40,7 +39,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Resize = uiGenerator({
+    var Resize = generator({
         STATIC: {
             defaults: defaults
         },
@@ -53,7 +52,6 @@ define(function (require, exports, module) {
                 throw 'instance element is empty';
             }
 
-            Emitter.apply(the);
             the._$ele = $ele[0];
             the._options = dato.extend(!0, {}, defaults, options);
             the._init();
@@ -205,7 +203,7 @@ define(function (require, exports, module) {
             the._un();
             modification.remove(the._$wrap);
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
     module.exports = Resize;

@@ -19,7 +19,6 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires core/event/drag
      * @requires core/navigator/compatible
-     * @requires libs/Emitter
      * @requires libs/Template
      *
      * @author ydr.me
@@ -31,8 +30,7 @@ define(function (require, exports, module) {
 
     require('../../core/event/drag.js');
     var style = require('css!./style.css');
-    var uiGenerator = require('../generator.js');
-    var Emitter = require('../../libs/Emitter.js');
+    var generator = require('../generator.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -72,7 +70,7 @@ define(function (require, exports, module) {
     // 打开的对话框队列
     var openDialogs = [];
     var dialogsMap = {};
-    var Dialog = uiGenerator({
+    var Dialog = generator({
         STATIC: {
             /**
              * 默认配置
@@ -105,7 +103,6 @@ define(function (require, exports, module) {
 
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
-            Emitter.apply(the, arguments);
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
@@ -519,7 +516,7 @@ define(function (require, exports, module) {
 
             return pos;
         }
-    }, Emitter);
+    });
 
 
     style += '.alien-ui-dialog-overflow{padding-right:' + scrollbarWidth + 'px;}';

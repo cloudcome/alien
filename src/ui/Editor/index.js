@@ -22,7 +22,6 @@ define(function (require, exports, module) {
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
      * @requires libs/Template
-     * @requires libs/Emitter
      */
     'use strict';
 
@@ -35,8 +34,7 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
-    var Emitter = require('../../libs/Emitter.js');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
@@ -64,7 +62,7 @@ define(function (require, exports, module) {
         // [{url:'1.jpg',width:100,height:100}]
         uploadCallback: null
     };
-    var Editor = uiGenerator({
+    var Editor = generator({
         STATIC: {
             defaults: defaults
         },
@@ -85,7 +83,6 @@ define(function (require, exports, module) {
                 throw new Error('instance element is empty');
             }
 
-            Emitter.apply(the, arguments);
             the._id = alienIndex++;
             the._$ele = the._$ele[0];
             the._options = dato.extend(true, {}, defaults, options);
@@ -615,7 +612,7 @@ define(function (require, exports, module) {
 
             return the;
         }
-    }, Emitter);
+    });
 
 
     modification.importStyle(style);

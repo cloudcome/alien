@@ -10,7 +10,6 @@ define(function (require, exports, module) {
      * @module ui/Tooltip
      * @requires util/class
      * @requires util/dato
-     * @requires libs/Emitter
      * @requires core/dom/selector
      * @requires ui/generator
      */
@@ -19,7 +18,6 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var uiGenerator = require('../generator.js');
     var dato = require('../../util/dato.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -31,7 +29,7 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var tooltipClass = 'alien-ui-tooltip';
     // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-    var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
+    //var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
     var defaults = {
         duration: 234,
         easing: 'ease-out-quart',
@@ -61,7 +59,6 @@ define(function (require, exports, module) {
             }
 
             the._$ele = ele[0];
-            Emitter.apply(the, arguments);
             the._options = dato.extend(!0, {}, defaults, options);
             the._id = alienIndex++;
             the._init();
@@ -205,7 +202,7 @@ define(function (require, exports, module) {
                 modification.remove(the._$tooltip);
             });
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
 

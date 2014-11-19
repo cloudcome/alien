@@ -9,7 +9,6 @@ define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/index
      * @requires libs/Template
-     * @requires libs/Emitter
      * @requires util/dato
      * @requires util/class
      * @requires core/dom/selector
@@ -25,9 +24,8 @@ define(function (require, exports, module) {
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
-    var Emitter = require('../../libs/Emitter.js');
     var dato = require('../../util/dato.js');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -45,7 +43,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Imgclip = uiGenerator({
+    var Imgclip = generator({
         STATIC: {
             defaults: defaults
         },
@@ -59,7 +57,6 @@ define(function (require, exports, module) {
                 throw 'instance require an element';
             }
 
-            Emitter.apply(the);
             the._$ele = $ele[0];
             the._options = options = dato.extend(!0, {}, defaults, options);
 
@@ -383,7 +380,7 @@ define(function (require, exports, module) {
             the._resize.destroy();
             modification.remove(the._$wrap);
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
     module.exports = Imgclip;

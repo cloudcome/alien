@@ -11,7 +11,6 @@ define(function (require, exports, module) {
      * @requires util/class
      * @requires util/dato
      * @requires libs/Pagination
-     * @requires libs/Emitter
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -21,10 +20,9 @@ define(function (require, exports, module) {
     'use strict';
 
     var style = require('css!./style.css');
-    var uiGenerator = require('../generator.js');
+    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var libsPagination = require('../../libs/Pagination.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -38,7 +36,7 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = ui({
+    var Pagination = generator({
         STATIC: {
             /**
              * 默认配置
@@ -62,7 +60,6 @@ define(function (require, exports, module) {
             }
 
             the._$ele = the._$ele[0];
-            Emitter.apply(the, arguments);
             the._options = dato.extend(!0, {}, defaults, options);
             the._init();
         },
@@ -130,7 +127,7 @@ define(function (require, exports, module) {
             the._un();
             the._$ele.innerHTML = '';
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
 

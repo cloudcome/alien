@@ -24,7 +24,6 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
     var uiGenerator = require('../generator.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -76,7 +75,6 @@ define(function (require, exports, module) {
             }
 
             the._$ele = the._$ele[0];
-            Emitter.apply(the, arguments);
             the._options = dato.extend(!0, {}, defaults, options);
             the._id = alienIndex++;
             the._init();
@@ -711,7 +709,7 @@ define(function (require, exports, module) {
             modification.remove(the._$trackY);
             modification.unwrap(the._$ele, 'div div');
         }
-    }, Emitter);
+    });
 
     modification.importStyle(style);
 
