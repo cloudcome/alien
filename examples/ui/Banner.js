@@ -101,4 +101,6 @@ define(function (require) {
         banner.destroy();
         banner = null;
     };
+
+    window.banner = banner;
 });

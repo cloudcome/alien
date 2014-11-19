@@ -120,7 +120,7 @@ define(function (require, exports, module) {
             the._translate = 0;
             the._direction = options.axis.indexOf('x') > -1 ? 'X' : 'Y';
             the._increase = options.axis.indexOf('-') > -1 ? -1 : 1;
-            the._distance = the._direction === 'X' ? options.width : options.height;
+            the._distance = 0;
             the._isPrivatePlay = false;
             the._playTimeID = 0;
         },
@@ -353,17 +353,23 @@ define(function (require, exports, module) {
         resize: function (size) {
             var the = this;
             var options = the._options;
-            var set = the._calTranslate(the._$items.length > 5 ? -(the._showIndex + 2) * the._distance : 0);
-            var width = options.width * (the._direction === 'X' ? the._$items.length : 1);
-            var height = options.height * (the._direction === 'Y' ? the._$items.length : 1);
+            var set;
+            var width;
+            var height;
+
+            options.width = size.width || options.width;
+            options.height = size.height || options.height;
+            width = options.width * (the._direction === 'X' ? the._$items.length : 1);
+            height = options.height * (the._direction === 'Y' ? the._$items.length : 1);
+            the._distance = the._direction === 'X' ? options.width : options.height;
+            set = the._calTranslate(the._$items.length > 5 ? -(the._showIndex + 2) * the._distance : 0);
 
             dato.extend(true, set, {
                 position: 'relative',
                 width: width,
                 height: height
             });
-            options.width = size.width || options.width;
-            options.height = size.height || options.height;
+
             dato.each(the._$items, function (index, item) {
                 attribute.css(item, {
                     position: 'relative',
