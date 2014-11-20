@@ -306,7 +306,7 @@ define(function (require, exports, module) {
      * var s = "𠮷";
      * s.length = 2;
      * dato.length(s);
-     * // => 3
+     * // => 1
      */
     exports.length = function (string) {
         string += '';
