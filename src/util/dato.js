@@ -16,6 +16,8 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection'.split(' ');
+    var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
+    var REG_STRING_FIX = /[.*+?^=!:${}()|[\]\/\\]/g;
 
 
     /**
@@ -262,7 +264,7 @@ define(function (require, exports, module) {
      * // => '\/'
      */
     exports.fixRegExp = function (regExpString) {
-        return regExpString.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&');
+        return regExpString.replace(REG_STRING_FIX, '\\$&');
     };
 
 
@@ -291,5 +293,24 @@ define(function (require, exports, module) {
         }
 
         return k;
+    };
+
+
+    /**
+     * 计算字符串长度
+     * 双字节的字符使用 length 属性计算不准确
+     * @ref http://es6.ruanyifeng.com/#docs/string
+     * @param string {String} 原始字符串
+     *
+     * @example
+     * var s = "𠮷";
+     * s.length = 2;
+     * dato.length(s);
+     * // => 3
+     */
+    exports.length = function (string) {
+        string += '';
+
+        return string.replace(REG_NOT_UTF16_SINGLE, '*').length;
     };
 });
