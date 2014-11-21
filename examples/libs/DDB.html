@@ -77,22 +77,9 @@
 <p><b>BINDING:</b></p>
 
 <div id="demo">
-    <input type="text" al-model="name"/>
+    <p>输入：<input type="text" al-model="name"/></p>
 
-    <p
-            al-class="{abc: name==='云淡然',def: name!=='云淡然'}"
-            al-style="{fontSize: loves.length + 10 + 'px'}">
-        hi, <b al-html="name ? name: 'GUEST'"></b>，
-        你的第一个爱好为<em al-html="loves[0]"></em>
-    </p>
-
-    <ul>
-        <li al-repeat="index,love in loves">
-            <b al-html="index+1"></b>
-            =&gt;
-            <span al-html="love"></span>
-        </li>
-    </ul>
+    <p>输出：<strong al-html="name"></strong></p>
 </div>
 <p class="center">
     <button id="btn">=</button>
@@ -106,7 +93,7 @@
 
 <p><b>DATA:</b></p>
 
-<div id="data"></div>
+<pre id="data"></pre>
 
 
 <script src="../coolie.min.js" data-main="./libs/DDB.js"></script>

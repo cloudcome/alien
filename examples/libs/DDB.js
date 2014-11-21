@@ -2,11 +2,11 @@ define(function (require) {
     'use strict';
 
     var DDB = require('/src/libs/DDB.js');
+    var random = require('/src/util/random.js');
     var data = {
         name: '云淡然',
         loves: []
     };
-    var index = 1;
     var $data = document.getElementById('data');
     var $demo = document.getElementById('demo');
     var $btn = document.getElementById('btn');
@@ -26,18 +26,17 @@ define(function (require) {
 
         // 实例化一个DDB（DOM-DATA-BINDING）
         ddb = new DDB($demo, data);
-        window.ddb = ddb;
 
         // 数据发生变化回调
         ddb.on('change', function (data) {
-            $data.innerHTML = JSON.stringify(data);
+            $data.innerHTML = JSON.stringify(data, null, 4);
         });
     };
 
     $btn2.onclick = function () {
         // 手动更新数据
         ddb.update(function (data, next) {
-            data.loves[0] = '随机爱好' + (index++);
+            data.loves[0] = '随机爱好' + random.string();
             next();
         });
     };
@@ -48,7 +47,7 @@ define(function (require) {
             var max = data.loves.length;
             var pos = _random(0, max);
 
-            data.loves.splice(pos, 0, '随机爱好' + (index++));
+            data.loves.splice(pos, 0, '随机爱好' + random.string());
             next();
         });
     };
@@ -79,11 +78,4 @@ define(function (require) {
     function _random(min, max) {
         return Math.floor(Math.random() * (max - 1) + min);
     }
-});/*!
- * DDB
- * @author ydr.me
- * @create 2014-10-25 21:03
- */
-
-'use strict';
-
+});

@@ -6,8 +6,7 @@
   "scripts": {
     "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
-    "test": "node ./node_modules/mocha/bin/mocha -R spec -t 10000 ./test/**/*.test.js",
-    "lex": "node ./node_modules/jison/lib/cli.js ./src/libs/Lex.jison -o ./src/libs/Lex.js -m commonjs"
+    "test": "node ./node_modules/mocha/bin/mocha -R spec -t 10000 ./test/**/*.test.js"
   },
   "preferGlobal": false,
   "bin": {},
@@ -38,7 +37,6 @@
   "licenses": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "jison": "^0.4.15",
     "jsdoc": "^3.3.0-alpha10",
     "karma": "^0.12.25",
     "karma-mocha": "^0.1.9",

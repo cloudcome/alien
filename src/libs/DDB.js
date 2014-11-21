@@ -1,7 +1,24 @@
 /*!
  * DDB.js
  * @author ydr.me
- * @create 2014-10-18 12:12
+ * @create 2014年11月21日 16:01:20
+ */
+
+
+/**
+
+ // AST
+
+ {
+    node: $ele,
+    children: {
+        node: $ele,
+        children: {
+           ...
+        }
+    }
+ }
+
  */
 
 
@@ -11,6 +28,7 @@ define(function (require, exports, module) {
      * @module libs/DDB
      * @requires util/class
      * @requires util/dato
+     * @requires util/random
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -20,37 +38,26 @@ define(function (require, exports, module) {
 
     var klass = require('../util/class.js');
     var dato = require('../util/dato.js');
+    var random = require('../util/random.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
     var event = require('../core/event/base.js');
     var Emitter = require('./Emitter.js');
-    var alienKey = 'alien-libs-DDB-';
-    var alienIndex = 1;
-    var regRepeat = /^(([^,]+)+\s*,\s*)?(.*)\s+in\s+(.*)$/;
-    var regAlien = /^al-/;
-    var regClass = /^alien-[\da-z]{10}$/;
+    var alienKey = 'alien-libs-DDB';
+    var REG_ALIEN_ATTR = /^al-/i;
     var DDB = klass.create({
-        STATIC: {},
-
-
-        /**
-         * 构造函数
-         * @param ele
-         * @param data
-         */
-        constructor: function (ele, data) {
+        constructor: function ($ele) {
             var the = this;
 
-            ele = selector.query(ele);
+            the._$ele = selector.query($ele);
 
-            if (!ele.length) {
-                throw new Error('data binding must have an element');
+            if (!the._$ele.length) {
+                throw new Error('instance require an element');
             }
 
             Emitter.apply(the, arguments);
-            the._ele = ele[0];
-            the._data = data || {};
+            the._$ele = the._$ele[0];
             the._init();
         },
 
@@ -62,477 +69,138 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-            // 元素表
-            the._elesMap = {};
-            // 渲染表
-            the._parseMap = {};
-            // 重复表
-            the._repeatItems = [];
-            the._repeatTemps = {};
-            // 忽略渲染的节点
-            the._ignore = null;
-            // 状态，0=初始化阶段，1=更新阶段
-            the._state = 0;
-            // 解析
-            the._parse(the._ele);
-            // 事件监听
-            the._on();
-            // 渲染
-            the._render(the._parseMap, the._data);
+            the._data = {};
+            the._parser = [];
+            the._scanNodes(the._$ele);
         },
 
 
-        _parse: function (begin) {
+        /**
+         * 扫描节点
+         * @private
+         */
+        _scanNodes: function ($ele) {
             var the = this;
-            var children = selector.children(begin);
-            var parser = [];
 
-            if (!children.length) {
-                return parser;
-            }
-
-            dato.each(children, function (i, child) {
-                var attrs = child.attributes;
-                var className = 'alien-' + _randomString(10);
-
-                the._elesMap[alienIndex] = child;
-
-                child[alienKey + 'index'] = alienIndex;
-                attribute.addClass(child, className);
-
-                // 查找到所有符合的属性
-                dato.each(attrs, function (j, attr) {
-                    var name = attr.name;
-                    var val = attr.value;
-                    var type;
-                    var json;
-                    var repeatInfo;
-                    var closestRepeat;
-                    var closestRepeatIndex;
-                    var render;
-
-                    if (regAlien.test(attr.name)) {
-                        type = name.slice(3);
-
-                        if (type === 'repeat') {
-                            repeatInfo = val.match(regRepeat);
-
-                            if (repeatInfo) {
-                                the._parseMap[child[alienKey + 'index']] = {
-                                    index: alienIndex,
-                                    // 节点
-                                    node: child,
-                                    className: className,
-                                    // 渲染数据
-                                    render: [],
-                                    // 子集
-                                    repeat: {
-                                        node: child,
-                                        index: alienIndex,
-                                        type: type,
-                                        exp: val,
-                                        data: the._data,
-                                        key: repeatInfo[2],
-                                        val: repeatInfo[3],
-                                        name: repeatInfo[4],
-                                        map: {}
-                                    }
-                                };
-                                the._repeatItems.push(alienIndex);
-                                // the._repeatTemps[alienIndex] = child.cloneNode(!0);
-                            }
-                        } else {
-                            closestRepeat = the._closestRepeat(child);
-
-                            if (closestRepeat) {
-                                closestRepeatIndex = closestRepeat[alienKey + 'index'];
-
-                                the._findFather(closestRepeatIndex)[alienIndex] = {
-                                    node: child,
-                                    className: className,
-                                    render: [],
-                                    repeat: {}
-                                };
-                                render = the._findFather(closestRepeatIndex)[alienIndex].render;
-                            }
-                        }
-
-                        if (!render && !the._parseMap[alienIndex]) {
-                            the._parseMap[alienIndex] = {
-                                index: alienIndex,
-                                node: child,
-                                className: className,
-                                render: [],
-                                repeat: {}
-                            };
-                        }
-
-                        if (!render) {
-                            render = the._parseMap[alienIndex].render;
-                        }
-
-                        if (type === 'class' || type === 'style') {
-                            json = _parseJSON(val);
-
-                            dato.each(json, function (val, exp) {
-                                render.push({
-                                    index: alienIndex,
-                                    type: type,
-                                    exp: exp,
-                                    val: val,
-                                    data: the._data
-                                });
-                            });
-                        } else {
-                            render.push({
-                                index: alienIndex,
-                                type: type,
-                                exp: val,
-                                data: the._data
-                            });
-                        }
-                    }
-                });
-
-                alienIndex++;
-                the._parse(child);
-
-            });
-        },
-
-        _closestRepeat: function (node) {
-            var ret = null;
-
-            while (node !== this._ele) {
-                node = node.parentNode;
-
-                if (attribute.attr(node, 'al-repeat')) {
-                    ret = node;
-                    break;
+            dato.each($ele.childNodes, function (index, $ele) {
+                if ($ele.nodeType === 1) {
+                    $ele[alienKey] = {};
+                    the._parser.push($ele);
+                    the._parseElement($ele);
                 }
-            }
-
-            return ret;
-        },
-
-        _findFather: function (i) {
-            var find = null;
-            var src = this._parseMap;
-
-            i = dato.parseInt(i, 0);
-
-            _each(src);
-
-            function _each(father) {
-                if (find) {
-                    return find;
-                }
-
-                dato.each(father, function (j, obj) {
-                    if (obj.repeat && i === dato.parseInt(obj.repeat.index, 0)) {
-                        find = obj.repeat.map;
-                        return !1;
-                    }
-
-                    if (i === dato.parseInt(j, 0)) {
-                        find = father[j];
-                        return !1;
-                    }
-
-                    if (obj.repeat && obj.repeat.map) {
-                        _each(obj.repeat.map);
-                    }
-                });
-            }
-
-            return find;
-        },
-
-        _on: function () {
-            var the = this;
-            var ele = the._ele;
-
-            event.on(ele, 'input change', function (eve) {
-                var node = eve.target;
-                var index = node[alienKey + 'index'];
-                var val = node.value;
-                var parser;
-
-                // 存在的元素
-                if (index) {
-                    parser = the._parseMap[index];
-
-                    dato.each(parser.render, function (i, rd) {
-                        if (rd.type === 'model') {
-                            the._ignore = node;
-                            the._data[rd.exp] = val;
-                            the._render(the._parseMap, the._data);
-                            return !1;
-                        }
-                    });
-                }
-            });
-        },
-
-        _render: function (maps, data) {
-            var the = this;
-            var isFirstRender = the._state === 0;
-
-            the._state = 1;
-            the.emit('change', the._data);
-
-            dato.each(maps, function (i, map) {
-                var node = map.node;
-                var repeatName = map.repeat.name;
-                var repeatKey = map.repeat.key;
-                var repeatVal = map.repeat.val;
-                var eachLength = repeatName ? Object.keys(data[repeatName]).length : 0;
-                var eachIndex = 0;
-                var childrenLength;
-                var repeatFather;
-                var repeatChild;
-                var isRepeat = the._repeatItems.indexOf(map.index) > -1;
-
-                if (isFirstRender && isRepeat) {
-                    the._repeatTemps[map.index] = {
-                        parentClass: _getSignClass(node.parentNode),
-                        clone: node.cloneNode(!0)
-                    };
-                }
-
-                // 上次有数据，本次被清除
-                if (!eachLength && isRepeat && (!the._lastData || Object.keys(the._lastData[repeatName]).length)) {
-                    repeatFather = selector.query('.' + the._repeatTemps[map.index].parentClass, the._ele)[0];
-                    repeatFather.innerHTML = '';
-                }
-
-                if (map.repeat.map && eachLength) {
-                    childrenLength = selector.query('.' + map.className, the._ele).length;
-                    repeatFather = selector.query('.' + the._repeatTemps[map.index].parentClass, the._ele)[0];
-                    repeatChild = the._repeatTemps[map.index].clone;
-
-                    // repeat 项目不够
-                    if (eachLength > childrenLength) {
-                        while (eachLength > childrenLength) {
-                            modification.insert(repeatChild.cloneNode(!0), repeatFather, 'beforeend');
-                            childrenLength++;
-                        }
-                    }
-                    // repeat 项目超出
-                    else if (eachLength < childrenLength) {
-                        while (eachLength < childrenLength) {
-                            modification.remove(repeatFather.lastChild);
-                            childrenLength--;
-                        }
-                    }
-
-                    dato.each(data[repeatName], function (key, val) {
-                        var d1 = {};
-                        var d2;
-
-                        if (repeatKey) {
-                            d1[repeatKey] = key;
-                        }
-
-                        d1[repeatVal] = val;
-                        d2 = dato.extend(!0, {}, data, d1);
-                        d2[alienKey + 'index'] = eachIndex;
-                        the._render(map.repeat.map, d2);
-                        eachIndex++;
-                    });
-                }
-
-                dato.each(map.render, function (j, rd) {
-                    var exeVal;
-                    var selectIndex = data[alienKey + 'index'] !== undefined ? data[alienKey + 'index'] : 0;
-                    var node = selector.query('.' + map.className, the._ele)[selectIndex];
-
-                    if (node !== the._ignore) {
-                        exeVal = rd.type === 'repeat' ?
-                            null :
-                            _exe(rd.exp, isFirstRender ? rd.data : data);
-
-                        switch (rd.type) {
-                            case 'html':
-                                if (node.innerHTML !== exeVal) {
-                                    node.innerHTML = exeVal;
-                                }
-
-                                break;
-
-                            case 'text':
-                                if (node.textContent !== exeVal) {
-                                    node.textContent = exeVal;
-                                }
-
-                                break;
-
-                            case 'value':
-                            case 'model':
-                                if (node.value !== exeVal) {
-                                    node.value = exeVal;
-                                }
-
-                                break;
-
-                            case 'class':
-                                attribute[(exeVal ? 'add' : 'remove') + 'Class'](node, rd.val);
-                                break;
-
-                            case 'style':
-                                attribute.css(node, rd.val, exeVal);
-                                break;
-                        }
-                    }
-                });
             });
         },
 
 
         /**
-         * 手动更新数据
-         * @param {Function} 回调
-         * @chainable
-         *
-         * @example
-         * ddb.update(function(data, next){
-         *    // 这里的数据可以是异步，也可以同步修改的
-         *    // 只需要在数据最终状态处，执行 next(); 即可
-         *    // data 是当前的数据，修改的话，请直接修改 data
-         *    next();
-         * });
+         * 解析元素
+         * @private
          */
-        update: function (callback) {
+        _parseElement: function ($ele) {
             var the = this;
-            var next = function () {
-                the._render(the._parseMap, the._data);
-            };
 
-            the._lastData = dato.extend(!0, {}, the._data);
-            callback.call(the, the._data, next);
+            the._parseAttrs($ele);
+            the._scanNodes($ele);
+        },
 
-            return the;
+
+        /**
+         * 解析属性
+         * @private
+         */
+        _parseAttrs: function ($ele) {
+            var the = this;
+            var attrs = $ele.attributes;
+
+            dato.each(attrs, function (index, attr) {
+                var name = attr.name.toLowerCase();
+                var val = attr.value;
+                var relName;
+
+                if (REG_ALIEN_ATTR.test(name)) {
+                    relName = name.slice(3);
+
+                    switch (relName) {
+                        case 'style':
+                        case 'html':
+                        case 'class':
+                        case 'model':
+                        case 'repeat':
+                            $ele[alienKey][relName] = {
+                                // 表达式
+                                exp: val,
+                                // 绑定数据
+                                data: {}
+                            };
+                            break;
+                    }
+
+                    if (relName === 'model') {
+                        $ele[alienKey][relName].data[val] = $ele.value;
+                        the._listenModel($ele);
+                    }
+                }
+            });
+        },
+
+
+        /**
+         * 监听数据模型
+         * @param $ele
+         * @private
+         */
+        _listenModel: function ($ele) {
+            var the = this;
+
+            event.on($ele, 'change input', function(){
+                the._data[this[alienKey].model.exp] = this.value;
+                the.update(the._data);
+            });
+        },
+
+
+        /**
+         * 执行表达式
+         * @param type
+         * @param exp
+         * @param data
+         * @private
+         */
+        _exec: function (type, exp, data) {
+            switch (type) {
+                case 'style':
+                    break;
+                case 'html':
+                    break;
+                case 'class':
+                    break;
+                case 'model':
+                    break;
+                case 'repeat':
+                    break;
+            }
+        },
+
+
+        /**
+         * 更新渲染数据
+         * @param data
+         */
+        update: function (data) {
+            var the = this;
+
+            dato.extend(true, the._data, data);
+            the.emit('change', the._data);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+
         }
     }, Emitter);
-
-
-    /**
-     * 解析 JSON 表达式
-     * @param str
-     * @returns {*}
-     * @private
-     */
-    function _parseJSON(str) {
-        var arr1 = str.trim().slice(1, -1).split(',');
-        var json = {};
-
-        dato.each(arr1, function (index, val) {
-            var arr2 = val.split(':');
-            var name = arr2[0].trim();
-            var exp = arr2[1].trim();
-
-            if (arr2.length === 2 && name && exp) {
-                json[name] = exp;
-            }
-        });
-
-        return json;
-    }
-
-
-    /**
-     * 执行表达式
-     * @param exp
-     * @param data
-     * @returns {String}
-     * @private
-     */
-    function _exe(exp, data) {
-        var fnStr = 'try{';
-
-        dato.each(data, function (key) {
-            if (key.indexOf('-') === -1) {
-                fnStr += 'var ' + key + '=data.' + key + ';';
-            }
-        });
-
-        fnStr += 'return ' + exp + '}catch(err){return err.message;}';
-
-        try {
-            return (new Function('data', fnStr))(data);
-        } catch (err) {
-            return err.message;
-        }
-    }
-
-
-    /**
-     * 随机范围数字
-     * @param min
-     * @param max
-     * @returns {number|*}
-     * @private
-     */
-    function _randomNumber(min, max) {
-        return Math.floor(Math.random() * (max - 1) + min);
-    }
-
-
-    /**
-     * 随机字符串
-     * @param length
-     * @returns {string}
-     * @private
-     */
-    function _randomString(length) {
-        var str = '';
-
-        while (length--) {
-            str += _randomNumber(0, 35).toString(36);
-        }
-
-        return str;
-    }
-
-
-    /**
-     * 获取标识class
-     * @param node
-     * @returns {string}
-     * @private
-     */
-    function _getSignClass(node) {
-        var list = node.classList;
-        var className = '';
-
-        dato.each(list, function (i, cn) {
-            if (regClass.test(cn)) {
-                className = cn;
-                return !1;
-            }
-        });
-
-        return className;
-    }
-
-
-    /**
-     * 为子节点添加ignore属性
-     * @param node
-     * @param ignore
-     * @private
-     */
-    function _ignoreNode(node, ignore) {
-        var children = selector.children(node);
-        var child;
-
-        while (children.length--) {
-            child = children[children.length];
-            child[alienKey + 'ignore'] = ignore;
-
-            _ignoreNode(child);
-        }
-    }
 
 
     module.exports = DDB;
