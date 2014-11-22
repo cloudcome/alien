@@ -37,6 +37,7 @@ define(function (require, exports, module) {
             the._ruleList = [];
             // 已经存在的验证规则
             the._ruleNames = {};
+            the.rules = {};
             // 选项
             the._options = dato.extend(true, {}, defaults, options);
         },
@@ -222,11 +223,13 @@ define(function (require, exports, module) {
                         the._ruleList.forEach(function (existRule) {
                             if (rule.name === existRule.name) {
                                 dato.extend(true, existRule, rule);
+                                the.rules[rule.name] = existRule;
                             }
                         });
                     } else {
                         the._ruleList.push(rule);
                         the._ruleNames[rule.name] = rule;
+                        the.rules[rule.name] = rule;
                     }
                 } else {
                     throw '`' + rule.name + '`的验证规则已经存在，不能重复添加，欲覆盖请传入第2个参数`isOverride`。';
