@@ -107,10 +107,14 @@ define(function (require, exports, module) {
         _ontrigger: function (eve) {
             var the = this;
             var $li = selector.closest(eve.target, 'li');
+            var triggerIndex = selector.index($li[0]);
 
             eve.preventDefault();
-            the._index = selector.index($li[0]);
-            the._getActive(eve.target);
+
+            if(triggerIndex !== the._index){
+                the._index = triggerIndex;
+                the._getActive();
+            }
         },
 
 
