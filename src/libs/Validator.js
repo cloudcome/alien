@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         // 是否在遇到非法就中断，默认false
         // true: 返回单个错误对象
         // false: 返回错误对象组成的对象
-        breakOnInvalid: false
+        isBreakOnInvalid: false
     };
     var Validator = klass.create({
         STATIC: {},
