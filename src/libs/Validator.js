@@ -311,8 +311,10 @@ define(function (require, exports, module) {
                 if (findIndex > -1) {
                     the._validate(the._ruleList[findIndex], data, callback);
                 } else {
-                    callback();
+                    callback(null, data);
                 }
+            }else{
+                callback(null, data);
             }
         },
 
