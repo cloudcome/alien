@@ -4,7 +4,6 @@ define(function (require) {
     var Validator = require('/src/libs/Validator.js');
     var selector = require('/src/core/dom/selector.js');
     var modification = require('/src/core/dom/modification.js');
-    var v1 = new Validator();
     var $username = document.getElementById('username');
     var $password = document.getElementById('password');
     var $email = document.getElementById('email');
@@ -12,6 +11,7 @@ define(function (require) {
     var $number = document.getElementById('number');
     var $submit = document.getElementById('submit');
     var $msg = document.getElementById('msg');
+    var v1 = new Validator();
 
     v1.pushRule({
         name: 'username',
@@ -68,15 +68,7 @@ define(function (require) {
         }
     });
 
-
-    _validatOne($username);
-    _validatOne($password);
-    _validatOne($email);
-    _validatOne($url);
-    _validatOne($number);
-
-
-    $submit.onclick = function () {
+    $submit.onclick = function (eve) {
         var data = {
             username: $username.value,
             password: $password.value,
@@ -100,7 +92,16 @@ define(function (require) {
                 $msg.innerHTML = '<li>全部验证通过</li>';
             }
         });
+
+        eve.preventDefault();
     };
+
+
+    _validatOne($username);
+    _validatOne($password);
+    _validatOne($email);
+    _validatOne($url);
+    _validatOne($number);
 
 
     /**
