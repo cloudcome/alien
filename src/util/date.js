@@ -254,6 +254,8 @@ define(function (require, exports, module) {
      * // => Sun Dec 21 2014 12:21:22 GMT+0800 (CST)
      */
     exports.parse = function (string) {
+        string = String(string);
+
         var date = new Date(string);
 
         if (_parseDate(date)) {
