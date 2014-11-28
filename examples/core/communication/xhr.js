@@ -4,21 +4,22 @@ define(function (require) {
     var xhr = require('/src/core/communication/xhr.js');
 
     xhr.ajax({
-        url: './data.json2',
-        dataType: 'json'
+        isCORS: true,
+        url: 'http://ydrimg.oss-cn-hangzhou.aliyuncs.com/test/README',
+        dataType: 'text'
     }).on('success', function (json) {
         console.log(json);
     }).on('error', function (err) {
         console.log(err);
     });
 
-    xhr.get('./data.json').on('success', function (json) {
-        console.log(json);
-    });
-
-    xhr.post('./data.json').on('success', function (json) {
-        console.log(json);
-    });
+    //xhr.get('./data.json').on('success', function (json) {
+    //    console.log(json);
+    //});
+    //
+    //xhr.post('./data.json').on('success', function (json) {
+    //    console.log(json);
+    //});
 
     //xhr.ajax({
     //    url: './data.json',
