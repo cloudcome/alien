@@ -4,7 +4,6 @@ define(function (require) {
     var xhr = require('/src/core/communication/xhr.js');
 
     xhr.ajax({
-        isCORS: true,
         url: 'http://ydrimg.oss-cn-hangzhou.aliyuncs.com/test/README',
         dataType: 'text'
     }).on('success', function (json) {
@@ -12,6 +11,13 @@ define(function (require) {
     }).on('error', function (err) {
         console.log(err);
     });
+
+
+    //var xhr = new XMLHttpRequest();
+    //xhr.open('get', 'http://ydrimg.oss-cn-hangzhou.aliyuncs.com/test/README');
+    //xhr.send();
+
+
 
     //xhr.get('./data.json').on('success', function (json) {
     //    console.log(json);

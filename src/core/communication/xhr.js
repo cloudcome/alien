@@ -22,6 +22,7 @@ define(function (require, exports, module) {
     var Emitter = require('../../libs/Emitter.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
+    var REG_DOMAIN = /^([\w-]+:)?\/\/([^\/]+)/;
     var defaults = {
         // 请求地址
         url: location.href,
@@ -60,11 +61,14 @@ define(function (require, exports, module) {
 
             options = dato.extend(!0, {}, defaults, options);
 
+            var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
+            var hasCrossDomain = requestDomain && requestDomain !== window.location.host;
+
             if (!options.headers) {
                 options.headers = {};
             }
 
-            if (!options.headers['X-Requested-With']) {
+            if (!options.headers['X-Requested-With'] && !hasCrossDomain) {
                 options.headers['X-Requested-With'] = 'XMLHttpRequest';
             }
 
@@ -130,7 +134,7 @@ define(function (require, exports, module) {
 
             xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
 
-            if(options.isCORS){
+            if (options.isCORS) {
                 xhr.withCredentials = true;
             }
 
