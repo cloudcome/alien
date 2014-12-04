@@ -313,4 +313,32 @@ define(function (require, exports, module) {
 
         return string.replace(REG_NOT_UTF16_SINGLE, '*').length;
     };
+
+
+    /**
+     * asscii to base64
+     * @param asscii
+     * @returns {string}
+     */
+    exports.atob = function (asscii) {
+        try {
+            return window.atob(encodeURIComponent(String(asscii)));
+        } catch (err) {
+            return '';
+        }
+    };
+
+
+    /**
+     * base64 to asscii
+     * @param base64
+     * @returns {string}
+     */
+    exports.btoa = function (base64) {
+        try {
+            return decodeURIComponent(window.btoa(String(base64)));
+        } catch (err) {
+            return '';
+        }
+    };
 });
