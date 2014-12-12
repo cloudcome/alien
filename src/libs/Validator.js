@@ -314,7 +314,7 @@ define(function (require, exports, module) {
                 } else {
                     callback(null, data);
                 }
-            }else{
+            } else {
                 callback(null, data);
             }
         },
@@ -334,11 +334,9 @@ define(function (require, exports, module) {
             var type;
             var over = function (err) {
                 // onafter
-                if (typeis(rule.onafter) === 'function') {
-                    val = rule.onafter(err, val, data);
+                if (typeis(rule.onafter) === 'function' && !err) {
+                    data[rule.name] = rule.onafter(val, data);
                 }
-
-                data[rule.name] = val;
 
                 // callback
                 if (typeis(callback) === 'function') {
