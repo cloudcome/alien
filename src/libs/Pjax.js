@@ -184,11 +184,11 @@ define(function (require, exports, module) {
                 }
             };
 
-            the.isCache = cache && Date.now() - cache.timeStamp < expires;
+            the.inCache = cache && Date.now() - cache.timeStamp < expires;
             the.emit('beforechange');
 
             // 有效期内
-            if (the.isCache) {
+            if (the.inCache) {
                 _render(true, cache.data);
             } else {
                 the._ajax(function (isSuccess, html) {
