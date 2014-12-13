@@ -26,11 +26,11 @@ define(function (require) {
     var num = 1;
 
     pjax.on('beforechange', function () {
-        $status.innerHTML = (this.isCache ? 'cache' : 'ajax') + ' loading....';
+        $status.innerHTML = (this.inCache ? 'cache' : 'ajax') + ' loading....';
     });
 
     pjax.on('afterchange', function () {
-        $status.innerHTML = (this.isCache ? 'cache' : 'ajax') + ' done';
+        $status.innerHTML = (this.inCache ? 'cache' : 'ajax') + ' done';
     });
 
     pjax.on('success', function (html) {
