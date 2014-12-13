@@ -35,10 +35,10 @@ define(function (require, exports, module) {
     var queryListenerMap = {};
     var queryAllListener = [];
     var matchesDefaults = {
-        // 是否忽略大小写，默认 false
-        isIgnoreCase: !1,
+        // 是否忽略大小写，默认 true
+        isIgnoreCase: true,
         // 是否忽略末尾斜杠，默认 true
-        isIgnoreEndSlash: !0
+        isIgnoreEndSlash: true
     };
     var hashchangeCallback = function (eve) {
         var newObject = exports.parse(eve.newURL);
