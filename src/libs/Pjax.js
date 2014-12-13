@@ -36,7 +36,7 @@ define(function (require, exports, module) {
             method: 'GET',
             dataType: 'text',
             headers: {
-                'X-Pjax-With': '1'
+                'X-Pjax-With': 'true'
             }
         }
     };
@@ -49,14 +49,14 @@ define(function (require, exports, module) {
         constructor: function ($container, options) {
             var the = this;
 
-            the._$container = selector.query($container);
+            the.$container = selector.query($container);
 
-            if (!the._$container.length) {
+            if (!the.$container.length) {
                 throw new Error('Pjax require $container element');
             }
 
             Emeitter.apply(the, arguments);
-            the._$container = the._$container[0];
+            the.$container = the.$container[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
@@ -90,10 +90,15 @@ define(function (require, exports, module) {
             var options = the._options;
 
             event.on(document, 'click', options.selector, function (eve) {
-                the.url = the._getURL(this);
-                the.state = attribute.data(this, options.stateData);
-                history.pushState(the.state, null, the.url);
-                the._render();
+                var url = the._getURL(this);
+
+                if (url !== the.url) {
+                    the.url = url;
+                    the.state = attribute.data(this, options.stateData);
+                    history.pushState(the.state, null, the.url);
+                    the._render();
+                }
+
                 eve.preventDefault();
             });
 
@@ -145,7 +150,7 @@ define(function (require, exports, module) {
          * @private
          */
         _getURL: function (parent) {
-            return parent.pathname + parent.search + parent.hash;
+            return parent.pathname + parent.search;
         },
 
 
@@ -161,8 +166,8 @@ define(function (require, exports, module) {
                 url: the.url
             })).on('success', function (html) {
                 callback(true, html);
-            }).on('error', function () {
-                callback(false);
+            }).on('error', function (err) {
+                callback(false, err.message);
             });
         },
 
@@ -180,7 +185,7 @@ define(function (require, exports, module) {
                 the.emit('afterchange');
 
                 if (the.emit(isSuccess ? 'success' : 'error', html) !== false) {
-                    the._$container.innerHTML = html;
+                    the.$container.innerHTML = html;
                 }
             };
 
