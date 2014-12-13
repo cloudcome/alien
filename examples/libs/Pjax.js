@@ -34,11 +34,10 @@ define(function (require) {
     });
 
     pjax.on('success', function (html) {
-
+        console.log(this);
     });
 
     pjax.on('error', function () {
-
     });
 
 
