@@ -1,5 +1,5 @@
 /*!
- * Validate.js
+ * Validator.js
  * @author ydr.me
  * @create 2014-10-05 23:29
  */
