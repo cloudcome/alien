@@ -39,6 +39,7 @@ define(function (require, exports, module) {
         top: 'center',
         title: '提示',
         content: 'Hello world!',
+        addClass: '',
         buttons: null,
         canDrag: true,
         timeout: -1
@@ -118,7 +119,8 @@ define(function (require, exports, module) {
                 top: options.top,
                 isWrap: false,
                 canDrag: false,
-                title: null
+                title: null,
+                addClass: options.addClass
             }).open();
 
             if (options.canDrag) {
@@ -260,6 +262,7 @@ define(function (require, exports, module) {
      * @param [options.top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
      * @param [options.title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
      * @param [options.content="Hello world!"] {String} 消息框内容
+     * @param [options.addClass=""] {String} 消息框添加的 className
      * @param [options.buttons=null] {Array|null} 消息框按钮数组，如：<code>["确定", "取消"]</code>
      * @param [options.canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
      * @param [options.timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms

@@ -7,7 +7,7 @@
         {{if isWrap}}
             {{if title}}
             <div class="alien-ui-dialog-header" draggablefor="{{title && canDrag ? 'alien-ui-dialog-' + id : 'null'}}">
-                <div class="alien-ui-dialog-title">{{title}}</div>
+                <div class="alien-ui-dialog-title">{{=title}}</div>
                 {{if !hideClose}}
                 <div class="alien-ui-dialog-close">×</div>
                 {{/if}}

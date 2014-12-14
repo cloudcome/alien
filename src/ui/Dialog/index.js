@@ -58,6 +58,7 @@ define(function (require, exports, module) {
         hideClose: false,
         duration: 345,
         easing: 'ease-in-out-back',
+        addClass: '',
         // 优先级2
         remote: null,
         remoteHeight: 400,
@@ -158,6 +159,7 @@ define(function (require, exports, module) {
             the._$bd = $bd;
             the._$dialog = $dialog;
             the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
+            attribute.addClass($dialog, options.addClass);
             modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
         },
 
@@ -572,6 +574,7 @@ define(function (require, exports, module) {
      * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
      * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
      * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
+     * @param [options.addClass=""] {String} 对话框添加的 className
      * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
      * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
      * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
