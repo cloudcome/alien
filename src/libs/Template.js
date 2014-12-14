@@ -135,7 +135,7 @@ define(function (require, exports, module) {
          */
         _init: function (template) {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
             var _var = 'alienTemplateOutput_' + Date.now();
             var fnStr = 'var ' + _var + '="";';
             var output = [];
@@ -151,11 +151,12 @@ define(function (require, exports, module) {
             };
             the._useFilters = {};
 
-            template.split(openTag).forEach(function (value) {
+            template.split(openTag).forEach(function (value, times) {
                 var array = value.split(closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
                 var parseVar;
+                var isEndIgnore;
 
                 parseTimes++;
 
@@ -172,7 +173,8 @@ define(function (require, exports, module) {
                         output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + openTag) + ';');
                         inIgnore = true;
                         parseTimes--;
-                    } else {
+                    }
+                    else {
                         if ((parseTimes % 2) === 0) {
                             throw new Error('find unclose tag ' + openTag);
                         }
@@ -186,12 +188,33 @@ define(function (require, exports, module) {
                 else if (array.length === 2) {
                     $0 = $0.trim();
                     inExp = false;
+                    isEndIgnore = $1.slice(-1) === '\\';
 
                     // 忽略结束
                     if (inIgnore) {
-                        output.push(_var + '+=' + the._lineWrap($0 + closeTag + $1) + ';');
+                        output.push(
+                            _var +
+                            '+=' + the._lineWrap((times > 1 ? openTag : '') +
+                                $0 + closeTag +
+                                (isEndIgnore ? $1.slice(0, -1) : $1)
+                            ) +
+                            ';');
                         inIgnore = false;
+
+                        // 下一次忽略
+                        if (isEndIgnore) {
+                            inIgnore = true;
+                            parseTimes--;
+                        }
+
                         return;
+                    }
+
+                    // 下一次忽略
+                    if (isEndIgnore) {
+                        inIgnore = true;
+                        parseTimes--;
+                        $1 = $1.slice(0, -1);
                     }
 
                     $1 = the._lineWrap($1);
