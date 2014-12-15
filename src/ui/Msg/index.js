@@ -8,24 +8,25 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Msg/index
-     * @requires util/class
+     * @requires ui/generator
      * @requires util/dato
+     * @requires libs/Template
+     * @requires ui/Dialog/index
      * @requires core/event/touch
      * @requires core/dom/selector
      * @requires core/dom/modification
-     * @requires ui/dialog
-     * @requires ui/generator
+     * @requires core/dom/attribute
      */
     'use strict';
 
-    var style = require('css!./style.css');
     var generator = require('../generator.js');
+    var style = require('css!./style.css');
+    var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
     var tpl = new Template(template);
-    var event = require('../../core/event/touch.js');
     var Dialog = require('../Dialog/index.js');
+    var event = require('../../core/event/touch.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
