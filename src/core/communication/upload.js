@@ -7,9 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/upload
-     * @requires util/dato
+     * @module core/communication/upload
      * @requires util/typeis
+     * @requires util/dato
      * @requires core/communication/xhr
      */
     'use strict';

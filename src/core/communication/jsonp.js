@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      * @requires util/dato
      * @requires util/class
      * @requires libs/Emitter
-     * @requires core/navigator/querystring
+     * @requires util/querystring
      * @requires core/dom/modification
      */
     'use strict';
