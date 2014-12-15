@@ -9,6 +9,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Editor/index
+     * @requires ui/generator
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -16,8 +17,8 @@ define(function (require, exports, module) {
      * @requires ui/Editor/editor
      * @requires util/dato
      * @requires util/typeis
+     * @requires util/date
      * @requires util/random
-     * @requires ui/generator
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -25,6 +26,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var generator = require('../generator.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -34,7 +36,6 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
-    var generator = require('../generator.js');
     var Scrollbar = require('../Scrollbar/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
