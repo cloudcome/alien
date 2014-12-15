@@ -8,23 +8,23 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pagination
-     * @requires util/class
+     * @requires ui/generator
      * @requires util/dato
      * @requires libs/Pagination
+     * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/touch
-     * @requires ui/generator
      */
     'use strict';
 
-    var style = require('css!./style.css');
     var generator = require('../generator.js');
+    var style = require('css!./style.css');
+    var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
