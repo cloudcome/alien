@@ -8,24 +8,23 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/index
+     * @requires ui/generator
      * @requires libs/Template
      * @requires util/dato
-     * @requires util/class
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/dom/animation
      * @requires core/event/drag
      * @requires ui/Resize/index
-     * @requires ui/generator
      */
     'use strict';
 
+    var generator = require('../generator.js');
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
     var dato = require('../../util/dato.js');
-    var generator = require('../generator.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
