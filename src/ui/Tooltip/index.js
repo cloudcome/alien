@@ -1,5 +1,5 @@
 /*!
- * Tooltip.js
+ * 提示UI
  * @author ydr.me
  * @create 2014-10-16 21:41
  */
