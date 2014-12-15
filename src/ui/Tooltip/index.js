@@ -8,18 +8,22 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Tooltip
-     * @requires util/class
-     * @requires util/dato
-     * @requires core/dom/selector
      * @requires ui/generator
+     * @requires util/dato
+     * @requires libs/Template
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/event/base
      */
     'use strict';
 
     var style = require('css!./style.css');
-    var uiGenerator = require('../generator.js');
+    var template = require('html!./template.html');
+    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -37,7 +41,7 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = uiGenerator({
+    var Tooltip = generator({
         STATIC: {
             /**
              * 默认配置
