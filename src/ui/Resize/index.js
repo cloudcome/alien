@@ -8,22 +8,20 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Resize/index
-     * @requires util/class
+     * @requires ui/generator
      * @requires util/dato
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/drag
-     * @requires ui/generator
      */
     'use strict';
 
-    var style = require('text!./style.css');
-    var template = require('text!./template.html');
     var generator = require('../generator.js');
+    var style = require('css!./style.css');
+    var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
-    var Emitter = require('../../libs/Emitter.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
