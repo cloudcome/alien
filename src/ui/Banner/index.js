@@ -8,12 +8,12 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Banner/index
+     * @requires ui/generator
      * @requires core/event/touch
      * @requires core/dom/modification
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/animation
-     * @requires ui/generator
      * @requires util/dato
      * @requires util/typeis
      * @requires libs/Template
@@ -26,12 +26,12 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var style = require('css!./style.css');
     var template = require('html!./template.html');
+    var generator = require('../generator.js');
     var event = require('../../core/event/touch.js');
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
-    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
     var Template = require('../../libs/Template.js');
