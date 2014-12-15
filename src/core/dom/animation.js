@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires util/dato
      * @requires util/typeis
+     * @requires util/easing
      * @requires core/navigator/compatible
      * @requires core/event/base
      */
