@@ -92,6 +92,7 @@ define(function (require, exports, module) {
             xhr.onload = function () {
                 var responseText = xhr.responseText;
                 var json;
+                var err;
 
                 // 200 - 300
                 if ((xhr.status >= 200 && xhr.status < 300) ||
@@ -103,11 +104,11 @@ define(function (require, exports, module) {
                         case 'json':
                             try {
                                 json = JSON.parse(responseText);
-                                oncallback(null, json);
-                            } catch (err) {
-                                oncallback(err);
+                            } catch (_err) {
+                                err = _err;
                             }
 
+                            oncallback(err, json);
                             break;
 
                         default:
