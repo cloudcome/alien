@@ -8,15 +8,16 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/xhr
-     * @requires util/dato
      * @requires util/typeis
-     * @requires core/navigator/querystring
+     * @requires util/dato
+     * @requires util/class
+     * @requires util/querystring
+     * @requires libs/Emitter
      */
     'use strict';
 
     var typeis = require('../../util/typeis.js');
     var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
     var klass = require('../../util/class.js');
     var qs = require('../../util/querystring.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -29,7 +30,7 @@ define(function (require, exports, module) {
         // 请求方式
         method: 'GET',
         // 响应数据类型：json、text
-        dataType: 'json',
+        type: 'json',
         // 请求 querystring
         query: {},
         // 请求数据
@@ -75,8 +76,18 @@ define(function (require, exports, module) {
             options.method = options.method.toUpperCase();
 
             var xhr = new XMLHttpRequest();
-
             var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
+            var oncallback = function (err, ret) {
+                the.emit('complete', err, ret);
+
+                if (err) {
+                    the.emit('error', err);
+                } else {
+                    the.emit('success', ret);
+                }
+
+                the.emit('finish', err, ret);
+            };
 
             xhr.onload = function () {
                 var responseText = xhr.responseText;
@@ -88,36 +99,34 @@ define(function (require, exports, module) {
                     xhr.status === 304 ||
                         // file
                     (xhr.status === 0 && protocol === 'file:')) {
-                    switch (options.dataType) {
+                    switch (options.type) {
                         case 'json':
                             try {
                                 json = JSON.parse(responseText);
-                                return the.emit(xhr, 'success', json);
+                                oncallback(null, json);
                             } catch (err) {
-                                return the.emit(xhr, 'error', err);
+                                oncallback(err);
                             }
 
                             break;
 
                         default:
-                            return the.emit(xhr, 'success', responseText);
+                            oncallback(null, responseText);
                     }
                 } else {
-                    return the.emit(xhr, 'error', new Error('transmission status error'));
+                    oncallback(new Error('transmission status error'));
                 }
             };
 
             xhr.onabort = function () {
-                the.emit(xhr, 'error', new Error('transmission is aborted'));
+                oncallback(new Error('transmission has aborted'));
             };
 
             xhr.ontimeout = function () {
-                the.emit(xhr, 'error', new Error('transmission has expired'));
+                oncallback(new Error('transmission has timeout'));
             };
 
-            xhr.onerror = function (err) {
-                the.emit(xhr, 'error', err);
-            };
+            xhr.onerror = oncallback;
 
             xhr.upload.onprogress = function (eve) {
                 eve.alienDetail = eve.alienDetail || {};
@@ -147,13 +156,13 @@ define(function (require, exports, module) {
             });
             xhr.send(_buildData(options));
 
-            the._xhr = xhr;
+            the.xhr = xhr;
             return the;
         },
         abort: function () {
             var the = this;
 
-            the._xhr.abort();
+            the.xhr.abort();
 
             return the;
         }
@@ -167,7 +176,7 @@ define(function (require, exports, module) {
          * @param {String} [options.url] 请求地址
          * @param {String} [options.method] 请求方法，默认 GET
          * @param {Object} [options.headers] 请求头
-         * @param {String} [options.dataType=json] 数据类型，默认 json
+         * @param {String} [options.type=json] 数据类型，默认 json
          * @param {String|Object} [options.query] URL querstring
          * @param {*} [options.data] 请求数据
          * @param {Boolean} [options.isAsync] 是否异步，默认 true

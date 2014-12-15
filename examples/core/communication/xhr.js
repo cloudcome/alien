@@ -4,37 +4,15 @@ define(function (require) {
     var xhr = require('/src/core/communication/xhr.js');
 
     xhr.ajax({
-        url: 'http://ydrimg.oss-cn-hangzhou.aliyuncs.com/test/README',
-        dataType: 'text'
+        url: 'http://s.ydr.me/p/t/test.txt',
+        type: 'text'
     }).on('success', function (json) {
         console.log(json);
     }).on('error', function (err) {
         console.log(err);
+    }).on('complete', function () {
+        console.log('complete');
+    }).on('finish', function () {
+        console.log('finish');
     });
-
-
-    //var xhr = new XMLHttpRequest();
-    //xhr.open('get', 'http://ydrimg.oss-cn-hangzhou.aliyuncs.com/test/README');
-    //xhr.send();
-
-
-
-    //xhr.get('./data.json').on('success', function (json) {
-    //    console.log(json);
-    //});
-    //
-    //xhr.post('./data.json').on('success', function (json) {
-    //    console.log(json);
-    //});
-
-    //xhr.ajax({
-    //    url: './data.json',
-    //    type: 'text'
-    //}).done(function (json) {
-    //    console.log(json);
-    //}).fail(function (err) {
-    //    console.log(err);
-    //}).progress(function (eve) {
-    //    console.log(eve.alienDetail.percent);
-    //});
 });
