@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * @requires util/dato
      * @requires util/typeis
      * @requires core/navigator/compatible
+     * @requires core/dom/selector
      */
     'use strict';
 
