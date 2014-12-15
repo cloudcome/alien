@@ -8,28 +8,27 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Scrollbar/index
+     * @requires ui/generator
      * @requires util/dato
-     * @requires util/class
+     * @requires libs/Template
+     * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
-     * @requires core/dom/selector
      * @requires core/dom/animation
      * @requires core/event/wheel
      * @requires core/event/drag
-     * @requires libs/Template
-     * @requires ui/generator
      */
     'use strict';
 
+    var generator = require('../generator.js');
     var style = require('css!./style.css');
-    var dato = require('../../util/dato.js');
-    var uiGenerator = require('../generator.js');
-    var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
+    var dato = require('../../util/dato.js');
+    var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
+    var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
-    var selector = require('../../core/dom/selector.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/wheel.js');
     var drag = require('../../core/event/drag.js');
@@ -60,7 +59,7 @@ define(function (require, exports, module) {
         cssEasing: 'in-out',
         jsEasing: 'swing'
     };
-    var Scrollbar = uiGenerator({
+    var Scrollbar = generator({
         STATIC: {
             defaults: defaults
         },
