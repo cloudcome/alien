@@ -11,12 +11,12 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires core/dom/modification
      * @requires core/dom/selector
+     * @requires core/dom/attribute
      * @requires core/dom/animation
-     * @requires util/class
+     * @requires ui/generator
      * @requires util/dato
      * @requires util/typeis
      * @requires libs/Template
-     * @requires ui/generator
      */
     'use strict';
 
