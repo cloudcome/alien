@@ -9,17 +9,14 @@ define(function (require, exports, module) {
     /**
      * @module ui/Dialog/index
      * @requires ui/generator
-     * @requires util/class
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires libs/Template
      * @requires core/dom/modification
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/animation
      * @requires core/event/touch
-     * @requires core/event/drag
-     * @requires core/navigator/compatible
-     * @requires libs/Template
+     * @requires util/dato
+     * @requires util/typeis
      *
      * @author ydr.me
      * @create 2014-10-04 02:33
@@ -30,9 +27,9 @@ define(function (require, exports, module) {
 
     require('../../core/event/drag.js');
     var style = require('css!./style.css');
+    var template = require('html!./template.html');
     var generator = require('../generator.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
     var tpl = new Template(template);
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
