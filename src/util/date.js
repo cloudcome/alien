@@ -244,6 +244,8 @@ define(function (require, exports, module) {
 
         return format;
     };
+
+
     /**
      * 解析时间
      * @param {String} string 时间字符串
@@ -266,6 +268,8 @@ define(function (require, exports, module) {
 
         return _parseDate(new Date(string));
     };
+
+
     /**
      * 是否为闰年
      * @param {Number} year 年份
@@ -278,6 +282,8 @@ define(function (require, exports, module) {
     exports.isLeapYear = function (year) {
         return (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
     };
+
+
     /**
      * 获得某年某月的天数
      * @param {Number} year 年
@@ -295,6 +301,8 @@ define(function (require, exports, module) {
 
         return month === 1 ? (this.isLeapYear(year) ? 29 : 28) : monthDates[month];
     };
+
+
     /**
      * 获得某年某月某日在当年的第几天
      * @param {Number} year 年份
@@ -314,6 +322,7 @@ define(function (require, exports, module) {
 
         return days;
     };
+
 
     /**
      * 计算某年某月某日是当年的第几周
@@ -340,6 +349,8 @@ define(function (require, exports, module) {
 
         return Math.ceil(pastDate / 7);
     };
+
+
     /**
      * 计算某年某月某日是当月的第几周
      * @param {Number} year 年

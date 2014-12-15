@@ -13,6 +13,7 @@ define(function (require, exports) {
      *
      * @module util/querystring
      * @requires util/dato
+     * @requires util/typeis
      */
     'use strict';
 
