@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
     var regDir = />/g;
-    var regComments = /\/\*+([\s\S]*?)\*+\//;
+    //var regComments = /\/\*+([\s\S]*?)\*+\//;
     var head = domSelector.query('head')[0] || document.documentElement;
 
     module.exports = {
