@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     var udf = 'undefined';
     var REG_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
     var REG_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
+    var REG_INVALID = /invalid/i;
 
 
     /**
@@ -186,6 +187,18 @@ define(function (require, exports, module) {
      */
     typeis.email = function (string) {
         return this(string) === 'string' && REG_EMAIL.test(string);
+    };
+
+
+    /**
+     * 判断能否转换为合法Date
+     * @param  {*}
+     * @return {Boolean}
+     * @version 1.0
+     * 2014年5月2日21:07:33
+     */
+    typeis.validDate = function (anything) {
+        return !REG_INVALID.test(new Date(anything).toString());
     };
 
 
