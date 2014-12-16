@@ -114,7 +114,7 @@ define(function (require, exports, module) {
             the._uploadList = [];
             the._history = [the._$ele.value];
             the._historyIndex = -1;
-            the._on();
+            the._initEvent();
             the._isFullscreen = false;
             the._initVal();
             attribute.addClass(the._$wrap, options.addClass);
@@ -133,20 +133,25 @@ define(function (require, exports, module) {
             var minTime = 24 * 60 * 60 * 1000;
             var deltaTime = Date.now() - local.ver;
             var humanTime = date.from(local.ver);
-            var done = function _done() {
+            var done = function () {
                 editor.focusEnd(the._$ele);
                 the._savePos();
             };
+            var value = the._$ele.value;
 
             // 1天之内的本地记录 && 内容不一致
-            if (deltaTime < minTime && local.val !== the._$ele.value) {
+            if (deltaTime < minTime && local.val !== value) {
                 new Msg({
-                    content: '是否恢复本地的历史记录？<br>本地记录时间为：<b>' + humanTime + '</b>。',
+                    content: '本地记录时间为：<b>' + humanTime + '</b>。' +
+                    '<br>本地缓存内容长度为：<b>' + local.val.length + '</b>' +
+                    '<br>当前内容长度为：<b>' + value.length + '</b>' +
+                    '<br>是否恢复？',
                     buttons: ['确定', '取消']
                 })
                     .on('close', function (index) {
                         if (index === 0) {
                             the._$ele.value = local.val;
+                            the._autoheight.resize();
                         } else {
                             the._saveLocal();
                         }
@@ -156,25 +161,6 @@ define(function (require, exports, module) {
                 done();
             }
         },
-
-
-        ///**
-        // * 切换编辑器的全屏模式
-        // */
-        //toggleFullscreen: function () {
-        //    var the = this;
-        //    var options = the._options;
-        //
-        //    if (the._isFullscreen) {
-        //        the._isFullscreen = false;
-        //        attribute.css(document.body, 'overflow', '');
-        //        attribute.removeClass(the._$wrap, alienClass + '-fullscreen');
-        //    } else {
-        //        the._isFullscreen = true;
-        //        attribute.css(document.body, 'overflow', 'hidden');
-        //        attribute.addClass(the._$wrap, alienClass + '-fullscreen');
-        //    }
-        //},
 
 
         /**
@@ -341,7 +327,7 @@ define(function (require, exports, module) {
          * 事件监听
          * @private
          */
-        _on: function () {
+        _initEvent: function () {
             var the = this;
             var $ele = the._$ele;
 
