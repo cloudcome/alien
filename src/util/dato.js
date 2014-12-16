@@ -316,6 +316,28 @@ define(function (require, exports, module) {
 
 
     /**
+     * 按长度补0填充数字
+     * @param  {Number|String} number 数字
+     * @param  {Number} length 长度
+     * @return {String} 修复后的数字
+     *
+     * @example
+     * fixedNumber(2, 4);
+     * // => "0002"
+     */
+    exports.fillNumber = function (number, length) {
+        var len = length;
+        var start = '';
+
+        while (len--) {
+            start += '0';
+        }
+
+        return (start + number).slice(-length);
+    };
+
+
+    /**
      * asscii to base64
      * @param asscii
      * @returns {string}
