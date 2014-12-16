@@ -345,10 +345,28 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
 
+            event.on(window, 'resize', the._onresize.bind(the));
             event.on($ele, 'keydown', the._onkeydown.bind(the));
             event.on($ele, 'input', the._oninput.bind(the));
             event.on($ele, 'drop', the._ondrop.bind(the));
             event.on($ele, 'paste', the._onpaste.bind(the));
+        },
+
+
+        /**
+         * window.onresize 时回调
+         * @private
+         */
+        _onresize: function () {
+            var the = this;
+
+            if (the._timerId) {
+                clearTimeout(the._timerId);
+            }
+
+            the._timerId = setTimeout(function () {
+                the._autoheight.resize();
+            }, 100);
         },
 
 

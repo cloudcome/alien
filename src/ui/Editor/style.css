@@ -19,6 +19,11 @@
     border: 1px solid #ddd;
 }
 
+.alien-ui-editor-fullscreen .alien-ui-editor-inner{
+    box-shadow: none;
+    border: 0;
+}
+
 .alien-ui-editor-inner .alien-ui-editor-textarea {
     overflow: hidden;
     resize: none;
