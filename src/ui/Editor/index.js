@@ -426,7 +426,6 @@ define(function (require, exports, module) {
          */
         _parseImgList: function (eve, items) {
             var the = this;
-            eve.preventDefault();
 
             the._uploadList = [];
             dato.each(items, function (index, item) {
@@ -447,7 +446,8 @@ define(function (require, exports, module) {
             if (the._uploadList.length) {
                 the._$ele.blur();
                 the._uploadDialog();
-            }else{
+            } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length) {
+                eve.preventDefault();
                 return new Msg({
                     content: '请拖拽或粘贴图片文件',
                     buttons: ['确定']
