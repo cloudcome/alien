@@ -49,6 +49,8 @@ define(function (require, exports, module) {
     var localStorage = window.localStorage;
     var pathname = location.pathname;
     var defaults = {
+        // 手动设置 ID
+        id: '',
         addClass: '',
         // tab 长度
         tabSize: 4,
@@ -268,6 +270,11 @@ define(function (require, exports, module) {
          */
         _calStoreId: function () {
             var the = this;
+
+            if (the._options.id) {
+                return the._storeId = the._options.id;
+            }
+
             var $ele = the._$ele;
             var atts = $ele.attributes;
             var attrList = [];
@@ -588,18 +595,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 销毁实例
-         */
-        destroy: function () {
-            var the = this;
-
-            the._un();
-            the._autoheight.destroy();
-            the._$ele.unwrap('div > div');
-        },
-
-
-        /**
          * 清除本地备份记录
          */
         clearStore: function () {
@@ -608,6 +603,25 @@ define(function (require, exports, module) {
             window.localStorage.setItem(the._storeId, '');
 
             return the;
+        },
+
+
+        /**
+         * 重置尺寸
+         */
+        resize: function () {
+            this._autoheight.resize();
+        },
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            the._un();
+            the._autoheight.destroy();
+            the._$ele.unwrap('div > div');
         }
     });
 

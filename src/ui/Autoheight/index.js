@@ -99,9 +99,9 @@ define(function (require, exports, module) {
                 overflow: 'hidden'
             });
             // 先插入字符，重新排版后还原
-            $ele.value = value + ' ';
-            $ele.value = value;
+            $ele.value = ' ';
             the._innerHeight = attribute.innerHeight(the._$ele);
+            $ele.value = value;
             the._initEvent();
         },
 
