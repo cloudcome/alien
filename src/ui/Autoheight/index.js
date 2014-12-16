@@ -92,6 +92,18 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+
+            the._initSize();
+            the._initEvent();
+        },
+
+
+        /**
+         * 初始化尺寸
+         * @private
+         */
+        _initSize: function () {
+            var the = this;
             var $ele = the._$ele;
             var value = $ele.value;
 
@@ -100,9 +112,9 @@ define(function (require, exports, module) {
             });
             // 先插入字符，重新排版后还原
             $ele.value = ' ';
+            the._$ele.style.height = 'auto';
             the._innerHeight = attribute.innerHeight(the._$ele);
             $ele.value = value;
-            the._initEvent();
         },
 
 
@@ -121,7 +133,11 @@ define(function (require, exports, module) {
         /**
          * 重新定位尺寸
          */
-        resize: adjust,
+        resize: function () {
+            var the = this;
+            the._initSize();
+            adjust.call(the);
+        },
 
 
         /**
