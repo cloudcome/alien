@@ -16,12 +16,9 @@ define(function (require, exports, module) {
 
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
-    var regInvalid = /invalid/i;
-    var regSep = /-/g;
-    var regChinese = /[\u4e00-\u9fa5]/g;
-    var regAPM = /[ap]m/ig;
     var weeks = '日一二三四五六';
     var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var REG_RANGE = /^(this|in|prev|next)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
 
 
     /**
@@ -99,9 +96,7 @@ define(function (require, exports, module) {
         }
 
         format = format || 'YYYY-MM-DD HH:mm:ss www';
-        date = typeis(date) === 'date' ? date : new Date(date || Date.now());
-        date = this.parse(date);
-        date = date || new Date();
+        date = exports.parse(date);
         config = config || {};
 
         var Y = String(date.getFullYear());
@@ -127,7 +122,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'MM',
-                val: _fixNumber(M),
+                val: dato.fillNumber(M, 2),
                 is: 'M'
             },
             {
@@ -137,7 +132,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'DD',
-                val: _fixNumber(D),
+                val: dato.fillNumber(D, 2),
                 is: 'D'
             },
             {
@@ -147,7 +142,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'HH',
-                val: _fixNumber(H),
+                val: dato.fillNumber(H, 2),
                 is: 'H'
             },
             {
@@ -157,7 +152,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'hh',
-                val: _fixNumber(h),
+                val: dato.fillNumber(h, 2),
                 is: 'h'
             },
             {
@@ -167,7 +162,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'mm',
-                val: _fixNumber(m),
+                val: dato.fillNumber(m, 2),
                 is: 'm'
             },
             {
@@ -177,7 +172,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'ss',
-                val: _fixNumber(s),
+                val: dato.fillNumber(s, 2),
                 is: 's'
             },
             {
@@ -187,12 +182,12 @@ define(function (require, exports, module) {
             },
             {
                 key: 'SSS',
-                val: _fixNumber(S, 3),
+                val: dato.fillNumber(S, 3),
                 is: 'S'
             },
             {
                 key: 'SS',
-                val: _fixNumber(S, 2),
+                val: dato.fillNumber(S, 2),
                 is: 'S'
             },
             {
@@ -248,25 +243,17 @@ define(function (require, exports, module) {
 
     /**
      * 解析时间
-     * @param {String} string 时间字符串
-     * @returns {Date|null}
+     * @param {String|Date} string 时间字符串
+     * @returns {Date}
      *
      * @example
      * date.parse('12/21/2014 12:21:22');
      * // => Sun Dec 21 2014 12:21:22 GMT+0800 (CST)
      */
     exports.parse = function (string) {
-        string = String(string);
+        var date = typeis(string) === 'date' ? string : new Date(string);
 
-        var date = new Date(string);
-
-        if (_parseDate(date)) {
-            return date;
-        }
-
-        string = string.replace(regSep, '/').replace(regChinese, '').replace(regAPM, '');
-
-        return _parseDate(new Date(string));
+        return typeis.validDate(date) ? new Date(date) : new Date();
     };
 
 
@@ -424,9 +411,9 @@ define(function (require, exports, module) {
      */
     exports.from = function (date, compareDate) {
         compareDate = compareDate || new Date();
-        compareDate = this.parse(compareDate);
+        compareDate = exports.parse(compareDate);
 
-        var old = this.parse(date);
+        var old = exports.parse(date);
         var oldTime;
         var diff;
         var seconds;
@@ -498,37 +485,98 @@ define(function (require, exports, module) {
 
 
     /**
-     * 解析为合法的日期
-     * @param {Date|Object|String|Number}date
-     * @returns {Date|null}
-     * @private
+     * 计算日期范围
+     * @param type {String} 可选
+     * `this N days`/`this N weeks`/`this N months`/`this N years` 当日/周/月/年
+     * `in Ndays`/`in N weeks`/`in N months`/`in N years` 几日/周/月/年内
+     * @param [from] {Date} 起点时间，默认为当前时间
+     * @returns {{from: Date, to: Date}}
      */
-    function _parseDate(date) {
-        var type = typeis(date);
+    exports.range = function (range, from) {
+        range = String(range).toLowerCase();
 
-        if (type !== 'date') {
-            date = new Date(date);
+        var temp = range.match(REG_RANGE);
+
+        if (!temp) {
+            throw new Error('date range error');
         }
 
-        return regInvalid.test(date.toString()) ? null : date;
-    }
+        var type = temp[1];
+        var value = dato.parseInt(temp[2] || 1);
+        var scope = temp[3];
+        var oneDayMilliseconds = 1 * 24 * 60 * 60 * 1000;
 
-    /**
-     * 修复十进制数字，4 => '04'
-     * @param {Number|String} num 数字
-     * @param {Number} [length=2] 长度，默认2
-     * @returns {Number|string}
-     * @private
-     */
-    function _fixNumber(num, length) {
-        num = String(num);
-        length = length || 2;
+        from = exports.parse(from);
 
-        while (num.length < length) {
-            num = '0' + num;
+        var thisYear = from.getFullYear();
+        var thisMonth = from.getMonth();
+        var thisDate = from.getDate();
+        var thisDay = from.getDay();
+
+        // 今日 00:00:00:000
+        from.setHours(0);
+        from.setMinutes(0);
+        from.setSeconds(0);
+        from.setMilliseconds(0);
+        // 昨日 23:59:59:999
+        var to = new Date(from.getTime() - 1);
+
+        switch (type) {
+            case 'this':
+
+                switch (scope) {
+                    case 'day':
+                        to.setDate(thisDate + value - 1);
+                        break;
+
+                    case 'week':
+                        from.setDate(thisDate + (1 - thisDay) + (value - 1) * 7);
+                        to.setDate(thisDate + (7 - thisDay) + (value - 1) * 7);
+                        break;
+
+                    case 'month':
+
+                        from.setDate(1);
+                        to.setMonth(thisMonth + value, 1);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+
+                    case 'year':
+                        from.setMonth(0);
+                        from.setDate(1);
+                        to.setFullYear(thisYear + value - 1);
+                        to.setMonth(12, 1);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+                }
+                break;
+
+            case 'in':
+                switch (scope) {
+                    case 'day':
+                        to.setDate(thisDate + value - 1);
+                        break;
+
+                    case 'week':
+                        to.setDate(thisDate + (7 - thisDay) + (value - 1) * 7);
+                        break;
+
+                    case 'month':
+                        to.setMonth(thisMonth + value, 1);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+
+                    case 'year':
+                        to.setFullYear(thisYear + value, thisMonth, thisDate);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+                }
+                break;
         }
 
-        return num;
-    }
-
+        return {
+            from: from,
+            to: to
+        };
+    };
 });
