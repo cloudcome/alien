@@ -41,8 +41,8 @@ define(function (require, exports, module) {
         tabindex: -1,
         style: {
             position: 'absolute',
-            //top: -9999,
-            //left: -9999,
+            top: -9999,
+            left: -9999,
             right: 'auto',
             bottom: 'auto',
             border: 0,

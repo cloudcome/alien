@@ -36,7 +36,7 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
-    var Scrollbar = require('../Scrollbar/index.js');
+    var Autoheight = require('../Autoheight/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
     var Template = require('../../libs/Template.js');
@@ -50,7 +50,6 @@ define(function (require, exports, module) {
     var pathname = location.pathname;
     var defaults = {
         width: '100%',
-        height: 300,
         // tab 长度
         tabSize: 4,
         // 历史长度
@@ -103,7 +102,6 @@ define(function (require, exports, module) {
             attribute.css(the._$ele, {
                 border: 0,
                 width: options.width,
-                height: options.height,
                 padding: 10,
                 margin: 0
             });
@@ -111,7 +109,7 @@ define(function (require, exports, module) {
             modification.wrap(the._$ele, '<div class="' + alienClass +
             '"><div class="' + alienClass + '-inner"></div></div>');
             the._$wrap = selector.closest(the._$ele, '.' + alienClass)[0];
-            the._scrollbar = new Scrollbar(the._$ele);
+            the._autoheight = new Autoheight(the._$ele);
             the._uploadList = [];
             the._history = [the._$ele.value];
             the._historyIndex = -1;
@@ -134,7 +132,6 @@ define(function (require, exports, module) {
             var deltaTime = Date.now() - local.ver;
             var humanTime = date.from(local.ver);
             var done = function _done() {
-                the._scrollbar.update();
                 editor.focusEnd(the._$ele);
                 the._savePos();
             };
@@ -159,31 +156,23 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 切换编辑器的全屏模式
-         */
-        toggleFullscreen: function () {
-            var the = this;
-            var options = the._options;
-
-            if (the._isFullscreen) {
-                the._isFullscreen = false;
-                attribute.css(document.body, 'overflow', '');
-                attribute.removeClass(the._$wrap, alienClass + '-fullscreen');
-                the._scrollbar.resize({
-                    width: options.width,
-                    height: options.height
-                });
-            } else {
-                the._isFullscreen = true;
-                attribute.css(document.body, 'overflow', 'hidden');
-                attribute.addClass(the._$wrap, alienClass + '-fullscreen');
-                the._scrollbar.resize({
-                    width: attribute.innerWidth(window),
-                    height: attribute.innerHeight(window)
-                });
-            }
-        },
+        ///**
+        // * 切换编辑器的全屏模式
+        // */
+        //toggleFullscreen: function () {
+        //    var the = this;
+        //    var options = the._options;
+        //
+        //    if (the._isFullscreen) {
+        //        the._isFullscreen = false;
+        //        attribute.css(document.body, 'overflow', '');
+        //        attribute.removeClass(the._$wrap, alienClass + '-fullscreen');
+        //    } else {
+        //        the._isFullscreen = true;
+        //        attribute.css(document.body, 'overflow', 'hidden');
+        //        attribute.addClass(the._$wrap, alienClass + '-fullscreen');
+        //    }
+        //},
 
 
         /**
@@ -498,7 +487,7 @@ define(function (require, exports, module) {
             var the = this;
             the._$ele.value = value;
             the._pushHistory();
-            the._scrollbar.update();
+            the._autoheight.resize();
 
             return the;
         },
@@ -594,7 +583,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._un();
-            the._scrollbar.destroy();
+            the._autoheight.destroy();
             the._$ele.unwrap('div > div');
         },
 
