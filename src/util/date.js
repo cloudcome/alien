@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var weeks = '日一二三四五六';
     var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    var REG_RANGE = /^(this|in|prev|next)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
+    var REG_RANGE = /^(this|in)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
 
 
     /**
@@ -489,10 +489,29 @@ define(function (require, exports, module) {
      * @param type {String} 可选
      * `this N days`/`this N weeks`/`this N months`/`this N years` 当日/周/月/年
      * `in Ndays`/`in N weeks`/`in N months`/`in N years` 几日/周/月/年内
-     * @param [from] {Date} 起点时间，默认为当前时间
+     * @param [ref] {Date} 起点时间，默认为当前时间
      * @returns {{from: Date, to: Date}}
+     *
+     * @example
+     * // this
+     * date.range('this 1 day');
+     * // 本周日 - 本周一
+     * date.range('this 1 week');
+     * // 本月一 - 本月末
+     * date.range('this 1 month');
+     * // 本年头 - 本年尾
+     * date.range('this 1 year');
+     *
+     * // in
+     * date.range('in 1 day');
+     * // 今天 - 一周内
+     * date.range('in 1 week');
+     * // 今天 - 下个月今天
+     * date.range('in 1 month');
+     * // 今天 - 明年今天
+     * date.range('in 1 year');
      */
-    exports.range = function (range, from) {
+    exports.range = function (range, ref) {
         range = String(range).toLowerCase();
 
         var temp = range.match(REG_RANGE);
@@ -505,9 +524,7 @@ define(function (require, exports, module) {
         var value = dato.parseInt(temp[2] || 1);
         var scope = temp[3];
         var oneDayMilliseconds = 1 * 24 * 60 * 60 * 1000;
-
-        from = exports.parse(from);
-
+        var from = exports.parse(ref);
         var thisYear = from.getFullYear();
         var thisMonth = from.getMonth();
         var thisDate = from.getDate();
@@ -523,19 +540,17 @@ define(function (require, exports, module) {
 
         switch (type) {
             case 'this':
-
                 switch (scope) {
                     case 'day':
                         to.setDate(thisDate + value - 1);
                         break;
 
                     case 'week':
-                        from.setDate(thisDate + (1 - thisDay) + (value - 1) * 7);
-                        to.setDate(thisDate + (7 - thisDay) + (value - 1) * 7);
+                        from.setDate(thisDate + (0 - thisDay));
+                        to.setDate(thisDate + (6 - thisDay) + (value - 1) * 7);
                         break;
 
                     case 'month':
-
                         from.setDate(1);
                         to.setMonth(thisMonth + value, 1);
                         to = new Date(to.getTime() - oneDayMilliseconds);
@@ -558,11 +573,11 @@ define(function (require, exports, module) {
                         break;
 
                     case 'week':
-                        to.setDate(thisDate + (7 - thisDay) + (value - 1) * 7);
+                        to.setDate(thisDate + value * 7);
                         break;
 
                     case 'month':
-                        to.setMonth(thisMonth + value, 1);
+                        to.setMonth(thisMonth + value, thisDate);
                         to = new Date(to.getTime() - oneDayMilliseconds);
                         break;
 
