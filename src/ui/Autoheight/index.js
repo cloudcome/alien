@@ -34,7 +34,8 @@ define(function (require, exports, module) {
         'textTransform',
         'wordSpacing',
         'textIndent',
-        'whiteSpace'
+        'whiteSpace',
+        'lineHeight'
     ];
     // 创建镜像 textarea
     var $mirror = modification.create('textarea', {
@@ -66,7 +67,7 @@ define(function (require, exports, module) {
 
         var scrollHeight = $mirror.scrollHeight;
 
-        attribute.height($ref, scrollHeight > the._height ? scrollHeight : the._height);
+        attribute.innerHeight($ref, scrollHeight > the._height ? scrollHeight : the._height);
     };
     var Autoheight = generator({
         STATIC: {},
@@ -92,7 +93,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-            the._height = attribute.height(the._$ele);
+            the._height = attribute.innerHeight(the._$ele);
             the._initEvent();
         },
 

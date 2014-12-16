@@ -15,6 +15,7 @@
 .alien-ui-editor-inner {
     position: relative;
     overflow: hidden;
+    padding: 10px;
 }
 
 .alien-ui-editor-inner .alien-ui-editor-textarea {
@@ -22,7 +23,6 @@
     resize: none;
     outline: 0;
     box-shadow: none;
-    background: #FFFBE8;
 }
 
 .alien-ui-editor-inner .alien-ui-editor-textarea:hover,

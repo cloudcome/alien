@@ -49,7 +49,7 @@ define(function (require, exports, module) {
     var localStorage = window.localStorage;
     var pathname = location.pathname;
     var defaults = {
-        width: '100%',
+        addClass: '',
         // tab 长度
         tabSize: 4,
         // 历史长度
@@ -100,9 +100,10 @@ define(function (require, exports, module) {
 
             the._calStoreId();
             attribute.css(the._$ele, {
+                display: 'block',
                 border: 0,
-                width: options.width,
-                padding: 10,
+                width: '100%',
+                padding: 0,
                 margin: 0
             });
             attribute.addClass(the._$ele, alienClass + '-textarea');
@@ -116,6 +117,7 @@ define(function (require, exports, module) {
             the._on();
             the._isFullscreen = false;
             the._initVal();
+            attribute.addClass(the._$wrap, options.addClass);
 
             return the;
         },
