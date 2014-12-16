@@ -15,8 +15,6 @@
 .alien-ui-editor-inner {
     position: relative;
     overflow: hidden;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px #B6B6B6;
 }
 
 .alien-ui-editor-inner .alien-ui-editor-textarea {

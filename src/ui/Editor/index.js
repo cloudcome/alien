@@ -408,10 +408,6 @@ define(function (require, exports, module) {
 
                 eve.preventDefault();
             }
-            // ctrl/meta + esc
-            else if ((isCtrl || isMetaKey) && keyCode === 27) {
-                the.toggleFullscreen();
-            }
         },
 
 
