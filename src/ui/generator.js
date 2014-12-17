@@ -68,6 +68,7 @@ define(function (require, exports, module) {
                 var keyType = typeis(key);
                 var ret = [];
 
+                the.emit('getoptions');
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options && the._options[key];
                 } else if (keyType === 'array') {
@@ -87,6 +88,7 @@ define(function (require, exports, module) {
                 var the = this;
                 var keyType = typeis(key);
 
+                the.emit('setoptions', the._options);
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options ? the._options[key] = val : udf;
                 } else if (keyType === 'object') {
