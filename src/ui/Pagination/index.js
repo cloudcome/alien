@@ -50,11 +50,11 @@ define(function (require, exports, module) {
         },
 
 
-        constructor: function (ele, options) {
+        constructor: function ($parent, options) {
             var the = this;
 
 
-            the._$ele = selector.query(ele);
+            the._$ele = selector.query($parent);
 
             if (!the._$ele.length) {
                 throw new Error('instance element is empty');

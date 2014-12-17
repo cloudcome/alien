@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     var dato = require('./../util/dato.js');
     var klass = require('./../util/class.js');
     var defaults = {
-        count: 1,
+        max: 1,
         page: 1,
         size: 3
     };
@@ -38,16 +38,16 @@ define(function (require, exports, module) {
             var remainLeft = 0;
             var remainRight = 0;
 
-            options.count = Math.abs(dato.parseInt(options.count, 1));
+            options.max = Math.abs(dato.parseInt(options.max, 1));
             options.page = Math.abs(dato.parseInt(options.page, 1));
-            options.page = options.page > options.count ? options.count : options.page;
+            options.page = options.page > options.max ? options.max : options.page;
             options.size = Math.abs(dato.parseInt(options.size, 3));
             options.size += options.size % 2 ? 0 : 1;
             offset = Math.floor(options.size / 2);
 
             // 小于可视范围
-            if (options.count <= options.size) {
-                for (i = 1; i <= options.count; i++) {
+            if (options.max <= options.size) {
+                for (i = 1; i <= options.max; i++) {
                     list.push({
                         page: i,
                         active: i === options.page
@@ -74,8 +74,8 @@ define(function (require, exports, module) {
                     i = 1;
                 }
                 // 剩右边
-                else if (j > options.count) {
-                    remainRight = j - options.count;
+                else if (j > options.max) {
+                    remainRight = j - options.max;
                     i -= remainRight;
                     if (i < 1) {
                         i = 1;
@@ -112,8 +112,8 @@ define(function (require, exports, module) {
                 i = options.page + 1;
                 j = i + offset + remainLeft;
 
-                if (j > options.count) {
-                    j = options.count;
+                if (j > options.max) {
+                    j = options.max;
                 }
 
                 for (; i < j; i++) {
@@ -122,20 +122,20 @@ define(function (require, exports, module) {
                     });
                 }
 
-                if(i < options.count){
+                if(i < options.max){
                     list.push({
                         type: 'ellipsis'
                     });
                 }
 
                 // 尾页
-                if (i <= options.count) {
+                if (i <= options.max) {
                     list.push({
-                        page: options.count
+                        page: options.max
                     });
                 }
 
-                if (options.page < options.count) {
+                if (options.page < options.max) {
                     list.push({
                         type: 'next',
                         page: options.page + 1
@@ -150,7 +150,7 @@ define(function (require, exports, module) {
     /**
      * 实例化一个分页器
      * @param [options] {Object} 配置
-     * @param [options.count=1] {Number} 总分页数量
+     * @param [options.max=1] {Number}  最大页码
      * @param [options.page=1] {Number} 当前页码
      * @param [options.size=3] {Number} 可视范围
      *
