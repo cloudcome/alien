@@ -62,12 +62,14 @@ define(function (require, exports, module) {
         var width = attribute.width($ref);
 
         attribute.css($mirror, style);
-        $mirror.value = value;
+        // 使输入框的高度多出一行，避免文本域高度变化的时候文字重排
+        $mirror.value = value + '\n';
         attribute.width($mirror, width);
 
         var scrollHeight = $mirror.scrollHeight;
 
         attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
+        $mirror.value = value;
     };
     var Autoheight = generator({
         STATIC: {},
