@@ -9,12 +9,12 @@ define(function (require, exports, module) {
     'use strict';
 
     var Pager = require('/src/ui/Pager/index.js');
-    var pager = new Pager('#demo');
-
-    pager.render({
+    var pager = new Pager('#demo', {
         page: 1,
-        max: 20
-    }).on('change', function (page) {
+        max: 3
+    });
+
+    pager.on('change', function (page) {
         this.render({
             page: page
         });
