@@ -25,11 +25,30 @@
             width: 200px;
             margin: 50px auto;
         }
+
+        pre{
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f5f5f5;
+            padding: 10px;
+        }
     </style>
 </head>
 <body ontouchstart="">
 
 <div id="demo"></div>
+
+<pre>
+var pager = new Pager('#demo', {
+    page: 1,
+    max: 3
+}).on('change', function (page) {
+    this.render({
+        page: page
+    });
+});
+</pre>
+
 <script src="../coolie.min.js" data-main="./ui/Pager.js"></script>
 <script src="../coolie-config.js"></script>
 

@@ -12,9 +12,7 @@ define(function (require, exports, module) {
     var pager = new Pager('#demo', {
         page: 1,
         max: 3
-    });
-
-    pager.on('change', function (page) {
+    }).on('change', function (page) {
         this.render({
             page: page
         });

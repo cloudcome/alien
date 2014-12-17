@@ -20,16 +20,36 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>Pagination.html</title>
     <style>
-        #ret{
+        #demo{
             text-align: center;
             margin: 50px;
         }
+
+        pre{
+             border: 1px solid #ddd;
+             border-radius: 4px;
+             background: #f5f5f5;
+             padding: 10px;
+         }
     </style>
 </head>
 <body>
 
 
-<div id="ret"></div>
+<div id="demo"></div>
+
+<pre>
+var pg1 = new Pagination('#demo', {
+    max: 1299,
+    page: 1
+}).on('change', function (page) {
+    this.render({
+        page: page
+    });
+}).on('change', function (page) {
+    console.log(page);
+});
+</pre>
 
 
 <script src="../coolie.min.js" data-main="./ui/Pagination.js"></script>
