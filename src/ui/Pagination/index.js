@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var normalClass = 'alien-ui-pagination-normal';
     var defaults = {
         addClass: '',
-        count: 1,
+        max: 1,
         page: 1,
         size: 3
     };
@@ -42,7 +42,7 @@ define(function (require, exports, module) {
             /**
              * 默认配置
              * @name defaults
-             * @property [count=1] {Number} 分页总数
+             * @property [max=1] {Number} 分页总数
              * @property [page=1] {Number} 当前分数
              * @property [size=3] {Number} 分页可见范围
              */
@@ -106,7 +106,7 @@ define(function (require, exports, module) {
         /**
          * 渲染
          * @param {Object} [settings] 配置参数
-         * @param {Number} [settings.count] 重新配置总页数，默认为上一次配置的值
+         * @param {Number} [settings.max] 重新配置总页数，默认为上一次配置的值
          * @param {Number} [settings.page] 重新配置当前页数，默认为上一次配置的值
          * @param {Number} [settings.size] 重新配置可视范围，默认为上一次配置的值
          * @returns {Pagination}
@@ -142,7 +142,7 @@ define(function (require, exports, module) {
      * 实例化一个分页控制器
      * @param ele {Element} 元素，生成的分页将在此渲染
      * @param [options] {Object} 配置
-     * @param [options.count=1] {Number} 分页总数
+     * @param [options.max=1] {Number} 分页总数
      * @param [options.page=1] {Number} 当前分数
      * @param [options.size=3] {Number} 分页可见范围
      * @constructor
