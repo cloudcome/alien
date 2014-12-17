@@ -63,13 +63,16 @@ define(function (require, exports, module) {
 
         _onpage: function (eve) {
             var the = this;
-            var page = attribute.data(eve.target, 'page');
+            var $ele = eve.target;
+            var page = attribute.data($ele, 'page');
 
-            page = dato.parseInt(page, 1);
+            if (!attribute.hasClass($ele, alienClass + '-disabled')) {
+                page = dato.parseInt(page, 1);
 
-            if (page !== the.page) {
-                the.page = page;
-                the.emit('change', the.page);
+                if (page !== the.page) {
+                    the.page = page;
+                    the.emit('change', the.page);
+                }
             }
         },
 

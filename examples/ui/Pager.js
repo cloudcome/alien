@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
     pager.render({
         page: 1,
-        max: 100
+        max: 20
     }).on('change', function (page) {
         this.render({
             page: page
