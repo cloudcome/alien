@@ -153,6 +153,7 @@ define(function (require, exports, module) {
                     .on('close', function (index) {
                         if (index === 0) {
                             the._$ele.value = local.val;
+                            the.emit('change', local.val);
                             the._autoheight.resize();
                         } else {
                             the._saveLocal();
