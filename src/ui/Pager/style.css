@@ -1,3 +1,40 @@
 @charset "utf-8";
+.alien-ui-pager{
+    border: 1px solid #ddd;
+}
 
+.alien-ui-pager::after{
+    content: ' ';
+    display: table;
+}
+
+.alien-ui-pager-page{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    width: 50%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    background: #fcfcfc;
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+    color: #666;
+}
+
+.alien-ui-pager-page:hover{
+    background: #000;
+}
+
+.alien-ui-pager-page:last-child{
+    border-right: 0;
+
+}
+
+.alien-ui-pager-disabled{
+    cursor: not-allowed;
+    background: #f6f6f6;
+    color: #ccc;
+}
  

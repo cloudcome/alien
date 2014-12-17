@@ -22,6 +22,8 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var tpl = new Template(template);
     var defaults = {
+        prev: '上一页',
+        next: '下一页',
         // 默认为第 1 页
         page: 1,
         // 最大精确正整数，2^53
@@ -67,7 +69,7 @@ define(function (require, exports, module) {
 
             if (page !== the.page) {
                 the.page = page;
-                the.emit('page', the.page);
+                the.emit('change', the.page);
             }
         },
 
