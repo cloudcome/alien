@@ -88,19 +88,20 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
 
-            event.on(the._$ele, 'click tap', '.' + normalClass, the._onclick.bind(the));
+            event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
         },
 
-        _onclick: function (eve) {
+        _onpage: function (eve) {
             var page = attribute.data(eve.target, 'page');
 
+            page = dato.parseInt(page, 1);
             this.emit('change', page);
         },
 
         _unEvent: function () {
             var the = this;
 
-            event.un(the._$ele, 'click tap', the._onclick);
+            event.un(the._$ele, 'click tap', the._onpage);
         },
 
         /**
