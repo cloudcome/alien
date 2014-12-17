@@ -91,30 +91,35 @@ define(function (require, exports, module) {
             event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
         },
 
+
+        /**
+         * 翻页回调
+         * @param eve
+         * @private
+         */
         _onpage: function (eve) {
+            var the = this;
             var page = attribute.data(eve.target, 'page');
 
             page = dato.parseInt(page, 1);
-            this.emit('change', page);
+            if (page !== the._options.page) {
+                the._options.page = page;
+                the.emit('change', page);
+            }
         },
 
-        _unEvent: function () {
-            var the = this;
-
-            event.un(the._$ele, 'click tap', the._onpage);
-        },
 
         /**
          * 渲染
-         * @param {Object} [settings] 配置参数
-         * @param {Number} [settings.max] 重新配置总页数，默认为上一次配置的值
-         * @param {Number} [settings.page] 重新配置当前页数，默认为上一次配置的值
-         * @param {Number} [settings.size] 重新配置可视范围，默认为上一次配置的值
+         * @param {Object} [data] 分页数据
+         * @param {Number} [data.max] 重新配置总页数，默认为上一次配置的值
+         * @param {Number} [data.page] 重新配置当前页数，默认为上一次配置的值
+         * @param {Number} [data.size] 重新配置可视范围，默认为上一次配置的值
          * @returns {Pagination}
          */
-        render: function (settings) {
+        render: function (data) {
             var the = this;
-            var options = dato.extend(the._options, settings);
+            var options = dato.extend(the._options, data);
             var list = new libsPagination(options);
 
             the._$ele.innerHTML = tpl.render({
@@ -131,7 +136,7 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            the._unEvent();
+            event.un(the._$ele, 'click tap', the._onpage);
             the._$ele.innerHTML = '';
         }
     });

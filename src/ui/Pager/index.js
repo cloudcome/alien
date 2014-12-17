@@ -46,14 +46,22 @@ define(function (require, exports, module) {
             the._init();
         },
 
+        /**
+         * 初始化
+         * @private
+         */
         _init: function () {
             var the = this;
 
-            the.page = null;
             the._initEvent();
+            the.render();
         },
 
 
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
 
@@ -61,6 +69,11 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 翻页回调
+         * @param eve
+         * @private
+         */
         _onpage: function (eve) {
             var the = this;
             var $ele = eve.target;
@@ -69,9 +82,9 @@ define(function (require, exports, module) {
             if (!attribute.hasClass($ele, alienClass + '-disabled')) {
                 page = dato.parseInt(page, 1);
 
-                if (page !== the.page) {
-                    the.page = page;
-                    the.emit('change', the.page);
+                if (page !== the._options.page) {
+                    the._options.page = page;
+                    the.emit('change', the._options.page);
                 }
             }
         },
@@ -79,8 +92,8 @@ define(function (require, exports, module) {
 
         /**
          * 渲染分页
-         * @param data {Object} 分页数据
-         * @param data.page {Number} 页码
+         * @param [data] {Object} 分页数据
+         * @param [data.page] {Number} 页码
          * @param [data.max] {Number} 最大页码
          */
         render: function (data) {
