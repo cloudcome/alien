@@ -88,12 +88,13 @@ define(function (require, exports, module) {
                 var the = this;
                 var keyType = typeis(key);
 
-                the.emit('setoptions', the._options);
                 if (keyType === 'string' || keyType === 'number') {
-                    return the._options ? the._options[key] = val : udf;
+                    the._options ? the._options[key] = val : udf;
                 } else if (keyType === 'object') {
                     dato.extend(the._options, key);
                 }
+
+                the.emit('setoptions', the._options);
             };
         }
 
