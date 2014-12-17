@@ -120,13 +120,13 @@ define(function (require, exports, module) {
             the._historyIndex = -1;
             the._initEvent();
             the._isFullscreen = false;
-            the._initVal();
             attribute.addClass(the._$wrap, options.addClass);
             the.on('setoptions', function (options) {
-                if(the._storeId !== options.id){
+                if (the._storeId !== options.id) {
                     the._storeId = options.id;
                 }
             });
+            setTimeout(the._initVal.bind(the), 1);
 
             return the;
         },
@@ -143,28 +143,34 @@ define(function (require, exports, module) {
             var deltaTime = Date.now() - local.ver;
             var humanTime = date.from(local.ver);
             var done = function () {
-                editor.focusEnd(the._$ele);
+                if (the._options.autoFocus) {
+                    editor.focusEnd(the._$ele);
+                }
                 the._savePos();
             };
-            var value = the._$ele.value;
+            var nowVal = the._$ele.value;
+            var nowLen = nowVal.length;
+            var storeVal = local.val;
+            var storeLen = storeVal.length;
 
-            // 1天之内的本地记录 && 内容不一致
-            if (deltaTime < minTime && local.val !== value) {
+            // 1天之内的本地记录 && 内容部分不一致
+            if (deltaTime < minTime && Math.abs(nowLen - storeLen) > 9) {
                 new Msg({
-                    content: '本地记录时间为：<b>' + humanTime + '</b>。' +
-                    '<br>本地缓存内容长度为：<b>' + local.val.length + '</b>' +
-                    '<br>当前内容长度为：<b>' + value.length + '</b>' +
+                    content: '本地缓存内容与当前不一致。' +
+                    '<br>缓存时间为：<b>' + humanTime + '</b>。' +
+                    '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
+                    '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
                     '<br>是否恢复？',
                     buttons: ['确定', '取消']
                 })
                     .on('close', function (index) {
                         if (index === 0) {
-                            the._$ele.value = local.val;
-                            the.emit('change', local.val);
+                            the._$ele.value = storeVal;
+                            the.emit('change', storeVal);
                             the._autoheight.resize();
-                        } else {
-                            the._saveLocal();
                         }
+
+                        the._saveLocal();
                         done();
                     });
             } else {
