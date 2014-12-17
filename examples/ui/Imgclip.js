@@ -5,9 +5,7 @@ define(function (require) {
         minWidth: 100,
         minHeight: 100,
         ratio: 1.5
-    });
-
-    imgclip.on('clipend', function (selection) {
+    }).on('clipend', function (selection) {
         $ret.innerHTML = JSON.stringify(selection);
     });
 });

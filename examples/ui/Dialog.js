@@ -2,12 +2,8 @@ define(function (require) {
     'use strict';
 
     var Dialog = require('/src/ui/Dialog/index.js');
-    var demo1 = document.getElementById('demo1');
-    var demo2 = document.getElementById('demo2');
-    var demo3 = document.getElementById('demo3');
-
-    var d1 = new Dialog(demo1);
-    var d2 = new Dialog(demo2, {
+    var d1 = new Dialog('#demo1');
+    var d2 = new Dialog('#demo2', {
         width: 350,
         height: 400,
         top: 0,
@@ -16,7 +12,7 @@ define(function (require) {
         canDrag: false,
         isModal: false
     });
-    var d3 = new Dialog(demo3, {
+    var d3 = new Dialog('#demo3', {
         remote: 'http://wap.baidu.com/'
     });
 
