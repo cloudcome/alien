@@ -62,7 +62,9 @@ define(function (require, exports, module) {
         // arg1: 进度回调
         // arg2: list 上传成功JSON数组对象
         // [{url:'1.jpg',width:100,height:100}]
-        uploadCallback: null
+        uploadCallback: null,
+        // 是否自动聚焦
+        autoFocus: true
     };
     var Editor = generator({
         STATIC: {
@@ -120,6 +122,11 @@ define(function (require, exports, module) {
             the._isFullscreen = false;
             the._initVal();
             attribute.addClass(the._$wrap, options.addClass);
+            the.on('setoptions', function (options) {
+                if(the._storeId !== options.id){
+                    the._storeId = options.id;
+                }
+            });
 
             return the;
         },
@@ -273,7 +280,8 @@ define(function (require, exports, module) {
             var the = this;
 
             if (the._options.id) {
-                return the._storeId = the._options.id;
+                the._storeId = the._options.id;
+                return;
             }
 
             var $ele = the._$ele;
@@ -324,10 +332,14 @@ define(function (require, exports, module) {
         _saveLocal: function () {
             var the = this;
 
-            localStorage.setItem(the._storeId, JSON.stringify({
-                val: the._$ele.value,
-                ver: Date.now()
-            }));
+            try {
+                localStorage.setItem(the._storeId, JSON.stringify({
+                    val: the._$ele.value,
+                    ver: Date.now()
+                }));
+            } catch (err) {
+                // ignore
+            }
         },
 
 
