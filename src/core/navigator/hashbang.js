@@ -222,6 +222,13 @@ define(function (require, exports) {
 
 
     /**
+     * hashbang 监听
+     * @type {exports.on}
+     */
+    exports.on = hashbang.on;
+
+
+    /**
      * 判断 hashbang 部分是否合法
      * @param {*} part
      * @returns {boolean}
