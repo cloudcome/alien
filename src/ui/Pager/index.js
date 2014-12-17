@@ -85,6 +85,7 @@ define(function (require, exports, module) {
             var html = tpl.render(dato.extend(the._options, data));
 
             the._$ele.innerHTML = html;
+            return the;
         },
 
 
