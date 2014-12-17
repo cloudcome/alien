@@ -24,6 +24,8 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var dato = require('../../util/dato.js');
+    var style = require('css!./style.css');
+    var alienClass = 'alien-ui-autoheight';
     var defaults = {};
     var typographyStyles = [
         'fontFamily',
@@ -95,6 +97,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
+            attribute.addClass(the._$ele, alienClass);
             the._initSize();
             the._initEvent();
         },
@@ -152,6 +155,7 @@ define(function (require, exports, module) {
         }
     });
 
+    modification.importStyle(style);
     document.body.appendChild($mirror);
     module.exports = Autoheight;
 });

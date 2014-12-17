@@ -15,11 +15,6 @@
     resize: none;
     outline: 0;
     box-shadow: none;
-    -webkit-transition: width, height .3s;
-    -moz-transition: width, height .3s;
-    -ms-transition: width, height .3s;
-    -o-transition: width, height .3s;
-    transition: width, height .3s;
 }
 
 .alien-ui-editor-textarea:hover,

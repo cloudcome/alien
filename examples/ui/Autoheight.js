@@ -12,5 +12,4 @@ define(function (require, exports, module) {
 
     var ah1 = new Autoheight('#textarea1');
     var ah2 = new Autoheight('#textarea2');
-    var ah3 = new Autoheight('#textarea3');
 });
