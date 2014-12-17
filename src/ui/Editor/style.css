@@ -2,15 +2,6 @@
     position: relative;
 }
 
-.alien-ui-editor-fullscreen {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 123;
-}
-
 .alien-ui-editor-inner {
     position: relative;
     overflow: hidden;
@@ -19,21 +10,21 @@
     border: 1px solid #ddd;
 }
 
-.alien-ui-editor-fullscreen .alien-ui-editor-inner{
-    box-shadow: none;
-    border: 0;
-}
-
-.alien-ui-editor-inner .alien-ui-editor-textarea {
+.alien-ui-editor-textarea {
     overflow: hidden;
     resize: none;
     outline: 0;
     box-shadow: none;
+    -webkit-transition: width, height .3s;
+    -moz-transition: width, height .3s;
+    -ms-transition: width, height .3s;
+    -o-transition: width, height .3s;
+    transition: width, height .3s;
 }
 
-.alien-ui-editor-inner .alien-ui-editor-textarea:hover,
-.alien-ui-editor-inner .alien-ui-editor-textarea:active,
-.alien-ui-editor-inner .alien-ui-editor-textarea:focus {
+.alien-ui-editor-textarea:hover,
+.alien-ui-editor-textarea:active,
+.alien-ui-editor-textarea:focus {
     outline: 0;
     box-shadow: none;
     border: 0;

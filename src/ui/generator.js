@@ -68,6 +68,7 @@ define(function (require, exports, module) {
                 var keyType = typeis(key);
                 var ret = [];
 
+                the.emit('getoptions');
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options && the._options[key];
                 } else if (keyType === 'array') {
@@ -88,10 +89,12 @@ define(function (require, exports, module) {
                 var keyType = typeis(key);
 
                 if (keyType === 'string' || keyType === 'number') {
-                    return the._options ? the._options[key] = val : udf;
+                    the._options ? the._options[key] = val : udf;
                 } else if (keyType === 'object') {
                     dato.extend(the._options, key);
                 }
+
+                the.emit('setoptions', the._options);
             };
         }
 

@@ -1,6 +1,5 @@
 /*!
  * 编辑器
- * @todo 支持图片拖拽、粘贴上传
  * @author ydr.me
  * @create 2014-11-06 11:07
  */
@@ -49,6 +48,8 @@ define(function (require, exports, module) {
     var localStorage = window.localStorage;
     var pathname = location.pathname;
     var defaults = {
+        // 手动设置 ID
+        id: '',
         addClass: '',
         // tab 长度
         tabSize: 4,
@@ -60,7 +61,9 @@ define(function (require, exports, module) {
         // arg1: 进度回调
         // arg2: list 上传成功JSON数组对象
         // [{url:'1.jpg',width:100,height:100}]
-        uploadCallback: null
+        uploadCallback: null,
+        // 是否自动聚焦
+        autoFocus: true
     };
     var Editor = generator({
         STATIC: {
@@ -116,8 +119,13 @@ define(function (require, exports, module) {
             the._historyIndex = -1;
             the._initEvent();
             the._isFullscreen = false;
-            the._initVal();
             attribute.addClass(the._$wrap, options.addClass);
+            the.on('setoptions', function (options) {
+                if (the._storeId !== options.id) {
+                    the._storeId = options.id;
+                }
+            });
+            setTimeout(the._initVal.bind(the), 1);
 
             return the;
         },
@@ -134,27 +142,34 @@ define(function (require, exports, module) {
             var deltaTime = Date.now() - local.ver;
             var humanTime = date.from(local.ver);
             var done = function () {
-                editor.focusEnd(the._$ele);
+                if (the._options.autoFocus) {
+                    editor.focusEnd(the._$ele);
+                }
                 the._savePos();
             };
-            var value = the._$ele.value;
+            var nowVal = the._$ele.value;
+            var nowLen = nowVal.length;
+            var storeVal = local.val;
+            var storeLen = storeVal.length;
 
-            // 1天之内的本地记录 && 内容不一致
-            if (deltaTime < minTime && local.val !== value) {
+            // 1天之内的本地记录 && 内容部分不一致
+            if (deltaTime < minTime && Math.abs(nowLen - storeLen) > 9) {
                 new Msg({
-                    content: '本地记录时间为：<b>' + humanTime + '</b>。' +
-                    '<br>本地缓存内容长度为：<b>' + local.val.length + '</b>' +
-                    '<br>当前内容长度为：<b>' + value.length + '</b>' +
+                    content: '本地缓存内容与当前不一致。' +
+                    '<br>缓存时间为：<b>' + humanTime + '</b>。' +
+                    '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
+                    '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
                     '<br>是否恢复？',
                     buttons: ['确定', '取消']
                 })
                     .on('close', function (index) {
                         if (index === 0) {
-                            the._$ele.value = local.val;
+                            the._$ele.value = storeVal;
+                            the.emit('change', storeVal);
                             the._autoheight.resize();
-                        } else {
-                            the._saveLocal();
                         }
+
+                        the._saveLocal();
                         done();
                     });
             } else {
@@ -268,6 +283,12 @@ define(function (require, exports, module) {
          */
         _calStoreId: function () {
             var the = this;
+
+            if (the._options.id) {
+                the._storeId = the._options.id;
+                return;
+            }
+
             var $ele = the._$ele;
             var atts = $ele.attributes;
             var attrList = [];
@@ -316,10 +337,14 @@ define(function (require, exports, module) {
         _saveLocal: function () {
             var the = this;
 
-            localStorage.setItem(the._storeId, JSON.stringify({
-                val: the._$ele.value,
-                ver: Date.now()
-            }));
+            try {
+                localStorage.setItem(the._storeId, JSON.stringify({
+                    val: the._$ele.value,
+                    ver: Date.now()
+                }));
+            } catch (err) {
+                // ignore
+            }
         },
 
 
@@ -426,7 +451,6 @@ define(function (require, exports, module) {
          */
         _parseImgList: function (eve, items) {
             var the = this;
-            eve.preventDefault();
 
             the._uploadList = [];
             dato.each(items, function (index, item) {
@@ -447,7 +471,8 @@ define(function (require, exports, module) {
             if (the._uploadList.length) {
                 the._$ele.blur();
                 the._uploadDialog();
-            }else{
+            } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length) {
+                eve.preventDefault();
                 return new Msg({
                     content: '请拖拽或粘贴图片文件',
                     buttons: ['确定']
@@ -588,18 +613,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 销毁实例
-         */
-        destroy: function () {
-            var the = this;
-
-            the._un();
-            the._autoheight.destroy();
-            the._$ele.unwrap('div > div');
-        },
-
-
-        /**
          * 清除本地备份记录
          */
         clearStore: function () {
@@ -608,6 +621,25 @@ define(function (require, exports, module) {
             window.localStorage.setItem(the._storeId, '');
 
             return the;
+        },
+
+
+        /**
+         * 重置尺寸
+         */
+        resize: function () {
+            this._autoheight.resize();
+        },
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            the._un();
+            the._autoheight.destroy();
+            the._$ele.unwrap('div > div');
         }
     });
 

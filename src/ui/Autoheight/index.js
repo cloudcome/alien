@@ -62,12 +62,14 @@ define(function (require, exports, module) {
         var width = attribute.width($ref);
 
         attribute.css($mirror, style);
-        $mirror.value = value;
+        // 使输入框的高度多出一行，避免文本域高度变化的时候文字重排
+        $mirror.value = value + '\n';
         attribute.width($mirror, width);
 
         var scrollHeight = $mirror.scrollHeight;
 
         attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
+        $mirror.value = value;
     };
     var Autoheight = generator({
         STATIC: {},
@@ -92,6 +94,18 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+
+            the._initSize();
+            the._initEvent();
+        },
+
+
+        /**
+         * 初始化尺寸
+         * @private
+         */
+        _initSize: function () {
+            var the = this;
             var $ele = the._$ele;
             var value = $ele.value;
 
@@ -99,10 +113,10 @@ define(function (require, exports, module) {
                 overflow: 'hidden'
             });
             // 先插入字符，重新排版后还原
-            $ele.value = value + ' ';
-            $ele.value = value;
+            $ele.value = ' ';
+            the._$ele.style.height = 'auto';
             the._innerHeight = attribute.innerHeight(the._$ele);
-            the._initEvent();
+            $ele.value = value;
         },
 
 
@@ -121,7 +135,11 @@ define(function (require, exports, module) {
         /**
          * 重新定位尺寸
          */
-        resize: adjust,
+        resize: function () {
+            var the = this;
+            the._initSize();
+            adjust.call(the);
+        },
 
 
         /**
