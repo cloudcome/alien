@@ -21,6 +21,12 @@ define(function (require, exports, module) {
     var template = require('html!./template.html');
     var style = require('css!./style.css');
     var tpl = new Template(template);
+    var defaults = {
+        // 默认为第 1 页
+        page: 1,
+        // 最大精确正整数，2^53
+        max: 9007199254740991
+    };
     var alienClass = 'alien-ui-pager';
     var Pager = generator({
         STATIC: {},
@@ -73,7 +79,10 @@ define(function (require, exports, module) {
          * @param [data.max] {Number} 最大页码
          */
         render: function (data) {
+            var the = this;
+            var html = tpl.render(dato.extend(the._options, data));
 
+            the._$ele.innerHTML = html;
         },
 
 
@@ -84,6 +93,7 @@ define(function (require, exports, module) {
             var the = this;
 
             event.un(the._$ele, 'click tap', the._onpage);
+            the._$ele.innerHTML = '';
         }
     });
 
