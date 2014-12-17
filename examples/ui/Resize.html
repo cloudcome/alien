@@ -53,6 +53,20 @@
     <div id="inner"></div>
 </div>
 
+<pre>
+var resize = new Resize('#resize',{
+    minWidth: 100,
+    minHeight: 100,
+    maxWidth: 500,
+    maxHeight: 500,
+    ratio: 0
+});
+
+resize.on('resize', function (size) {
+    $inner.innerHTML = 'width: ' + size.width + '; height: ' + size.height;
+});
+</pre>
+
 <script src="../coolie.min.js" data-main="./ui/Resize.js"></script>
 <script src="../coolie-config.js"></script>
 

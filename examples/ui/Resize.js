@@ -13,6 +13,4 @@ define(function (require) {
     resize.on('resize', function (size) {
         $inner.innerHTML = 'width: ' + size.width + '; height: ' + size.height;
     });
-
-    window.resize = resize;
 });
