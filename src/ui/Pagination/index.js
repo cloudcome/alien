@@ -32,6 +32,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var normalClass = 'alien-ui-pagination-normal';
     var defaults = {
+        addClass: '',
         count: 1,
         page: 1,
         size: 3
@@ -72,29 +73,34 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-            the._on();
+            attribute.addClass(the._$ele, the._options.addClass);
+            the._initEvent();
             the.render();
 
             return the;
         },
 
 
-        _on: function () {
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
             var the = this;
 
-            event.on(the._$ele, 'click tap', '.' + normalClass, the._onEle.bind(the));
+            event.on(the._$ele, 'click tap', '.' + normalClass, the._onclick.bind(the));
         },
 
-        _onEle: function (eve) {
+        _onclick: function (eve) {
             var page = attribute.data(eve.target, 'page');
 
             this.emit('change', page);
         },
 
-        _un: function () {
+        _unEvent: function () {
             var the = this;
 
-            event.un(the._$ele, 'click tap', the._onEle);
+            event.un(the._$ele, 'click tap', the._onclick);
         },
 
         /**
@@ -124,7 +130,7 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            the._un();
+            the._unEvent();
             the._$ele.innerHTML = '';
         }
     });
