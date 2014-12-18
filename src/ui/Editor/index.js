@@ -145,6 +145,7 @@ define(function (require, exports, module) {
                 if (the._options.autoFocus) {
                     editor.focusEnd(the._$ele);
                 }
+
                 the._savePos();
             };
             var nowVal = the._$ele.value;
@@ -326,7 +327,7 @@ define(function (require, exports, module) {
                 // ignore
             }
 
-            return ret || {ver: 0};
+            return ret || {ver: 0, val: ''};
         },
 
 
