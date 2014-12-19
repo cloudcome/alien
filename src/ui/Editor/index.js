@@ -30,6 +30,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
+    var compatible = require('../../core/navigator/compatible.js');
     var editor = require('./editor.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
@@ -65,6 +66,7 @@ define(function (require, exports, module) {
         // 是否自动聚焦
         autoFocus: true
     };
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
     var Editor = generator({
         STATIC: {
             defaults: defaults
@@ -376,9 +378,9 @@ define(function (require, exports, module) {
                 clearTimeout(the._timerId);
             }
 
-            the._timerId = setTimeout(function () {
+            window[requestAnimationFrame](function () {
                 the._autoheight.resize();
-            }, 100);
+            });
         },
 
 
@@ -548,6 +550,22 @@ define(function (require, exports, module) {
 
 
         /**
+         * 聚焦
+         */
+        focus: function () {
+            this._$ele.focus();
+        },
+
+
+        /**
+         * 失焦
+         */
+        blur: function () {
+            this._$ele.blur();
+        },
+
+
+        /**
          * 获得当前编辑器内容
          * @returns {*} {String} 当前编辑器内容
          */
@@ -629,7 +647,11 @@ define(function (require, exports, module) {
          * 重置尺寸
          */
         resize: function () {
-            this._autoheight.resize();
+            var the = this;
+
+            setTimeout(function () {
+                the._autoheight.resize();
+            }, 1);
         },
 
         /**
