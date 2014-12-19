@@ -33,6 +33,10 @@
     border-radius: 0 4px 4px 0;
 }
 
+.alien-ui-pagination-item:only-child {
+    border-radius: 4px;
+}
+
 .alien-ui-pagination-item:hover {
     background: #428bca;
     border-color: #428bca;
