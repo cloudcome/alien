@@ -39,7 +39,7 @@ define(function (require, exports, module) {
     //var thumbClass = 'alien-ui-scrollbar-thumb';
     var thumbXClass = 'alien-ui-scrollbar-thumb-x';
     var thumbYClass = 'alien-ui-scrollbar-thumb-y';
-    var alienClass = 'alien-ui-scrollbar';
+    //var alienClass = 'alien-ui-scrollbar';
     var alienIndex = 0;
     // var trackActiveClass = 'alien-ui-scrollbar-track-active';
     var thumbActiveClass = 'alien-ui-scrollbar-thumb-active';
@@ -47,8 +47,7 @@ define(function (require, exports, module) {
     // var updateEvent = 'DOMSubtreeModified DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     // 这里不能用 DOMSubtreeModified，会导致IE卡死
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
-    //var isPlaceholderScroll = _isPlaceholderScroll();
-    var isPlaceholderScroll = true;
+    var isPlaceholderScroll = _isPlaceholderScroll();
     var maxNumber = Math.pow(2, 53);
     var defaults = {
         width: 700,
@@ -395,6 +394,8 @@ define(function (require, exports, module) {
                     the._isDrag = false;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
+
+                event.on(window, 'resize', the._onresize.bind(the));
             } else {
                 event.on($scroll, 'scroll', function () {
                     if (the._scrollLeft !== $scroll.scrollLeft) {
@@ -457,6 +458,15 @@ define(function (require, exports, module) {
                 the._scrollLeft = $scroll.scrollLeft;
                 the._scrollTop = $scroll.scrollTop;
                 the._calTrackSize();
+            }
+        },
+
+
+        _onresize: function () {
+            var the = this;
+
+            if(the._resizeTimer){
+
             }
         },
 
