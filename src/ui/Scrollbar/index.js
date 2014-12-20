@@ -101,22 +101,13 @@ define(function (require, exports, module) {
             var $thumbY = selector.query('.' + thumbYClass, $temp)[0];
             var $ele = the._$ele;
             var $parent = $ele.parentNode;
+            var isTextarea = $ele.tagName === 'TEXTAREA';
 
             modification.insert($trackY, $ele, 'afterend');
             modification.insert($trackX, $ele, 'afterend');
             modification.insert($body, $ele, 'afterend');
             modification.insert($ele, $body, 'beforeend');
             attribute.addClass($parent, the._className = $temp.className);
-
-            attribute.css($parent, {
-                position: 'relative',
-                overflow: 'hidden'
-            });
-
-            attribute.css($body, {
-                width: '100%',
-                height: '100%'
-            });
 
             the._jsAnimateOptions = {
                 duration: options.duration,
@@ -134,7 +125,8 @@ define(function (require, exports, module) {
             the._$thumbY = $thumbY;
             the._$parent = $parent;
             the._$body = $body;
-            the._isTextarea = $ele.tagName === 'TEXTAREA';
+            the._$scroll = isTextarea ? $ele : $body;
+            the._isTextarea = isTextarea;
             the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
             the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
 
@@ -168,28 +160,28 @@ define(function (require, exports, module) {
          */
         _calScrollSize: function () {
             var the = this;
-            var $body = the._$body;
+            var $scroll = the._$scroll;
             var $parent = the._$parent;
 
             // 当前滚动条值
-            the._scrollLeft = $body.scrollLeft;
-            the._scrollTop = $body.scrollTop;
+            the._scrollLeft = $scroll.scrollLeft;
+            the._scrollTop = $scroll.scrollTop;
 
             // 当前容器尺寸
             the._containerWidth = attribute.innerWidth($parent);
             the._containerHeight = attribute.innerHeight($parent);
-            the._scrollWidth = $body.scrollWidth;
-            the._scrollHeight = $body.scrollHeight;
+            the._scrollWidth = $scroll.scrollWidth;
+            the._scrollHeight = $scroll.scrollHeight;
 
             // 纵向滚动条最大值
-            $body.scrollTop = maxNumber;
-            the._scrollTopMax = $body.scrollTop;
-            $body.scrollTop = the._scrollTop;
+            $scroll.scrollTop = maxNumber;
+            the._scrollTopMax = $scroll.scrollTop;
+            $scroll.scrollTop = the._scrollTop;
 
             // 横向滚动条最大值
-            $body.scrollLeft = maxNumber;
-            the._scrollLeftMax = $body.scrollLeft;
-            $body.scrollLeft = the._scrollLeft;
+            $scroll.scrollLeft = maxNumber;
+            the._scrollLeftMax = $scroll.scrollLeft;
+            $scroll.scrollLeft = the._scrollLeft;
         },
 
 
@@ -267,6 +259,7 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var options = the._options;
+            var $scroll = the._$scroll;
             var $thumb = options.axis === 'y' ? the._$thumbY : the._$thumbX;
             var $parent = the._$parent;
             var key = options.axis === 'y' ? 'Top' : 'Left';
@@ -282,10 +275,10 @@ define(function (require, exports, module) {
                 });
 
                 // 自身滚动
-                event.on(the._$ele, 'scroll', the._onscroll.bind(the));
+                event.on($scroll, 'scroll', the._onscroll.bind(the));
 
                 if (the._isTextarea) {
-                    event.on(the._$ele, 'input', the._oninput.bind(the));
+                    event.on($scroll, 'input', the.resize.bind(the));
                 }
 
                 // 鼠标滚动
@@ -331,7 +324,7 @@ define(function (require, exports, module) {
 
                     the._xLeft = left;
                     the._scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
-                    the._$body.scrollLeft = the._scrollLeft;
+                    the._setScroll('x');
                     attribute.css(the._$thumbX, 'left', left);
                     the.emit('changex', the._scrollLeft);
                 });
@@ -362,7 +355,7 @@ define(function (require, exports, module) {
 
                     the._yTop = top;
                     the._scrollTop = the._scrollTopMax * top / the._thumbTopMax;
-                    the._$body.scrollTop = the._scrollTop;
+                    the._setScroll('y');
                     attribute.css(the._$thumbY, 'top', top);
                     the.emit('changey', the._scrollTop);
                 });
@@ -373,14 +366,14 @@ define(function (require, exports, module) {
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
             } else {
-                event.on(the._$wrap, 'scroll', function () {
-                    if (the._scrollLeft !== the._$wrap.scrollLeft) {
-                        the._scrollLeft = the._$wrap.scrollLeft;
+                event.on($scroll, 'scroll', function () {
+                    if (the._scrollLeft !== $scroll.scrollLeft) {
+                        the._scrollLeft = $scroll.scrollLeft;
                         the.emit('changex', the._scrollLeft);
                     }
 
-                    if (the._scrollTop !== the._$wrap.scrollTop) {
-                        the._scrollTop = the._$wrap.scrollTop;
+                    if (the._scrollTop !== $scroll.scrollTop) {
+                        the._scrollTop = $scroll.scrollTop;
                         the.emit('changey', the._scrollTop);
                     }
                 });
@@ -404,16 +397,39 @@ define(function (require, exports, module) {
          */
         _onscroll: function () {
             var the = this;
+            var $scroll = the._$scroll;
 
+            if(the._isPrivateTrigger || the._isPublicTrigger){
+                return;
+            }
+
+            the._scrollLeft = $scroll.scrollLeft;
+            the._scrollTop = $scroll.scrollTop;
+            the._setScroll('xy');
         },
 
 
         /**
-         * 输入时回调
+         * 设置滚动距离
+         * @param key
          * @private
          */
-        _oninput: function () {
+        _setScroll: function (key) {
             var the = this;
+            var isHorizontal = key === 'x';
+            var $scroll = the._$scroll;
+            var val = isHorizontal ? the._scrollLeft : the._scrollTop;
+
+            if (the._isPrivateTrigger || the._isPublicTrigger) {
+                animation.scrollTo($scroll, {
+                    x: the._scrollLeft,
+                    y: the._scrollTop
+                }, function () {
+                    the._isPrivateTrigger = the._isPublicTrigger = false;
+                });
+            } else {
+                $scroll['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
+            }
         },
 
 
@@ -424,7 +440,7 @@ define(function (require, exports, module) {
          */
         _scrollX: function (x) {
             var the = this;
-            var $body = the._$body;
+            var $scroll = the._$scroll;
             var $thumb = the._$thumbX;
 
             if (the._scrollLeftMax <= 0) {
@@ -465,9 +481,9 @@ define(function (require, exports, module) {
                     });
                 }
 
-                $body.scrollLeft = the._scrollLeft;
+                the._setScroll('x');
             } else {
-                animation.scrollTo($body, {
+                animation.scrollTo($scroll, {
                     x: the._scrollLeft,
                     y: the._scrollTop
                 }, the._jsAnimateOptions, function () {
@@ -512,7 +528,7 @@ define(function (require, exports, module) {
          */
         _scrollY: function (y) {
             var the = this;
-            var $body = the._$body;
+            var $scroll = the._$scroll;
             var $thumb = the._$thumbY;
 
             if (the._scrollTopMax <= 0) {
@@ -553,9 +569,9 @@ define(function (require, exports, module) {
                     });
                 }
 
-                $body.scrollTop = the._scrollTop;
+                the._setScroll('y');
             } else {
-                animation.scrollTo($body, {
+                animation.scrollTo($scroll, {
                     x: the._scrollLeft,
                     y: the._scrollTop
                 }, the._jsAnimateOptions, function () {

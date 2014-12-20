@@ -1,10 +1,19 @@
 .alien-ui-scrollbar {
     position: relative;
+    overflow: hidden;
 }
 
 .alien-ui-scrollbar-body {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.alien-ui-scrollbar-body > textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .alien-ui-scrollbar-track {
@@ -13,14 +22,6 @@
     padding: 0;
     bottom: 0;
     right: 0;
-    border: 0 solid rgba(255, 255, 255, 0);
-    background: rgba(255, 255, 255, 0);
-    -webkit-transition-duration: 456ms;
-    -moz-transition-duration: 456ms;
-    transition-duration: 456ms;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    transition-property: background;
 }
 
 .alien-ui-scrollbar-track-x {
@@ -33,11 +34,6 @@
     top: 0;
     width: 15px;
     border-left-width: 1px;
-}
-
-.alien-ui-scrollbar-track:hover {
-    border-color: #ccc;
-    background: #fff;
 }
 
 .alien-ui-scrollbar-thumb {
