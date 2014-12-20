@@ -10,7 +10,23 @@ define(function (require, exports, module) {
 
     var control = require('/src/util/control.js');
 
-    window.onscroll = control.debounce(function () {
-        console.log('onsrcoll', Date.now());
-    }, 1000);
+    window.addEventListener('scroll', control.throttle(function () {
+        console.log('throttle onsrcoll', Date.now());
+    }, 1000));
+
+    window.addEventListener('scroll', control.debounce(function () {
+        console.log('debounce onsrcoll', Date.now());
+    }, 1000));
+
+    document.addEventListener('click', control.once(function () {
+        alert('I am once');
+    }));
+
+    document.addEventListener('click', control.toggle(function () {
+        alert('呵呵');
+    }, function () {
+        alert('哈哈');
+    }, function () {
+        alert('嘿嘿');
+    }));
 });
