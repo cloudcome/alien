@@ -24,6 +24,7 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
+    var control = require('../../util/control.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
@@ -142,6 +143,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
+            console.log('......>>><<<.....');
             the._trigger = true;
             the._calScrollSize();
             the._calTrackSize();
@@ -303,7 +305,7 @@ define(function (require, exports, module) {
 
             if (isPlaceholderScroll) {
                 // 更新内容尺寸
-                event.on(the._$ele, updateEvent, the.resize.bind(the));
+                event.on(the._$ele, updateEvent, control.debounce(the.resize.bind(the)));
 
                 // 自身滚动
                 event.on($scroll, 'scroll', the._onscroll.bind(the));
@@ -395,7 +397,7 @@ define(function (require, exports, module) {
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
 
-                event.on(window, 'resize', the._onresize.bind(the));
+                event.on(window, 'resize', the._onresize = control.debounce(the.resize.bind(the)));
             } else {
                 event.on($scroll, 'scroll', function () {
                     if (the._scrollLeft !== $scroll.scrollLeft) {
@@ -461,14 +463,6 @@ define(function (require, exports, module) {
             }
         },
 
-
-        _onresize: function () {
-            var the = this;
-
-            if(the._resizeTimer){
-
-            }
-        },
 
 
         /**
