@@ -129,8 +129,6 @@ define(function (require, exports, module) {
             the._isTextarea = isTextarea;
             the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
             the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
-            the._trigger = false;
-            the._trigger = false;
             the.resize();
             the._initEvent();
 
@@ -145,6 +143,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
+            the._trigger = true;
             the._calScrollSize();
             the._calTrackSize();
 
@@ -231,9 +230,7 @@ define(function (require, exports, module) {
 
                 if (the._trigger) {
                     animation.stop($thumbX);
-                    animation.animate($thumbX, thumbXSize, the._cssAnimateOptions, function () {
-                        the._trigger = false;
-                    });
+                    animation.animate($thumbX, thumbXSize, the._cssAnimateOptions);
                 } else {
                     attribute.css($thumbX, thumbXSize);
                 }
@@ -250,9 +247,7 @@ define(function (require, exports, module) {
 
                 if (the._trigger) {
                     animation.stop($thumbY);
-                    animation.animate($thumbY, thumbYSize, the._cssAnimateOptions, function () {
-                        the._trigger = false;
-                    });
+                    animation.animate($thumbY, thumbYSize, the._cssAnimateOptions);
                 } else {
                     attribute.css($thumbY, thumbYSize);
                 }
@@ -341,7 +336,7 @@ define(function (require, exports, module) {
                 // 拖拽支持
                 event.on(the._$thumbX, 'dragstart', function (eve) {
                     eve.preventDefault();
-                    the._trigger = true;
+                    the._isDrag = true;
                     x0 = eve.pageX;
                     left0 = parseFloat(attribute.css(the._$thumbX, 'left'));
                     attribute.addClass(the._$thumbX, thumbActiveClass);
@@ -365,7 +360,7 @@ define(function (require, exports, module) {
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
                     eve.preventDefault();
-                    the._trigger = false;
+                    the._isDrag = false;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
                 });
 
@@ -456,7 +451,7 @@ define(function (require, exports, module) {
             var the = this;
             var $scroll = the._$scroll;
 
-            if (!the._isWeel && !the._isDrag && !the._isInput) {
+            if (!(the._isWeel || the._isDrag || the._isInput || the._trigger)) {
                 the._scrollLeft = $scroll.scrollLeft;
                 the._scrollTop = $scroll.scrollTop;
                 the._calTrackSize();
@@ -466,18 +461,13 @@ define(function (require, exports, module) {
 
         /**
          * x 轴滚动
-         * @param {Number} [x] 滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条
          * @returns {Scrollbar}
          */
-        _scrollX: function (x) {
+        _scrollX: function () {
             var the = this;
 
             if (the._scrollLeftMax <= 0) {
                 return the;
-            }
-
-            if (x !== undefined) {
-                the._scrollLeft = dato.parseFloat(x, 0);
             }
 
             if (the._scrollLeft > the._scrollLeftMax) {
@@ -489,8 +479,6 @@ define(function (require, exports, module) {
             the._thumbLeft = the._thumbLeftMax * the._scrollLeft / the._scrollLeftMax;
             the._setScroll();
             the.emit('changex', the._scrollLeft);
-
-            return the;
         },
 
 
@@ -502,7 +490,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            return the._scrollX(0);
+            the._scrollLeft = 0;
+            the._scrollX();
+            the._calTrackSize();
+
+            return the;
         },
 
 
@@ -514,24 +506,23 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            return the._scrollX(the._scrollLeftMax);
+            the._scrollLeft = the._scrollLeftMax;
+            the._scrollX();
+            the._calTrackSize();
+
+            return the;
         },
 
 
         /**
          * y 轴滚动
-         * @param {Number} [y] 滚动的位置，相对于框架，默认为当前值，常用来重新定位当前滚动条
          * @returns {Scrollbar}
          */
-        _scrollY: function (y) {
+        _scrollY: function () {
             var the = this;
 
             if (the._scrollTopMax <= 0) {
                 return the;
-            }
-
-            if (y !== undefined) {
-                the._scrollTop = dato.parseFloat(y, 0);
             }
 
             if (the._scrollTop > the._scrollTopMax) {
@@ -543,8 +534,6 @@ define(function (require, exports, module) {
             the._thumbTop = the._thumbTopMax * the._scrollTop / the._scrollTopMax;
             the._setScroll();
             the.emit('changey', the._scrollTop);
-
-            return the;
         },
 
 
