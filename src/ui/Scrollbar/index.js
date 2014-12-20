@@ -133,6 +133,8 @@ define(function (require, exports, module) {
             // 私有、公有触发
             the._isPrivateTrigger = false;
             the._isPublicTrigger = false;
+            the._triggerScroll = false;
+            the._triggerThumb = false;
             the.resize();
             the._initEvent();
 
@@ -199,8 +201,8 @@ define(function (require, exports, module) {
             var thumbWidthRatio = the._containerWidth / the._scrollWidth;
             var thumbHeightRatio = the._containerHeight / the._scrollHeight;
             // 距离比例
-            var thumbLeftRatio = the._scrollLeft / the._scrollWidth;
-            var thumbTopRatio = the._scrollTop / the._scrollHeight;
+            var thumbLeftRatio = the._scrollLeft / the._scrollLeftMax;
+            var thumbTopRatio = the._scrollTop / the._scrollTopMax;
             var options = the._options;
 
             the._trackWidth = attribute.width($trackX) - the._thumbWidthOffset;
@@ -210,44 +212,87 @@ define(function (require, exports, module) {
 
             if (the._thumbWidth < options.minX) {
                 the._thumbWidth = options.minX;
-                thumbWidthRatio = the._thumbWidth / the._trackWidth;
             }
 
             if (the._thumbHeight < options.minY) {
                 the._thumbHeight = options.minY;
-                thumbHeightRatio = the._thumbHeight / the._trackHeight;
             }
 
-            the._thumbLeft = the._trackWidth * thumbLeftRatio;
-            the._thumbTop = the._trackHeight * thumbTopRatio;
             the._thumbLeftMax = the._trackWidth - the._thumbWidth;
             the._thumbTopMax = the._trackHeight - the._thumbHeight;
-            the._thumbWidthRatio = thumbWidthRatio;
-            the._thumbHeightRatio = thumbHeightRatio;
+            the._thumbLeft = the._thumbLeftMax * thumbLeftRatio;
+            the._thumbTop = the._thumbTopMax * thumbTopRatio;
+
+            var thumbXSize = {
+                left: the._thumbLeft,
+                width: the._thumbWidth
+            };
 
             if (the._thumbLeftMax <= 0) {
                 attribute.css($trackX, 'display', 'none');
+                the._triggerThumb = false;
             } else {
                 attribute.css($trackX, 'display', 'block');
 
-                animation.stop($thumbX);
-                animation.animate($thumbX, {
-                    left: the._thumbLeft,
-                    width: the._thumbWidth
-                }, the._cssAnimateOptions);
-
+                if (the._triggerScroll && the._triggerThumb) {
+                    animation.stop($thumbX);
+                    animation.animate($thumbX, thumbXSize, the._cssAnimateOptions, function () {
+                        the._triggerThumb = false;
+                    });
+                } else {
+                    the._triggerThumb = false;
+                    attribute.css($thumbX, thumbXSize);
+                }
             }
 
+            var thumbYSize = {
+                top: the._thumbTop,
+                height: the._thumbHeight
+            };
             if (the._thumbTopMax <= 0) {
                 attribute.css($trackY, 'display', 'none');
+                the._triggerThumb = false;
             } else {
                 attribute.css($trackY, 'display', 'block');
 
-                animation.stop($thumbY);
-                animation.animate($thumbY, {
-                    top: the._thumbTop,
-                    height: the._thumbHeight
-                }, the._cssAnimateOptions);
+                if (the._triggerScroll && the._triggerThumb) {
+                    animation.stop($thumbY);
+                    animation.animate($thumbY, thumbYSize, the._cssAnimateOptions, function () {
+                        the._triggerThumb = false;
+                    });
+                } else {
+                    the._triggerThumb = false;
+                    attribute.css($thumbY, thumbYSize);
+                }
+            }
+        },
+
+
+        /**
+         * 设置滚动距离
+         * @private
+         */
+        _setScroll: function () {
+            var the = this;
+            var $scroll = the._$scroll;
+
+            if (the._triggerScroll && the._triggerThumb) {
+                animation.scrollTo($scroll, {
+                    x: the._scrollLeft,
+                    y: the._scrollTop
+                }, function () {
+                    if (the._scrollTimer) {
+                        clearTimeout(the._scrollTimer);
+                    }
+
+                    the._scrollTimer = setTimeout(function () {
+                        the._triggerScroll = false;
+                        the._scrollTimer = 0;
+                    }, 100);
+                });
+            } else {
+                $scroll.scrollLeft = the._scrollLeft;
+                $scroll.scrollTop = the._scrollTop;
             }
         },
 
@@ -270,19 +315,18 @@ define(function (require, exports, module) {
 
             if (isPlaceholderScroll) {
                 // 更新内容尺寸
-                event.on(the._$ele, updateEvent, function () {
-                    the.resize();
-                });
+                event.on(the._$ele, updateEvent, the.resize.bind(the));
 
                 // 自身滚动
                 event.on($scroll, 'scroll', the._onscroll.bind(the));
 
                 if (the._isTextarea) {
-                    event.on($scroll, 'input', the.resize.bind(the));
+                    event.on($scroll, 'input', the._oninput.bind(the));
                 }
 
                 // 鼠标滚动
                 event.on($parent, 'wheelstart', function () {
+                    the._triggerScroll = true;
                     attribute.addClass($thumb, thumbActiveClass);
                 });
 
@@ -296,8 +340,14 @@ define(function (require, exports, module) {
                         eve.preventDefault();
                     }
 
-                    the['_scroll' + key] = d;
-                    the['_scroll' + options.axis.toUpperCase()]();
+                    if (d < 0) {
+                        d = 0;
+                    } else if (d > the['_scroll' + key + 'Max']) {
+                        d = the['_scroll' + key + 'Max'];
+                    }
+
+                    $scroll['scroll' + key] = the['_scroll' + key] = d;
+                    the._calTrackSize();
                 });
 
                 event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
@@ -305,7 +355,7 @@ define(function (require, exports, module) {
                 // 拖拽支持
                 event.on(the._$thumbX, 'dragstart', function (eve) {
                     eve.preventDefault();
-
+                    the._triggerThumb = true;
                     x0 = eve.pageX;
                     left0 = parseFloat(attribute.css(the._$thumbX, 'left'));
                     attribute.addClass(the._$thumbX, thumbActiveClass);
@@ -323,20 +373,19 @@ define(function (require, exports, module) {
                     }
 
                     the._xLeft = left;
-                    the._scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
-                    the._setScroll('x');
                     attribute.css(the._$thumbX, 'left', left);
-                    the.emit('changex', the._scrollLeft);
+                    $scroll.scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
                 });
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
                     eve.preventDefault();
+                    the._triggerThumb = false;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
                 });
 
                 event.on(the._$thumbY, 'dragstart', function (eve) {
                     eve.preventDefault();
-
+                    the._triggerThumb = true;
                     y0 = eve.pageY;
                     top0 = parseFloat(attribute.css(the._$thumbY, 'top'));
                     attribute.addClass(the._$thumbY, thumbActiveClass);
@@ -354,15 +403,13 @@ define(function (require, exports, module) {
                     }
 
                     the._yTop = top;
-                    the._scrollTop = the._scrollTopMax * top / the._thumbTopMax;
-                    the._setScroll('y');
                     attribute.css(the._$thumbY, 'top', top);
-                    the.emit('changey', the._scrollTop);
+                    $scroll.scrollTop = the._scrollTopMax * top / the._thumbTopMax;
                 });
 
                 event.on(the._$thumbY, 'dragend', function (eve) {
                     eve.preventDefault();
-
+                    the._triggerThumb = false;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
                 });
             } else {
@@ -378,6 +425,15 @@ define(function (require, exports, module) {
                     }
                 });
             }
+        },
+
+
+        _oninput: function () {
+            var the = this;
+
+            the._triggerScroll = true;
+            the._calScrollSize();
+            the._calTrackSize();
         },
 
 
@@ -399,36 +455,12 @@ define(function (require, exports, module) {
             var the = this;
             var $scroll = the._$scroll;
 
-            if(the._isPrivateTrigger || the._isPublicTrigger){
-                return;
-            }
-
-            the._scrollLeft = $scroll.scrollLeft;
-            the._scrollTop = $scroll.scrollTop;
-            the._setScroll('xy');
-        },
-
-
-        /**
-         * 设置滚动距离
-         * @param key
-         * @private
-         */
-        _setScroll: function (key) {
-            var the = this;
-            var isHorizontal = key === 'x';
-            var $scroll = the._$scroll;
-            var val = isHorizontal ? the._scrollLeft : the._scrollTop;
-
-            if (the._isPrivateTrigger || the._isPublicTrigger) {
-                animation.scrollTo($scroll, {
-                    x: the._scrollLeft,
-                    y: the._scrollTop
-                }, function () {
-                    the._isPrivateTrigger = the._isPublicTrigger = false;
-                });
-            } else {
-                $scroll['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
+            console.log(the._triggerScroll);
+            console.log(the._triggerThumb);
+            if (!(the._triggerScroll && the._triggerThumb)) {
+                //the._scrollLeft = $scroll.scrollLeft;
+                //the._scrollTop = $scroll.scrollTop;
+                //the._calTrackSize();
             }
         },
 
@@ -440,18 +472,12 @@ define(function (require, exports, module) {
          */
         _scrollX: function (x) {
             var the = this;
-            var $scroll = the._$scroll;
-            var $thumb = the._$thumbX;
 
             if (the._scrollLeftMax <= 0) {
                 return the;
             }
 
-            if (arguments.length) {
-                if (!the._isPublicTrigger) {
-                    the._isPrivateTrigger = true;
-                }
-
+            if (x !== undefined) {
                 the._scrollLeft = dato.parseFloat(x, 0);
             }
 
@@ -462,35 +488,7 @@ define(function (require, exports, module) {
             }
 
             the._thumbLeft = the._thumbLeftMax * the._scrollLeft / the._scrollLeftMax;
-
-            if (the._isPublicTrigger) {
-                attribute.addClass($thumb, thumbActiveClass);
-            }
-
-            if (isPlaceholderScroll) {
-                if (the._isPrivateTrigger || the._isPublicTrigger) {
-                    animation.stop($thumb);
-                    animation.animate($thumb, {
-                        left: the._thumbLeft
-                    }, the._cssAnimateOptions, function () {
-                        attribute.removeClass($thumb, thumbActiveClass);
-                    });
-                } else {
-                    attribute.css($thumb, {
-                        left: the._thumbLeft
-                    });
-                }
-
-                the._setScroll('x');
-            } else {
-                animation.scrollTo($scroll, {
-                    x: the._scrollLeft,
-                    y: the._scrollTop
-                }, the._jsAnimateOptions, function () {
-                    attribute.removeClass($thumb, thumbActiveClass);
-                });
-            }
-
+            the._setScroll();
             the.emit('changex', the._scrollLeft);
 
             return the;
@@ -504,7 +502,7 @@ define(function (require, exports, module) {
         scrollLeft: function () {
             var the = this;
 
-            the._isPublicTrigger = true;
+            the._trigger = true;
             return the._scrollX(0);
         },
 
@@ -516,7 +514,7 @@ define(function (require, exports, module) {
         scrollRight: function () {
             var the = this;
 
-            the._isPublicTrigger = true;
+            the._trigger = true;
             return the._scrollX(the._scrollLeftMax);
         },
 
@@ -528,18 +526,12 @@ define(function (require, exports, module) {
          */
         _scrollY: function (y) {
             var the = this;
-            var $scroll = the._$scroll;
-            var $thumb = the._$thumbY;
 
             if (the._scrollTopMax <= 0) {
                 return the;
             }
 
-            if (arguments.length) {
-                if (!the._isPublicTrigger) {
-                    the._isPrivateTrigger = true;
-                }
-
+            if (y !== undefined) {
                 the._scrollTop = dato.parseFloat(y, 0);
             }
 
@@ -550,35 +542,7 @@ define(function (require, exports, module) {
             }
 
             the._thumbTop = the._thumbTopMax * the._scrollTop / the._scrollTopMax;
-
-            if (the._isPublicTrigger) {
-                attribute.addClass($thumb, thumbActiveClass);
-            }
-
-            if (isPlaceholderScroll) {
-                if (the._isPrivateTrigger || the._isPublicTrigger) {
-                    animation.stop($thumb);
-                    animation.animate($thumb, {
-                        top: the._thumbTop
-                    }, the._cssAnimateOptions, function () {
-                        attribute.removeClass($thumb, thumbActiveClass);
-                    });
-                } else {
-                    attribute.css($thumb, {
-                        top: the._thumbTop
-                    });
-                }
-
-                the._setScroll('y');
-            } else {
-                animation.scrollTo($scroll, {
-                    x: the._scrollLeft,
-                    y: the._scrollTop
-                }, the._jsAnimateOptions, function () {
-                    attribute.removeClass($thumb, thumbActiveClass);
-                });
-            }
-
+            the._setScroll();
             the.emit('changey', the._scrollTop);
 
             return the;
@@ -592,7 +556,7 @@ define(function (require, exports, module) {
         scrollTop: function () {
             var the = this;
 
-            the._isPublicTrigger = true;
+            the._trigger = true;
             return the._scrollY(0);
         },
 
@@ -604,7 +568,7 @@ define(function (require, exports, module) {
         scrollBottom: function () {
             var the = this;
 
-            the._isPublicTrigger = true;
+            the._trigger = true;
             return the._scrollY(the._scrollTopMax);
         },
 

@@ -267,6 +267,10 @@ define(function (require, exports, module) {
                 callback = args[2];
             }
 
+            if (typeis(callback) !== 'function') {
+                callback = noop;
+            }
+
             to = to || {};
             to.x = to.x === udf ? from.x : to.x;
             to.y = to.y === udf ? from.y : to.y;
