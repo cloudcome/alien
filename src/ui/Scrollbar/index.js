@@ -146,6 +146,8 @@ define(function (require, exports, module) {
             the._trigger = true;
             the._calScrollSize();
             the._calTrackSize();
+            the._scrollX();
+            the._scrollY();
 
             return the;
         },
@@ -321,13 +323,13 @@ define(function (require, exports, module) {
                     var y = eve.alienDetail.deltaY;
                     var d = -y * options.speed;
 
-                    d = the['_scroll' + key] + d;
+                    the['_scroll' + key] += d;
 
-                    if (d >= 0 && d <= the['_scroll' + key + 'Max']) {
+                    if (the['_scroll' + key] >= 0 && the['_scroll' + key] <= the['_scroll' + key + 'Max']) {
                         eve.preventDefault();
                     }
 
-                    the['_scroll' + options.axis.toUpperCase()](d);
+                    the['_scroll' + options.axis.toUpperCase()]();
                     the._calTrackSize();
                 });
 
@@ -418,7 +420,7 @@ define(function (require, exports, module) {
 
             the._isInput = true;
 
-            if(the._inputTimer){
+            if (the._inputTimer) {
                 clearTimeout(the._inputTimer);
             }
 
@@ -545,7 +547,12 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            return the._scrollY(0);
+            the._scrollTop = 0;
+            the._scrollY();
+            the._calTrackSize();
+
+            return the;
+
         },
 
 
@@ -557,7 +564,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            return the._scrollY(the._scrollTopMax);
+            the._scrollTop = the._scrollTopMax;
+            the._scrollY();
+            the._calTrackSize();
+
+            return the;
         },
 
 
