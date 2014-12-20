@@ -47,7 +47,9 @@ define(function (require, exports, module) {
     // var updateEvent = 'DOMSubtreeModified DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
     // 这里不能用 DOMSubtreeModified，会导致IE卡死
     var updateEvent = ' DOMNodeInserted DOMNodeRemoved DOMNodeRemovedFromDocument DOMNodeInsertedIntoDocument DOMAttrModified DOMCharacterDataModified';
-    var isPlaceholderScroll = _isPlaceholderScroll();
+    //var isPlaceholderScroll = _isPlaceholderScroll();
+    var isPlaceholderScroll = true;
+    var maxNumber = Math.pow(2, 53);
     var defaults = {
         width: 700,
         height: 300,
@@ -90,78 +92,56 @@ define(function (require, exports, module) {
                 id: the._id,
                 isPlaceholderScroll: isPlaceholderScroll
             };
-            var wrapText = tpl.render(scrollbarData);
-            var $wrap;
-            var $body;
+            var wrapHTML = tpl.render(scrollbarData);
+            var $temp = modification.parse(wrapHTML)[0];
+            var $body = selector.query('.' + bodyClass, $temp)[0];
+            var $trackX = selector.query('.' + trackXClass, $temp)[0];
+            var $trackY = selector.query('.' + trackYClass, $temp)[0];
+            var $thumbX = selector.query('.' + thumbXClass, $temp)[0];
+            var $thumbY = selector.query('.' + thumbYClass, $temp)[0];
+            var $ele = the._$ele;
+            var $parent = $ele.parentNode;
 
-            the._isTextarea = the._$ele.tagName === 'TEXTAREA';
+            modification.insert($trackY, $ele, 'afterend');
+            modification.insert($trackX, $ele, 'afterend');
+            modification.insert($body, $ele, 'afterend');
+            modification.insert($ele, $body, 'beforeend');
+            attribute.addClass($parent, the._className = $temp.className);
 
-            if (!the._isTextarea) {
-                the._sizeWidth = attribute.width(the._$ele.parentNode);
-                the._sizeHeight = attribute.height(the._$ele.parentNode);
-            }
+            attribute.css($parent, {
+                position: 'relative',
+                overflow: 'hidden'
+            });
 
-            $wrap = modification.parse(wrapText)[0];
-            modification.insert($wrap, the._$ele, 'afterend');
-            $body = selector.query('.' + alienClass + '-body', $wrap)[0];
-            modification.insert(the._$ele, $body, 'afterbegin');
+            attribute.css($body, {
+                width: '100%',
+                height: '100%'
+            });
 
-            if (isPlaceholderScroll) {
-                the._jsAnimateOptions = {
-                    duration: options.duration,
-                    easing: options.jsEasing
-                };
+            the._jsAnimateOptions = {
+                duration: options.duration,
+                easing: options.jsEasing
+            };
 
-                the._cssAnimateOptions = {
-                    duration: options.duration,
-                    easing: options.cssEasing
-                };
+            the._cssAnimateOptions = {
+                duration: options.duration,
+                easing: options.cssEasing
+            };
 
-                the._$body = selector.query('.' + bodyClass, $wrap)[0];
-                the._$trackX = selector.query('.' + trackXClass, $wrap)[0];
-                the._$trackY = selector.query('.' + trackYClass, $wrap)[0];
-                the._$thumbX = selector.query('.' + thumbXClass, $wrap)[0];
-                the._$thumbY = selector.query('.' + thumbYClass, $wrap)[0];
-                the._xOffset = the._$thumbX.offsetLeft * 2;
-                the._yOffset = the._$thumbY.offsetTop * 2;
-            } else {
-                the._xOffset = 0;
-                the._yOffset = 0;
+            the._$trackX = $trackX;
+            the._$trackY = $trackY;
+            the._$thumbX = $thumbX;
+            the._$thumbY = $thumbY;
+            the._$parent = $parent;
+            the._$body = $body;
+            the._isTextarea = $ele.tagName === 'TEXTAREA';
+            the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
+            the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
 
-                attribute.css($wrap, {
-                    'overflow-scrolling': 'touch',
-                    overflow: 'auto'
-                });
-            }
-
-            if (the._isTextarea) {
-                the._sizeWidth = attribute.innerWidth(the._$ele);
-                the._sizeHeight = attribute.innerHeight(the._$ele);
-            }
-
-            the._$wrap = $wrap;
-            // 框架尺寸元素
-            the._$size = the._isTextarea ? the._$ele : the._$body;
-            // 内容区域的尺寸
-            the._scrollLeft = the._$ele.scrollLeft;
-            the._scrollTop = the._$ele.scrollTop;
-            the._calContentSize('xy');
-            //// 滚动区域最大值
-            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
-            the._scrollTopMax = the._contentHeight - the._sizeHeight;
-            // 水平滚动条的左位移
-            the._xLeft = 0;
-            // 水平滚动条的最大距离
-            the._xLeftMax = 0;
-            // 水平滚动条的宽度
-            the._xWidth = 0;
-            the._yTop = 0;
-            the._yTopMax = 0;
-            the._yHeight = 0;
             // 私有、公有触发
             the._isPrivateTrigger = false;
             the._isPublicTrigger = false;
-            the.update();
+            the.resize();
             the._initEvent();
 
             return the;
@@ -169,152 +149,113 @@ define(function (require, exports, module) {
 
 
         /**
-         * 计算内容尺寸
-         * @param axis 方向
-         * @private
-         */
-        _calContentSize: function (axis) {
-            var the = this;
-
-            if (axis.indexOf('x') > -1) {
-                the._contentWidth = the._$ele[(the._isTextarea ? 'scroll' : 'offset') + 'Width'];
-            }
-
-            if (axis.indexOf('y') > -1) {
-                the._contentHeight = the._$ele[(the._isTextarea ? 'scroll' : 'offset') + 'Height'];
-            }
-
-            // 内容区域的尺寸
-            the._scrollLeft = the._$ele.scrollLeft;
-            the._scrollTop = the._$ele.scrollTop;
-            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
-            the._scrollTopMax = the._contentHeight - the._sizeHeight;
-        },
-
-
-        /**
-         * 更新当前内容尺寸
-         * @param {Object} [scrollSize] 包含 width 和 height 的键值对
-         * @returns {Scrollbar}
-         */
-        update: function () {
-            var the = this;
-
-            the.resize({
-                width: the._sizeWidth,
-                height: the._sizeHeight
-            });
-
-            return the;
-        },
-
-
-        /**
          * 更新当前框架尺寸
-         * @param {Object} [boxSize] 包含 width 和 height 的键值对
          * @returns {Scrollbar}
          */
-        resize: function (boxSize) {
+        resize: function () {
             var the = this;
 
-            boxSize = boxSize || {};
-
-            if (boxSize.width && boxSize.width !== the._sizeWidth) {
-                the._sizeWidth = boxSize.width;
-            }
-
-            if (boxSize.height && boxSize.height !== the._sizeHeight) {
-                the._sizeHeight = boxSize.height;
-            }
-
-
-            attribute[(the._isTextarea ? 'innerW' : 'w') + 'idth'](the._$size, the._sizeWidth);
-            attribute[(the._isTextarea ? 'innerH' : 'h') + 'eight'](the._$size, the._sizeHeight);
-            // 内容尺寸
-            the._calContentSize('xy');
-            the._resize();
-            the._scrollX();
-            the._scrollY();
+            the._calScrollSize();
+            the._calTrackSize();
 
             return the;
         },
 
 
         /**
-         * 重置尺寸，当前区域或者内容尺寸变化时
+         * 计算滚动条尺寸
          * @private
          */
-        _resize: function () {
-            if (!isPlaceholderScroll) {
-                return this;
-            }
-
+        _calScrollSize: function () {
             var the = this;
-            var options = the._options;
-            var sizeWidth = the._isTextarea ? attribute.innerWidth(the._$size) : the._sizeWidth;
-            var sizeHeight = the._isTextarea ? attribute.innerHeight(the._$size) : the._sizeHeight;
+            var $body = the._$body;
+            var $parent = the._$parent;
 
-            // 计算滚动条的x轴的宽、y轴的高
-            // 6等于滚动条的左边距3 + 右边距3
-            the._xWidth = (sizeWidth - the._xOffset) * sizeWidth / the._contentWidth;
+            // 当前滚动条值
+            the._scrollLeft = $body.scrollLeft;
+            the._scrollTop = $body.scrollTop;
 
-            if (the._xWidth < options.minX) {
-                the._xWidth = options.minX;
-            }
+            // 当前容器尺寸
+            the._containerWidth = attribute.innerWidth($parent);
+            the._containerHeight = attribute.innerHeight($parent);
+            the._scrollWidth = $body.scrollWidth;
+            the._scrollHeight = $body.scrollHeight;
 
-            the._yHeight = (sizeHeight - the._yOffset) * sizeHeight / the._contentHeight;
+            // 纵向滚动条最大值
+            $body.scrollTop = maxNumber;
+            the._scrollTopMax = $body.scrollTop;
+            $body.scrollTop = the._scrollTop;
 
-            if (the._yHeight < options.minY) {
-                the._yHeight = options.minY;
-            }
-
-            the._xLeftMax = sizeWidth - the._xWidth - the._xOffset;
-            the._yTopMax = sizeHeight - the._yHeight - the._yOffset;
-
-            if (the._xLeftMax <= 0) {
-                attribute.css(the._$trackX, 'display', 'none');
-            } else {
-                attribute.css(the._$trackX, 'display', 'block');
-            }
-
-            if (the._yTopMax <= 0) {
-                attribute.css(the._$trackY, 'display', 'none');
-            } else {
-                attribute.css(the._$trackY, 'display', 'block');
-            }
-
-            animation.stop(the._$thumbX);
-            animation.animate(the._$thumbX, {
-                width: the._xWidth
-            }, the._cssAnimateOptions);
-
-            animation.stop(the._$thumbY);
-            animation.animate(the._$thumbY, {
-                height: the._yHeight
-            }, the._cssAnimateOptions);
+            // 横向滚动条最大值
+            $body.scrollLeft = maxNumber;
+            the._scrollLeftMax = $body.scrollLeft;
+            $body.scrollLeft = the._scrollLeft;
         },
 
 
         /**
-         * 设置滚动距离
-         * @param key
+         * 计算滚动轨道尺寸
          * @private
          */
-        _setScroll: function (key) {
+        _calTrackSize: function () {
             var the = this;
-            var isHorizontal = key === 'x';
-            var val = isHorizontal ? the._scrollLeft : the._scrollTop;
+            var $trackX = the._$trackX;
+            var $thumbX = the._$thumbX;
+            var $trackY = the._$trackY;
+            var $thumbY = the._$thumbY;
+            // 尺寸比例
+            var thumbWidthRatio = the._containerWidth / the._scrollWidth;
+            var thumbHeightRatio = the._containerHeight / the._scrollHeight;
+            // 距离比例
+            var thumbLeftRatio = the._scrollLeft / the._scrollWidth;
+            var thumbTopRatio = the._scrollTop / the._scrollHeight;
+            var options = the._options;
 
-            if (the._isPrivateTrigger || the._isPublicTrigger) {
-                animation.stop(the._$size);
-                animation.scrollTo(the._$size, {
-                    x: the._scrollLeft,
-                    y: the._scrollTop
-                }, function () {
-                    the._isPrivateTrigger = the._isPublicTrigger = false;
-                });
+            the._trackWidth = attribute.width($trackX) - the._thumbWidthOffset;
+            the._trackHeight = attribute.height($trackY) - the._thumbHeightOffset;
+            the._thumbWidth = the._trackWidth * thumbWidthRatio;
+            the._thumbHeight = the._trackHeight * thumbHeightRatio;
+
+            if (the._thumbWidth < options.minX) {
+                the._thumbWidth = options.minX;
+                thumbWidthRatio = the._thumbWidth / the._trackWidth;
+            }
+
+            if (the._thumbHeight < options.minY) {
+                the._thumbHeight = options.minY;
+                thumbHeightRatio = the._thumbHeight / the._trackHeight;
+            }
+
+            the._thumbLeft = the._trackWidth * thumbLeftRatio;
+            the._thumbTop = the._trackHeight * thumbTopRatio;
+            the._thumbLeftMax = the._trackWidth - the._thumbWidth;
+            the._thumbTopMax = the._trackHeight - the._thumbHeight;
+            the._thumbWidthRatio = thumbWidthRatio;
+            the._thumbHeightRatio = thumbHeightRatio;
+
+            if (the._thumbLeftMax <= 0) {
+                attribute.css($trackX, 'display', 'none');
             } else {
-                the._$size['scroll' + (isHorizontal ? 'Left' : 'Top')] = val;
+                attribute.css($trackX, 'display', 'block');
+
+                animation.stop($thumbX);
+                animation.animate($thumbX, {
+                    left: the._thumbLeft,
+                    width: the._thumbWidth
+                }, the._cssAnimateOptions);
+
+            }
+
+            if (the._thumbTopMax <= 0) {
+                attribute.css($trackY, 'display', 'none');
+            } else {
+                attribute.css($trackY, 'display', 'block');
+
+                animation.stop($thumbY);
+                animation.animate($thumbY, {
+                    top: the._thumbTop,
+                    height: the._thumbHeight
+                }, the._cssAnimateOptions);
             }
         },
 
@@ -327,6 +268,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var $thumb = options.axis === 'y' ? the._$thumbY : the._$thumbX;
+            var $parent = the._$parent;
             var key = options.axis === 'y' ? 'Top' : 'Left';
             var x0;
             var left0;
@@ -335,23 +277,23 @@ define(function (require, exports, module) {
 
             if (isPlaceholderScroll) {
                 // 更新内容尺寸
-                event.on(the._$size, updateEvent, function () {
-                    the.update();
+                event.on(the._$ele, updateEvent, function () {
+                    the.resize();
                 });
 
                 // 自身滚动
-                event.on(the._$size, 'scroll', the._onscroll.bind(the));
+                event.on(the._$ele, 'scroll', the._onscroll.bind(the));
 
                 if (the._isTextarea) {
-                    event.on(the._$size, 'input', the._oninput.bind(the));
+                    event.on(the._$ele, 'input', the._oninput.bind(the));
                 }
 
                 // 鼠标滚动
-                event.on(the._$wrap, 'wheelstart', function () {
+                event.on($parent, 'wheelstart', function () {
                     attribute.addClass($thumb, thumbActiveClass);
                 });
 
-                event.on(the._$wrap, 'wheelchange', function (eve) {
+                event.on($parent, 'wheelchange', function (eve) {
                     var y = eve.alienDetail.deltaY;
                     var d = -y * options.speed;
 
@@ -368,7 +310,6 @@ define(function (require, exports, module) {
                 event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
 
                 // 拖拽支持
-
                 event.on(the._$thumbX, 'dragstart', function (eve) {
                     eve.preventDefault();
 
@@ -384,13 +325,13 @@ define(function (require, exports, module) {
 
                     if (left < 0) {
                         left = 0;
-                    } else if (left > the._xLeftMax) {
-                        left = the._xLeftMax;
+                    } else if (left > the._thumbLeftMax) {
+                        left = the._thumbLeftMax;
                     }
 
                     the._xLeft = left;
-                    the._scrollLeft = the._scrollLeftMax * left / the._xLeftMax;
-                    the._setScroll('x');
+                    the._scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
+                    the._$body.scrollLeft = the._scrollLeft;
                     attribute.css(the._$thumbX, 'left', left);
                     the.emit('changex', the._scrollLeft);
                 });
@@ -415,13 +356,13 @@ define(function (require, exports, module) {
 
                     if (top < 0) {
                         top = 0;
-                    } else if (top > the._yTopMax) {
-                        top = the._yTopMax;
+                    } else if (top > the._thumbTopMax) {
+                        top = the._thumbTopMax;
                     }
 
                     the._yTop = top;
-                    the._scrollTop = the._scrollTopMax * top / the._yTopMax;
-                    the._setScroll('y');
+                    the._scrollTop = the._scrollTopMax * top / the._thumbTopMax;
+                    the._$body.scrollTop = the._scrollTop;
                     attribute.css(the._$thumbY, 'top', top);
                     the.emit('changey', the._scrollTop);
                 });
@@ -464,19 +405,6 @@ define(function (require, exports, module) {
         _onscroll: function () {
             var the = this;
 
-            if (the._isPrivateTrigger || the._isPublicTrigger) {
-                return;
-            }
-
-            if (the._$size.scrollLeft !== the._scrollLeft) {
-                the._scrollLeft = the._$size.scrollLeft;
-                the._scrollX();
-            }
-
-            if (the._$size.scrollTop !== the._scrollTop) {
-                the._scrollTop = the._$size.scrollTop;
-                the._scrollY();
-            }
         },
 
 
@@ -486,16 +414,6 @@ define(function (require, exports, module) {
          */
         _oninput: function () {
             var the = this;
-
-            if (the._isPrivateTrigger) {
-                the._isPrivateTrigger = false;
-                return;
-            }
-
-            the._calContentSize('xy');
-            the._scrollLeftMax = the._contentWidth - the._sizeWidth;
-            the._scrollTopMax = the._contentHeight - the._sizeHeight;
-            the.update();
         },
 
 
@@ -506,6 +424,8 @@ define(function (require, exports, module) {
          */
         _scrollX: function (x) {
             var the = this;
+            var $body = the._$body;
+            var $thumb = the._$thumbX;
 
             if (the._scrollLeftMax <= 0) {
                 return the;
@@ -516,13 +436,7 @@ define(function (require, exports, module) {
                     the._isPrivateTrigger = true;
                 }
 
-                x = dato.parseFloat(x, 0);
-
-                if (x < 0 || x > the._contentWidth) {
-                    x = the._contentWidth;
-                }
-
-                the._scrollLeft = x;
+                the._scrollLeft = dato.parseFloat(x, 0);
             }
 
             if (the._scrollLeft > the._scrollLeftMax) {
@@ -531,38 +445,37 @@ define(function (require, exports, module) {
                 the._scrollLeft = 0;
             }
 
-            the._xLeft = the._xLeftMax * the._scrollLeft / the._scrollLeftMax;
+            the._thumbLeft = the._thumbLeftMax * the._scrollLeft / the._scrollLeftMax;
 
             if (the._isPublicTrigger) {
-                attribute.addClass(the._$thumbX, thumbActiveClass);
+                attribute.addClass($thumb, thumbActiveClass);
             }
 
             if (isPlaceholderScroll) {
                 if (the._isPrivateTrigger || the._isPublicTrigger) {
-                    animation.stop(the._$thumbX);
-                    animation.animate(the._$thumbX, {
-                        left: the._xLeft
+                    animation.stop($thumb);
+                    animation.animate($thumb, {
+                        left: the._thumbLeft
                     }, the._cssAnimateOptions, function () {
-                        attribute.removeClass(the._$thumbX, thumbActiveClass);
+                        attribute.removeClass($thumb, thumbActiveClass);
                     });
                 } else {
-                    attribute.css(the._$thumbX, {
-                        left: the._xLeft
+                    attribute.css($thumb, {
+                        left: the._thumbLeft
                     });
                 }
 
-                the._setScroll('x');
+                $body.scrollLeft = the._scrollLeft;
             } else {
-                animation.scrollTo(the._$wrap, {
+                animation.scrollTo($body, {
                     x: the._scrollLeft,
                     y: the._scrollTop
                 }, the._jsAnimateOptions, function () {
-                    attribute.removeClass(the._$thumbX, thumbActiveClass);
+                    attribute.removeClass($thumb, thumbActiveClass);
                 });
             }
 
             the.emit('changex', the._scrollLeft);
-
 
             return the;
         },
@@ -599,6 +512,8 @@ define(function (require, exports, module) {
          */
         _scrollY: function (y) {
             var the = this;
+            var $body = the._$body;
+            var $thumb = the._$thumbY;
 
             if (the._scrollTopMax <= 0) {
                 return the;
@@ -609,13 +524,7 @@ define(function (require, exports, module) {
                     the._isPrivateTrigger = true;
                 }
 
-                y = dato.parseFloat(y, 0);
-
-                if (y < 0 || y > the._contentHeight) {
-                    y = the._contentHeight;
-                }
-
-                the._scrollTop = y;
+                the._scrollTop = dato.parseFloat(y, 0);
             }
 
             if (the._scrollTop > the._scrollTopMax) {
@@ -624,38 +533,37 @@ define(function (require, exports, module) {
                 the._scrollTop = 0;
             }
 
-            the._yTop = the._yTopMax * the._scrollTop / the._scrollTopMax;
+            the._thumbTop = the._thumbTopMax * the._scrollTop / the._scrollTopMax;
 
             if (the._isPublicTrigger) {
-                attribute.addClass(the._$thumbY, thumbActiveClass);
+                attribute.addClass($thumb, thumbActiveClass);
             }
 
             if (isPlaceholderScroll) {
                 if (the._isPrivateTrigger || the._isPublicTrigger) {
-                    animation.stop(the._$thumbY);
-                    animation.animate(the._$thumbY, {
-                        top: the._yTop
+                    animation.stop($thumb);
+                    animation.animate($thumb, {
+                        top: the._thumbTop
                     }, the._cssAnimateOptions, function () {
-                        attribute.removeClass(the._$thumbY, thumbActiveClass);
+                        attribute.removeClass($thumb, thumbActiveClass);
                     });
                 } else {
-                    attribute.css(the._$thumbY, {
-                        top: the._yTop
+                    attribute.css($thumb, {
+                        top: the._thumbTop
                     });
                 }
 
-                the._setScroll('y');
+                $body.scrollTop = the._scrollTop;
             } else {
-                animation.scrollTo(the._$wrap, {
+                animation.scrollTo($body, {
                     x: the._scrollLeft,
                     y: the._scrollTop
                 }, the._jsAnimateOptions, function () {
-                    attribute.removeClass(the._$thumbY, thumbActiveClass);
+                    attribute.removeClass($thumb, thumbActiveClass);
                 });
             }
 
             the.emit('changey', the._scrollTop);
-
 
             return the;
         },
@@ -696,17 +604,18 @@ define(function (require, exports, module) {
             event.un(the._$thumbY, 'dragsatrt drag dragend');
 
             // 清除监听
-            event.un(the._$size, updateEvent);
-            event.un(the._$wrap, 'wheelstart');
-            event.un(the._$wrap, 'wheelchange');
+            event.un(the._$ele, updateEvent);
+            event.un(the._$parent, 'wheelstart');
+            event.un(the._$parent, 'wheelchange');
             event.un(document, 'wheelend', the._onwheelend);
-            event.un(the._$size, 'scroll', the._onscroll);
-            event.un(the._$size, 'input', the._oninput);
+            event.un(the._$ele, 'scroll', the._onscroll);
+            event.un(the._$ele, 'input', the._oninput);
 
             // unwrap
             modification.remove(the._$trackX);
             modification.remove(the._$trackY);
-            modification.unwrap(the._$ele, 'div div');
+            modification.unwrap(the._$ele, 'div');
+            attribute.removeClass(the._$ele, the._className);
         }
     });
 
