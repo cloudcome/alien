@@ -1,1 +1,5 @@
-<div class="alien-ui-pager"><div class="alien-ui-pager-page {{if page < 2}}alien-ui-pager-disabled{{/if}}" data-page="{{page-1}}">{{prev}}</div><div class="alien-ui-pager-page {{if page >= max}}alien-ui-pager-disabled{{/if}}" data-page="{{page-1+2}}">{{next}}</div></div>
+<div class="alien-ui-pager">
+    <div class="alien-ui-pager-page alien-ui-pager-prev{{if page < 2}} alien-ui-pager-disabled{{/if}}" data-page="{{page-1}}">{{prev}}</div>
+    <div class="alien-ui-pager-number">{{page}}</div>
+    <div class="alien-ui-pager-page alien-ui-pager-next{{if page >= max}} alien-ui-pager-disabled{{/if}}" data-page="{{page-1+2}}">{{next}}</div>
+</div>

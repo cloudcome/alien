@@ -143,7 +143,6 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            console.log('......>>><<<.....');
             the._trigger = true;
             the._calScrollSize();
             the._calTrackSize();
