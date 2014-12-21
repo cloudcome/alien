@@ -59,7 +59,9 @@ define(function (require, exports, module) {
         speed: 100,
         duration: 456,
         cssEasing: 'in-out',
-        jsEasing: 'swing'
+        jsEasing: 'swing',
+        addClass: '',
+        isStandAlone: false
     };
     var Scrollbar = generator({
         STATIC: {
@@ -107,6 +109,7 @@ define(function (require, exports, module) {
             modification.insert($trackX, $ele, 'afterend');
             modification.insert($body, $ele, 'afterend');
             modification.insert($ele, $body, 'beforeend');
+            attribute.addClass($temp, options.addClass);
             attribute.addClass($parent, the._className = $temp.className);
 
             the._jsAnimateOptions = {
@@ -325,7 +328,11 @@ define(function (require, exports, module) {
 
                     the['_scroll' + key] += d;
 
-                    if (the['_scroll' + key] >= 0 && the['_scroll' + key] <= the['_scroll' + key + 'Max']) {
+                    if (options.isStandAlone ||
+                        !options.isStandAlone &&
+                        the['_scroll' + key] >= 0 &&
+                        the['_scroll' + key] <= the['_scroll' + key + 'Max']
+                    ) {
                         eve.preventDefault();
                     }
 
@@ -461,7 +468,6 @@ define(function (require, exports, module) {
                 the._calTrackSize();
             }
         },
-
 
 
         /**
@@ -615,6 +621,8 @@ define(function (require, exports, module) {
      * @param {Number} [optoions.duration=456] 动画时间，单位 ms
      * @param {String} [optoions.cssEasing="in-out"] CSS 动画缓冲类型
      * @param {String} [optoions.jsEasing="iswing"] JS 动画缓冲类型
+     * @param {String} [optoions.addClass=""] 额外添加的 className
+     * @param {String} [optoions.isStandAlone=false] 是否为独立区域，独立区域即在滚动超过边际时不会释放对滚轮的阻止
      * @constructor
      */
     module.exports = Scrollbar;
