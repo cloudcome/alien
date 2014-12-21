@@ -5,7 +5,9 @@ define(function (require) {
     var demo = document.getElementById('demo');
     var scrollbar1 = new Scrollbar('#demo');
     var scrollbar2 = new Scrollbar('#textarea');
-    var scrollbar3 = new Scrollbar('#table');
+    var scrollbar3 = new Scrollbar('#table',{
+        isStandAlone: true
+    });
 
     document.getElementById('scrollTop').onclick = function(){
         scrollbar1.scrollTop();
