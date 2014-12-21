@@ -10,8 +10,8 @@ define(function (require, exports, module) {
 
     var Pager = require('/src/ui/Pager/index.js');
     var pager = new Pager('#demo', {
-        page: 1,
-        max: 3
+        page: 100,
+        max: 300
     }).on('change', function (page) {
         this.render({
             page: page

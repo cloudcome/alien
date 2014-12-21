@@ -18,6 +18,7 @@
     height: 36px;
     line-height: 36px;
     border: 1px solid #ddd;
+    padding: 0 15px;
 }
 
 .alien-ui-pager-page {
@@ -32,17 +33,16 @@
 }
 
 .alien-ui-pager-prev {
-    width: 35%;
     border-radius: 4px 0 0 4px;
+    border-right: 0;
 }
 
 .alien-ui-pager-next {
-    width: 35%;
     border-radius: 0 4px 4px 0;
+    border-left: 0;
 }
 
 .alien-ui-pager-number {
-    width: 30%;
     border-left: 0;
     border-right: 0;
     background: #555;
