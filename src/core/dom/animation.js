@@ -83,10 +83,8 @@ define(function (require, exports, module) {
             var args = arguments;
             var argL = args.length;
             var keys = [];
-            var listener;
             var hasDispatch = 0;
             var timeid = 0;
-            var easing = '';
             // 修正 CSS 终点
             var fixTo = {};
             var durationVal = [];
@@ -118,29 +116,32 @@ define(function (require, exports, module) {
                 callback = noop;
             }
 
-            listener = function () {
-                if (timeid) {
-                    clearTimeout(timeid);
-                    timeid = 0;
-                }
+            var listener = function (eve) {
+                if(eve.target === ele){
+                    if (timeid) {
+                        clearTimeout(timeid);
+                        timeid = 0;
+                    }
 
-                if (hasDispatch) {
-                    return;
-                }
+                    if (hasDispatch) {
+                        return;
+                    }
 
-                hasDispatch = 1;
-                animationMap[id] = null;
-                event.un(ele, transitionendEventType, listener);
-                attribute.css(ele, 'transition-duration', '');
-                attribute.css(ele, 'transition-delay', '');
-                attribute.css(ele, 'transition-timing-function', '');
-                attribute.css(ele, 'transition-property', '');
-                callback();
+                    hasDispatch = 1;
+                    animationMap[id] = null;
+                    event.un(ele, transitionendEventType, listener);
+                    attribute.css(ele, 'transition-duration', '');
+                    attribute.css(ele, 'transition-delay', '');
+                    attribute.css(ele, 'transition-timing-function', '');
+                    attribute.css(ele, 'transition-property', '');
+                    callback();
+                }
             };
 
             event.on(ele, transitionendEventType, listener);
             options = dato.extend({}, cssDefaults, options);
-            easing = eeeing.css3[options.easing];
+
+            var easing = eeeing.css3[options.easing];
 
             if (!easing) {
                 easing = options.easing;
