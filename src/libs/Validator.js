@@ -294,7 +294,7 @@ define(function (require, exports, module) {
 
             // onbefore
             if (typeis(rule.onbefore) === 'function') {
-                val = rule.onbefore(val, data);
+                data[rule.name] = val = rule.onbefore(val, data);
             }
 
             type = typeis(val);
