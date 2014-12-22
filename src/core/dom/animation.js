@@ -117,7 +117,7 @@ define(function (require, exports, module) {
             }
 
             var listener = function (eve) {
-                if(eve.target === ele){
+                if(eve && eve.target === ele){
                     if (timeid) {
                         clearTimeout(timeid);
                         timeid = 0;
