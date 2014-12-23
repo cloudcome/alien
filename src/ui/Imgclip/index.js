@@ -82,6 +82,7 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
             var options = the._options;
+            var img = new Image();
 
             // 外围尺寸
             the._wrapWidth = attribute.width($ele);
@@ -93,7 +94,14 @@ define(function (require, exports, module) {
                     the.emit('error', new Error('图片尺寸过小'));
                 }, 0);
             }else{
-                the._initSize();
+                img.src = $ele.src;
+                img.onload = function () {
+                    the._imgWidth = this.width;
+                    the._imgHeight = this.height;
+                    the._ratioWidth = the._wrapWidth/the._imgWidth;
+                    the._ratioHeight = the._wrapHeight/the._imgHeight;
+                    the._initSize();
+                };
             }
 
             return the;
@@ -305,7 +313,7 @@ define(function (require, exports, module) {
                     animation.animate(the._$sele, selectionProp, animationOptions);
                     animation.stop(the._$img);
                     animation.animate(the._$img, imgProp, animationOptions);
-
+                    the._ratioSelection();
                     the.emit('clipend', the._selection);
                 }
             });
@@ -365,6 +373,7 @@ define(function (require, exports, module) {
 
                 if (state === 3) {
                     state = 2;
+                    the._ratioSelection();
                     the.emit('clipend', the._selection);
                 }
             });
@@ -387,6 +396,7 @@ define(function (require, exports, module) {
             the._resize.on('resizeend', function () {
                 if (state === 4) {
                     state = 2;
+                    the._ratioSelection();
                     the.emit('clipend', the._selection);
                 }
             });
@@ -404,6 +414,18 @@ define(function (require, exports, module) {
                     }
                 }
             });
+        },
+
+
+        /**
+         * 调整原始选区尺寸
+         * @private
+         */
+        _ratioSelection: function () {
+            var the = this;
+
+            the._selection.srcWidth = the._selection.width / the._ratioWidth;
+            the._selection.srcHeight = the._selection.height / the._ratioHeight;
         },
 
         /**
