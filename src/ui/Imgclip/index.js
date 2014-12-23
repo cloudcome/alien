@@ -430,8 +430,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._un();
-            the._resize.destroy();
-            modification.remove(the._$wrap);
+
+            if(the._resize){
+                the._resize.destroy();
+                modification.remove(the._$wrap);
+            }
         }
     });
 
