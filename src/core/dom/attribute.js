@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var selector = require('./selector.js');
     var REG_PX = /margin|width|height|padding|top|right|bottom|left/i;
     var REG_TRANSFORM = /translate|scale|skew|rotate|matrix|perspective/i;
+    var REG_IMPORTANT = /\s!important$/i;
     // +123.456
     // -123.456
     var regNum = /^[+\-]?\d+(\.\d*)?$/;
@@ -160,6 +161,15 @@ define(function (require, exports, module) {
          * // }
          */
         fixCss: function (key, val) {
+            val = String(val).trim();
+
+            var important = null;
+
+            if (REG_IMPORTANT.test(val)) {
+                important = true;
+                val = val.replace(REG_IMPORTANT, '');
+            }
+
             if (REG_TRANSFORM.test(key)) {
                 val = key + '(' + val + ')';
                 key = 'transform';
@@ -167,7 +177,8 @@ define(function (require, exports, module) {
 
             return {
                 key: compatible.css3(_toSepString(key)),
-                val: _toCssVal(key, val)
+                val: _toCssVal(key, val),
+                important: important
             };
         },
 
@@ -178,16 +189,15 @@ define(function (require, exports, module) {
          * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
          *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
          * @param {String|Number} [val] 样式属性值
-         * @param {Boolean} [isImportant=false] 是否设置为最高优先级，默认false
          * @returns {*}
          *
          * @example
          * // set
          * attribute.css(ele, 'width', 100);
-         * attribute.css(ele, 'width', 100, true);
+         * attribute.css(ele, 'width', 100);
          * attribute.css(ele, {
          *    width: 100,
-         *    height: '200px'
+         *    height: '200px !important'
          * });
          *
          * // get
@@ -195,7 +205,7 @@ define(function (require, exports, module) {
          * attribute.css(ele, 'width::after');
          * attribute.css(ele, ['width','height']);
          */
-        css: function (ele, key, val, isImportant) {
+        css: function (ele, key, val) {
             if (!ele || ele.nodeType !== 1 || !key) {
                 return;
             }
@@ -219,7 +229,7 @@ define(function (require, exports, module) {
                     // ele.style[fix.key] = fix.val;
                     // 样式名, 样式值, 优先级
                     // object.setProperty (propertyName, propertyValue, priority);
-                    ele.style.setProperty(fix.key, fix.val, isImportant ? 'important' : null);
+                    ele.style.setProperty(fix.key, fix.val, fix.important);
                 }
             });
         },

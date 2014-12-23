@@ -46,6 +46,8 @@ define(function (require, exports, module) {
         STATIC: {
             defaults: defaults
         },
+
+
         constructor: function ($ele, options) {
             var the = this;
             var adjust;
@@ -69,13 +71,24 @@ define(function (require, exports, module) {
                 event.on(the._$ele, 'load', the._init.bind(the));
             }
         },
+
+
+        /**
+         * 初始化
+         * @returns {Imgclip}
+         * @private
+         */
         _init: function () {
             var the = this;
             var tpl = new Template(template);
             var wrap;
             var $ele = the._$ele;
-            var $img = $ele.cloneNode(!0);
+            var $img = $ele.cloneNode(true);
             var $wrap;
+
+            if (attribute.css($ele.parentNode, 'position') === 'static') {
+                attribute.css($ele.parentNode, 'postion', 'relative');
+            }
 
             the._id = alienIndex++;
             wrap = tpl.render({
@@ -100,10 +113,18 @@ define(function (require, exports, module) {
             });
             attribute.top($wrap, attribute.top($ele));
             attribute.left($wrap, attribute.left($ele));
-            the._$sele = selector.query('.alien-ui-imgclip-selection', $wrap)[0];
-            the._$bg = selector.query('.alien-ui-imgclip-bg', $wrap)[0];
-            the._$in = selector.query('.alien-ui-imgclip-in', $wrap)[0];
+
+            var nodes = selector.query('.j-flag', $wrap);
+
+            the._$bg = nodes[0];
+            the._$sele = nodes[1];
             modification.insert($img, the._$sele, 'afterbegin');
+            attribute.css($img, {
+                width: the._wrapWidth,
+                height: the._wrapHeight,
+                maxWidth: 'none !important',
+                maxHeight: 'none'
+            });
             the._$img = $img;
             // 重置选区
             the._reset();
@@ -113,6 +134,22 @@ define(function (require, exports, module) {
 
             return the;
         },
+
+
+        /**
+         * 计算图片需要裁剪的真实配置
+         * @private
+         */
+        _calResizeOptions: function () {
+            var the = this;
+            var img = new Image();
+            var ratioWidth = the._wrapWidth / img.width;
+            var ratioHeight = the._wrapHeight / img.height;
+
+            img.src = the._$ele.src;
+        },
+
+
         /**
          * 更新选区的范围
          * @private
@@ -133,6 +170,8 @@ define(function (require, exports, module) {
                 maxHeight: the._maxHeight = adjust[1]
             });
         },
+
+
         /**
          * 重置选区
          * @private
@@ -147,6 +186,12 @@ define(function (require, exports, module) {
                 height: 0
             };
         },
+
+
+        /**
+         * 事件监听
+         * @private
+         */
         _on: function () {
             var the = this;
             var x0;
@@ -163,10 +208,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             event.on(the._$wrap, 'dragstart', function (eve) {
+                eve.preventDefault();
+
                 var left;
                 var top;
-
-                eve.preventDefault();
 
                 // 开始新选区
                 if (state === 0 || state === 2) {
@@ -194,6 +239,7 @@ define(function (require, exports, module) {
 
             event.on(the._$wrap, 'drag', function (eve) {
                 eve.preventDefault();
+
                 var width;
                 var height;
                 var adjust;
@@ -236,9 +282,6 @@ define(function (require, exports, module) {
                     // 1. 调整尺寸
                     if (the._selection.width < options.minWidth) {
                         selectionProp.width = the._selection.width = options.minWidth;
-                        //animation.animate(the._$sele, {
-                        //    width: the._selection.width = options.minWidth
-                        //}, animationOptions);
                     }
 
                     if (the._selection.height < options.minHeight) {
@@ -358,6 +401,11 @@ define(function (require, exports, module) {
                 }
             });
         },
+
+        /**
+         * 解除监听
+         * @private
+         */
         _un: function () {
             var the = this;
 
@@ -369,6 +417,8 @@ define(function (require, exports, module) {
             event.un(the._$sele, 'dragend');
             event.un(the._$bg, 'click');
         },
+
+
         /**
          * 销毁实例
          */

@@ -21,19 +21,39 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>Imgclip.html</title>
     <style>
-        pre{
+        #demo{
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            text-align: center;
+            line-height: 300px;
+            border: 4px solid #eee;
+        }
+
+        #demo img{
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        pre {
             border: 1px solid #ddd;
             border-radius: 4px;
             background: #f5f5f5;
             padding: 20px;
             margin: 10px;
         }
-
     </style>
 </head>
 <body>
 
-<img id="img" src="water.jpg" alt="water" width="680" height="510"/>
+<div id="demo">
+    <img id="img" src="water.jpg" alt="water" width="680" height="510"/>
+</div>
+
 <h3>选区：<b id="ret">空</b></h3>
 
 <pre>
@@ -48,6 +68,27 @@ var imgclip = new Imgclip('#img', {
 
 <script src="../coolie.min.js" data-main="./ui/Imgclip.js"></script>
 <script src="../coolie-config.js"></script>
+
+
+<!--<ul id="demo1">-->
+    <!--<li>1</li>-->
+    <!--<li>2</li>-->
+    <!--<li>3</li>-->
+    <!--<li>4</li>-->
+<!--</ul>-->
+<!--<ul id="demo2"></ul>-->
+<!--<script>-->
+    <!--var $demo1 = document.getElementById('demo1');-->
+    <!--var $demo2 = document.getElementById('demo2');-->
+    <!--var $list = $demo1.getElementsByTagName('li');-->
+    <!--var i = 0;-->
+    <!--var j = $list.length;-->
+
+    <!--for (; i < j; i++) {-->
+        <!--$demo2.appendChild($list[i]);-->
+    <!--}-->
+<!--</script>-->
+
 
 </body>
 </html>
