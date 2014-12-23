@@ -50,7 +50,6 @@ define(function (require, exports, module) {
 
         constructor: function ($ele, options) {
             var the = this;
-            var adjust;
 
             $ele = selector.query($ele);
 
@@ -59,18 +58,28 @@ define(function (require, exports, module) {
             }
 
             the._$ele = $ele[0];
-            the._options = options = dato.extend(!0, {}, defaults, options);
-
-
-            adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
-            options.minWidth = adjust[0];
-            options.minHeight = adjust[1];
+            the._options = dato.extend(!0, {}, defaults, options);
 
             if (the._$ele.complete) {
                 the._init();
             } else {
                 event.on(the._$ele, 'load', the._init.bind(the));
             }
+        },
+
+
+        /**
+         * 调整裁剪尺寸
+         * @private
+         */
+        _ratioClip: function () {
+            var the = this;
+            var options = the._options;
+
+            options.minWidth = options.minWidth * the._ratioWidth;
+            options.maxWidth = options.maxWidth * the._ratioWidth;
+            options.minHeight = options.minHeight * the._ratioHeight;
+            options.maxHeight = options.maxHeight * the._ratioHeight;
         },
 
 
@@ -93,13 +102,19 @@ define(function (require, exports, module) {
                 setTimeout(function () {
                     the.emit('error', new Error('图片尺寸过小'));
                 }, 0);
-            }else{
+            } else {
                 img.src = $ele.src;
                 img.onload = function () {
                     the._imgWidth = this.width;
                     the._imgHeight = this.height;
-                    the._ratioWidth = the._wrapWidth/the._imgWidth;
-                    the._ratioHeight = the._wrapHeight/the._imgHeight;
+                    the._ratioWidth = the._wrapWidth / the._imgWidth;
+                    the._ratioHeight = the._wrapHeight / the._imgHeight;
+                    the._ratioClip();
+
+                    var adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
+
+                    options.minWidth = adjust[0];
+                    options.minHeight = adjust[1];
                     the._initSize();
                 };
             }
@@ -453,7 +468,7 @@ define(function (require, exports, module) {
 
             the._un();
 
-            if(the._resize){
+            if (the._resize) {
                 the._resize.destroy();
                 modification.remove(the._$wrap);
             }
