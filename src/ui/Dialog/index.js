@@ -223,7 +223,10 @@ define(function (require, exports, module) {
             }
 
             openDialogs.push(the._id);
-            attribute.addClass(body, alienClass + '-overflow');
+
+            if (options.isModal) {
+                attribute.addClass(body, alienClass + '-overflow');
+            }
 
             if (options.content || options.remote) {
                 the._$ele.innerHTML = '';
@@ -295,15 +298,33 @@ define(function (require, exports, module) {
             var $bg = the._$bg;
             var $dialog = the._$dialog;
             var options = the._options;
+            var findModal = false;
+            var index = openDialogs.length - 2;
+            var findIndex = -1;
 
             if (!the._hasOpen) {
                 return the;
             }
 
             the._hasOpen = false;
-            openDialogs.pop();
 
-            if (!openDialogs.length) {
+            dato.each(openDialogs, function (index, id) {
+                if (id === the._id) {
+                    findIndex = index;
+                    return false;
+                }
+            });
+
+            openDialogs.splice(findIndex, 1);
+
+            for (; index >= 0; index--) {
+                if (dialogsMap[openDialogs[index]]._options.isModal) {
+                    findModal = true;
+                    break;
+                }
+            }
+
+            if (!findModal) {
                 attribute.removeClass(body, alienClass + '-overflow');
             }
 
