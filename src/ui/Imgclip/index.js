@@ -439,6 +439,8 @@ define(function (require, exports, module) {
         _ratioSelection: function () {
             var the = this;
 
+            the._selection.srcLeft = the._selection.left / the._ratioWidth;
+            the._selection.srcTop = the._selection.top / the._ratioWidth;
             the._selection.srcWidth = the._selection.width / the._ratioWidth;
             the._selection.srcHeight = the._selection.height / the._ratioHeight;
         },
