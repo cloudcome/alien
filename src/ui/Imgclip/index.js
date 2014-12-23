@@ -122,7 +122,7 @@ define(function (require, exports, module) {
             attribute.css($img, {
                 width: the._wrapWidth,
                 height: the._wrapHeight,
-                maxWidth: 'none !important',
+                maxWidth: 'none',
                 maxHeight: 'none'
             });
             the._$img = $img;

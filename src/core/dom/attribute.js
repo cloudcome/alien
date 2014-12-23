@@ -166,7 +166,7 @@ define(function (require, exports, module) {
             var important = null;
 
             if (REG_IMPORTANT.test(val)) {
-                important = true;
+                important = 'important';
                 val = val.replace(REG_IMPORTANT, '');
             }
 
