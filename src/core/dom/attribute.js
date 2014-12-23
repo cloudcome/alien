@@ -533,7 +533,7 @@ define(function (require, exports, module) {
          * position.top(ele);
          */
         top: function () {
-            return _middleware('top', arguments);
+            return _middleware('top', arguments, 'scrollTop');
         },
 
 
@@ -551,7 +551,7 @@ define(function (require, exports, module) {
          * position.left(ele);
          */
         left: function () {
-            return _middleware('left', arguments);
+            return _middleware('left', arguments, 'scrollLeft');
         },
 
 
@@ -789,7 +789,9 @@ define(function (require, exports, module) {
 
             if (extraKey && eleType === 'element') {
                 dato.each(extraKey, function (i, key) {
-                    extraVal += dato.parseFloat(attribute.css(ele, key), 0);
+                    extraVal += key.indexOf('scroll') > -1 ?
+                        dato.parseFloat(attribute[key](ele), 0) :
+                        dato.parseFloat(attribute.css(ele, key), 0);
                 });
             }
 
@@ -810,7 +812,7 @@ define(function (require, exports, module) {
                 }
                 // set
                 else if (argsLength === 2 && eleType === 'element' && typeis(args[1]) === 'number') {
-                    _setBoundingClientRect(ele, key, args[1] + extraVal);
+                    _setBoundingClientRect(ele, key, args[1] + extraVal, extraKey);
                 }
             });
         }
@@ -822,9 +824,10 @@ define(function (require, exports, module) {
      * @param {Element} ele 元素
      * @param {String} key 键名
      * @param {Number} val 键值
+     * @param {Number} extraKey 额外的键
      * @private
      */
-    function _setBoundingClientRect(ele, key, val) {
+    function _setBoundingClientRect(ele, key, val, extraKey) {
         var elePos = attribute.css(ele, 'position');
         var rect;
         var now;
@@ -846,6 +849,10 @@ define(function (require, exports, module) {
         width = rect.width;
         height = rect.height;
         deleta = val - now;
+
+        if (key === 'top' || key === 'left') {
+            deleta -= attribute[extraKey](ele);
+        }
 
         if (attribute.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
             css = dato.parseFloat(attribute.css(ele, 'margin-' + key), 0);
