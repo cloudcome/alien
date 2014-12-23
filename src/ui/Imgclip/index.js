@@ -301,7 +301,9 @@ define(function (require, exports, module) {
                         imgProp.top = -the._selection.top;
                     }
 
+                    animation.stop(the._$sele);
                     animation.animate(the._$sele, selectionProp, animationOptions);
+                    animation.stop(the._$img);
                     animation.animate(the._$img, imgProp, animationOptions);
 
                     the.emit('clipend', the._selection);
