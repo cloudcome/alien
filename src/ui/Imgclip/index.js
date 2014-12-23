@@ -61,6 +61,7 @@ define(function (require, exports, module) {
             the._$ele = $ele[0];
             the._options = options = dato.extend(!0, {}, defaults, options);
 
+
             adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
             options.minWidth = adjust[0];
             options.minHeight = adjust[1];
@@ -75,10 +76,31 @@ define(function (require, exports, module) {
 
         /**
          * 初始化
-         * @returns {Imgclip}
          * @private
          */
         _init: function () {
+            var the = this;
+            var $ele = the._$ele;
+            var options = the._options;
+
+            // 外围尺寸
+            the._wrapWidth = attribute.width($ele);
+            the._wrapHeight = attribute.height($ele);
+
+            if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
+                options.minHeight > 0 && the._wrapHeight < options.minHeight) {
+                setTimeout(function () {
+                    the.emit('error', new Error('图片尺寸过小'));
+                }, 0);
+            }else{
+                the._initSize();
+            }
+
+            return the;
+        },
+
+
+        _initSize: function () {
             var the = this;
             var tpl = new Template(template);
             var wrap;
@@ -97,10 +119,6 @@ define(function (require, exports, module) {
 
             $wrap = the._$wrap = modification.parse(wrap)[0];
             modification.insert($wrap, $ele, 'afterend');
-
-            // 外围尺寸
-            the._wrapWidth = attribute.width($ele);
-            the._wrapHeight = attribute.height($ele);
 
             // 选区最大尺寸
             the._maxWidth = the._wrapWidth;
@@ -131,22 +149,6 @@ define(function (require, exports, module) {
             the._resize = new Resize(the._$sele, the._options);
             the._on();
             the.on('clipstart clipend', the._updateClipRange);
-
-            return the;
-        },
-
-
-        /**
-         * 计算图片需要裁剪的真实配置
-         * @private
-         */
-        _calResizeOptions: function () {
-            var the = this;
-            var img = new Image();
-            var ratioWidth = the._wrapWidth / img.width;
-            var ratioHeight = the._wrapHeight / img.height;
-
-            img.src = the._$ele.src;
         },
 
 
