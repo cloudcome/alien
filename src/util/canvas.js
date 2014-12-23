@@ -68,8 +68,8 @@ define(function (require, exports) {
         }
 
         $canvas = modification.create('canvas', {
-            width: options.srcWidth,
-            height: options.srcHeight
+            width: options.drawWidth,
+            height: options.drawHeight
         });
 
         //modification.insert($canvas, document.body, 'beforeend');
