@@ -142,22 +142,22 @@ define(function (require, exports, module) {
             };
             var $tpl = modification.parse(tpl.render(dialogData))[0];
             var $bg = options.isModal ? $tpl : null;
-            var $bd;
+            var $body;
             var $dialog = options.isModal ? selector.query('.' + alienClass, $bg)[0] : $tpl;
 
             modification.insert($bg ? $bg : $dialog, body, 'beforeend');
 
             if (options.isWrap) {
                 $dialog = $dialog ? $dialog : selector.query('.' + alienClass, $bg)[0];
-                $bd = selector.query('.' + alienClass + '-body', $dialog)[0];
+                $body = selector.query('.' + alienClass + '-body', $dialog)[0];
             }
 
             the._$bg = $bg;
-            the._$bd = $bd;
+            the._$body = $body;
             the._$dialog = $dialog;
             the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
             attribute.addClass($dialog, options.addClass);
-            modification.insert(the._$ele, $bd ? $bd : $dialog, 'beforeend');
+            modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');
         },
 
 
@@ -207,6 +207,8 @@ define(function (require, exports, module) {
             var dialogStyle = {
                 display: 'block',
                 visibility: 'hidden',
+            };
+            var bodyStyle = {
                 width: options.width,
                 height: options.height
             };
@@ -243,6 +245,7 @@ define(function (require, exports, module) {
             }
 
             attribute.css($dialog, dialogStyle);
+            attribute.css(the._$body, bodyStyle);
             the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
