@@ -152,6 +152,11 @@ define(function (require, exports, module) {
                 xhr.overrideMimeType(options.mimeType);
             }
 
+            // 当 data 为 formdata 时，删除 content-type header
+            if(options.data && options.data.constructor === FormData){
+                delete options.headers['content-type'];
+            }
+
             dato.each(options.headers, function (key, val) {
                 xhr.setRequestHeader(key, val);
             });
