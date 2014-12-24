@@ -18,7 +18,6 @@
     display: none;
     position: absolute;
     width: 500px;
-    background: #fff;
     box-shadow: 0 0 20px #A0A0A0;
     overflow: hidden;
 }
@@ -70,10 +69,12 @@
     position: relative;
     padding: 20px;
     overflow: auto;
+    background: #fff;
 }
 
 .alien-ui-dialog-iframe {
     display: block;
+    background: #fff;
     border: 0;
     margin: 0;
     padding: 0;
