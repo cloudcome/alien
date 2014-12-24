@@ -92,33 +92,31 @@ define(function (require, exports, module) {
             var $ele = the._$ele;
             var options = the._options;
             var img = new Image();
+            var adjust;
 
             // 外围尺寸
             the._wrapWidth = attribute.width($ele);
             the._wrapHeight = attribute.height($ele);
+            img.src = $ele.src;
+            img.onload = function () {
+                the._imgWidth = this.width;
+                the._imgHeight = this.height;
+                the._ratioWidth = the._wrapWidth / the._imgWidth;
+                the._ratioHeight = the._wrapHeight / the._imgHeight;
+                the._ratioClip();
 
-            if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
-                options.minHeight > 0 && the._wrapHeight < options.minHeight) {
-                setTimeout(function () {
-                    the.emit('error', new Error('图片尺寸过小'));
-                }, 0);
-            } else {
-                img.src = $ele.src;
-                img.onload = function () {
-                    the._imgWidth = this.width;
-                    the._imgHeight = this.height;
-                    the._ratioWidth = the._wrapWidth / the._imgWidth;
-                    the._ratioHeight = the._wrapHeight / the._imgHeight;
-                    the._ratioClip();
-
-                    var adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
-
+                if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
+                    options.minHeight > 0 && the._wrapHeight < options.minHeight) {
+                    setTimeout(function () {
+                        the.emit('error', new Error('图片尺寸过小'));
+                    }, 0);
+                } else {
+                    adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
                     options.minWidth = adjust[0];
                     options.minHeight = adjust[1];
                     the._initSize();
-                };
-            }
-
+                }
+            };
             return the;
         },
 
