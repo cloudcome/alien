@@ -51,7 +51,6 @@ define(function (require, exports, module) {
         // 覆盖 MIME
         mimeType: null
     };
-    var index = 0;
     var regProtocol = /^([\w-]+:)\/\//;
     var XHR = klass.create({
         STATIC: {},
@@ -225,7 +224,7 @@ define(function (require, exports, module) {
         var url = options.url;
         var query = options.query;
         var querystring = typeis.string(query) === 'string' ? query : qs.stringify(query);
-        var cache = options.isCache ? '' : '_=' + (++index);
+        var cache = options.isCache ? '' : '_=' + Date.now();
 
         // 删除原有的缓存字符串
         url = options.isCache ? url : url.replace(regCache, '').replace(regEnd, '');
