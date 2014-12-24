@@ -8,6 +8,7 @@
     position: relative;
     font-weight: normal;
     overflow: hidden;
+    background: #fff;
 }
 
 .alien-ui-msg-title {
@@ -48,6 +49,7 @@
     line-height: 22px;
     font-size: 16px;
     color: #444;
+    background: #fff;
 }
 
 .alien-ui-msg-buttons {
