@@ -108,7 +108,7 @@ define(function (require, exports, module) {
                 if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
                     options.minHeight > 0 && the._wrapHeight < options.minHeight) {
                     setTimeout(function () {
-                        the.emit('error', new Error('图片尺寸过小'));
+                        the.emit('error', new Error('图片尺寸至少需要' + options.minWidth + '×' + options.minHeight + 'px'));
                     }, 0);
                 } else {
                     adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
