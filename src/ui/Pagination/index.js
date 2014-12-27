@@ -102,6 +102,7 @@ define(function (require, exports, module) {
             var page = attribute.data(eve.target, 'page');
 
             page = dato.parseInt(page, 1);
+
             if (page !== the._options.page) {
                 the._options.page = page;
                 the.emit('change', page);
