@@ -469,7 +469,7 @@ define(function (require, exports, module) {
             var ret = [];
             var key = 'display';
             var none = 'none';
-            var block = 'block';
+            var block = 'block !important';
 
             // get
             if (!state) {
