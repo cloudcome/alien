@@ -108,7 +108,6 @@ define(function (require, exports, module) {
                 display: 'block',
                 border: 0,
                 width: '100%',
-                padding: 0,
                 margin: 0
             });
             attribute.addClass(the._$ele, alienClass + '-textarea');
