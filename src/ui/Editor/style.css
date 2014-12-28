@@ -3,6 +3,12 @@
     background: #fff;
 }
 
+.alien-ui-editor * {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
 .alien-ui-editor-inner {
     position: relative;
     overflow: hidden;
