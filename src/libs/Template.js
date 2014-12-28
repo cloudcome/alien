@@ -378,40 +378,42 @@ define(function (require, exports, module) {
             var the = this;
             var matches = str.trim().match(regVar);
             var filters;
-            var ret;
 
             if (!matches) {
                 return '';
             }
 
-            ret = (matches[1] !== '=' ? 'this.escape(' : '') +
-            matches[2] +
-            (matches[1] !== '=' ? ')' : '');
+            var exp = matches[2];
 
-            if (!matches[3]) {
-                return ret;
+            // name || "123"
+            if (matches[3] && matches[3].slice(0, 2) === '||') {
+                //return ret + '?' + matches[2] + ':' + matches[3].slice(2) + ')';
+                exp = 'typeof(' + exp + ')!=="undefined"?' + exp + ':' + matches[3].slice(2);
+            } else if (matches[3] && matches[3].slice(0, 1) === '|') {
+                filters = matches[3].split('|');
+                filters.shift();
+                filters.forEach(function (filter) {
+                    var matches = filter.match(regFilter);
+                    var args;
+                    var name;
+
+                    if (!matches) {
+                        throw new Error('parse error ' + filter);
+                    }
+
+                    name = matches[1];
+
+                    the._useFilters[name] = false;
+
+                    args = exp + (matches[3] ? ',' + matches[3] : '');
+                    exp = 'this.filters.' + name + '(' + args + ')';
+                });
             }
 
-            filters = matches[3].split('|');
-            filters.shift();
-            filters.forEach(function (filter) {
-                var matches = filter.match(regFilter);
-                var args;
-                var name;
+            var isEscape = matches[1] !== '=';
 
-                if (!matches) {
-                    throw new Error('parse error ' + filter);
-                }
-
-                name = matches[1];
-
-                the._useFilters[name] = !0;
-
-                args = ret + (matches[3] ? ',' + matches[3] : '');
-                ret = 'this.filters.' + name + '(' + args + ')';
-            });
-
-            return ret;
+            return (isEscape ? 'this.escape(' : '(') +
+                exp + ')';
         },
 
 
