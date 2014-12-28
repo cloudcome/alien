@@ -267,6 +267,10 @@ define(function (require, exports, module) {
                 }
 
                 dato.each(list, function (index, img) {
+                    // 预加载
+                    var _img = new Image();
+
+                    _img.src = _img.url;
                     html.push('![' + img.name + '](' + img.url + ')');
                 });
 
