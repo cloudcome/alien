@@ -105,13 +105,6 @@ define(function (require, exports, module) {
             var $parent = $ele.parentNode;
             var isTextarea = $ele.tagName === 'TEXTAREA';
 
-            modification.insert($trackY, $ele, 'afterend');
-            modification.insert($trackX, $ele, 'afterend');
-            modification.insert($body, $ele, 'afterend');
-            modification.insert($ele, $body, 'beforeend');
-            attribute.addClass($temp, options.addClass);
-            attribute.addClass($parent, the._className = $temp.className);
-
             the._jsAnimateOptions = {
                 duration: options.duration,
                 easing: options.jsEasing
@@ -122,18 +115,31 @@ define(function (require, exports, module) {
                 easing: options.cssEasing
             };
 
-            the._$trackX = $trackX;
-            the._$trackY = $trackY;
-            the._$thumbX = $thumbX;
-            the._$thumbY = $thumbY;
-            the._$parent = $parent;
-            the._$body = $body;
-            the._$scroll = isTextarea ? $ele : $body;
-            the._isTextarea = isTextarea;
-            the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
-            the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
-            the.resize();
-            the._initEvent();
+            attribute.addClass($temp, options.addClass);
+            attribute.addClass($parent, the._className = $temp.className);
+
+            if(isPlaceholderScroll){
+                modification.insert($trackY, $ele, 'afterend');
+                modification.insert($trackX, $ele, 'afterend');
+                modification.insert($body, $ele, 'afterend');
+                modification.insert($ele, $body, 'beforeend');
+                the._$trackX = $trackX;
+                the._$trackY = $trackY;
+                the._$thumbX = $thumbX;
+                the._$thumbY = $thumbY;
+                the._$parent = $parent;
+                the._$body = $body;
+                the._$scroll = isTextarea ? $ele : $body;
+                the._isTextarea = isTextarea;
+                the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
+                the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
+                the.resize();
+                the._initEvent();
+            }else{
+                attribute.css($parent, {
+                    overflow: 'auto !important'
+                });
+            }
 
             return the;
         },
