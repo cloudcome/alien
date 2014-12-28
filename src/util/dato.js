@@ -126,10 +126,10 @@ define(function (require, exports, module) {
                 if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
                     type = typeis(obj[i]);
                     if (type === 'object' && isExtendDeep) {
-                        source[i] = {};
+                        source[i] = source[i] || {};
                         this.extend.call(this, isExtendDeep, source[i], obj[i]);
                     } else if (type === 'array' && isExtendDeep) {
-                        source[i] = [];
+                        source[i] = source[i] || [];
                         this.extend.call(this, isExtendDeep, source[i], obj[i]);
                     } else {
                         source[i] = obj[i];
