@@ -177,7 +177,7 @@ define(function (require, exports, module) {
 
             return {
                 key: compatible.css3(_toSepString(key)),
-                val: _toCssVal(key, val),
+                val: compatible.css3(_toCssVal(key, val)),
                 important: important
             };
         },
