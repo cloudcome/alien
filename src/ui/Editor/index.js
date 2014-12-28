@@ -270,7 +270,7 @@ define(function (require, exports, module) {
                     // 预加载
                     var _img = new Image();
 
-                    _img.src = _img.url;
+                    _img.src = img.url;
                     html.push('![' + img.name + '](' + img.url + ')');
                 });
 
