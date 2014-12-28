@@ -175,9 +175,11 @@ define(function (require, exports, module) {
                 key = 'transform';
             }
 
+            var fixVal = _toCssVal(key, val);
+
             return {
                 key: compatible.css3(_toSepString(key)),
-                val: compatible.css3(_toCssVal(key, val)),
+                val: compatible.css3(fixVal) || fixVal,
                 important: important
             };
         },
