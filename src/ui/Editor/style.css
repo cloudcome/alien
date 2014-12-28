@@ -3,7 +3,8 @@
     background: #fff;
 }
 
-.alien-ui-editor * {
+.alien-ui-editor *,
+.alien-ui-editor-upload * {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
