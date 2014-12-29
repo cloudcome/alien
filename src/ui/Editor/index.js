@@ -56,6 +56,8 @@ define(function (require, exports, module) {
         tabSize: 4,
         // 历史长度
         historyLength: 20,
+        // 最小检查同步本地的内容的相差长度
+        checkLength: 3,
         // 上传操作
         // uploadCallback 约定：
         // arg0: err 对象
@@ -155,7 +157,7 @@ define(function (require, exports, module) {
             var storeLen = storeVal.length;
 
             // 1天之内的本地记录 && 内容部分不一致
-            if (deltaTime < minTime && Math.abs(nowLen - storeLen) > 9) {
+            if (deltaTime < minTime && Math.abs(nowLen - storeLen) >= the._options.checkLength) {
                 new Msg({
                     content: '本地缓存内容与当前不一致。' +
                     '<br>缓存时间为：<b>' + humanTime + '</b>。' +
