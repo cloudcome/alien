@@ -38,8 +38,8 @@ define(function (require, exports, module) {
         delay: 0
     };
     var css = 'transition-property';
-    var transitionendEventPrefix = compatible.css3(css).replace(css, '');
-    var transitionendEventType = transitionendEventPrefix + 'transitionend';
+    var transitionendEventPrefix = compatible.css3(css).replace(css, '').replace(/-/g, '');
+    var transitionendEventType = transitionendEventPrefix ? transitionendEventPrefix + 'TransitionEnd' : 'transitionend';
     var noop = function () {
         // ignore
     };
