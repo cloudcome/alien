@@ -32,16 +32,6 @@
     color: #fff;
 }
 
-.alien-ui-pager-prev {
-    border-radius: 4px 0 0 4px;
-    border-right: 0;
-}
-
-.alien-ui-pager-next {
-    border-radius: 0 4px 4px 0;
-    border-left: 0;
-}
-
 .alien-ui-pager-number {
     border-left: 0;
     border-right: 0;
@@ -51,11 +41,13 @@
     cursor: default;
 }
 
-.alien-ui-pager-disabled,
-.alien-ui-pager-disabled:hover {
-    cursor: not-allowed;
-    background: #f6f6f6;
-    border-color: #ddd;
-    color: #ccc;
+.alien-ui-pager *:first-child {
+    border-radius: 4px 0 0 4px;
+    border-right: 0;
 }
- 
+
+.alien-ui-pager *:last-child {
+    border-radius: 0 4px 4px 0;
+    border-left: 0;
+}
+

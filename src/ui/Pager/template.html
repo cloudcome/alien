@@ -1,5 +1,9 @@
 <div class="alien-ui-pager">
-    <div class="alien-ui-pager-page alien-ui-pager-prev{{if page < 2}} alien-ui-pager-disabled{{/if}}" data-page="{{page-1}}">{{prev}}</div>
+    {{if page > 1}}
+    <div class="alien-ui-pager-page alien-ui-pager-prev" data-page="{{page-1}}">{{prev}}</div>
+    {{/if}}
     <div class="alien-ui-pager-number">{{page}}</div>
-    <div class="alien-ui-pager-page alien-ui-pager-next{{if page >= max}} alien-ui-pager-disabled{{/if}}" data-page="{{page-1+2}}">{{next}}</div>
+    {{if page < max}}
+    <div class="alien-ui-pager-page alien-ui-pager-next" data-page="{{page-1+2}}">{{next}}</div>
+    {{/if}}
 </div>

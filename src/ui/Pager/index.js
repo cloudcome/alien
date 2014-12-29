@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * Pager
  * @author ydr.me
  * @create 2014-12-17 21:49
  */
@@ -7,7 +7,14 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/Pager
+     * @requires ui/generator
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires core/event/touch
+     * @requires util/dato
+     * @requires libs/Template
      */
     'use strict';
 
@@ -22,12 +29,13 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var tpl = new Template(template);
     var defaults = {
+        addClass: '',
         prev: '上一页',
         next: '下一页',
         // 默认为第 1 页
         page: 1,
-        // 最大精确正整数，2^53
-        max: 9007199254740991
+        // 最大页数
+        max: 1
     };
     var alienClass = 'alien-ui-pager';
     var Pager = generator({
@@ -53,6 +61,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
+            attribute.addClass(the._$ele, the._options.addClass);
             the._initEvent();
             the.render();
         },
