@@ -37,7 +37,9 @@ define(function (require, exports, module) {
         duration: 789,
         delay: 0
     };
-    var transitionendEventType = compatible.html5('transitionend', window, !0);
+    var css = 'transition-property';
+    var transitionendEventPrefix = compatible.css3(css).replace(css, '');
+    var transitionendEventType = transitionendEventPrefix + 'transitionend';
     var noop = function () {
         // ignore
     };
@@ -117,7 +119,7 @@ define(function (require, exports, module) {
             }
 
             var listener = function (eve) {
-                if(eve && eve.target === ele){
+                if (eve && eve.target === ele) {
                     if (timeid) {
                         clearTimeout(timeid);
                         timeid = 0;
@@ -219,9 +221,7 @@ define(function (require, exports, module) {
             attribute.css(ele, 'transition-delay', '');
             attribute.css(ele, 'transition-timing-function', '');
             attribute.css(ele, 'transition-property', '');
-            dato.each(transitionendEventType.split(' '), function (i, et) {
-                event.dispatch(ele, et);
-            });
+            event.dispatch(ele, transitionendEventType);
         },
 
 
