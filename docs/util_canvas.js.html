@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: util/canvas.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_DDB.html">libs/DDB</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Lex.html">libs/Lex</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
+<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
+<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
+<li><a href="module-ui_generator.html">ui/generator</a></li>
+<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
+<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
+<li><a href="module-ui_Pager.html">ui/Pager</a></li>
+<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
+<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
+<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
+<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
+<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-util_canvas.html">util/canvas</a></li>
+<li><a href="module-util_class.html">util/class</a></li>
+<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_data.html">util/data</a></li>
+<li><a href="module-util_date.html">util/date</a></li>
+<li><a href="module-util_easing.html">util/easing</a></li>
+<li><a href="module-util_hashbang.html">util/hashbang</a></li>
+<li><a href="module-util_querystring.html">util/querystring</a></li>
+<li><a href="module-util_random.html">util/random</a></li>
+<li><a href="module-util_selection.html">util/selection</a></li>
+<li><a href="module-util_typeis.html">util/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_Template-constructor.html">constructor</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: util/canvas.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * 画布操作
+ * @author ydr.me
+ * @create 2014-10-28 11:09
+ */
+
+
+define(function (require, exports) {
+    /**
+     * @module util/canvas
+     * @requires util/dato
+     * @requires core/dom/modification
+     * @requires core/navigator/compatible
+     */
+    'use strict';
+
+    var dato = require('./dato.js');
+    var modification = require('../core/dom/modification.js');
+    var compatible = require('../core/navigator/compatible.js');
+    var URL = window[compatible.html5('URL', window)];
+    var saveAs = window[compatible.html5('saveAs', window)];
+    var saveBlob = navigator[compatible.html5('saveBlob', navigator)];
+    var defaults = {
+        srcX: 0,
+        srcY: 0,
+        type: 'image/png',
+        quality: 1
+    };
+    var udf;
+    var supportToBlob = 'toBlob' in HTMLCanvasElement.prototype;
+
+    /**
+     * 将图片对象绘制到 canvas 上
+     * @param $canvas {Element} canvas 对象
+     * @param $img {HTMLImageElement} img 对象
+     * @param options {Object} 参数
+     * @param [options.srcX=0] {Number} 源图片区域起点 x 坐标，默认为0
+     * @param [options.srcY=0] {Number} 源图片区域起点 y 坐标，默认为0
+     * @param [options.srcWidth] {Number} 源图片区域宽度，默认为图片宽度
+     * @param [options.srcHeight] {Number} 源图片区域高度，默认为图片高度
+     * @param [options.drawWidth] {Number} 绘制图片区域宽度，默认为源图片区域宽度
+     * @param [options.drawHeight] {Number} 绘制图片区域高度，默认为源图片区域高度
+     * @param [options.type='image/png'] {String} 图片类型，可选'image/png,image/jpg,image/webp'
+     * @param [options.quality=1] {Number} 图片质量，默认为1，仅当`type`为'image/jpg'或'image/webp'时有效
+     * @param [isReturnCanvas=false] {Boolean} 是否返回 canvas 对象，默认false
+     * @returns {String|HTMLElement} 图片的 base64 编码
+     */
+    exports.imgToBase64 = function ($img, options, isReturnCanvas) {
+        var $canvas;
+        var context;
+
+        options = dato.extend(!0, {}, defaults, options);
+
+        if (options.srcWidth === udf) {
+            options.srcWidth = $img.width;
+        }
+
+        if (options.srcHeight === udf) {
+            options.srcHeight = $img.height;
+        }
+
+        if (options.drawWidth === udf) {
+            options.drawWidth = options.srcWidth;
+        }
+
+        if (options.drawHeight === udf) {
+            options.drawHeight = options.srcHeight;
+        }
+
+        $canvas = modification.create('canvas', {
+            width: options.drawWidth,
+            height: options.drawHeight
+        });
+
+        //modification.insert($canvas, document.body, 'beforeend');
+        context = $canvas.getContext('2d');
+        context.drawImage($img, options.srcX, options.srcY, options.srcWidth, options.srcHeight, 0, 0, options.drawWidth, options.drawHeight);
+
+        if (isReturnCanvas) {
+            return $canvas;
+        } else {
+            //modification.remove($canvas);
+            return $canvas.toDataURL(options.type, options.quality);
+        }
+    };
+
+
+    /**
+     * 图片转换为二进制对象
+     * @param $img {HTMLImageELement} 图片对象
+     * @param options {Object} 配置
+     * @param [options.srcX=0] {Number} 源图片区域起点 x 坐标，默认为0
+     * @param [options.srcY=0] {Number} 源图片区域起点 y 坐标，默认为0
+     * @param [options.srcWidth] {Number} 源图片区域宽度，默认为图片宽度
+     * @param [options.srcHeight] {Number} 源图片区域高度，默认为图片高度
+     * @param [options.drawWidth] {Number} 绘制图片区域宽度，默认为源图片区域宽度
+     * @param [options.drawHeight] {Number} 绘制图片区域高度，默认为源图片区域高度
+     * @param [options.type='image/png'] {String} 图片类型，可选'image/png,image/jpg,image/webp'
+     * @param [options.quality=1] {Number} 图片质量，默认为1，仅当`type`为'image/jpg'或'image/webp'时有效
+     * @param callback {Function} 回调
+     * @returns {*}
+     */
+    exports.imgToBlob = function ($img, options, callback) {
+        var $canvas;
+        var base64;
+
+        options = dato.extend(!0, {}, defaults, options);
+
+        // moz
+        if (supportToBlob) {
+            $canvas = this.imgToBase64($img, options, !0);
+            return $canvas.toBlob(callback, options.type, options.quality);
+        } else {
+            base64 = this.imgToBase64($img, options, !1);
+            callback(this.base64toBlob(base64));
+        }
+    };
+
+
+    /**
+     * base64 转换为 Blob 实例
+     * @ref http://stackoverflow.com/q/18253378
+     * @param base64 {String} base64 编码
+     * @returns {Blob}
+     */
+    exports.base64toBlob = function (base64) {
+        var i = 0;
+        var byteString = atob(base64.split(',')[1]);
+        var mimeString = base64.split(',')[0].split(':')[1].split(';')[0];
+        var ab = new ArrayBuffer(byteString.length);
+        var ua = new Uint8Array(ab);
+
+        for (; i &lt; byteString.length; i++) {
+            ua[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ab], {
+            type: mimeString
+        });
+    };
+
+
+    /**
+     * 保存二进制对象
+     * @param $canvas {HTMLCanvasElement} canvas 对象
+     * @param name {String} 文件名称
+     * @param [options] {Object} 参数
+     * @param [options.type='image/png'] {String} 图片类型
+     * @param [options.quality=1] {Number} 图片质量
+     */
+    exports.saveAs = function ($canvas, name, options) {
+        options = dato.extend(!0, {}, defaults, options);
+
+        var base64 = $canvas.toDataURL(options.type, options.quality);
+        var link = modification.create('a', {
+            href: base64,
+            download: name
+        });
+        var eve = document.createEvent("HTMLEvents");
+
+        eve.initEvent('click', !1, !1);
+        link.dispatchEvent(eve);
+    };
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

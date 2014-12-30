@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Index - Alien documents</title>
+    <title>Source: core/communication/upload.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -99,15 +99,121 @@
 
 	
 
-		<div class="jumbotron">
-            <div class="container">
-                <h1>Alien documents</h1>
-                <p>Author: <a href="http://github.com/cloudcome/">cloudcome</a></p>
-                <p>Build: jsdoc 3.3.0-alpha10 Tue Dec 30 2014 15:58:23 GMT+0800 (中国标准时间)</p>
-            </div>
-        </div>
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
 
-	
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: core/communication/upload.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * upload.js
+ * @author ydr.me
+ * @create 2014-10-09 15:29
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module core/communication/upload
+     * @requires util/typeis
+     * @requires util/dato
+     * @requires core/communication/xhr
+     */
+    'use strict';
+
+    var typeis = require('../../util/typeis.js');
+    var dato = require('../../util/dato.js');
+    var xhr = require('./xhr.js');
+    var defaults = {
+        url: location.href,
+        data: null,
+        // 如：'file'
+        blobName: null,
+//        如：'example.png'
+//        fileName: null,
+        file: null
+    };
+
+    exports.defaults = defaults;
+    module.exports = function (options) {
+        options = dato.extend(!0, {}, defaults, options);
+
+        if (!options.file) {
+            throw new Error('require param `file`');
+        }
+
+        var fileType = typeis(options.file);
+        var files;
+        var fd = new FormData();
+        var name = options.blobName;
+
+        switch (fileType) {
+            case 'element':
+                if (options.file.tagName !== 'INPUT' || options.file.type !== 'file') {
+                    throw new Error('element tag must be a input file');
+                }
+
+                name = options.file.name;
+                files = options.file.files || [];
+
+                if (files.length === 1) {
+                    fd.append(name, files[0]);
+                } else {
+                    dato.each(options.file.files, function (index, file) {
+                        fd.append(name + '[]', file);
+                    });
+                }
+
+                break;
+
+            case 'blob':
+                if (!options.blobName) {
+                    throw new Error('require param `blobName`');
+                }
+
+                fd.append(name, options.file);
+                break;
+        }
+
+        dato.each(options.data, function (key, val) {
+            fd.append(key, val);
+        });
+
+        options.method = 'POST';
+        options.data = fd;
+
+        return xhr.ajax(options);
+    };
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
 
 
 </div>
