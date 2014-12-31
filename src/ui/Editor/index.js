@@ -233,7 +233,7 @@ define(function (require, exports, module) {
          * 销毁上传实例
          * @private
          */
-        _uploadDestroy: function () {
+        uploadDestroy: function () {
             var the = this;
 
             the._dialog.destroy(function () {
@@ -263,7 +263,7 @@ define(function (require, exports, module) {
                         content: err.message
                     });
                     msg.on('close', function () {
-                        the._uploadDestroy();
+                        the.uploadDestroy();
                     });
                     return;
                 }
@@ -278,10 +278,10 @@ define(function (require, exports, module) {
 
                 the.insert(html = html.join(' '));
                 the._selection[1] += html.length;
-                the._uploadDestroy();
+                the.uploadDestroy();
             };
 
-            the._options.uploadCallback(list, onprogress, ondone);
+            the._options.uploadCallback.call(the, list, onprogress, ondone);
         },
 
 
