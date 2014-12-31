@@ -123,9 +123,9 @@ define(function (require, exports, module) {
             var options = dato.extend(the._options, data);
             var list = new libsPagination(options);
 
-            the._$ele.innerHTML = tpl.render({
+            the._$ele.innerHTML = tpl.render(dato.extend(options, {
                 pagination: list
-            });
+            }));
 
             return the;
         },
