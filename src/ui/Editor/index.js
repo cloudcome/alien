@@ -476,9 +476,11 @@ define(function (require, exports, module) {
             });
 
             if (the._uploadList.length) {
+                eve.preventDefault();
                 the._$ele.blur();
                 the._uploadDialog();
-            } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length) {
+            } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length ||
+                eve.clipboardData && eve.clipboardData.files && eve.clipboardData.files.length) {
                 eve.preventDefault();
                 return new Msg({
                     content: '请拖拽或粘贴图片文件',
