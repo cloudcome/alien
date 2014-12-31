@@ -3,7 +3,6 @@
     background: #fff;
 }
 
-.alien-ui-editor *,
 .alien-ui-editor-upload * {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -13,22 +12,14 @@
 .alien-ui-editor-inner {
     position: relative;
     overflow: hidden;
-    border: 1px solid #ddd;
 }
 
 .alien-ui-editor-textarea {
     overflow: hidden;
     resize: none;
-    outline: 0;
-    box-shadow: none;
-}
-
-.alien-ui-editor-textarea:hover,
-.alien-ui-editor-textarea:active,
-.alien-ui-editor-textarea:focus {
-    outline: 0;
-    box-shadow: none;
-    border: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .alien-ui-editor-upload {
