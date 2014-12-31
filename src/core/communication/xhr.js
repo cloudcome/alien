@@ -115,7 +115,7 @@ define(function (require, exports, module) {
                             oncallback(null, responseText);
                     }
                 } else {
-                    oncallback(new Error('transmission status error'));
+                    oncallback(new Error('response status is ' + xhr.status));
                 }
             };
 
