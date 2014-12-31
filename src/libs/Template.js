@@ -388,7 +388,7 @@ define(function (require, exports, module) {
             // name || "123"
             if (matches[3] && matches[3].slice(0, 2) === '||') {
                 //return ret + '?' + matches[2] + ':' + matches[3].slice(2) + ')';
-                exp = 'typeof(' + exp + ')!=="undefined"?' + exp + ':' + matches[3].slice(2);
+                exp = '(typeof(' + exp + ')!=="undefined"&&!!' + exp + ')?' + exp + ':' + matches[3].slice(2);
             } else if (matches[3] && matches[3].slice(0, 1) === '|') {
                 filters = matches[3].split('|');
                 filters.shift();
