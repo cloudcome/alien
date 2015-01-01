@@ -668,7 +668,7 @@ define(function (require, exports, module) {
 
             the._un();
             the._autoheight.destroy();
-            the._$ele.unwrap('div > div');
+            modification.unwrap(the._$ele, 'div>div');
         }
     });
 
