@@ -40,7 +40,7 @@ define(function (require, exports, module) {
             method: 'GET',
             dataType: 'text',
             headers: {
-                'X-Pjax-With': 'true'
+                'x-ajax-with': 'pushstate'
             }
         }
     };
