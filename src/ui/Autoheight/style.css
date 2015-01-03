@@ -1,9 +1,10 @@
 @charset "utf-8";
 
 .alien-ui-autoheight {
-    -webkit-transition: width, height, border-color, box-shadow ease-in-out .2s;
-    -moz-transition: width, height, border-color, box-shadow ease-in-out .2s;
-    -o-transition: width, height, border-color, box-shadow ease-in-out .2s;
-    -ms-transition: width, height, border-color, box-shadow ease-in-out .2s;
-    transition: width, height, border-color, box-shadow ease-in-out .2s;
+    -webkit-transition-property: width, height, border-color, box-shadow;
+    transition-property: width, height, border-color, box-shadow;
+    -webkit-transition-duration: .2s, .2s, .2s, .2s;
+    transition-duration: .2s, .2s, .2s, .2s;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-in-out;
+    transition-timing-function: ease-in-out, ease-in-out, ease-in-out, ease-in-out;
 }
