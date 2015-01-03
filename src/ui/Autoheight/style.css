@@ -1,9 +1,9 @@
 @charset "utf-8";
 
-.alien-ui-autoheight{
-    -webkit-transition: width, height .3s;
-    -moz-transition: width, height .3s;
-    -ms-transition: width, height .3s;
-    -o-transition: width, height .3s;
-    transition: width, height .3s;
+.alien-ui-autoheight {
+    -webkit-transition: width, height, border-color, box-shadow ease-in-out .2s;
+    -moz-transition: width, height, border-color, box-shadow ease-in-out .2s;
+    -o-transition: width, height, border-color, box-shadow ease-in-out .2s;
+    -ms-transition: width, height, border-color, box-shadow ease-in-out .2s;
+    transition: width, height, border-color, box-shadow ease-in-out .2s;
 }
