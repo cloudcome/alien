@@ -375,7 +375,7 @@ define(function (require, exports, module) {
          * @param {Function} [callback] 打开之后回调
          * @returns {Dialog}
          */
-        position: function (callback) {
+        resize: function (callback) {
             var the = this;
             var options = the._options;
             var pos = the._position();
