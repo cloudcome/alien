@@ -19,12 +19,21 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
+    var templateWrap = require('html!./wrap.html');
+    var templateLoading = require('html!./loading.html');
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
-    var tpl = new Template(template);
+    var tplWrap = new Template(templateWrap);
+    var tplLoading = new Template(templateLoading);
     var alienClass = 'alien-ui-imgview';
-    var defaults = {};
+    var defaults = {
+        loading: {
+            src: 'http://s.ydr.me/p/i/loading.gif',
+            width: 16,
+            height: 16,
+            text: '加载中……'
+        }
+    };
     var Imgview = generator({
         constructor: function (options) {
             var the = this;
@@ -52,11 +61,14 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            var html = tpl.render({});
-            var node = modification.parse(html)[0];
+            var htmlWrap = tplWrap.render({});
+            var htmlLoading = tplWrap.render(the._options.loading);
+            var nodeWrap = modification.parse(htmlWrap)[0];
+            var nodeLoading = modification.parse(htmlLoading)[0];
 
-            modification.insert(node, document.body, 'beforeend');
-            the._$ele = node;
+            modification.insert(nodeWrap, document.body, 'beforeend');
+            the._$ele = nodeWrap;
+            the._$loading = nodeLoading;
         },
 
 
