@@ -21,10 +21,12 @@ define(function (require, exports, module) {
     var Template = require('../../libs/Template.js');
     var templateWrap = require('html!./wrap.html');
     var templateLoading = require('html!./loading.html');
+    var templateNav = require('html!./nav.html');
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
+    var tplNav = new Template(templateNav);
     var alienClass = 'alien-ui-imgview';
     var defaults = {
         loading: {
