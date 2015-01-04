@@ -196,7 +196,7 @@ define(function (require, exports, module) {
                 event.un($dialog, 'load');
 
                 if (the._dialog) {
-                    the._dialog.position();
+                    the._dialog.resize();
                 }
             };
             var options = the._options;

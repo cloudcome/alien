@@ -423,7 +423,7 @@ define(function (require, exports, module) {
             }
 
             modification.insert(content, the._$ele, 'beforeend');
-            the.position();
+            the.resize();
 
             return the;
         },
@@ -449,7 +449,7 @@ define(function (require, exports, module) {
 
             the._$ele.innerHTML = '';
             modification.insert($iframe, the._$ele, 'beforeend');
-            the.position();
+            the.resize();
 
             return the;
         },

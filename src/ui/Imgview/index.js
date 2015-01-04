@@ -62,7 +62,7 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
             var htmlWrap = tplWrap.render({});
-            var htmlLoading = tplWrap.render(the._options.loading);
+            var htmlLoading = tplLoading.render(the._options);
             var nodeWrap = modification.parse(htmlWrap)[0];
             var nodeLoading = modification.parse(htmlLoading)[0];
 
@@ -106,8 +106,63 @@ define(function (require, exports, module) {
         },
 
 
-        open: function (list) {
+        _load: function (callback) {
+            var img = new Image();
+            var the = this;
 
+            img.src = the._list[the._index];
+
+            if (img.complete) {
+                callback(null, {
+                    $img: img,
+                    width: img.width,
+                    height: img.height
+                });
+            } else {
+                img.onload = function () {
+                    callback(null, {
+                        $img: img,
+                        width: img.width,
+                        height: img.height
+                    });
+                };
+                img.onerror = callback;
+            }
+        },
+
+
+        /**
+         * 展示
+         * @private
+         */
+        _show: function () {
+            var the = this;
+
+            the._$ele.innerHTML = '';
+            modification.insert(the._$loading, the._$ele, 'beforeend');
+            the._dialog.resize();
+            the._load(function (err, info) {
+                if (err) {
+                    return the.emit('error', err);
+                }
+
+
+            });
+        },
+
+
+        /**
+         * 打开图片查看器
+         * @param list {Array} 图片列表
+         * @param [index] {Number} 打开时显示的图片索引
+         */
+        open: function (list, index) {
+            var the = this;
+
+            the._list = list;
+            the._index = index || 0;
+            the._dialog.open();
+            the._show();
         },
 
 
