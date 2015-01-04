@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
-    var event = require('../../core/event/touch.js');
+    var event = require('../../core/event/base.js');
     var Template = require('../../libs/Template.js');
     var templateWrap = require('html!./wrap.html');
     var templateLoading = require('html!./loading.html');
@@ -103,7 +103,8 @@ define(function (require, exports, module) {
 
             the._dialogOptions = {
                 title: null,
-                addClass: alienClass + '-dialog'
+                addClass: alienClass + '-dialog',
+                canDrag: false
             };
             the._dialog = new Dialog(the._$ele, the._dialogOptions);
         },
@@ -130,6 +131,36 @@ define(function (require, exports, module) {
             the._dialog.on('open', function () {
                 the._show();
             });
+
+            // 上一张
+            event.on(the._$prev, 'click', function () {
+                var length = the._list.length;
+
+                if (length > 1 && the._index > 0) {
+                    the._index--;
+                    the._show();
+                }
+            });
+
+            // 下一张
+            event.on(the._$next, 'click', function () {
+                var length = the._list.length;
+
+                if (length > 1 && the._index < length - 1) {
+                    the._index++;
+                    the._show();
+                }
+            });
+
+            // 导航切换
+            event.on(the._$navParent, 'click', '.' + alienClass + '-nav-item', function () {
+                var index = attribute.data(this, 'index') * 1;
+
+                if (index !== the._index) {
+                    the._index = index;
+                    the._show();
+                }
+            });
         },
 
 
@@ -142,6 +173,7 @@ define(function (require, exports, module) {
          */
         _load: function (src, onbefore, callback) {
             var img = new Image();
+            var index = this._index;
 
             img.src = src;
             onbefore = onbefore || noop;
@@ -149,6 +181,7 @@ define(function (require, exports, module) {
 
             if (img.complete) {
                 callback(null, {
+                    index: index,
                     src: src,
                     width: img.width,
                     height: img.height
@@ -157,7 +190,8 @@ define(function (require, exports, module) {
                 onbefore();
                 img.onload = function () {
                     callback(null, {
-                        $img: img,
+                        index: index,
+                        src: src,
                         width: img.width,
                         height: img.height
                     });
@@ -173,7 +207,7 @@ define(function (require, exports, module) {
          */
         _ctrl: function () {
             var the = this;
-            var disabledClass = alienClass + '-disabled';
+            var disabledClass = alienClass + '-ctrl-disabled';
 
             if (the._index === 0) {
                 attribute.addClass(the._$prev, disabledClass);
@@ -190,6 +224,25 @@ define(function (require, exports, module) {
 
 
         /**
+         * 导航
+         * @private
+         */
+        _nav: function () {
+            var the = this;
+            var $items = selector.query('.' + alienClass + '-nav-item');
+            var activeClass = alienClass + '-nav-item-active';
+
+            $items.forEach(function ($item, index) {
+                if (index === the._index) {
+                    attribute.addClass($item, activeClass);
+                } else {
+                    attribute.removeClass($item, activeClass);
+                }
+            });
+        },
+
+
+        /**
          * 展示
          * @private
          */
@@ -197,6 +250,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._ctrl();
+            the._nav();
             the._load(the._list[the._index], function () {
                 the._$mainParent.innerHTML = '';
                 modification.insert(the._$loading, the._$mainParent, 'beforeend');
@@ -206,11 +260,13 @@ define(function (require, exports, module) {
                     return the.emit('error', err);
                 }
 
-                var $img = modification.create('img', info);
+                if (the._index === info.index) {
+                    var $img = modification.create('img', info);
 
-                the._$mainParent.innerHTML = '';
-                modification.insert($img, the._$mainParent, 'beforeend');
-                the._dialog.resize();
+                    the._$mainParent.innerHTML = '';
+                    modification.insert($img, the._$mainParent, 'beforeend');
+                    the._dialog.resize();
+                }
             });
         },
 

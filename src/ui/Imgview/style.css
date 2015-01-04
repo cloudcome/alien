@@ -1,16 +1,20 @@
 @charset "utf-8";
 
-.alien-ui-imgview{
+.alien-ui-imgview {
     text-align: center;
 }
 
-.alien-ui-imgview-main img{
+.alien-ui-imgview-main {
+    margin-bottom: 20px;
+}
+
+.alien-ui-imgview-main img {
     width: auto;
     height: auto;
     max-width: 100%;
 }
 
-.alien-ui-imgview-loading{
+.alien-ui-imgview-loading {
     display: inline-block;
     border: 1px solid #eee;
     padding: 20px 60px;
@@ -18,37 +22,98 @@
     background: #F5F5F5;
 }
 
-.alien-ui-imgview-loading-img{
+.alien-ui-imgview-loading-img {
     vertical-align: top;
 }
 
-.alien-ui-imgview-loading-text{
+.alien-ui-imgview-loading-text {
     line-height: 30px;
     margin-top: 15px;
 }
 
 .alien-ui-imgview-prev,
-.alien-ui-imgview-next{
+.alien-ui-imgview-next {
     position: absolute;
     top: 50%;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    cursor: not-allowed;
-    padding: 10px;
-    background: #eee;
-    color: #666;
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+    cursor: pointer;
+    background: #f6f6f6;
 }
 
-.alien-ui-imgview-prev{
+.alien-ui-imgview-prev:hover,
+.alien-ui-imgview-next:hover {
+    background: #428bca;
+    border-color: #428bca;
+    color: #fff;
+}
+
+.alien-ui-imgview-prev {
+    border-radius: 0 4px 4px 0;
     left: 0;
 }
 
-.alien-ui-imgview-next{
+.alien-ui-imgview-next {
+    border-radius: 4px 0 0 4px;
     right: 0;
 }
 
-.alien-ui-imgview-disabled{
-    color: #BEBEBE;
+.alien-ui-imgview-ctrl-disabled,
+.alien-ui-imgview-ctrl-disabled:hover {
+    background: #f6f6f6;
+    cursor: not-allowed;
+    color: #ccc;
+    border-color: #ddd;
+}
+
+.alien-ui-imgview-nav {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.alien-ui-imgview-nav-item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    min-width: 40px;
+    height: 36px;
+    line-height: 36px;
+    border-right-width: 0;
+    color: #1E77B6;
+    cursor: pointer;
+}
+
+.alien-ui-imgview-nav-item:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.alien-ui-imgview-nav-item:last-child {
+    border-right-width: 1px;
+    border-radius: 0 4px 4px 0;
+}
+
+.alien-ui-imgview-nav-item:only-child {
+    border-radius: 4px;
+}
+
+.alien-ui-imgview-nav-item:hover {
+    background: #428bca;
+    border-color: #428bca;
+    color: #fff;
+}
+
+.alien-ui-imgview-nav-item-active,
+.alien-ui-imgview-nav-item-active:hover {
+    background: #555;
+    border-color: #555;
+    color: #fff;
+    cursor: default;
 }
