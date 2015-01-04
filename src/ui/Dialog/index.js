@@ -156,7 +156,8 @@ define(function (require, exports, module) {
             the._$body = $body;
             the._$dialog = $dialog;
             the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
-            attribute.addClass($dialog, options.addClass);
+
+            attribute.addClass($bg || $dialog, options.addClass);
             modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');
         },
 
