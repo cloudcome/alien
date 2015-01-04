@@ -18,11 +18,6 @@ define(function (require, exports, module) {
     list.push('http://dummyimage.com/1600x400');
 
     document.getElementById('img').onclick = function () {
-        list.push(this.src);
         imgview.open(list);
-
-        setTimeout(function () {
-            imgview.destroy();
-        }, 2000);
     };
 });
