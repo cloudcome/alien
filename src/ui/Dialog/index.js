@@ -181,7 +181,10 @@ define(function (require, exports, module) {
                 eve.stopPropagation();
 
                 if (!selector.closest(eve.target, '.' + alienClass).length) {
-                    the.shake();
+
+                    if (the.emit('hitbg') !== false) {
+                        the.shake();
+                    }
                 }
             });
 
@@ -207,7 +210,7 @@ define(function (require, exports, module) {
             var findIndex;
             var dialogStyle = {
                 display: 'block',
-                visibility: 'hidden',
+                visibility: 'hidden'
             };
             var bodyStyle = {
                 width: options.width,
@@ -553,7 +556,10 @@ define(function (require, exports, module) {
             d = dialogsMap[openDialogs[openDialogs.length - 1]];
 
             if (d && d.constructor === Dialog) {
-                d.shake();
+
+                if (d.emit('esc') !== false) {
+                    d.shake();
+                }
             }
         }
     });
@@ -585,6 +591,11 @@ define(function (require, exports, module) {
 
     /**
      * 实例化一个模态交互对话框
+     *
+     * @event hitbg
+     * @event esc
+     * @event open
+     * @event close
      *
      * @param ele {HTMLElement|Node|String} 元素或选择器
      * @param [options] {Object}
