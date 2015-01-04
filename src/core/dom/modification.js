@@ -193,10 +193,12 @@ define(function (require, exports, module) {
                 return false;
             }
 
-            try {
-                ele.remove();
-            } catch (err) {
-                document.removeChild(ele);
+            if (ele && ele.parentNode) {
+                try {
+                    ele.parentNode.removeChild(ele);
+                } catch (err) {
+                    // ignore
+                }
             }
         },
 
