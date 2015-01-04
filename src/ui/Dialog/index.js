@@ -463,12 +463,15 @@ define(function (require, exports, module) {
             var the = this;
 
             if (the.shakeTimeid) {
-                the.shakeTimeid = 0;
                 clearTimeout(the.shakeTimeid);
                 attribute.removeClass(the._$dialog, alienClass + '-shake');
             }
 
             attribute.addClass(the._$dialog, alienClass + '-shake');
+            the.shakeTimeid = setTimeout(function () {
+                the.shakeTimeid = 0;
+                attribute.removeClass(the._$dialog, alienClass + '-shake');
+            }, 500);
 
             return the;
         },

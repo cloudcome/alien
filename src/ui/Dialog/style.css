@@ -20,6 +20,9 @@
     width: 500px;
     box-shadow: 0 0 20px #A0A0A0;
     overflow: hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .alien-ui-dialog-header {
@@ -70,6 +73,9 @@
     padding: 20px;
     overflow: auto;
     background: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .alien-ui-dialog-iframe {
