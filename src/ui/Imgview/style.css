@@ -20,3 +20,29 @@
     line-height: 30px;
     margin-top: 15px;
 }
+
+.alien-ui-imgview-prev,
+.alien-ui-imgview-next{
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    cursor: not-allowed;
+    padding: 10px;
+    background: #eee;
+    color: #666;
+}
+
+.alien-ui-imgview-prev{
+    left: 0;
+}
+
+.alien-ui-imgview-next{
+    right: 0;
+}
+
+.alien-ui-imgview-disabled{
+    color: #BEBEBE;
+}

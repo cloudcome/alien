@@ -28,19 +28,32 @@ define(function (require, exports, module) {
     var tplLoading = new Template(templateLoading);
     var tplNav = new Template(templateNav);
     var alienClass = 'alien-ui-imgview';
+    var noop = function () {
+        // ignore
+    };
     var defaults = {
         loading: {
             src: 'http://s.ydr.me/p/i/loading-128.gif',
             width: 64,
             height: 64,
             text: '加载中……'
+        },
+        nav: {
+            prev: {
+                icon: '&laquo;',
+                text: '上一张'
+            },
+            next: {
+                icon: '&raquo;',
+                text: '下一张'
+            }
         }
     };
     var Imgview = generator({
         constructor: function (options) {
             var the = this;
 
-            the._options = dato.extend({}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
@@ -63,15 +76,21 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            var htmlWrap = tplWrap.render({});
-            var htmlLoading = tplLoading.render(the._options);
+            var options = the._options;
+            var htmlWrap = tplWrap.render(options);
+            var htmlLoading = tplLoading.render(options);
             var nodeWrap = modification.parse(htmlWrap)[0];
             var nodeLoading = modification.parse(htmlLoading)[0];
+            var nodes = selector.query('.j-flag', nodeWrap);
 
-            the._load(the._options.loading.src);
+            the._load(options.loading.src);
             modification.insert(nodeWrap, document.body, 'beforeend');
             the._$ele = nodeWrap;
             the._$loading = nodeLoading;
+            the._$mainParent = nodes[0];
+            the._$navParent = nodes[1];
+            the._$prev = nodes[2];
+            the._$next = nodes[3];
         },
 
 
@@ -114,13 +133,19 @@ define(function (require, exports, module) {
         },
 
 
-        _load: function (src, callback) {
+        /**
+         * 加载图片
+         * @param src {String} 图片地址
+         * @param [onbefore] {Function} 加载之前
+         * @param [callback] {Function} 加载之后
+         * @private
+         */
+        _load: function (src, onbefore, callback) {
             var img = new Image();
 
             img.src = src;
-            callback = callback || function () {
-                // ignore
-            };
+            onbefore = onbefore || noop;
+            callback = callback || noop;
 
             if (img.complete) {
                 callback(null, {
@@ -129,6 +154,7 @@ define(function (require, exports, module) {
                     height: img.height
                 });
             } else {
+                onbefore();
                 img.onload = function () {
                     callback(null, {
                         $img: img,
@@ -142,16 +168,40 @@ define(function (require, exports, module) {
 
 
         /**
+         * 控制
+         * @private
+         */
+        _ctrl: function () {
+            var the = this;
+            var disabledClass = alienClass + '-disabled';
+
+            if (the._index === 0) {
+                attribute.addClass(the._$prev, disabledClass);
+            } else {
+                attribute.removeClass(the._$prev, disabledClass);
+            }
+
+            if (the._index === the._list.length - 1) {
+                attribute.addClass(the._$next, disabledClass);
+            } else {
+                attribute.removeClass(the._$next, disabledClass);
+            }
+        },
+
+
+        /**
          * 展示
          * @private
          */
         _show: function () {
             var the = this;
 
-            the._$ele.innerHTML = '';
-            modification.insert(the._$loading, the._$ele, 'beforeend');
-            the._dialog.resize();
-            the._load(the._list[the._index], function (err, info) {
+            the._ctrl();
+            the._load(the._list[the._index], function () {
+                the._$mainParent.innerHTML = '';
+                modification.insert(the._$loading, the._$mainParent, 'beforeend');
+                the._dialog.resize();
+            }, function (err, info) {
                 if (err) {
                     return the.emit('error', err);
                 }
@@ -168,7 +218,11 @@ define(function (require, exports, module) {
          */
         open: function (list, index) {
             var the = this;
+            var navHTML = tplNav.render({
+                list: list
+            });
 
+            the._$navParent.innerHTML = navHTML;
             the._list = list;
             the._index = index || 0;
             the._dialog.setOptions('width', attribute.width(window) - 20);
