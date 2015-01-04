@@ -20,5 +20,9 @@ define(function (require, exports, module) {
     document.getElementById('img').onclick = function () {
         list.push(this.src);
         imgview.open(list);
+
+        setTimeout(function () {
+            imgview.destroy();
+        }, 2000);
     };
 });

@@ -274,7 +274,7 @@ define(function (require, exports, module) {
         /**
          * 打开图片查看器
          * @param list {Array} 图片列表
-         * @param [index] {Number} 打开时显示的图片索引
+         * @param [index=0] {Number} 打开时显示的图片索引
          */
         open: function (list, index) {
             var the = this;
@@ -283,6 +283,7 @@ define(function (require, exports, module) {
             });
 
             the._$navParent.innerHTML = navHTML;
+            the._$mainParent.innerHTML = '';
             the._list = list;
             the._index = index || 0;
             the._dialog.setOptions('width', attribute.width(window) - 20);
@@ -290,8 +291,14 @@ define(function (require, exports, module) {
         },
 
 
-        close: function () {
+        destroy: function () {
+            var the = this;
 
+            the._dialog.destroy();
+            event.un(the._$prev, 'click');
+            event.un(the._$next, 'click');
+            event.un(the._$navParent, 'click');
+            modification.remove(the._$ele);
         }
     });
 
