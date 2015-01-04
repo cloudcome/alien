@@ -4,6 +4,12 @@
     text-align: center;
 }
 
+.alien-ui-imgview-main img{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
 .alien-ui-imgview-loading{
     display: inline-block;
     border: 1px solid #eee;

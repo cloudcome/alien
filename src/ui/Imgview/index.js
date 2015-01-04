@@ -149,7 +149,7 @@ define(function (require, exports, module) {
 
             if (img.complete) {
                 callback(null, {
-                    $img: img,
+                    src: src,
                     width: img.width,
                     height: img.height
                 });
@@ -206,7 +206,11 @@ define(function (require, exports, module) {
                     return the.emit('error', err);
                 }
 
+                var $img = modification.create('img', info);
 
+                the._$mainParent.innerHTML = '';
+                modification.insert($img, the._$mainParent, 'beforeend');
+                the._dialog.resize();
             });
         },
 
