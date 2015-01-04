@@ -10,4 +10,8 @@ define(function (require, exports, module) {
 
     var Imgview = require('/src/ui/Imgview/');
     var imgview = new Imgview();
+
+    document.getElementById('img').onclick = function () {
+        imgview.open([this.src]);
+    };
 });

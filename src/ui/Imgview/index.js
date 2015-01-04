@@ -66,25 +66,22 @@ define(function (require, exports, module) {
          */
         _initDialog: function () {
             var the = this;
+            var onclose = function () {
+                this.close();
+                return false;
+            };
 
             the._dialogOptions = {
                 title: null,
                 addClass: alienClass + '-dialog'
             };
             the._dialog = new Dialog(the._$ele, the._dialogOptions);
-            the._dialog.open();
 
             // 单击背景
-            the._dialog.on('hitbg', function () {
-                this.close();
-                return false;
-            });
+            the._dialog.on('hitbg', onclose);
 
             // 按 esc
-            the._dialog.on('esc', function () {
-                this.close();
-                return false;
-            });
+            the._dialog.on('esc', onclose);
         },
 
 
@@ -93,6 +90,16 @@ define(function (require, exports, module) {
          * @private
          */
         _initEvent: function () {
+
+        },
+
+
+        open: function (list) {
+
+        },
+
+
+        close: function () {
 
         }
     });
