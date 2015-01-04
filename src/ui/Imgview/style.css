@@ -1,1 +1,22 @@
 @charset "utf-8";
+
+.alien-ui-imgview{
+    text-align: center;
+}
+
+.alien-ui-imgview-loading{
+    display: inline-block;
+    border: 1px solid #eee;
+    padding: 20px 60px;
+    border-radius: 6px;
+    background: #F5F5F5;
+}
+
+.alien-ui-imgview-loading-img{
+    vertical-align: top;
+}
+
+.alien-ui-imgview-loading-text{
+    line-height: 30px;
+    margin-top: 15px;
+}

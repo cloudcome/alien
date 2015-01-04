@@ -28,9 +28,9 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-imgview';
     var defaults = {
         loading: {
-            src: 'http://s.ydr.me/p/i/loading.gif',
-            width: 16,
-            height: 16,
+            src: 'http://s.ydr.me/p/i/loading-128.gif',
+            width: 64,
+            height: 64,
             text: '加载中……'
         }
     };
@@ -66,6 +66,7 @@ define(function (require, exports, module) {
             var nodeWrap = modification.parse(htmlWrap)[0];
             var nodeLoading = modification.parse(htmlLoading)[0];
 
+            the._load(the._options.loading.src);
             modification.insert(nodeWrap, document.body, 'beforeend');
             the._$ele = nodeWrap;
             the._$loading = nodeLoading;
@@ -78,22 +79,12 @@ define(function (require, exports, module) {
          */
         _initDialog: function () {
             var the = this;
-            var onclose = function () {
-                this.close();
-                return false;
-            };
 
             the._dialogOptions = {
                 title: null,
                 addClass: alienClass + '-dialog'
             };
             the._dialog = new Dialog(the._$ele, the._dialogOptions);
-
-            // 单击背景
-            the._dialog.on('hitbg', onclose);
-
-            // 按 esc
-            the._dialog.on('esc', onclose);
         },
 
 
@@ -102,15 +93,32 @@ define(function (require, exports, module) {
          * @private
          */
         _initEvent: function () {
+            var the = this;
+            var onclose = function () {
+                this.close();
+                return false;
+            };
 
+            // 单击背景
+            the._dialog.on('hitbg', onclose);
+
+            // 按 esc
+            the._dialog.on('esc', onclose);
+
+            // 打开
+            the._dialog.on('open', function () {
+                the._show();
+            });
         },
 
 
-        _load: function (callback) {
+        _load: function (src, callback) {
             var img = new Image();
-            var the = this;
 
-            img.src = the._list[the._index];
+            img.src = src;
+            callback = callback || function () {
+                // ignore
+            };
 
             if (img.complete) {
                 callback(null, {
@@ -141,7 +149,7 @@ define(function (require, exports, module) {
             the._$ele.innerHTML = '';
             modification.insert(the._$loading, the._$ele, 'beforeend');
             the._dialog.resize();
-            the._load(function (err, info) {
+            the._load(the._list[the._index], function (err, info) {
                 if (err) {
                     return the.emit('error', err);
                 }
@@ -161,8 +169,8 @@ define(function (require, exports, module) {
 
             the._list = list;
             the._index = index || 0;
+            the._dialog.setOptions('width', attribute.width(window) - 20);
             the._dialog.open();
-            the._show();
         },
 
 
