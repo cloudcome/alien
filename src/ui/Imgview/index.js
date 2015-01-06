@@ -81,8 +81,6 @@ define(function (require, exports, module) {
 
             the._list = [];
             the._index = 0;
-            the._isSame = false;
-            the._hasFirstShow = false;
         },
 
 
@@ -234,13 +232,7 @@ define(function (require, exports, module) {
         _show: function () {
             var the = this;
 
-            if (the._isSame) {
-                the._isSame = false;
-                return;
-            }
-
             the._ctrl();
-
             attribute.addClass(the._$ele, alienClass + '-isloading');
             the._load(the._list[the._index], function (err, info) {
                 if (err) {
@@ -268,28 +260,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 判断本次和上次是否一致
-         * @param list
-         * @param index
-         * @returns {boolean}
-         * @private
-         */
-        _compare: function (list, index) {
-            index = index || 0;
-
-            var the = this;
-
-            if ((index !== the._index) || (list.length !== the._list.length)) {
-                return false;
-            }
-
-            var compare = dato.compare(list, the._list);
-
-            return !compare.different.length && !compare.only[0].length && !compare.only[1].length;
-        },
-
-
-        /**
          * 打开图片查看器
          * @param list {Array} 图片列表
          * @param [index=0] {Number} 打开时显示的图片索引
@@ -297,23 +267,14 @@ define(function (require, exports, module) {
         open: function (list, index) {
             var the = this;
 
-            the._isSame = the._compare(list, index);
             the._list = list;
             the._index = index || 0;
+            the._$mainParent.innerHTML = '';
+            the._dialog.setOptions({
+                width: 300,
+                height: 300
+            });
 
-            if (!the._isSame) {
-                the._hasFirstShow = false;
-                the._$mainParent.innerHTML = '';
-            }
-
-            if (!the._hasFirstShow) {
-                the._dialog.setOptions({
-                    width: 300,
-                    height: 300
-                });
-            }
-
-            the._hasFirstShow = true;
             the._dialog.open();
 
             return the;
