@@ -193,15 +193,15 @@ define(function (require, exports, module) {
             //        height: img.height
             //    });
             //} else {
-                img.onload = function () {
-                    callback(null, {
-                        index: index,
-                        src: src,
-                        width: img.width,
-                        height: img.height
-                    });
-                };
-                img.onerror = callback;
+            img.onload = function () {
+                callback(null, {
+                    index: index,
+                    src: src,
+                    width: img.width,
+                    height: img.height
+                });
+            };
+            img.onerror = callback;
             //}
         },
 
@@ -229,23 +229,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 展示之前动画
-         * @params callback {Function} 回调
-         * @private
-         */
-        _preShow: function (callback) {
-            var the = this;
-
-            attribute.addClass(the._$ele, alienClass + '-isloading');
-            the._dialog.setOptions({
-                width: 300,
-                height: 'auto'
-            });
-            the._dialog.resize(callback);
-        },
-
-
-        /**
          * 展示
          * @private
          */
@@ -259,27 +242,29 @@ define(function (require, exports, module) {
 
             the._ctrl();
 
-            howdo
-                .task(the._preShow.bind(the))
-                .task(function (done) {
-                    the._load(the._list[the._index], done);
-                })
-                .together(function (err, info) {
-                    if (err) {
-                        return the.emit('error', err);
-                    }
+            attribute.addClass(the._$ele, alienClass + '-isloading');
+            the._load(the._list[the._index], function (err, info) {
+                if (err) {
+                    return the.emit('error', err);
+                }
 
-                    if (the._index === info.index) {
-                        //var $img = modification.create('img', info);
-                        //var width = Math.min(info.width, attribute.width(window) - 20);
-                        //
-                        //the._$mainParent.innerHTML = '';
-                        //modification.insert($img, the._$mainParent, 'beforeend');
-                        //attribute.removeClass(the._$ele, alienClass + '-isloading');
-                        //the._dialog.setOptions('width', width);
-                        //the._dialog.resize();
-                    }
-                });
+                if (the._index === info.index) {
+                    var width = Math.min(info.width, attribute.width(window) - 20);
+                    var ratio = info.width/info.height;
+                    var height = width/ratio;
+
+                    the._dialog.setOptions({
+                        width: width,
+                        height: height
+                    });
+                    the._dialog.resize(function () {
+                        var $img = modification.create('img', info);
+                        the._$mainParent.innerHTML = '';
+                        modification.insert($img, the._$mainParent, 'beforeend');
+                        attribute.removeClass(the._$ele, alienClass + '-isloading');
+                    });
+                }
+            });
         },
 
 
