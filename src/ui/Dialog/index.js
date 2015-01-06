@@ -156,7 +156,11 @@ define(function (require, exports, module) {
             the._$bg = $bg;
             the._$body = $body;
             the._$dialog = $dialog;
-            the._scrollbar = new Scrollbar(the._$dialog);
+
+            if (options.isModal) {
+                the._scrollbar = new Scrollbar(the._$dialog);
+            }
+
             the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
             attribute.addClass($bg || $dialog, options.addClass);
             modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');

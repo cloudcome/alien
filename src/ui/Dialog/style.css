@@ -10,14 +10,13 @@
     bottom: 0;
     left: 0;
     background: rgba(255, 255, 255, .3);
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
 .alien-ui-dialog {
     display: none;
     position: absolute;
-    width: 500px;
     box-shadow: 0 0 20px #A0A0A0;
     overflow: hidden;
     -webkit-box-sizing: border-box;
