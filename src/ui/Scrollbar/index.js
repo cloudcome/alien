@@ -61,9 +61,7 @@ define(function (require, exports, module) {
         cssEasing: 'in-out',
         jsEasing: 'swing',
         addClass: '',
-        isStandAlone: false,
-        $wrap: null,
-        $body: null
+        isStandAlone: false
     };
     var Scrollbar = generator({
         STATIC: {
@@ -631,8 +629,6 @@ define(function (require, exports, module) {
      * @param {String} [optoions.jsEasing="iswing"] JS 动画缓冲类型
      * @param {String} [optoions.addClass=""] 额外添加的 className
      * @param {String} [optoions.isStandAlone=false] 是否为独立区域，独立区域即在滚动超过边际时不会释放对滚轮的阻止
-     * @param {String} [optoions.$wrap=null] wrap 区域
-     * @param {String} [optoions.$body=null] body 区域
      * @constructor
      */
     module.exports = Scrollbar;
