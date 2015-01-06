@@ -414,6 +414,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var pos = the._position();
 
+            animation.stop(the._$dialog, false);
             animation.animate(the._$dialog, pos, {
                 duration: options.duration,
                 easing: options.easing
