@@ -276,6 +276,19 @@ define(function (require, exports, module) {
 
 
         /**
+         * 改变显示方式
+         * @param isVisible
+         * @private
+         */
+        _changeVisible: function (isVisible) {
+            attribute.css(this._$ele, {
+                visibility: isVisible ? 'visible' : 'hidden',
+                overflow: isVisible ? 'auto' : 'hidden'
+            });
+        },
+
+
+        /**
          * 展示之前动画
          * @params callback {Function} 回调
          * @private
@@ -292,10 +305,10 @@ define(function (require, exports, module) {
                 width: 200,
                 height: 200,
                 left: (attribute.width(window) - 200) / 2,
-                top: (attribute.height(window) - 200)  / 2
+                top: (attribute.height(window) - 200) / 2
             };
 
-            attribute.css(the._$mainParent, 'visibility', 'hidden');
+            the._changeVisible(false);
             the._dialog.animate(to, callback);
         },
 
@@ -316,7 +329,7 @@ define(function (require, exports, module) {
             the._nav();
             the._load(the._list[the._index], function () {
                 the._preShow(function () {
-                    attribute.css(the._$mainParent, 'visibility', 'visible');
+                    the._changeVisible(true);
                     the._$mainParent.innerHTML = '';
                     modification.insert(the._$loading, the._$mainParent, 'beforeend');
                     the._dialog.resize(the._resize.bind(the));
@@ -331,7 +344,7 @@ define(function (require, exports, module) {
                         var $img = modification.create('img', info);
                         var width = Math.min(info.width, attribute.width(window) - 20);
 
-                        attribute.css(the._$mainParent, 'visibility', 'visible');
+                        the._changeVisible(true);
                         the._$mainParent.innerHTML = '';
                         modification.insert($img, the._$mainParent, 'beforeend');
                         the._dialog.setOptions('width', width);
