@@ -275,7 +275,7 @@ define(function (require, exports, module) {
                 height: 300
             });
 
-            if (the._list.length) {
+            if (the._list.length > 1) {
                 attribute.css(the._$prev, 'display', 'block');
                 attribute.css(the._$next, 'display', 'block');
             } else {
