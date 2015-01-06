@@ -552,6 +552,10 @@ define(function (require, exports, module) {
             var pos = {};
 
             animation.stop(the._$dialog, true);
+            attribute.css(the._$dialog, {
+                width: options.width,
+                height: options.height
+            });
             pos.width = attribute.outerWidth(the._$dialog);
             pos.height = attribute.outerHeight(the._$dialog);
 
