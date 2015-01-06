@@ -121,8 +121,7 @@ define(function (require, exports, module) {
             the._dialogOptions = {
                 title: null,
                 addClass: alienClass + '-dialog',
-                canDrag: false,
-                duration: 2000
+                canDrag: false
             };
             the._dialog = new Dialog(the._$ele, the._dialogOptions);
         },
@@ -250,8 +249,8 @@ define(function (require, exports, module) {
 
                 if (the._index === info.index) {
                     var width = Math.min(info.width, attribute.width(window) - 20);
-                    var ratio = info.width/info.height;
-                    var height = width/ratio;
+                    var ratio = info.width / info.height;
+                    var height = width / ratio;
 
                     the._dialog.setOptions({
                         width: width,
@@ -303,10 +302,18 @@ define(function (require, exports, module) {
             the._index = index || 0;
 
             if (!the._isSame) {
+                the._hasFirstShow = false;
                 the._$mainParent.innerHTML = '';
             }
 
-            the._dialog.setOptions('width', 300);
+            if (!the._hasFirstShow) {
+                the._dialog.setOptions({
+                    width: 300,
+                    height: 300
+                });
+            }
+
+            the._hasFirstShow = true;
             the._dialog.open();
 
             return the;
