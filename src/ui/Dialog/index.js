@@ -411,22 +411,18 @@ define(function (require, exports, module) {
          */
         resize: function (callback) {
             var the = this;
-            var options = the._options;
             var pos = the._position();
 
             animation.stop(the._$dialog, false);
-            //animation.animate(the._$dialog, pos, {
-            //    duration: options.duration,
-            //    easing: options.easing
-            //}, function () {
-            //    if (typeis(callback) === 'function') {
-            //        callback.call(the);
-            //    }
-            //
-            //    if (the._scrollbar) {
-            //        the._scrollbar.resize();
-            //    }
-            //});
+            the.animate(pos, function () {
+                if (typeis(callback) === 'function') {
+                    callback.call(the);
+                }
+
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
+            });
 
             return the;
         },
@@ -562,16 +558,16 @@ define(function (require, exports, module) {
             var winW = attribute.width(window);
             var winH = attribute.height(window);
             var pos = {};
+            var pre = attribute.css(the._$dialog, ['width', 'height']);
 
             animation.stop(the._$dialog, true);
-            //attribute.css(the._$dialog, {
-            //    width: options.width,
-            //    height: options.height
-            //});
-            //pos.width = attribute.outerWidth(the._$dialog);
-            //pos.height = attribute.outerHeight(the._$dialog);
-            pos.width = options.width;
-            pos.height = options.height;
+            attribute.css(the._$dialog, {
+                width: options.width,
+                height: options.height
+            });
+            pos.width = attribute.outerWidth(the._$dialog);
+            pos.height = attribute.outerHeight(the._$dialog);
+            attribute.css(the._$dialog, pre);
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
