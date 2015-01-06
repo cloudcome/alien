@@ -54,7 +54,7 @@ define(function (require, exports, module) {
         title: '无标题对话框',
         canDrag: true,
         hideClose: false,
-        duration: 345,
+        duration: 456,
         easing: 'ease-in-out-back',
         addClass: '',
         // 优先级2
@@ -304,7 +304,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$bg, 'overflow', 'hidden');
-            attribute.css(the._$dialog, 'visibility', 'hidden');
+            attribute.css(the._$body, {
+                visibility: 'hidden',
+                overflow: 'hidden'
+            });
             animation.animate(the._$dialog, to, {
                 duration: options.duration,
                 easing: options.easing
@@ -318,7 +321,10 @@ define(function (require, exports, module) {
                 }
 
                 attribute.css(the._$bg, 'overflow', 'auto');
-                attribute.css(the._$dialog, 'visibility', 'visible');
+                attribute.css(the._$body, {
+                    visibility: 'visible',
+                    overflow: 'auto'
+                });
             });
         },
 
