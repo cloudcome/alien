@@ -38,6 +38,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
+    var Scrollbar = require('../Scrollbar/');
     var alienIndex = 0;
     var zIndex = 9999;
     var body = document.body;
@@ -155,8 +156,8 @@ define(function (require, exports, module) {
             the._$bg = $bg;
             the._$body = $body;
             the._$dialog = $dialog;
+            the._scrollbar = new Scrollbar(the._$dialog);
             the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
-
             attribute.addClass($bg || $dialog, options.addClass);
             modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');
         },
@@ -277,6 +278,10 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('open');
+
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
 
                 if (!options.content && options.remote) {
                     the.setRemote(options.remote);
@@ -489,6 +494,9 @@ define(function (require, exports, module) {
                 // 从对话框 map 里删除
                 delete(dialogsMap[the._id]);
 
+                if (the._scrollbar) {
+                    the._scrollbar.destroy();
+                }
 
                 // 将内容放到 body 里
                 modification.insert(the._$ele, body, 'beforeend');
@@ -522,7 +530,12 @@ define(function (require, exports, module) {
 
             animation.stop(the._$dialog, true);
 
-            attribute.css(the._$dialog, {
+            //attribute.css(the._$dialog, {
+            //    width: options.width,
+            //    height: options.height
+            //});
+
+            attribute.css(the._$body, {
                 width: options.width,
                 height: options.height
             });
