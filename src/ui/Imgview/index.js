@@ -28,7 +28,6 @@ define(function (require, exports, module) {
     var tplLoading = new Template(templateLoading);
     var tplNav = new Template(templateNav);
     var alienClass = 'alien-ui-imgview';
-    var scrollbarWidth = _calScrollBarWidth();
     var noop = function () {
         // ignore
     };
@@ -84,6 +83,7 @@ define(function (require, exports, module) {
             the._list = [];
             the._index = 0;
             the._isSame = false;
+            the._hasFirstShow = false;
         },
 
 
@@ -276,6 +276,31 @@ define(function (require, exports, module) {
 
 
         /**
+         * 展示之前动画
+         * @params callback {Function} 回调
+         * @private
+         */
+        _preShow: function (callback) {
+            var the = this;
+
+            if (!the._hasFirstShow) {
+                the._hasFirstShow = true;
+                return callback();
+            }
+
+            var to = {
+                width: 200,
+                height: 200,
+                left: (attribute.width(window) - 200) / 2,
+                top: (attribute.height(window) - 200)  / 2
+            };
+
+            attribute.css(the._$mainParent, 'visibility', 'hidden');
+            the._dialog.animate(to, callback);
+        },
+
+
+        /**
          * 展示
          * @private
          */
@@ -290,20 +315,28 @@ define(function (require, exports, module) {
             the._ctrl();
             the._nav();
             the._load(the._list[the._index], function () {
-                the._$mainParent.innerHTML = '';
-                modification.insert(the._$loading, the._$mainParent, 'beforeend');
-                the._dialog.resize(the._resize.bind(the));
+                the._preShow(function () {
+                    attribute.css(the._$mainParent, 'visibility', 'visible');
+                    the._$mainParent.innerHTML = '';
+                    modification.insert(the._$loading, the._$mainParent, 'beforeend');
+                    the._dialog.resize(the._resize.bind(the));
+                });
             }, function (err, info) {
                 if (err) {
                     return the.emit('error', err);
                 }
 
                 if (the._index === info.index) {
-                    var $img = modification.create('img', info);
+                    the._preShow(function () {
+                        var $img = modification.create('img', info);
+                        var width = Math.min(info.width, attribute.width(window) - 20);
 
-                    the._$mainParent.innerHTML = '';
-                    modification.insert($img, the._$mainParent, 'beforeend');
-                    the._dialog.resize(the._resize.bind(the));
+                        attribute.css(the._$mainParent, 'visibility', 'visible');
+                        the._$mainParent.innerHTML = '';
+                        modification.insert($img, the._$mainParent, 'beforeend');
+                        the._dialog.setOptions('width', width);
+                        the._dialog.resize(the._resize.bind(the));
+                    });
                 }
             });
         },
@@ -351,7 +384,7 @@ define(function (require, exports, module) {
                 the._$mainParent.innerHTML = '';
             }
 
-            the._dialog.setOptions('width', attribute.width(window) - 20);
+            the._dialog.setOptions('width', 300);
             the._dialog.open();
 
             return the;
@@ -375,28 +408,4 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
     module.exports = Imgview;
-
-
-    /**
-     * 计算当前页面的滚动条宽度
-     * @returns {number}
-     * @private
-     */
-    function _calScrollBarWidth() {
-        var $div = modification.create('div', {
-            style: {
-                width: 100,
-                height: 100,
-                position: 'absolute',
-                padding: 0,
-                margin: 0,
-                overflow: 'scroll',
-                top: -111,
-                left: -111
-            }
-        });
-
-        modification.insert($div, document.body);
-        return 100 - $div.clientWidth;
-    }
 });

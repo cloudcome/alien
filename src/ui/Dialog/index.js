@@ -277,12 +277,8 @@ define(function (require, exports, module) {
                 });
             }
 
-            animation.animate($dialog, to, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                the.emit('open');
 
+            the.animate(to, function () {
                 if (the._scrollbar) {
                     the._scrollbar.resize();
                 }
@@ -291,9 +287,7 @@ define(function (require, exports, module) {
                     the.setRemote(options.remote);
                 }
 
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
+                the.emit('open');
             });
 
             if (options.content) {
@@ -301,6 +295,30 @@ define(function (require, exports, module) {
             }
 
             return the;
+        },
+
+
+        /**
+         * 动画
+         * @param to
+         * @param callback
+         */
+        animate: function (to, callback) {
+            var the = this;
+            var options = the._options;
+
+            animation.animate(the._$dialog, to, {
+                duration: options.duration,
+                easing: options.easing
+            }, function () {
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
+
+                if (typeis(callback) === 'function') {
+                    callback.call(the);
+                }
+            });
         },
 
 
