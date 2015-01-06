@@ -24,6 +24,7 @@ define(function (require, exports, module) {
     var templateNav = require('html!./nav.html');
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
+    var howdo = require('../../util/howdo.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
     var tplNav = new Template(templateNav);
@@ -184,16 +185,14 @@ define(function (require, exports, module) {
         /**
          * 加载图片
          * @param src {String} 图片地址
-         * @param [onbefore] {Function} 加载之前
          * @param [callback] {Function} 加载之后
          * @private
          */
-        _load: function (src, onbefore, callback) {
+        _load: function (src, callback) {
             var img = new Image();
             var index = this._index;
 
             img.src = src;
-            onbefore = onbefore || noop;
             callback = callback || noop;
 
             if (img.complete) {
@@ -204,7 +203,6 @@ define(function (require, exports, module) {
                     height: img.height
                 });
             } else {
-                onbefore();
                 img.onload = function () {
                     callback(null, {
                         index: index,
@@ -260,22 +258,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * resize
-         * @private
-         */
-        _resize: function () {
-            var the = this;
-            var clientWidth = the._dialog._$bg.clientWidth;
-            var offsetWidth = the._dialog._$bg.offsetWidth;
-
-            if (clientWidth !== offsetWidth) {
-                the._dialog.setOptions('width', clientWidth - 20);
-                the._dialog.resize();
-            }
-        },
-
-
-        /**
          * 改变显示方式
          * @param isVisible
          * @private
@@ -296,10 +278,10 @@ define(function (require, exports, module) {
         _preShow: function (callback) {
             var the = this;
 
-            if (!the._hasFirstShow) {
-                the._hasFirstShow = true;
-                return callback();
-            }
+            //if (!the._hasFirstShow) {
+            //    the._hasFirstShow = true;
+            //    return callback();
+            //}
 
             var to = {
                 width: 200,
@@ -308,7 +290,8 @@ define(function (require, exports, module) {
                 top: (attribute.height(window) - 200) / 2
             };
 
-            the._changeVisible(false);
+            the._$mainParent.innerHTML = '';
+            modification.insert(the._$loading, the._$mainParent, 'beforeend');
             the._dialog.animate(to, callback);
         },
 
@@ -327,31 +310,30 @@ define(function (require, exports, module) {
 
             the._ctrl();
             the._nav();
-            the._load(the._list[the._index], function () {
-                the._preShow(function () {
-                    the._changeVisible(true);
-                    the._$mainParent.innerHTML = '';
-                    modification.insert(the._$loading, the._$mainParent, 'beforeend');
-                    the._dialog.resize(the._resize.bind(the));
+
+            howdo
+                .task(the._preShow.bind(the))
+                .task(function (done) {
+                    the._load(the._list[the._index], done);
+                })
+                .together(function (err, info) {
+                    //if (err) {
+                    //    return the.emit('error', err);
+                    //}
+                    //
+                    //if (the._index === info.index) {
+                    //    the._preShow(function () {
+                    //        var $img = modification.create('img', info);
+                    //        var width = Math.min(info.width, attribute.width(window) - 20);
+                    //
+                    //        the._changeVisible(true);
+                    //        the._$mainParent.innerHTML = '';
+                    //        modification.insert($img, the._$mainParent, 'beforeend');
+                    //        the._dialog.setOptions('width', width);
+                    //        the._dialog.resize();
+                    //    });
+                    //}
                 });
-            }, function (err, info) {
-                if (err) {
-                    return the.emit('error', err);
-                }
-
-                if (the._index === info.index) {
-                    the._preShow(function () {
-                        var $img = modification.create('img', info);
-                        var width = Math.min(info.width, attribute.width(window) - 20);
-
-                        the._changeVisible(true);
-                        the._$mainParent.innerHTML = '';
-                        modification.insert($img, the._$mainParent, 'beforeend');
-                        the._dialog.setOptions('width', width);
-                        the._dialog.resize(the._resize.bind(the));
-                    });
-                }
-            });
         },
 
 

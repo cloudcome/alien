@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.alien-ui-imgview-preloading{
+
+}
+
 .alien-ui-imgview-main {
     margin-bottom: 20px;
 }
@@ -20,10 +24,9 @@
 
 .alien-ui-imgview-loading {
     display: inline-block;
-    border: 1px solid #eee;
     padding: 20px 60px;
     border-radius: 6px;
-    background: #F5F5F5;
+    color: #aaa;
 }
 
 .alien-ui-imgview-loading-img {
