@@ -396,6 +396,10 @@ define(function (require, exports, module) {
                 if (typeis(callback) === 'function') {
                     callback.call(the);
                 }
+
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
             });
 
             return the;
@@ -445,7 +449,6 @@ define(function (require, exports, module) {
          * @returns {Dialog}
          */
         setRemote: function (url, height) {
-
             var the = this;
             var options = the._options;
             var $iframe = modification.create('iframe', {
@@ -457,8 +460,10 @@ define(function (require, exports, module) {
             });
 
             the._$ele.innerHTML = '';
+            $iframe.onload = $iframe.onerror = function () {
+                the.resize();
+            };
             modification.insert($iframe, the._$ele, 'beforeend');
-            the.resize();
 
             return the;
         },
@@ -534,28 +539,23 @@ define(function (require, exports, module) {
 
             animation.stop(the._$dialog, true);
 
-            //attribute.css(the._$dialog, {
-            //    width: options.width,
-            //    height: options.height
-            //});
-
             attribute.css(the._$body, {
                 width: options.width,
                 height: options.height
             });
 
-            pos.width = attribute.outerWidth(the._$dialog);
-            pos.height = attribute.outerHeight(the._$dialog);
+            var width = attribute.outerWidth(the._$dialog);
+            var height = attribute.outerHeight(the._$dialog);
 
             if (options.left === 'center') {
-                pos.left = (winW - pos.width) / 2;
+                pos.left = (winW - width) / 2;
                 pos.left = pos.left < 0 ? 0 : pos.left;
             } else {
                 pos.left = options.left;
             }
 
             if (options.top === 'center') {
-                pos.top = (winH - pos.height) * 2 / 5;
+                pos.top = (winH - height) * 2 / 5;
                 pos.top = pos.top < 0 ? 0 : pos.top;
             } else {
                 pos.top = options.top;
