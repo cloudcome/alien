@@ -182,24 +182,24 @@ define(function (require, exports, module) {
             img.src = src;
             callback = callback || noop;
 
-            //if (img.complete) {
-            //    callback(null, {
-            //        index: index,
-            //        src: src,
-            //        width: img.width,
-            //        height: img.height
-            //    });
-            //} else {
-            img.onload = function () {
+            if (img.complete) {
                 callback(null, {
                     index: index,
                     src: src,
                     width: img.width,
                     height: img.height
                 });
-            };
-            img.onerror = callback;
-            //}
+            } else {
+                img.onload = function () {
+                    callback(null, {
+                        index: index,
+                        src: src,
+                        width: img.width,
+                        height: img.height
+                    });
+                };
+                img.onerror = callback;
+            }
         },
 
 
@@ -274,6 +274,14 @@ define(function (require, exports, module) {
                 width: 300,
                 height: 300
             });
+
+            if (the._list.length) {
+                attribute.css(the._$prev, 'display', 'block');
+                attribute.css(the._$next, 'display', 'block');
+            } else {
+                attribute.css(the._$prev, 'display', 'none');
+                attribute.css(the._$next, 'display', 'none');
+            }
 
             the._dialog.open();
 
