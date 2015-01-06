@@ -260,6 +260,22 @@ define(function (require, exports, module) {
 
 
         /**
+         * resize
+         * @private
+         */
+        _resize: function () {
+            var the = this;
+            var clientWidth = the._dialog._$bg.clientWidth;
+            var offsetWidth = the._dialog._$bg.offsetWidth;
+
+            if (clientWidth !== offsetWidth) {
+                the._dialog.setOptions('width', clientWidth - 20);
+                the._dialog.resize();
+            }
+        },
+
+
+        /**
          * 展示
          * @private
          */
@@ -276,11 +292,7 @@ define(function (require, exports, module) {
             the._load(the._list[the._index], function () {
                 the._$mainParent.innerHTML = '';
                 modification.insert(the._$loading, the._$mainParent, 'beforeend');
-                the._dialog.resize(function () {
-                    if(scrollbarWidth){
-                        the._dialog.resize();
-                    }
-                });
+                the._dialog.resize(the._resize.bind(the));
             }, function (err, info) {
                 if (err) {
                     return the.emit('error', err);
@@ -291,11 +303,7 @@ define(function (require, exports, module) {
 
                     the._$mainParent.innerHTML = '';
                     modification.insert($img, the._$mainParent, 'beforeend');
-                    the._dialog.resize(function () {
-                        if(scrollbarWidth){
-                            the._dialog.resize();
-                        }
-                    });
+                    the._dialog.resize(the._resize.bind(the));
                 }
             });
         },
@@ -346,7 +354,7 @@ define(function (require, exports, module) {
             the._dialog.setOptions('width', attribute.width(window) - 20);
             the._dialog.open();
 
-            return  the;
+            return the;
         },
 
 
@@ -374,7 +382,7 @@ define(function (require, exports, module) {
      * @returns {number}
      * @private
      */
-    function _calScrollBarWidth(){
+    function _calScrollBarWidth() {
         var $div = modification.create('div', {
             style: {
                 width: 100,
