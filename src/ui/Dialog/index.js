@@ -304,10 +304,6 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$bg, 'overflow', 'hidden');
-            attribute.css(the._$body, {
-                visibility: 'hidden',
-                overflow: 'hidden'
-            });
             animation.animate(the._$dialog, to, {
                 duration: options.duration,
                 easing: options.easing
@@ -321,10 +317,6 @@ define(function (require, exports, module) {
                 }
 
                 attribute.css(the._$bg, 'overflow', 'auto');
-                attribute.css(the._$body, {
-                    visibility: 'visible',
-                    overflow: 'auto'
-                });
             });
         },
 
