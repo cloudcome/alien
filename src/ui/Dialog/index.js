@@ -552,24 +552,18 @@ define(function (require, exports, module) {
             var pos = {};
 
             animation.stop(the._$dialog, true);
-
-            attribute.css(the._$body, {
-                width: options.width,
-                height: options.height
-            });
-
-            var width = attribute.outerWidth(the._$dialog);
-            var height = attribute.outerHeight(the._$dialog);
+            pos.width = attribute.outerWidth(the._$dialog);
+            pos.height = attribute.outerHeight(the._$dialog);
 
             if (options.left === 'center') {
-                pos.left = (winW - width) / 2;
+                pos.left = (winW - pos.width) / 2;
                 pos.left = pos.left < 0 ? 0 : pos.left;
             } else {
                 pos.left = options.left;
             }
 
             if (options.top === 'center') {
-                pos.top = (winH - height) * 2 / 5;
+                pos.top = (winH - pos.height) * 2 / 5;
                 pos.top = pos.top < 0 ? 0 : pos.top;
             } else {
                 pos.top = options.top;
