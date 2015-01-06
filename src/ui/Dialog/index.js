@@ -215,9 +215,7 @@ define(function (require, exports, module) {
             var findIndex;
             var dialogStyle = {
                 display: 'block',
-                visibility: 'hidden'
-            };
-            var bodyStyle = {
+                visibility: 'hidden',
                 width: options.width,
                 height: options.height
             };
@@ -254,7 +252,6 @@ define(function (require, exports, module) {
             }
 
             attribute.css($dialog, dialogStyle);
-            attribute.css(the._$body, bodyStyle);
             the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
@@ -276,7 +273,6 @@ define(function (require, exports, module) {
                     easing: options.easing
                 });
             }
-
 
             the.animate(to, function () {
                 if (the._scrollbar) {
