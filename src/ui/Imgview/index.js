@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var tplLoading = new Template(templateLoading);
     var tplNav = new Template(templateNav);
     var alienClass = 'alien-ui-imgview';
+    var scrollbarWidth = _calScrollBarWidth();
     var noop = function () {
         // ignore
     };
@@ -275,7 +276,11 @@ define(function (require, exports, module) {
             the._load(the._list[the._index], function () {
                 the._$mainParent.innerHTML = '';
                 modification.insert(the._$loading, the._$mainParent, 'beforeend');
-                the._dialog.resize();
+                the._dialog.resize(function () {
+                    if(scrollbarWidth){
+                        the._dialog.resize();
+                    }
+                });
             }, function (err, info) {
                 if (err) {
                     return the.emit('error', err);
@@ -286,7 +291,11 @@ define(function (require, exports, module) {
 
                     the._$mainParent.innerHTML = '';
                     modification.insert($img, the._$mainParent, 'beforeend');
-                    the._dialog.resize();
+                    the._dialog.resize(function () {
+                        if(scrollbarWidth){
+                            the._dialog.resize();
+                        }
+                    });
                 }
             });
         },
@@ -358,4 +367,28 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
     module.exports = Imgview;
+
+
+    /**
+     * 计算当前页面的滚动条宽度
+     * @returns {number}
+     * @private
+     */
+    function _calScrollBarWidth(){
+        var $div = modification.create('div', {
+            style: {
+                width: 100,
+                height: 100,
+                position: 'absolute',
+                padding: 0,
+                margin: 0,
+                overflow: 'scroll',
+                top: -111,
+                left: -111
+            }
+        });
+
+        modification.insert($div, document.body);
+        return 100 - $div.clientWidth;
+    }
 });
