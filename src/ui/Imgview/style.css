@@ -8,8 +8,10 @@
     text-align: center;
 }
 
-.alien-ui-imgview-preloading{
-
+.alien-ui-imgview-isloading .alien-ui-imgview-nav,
+.alien-ui-imgview-isloading .alien-ui-imgview-prev,
+.alien-ui-imgview-isloading .alien-ui-imgview-next{
+    display: none;
 }
 
 .alien-ui-imgview-main {

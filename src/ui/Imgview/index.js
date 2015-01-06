@@ -21,13 +21,11 @@ define(function (require, exports, module) {
     var Template = require('../../libs/Template.js');
     var templateWrap = require('html!./wrap.html');
     var templateLoading = require('html!./loading.html');
-    var templateNav = require('html!./nav.html');
     var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
     var howdo = require('../../util/howdo.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
-    var tplNav = new Template(templateNav);
     var alienClass = 'alien-ui-imgview';
     var noop = function () {
         // ignore
@@ -106,9 +104,9 @@ define(function (require, exports, module) {
             the._$ele = nodeWrap;
             the._$loading = nodeLoading;
             the._$mainParent = nodes[0];
-            the._$navParent = nodes[1];
-            the._$prev = nodes[2];
-            the._$next = nodes[3];
+            the._$prev = nodes[1];
+            the._$next = nodes[2];
+            the._$loadingParent = nodes[3];
         },
 
 
@@ -122,7 +120,8 @@ define(function (require, exports, module) {
             the._dialogOptions = {
                 title: null,
                 addClass: alienClass + '-dialog',
-                canDrag: false
+                canDrag: false,
+                duration: 2000
             };
             the._dialog = new Dialog(the._$ele, the._dialogOptions);
         },
@@ -166,16 +165,6 @@ define(function (require, exports, module) {
 
                 if (length > 1 && the._index < length - 1) {
                     the._index++;
-                    the._show();
-                }
-            });
-
-            // 导航切换
-            event.on(the._$navParent, 'click', '.' + alienClass + '-nav-item', function () {
-                var index = attribute.data(this, 'index') * 1;
-
-                if (index !== the._index) {
-                    the._index = index;
                     the._show();
                 }
             });
@@ -239,25 +228,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 导航
-         * @private
-         */
-        _nav: function () {
-            var the = this;
-            var $items = selector.query('.' + alienClass + '-nav-item');
-            var activeClass = alienClass + '-nav-item-active';
-
-            $items.forEach(function ($item, index) {
-                if (index === the._index) {
-                    attribute.addClass($item, activeClass);
-                } else {
-                    attribute.removeClass($item, activeClass);
-                }
-            });
-        },
-
-
-        /**
          * 改变显示方式
          * @param isVisible
          * @private
@@ -278,21 +248,12 @@ define(function (require, exports, module) {
         _preShow: function (callback) {
             var the = this;
 
-            //if (!the._hasFirstShow) {
-            //    the._hasFirstShow = true;
-            //    return callback();
-            //}
-
-            var to = {
-                width: 200,
-                height: 200,
-                left: (attribute.width(window) - 200) / 2,
-                top: (attribute.height(window) - 200) / 2
-            };
-
-            the._$mainParent.innerHTML = '';
-            modification.insert(the._$loading, the._$mainParent, 'beforeend');
-            the._dialog.animate(to, callback);
+            attribute.addClass(the._$ele, alienClass + '-loading');
+            the._dialog.setOptions({
+                width: 300,
+                height: 'auto'
+            });
+            the._dialog.resize(callback);
         },
 
 
@@ -317,22 +278,20 @@ define(function (require, exports, module) {
                     the._load(the._list[the._index], done);
                 })
                 .together(function (err, info) {
-                    //if (err) {
-                    //    return the.emit('error', err);
-                    //}
-                    //
-                    //if (the._index === info.index) {
-                    //    the._preShow(function () {
-                    //        var $img = modification.create('img', info);
-                    //        var width = Math.min(info.width, attribute.width(window) - 20);
-                    //
-                    //        the._changeVisible(true);
-                    //        the._$mainParent.innerHTML = '';
-                    //        modification.insert($img, the._$mainParent, 'beforeend');
-                    //        the._dialog.setOptions('width', width);
-                    //        the._dialog.resize();
-                    //    });
-                    //}
+                    if (err) {
+                        return the.emit('error', err);
+                    }
+
+                    if (the._index === info.index) {
+                        var $img = modification.create('img', info);
+                        var width = Math.min(info.width, attribute.width(window) - 20);
+
+                        the._$mainParent.innerHTML = '';
+                        modification.insert($img, the._$mainParent, 'beforeend');
+                        attribute.removeClass(the._$ele, alienClass + '-preloading');
+                        the._dialog.setOptions('width', width);
+                        the._dialog.resize();
+                    }
                 });
         },
 
