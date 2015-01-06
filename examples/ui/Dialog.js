@@ -3,7 +3,6 @@ define(function (require) {
 
     var Dialog = require('/src/ui/Dialog/index.js');
     var d1 = new Dialog('#demo1', {
-        height: 2000
     });
     var d2 = new Dialog('#demo2', {
         width: 350,
