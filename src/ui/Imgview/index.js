@@ -107,6 +107,7 @@ define(function (require, exports, module) {
             the._$prev = nodes[1];
             the._$next = nodes[2];
             the._$loadingParent = nodes[3];
+            modification.insert(the._$loading, the._$loadingParent);
         },
 
 
@@ -184,14 +185,14 @@ define(function (require, exports, module) {
             img.src = src;
             callback = callback || noop;
 
-            if (img.complete) {
-                callback(null, {
-                    index: index,
-                    src: src,
-                    width: img.width,
-                    height: img.height
-                });
-            } else {
+            //if (img.complete) {
+            //    callback(null, {
+            //        index: index,
+            //        src: src,
+            //        width: img.width,
+            //        height: img.height
+            //    });
+            //} else {
                 img.onload = function () {
                     callback(null, {
                         index: index,
@@ -201,7 +202,7 @@ define(function (require, exports, module) {
                     });
                 };
                 img.onerror = callback;
-            }
+            //}
         },
 
 
@@ -228,19 +229,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 改变显示方式
-         * @param isVisible
-         * @private
-         */
-        _changeVisible: function (isVisible) {
-            attribute.css(this._$ele, {
-                visibility: isVisible ? 'visible' : 'hidden',
-                overflow: isVisible ? 'auto' : 'hidden'
-            });
-        },
-
-
-        /**
          * 展示之前动画
          * @params callback {Function} 回调
          * @private
@@ -248,7 +236,7 @@ define(function (require, exports, module) {
         _preShow: function (callback) {
             var the = this;
 
-            attribute.addClass(the._$ele, alienClass + '-loading');
+            attribute.addClass(the._$ele, alienClass + '-isloading');
             the._dialog.setOptions({
                 width: 300,
                 height: 'auto'
@@ -270,7 +258,6 @@ define(function (require, exports, module) {
             }
 
             the._ctrl();
-            the._nav();
 
             howdo
                 .task(the._preShow.bind(the))
@@ -283,14 +270,14 @@ define(function (require, exports, module) {
                     }
 
                     if (the._index === info.index) {
-                        var $img = modification.create('img', info);
-                        var width = Math.min(info.width, attribute.width(window) - 20);
-
-                        the._$mainParent.innerHTML = '';
-                        modification.insert($img, the._$mainParent, 'beforeend');
-                        attribute.removeClass(the._$ele, alienClass + '-preloading');
-                        the._dialog.setOptions('width', width);
-                        the._dialog.resize();
+                        //var $img = modification.create('img', info);
+                        //var width = Math.min(info.width, attribute.width(window) - 20);
+                        //
+                        //the._$mainParent.innerHTML = '';
+                        //modification.insert($img, the._$mainParent, 'beforeend');
+                        //attribute.removeClass(the._$ele, alienClass + '-isloading');
+                        //the._dialog.setOptions('width', width);
+                        //the._dialog.resize();
                     }
                 });
         },
@@ -325,16 +312,12 @@ define(function (require, exports, module) {
          */
         open: function (list, index) {
             var the = this;
-            var navHTML = tplNav.render({
-                list: list
-            });
 
             the._isSame = the._compare(list, index);
             the._list = list;
             the._index = index || 0;
 
             if (!the._isSame) {
-                the._$navParent.innerHTML = navHTML;
                 the._$mainParent.innerHTML = '';
             }
 
@@ -356,7 +339,6 @@ define(function (require, exports, module) {
             });
             event.un(the._$prev, 'click');
             event.un(the._$next, 'click');
-            event.un(the._$navParent, 'click');
         }
     });
 

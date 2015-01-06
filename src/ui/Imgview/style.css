@@ -8,10 +8,12 @@
     text-align: center;
 }
 
-.alien-ui-imgview-isloading .alien-ui-imgview-nav,
-.alien-ui-imgview-isloading .alien-ui-imgview-prev,
-.alien-ui-imgview-isloading .alien-ui-imgview-next{
+.alien-ui-imgview-isloading .alien-ui-imgview-body{
     display: none;
+}
+
+.alien-ui-imgview-isloading .alien-ui-imgview-loading{
+    display: inline-block;
 }
 
 .alien-ui-imgview-main {
@@ -25,7 +27,7 @@
 }
 
 .alien-ui-imgview-loading {
-    display: inline-block;
+    display: none;
     padding: 20px 60px;
     border-radius: 6px;
     color: #aaa;
