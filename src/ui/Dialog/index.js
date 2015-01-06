@@ -415,18 +415,18 @@ define(function (require, exports, module) {
             var pos = the._position();
 
             animation.stop(the._$dialog, false);
-            animation.animate(the._$dialog, pos, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-
-                if (the._scrollbar) {
-                    the._scrollbar.resize();
-                }
-            });
+            //animation.animate(the._$dialog, pos, {
+            //    duration: options.duration,
+            //    easing: options.easing
+            //}, function () {
+            //    if (typeis(callback) === 'function') {
+            //        callback.call(the);
+            //    }
+            //
+            //    if (the._scrollbar) {
+            //        the._scrollbar.resize();
+            //    }
+            //});
 
             return the;
         },
@@ -564,12 +564,14 @@ define(function (require, exports, module) {
             var pos = {};
 
             animation.stop(the._$dialog, true);
-            attribute.css(the._$dialog, {
-                width: options.width,
-                height: options.height
-            });
-            pos.width = attribute.outerWidth(the._$dialog);
-            pos.height = attribute.outerHeight(the._$dialog);
+            //attribute.css(the._$dialog, {
+            //    width: options.width,
+            //    height: options.height
+            //});
+            //pos.width = attribute.outerWidth(the._$dialog);
+            //pos.height = attribute.outerHeight(the._$dialog);
+            pos.width = options.width;
+            pos.height = options.height;
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
