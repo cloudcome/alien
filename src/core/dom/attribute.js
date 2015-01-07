@@ -252,7 +252,7 @@ define(function (require, exports, module) {
          */
         scrollTop: function (ele, top) {
             if (top === undefined) {
-                return _isDispute(ele) ? Math.abs(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
+                return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
             }
 
             if (_isDispute(ele)) {
@@ -279,7 +279,7 @@ define(function (require, exports, module) {
          */
         scrollLeft: function (ele, left) {
             if (left === undefined) {
-                return _isDispute(ele) ? Math.abs(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
+                return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
             }
 
             if (_isDispute(ele)) {
