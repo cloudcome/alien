@@ -285,8 +285,9 @@ define(function (require, exports, module) {
      */
     exports.getDaysInMonth = function (year, month, isNatualMonth) {
         month = isNatualMonth ? month - 1 : month;
+        month = new Date(year, month).getMonth();
 
-        return month === 1 ? (this.isLeapYear(year) ? 29 : 28) : monthDates[month];
+        return month === 1 ? (exports.isLeapYear(year) ? 29 : 28) : monthDates[month];
     };
 
 
