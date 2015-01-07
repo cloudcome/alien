@@ -623,7 +623,8 @@ define(function (require, exports, module) {
             list.push({
                 year: prevDate.getFullYear(),
                 month: prevDate.getMonth() + 1,
-                date: prevMonthDays - i
+                date: prevMonthDays - i,
+                type: 'prev'
             });
         }
 
@@ -634,7 +635,8 @@ define(function (require, exports, module) {
             list.push({
                 year: thisDate.getFullYear(),
                 month: thisDate.getMonth() + 1,
-                date: i
+                date: i,
+                type: 'this'
             });
         }
 
@@ -648,7 +650,8 @@ define(function (require, exports, module) {
                 list.push({
                     year: nextDate.getFullYear(),
                     month: nextDate.getMonth() + 1,
-                    date: i
+                    date: i,
+                    type: 'next'
                 });
             }
         }
