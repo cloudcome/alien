@@ -118,7 +118,7 @@ define(function (require, exports, module) {
             attribute.addClass($temp, options.addClass);
             attribute.addClass($parent, the._className = $temp.className);
 
-            if(isPlaceholderScroll){
+            if (isPlaceholderScroll) {
                 modification.insert($trackY, $ele, 'afterend');
                 modification.insert($trackX, $ele, 'afterend');
                 modification.insert($body, $ele, 'afterend');
@@ -131,11 +131,11 @@ define(function (require, exports, module) {
                 the._$body = $body;
                 the._$scroll = isTextarea ? $ele : $body;
                 the._isTextarea = isTextarea;
-                the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
-                the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
+                the._thumbXOffset = 3;
+                the._thumbYOffset = 3;
                 the.resize();
                 the._initEvent();
-            }else{
+            } else {
                 attribute.css($parent, {
                     overflow: 'auto !important'
                 });
@@ -211,8 +211,8 @@ define(function (require, exports, module) {
             var thumbTopRatio = the._scrollTop / the._scrollTopMax;
             var options = the._options;
 
-            the._trackWidth = attribute.width($trackX) - the._thumbWidthOffset;
-            the._trackHeight = attribute.height($trackY) - the._thumbHeightOffset;
+            the._trackWidth = attribute.width($trackX) - the._thumbXOffset;
+            the._trackHeight = attribute.height($trackY) - the._thumbYOffset;
             the._thumbWidth = the._trackWidth * thumbWidthRatio;
             the._thumbHeight = the._trackHeight * thumbHeightRatio;
 
@@ -224,8 +224,8 @@ define(function (require, exports, module) {
                 the._thumbHeight = options.minY;
             }
 
-            the._thumbLeftMax = the._trackWidth - the._thumbWidth;
-            the._thumbTopMax = the._trackHeight - the._thumbHeight;
+            the._thumbLeftMax = the._trackWidth - the._thumbWidth - the._thumbXOffset;
+            the._thumbTopMax = the._trackHeight - the._thumbHeight - the._thumbYOffset;
             the._thumbLeft = the._thumbLeftMax * thumbLeftRatio;
             the._thumbTop = the._thumbTopMax * thumbTopRatio;
 

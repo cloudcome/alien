@@ -109,7 +109,7 @@ define(function (require, exports, module) {
          * 将源插入到指定的目标位置，并返回指定的元素
          * @param {Object} source 源
          * @param {Object} target 目标
-         * @param {String} position 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
+         * @param {String} [position="beforeend"] 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
          * @param {Boolean} [isReturnSource] 是否返回源，默认false
          * @returns {Object|null}
          *
@@ -130,6 +130,8 @@ define(function (require, exports, module) {
             if (!source || !source.nodeType || !target || !target.nodeType) {
                 return null;
             }
+
+            position = position || 'beforeend';
 
             switch (position) {
                 // 源插入到目标外部之前
@@ -193,10 +195,12 @@ define(function (require, exports, module) {
                 return false;
             }
 
-            try {
-                ele.remove();
-            } catch (err) {
-                document.removeChild(ele);
+            if (ele && ele.parentNode) {
+                try {
+                    ele.parentNode.removeChild(ele);
+                } catch (err) {
+                    // ignore
+                }
             }
         },
 
