@@ -614,6 +614,7 @@ define(function (require, exports, module) {
         var thisDate = new Date(year, month, 1);
         var thisMonthDays = exports.getDaysInMonth(year, month);
         var thisMonthFirstDateDay = thisDate.getDay();
+        thisMonthFirstDateDay = thisMonthFirstDateDay < firstDayInWeek ? thisMonthFirstDateDay + 7 : thisMonthFirstDateDay;
         var deltaDays = thisMonthFirstDateDay - firstDayInWeek;
         var prevMonthDays = exports.getDaysInMonth(year, month - 1);
         var i = 0;
