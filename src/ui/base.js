@@ -1,5 +1,5 @@
 /*!
- * UI 类生成器
+ * UI 类基础
  * @author ydr.me
  * @create 2014-11-11 20:07
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/generator
+     * @module ui/base
      * @requires util/dato
      * @requires util/typeis
      * @requires util/class
@@ -21,6 +21,17 @@ define(function (require, exports, module) {
     var Emitter = require('../libs/Emitter.js');
     var udf;
     var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
+    var zIndex = 999;
+
+
+    /**
+     * 获取 zIndex
+     * @returns {number}
+     */
+    exports.getZindex = function () {
+        return zIndex++;
+    };
+
 
     /**
      * 创建一个 UI 类
@@ -37,7 +48,7 @@ define(function (require, exports, module) {
      *     myClassName: fn
      * });
      */
-    module.exports = function (property, isInheritSuperStatic) {
+    exports.create = function (property, isInheritSuperStatic) {
         var proto = {};
 
         if (typeis(property) !== 'object') {

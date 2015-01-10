@@ -20,7 +20,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');

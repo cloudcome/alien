@@ -9,7 +9,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Autoheight
-     * @requires ui/generator
+     * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -73,7 +73,7 @@ define(function (require, exports, module) {
         attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
         $mirror.value = value;
     };
-    var Autoheight = generator({
+    var Autoheight = ui.create({
         STATIC: {},
         constructor: function ($ele, options) {
             var the = this;

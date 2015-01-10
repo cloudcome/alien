@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     require('../../core/event/drag.js');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var modification = require('../../core/dom/modification.js');

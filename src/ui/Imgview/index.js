@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     'use strict';
 
 
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var Dialog = require('../Dialog/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');

@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var style = require('css!./style.css');
     var template = require('html!./template.html');
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var event = require('../../core/event/touch.js');
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');
@@ -57,7 +57,7 @@ define(function (require, exports, module) {
         navGenerator: null
     };
 
-    var Banner = generator({
+    var Banner = ui.create({
         STATIC: {
             /**
              * 默认配置
