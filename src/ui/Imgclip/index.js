@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires libs/Template
      * @requires util/dato
      * @requires core/dom/selector
@@ -42,7 +42,7 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Imgclip = generator({
+    var Imgclip = ui.create({
         STATIC: {
             defaults: defaults
         },

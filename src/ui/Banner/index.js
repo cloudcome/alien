@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Banner/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires core/event/touch
      * @requires core/dom/modification
      * @requires core/dom/selector

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Dialog/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires libs/Template
      * @requires core/dom/modification
      * @requires core/dom/selector
@@ -69,7 +69,7 @@ define(function (require, exports, module) {
     // 打开的对话框队列
     var openDialogs = [];
     var dialogsMap = {};
-    var Dialog = generator({
+    var Dialog = ui.create({
         STATIC: {
             /**
              * 默认配置

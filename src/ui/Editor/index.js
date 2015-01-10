@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Editor/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -69,7 +69,7 @@ define(function (require, exports, module) {
         autoFocus: true
     };
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
-    var Editor = generator({
+    var Editor = ui.create({
         STATIC: {
             defaults: defaults
         },
