@@ -64,7 +64,8 @@ define(function (require, exports, module) {
         content: null,
         // 优先级1
         isWrap: true,
-        isModal: true
+        isModal: true,
+        zIndex: null
     };
     // 打开的对话框队列
     var openDialogs = [];
@@ -116,7 +117,6 @@ define(function (require, exports, module) {
             var the = this;
 
             the._hasOpen = false;
-            the._zIndex = 0;
             dialogsMap[the._id] = the;
             the._initNode();
             the._initEvent();
@@ -244,15 +244,14 @@ define(function (require, exports, module) {
             if ($bg) {
                 attribute.css($bg, {
                     display: 'block',
-                    zIndex: ++zIndex,
+                    zIndex: options.zIndex || ui.getZindex(),
                     opacity: 0
                 });
             } else {
-                dialogStyle.zIndex = ++zIndex;
+                dialogStyle.zIndex = options.zIndex + 1 || ui.getZindex();
             }
 
             attribute.css($dialog, dialogStyle);
-            the._zIndex = zIndex;
             to = the._position();
             to.opacity = '';
             to.transform = '';
@@ -646,6 +645,7 @@ define(function (require, exports, module) {
      * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
      * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
      * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
+     * @param [options.zIndex=null] {null|Number} 层级，默认自动分配层级
      * @constructor
      */
     module.exports = Dialog;
