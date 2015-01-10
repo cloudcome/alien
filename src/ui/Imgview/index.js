@@ -8,6 +8,15 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Viewer
+     * @requires ui/base/
+     * @requires ui/Dialog/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/event/base
+     * @requires libs/Template
+     * @requires util/dato
+     * @requires util/howdo
      */
     'use strict';
 

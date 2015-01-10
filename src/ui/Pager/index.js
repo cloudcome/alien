@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pager
-     * @requires ui/generator
+     * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -38,7 +38,7 @@ define(function (require, exports, module) {
         max: 1
     };
     var alienClass = 'alien-ui-pager';
-    var Pager = generator({
+    var Pager = ui.create({
         STATIC: {},
         constructor: function ($parent, options) {
             var the = this;

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Tooltip
-     * @requires ui/generator
+     * @requires ui/base
      * @requires util/dato
      * @requires libs/Template
      * @requires core/dom/selector
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = generator({
+    var Tooltip = ui.create({
         STATIC: {
             /**
              * 默认配置

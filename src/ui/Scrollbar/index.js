@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Scrollbar/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires util/dato
      * @requires libs/Template
      * @requires core/dom/selector
@@ -63,7 +63,7 @@ define(function (require, exports, module) {
         addClass: '',
         isStandAlone: false
     };
-    var Scrollbar = generator({
+    var Scrollbar = ui.create({
         STATIC: {
             defaults: defaults
         },

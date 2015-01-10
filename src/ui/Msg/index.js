@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Msg/index
-     * @requires ui/generator
+     * @requires ui/base
      * @requires util/dato
      * @requires libs/Template
      * @requires ui/Dialog/index
@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         timeout: -1
     };
     var mouseevent = {};
-    var Msg = generator({
+    var Msg = ui.create({
         STATIC: {
             /**
              * 默认配置

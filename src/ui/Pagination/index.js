@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pagination
-     * @requires ui/generator
+     * @requires ui/base
      * @requires util/dato
      * @requires libs/Pagination
      * @requires libs/Template
@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = generator({
+    var Pagination = ui.create({
         STATIC: {
             /**
              * 默认配置
