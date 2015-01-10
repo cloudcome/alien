@@ -15,7 +15,6 @@ define(function (require, exports, module) {
     var date = require('./date.js');
 
 
-
     /**
      * 月历
      * @param year {Number} 年
@@ -43,7 +42,7 @@ define(function (require, exports, module) {
                 year: prevDate.getFullYear(),
                 month: prevDate.getMonth() + 1,
                 date: prevMonthDays - i,
-                type: 'prev'
+                type: i
             });
         }
 
