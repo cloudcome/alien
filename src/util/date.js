@@ -244,16 +244,32 @@ define(function (require, exports, module) {
     /**
      * 解析时间
      * @param {String|Date} string 时间字符串
+     * @param {Date} [dftDate] 如果前置时间不合法，默认时间，默认为现在
      * @returns {Date}
      *
      * @example
      * date.parse('12/21/2014 12:21:22');
      * // => Sun Dec 21 2014 12:21:22 GMT+0800 (CST)
      */
-    exports.parse = function (string) {
-        var date = typeis(string) === 'date' ? string : new Date(string);
+    exports.parse = function (string, dftDate) {
+        var date;
 
-        return typeis.validDate(date) ? new Date(date) : new Date();
+        dftDate = dftDate || new Date();
+
+        switch (typeis(string)) {
+            case 'string':
+            case 'number':
+                date = string;
+                break;
+
+            case 'date':
+                return string;
+
+            default :
+                return dftDate;
+        }
+
+        return typeis.validDate(date) ? new Date(date) : dftDate;
     };
 
 
