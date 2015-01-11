@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
+     * @requires core/dom/animation
      * @requires ui/base
      */
     'use strict';
