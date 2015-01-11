@@ -3,18 +3,18 @@ define(function (require) {
 
     var Dialog = require('/src/ui/Dialog/index2.js');
     var d1 = new Dialog('#demo1');
-    var d2 = new Dialog('#demo2', {
-        width: 350,
-        height: 500,
-        top: 0,
-        title: null,
-        wrap: false,
-        canDrag: false,
-        isModal: false
-    });
-    var d3 = new Dialog('#demo3', {
-        remote: 'http://wap.baidu.com/'
-    });
+    //var d2 = new Dialog('#demo2', {
+    //    width: 350,
+    //    height: 500,
+    //    top: 0,
+    //    title: null,
+    //    wrap: false,
+    //    canDrag: false,
+    //    isModal: false
+    //});
+    //var d3 = new Dialog('#demo3', {
+    //    remote: 'http://wap.baidu.com/'
+    //});
 
     document.getElementById('open1').onclick = function () {
         d1.open();
@@ -24,15 +24,15 @@ define(function (require) {
         d1.close();
     };
 
-    document.getElementById('open2').onclick = function () {
-        d2.open();
-    };
-
-    document.getElementById('close2').onclick = function () {
-        d2.close();
-    };
-
-    document.getElementById('open3').onclick = function () {
-        d3.open();
-    };
+    //document.getElementById('open2').onclick = function () {
+    //    d2.open();
+    //};
+    //
+    //document.getElementById('close2').onclick = function () {
+    //    d2.close();
+    //};
+    //
+    //document.getElementById('open3').onclick = function () {
+    //    d3.open();
+    //};
 });
