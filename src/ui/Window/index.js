@@ -136,7 +136,7 @@ define(function (require, exports, module) {
             to.transform = '';
             the.visible = true;
             animation.animate(the._$window, to, {
-                durtaion: options.duration,
+                duration: options.duration,
                 easing: options.easing
             }, function () {
                 the.emit('open');
