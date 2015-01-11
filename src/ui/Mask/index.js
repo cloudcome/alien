@@ -27,6 +27,7 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
     var maskWindowLength = 0;
+    var maskWindowList = [];
     var defaults = {
         addClass: '',
         zIndex: null,
@@ -34,6 +35,22 @@ define(function (require, exports, module) {
         easing: 'ease-in-out-circ'
     };
     var Mask = ui.create({
+        STATIC: {
+            /**
+             * 覆盖 window 的 mask 列表
+             * @type {Array}
+             */
+            maskWindowList: maskWindowList,
+
+
+            /**
+             * 获得当前最顶层覆盖 window 的 mask
+             * @returns {*}
+             */
+            getTopMask: function () {
+                return maskWindowList[0];
+            }
+        },
         constructor: function ($cover, options) {
             var the = this;
 
@@ -54,6 +71,7 @@ define(function (require, exports, module) {
                 display: 'none'
             };
 
+            the.id = alienIndex;
             the._$mask = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
                 style: style,
@@ -116,6 +134,7 @@ define(function (require, exports, module) {
 
             if (the._$cover === window) {
                 maskWindowLength++;
+                maskWindowList.push(the);
             }
 
             attribute.addClass(document.body, alienClass + '-overflow');
@@ -165,6 +184,17 @@ define(function (require, exports, module) {
 
             if (the._$cover === window) {
                 maskWindowLength--;
+
+                var findIndex = -1;
+
+                dato.each(maskWindowList, function (index, mask) {
+                    if (mask.id === the.id) {
+                        findIndex = index;
+                        return false;
+                    }
+                });
+
+                maskWindowList.splice(findIndex, 1);
             }
 
             if (!maskWindowLength) {
