@@ -50,6 +50,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
             var options = the._options;
+            var $pos = modification.create('div');
 
             the._$window = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
@@ -61,7 +62,9 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);
-            modification.insert(the._$content, the._$window)
+            modification.insert($pos, the._$content, 'afterend');
+            the._$contentPos = $pos;
+            modification.insert(the._$content, the._$window);
 
             return the;
         },
@@ -231,6 +234,19 @@ define(function (require, exports, module) {
          */
         getNode: function () {
             return this._$window;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            // 移动到原位
+            modification.insert(the._$content, the._$contentPos, 'afterend');
+            modification.remove(the._$contentPos);
+            modification.remove(the._$window);
         }
     });
 
