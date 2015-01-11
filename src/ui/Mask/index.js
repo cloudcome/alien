@@ -155,6 +155,15 @@ define(function (require, exports, module) {
             the.visible = false;
 
             return the;
+        },
+
+
+        /**
+         * 获取当前 mask 节点
+         * @returns {HTMLElementNode}
+         */
+        getNode: function () {
+            return this._$mask;
         }
     });
 
