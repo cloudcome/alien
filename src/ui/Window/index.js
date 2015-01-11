@@ -149,13 +149,21 @@ define(function (require, exports, module) {
 
         /**
          * 改变 window 尺寸
-         * @param size
+         * @param [size] {Object} 尺寸
+         * @param [callback] {Function} 回调
          */
         resize: function (size, callback) {
             var the = this;
 
             if (!the.visible) {
                 return the;
+            }
+
+            var args = arguments;
+
+            if (typeis.function(args[0])) {
+                callback = args[0];
+                size = null;
             }
 
             var options = the._options;
