@@ -44,17 +44,11 @@
 
 <div id="demo">#demo</div>
 <button id="btn1">切换显示 #demo mask</button>
-<button id="btn2">打开 body mask</button>
+<button id="btn2">打开 window mask</button>
 
 <pre>
-var pager = new Pager('#demo', {
-    page: 1,
-    max: 4
-}).on('change', function (page) {
-    this.render({
-        page: page
-    });
-});
+var mask1 = new Mask('#demo');
+var mask2 = new Mask(window);
 </pre>
 
 <script src="../coolie.min.js" data-main="./ui/Mask.js"></script>
