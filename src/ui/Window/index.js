@@ -242,11 +242,17 @@ define(function (require, exports, module) {
          */
         destroy: function () {
             var the = this;
+            var destroy = function () {
+                modification.insert(the._$content, the._$contentPos, 'afterend');
+                modification.remove(the._$contentPos);
+                modification.remove(the._$window);
+            };
 
-            // 移动到原位
-            modification.insert(the._$content, the._$contentPos, 'afterend');
-            modification.remove(the._$contentPos);
-            modification.remove(the._$window);
+            if (the.visible) {
+                the.close(destroy);
+            } else {
+                destroy();
+            }
         }
     });
 
