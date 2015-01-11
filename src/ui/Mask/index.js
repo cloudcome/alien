@@ -28,10 +28,10 @@ define(function (require, exports, module) {
         zIndex: null
     };
     var Mask = ui.create({
-        constructor: function ($parent, options) {
+        constructor: function ($cover, options) {
             var the = this;
 
-            the._$parent = selector.query($parent)[0];
+            the._$cover = selector.query($cover)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the.visible = false;
             the._init();
@@ -67,16 +67,16 @@ define(function (require, exports, module) {
          */
         _getSize: function () {
             var the = this;
-            var $parent = the._$parent;
+            var $cover = the._$cover;
 
             // 其他节点
-            if ($parent) {
+            if ($cover) {
                 return {
                     position: 'absolute',
-                    width: attribute.width($parent),
-                    height: attribute.height($parent),
-                    top: attribute.top($parent),
-                    left: attribute.left($parent)
+                    width: attribute.width($cover),
+                    height: attribute.height($cover),
+                    top: attribute.top($cover),
+                    left: attribute.left($cover)
                 };
             }
 
@@ -112,5 +112,13 @@ define(function (require, exports, module) {
         }
     });
 
+
+    /**
+     * 构造一个 mask
+     * @param $cover {Object} 欲覆盖的节点
+     * @param [options] {Object} 配置
+     * @param [options.zIndex] {Number} 层级，默认为null，即自动分配
+     * @param [options.addClass] {String} 添加的 className，默认为空
+     */
     module.exports = Mask;
 });
