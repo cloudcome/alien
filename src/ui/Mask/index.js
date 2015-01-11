@@ -45,8 +45,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var style = {
-                display: 'none',
-                zIndex: options.zIndex || ui.getZindex()
+                display: 'none'
             };
 
             the._$mask = modification.create('div', {
@@ -98,6 +97,7 @@ define(function (require, exports, module) {
             var pos = the._getSize();
 
             pos.display = 'block';
+            pos.zIndex = the._options.zIndex || ui.getZindex();
             attribute.css(the._$mask, pos);
             the.visible = true;
         },
