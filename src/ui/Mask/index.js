@@ -24,7 +24,8 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
     var defaults = {
-        addClass: ''
+        addClass: '',
+        zIndex: null
     };
     var Mask = ui.create({
         constructor: function ($parent, options) {
@@ -42,9 +43,10 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+            var options = the._options;
             var style = {
                 display: 'none',
-                zIndex: ui.getZindex()
+                zIndex: options.zIndex || ui.getZindex()
             };
 
             the._$mask = modification.create('div', {
@@ -52,7 +54,7 @@ define(function (require, exports, module) {
                 style: style,
                 'class': alienClass
             });
-            attribute.addClass(the._$mask, the._options.addClass);
+            attribute.addClass(the._$mask, options.addClass);
             modification.insert(the._$mask, document.body);
             return the;
         },
