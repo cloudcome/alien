@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-window';
     var defaults = {
         parentNode: document.body,
-        width: 'auto',
+        width: 500,
         height: 'auto',
         left: 'center',
         top: 'center',
@@ -132,6 +132,38 @@ define(function (require, exports, module) {
             to.opacity = '';
             to.transform = '';
             the.visible = true;
+            animation.animate(the._$window, to, {
+                durtaion: options.duration,
+                easing: options.easing
+            }, function () {
+                the.emit('open');
+
+                if (typeis.function(callback)) {
+                    callback.call(the);
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 改变 window 尺寸
+         * @param size
+         */
+        resize: function (size, callback) {
+            var the = this;
+
+            if (!the.visible) {
+                return the;
+            }
+
+            var options = the._options;
+
+            dato.extend(true, options, size);
+
+            var to = the._getPos();
+
             animation.animate(the._$window, to, {
                 durtaion: options.duration,
                 easing: options.easing
