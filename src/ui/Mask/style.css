@@ -1,0 +1,5 @@
+@charset "utf-8";
+
+.alien-ui-mask-overflow{
+    overflow: hidden !important;
+}

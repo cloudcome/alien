@@ -23,8 +23,10 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var ui = require('../base.js');
+    var style = require('css!./style.css');
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
+    var maskWindowLength = 0;
     var defaults = {
         addClass: '',
         zIndex: null,
@@ -112,6 +114,13 @@ define(function (require, exports, module) {
             the.visible = true;
             the.emit('open');
 
+            if (the._$cover === window) {
+                maskWindowLength++;
+            }
+
+            attribute.addClass(document.body, alienClass + '-overflow');
+            attribute.addClass(document.documentElement, alienClass + '-overflow');
+
             return the;
         },
 
@@ -154,6 +163,15 @@ define(function (require, exports, module) {
             attribute.css(the._$mask, 'display', 'none');
             the.visible = false;
 
+            if (the._$cover === window) {
+                maskWindowLength--;
+            }
+
+            if (!maskWindowLength) {
+                attribute.removeClass(document.body, alienClass + '-overflow');
+                attribute.removeClass(document.documentElement, alienClass + '-overflow');
+            }
+
             return the;
         },
 
@@ -178,4 +196,5 @@ define(function (require, exports, module) {
      * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
      */
     module.exports = Mask;
+    modification.importStyle(style);
 });
