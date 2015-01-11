@@ -52,6 +52,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var $pos = modification.create('div');
 
+            the.id = alienIndex;
             the._$window = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
                 class: alienClass,
