@@ -163,8 +163,10 @@ define(function (require, exports, module) {
      * 构造一个 mask
      * @param $cover {Object} 欲覆盖的节点
      * @param [options] {Object} 配置
-     * @param [options.zIndex] {Number} 层级，默认为null，即自动分配
-     * @param [options.addClass] {String} 添加的 className，默认为空
+     * @param [options.zIndex=null] {Number} 层级，默认为null，即自动分配
+     * @param [options.addClass=""] {String} 添加的 className，默认为空
+     * @param [options.duration=234] {Number} resize 时的动画时间
+     * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
      */
     module.exports = Mask;
 });
