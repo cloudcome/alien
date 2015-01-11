@@ -48,6 +48,7 @@ define(function (require, exports, module) {
 
         _init: function () {
             var the = this;
+            var options = the._options;
 
             the._$window = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
@@ -57,7 +58,8 @@ define(function (require, exports, module) {
                     position: 'absolute'
                 }
             });
-            modification.insert(the._$window, the._options.parentNode);
+            attribute.addClass(the._$window, options.addClass);
+            modification.insert(the._$window, options.parentNode);
             modification.insert(the._$content, the._$window)
 
             return the;
@@ -122,7 +124,8 @@ define(function (require, exports, module) {
                 visibility: 'visible',
                 left: to.left,
                 top: to.top,
-                scale: 0
+                scale: 0,
+                zIndex: options.zIndex || ui.getZindex()
             });
 
             to.opacity = '';
@@ -181,5 +184,19 @@ define(function (require, exports, module) {
         }
     });
 
+
+    /**
+     * 创建一个窗口实例
+     * @param $content {Object} 内容节点
+     * @param [options] {Object} 配置
+     * @param [options.width="auto"] {Number|String} 窗口宽度
+     * @param [options.height="auto"] {Number|String} 窗口高度
+     * @param [options.left="center"] {Number|String} 窗口左位移
+     * @param [options.top="center"] {Number|String} 窗口上位移
+     * @param [options.duration=456] {Number} 窗口打开动画时间
+     * @param [options.easing="ease-in-out-back"] {Number} 窗口打开动画缓冲
+     * @param [options.addClass=""] {String} 窗口添加的 className
+     * @param [options.zIndex=null] {null|Number} 窗口层级，默认自动分配
+     */
     module.exports = Window;
 });
