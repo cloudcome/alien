@@ -182,6 +182,15 @@ define(function (require, exports, module) {
             });
 
             return the;
+        },
+
+
+        /**
+         * 获取当前 mask 节点
+         * @returns {HTMLElementNode}
+         */
+        getNode: function () {
+            return this._$window;
         }
     });
 
