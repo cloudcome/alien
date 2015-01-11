@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
+     * @requires core/dom/animation
      * @requires ui/base
      */
     'use strict';
@@ -20,12 +21,15 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
     var ui = require('../base.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
     var defaults = {
         addClass: '',
-        zIndex: null
+        zIndex: null,
+        duration: 234,
+        easing: 'ease-in-out-circ'
     };
     var Mask = ui.create({
         constructor: function ($cover, options) {
@@ -55,6 +59,7 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$mask, options.addClass);
             modification.insert(the._$mask, document.body);
+
             return the;
         },
 
@@ -94,12 +99,45 @@ define(function (require, exports, module) {
          */
         open: function () {
             var the = this;
+
+            if (the.visible) {
+                return the;
+            }
+
             var pos = the._getSize();
 
             pos.display = 'block';
             pos.zIndex = the._options.zIndex || ui.getZindex();
             attribute.css(the._$mask, pos);
             the.visible = true;
+            the.emit('open');
+
+            return the;
+        },
+
+
+        /**
+         * 重置尺寸
+         * @param pos
+         */
+        resize: function (pos) {
+            var the = this;
+
+            if (!the.visible) {
+                return the;
+            }
+
+            var options = the._options;
+
+            pos = dato.extend({}, the._getSize(), pos);
+            animation.animate(the._$mask, pos, {
+                duation: options.duration,
+                easing: options.easing
+            }, function () {
+                the.emit('resize');
+            });
+
+            return the;
         },
 
 
@@ -107,8 +145,16 @@ define(function (require, exports, module) {
          * 关闭 mask
          */
         close: function () {
-            attribute.css(this._$mask, 'display', 'none');
-            this.visible = false;
+            var the = this;
+
+            if (!the.visible) {
+                return the;
+            }
+
+            attribute.css(the._$mask, 'display', 'none');
+            the.visible = false;
+
+            return the;
         }
     });
 
