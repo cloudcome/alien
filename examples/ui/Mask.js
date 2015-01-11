@@ -23,4 +23,6 @@ define(function (require, exports, module) {
     document.getElementById('btn2').onclick = function () {
         mask2.visible ? mask2.close() : mask2.open();
     };
+
+    window.mask1 = mask1;
 });
