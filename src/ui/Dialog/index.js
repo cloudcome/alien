@@ -1,51 +1,32 @@
 /*!
- * Dialog.js
+ * 对话框
  * @author ydr.me
- * @create 2014-10-10 22:36
+ * @create 2015-01-11 16:53
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Dialog/index
-     * @requires ui/base
-     * @requires libs/Template
-     * @requires core/dom/modification
-     * @requires core/dom/selector
-     * @requires core/dom/attribute
-     * @requires core/dom/animation
-     * @requires core/event/touch
-     * @requires util/dato
-     * @requires util/typeis
-     *
-     * @author ydr.me
-     * @create 2014-10-04 02:33
+     * @module ui/Dialog/
      */
-
     'use strict';
 
-
-    require('../../core/event/drag.js');
-    var style = require('css!./style.css');
-    var template = require('html!./template.html');
-    var ui = require('../base.js');
-    var Template = require('../../libs/Template.js');
-    var tpl = new Template(template);
-    var modification = require('../../core/dom/modification.js');
-    var selector = require('../../core/dom/selector.js');
-    var attribute = require('../../core/dom/attribute.js');
-    var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/touch.js');
+    var Mask = require('../Mask/');
+    var Window = require('../Window/');
+    var Scrollbar = require('../Scrollbar/');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var Scrollbar = require('../Scrollbar/');
-    var alienIndex = 0;
-    var zIndex = 9999;
-    var body = document.body;
-    var alienClass = 'alien-ui-dialog';
-    var scrollbarWidth = _getScrollWidth();
-    // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-    var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
+    var event = require('../../core/event/drag.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var style = require('css!./style.css');
+    var tpl = new Template(template);
+    var ui = require('../base.js');
+    var $body = document.body;
     var defaults = {
         width: 500,
         height: 'auto',
@@ -57,398 +38,138 @@ define(function (require, exports, module) {
         duration: 456,
         easing: 'ease-in-out-back',
         addClass: '',
-        // 优先级2
         remote: null,
-        remoteHeight: 400,
-        // 优先级1
-        content: null,
-        // 优先级1
-        isWrap: true,
         isModal: true,
         zIndex: null
     };
-    // 打开的对话框队列
-    var openDialogs = [];
-    var dialogsMap = {};
+    var alienIndex = 0;
+    var alienClass = 'alien-ui-dialog';
     var Dialog = ui.create({
-        STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property [width=500] {Number|String} 对话框宽度
-             * @property [height="auto"] {Number|String} 对话框高度
-             * @property [left="center"] {Number|String} 对话框左距离，默认水平居中
-             * @property [top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
-             * @property [title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
-             * @property [canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
-             * @property [duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
-             * @property [easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
-             * @property [remote=null] {null|String} 对话框打开远程地址，优先级2
-             * @property [remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
-             * @property [content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
-             * @property [isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-             * @property [isModal=true] {Boolean} 是否模态，默认 true
-             */
-            defaults: defaults
-        },
-
-        constructor: function (ele, options) {
+        constructor: function ($content, options) {
             var the = this;
 
-            the._$ele = selector.query(ele);
-
-            if (!the._$ele.length) {
-                throw new Error('instance element is empty');
-            }
-
-            the._id = alienIndex++;
-            the._$ele = the._$ele[0];
+            the._$content = selector.query($content)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
 
-        /**
-         * 初始化
-         * @returns {Dialog}
-         * @private
-         */
         _init: function () {
             var the = this;
+            var options = the._options;
 
-            the._hasOpen = false;
-            dialogsMap[the._id] = the;
+            if (options.isModal) {
+                the._mask = new Mask(window, {
+                    addClass: alienClass + '-bg',
+                    zIndex: options.zIndex
+                });
+                the._$mask = the._mask.getNode();
+                the._mask.__diloag = the;
+            }
+
+            the._window = new Window(null, {
+                parentNode: options.isModal ? the._$mask : $body,
+                width: options.width,
+                height: options.height,
+                left: options.left,
+                top: options.top,
+                duration: options.duration,
+                easing: options.easing,
+                zIndex: options.zIndex
+            });
+            the._$window = the._window.getNode();
             the._initNode();
+
+            if (options.isModal) {
+                the._scrollbar = new Scrollbar(the._$window);
+            }
+
             the._initEvent();
+
+            if (options.remote) {
+                the.setRemote(options.remote);
+            }
 
             return the;
         },
 
 
-        /**
-         * 初始化节点
-         * @returns {Dialog}
-         * @private
-         */
         _initNode: function () {
             var the = this;
             var options = the._options;
-            var dialogData = {
-                hideClose: options.hideClose,
-                id: the._id,
+            var html = tpl.render({
+                id: alienIndex++,
+                windowId: the._$window.id,
                 title: options.title,
-                isWrap: options.isWrap,
-                isModal: options.isModal,
-                canDrag: options.canDrag
-            };
-            var $tpl = modification.parse(tpl.render(dialogData))[0];
-            var $bg = options.isModal ? $tpl : null;
-            var $body;
-            var $dialog = options.isModal ? selector.query('.' + alienClass, $bg)[0] : $tpl;
+                canDrag: options.canDrag,
+                hideClose: options.hideClose
+            });
+            var node = modification.parse(html)[0];
+            var nodes = selector.query('.j-flag', node);
+            var $pos = modification.create('div');
 
-            modification.insert($bg ? $bg : $dialog, body, 'beforeend');
+            the._$dialog = node;
+            the._$header = nodes[0];
+            the._$title = nodes[1];
+            the._$close = nodes[2];
+            the._$body = nodes[3];
 
-            if (options.isWrap) {
-                $dialog = $dialog ? $dialog : selector.query('.' + alienClass, $bg)[0];
-                $body = selector.query('.' + alienClass + '-body', $dialog)[0];
-            }
-
-            the._$bg = $bg;
-            the._$body = $body;
-            the._$dialog = $dialog;
-
-            if (options.isModal) {
-                the._scrollbar = new Scrollbar(the._$dialog);
-            }
-
-            the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
-            attribute.addClass($bg || $dialog, options.addClass);
-            modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');
+            modification.insert(the._$dialog, the._$window);
+            modification.insert($pos, the._$content, 'afterend');
+            the._$pos = $pos;
+            modification.insert(the._$content, the._$body);
         },
 
 
-        /**
-         * 初始化事件
-         * @returns {Dialog}
-         * @private
-         */
         _initEvent: function () {
             var the = this;
-            var options = the._options;
-            var $dialog = the._$dialog;
-            var $bg = the._$bg;
 
-            event.on($dialog, 'click tap', '.' + alienClass + '-close', function () {
+            // 对话框打开
+            the._window.on('open', function () {
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
+            });
+
+            // 点击关闭
+            event.on(the._$close, 'click', function () {
                 the.close();
             });
 
-            event.on($bg, 'click tap', function (eve) {
-                eve.stopPropagation();
+            // 单击背景
+            event.on(the._$mask, 'click', function (eve) {
+                var $window = selector.closest(eve.target, '.alien-ui-window')[0];
 
-                if (!selector.closest(eve.target, '.' + alienClass).length) {
-
-                    if (the.emit('hitbg') !== false) {
-                        the.shake();
-                    }
+                if (!$window && the.emit('hitbg') !== false) {
+                    the.shake();
                 }
+
+                return false;
             });
-
-            if (options.isModal) {
-                event.on(window, animationendEventType, function () {
-                    attribute.removeClass(the._$dialog, alienClass + '-shake');
-                });
-            }
-        },
-
-
-        /**
-         * 打开对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        open: function (callback) {
-            var the = this;
-            var $bg = the._$bg;
-            var $dialog = the._$dialog;
-            var to;
-            var options = the._options;
-            var findIndex;
-            var dialogStyle = {
-                display: 'block',
-                visibility: 'hidden',
-                width: options.width,
-                height: options.height
-            };
-
-            if (the._hasOpen) {
-                return the;
-            }
-
-            the._hasOpen = true;
-            findIndex = openDialogs.indexOf(the._id);
-
-            if (findIndex > -1) {
-                openDialogs.splice(findIndex, 1);
-            }
-
-            openDialogs.push(the._id);
-
-            if (options.isModal) {
-                attribute.addClass(body, alienClass + '-overflow');
-            }
-
-            if (options.content || options.remote) {
-                the._$ele.innerHTML = '';
-            }
-
-            if ($bg) {
-                attribute.css($bg, {
-                    display: 'block',
-                    zIndex: options.zIndex || ui.getZindex(),
-                    opacity: 0
-                });
-            } else {
-                dialogStyle.zIndex = options.zIndex + 1 || ui.getZindex();
-            }
-
-            attribute.css($dialog, dialogStyle);
-            to = the._position();
-            to.opacity = '';
-            to.transform = '';
-
-            attribute.css($dialog, {
-                opacity: 0,
-                visibility: 'visible',
-                left: to.left,
-                top: to.top,
-                scale: 0
-            });
-
-            if ($bg) {
-                animation.animate($bg, {
-                    opacity: 1
-                }, {
-                    duration: options.duration,
-                    easing: options.easing
-                });
-            }
-
-            the.animate(to, function () {
-                if (the._scrollbar) {
-                    the._scrollbar.resize();
-                }
-
-                if (!options.content && options.remote) {
-                    the.setRemote(options.remote);
-                }
-
-                the.emit('open');
-            });
-
-            if (options.content) {
-                the.setContent(options.content);
-            }
-
-            return the;
-        },
-
-
-        /**
-         * 动画
-         * @param to
-         * @param callback
-         */
-        animate: function (to, callback) {
-            var the = this;
-            var options = the._options;
-
-            attribute.css(the._$bg, 'overflow', 'hidden');
-            animation.animate(the._$dialog, to, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                if (the._scrollbar) {
-                    the._scrollbar.resize();
-                }
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-
-                attribute.css(the._$bg, 'overflow', 'auto');
-            });
-        },
-
-
-        /**
-         * 关闭对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        close: function (callback) {
-            var the = this;
-            var $bg = the._$bg;
-            var $dialog = the._$dialog;
-            var options = the._options;
-            var findModal = false;
-            var index = openDialogs.length - 2;
-            var findIndex = -1;
-
-            if (!the._hasOpen) {
-                return the;
-            }
-
-            the._hasOpen = false;
-
-            dato.each(openDialogs, function (index, id) {
-                if (id === the._id) {
-                    findIndex = index;
-                    return false;
-                }
-            });
-
-            openDialogs.splice(findIndex, 1);
-
-            for (; index >= 0; index--) {
-                if (dialogsMap[openDialogs[index]]._options.isModal) {
-                    findModal = true;
-                    break;
-                }
-            }
-
-            if (!findModal) {
-                attribute.removeClass(body, alienClass + '-overflow');
-            }
-
-            if ($bg) {
-                animation.stop($bg);
-                animation.animate($bg, {
-                    opacity: 0
-                }, {
-                    duration: options.duration,
-                    easing: options.easing
-                }, function () {
-                    attribute.css($bg, 'display', 'none');
-                });
-            }
-
-            animation.stop($dialog);
-            animation.animate($dialog, {
-                opacity: 0,
-                scale: 0
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                attribute.css($dialog, {
-                    scale: 1,
-                    display: 'none'
-                });
-                the.emit('close');
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
-
-            return the;
-        },
-
-
-        /**
-         * 重新定位对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        resize: function (callback) {
-            var the = this;
-            var pos = the._position();
-
-            animation.stop(the._$dialog, false);
-            the.animate(pos, function () {
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-
-                if (the._scrollbar) {
-                    the._scrollbar.resize();
-                }
-            });
-
-            return the;
         },
 
 
         /**
          * 设置对话框标题
-         * @param title {String}
+         * @param title {String} 对话框标题
          */
         setTitle: function (title) {
             var the = this;
 
-            the._options.title = title;
+            the._$title.innerHTML = title;
 
-            if (the._$title) {
-                the._$title.innerHTML = title;
-            }
+            return the;
         },
 
 
         /**
-         * 对话框添加内容，并重新定位
-         * @param content {String}
+         * 设置对话框内容
+         * @param html {String} 对话框内容
          */
-        setContent: function (content) {
+        setContent: function (html) {
             var the = this;
-            var contentType = typeis(content);
 
-            the._$ele.innerHTML = '';
-
-            if (contentType === 'string') {
-                content = modification.create('#text', content);
-            }
-
-            modification.insert(content, the._$ele, 'beforeend');
+            the._$body.innerHTML = html;
             the.resize();
 
             return the;
@@ -457,26 +178,29 @@ define(function (require, exports, module) {
 
         /**
          * 对话框添加远程地址，并重新定位
-         * @param {String} url 远程地址
-         * @param {Number} [height=400] 高度
+         * @param url {String} 远程地址
          * @returns {Dialog}
          */
-        setRemote: function (url, height) {
+        setRemote: function (url) {
             var the = this;
             var options = the._options;
             var $iframe = modification.create('iframe', {
                 src: url,
-                'class': alienClass + '-iframe',
+                class: alienClass + '-iframe',
                 style: {
-                    height: height || options.remoteHeight
+                    height: options.remoteHeight
                 }
             });
 
-            the._$ele.innerHTML = '';
-            $iframe.onload = $iframe.onerror = function () {
+            the._$body.innerHTML = '';
+            $iframe.onload = function () {
+                options.remote = null;
                 the.resize();
             };
-            modification.insert($iframe, the._$ele, 'beforeend');
+            $iframe.onerror = function () {
+                the.resize();
+            };
+            modification.insert($iframe, the._$body, 'beforeend');
 
             return the;
         },
@@ -484,20 +208,19 @@ define(function (require, exports, module) {
 
         /**
          * 晃动对话框以示提醒
-         * @returns {Dialog}
          */
         shake: function () {
             var the = this;
 
             if (the.shakeTimeid) {
                 clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the._$dialog, alienClass + '-shake');
+                attribute.removeClass(the._$window, alienClass + '-shake');
             }
 
-            attribute.addClass(the._$dialog, alienClass + '-shake');
+            attribute.addClass(the._$window, alienClass + '-shake');
             the.shakeTimeid = setTimeout(function () {
                 the.shakeTimeid = 0;
-                attribute.removeClass(the._$dialog, alienClass + '-shake');
+                attribute.removeClass(the._$window, alienClass + '-shake');
             }, 500);
 
             return the;
@@ -505,148 +228,93 @@ define(function (require, exports, module) {
 
 
         /**
-         * 销毁对话框
-         * @param {Function} [callback] 打开之后回调
+         * 打开 dialog
+         * @param [callback] {Function} 回调
          */
-        destroy: function (callback) {
+        open: function (callback) {
             var the = this;
 
-            // 关闭对话框
-            the.close(function () {
-                // 从对话框 map 里删除
-                delete(dialogsMap[the._id]);
+            if (the._mask) {
+                the._mask.open();
+            }
 
-                if (the._scrollbar) {
-                    the._scrollbar.destroy();
-                }
+            the._window.open(callback);
 
-                // 将内容放到 body 里
-                modification.insert(the._$ele, body, 'beforeend');
-
-                // 移除事件监听
-                event.un(the._$dialog, 'click tap');
-                event.un(the._$bg, 'click tap');
-                event.un(the._$dialog, animationendEventType);
-
-                // 在 DOM 里删除
-                modification.remove(the._$bg);
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
+            return the;
         },
 
 
         /**
-         * 获取对话框需要定位的终点位置
-         * @returns {Object}
-         * @private
+         * 改变 dialog 尺寸
+         * @param [size] {Object} 尺寸
+         * @param [callback] {Function} 回调
          */
-        _position: function () {
+        resize: function (size, callback) {
+            this._window.resize(size, callback);
+        },
+
+
+        /**
+         * 关闭 dialog
+         * @param [callback] {Function} 回调
+         */
+        close: function (callback) {
             var the = this;
-            var options = the._options;
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
-            var pos = {};
-            var pre = attribute.css(the._$dialog, ['width', 'height']);
 
-            animation.stop(the._$dialog, true);
-            attribute.css(the._$dialog, {
-                width: options.width,
-                height: options.height
+
+            the._window.close(function () {
+                if (the._mask) {
+                    the._mask.close();
+                }
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
             });
-            pos.width = attribute.outerWidth(the._$dialog);
-            pos.height = attribute.outerHeight(the._$dialog);
-            attribute.css(the._$dialog, pre);
 
-            if (options.left === 'center') {
-                pos.left = (winW - pos.width) / 2;
-                pos.left = pos.left < 0 ? 0 : pos.left;
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+            var destroy = function () {
+                modification.insert(the._$content, the._$pos, 'afterend');
+                modification.remove(the._$pos);
+                event.un(the._$close, 'click');
+                event.un(the._$mask, 'click');
+                modification.remove(the._$dialog);
+                the._window.destroy();
+                the._mask.destroy();
+            };
+
+            if (the._window.visible) {
+                the._window.close(destroy);
             } else {
-                pos.left = options.left;
+                destroy();
             }
-
-            if (options.top === 'center') {
-                pos.top = (winH - pos.height) * 2 / 5;
-                pos.top = pos.top < 0 ? 0 : pos.top;
-            } else {
-                pos.top = options.top;
-            }
-
-            return pos;
         }
     });
 
-
-    style += '.alien-ui-dialog-overflow{padding-right:' + scrollbarWidth + 'px;}';
-    modification.importStyle(style);
 
     event.on(document, 'keyup', function (eve) {
-        var d;
+        var mask;
+        var dialog;
 
-        if (eve.which === 27 && openDialogs.length) {
-            d = dialogsMap[openDialogs[openDialogs.length - 1]];
+        if (eve.which === 27 && Mask.maskWindowList.length) {
+            mask = Mask.getTopMask();
+            dialog = mask.__diloag;
 
-            if (d && d.constructor === Dialog) {
-
-                if (d.emit('esc') !== false) {
-                    d.shake();
-                }
+            if (dialog.emit('esc') !== false) {
+                dialog.shake();
             }
         }
     });
 
 
-    /**
-     * 获取当前页面的滚动条宽度
-     * @return {Number}
-     */
-    function _getScrollWidth() {
-        var $div = modification.create('div', {
-            style: {
-                width: 100,
-                height: 100,
-                position: 'absolute',
-                padding: 0,
-                margin: 0,
-                overflow: 'scroll'
-            }
-        });
-        var clientWidth;
-
-        modification.insert($div, body, 'beforeend');
-        clientWidth = $div.clientWidth;
-        modification.remove($div);
-
-        return 100 - clientWidth;
-    }
-
-    /**
-     * 实例化一个模态交互对话框
-     *
-     * @event hitbg
-     * @event esc
-     * @event open
-     * @event close
-     *
-     * @param ele {HTMLElement|Node|String} 元素或选择器
-     * @param [options] {Object}
-     * @param [options.width=500] {Number|String} 对话框宽度
-     * @param [options.height="auto"] {Number|String} 对话框高度
-     * @param [options.left="center"] {Number|String} 对话框左距离，默认水平居中
-     * @param [options.top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
-     * @param [options.title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
-     * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
-     * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
-     * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
-     * @param [options.addClass=""] {String} 对话框添加的 className
-     * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
-     * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
-     * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
-     * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-     * @param [options.zIndex=null] {null|Number} 层级，默认自动分配层级
-     * @constructor
-     */
+    modification.importStyle(style);
     module.exports = Dialog;
 });
