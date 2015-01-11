@@ -55,9 +55,13 @@ define(function (require, exports, module) {
                     case 'document':
                         ret = context.contains(selector) ? [selector] : [];
                         break;
+
+                    case 'window':
+                        ret = window;
+                        break;
                 }
 
-                return dato.toArray(ret, !0);
+                return dato.toArray(ret, true);
             } else {
                 throw new Error('query context must be an element');
             }
