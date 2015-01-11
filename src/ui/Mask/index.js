@@ -48,7 +48,7 @@ define(function (require, exports, module) {
              * @returns {*}
              */
             getTopMask: function () {
-                return maskWindowList[0];
+                return maskWindowList[maskWindowLength - 1];
             }
         },
         constructor: function ($cover, options) {
@@ -94,22 +94,22 @@ define(function (require, exports, module) {
             var $cover = the._$cover;
 
             // 其他节点
-            if ($cover) {
+            if ($cover === window) {
                 return {
-                    position: 'absolute',
-                    width: attribute.width($cover),
-                    height: attribute.height($cover),
-                    top: attribute.top($cover),
-                    left: attribute.left($cover)
+                    position: 'fixed',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
                 };
             }
 
             return {
-                position: 'fixed',
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0
+                position: 'absolute',
+                width: attribute.width($cover),
+                height: attribute.height($cover),
+                top: attribute.top($cover),
+                left: attribute.left($cover)
             };
         },
 

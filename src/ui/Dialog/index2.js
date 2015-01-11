@@ -64,6 +64,7 @@ define(function (require, exports, module) {
                     zIndex: options.zIndex
                 });
                 the._$mask = the._mask.getNode();
+                the._mask.__diloag = the;
             }
 
             the._window = new Window(null, {
@@ -136,8 +137,14 @@ define(function (require, exports, module) {
             });
 
             // 单击背景
-            event.on(the._$mask, 'click', function () {
-                the.shake();
+            event.on(the._$mask, 'click', function (eve) {
+                var $window = selector.closest(eve.target, '.alien-ui-window')[0];
+
+                if (!$window && the.emit('hitbg') !== false) {
+                    the.shake();
+                }
+
+                return false;
             });
         },
 
@@ -287,6 +294,21 @@ define(function (require, exports, module) {
                 the._window.close(destroy);
             } else {
                 destroy();
+            }
+        }
+    });
+
+
+    event.on(document, 'keyup', function (eve) {
+        var mask;
+        var dialog;
+
+        if (eve.which === 27 && Mask.maskWindowList.length) {
+            mask = Mask.getTopMask();
+            dialog = mask.__diloag;
+
+            if (dialog.emit('esc') !== false) {
+                dialog.shake();
             }
         }
     });
