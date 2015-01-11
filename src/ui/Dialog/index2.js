@@ -38,13 +38,7 @@ define(function (require, exports, module) {
         duration: 456,
         easing: 'ease-in-out-back',
         addClass: '',
-        // 优先级2
         remote: null,
-        remoteHeight: 400,
-        // 优先级1
-        content: null,
-        // 优先级1
-        isWrap: true,
         isModal: true,
         zIndex: null
     };
@@ -66,13 +60,21 @@ define(function (require, exports, module) {
 
             if (options.isModal) {
                 the._mask = new Mask(window, {
-                    addClass: alienClass + '-bg'
+                    addClass: alienClass + '-bg',
+                    zIndex: options.zIndex
                 });
                 the._$mask = the._mask.getNode();
             }
 
             the._window = new Window(null, {
-                parentNode: options.isModal ? the._$mask : $body
+                parentNode: options.isModal ? the._$mask : $body,
+                width: options.width,
+                height: options.height,
+                left: options.left,
+                top: options.top,
+                duration: options.duration,
+                easing: options.easing,
+                zIndex: options.zIndex
             });
             the._$window = the._window.getNode();
             the._initNode();
@@ -82,6 +84,10 @@ define(function (require, exports, module) {
             }
 
             the._initEvent();
+
+            if (options.remote) {
+                the.setRemote(options.remote);
+            }
 
             return the;
         },
@@ -128,6 +134,89 @@ define(function (require, exports, module) {
             event.on(the._$close, 'click', function () {
                 the.close();
             });
+
+            // 单击背景
+            event.on(the._$mask, 'click', function () {
+                the.shake();
+            });
+        },
+
+
+        /**
+         * 设置对话框标题
+         * @param title {String} 对话框标题
+         */
+        setTitle: function (title) {
+            var the = this;
+
+            the._$title.innerHTML = title;
+
+            return the;
+        },
+
+
+        /**
+         * 设置对话框内容
+         * @param html {String} 对话框内容
+         */
+        setContent: function (html) {
+            var the = this;
+
+            the._$body.innerHTML = html;
+            the.resize();
+
+            return the;
+        },
+
+
+        /**
+         * 对话框添加远程地址，并重新定位
+         * @param url {String} 远程地址
+         * @returns {Dialog}
+         */
+        setRemote: function (url) {
+            var the = this;
+            var options = the._options;
+            var $iframe = modification.create('iframe', {
+                src: url,
+                class: alienClass + '-iframe',
+                style: {
+                    height: options.remoteHeight
+                }
+            });
+
+            the._$body.innerHTML = '';
+            $iframe.onload = function () {
+                options.remote = null;
+                the.resize();
+            };
+            $iframe.onerror = function () {
+                the.resize();
+            };
+            modification.insert($iframe, the._$body, 'beforeend');
+
+            return the;
+        },
+
+
+        /**
+         * 晃动对话框以示提醒
+         */
+        shake: function () {
+            var the = this;
+
+            if (the.shakeTimeid) {
+                clearTimeout(the.shakeTimeid);
+                attribute.removeClass(the._$window, alienClass + '-shake');
+            }
+
+            attribute.addClass(the._$window, alienClass + '-shake');
+            the.shakeTimeid = setTimeout(function () {
+                the.shakeTimeid = 0;
+                attribute.removeClass(the._$window, alienClass + '-shake');
+            }, 500);
+
+            return the;
         },
 
 
@@ -138,7 +227,10 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
 
-            the._mask.open();
+            if (the._mask) {
+                the._mask.open();
+            }
+
             the._window.open(callback);
 
             return the;
@@ -164,7 +256,9 @@ define(function (require, exports, module) {
 
 
             the._window.close(function () {
-                the._mask.close();
+                if (the._mask) {
+                    the._mask.close();
+                }
 
                 if (typeis.function(callback)) {
                     callback();
