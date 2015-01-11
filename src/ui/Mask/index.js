@@ -182,6 +182,14 @@ define(function (require, exports, module) {
          */
         getNode: function () {
             return this._$mask;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            modification.remove(this._$mask)
         }
     });
 
