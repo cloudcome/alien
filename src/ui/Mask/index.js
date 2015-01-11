@@ -7,7 +7,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Mask
+     * @module ui/Mask/
+     * @requires util/dato
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires ui/base
      */
     'use strict';
 
