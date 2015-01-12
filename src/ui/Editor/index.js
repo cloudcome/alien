@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Editor/index
+     * @module ui/Editor/
      * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification

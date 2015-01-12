@@ -8,6 +8,18 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Dialog/
+     * @requires ui/Mask/
+     * @requires ui/Window/
+     * @requires ui/Scrollbar/
+     * @requires util/dato
+     * @requires util/typeis
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/event/drag
+     * @requires libs/Template
+     * @requires ui/base
      */
     'use strict';
 

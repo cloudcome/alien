@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Dialog = require('/src/ui/Dialog/index2.js');
+    var Dialog = require('/src/ui/Dialog/');
     var d1 = new Dialog('#demo1');
     var d2 = new Dialog('#demo2', {
         width: 350,
