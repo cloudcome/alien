@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Tab/index
+     * @module ui/Tab/
      * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/attribute

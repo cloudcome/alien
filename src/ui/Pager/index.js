@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Pager
+     * @module ui/Pager/
      * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification

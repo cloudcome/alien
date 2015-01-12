@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Viewer
+     * @module ui/Viewer/
      * @requires ui/base/
      * @requires ui/Dialog/
      * @requires core/dom/selector

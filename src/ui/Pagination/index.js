@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Pagination
+     * @module ui/Pagination/
      * @requires ui/base
      * @requires util/dato
      * @requires libs/Pagination

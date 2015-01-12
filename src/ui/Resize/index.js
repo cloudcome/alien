@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Resize/index
+     * @module ui/Resize/
      * @requires ui/base
      * @requires util/dato
      * @requires libs/Template

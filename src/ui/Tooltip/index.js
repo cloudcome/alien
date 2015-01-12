@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Tooltip
+     * @module ui/Tooltip/
      * @requires ui/base
      * @requires util/dato
      * @requires libs/Template
