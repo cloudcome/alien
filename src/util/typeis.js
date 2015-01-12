@@ -128,16 +128,31 @@ define(function (require, exports, module) {
     var i = 0;
     var jud = 'string number function object undefined null nan element regexp boolean array window document global'.split(' ');
     var makeStatic = function (tp) {
+        /**
+         * @property string
+         * @property number
+         * @property function
+         * @property object
+         * @property undefined
+         * @property null
+         * @property nan
+         * @property element
+         * @property regexp
+         * @property boolean
+         * @property array
+         * @property window
+         * @property document
+         * @property global
+         * @returns {boolean}
+         */
         typeis[tp] = function (obj) {
             return typeis(obj) === tp;
         };
     };
 
-
     for (; i < jud.length; i++) {
         makeStatic(jud[i]);
     }
-
 
     /**
      * 判断是否为纯对象
