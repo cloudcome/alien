@@ -150,7 +150,7 @@ define(function (require, exports, module) {
 
             // 单击背景
             event.on(the._$mask, 'click', function (eve) {
-                var $window = selector.closest(eve.target, '.alien-ui-window')[0];
+                var $window = selector.closest(eve.target, '#' + the._$window.id)[0];
 
                 if (!$window && the.emit('hitbg') !== false) {
                     the.shake();
