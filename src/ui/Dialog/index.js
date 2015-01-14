@@ -312,6 +312,23 @@ define(function (require, exports, module) {
     });
 
 
-    modification.importStyle(style);
+    /**
+     * 实例化一个对话框
+     * @param [options] {Object} 配置
+     * @param [options.width=300] {Number} 宽度
+     * @param [options.height="auto"] {Number|String} 高度
+     * @param [options.left="center"] {Number|String} 左位移
+     * @param [options.top="center"] {Number|String} 上位移
+     * @param [options.title="提示"] {null|String} 标题，为 null 时不显示标题
+     * @param [options.content="提示"] {String} 内容
+     * @param [options.addClass=""] {String} 添加的类
+     * @param [options.buttons=null] {null|Array} 按钮数组，如["确定"]
+     * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
+     * @param [options.isModal=true] {Boolean} 是否为模态
+     * @param [options.duration=345] {Number} 动画时间
+     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
+     * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
+     */
     module.exports = Dialog;
+    modification.importStyle(style);
 });
