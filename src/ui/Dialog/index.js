@@ -284,21 +284,15 @@ define(function (require, exports, module) {
          */
         destroy: function () {
             var the = this;
-            var destroy = function () {
+
+            the._window.destroy(function () {
                 modification.insert(the._$content, the._$pos, 'afterend');
                 modification.remove(the._$pos);
                 event.un(the._$close, 'click');
                 event.un(the._$mask, 'click');
                 modification.remove(the._$dialog);
-                the._window.destroy();
                 the._mask.destroy();
-            };
-
-            if (the._window.visible) {
-                the._window.close(destroy);
-            } else {
-                destroy();
-            }
+            });
         }
     });
 
