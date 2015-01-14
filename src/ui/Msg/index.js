@@ -84,7 +84,7 @@ define(function (require, exports, module) {
 
             if (options.isModal) {
                 the._mask = new Mask(window, {
-                    addClass: alienClass + '-bg',
+                    addClass: alienClass + '-bg ' + options.addClass,
                     zIndex: options.zIndex
                 });
                 the._mask.__msg = the;
