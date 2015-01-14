@@ -224,16 +224,7 @@ define(function (require, exports, module) {
         shake: function () {
             var the = this;
 
-            if (the.shakeTimeid) {
-                clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the._$window, alienClass + '-shake');
-            }
-
-            attribute.addClass(the._$window, alienClass + '-shake');
-            the.shakeTimeid = setTimeout(function () {
-                the.shakeTimeid = 0;
-                attribute.removeClass(the._$window, alienClass + '-shake');
-            }, 500);
+            the._window.shake();
 
             return the;
         },
