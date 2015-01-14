@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
+    var style = require('css!./style.css');
     var ui = require('../base.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-window';
@@ -239,6 +240,28 @@ define(function (require, exports, module) {
 
 
         /**
+         * 震晃窗口以示提醒
+         */
+        shake: function () {
+            var the = this;
+            var className = alienClass + '-shake';
+
+            if (the._shakeTimeid) {
+                clearTimeout(the._shakeTimeid);
+                attribute.removeClass(the._$window, className);
+            }
+
+            attribute.addClass(the._$window, className);
+            the._shakeTimeid = setTimeout(function () {
+                the._shakeTimeid = 0;
+                attribute.removeClass(the._$window, className);
+            }, 500);
+
+            return the;
+        },
+
+
+        /**
          * 销毁实例
          */
         destroy: function () {
@@ -272,4 +295,5 @@ define(function (require, exports, module) {
      * @param [options.zIndex=null] {null|Number} 窗口层级，默认自动分配
      */
     module.exports = Window;
+    modification.importStyle(style);
 });
