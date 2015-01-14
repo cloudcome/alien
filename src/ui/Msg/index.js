@@ -66,6 +66,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._initNode();
+            the._initEvent();
             the._mask.open();
             the._window.open();
 
@@ -146,6 +147,32 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置 Msg 标题
+         * @param title {String} 对话框标题
+         */
+        setTitle: function (title) {
+            var the = this;
+
+            the._$title.innerHTML = title;
+
+            return the;
+        },
+
+
+        /**
+         * 设置 Msg 内容
+         * @param html {String} 对话框内容
+         */
+        setContent: function (html) {
+            var the = this;
+
+            the._$body.innerHTML = html;
+            the._window.resize();
+
+            return the;
+        },
+
+        /**
          * 震晃窗口以示提醒
          */
         shake: function () {
@@ -157,11 +184,18 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 销毁实例
+         */
         destroy: function () {
             var the = this;
 
-            event.un(the._$close, 'click');
-            event.un(the._$buttons, 'click');
+            the._window.destroy(function () {
+                event.un(the._$close, 'click');
+                event.un(the._$buttons, 'click');
+                event.un(the._$mask, 'click');
+                the._mask.destroy();
+            });
         }
     });
 
