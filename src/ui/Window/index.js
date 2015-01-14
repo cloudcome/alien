@@ -239,6 +239,8 @@ define(function (require, exports, module) {
         },
 
 
+
+
         /**
          * 震晃窗口以示提醒
          */
@@ -264,12 +266,16 @@ define(function (require, exports, module) {
         /**
          * 销毁实例
          */
-        destroy: function () {
+        destroy: function (callback) {
             var the = this;
             var destroy = function () {
                 modification.insert(the._$content, the._$contentPos, 'afterend');
                 modification.remove(the._$contentPos);
                 modification.remove(the._$window);
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
             };
 
             if (the.visible) {
