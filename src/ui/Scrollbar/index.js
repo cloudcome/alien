@@ -153,10 +153,13 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            the._calScrollSize();
-            the._calTrackSize();
-            the._scrollX();
-            the._scrollY();
+
+            if (isPlaceholderScroll) {
+                the._calScrollSize();
+                the._calTrackSize();
+                the._scrollX();
+                the._scrollY();
+            }
 
             return the;
         },
