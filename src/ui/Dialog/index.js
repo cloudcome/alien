@@ -40,18 +40,19 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var $body = document.body;
     var defaults = {
-        width: 500,
+        width: 600,
         height: 'auto',
         left: 'center',
         top: 'center',
         title: '无标题对话框',
-        canDrag: true,
-        hideClose: false,
+        addClass: '',
         duration: 456,
         easing: 'ease-in-out-back',
-        addClass: '',
-        remote: null,
+        canDrag: true,
         isModal: true,
+        hideClose: false,
+        remote: null,
+        remoteHeight: 400,
         zIndex: null
     };
     var alienIndex = 0;
@@ -72,7 +73,7 @@ define(function (require, exports, module) {
 
             if (options.isModal) {
                 the._mask = new Mask(window, {
-                    addClass: alienClass + '-bg',
+                    addClass: alienClass + '-bg ' + options.addClass,
                     zIndex: options.zIndex
                 });
                 the._$mask = the._mask.getNode();
@@ -315,18 +316,19 @@ define(function (require, exports, module) {
     /**
      * 实例化一个对话框
      * @param [options] {Object} 配置
-     * @param [options.width=300] {Number} 宽度
+     * @param [options.width=600] {Number} 宽度
      * @param [options.height="auto"] {Number|String} 高度
      * @param [options.left="center"] {Number|String} 左位移
      * @param [options.top="center"] {Number|String} 上位移
-     * @param [options.title="提示"] {null|String} 标题，为 null 时不显示标题
-     * @param [options.content="提示"] {String} 内容
-     * @param [options.addClass=""] {String} 添加的类
-     * @param [options.buttons=null] {null|Array} 按钮数组，如["确定"]
+     * @param [options.title="无标题对话框"] {null|String} 标题，为 null 时不显示标题
+     * @param [options.addClass=""] {String} 添加的 className
+     * @param [options.duration=456] {Number} 动画时间
+     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
      * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
      * @param [options.isModal=true] {Boolean} 是否为模态
-     * @param [options.duration=345] {Number} 动画时间
-     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
+     * @param [options.hideClose=false] {Boolean} 是否隐藏关闭按钮
+     * @param [options.remote=null] {null} 远程地址
+     * @param [options.remoteHeight=400] {null} 远程地址高度
      * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */
     module.exports = Dialog;
