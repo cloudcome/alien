@@ -5,6 +5,7 @@ define(function (require) {
 
     document.getElementById('btn0').onclick = function () {
         new Msg({
+            isModal: false,
             content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
             buttons: []
         });
