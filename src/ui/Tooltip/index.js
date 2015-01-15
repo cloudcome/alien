@@ -21,7 +21,6 @@ define(function (require, exports, module) {
 
     var ui = require('../base.js');
     var template = require('html!./template.html');
-    var generator = require('../generator.js');
     var dato = require('../../util/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
