@@ -206,10 +206,12 @@ define(function (require, exports, module) {
 
             the._$body.innerHTML = '';
             $iframe.onload = function () {
+                $iframe.onload = null;
                 options.remote = null;
                 the.resize();
             };
             $iframe.onerror = function () {
+                $iframe.onerror = null;
                 the.resize();
             };
             modification.insert($iframe, the._$body, 'beforeend');
