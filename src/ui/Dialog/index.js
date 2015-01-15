@@ -284,7 +284,7 @@ define(function (require, exports, module) {
         /**
          * 销毁实例
          */
-        destroy: function () {
+        destroy: function (callback) {
             var the = this;
 
             the._window.destroy(function () {
@@ -294,6 +294,10 @@ define(function (require, exports, module) {
                 event.un(the._$mask, 'click');
                 modification.remove(the._$dialog);
                 the._mask.destroy();
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
             });
         }
     });
