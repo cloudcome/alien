@@ -36,6 +36,8 @@ define(function (require, exports, module) {
         duration: 456,
         easing: 'ease-in-out-back',
         addClass: '',
+        // 最小偏移量
+        minOffset: 20,
         zIndex: null
     };
     var Window = ui.create({
@@ -102,7 +104,7 @@ define(function (require, exports, module) {
 
             if (options.top === 'center') {
                 pos.top = (winH - pos.height) * 2 / 5;
-                pos.top = pos.top < 0 ? 0 : pos.top;
+                pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
             } else {
                 pos.top = options.top;
             }
@@ -130,6 +132,7 @@ define(function (require, exports, module) {
                 visibility: 'visible',
                 left: to.left,
                 top: to.top,
+                marginBottom: options.minOffset,
                 scale: 0,
                 zIndex: options.zIndex || ui.getZindex()
             });
