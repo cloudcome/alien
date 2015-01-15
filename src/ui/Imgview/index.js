@@ -57,7 +57,7 @@ define(function (require, exports, module) {
             }
         }
     };
-    var Imgview = generator({
+    var Imgview = ui.create({
         constructor: function (options) {
             var the = this;
 
