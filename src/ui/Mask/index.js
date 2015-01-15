@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Mask/
      * @requires util/dato
+     * @requires util/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -218,8 +220,15 @@ define(function (require, exports, module) {
         /**
          * 销毁实例
          */
-        destroy: function () {
-            modification.remove(this._$mask)
+        destroy: function (callback) {
+            var the = this;
+
+            the.close();
+            modification.remove(the._$mask);
+
+            if (typeis.function(callback)) {
+                callback();
+            }
         }
     });
 
