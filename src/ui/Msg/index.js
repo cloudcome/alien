@@ -217,7 +217,7 @@ define(function (require, exports, module) {
             mask = Mask.getTopMask();
             msg = mask.__msg;
 
-            if (msg.emit('esc') !== false) {
+            if (msg && msg.emit('esc') !== false) {
                 msg.shake();
             }
         }
