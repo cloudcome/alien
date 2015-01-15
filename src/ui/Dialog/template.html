@@ -8,9 +8,7 @@
         <div class="alien-ui-dialog-title j-flag">{{=title}}</div>
     </div>
 
-    {{if !hideClose}}
-    <div class="alien-ui-dialog-close j-flag"  {{if !title}}style="display:none;"{{/if}}>&times;</div>
-    {{/if}}
+    <div class="alien-ui-dialog-close j-flag"  {{if !title || !hideClose}}style="display:none;"{{/if}}>&times;</div>
 
     <div class="alien-ui-dialog-body j-flag"></div>
 </div>
