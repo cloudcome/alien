@@ -218,12 +218,10 @@ define(function (require, exports, module) {
             event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
-            the._dialog = new Dialog('#' + alienClass + '-upload-' + the._id, {
-                width: 500,
+            the._dialog = new Dialog($dialog, {
                 title: '上传' + the._uploadList.length + '张图片（0%）',
                 hideClose: true
             }).open();
-            the._$dialog = $dialog;
             the._doUpload();
         },
 
