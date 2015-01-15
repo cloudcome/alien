@@ -306,7 +306,7 @@ define(function (require, exports, module) {
             mask = Mask.getTopMask();
             dialog = mask.__diloag;
 
-            if (dialog.emit('esc') !== false) {
+            if (dialog && dialog.emit('esc') !== false) {
                 dialog.shake();
             }
         }
