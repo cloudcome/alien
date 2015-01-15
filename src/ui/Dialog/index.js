@@ -155,9 +155,8 @@ define(function (require, exports, module) {
 
                 if (!$window && the.emit('hitbg') !== false) {
                     the.shake();
+                    return false;
                 }
-
-                return false;
             });
         },
 
