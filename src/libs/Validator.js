@@ -46,8 +46,8 @@ define(function (require, exports, module) {
              *     name: 'suffix',
              *     type: 'array'
              * }, function(suffix, val, next){
-             *     var sf = val.match(/\.[^.]*$/)[0];
-             *     var boolen = suffix.indexOf(sf) > -1;
+             *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+             *     var boolean = suffix.indexOf(sf) > -1;
              *
              *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
              * });
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                     customRules[options.name] = {
                         name: options.name,
                         type: options.type,
-                        function: options.function
+                        fn: fn
                     };
                 }
             }
@@ -322,7 +322,7 @@ define(function (require, exports, module) {
             var err;
             var type;
             var onover = function (err) {
-                var ondone = function () {
+                var ondone = function (err) {
                     // onafter
                     if (typeis(rule.onafter) === 'function' && !err) {
                         data[rule.name] = rule.onafter.call(rule, val, data);
@@ -345,7 +345,7 @@ define(function (require, exports, module) {
                         return next();
                     }
 
-                    ruleInfo.function.call(rule, _rule, val, function (err) {
+                    ruleInfo.fn.call(rule, _rule, val, function (err) {
                         if (!err) {
                             return next();
                         }
