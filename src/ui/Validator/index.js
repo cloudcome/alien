@@ -14,13 +14,18 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
-    var event = require('../../core/event/base.js');
+    var event = require('../../core/event/touch.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var Vldor = require('../../libs/Validator.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-validator';
     var udf;
     var inputSelector = 'input,select,textarea';
+    var formItemStatusClass = 'has-error has-success';
+    var noop = function () {
+        // ignore
+    };
     var defaults = {
         dataRuleAttr: 'validator',
         dataMessageAttr: 'msg',
@@ -28,10 +33,15 @@ define(function (require, exports, module) {
         formMsgSelector: '.form-msg',
         isVisibleOnSuccess: false,
         isBreakOnInvalid: false,
-        triggerEvent: 'focusout',
+        validateEvent: 'focusout',
         successMsg: '填写正确'
     };
     var Validator = ui.create({
+        /**
+         * 构造函数
+         * @param $form
+         * @param options
+         */
         constructor: function ($form, options) {
             var the = this;
 
@@ -40,9 +50,15 @@ define(function (require, exports, module) {
             the._init();
         },
 
+
+        /**
+         * 初始化
+         * @private
+         */
         _init: function () {
             var the = this;
 
+            the.id = alienIndex++;
             the._initRule();
             the._initEvent();
 
@@ -50,19 +66,30 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化验证规则
+         * @private
+         */
         _initRule: function () {
             var the = this;
             var options = the._options;
             var $inputs = selector.query(inputSelector, the._$form);
             var typeArray = ['url', 'email', 'number', 'string'];
 
+            attribute.addClass(the._$form, alienClass);
             the._validator = new Vldor();
             the._nameItemMap = {};
             the._nameMsgMap = {};
+            the._nameInputMap = {};
             dato.each($inputs, function (index, $input) {
+                var name = $input.name;
+
+                if (!name) {
+                    return;
+                }
+
                 var $formItem = selector.closest($input, options.formItemSelector)[0];
                 var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
-                var name = $input.name;
                 var rule = attribute.data($input, options.dataRuleAttr);
                 var msg = attribute.data($input, options.dataMessageAttr);
                 var type = attribute.attr($input, 'type');
@@ -73,10 +100,17 @@ define(function (require, exports, module) {
                     min: dato.parseInt($input.min, udf),
                     max: dato.parseInt($input.max, udf),
                     step: dato.parseInt($input.step, udf),
-                    regexp: $input.pattern,
                     required: $input.required,
                     type: typeArray.indexOf(type) > -1 ? type : 'string'
                 };
+
+                if ($input.pattern) {
+                    try {
+                        standar.regexp = new RegExp($input.pattern);
+                    } catch (err) {
+                        // ignore
+                    }
+                }
 
                 // 验证前置
                 rule.onbefore = function (val, data) {
@@ -91,41 +125,123 @@ define(function (require, exports, module) {
                 the._validator.pushRule(rule);
                 the._nameItemMap[name] = $formItem;
                 the._nameMsgMap[name] = $formMsg;
+                the._nameInputMap[name] = $input;
             });
         },
 
 
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
             var options = the._options;
 
-            if (options.triggerEvent) {
-                event.on(the._$form, options.triggerEvent, inputSelector, function () {
-                    var data = {};
-                    var name = this.name;
-
-                    data[name] = this.value;
-                    the._validator.validateOne(data, function (err, val) {
-                        if (err) {
-                            return the.emitMsg(name, err.message);
-                        }
-
-                        the.emitMsg(name, options.successMsg, 'success');
-                    });
-                });
+            if (options.validateEvent) {
+                event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
             }
+
+            event.on(the._$form, 'tap click', 'input[type=submit],button', the._onsubmit.bind(the));
+        },
+
+
+        /**
+         * 正在验证
+         * @param eve
+         * @private
+         */
+        _onvalidate: function (eve) {
+            var the = this;
+            var $input = eve.target;
+            var data = {};
+            var name = $input.name;
+
+            data[name] = the._getVal(name);
+            the.emit('validatebefore', $input);
+            the._validator.validateOne(data, function (err, val) {
+                if (err) {
+                    return the.emitMsg(name, err.message);
+                }
+
+                the.emitMsg(name, the._options.successMsg, true);
+                the.emit('validateafter', $input, err);
+            });
+        },
+
+
+        /**
+         * 提交验证
+         * @param eve
+         * @private
+         */
+        _onsubmit: function (eve) {
+            var $ele = eve.target;
+            var $btn = selector.closest($ele, 'button')[0] || $ele;
+
+            if ($btn.type !== 'submit' || $btn.disabled || attribute.hasClass($btn, 'disabled')) {
+                return;
+            }
+
+            this.validateAll();
+            eve.preventDefault();
+        },
+
+
+        /**
+         * 获取输入框的值
+         * @param name
+         * @private
+         */
+        _getVal: function (name) {
+            var $input = this._nameInputMap[name];
+            var type = $input.type;
+            var multiple = $input.multiple;
+            var tagName = $input.tagName.toLowerCase();
+            var val;
+
+            type = tagName === 'select' || tagName === 'textarea' ? tagName : type;
+
+            switch (type) {
+                case 'checkbox':
+                    val = [];
+                    dato.each(selector.query('input[name=' + name + '][type=checkbox]:checked'), function (index, $checkbox) {
+                        val.push($checkbox.value);
+                    });
+                    break;
+
+                case 'radio':
+                    $input = selector.query('input[name=' + name + '][type=radio]:checked')[0];
+                    val = $input ? $input.value : udf;
+                    break;
+
+                case 'select':
+                    if (multiple) {
+                        val = [];
+                        dato.each(selector.query('select[name=' + name + '] > option:selected'), function (index, $option) {
+                            val.push($option.value);
+                        });
+                    } else {
+                        $input = selector.query('select[name=' + name + ']')[0];
+                        val = $input ? $input.value : udf;
+                    }
+                    break;
+
+                default:
+                    val = $input.value;
+            }
+
+            return val;
         },
 
 
         /**
          * 触发表单消息
-         * @param name
-         * @param message
-         * @param [type="error"]
+         * @param name {String} 需要验证的表单 name
+         * @param message {String} 消息
+         * @param [isSuccess=false] 是否为成功消息
          */
-        emitMsg: function (name, message, type) {
-            type = type || 'error';
-
+        emitMsg: function (name, message, isSuccess) {
             var the = this;
             var $formItem = the._nameItemMap[name];
             var $formMsg = the._nameMsgMap[name];
@@ -134,11 +250,86 @@ define(function (require, exports, module) {
                 $formMsg.innerHTML = message;
             }
 
-            attribute.addClass($formItem, 'has' + type);
+            attribute.removeClass($formItem, formItemStatusClass);
+            attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
 
             return the;
+        },
+
+
+        /**
+         * 单个验证
+         * @param name {String} 需要验证的表单 name
+         * @param [callback] {Function} 回调
+         */
+        validateOne: function (name, callback) {
+            var the = this;
+            var data = {};
+            var $input = the._nameInputMap[name];
+
+            callback = typeis.function(callback) ? callback : noop;
+            data[name] = the._getVal(name);
+            the.emit('validatebefore', $input);
+            the._validator.validateOne(data, function (err) {
+                the.emit('validateafter', $input);
+                the.emitMsg(name, err ? err.message : the._options.successMsg, !err);
+                callback.apply(this, arguments);
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 全部验证
+         * @param [callback] {Function} 回调
+         */
+        validateAll: function (callback) {
+            var the = this;
+            var data = {};
+
+            callback = typeis.function(callback) ? callback : noop;
+            dato.each(the._nameInputMap, function (name) {
+                data[name] = the._getVal(name);
+            });
+
+            the.emit('validatebefore', the._$form);
+            the._validator.validateAll(data, function (errs) {
+                callback.apply(this, arguments);
+                the.emit('validateafter', the._$form, errs);
+
+                if (!errs) {
+                    return;
+                }
+
+                dato.each(the._nameInputMap, function (name) {
+                    if (errs[name]) {
+                        the.emitMsg(name, errs[name].message);
+                    } else {
+                        the.emitMsg(name, the._options.successMsg, true);
+                    }
+                });
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            dato.each(the._nameItemMap, function (name, $formItem) {
+                attribute.removeClass($formItem, formItemStatusClass);
+            });
+            event.un(the._$form, the._options.validateEvent, the._onvalidate);
+            event.un(the._$form, 'tap click', the._onsubmit);
+            attribute.removeClass(the._$form, alienClass);
         }
     });
+
 
     /**
      * 表单验证
@@ -157,6 +348,9 @@ define(function (require, exports, module) {
      *     maxlength: 6
      * }
      * ```
+     *
+     * @param $form {Node|String} form 节点
+     * @param [options] {Object} 配置
      */
     module.exports = Validator;
 });
