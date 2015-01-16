@@ -110,7 +110,7 @@ define(function (require, exports, module) {
          * emitter.emit(window, 'hi', 1, 2);
          * emitter.emit(window, 'hi', 1, 2, 3);
          */
-        emit: function (context, eventType) {
+        emit: function (context, eventType/*arguments*/) {
             var the = this;
             var args = arguments;
             var arg0 = args[0];
