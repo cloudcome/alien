@@ -39,9 +39,50 @@ define(function (require, exports, module) {
             the._ruleList = [];
             // 已经存在的验证规则
             the._ruleNames = {};
+            the._customRules = {};
             the.rules = {};
             // 选项
             the._options = dato.extend(true, {}, defaults, options);
+        },
+
+
+        /**
+         * 注册自定义的验证规则
+         * @param options {Object} 规则配置
+         * @param rule {Function} 规则方法
+         * @param [isOverride=false] 是否覆盖已有规则
+         *
+         * @example
+         * // 添加一个检查后缀的自定义规则
+         * validator.registerRule({
+         *     name: 'suffix',
+         *     type: 'array'
+         * }, function(suffix, val){
+         *     var sf = val.match(/\.[^.]*$/)[0];
+         *
+         *     return suffix.indexOf(sf) > -1;
+         * });
+         */
+        registerRule: function (options, fn, isOverride) {
+            var the = this;
+
+            if (!typeis.object(options)) {
+                throw 'custom validate rule options must be an object';
+            }
+
+            if (!typeis.function(fn)) {
+                throw 'custom validate rule function must be a function';
+            }
+
+            if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
+                the._customRules[options.name] = {
+                    name: options.name,
+                    type: options.type,
+                    function: options.function
+                };
+            }
+
+            return the;
         },
 
         /**
