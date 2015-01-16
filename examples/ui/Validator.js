@@ -12,17 +12,19 @@ define(function (require, exports, module) {
     var v1 = new Validator('#form');
     var $submit = document.getElementById('submit');
 
-    v1.on('validatebefore', function ($ele) {
+    //Validator.registerRule({
+    //    name: 'upperFirst',
+    //    type: 'string',
+    //    fn: function () {
+    //
+    //    }
+    //});
+
+    v1.on('validateallbefore', function ($ele) {
         $submit.disabled = true;
     });
 
-    v1.on('validateafter', function ($ele) {
+    v1.on('validateallafter', function ($ele) {
         $submit.disabled = false;
     });
-
-    $submit.onclick = function (eve) {
-        v1.validateAll();
-
-        eve.preventDefault();
-    };
 });

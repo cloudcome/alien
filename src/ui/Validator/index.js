@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
+    var customRulesList = [];
     var defaults = {
         dataRuleAttr: 'validator',
         dataMessageAttr: 'msg',
@@ -37,6 +38,29 @@ define(function (require, exports, module) {
         successMsg: '填写正确'
     };
     var Validator = ui.create({
+        STATIC: {
+            /**
+             * 注册自定义的静态验证规则
+             * @param options {Object} 规则配置
+             * @param rule {Function} 规则方法
+             * @param [isOverride=false] 是否覆盖已有规则
+             *
+             * @example
+             * // 添加一个检查后缀的自定义规则
+             * Validator.registerRule({
+             *     name: 'suffix',
+             *     type: 'array'
+             * }, function(suffix, val, next){
+             *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+             *     var boolean = suffix.indexOf(sf) > -1;
+             *
+             *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+             * });
+             */
+            registerRule: function (options, fn, isOverride) {
+                customRulesList.push(arguments);
+            }
+        },
         /**
          * 构造函数
          * @param $form
@@ -60,9 +84,24 @@ define(function (require, exports, module) {
 
             the.id = alienIndex++;
             the._initRule();
+            the._initCustomRules();
             the._initEvent();
 
             return the;
+        },
+
+
+        /**
+         * 添加自定义规则
+         * 添加到实例上，避免污染
+         * @private
+         */
+        _initCustomRules: function () {
+            var the = this;
+
+            dato.each(customRulesList, function (index, args) {
+                the._validator.registerRule.apply(the._validator, args);
+            });
         },
 
 
@@ -154,19 +193,9 @@ define(function (require, exports, module) {
         _onvalidate: function (eve) {
             var the = this;
             var $input = eve.target;
-            var data = {};
             var name = $input.name;
 
-            data[name] = the._getVal(name);
-            the.emit('validatebefore', $input);
-            the._validator.validateOne(data, function (err, val) {
-                if (err) {
-                    return the.emitMsg(name, err.message);
-                }
-
-                the.emitMsg(name, the._options.successMsg, true);
-                the.emit('validateafter', $input, err);
-            });
+            the.validateOne(name);
         },
 
 
@@ -269,9 +298,9 @@ define(function (require, exports, module) {
 
             callback = typeis.function(callback) ? callback : noop;
             data[name] = the._getVal(name);
-            the.emit('validatebefore', $input);
+            the.emit('validateonebefore', $input);
             the._validator.validateOne(data, function (err) {
-                the.emit('validateafter', $input);
+                the.emit('validateoneafter', $input);
                 the.emitMsg(name, err ? err.message : the._options.successMsg, !err);
                 callback.apply(this, arguments);
             });
@@ -293,10 +322,10 @@ define(function (require, exports, module) {
                 data[name] = the._getVal(name);
             });
 
-            the.emit('validatebefore', the._$form);
+            the.emit('validateallbefore', the._$form);
             the._validator.validateAll(data, function (errs) {
                 callback.apply(this, arguments);
-                the.emit('validateafter', the._$form, errs);
+                the.emit('validateallafter', the._$form, errs);
 
                 if (!errs) {
                     return;
@@ -353,4 +382,13 @@ define(function (require, exports, module) {
      * @param [options] {Object} 配置
      */
     module.exports = Validator;
+    customRulesList.push([{
+        name: 'suffix',
+        type: 'array'
+    }, function (suffix, val, next) {
+        var sf = (val.match(/\.[^.]*$/) || [''])[0];
+        var boolean = suffix.indexOf(sf) > -1;
+
+        next(boolean ? null : new Error(this.alias + '的后缀不正确'), val);
+    }]);
 });
