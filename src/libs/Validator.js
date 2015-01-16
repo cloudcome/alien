@@ -283,7 +283,7 @@ define(function (require, exports, module) {
             var over = function (err) {
                 // onafter
                 if (typeis(rule.onafter) === 'function' && !err) {
-                    data[rule.name] = rule.onafter(val, data);
+                    data[rule.name] = rule.onafter.call(rule, val, data);
                 }
 
                 // callback
@@ -295,7 +295,7 @@ define(function (require, exports, module) {
 
             // onbefore
             if (typeis(rule.onbefore) === 'function') {
-                data[rule.name] = val = rule.onbefore(val, data);
+                data[rule.name] = val = rule.onbefore.call(rule, val, data);
             }
 
             type = typeis(val);
