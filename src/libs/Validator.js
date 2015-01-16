@@ -57,10 +57,11 @@ define(function (require, exports, module) {
          * validator.registerRule({
          *     name: 'suffix',
          *     type: 'array'
-         * }, function(suffix, val){
+         * }, function(suffix, val, next){
          *     var sf = val.match(/\.[^.]*$/)[0];
+         *     var boolen = suffix.indexOf(sf) > -1;
          *
-         *     return suffix.indexOf(sf) > -1;
+         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
          * });
          */
         registerRule: function (options, fn, isOverride) {
@@ -320,19 +321,43 @@ define(function (require, exports, module) {
          * @private
          */
         _validateOne: function (rule, data, callback) {
+            var the = this;
             var val = data[rule.name];
             var err;
             var type;
-            var over = function (err) {
-                // onafter
-                if (typeis(rule.onafter) === 'function' && !err) {
-                    data[rule.name] = rule.onafter.call(rule, val, data);
+            var onover = function (err) {
+                var ondone = function () {
+                    // onafter
+                    if (typeis(rule.onafter) === 'function' && !err) {
+                        data[rule.name] = rule.onafter.call(rule, val, data);
+                    }
+
+                    // callback
+                    if (typeis(callback) === 'function') {
+                        callback(err, data);
+                    }
+                };
+
+                if (err) {
+                    return ondone(err);
                 }
 
-                // callback
-                if (typeis(callback) === 'function') {
-                    callback(err, data);
-                }
+                howdo.each(the._customRules, function (ruleName, ruleInfo, next) {
+                    var _rule = rule[ruleName];
+
+                    if (typeis(_rule) !== ruleInfo.type) {
+                        return next();
+                    }
+
+                    ruleInfo.function.call(rule, _rule, val, function (err) {
+                        if (!err) {
+                            return next();
+                        }
+
+                        err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
+                        next(err);
+                    });
+                }).follow(ondone);
             };
             var functionLength;
 
@@ -363,7 +388,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.required || rule.alias + '不能为空');
 
                     if (!info.stringLength) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -375,21 +400,21 @@ define(function (require, exports, module) {
                     case 'email':
                     case 'url':
                         if (type !== 'string') {
-                            return over(err);
+                            return onover(err);
                         }
 
                         if (rule.type === 'email' && !typeis.email(val)) {
-                            return over(err);
+                            return onover(err);
                         }
 
                         if (rule.type === 'url' && !typeis.url(val)) {
-                            return over(err);
+                            return onover(err);
                         }
                         break;
 
                     default:
                         if (rule.type && type !== rule.type) {
-                            return over(err);
+                            return onover(err);
                         }
                 }
 
@@ -398,7 +423,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.length || rule.alias + '长度必须为' + rule.length + '字符');
 
                     if (info.stringLength !== rule.length) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -407,7 +432,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.bytes || rule.alias + '长度必须为' + rule.bytes + '字节');
 
                     if (info.stringBytes !== rule.bytes) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -416,7 +441,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.minLength || rule.alias + '长度不能少于' + rule.minLength + '字符');
 
                     if (info.stringLength < rule.minLength) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -425,7 +450,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.minBytes || rule.alias + '长度不能少于' + rule.minBytes + '字节');
 
                     if (info.stringBytes < rule.minBytes) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -434,7 +459,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.maxLength || rule.alias + '长度不能超过' + rule.maxLength + '字符');
 
                     if (info.stringLength > rule.maxLength) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -443,7 +468,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.maxBytes || rule.alias + '长度不能超过' + rule.maxBytes + '字节');
 
                     if (info.stringBytes > rule.maxBytes) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -451,7 +476,7 @@ define(function (require, exports, module) {
                 if (typeis.array(rule.inArray)) {
                     err = new Error(rule.msg.inArray || rule.alias + '必须是“' + rule.inArray.join('、') + '”其一');
                     if (rule.inArray.indexOf(val) === -1) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -459,7 +484,7 @@ define(function (require, exports, module) {
                 if (typeis.number(rule.min) && type === 'number') {
                     err = new Error(rule.msg.min || rule.alias + '不能小于' + rule.min);
                     if (val < rule.min) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -468,7 +493,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.max || rule.alias + '不能大于' + rule.max);
 
                     if (val > rule.max) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -477,7 +502,7 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.regexp || rule.alias + '不符合规则');
 
                     if (!rule.regexp.test(val)) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
 
@@ -504,9 +529,10 @@ define(function (require, exports, module) {
                     err = new Error(rule.msg.equal || rule.alias + '必须是' + rule.equal);
 
                     if (!_isEqual(val, rule.equal)) {
-                        return over(err);
+                        return onover(err);
                     }
                 }
+
 
                 // function
                 if (typeis(rule.function) === 'function') {
@@ -520,10 +546,10 @@ define(function (require, exports, module) {
                         throw 'arguments are `val,[data],next`';
                     }
                 } else {
-                    over();
+                    onover();
                 }
             } else {
-                over();
+                onover();
             }
         }
     });
