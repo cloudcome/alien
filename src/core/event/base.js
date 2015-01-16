@@ -91,23 +91,18 @@ define(function (require, exports, module) {
 
 
     /**
-     * static
-     * @type {{create: create, dispatch: dispatch, on: on, un: un}}
-     */
-    module.exports = {
-        /**
-         * 事件创建
-         * @param {String} eventType 事件类型
-         * @param {Object} [properties] 事件属性
-         * @param {Boolean} [properties.bubbles] 是否冒泡，默认 true
-         * @param {Boolean} [properties.cancelable] 是否可以被取消冒泡，默认 true
-         * @param {Object} [properties.detail] 事件细节，默认{}
-         * @returns {Event}
-         * @link https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
-         *
-         * @example
-         * event.create('myclick');
-         * event.create('myclick', {
+     * 事件创建
+     * @param {String} eventType 事件类型
+     * @param {Object} [properties] 事件属性
+     * @param {Boolean} [properties.bubbles] 是否冒泡，默认 true
+     * @param {Boolean} [properties.cancelable] 是否可以被取消冒泡，默认 true
+     * @param {Object} [properties.detail] 事件细节，默认{}
+     * @returns {Event}
+     * @link https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+     *
+     * @example
+     * event.create('myclick');
+     * event.create('myclick', {
          *     bubbles: !0,
          *     cancelable: !0,
          *     detail: {
@@ -115,234 +110,265 @@ define(function (require, exports, module) {
          *        b: 2
          *     },
          * });
-         */
-        create: function (eventType, properties) {
-            properties = dato.extend({}, defaults, properties);
+     */
+    exports.create = function (eventType, properties) {
+        properties = dato.extend({}, defaults, properties);
 
-            var et;
-            var args;
-            var eventTypeIndex = 0;
+        var et;
+        var args;
+        var eventTypeIndex = 0;
 
+        try {
+            // ie11+/chrome/firefox
+            et = new Event(eventType, properties);
+        } catch (err1) {
             try {
-                // ie11+/chrome/firefox
-                et = new Event(eventType, properties);
-            } catch (err1) {
-                try {
-                    // who?
-                    et = new CustomEvent(eventType, properties);
-                } catch (err2) {
-                    // <= 10
-                    args = [eventType, !!properties.bubbles, !!properties.cancelable, window, {},
-                        0, 0, 0, 0, !1, !1, !1, !1, 0, null
-                    ];
+                // who?
+                et = new CustomEvent(eventType, properties);
+            } catch (err2) {
+                // <= 10
+                args = [eventType, !!properties.bubbles, !!properties.cancelable, window, {},
+                    0, 0, 0, 0, !1, !1, !1, !1, 0, null
+                ];
 
-                    if (htmlEvents.indexOf(eventType)) {
-                        eventTypeIndex = 1;
-                    } else if (mouseEvents.test(eventType)) {
-                        eventTypeIndex = 2;
-                    } else if (uiEvents.test(eventType)) {
-                        eventTypeIndex = 3;
-                    } else if (mutationEvents.test(eventType)) {
-                        eventTypeIndex = 4;
-                    }
-
-                    et = document.createEvent(eventTypeArr[eventTypeIndex]);
-                    et['init' + eventInitArr[eventTypeIndex] + 'Event'].apply(et, args);
+                if (htmlEvents.indexOf(eventType)) {
+                    eventTypeIndex = 1;
+                } else if (mouseEvents.test(eventType)) {
+                    eventTypeIndex = 2;
+                } else if (uiEvents.test(eventType)) {
+                    eventTypeIndex = 3;
+                } else if (mutationEvents.test(eventType)) {
+                    eventTypeIndex = 4;
                 }
+
+                et = document.createEvent(eventTypeArr[eventTypeIndex]);
+                et['init' + eventInitArr[eventTypeIndex] + 'Event'].apply(et, args);
             }
+        }
 
-            return et;
-        },
+        return et;
+    };
 
-        /**
-         * 触发事件
-         * @param {HTMLElement|Node|EventTarget} ele 元素
-         * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
-         * @param {Event} [copyEvent] 需要复制的事件信息
-         * @returns {Object} event
-         *
-         * @example
-         * event.dispatch(ele, 'myclick');
-         * event.dispatch(ele, myclikEvent);
-         * // 从当前事件 eve 上复制细节信息
-         * event.dispatch(ele, myclikEvent, eve);
-         */
-        dispatch: function (ele, eventTypeOrEvent, copyEvent) {
-            var et = typeis(eventTypeOrEvent) === 'string' ?
-                this.create(eventTypeOrEvent) :
-                eventTypeOrEvent;
+    /**
+     * 触发事件
+     * @param {HTMLElement|Node|EventTarget} ele 元素
+     * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
+     * @param {Event} [copyEvent] 需要复制的事件信息
+     * @returns {Object} event
+     *
+     * @example
+     * event.dispatch(ele, 'myclick');
+     * event.dispatch(ele, myclikEvent);
+     * // 从当前事件 eve 上复制细节信息
+     * event.dispatch(ele, myclikEvent, eve);
+     */
+    exports.dispatch = function (ele, eventTypeOrEvent, copyEvent) {
+        var et = typeis(eventTypeOrEvent) === 'string' ?
+            this.create(eventTypeOrEvent) :
+            eventTypeOrEvent;
 
-            if (copyEvent) {
-                et = this.extend(et, copyEvent);
-            }
+        if (copyEvent) {
+            et = this.extend(et, copyEvent);
+        }
 
-            // 同时触发相同的原生事件会报错
-            try {
-                ele.dispatchEvent(et);
-            } catch (err) {
-                // ignore
-            }
+        // 同时触发相同的原生事件会报错
+        try {
+            ele.dispatchEvent(et);
+        } catch (err) {
+            // ignore
+        }
 
-            return et;
-        },
+        return et;
+    };
 
-        /**
-         * 扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
-         * @param {String|Event} createEvent 创建事件
-         * @param {Event} copyEvent 复制事件
-         * @param {Object} [detail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
-         * @returns {Event} 创建事件
-         *
-         * @example
-         * event.extend('myclick', clickEvent, {
+    /**
+     * 扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
+     * @param {String|Event} createEvent 创建事件
+     * @param {Event} copyEvent 复制事件
+     * @param {Object} [detail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
+     * @returns {Event} 创建事件
+     *
+     * @example
+     * event.extend('myclick', clickEvent, {
          *     a: 1,
          *     b: 2
          * });
-         */
-        extend: function (createEvent, copyEvent, detail) {
-            if (typeis(createEvent) === 'string') {
-                createEvent = this.create(createEvent);
-            }
-
-            dato.each(mustEventProperties, function (index, prototype) {
-                if (prototype in copyEvent) {
-                    try {
-                        // 某些浏览器不允许重写只读属性，如 iPhone safari
-                        createEvent[prototype] = copyEvent[prototype];
-                    } catch (err) {
-                        // ignore
-                    }
-                }
-            });
-
-            detail = detail || {};
-            createEvent.alienDetail = createEvent.alienDetail || {};
-
-            dato.each(detail, function (key, val) {
-                createEvent.alienDetail[key] = val;
-            });
-
-            return createEvent;
-        },
-
-        /**
-         * 事件监听
-         * @param {Object|HTMLElement|Node} element 元素
-         * @param {String} eventType 事件类型，多个事件使用空格分开
-         * @param {String} [selector] 事件委托时的选择器，默认空
-         * @param {Function} listener 事件回调
-         * @param {Boolean} [isCapture] 是否事件捕获，默认false
-         *
-         * @example
-         * // un capture
-         * event.on(ele, 'click', fn, false):
-         * event.on(ele, 'click', 'li', fn, false):
-         *
-         * // is capture
-         * event.on(ele, 'click', fn, true):
-         * event.on(ele, 'click', 'li', fn, true):
-         */
-        on: function (element, eventType, selector, listener, isCapture) {
-            if (!element || !element.addEventListener) {
-                return;
-            }
-
-            var callback;
-            var eventTypes = String(eventType).trim().split(regSpace);
-            isCapture = arguments[arguments.length - 1];
-
-            if (typeis(isCapture) !== 'boolean') {
-                isCapture = !1;
-            }
-
-            // on self
-            // .on(body, 'click', fn);
-            if (typeis(arguments[2]) === 'function') {
-                callback = arguments[2];
-                listener = arguments[2];
-            }
-            // delegate
-            // .on(body, 'click', 'p', fn)
-            else if (typeis(listener) === 'function') {
-                callback = function (eve) {
-                    // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
-                    var closestElement = domSelector.closest(eve.target, selector);
-
-                    if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
-                        return listener.call(closestElement[0], eve);
-                    }
-                };
-            }
-
-            if (callback) {
-                dato.each(eventTypes, function (index, eventType) {
-                    if (typeis(listener) === 'function' && eventType) {
-                        _on(element, eventType, callback, listener, isCapture);
-                    }
-                });
-            }
-        },
-
-        /**
-         * 移除事件监听
-         * @param {window|HTMLElement|Node} element 元素
-         * @param {String} eventType 事件类型
-         * @param {Function} [listener=null] 回调，回调为空表示删除所有已经在 alien 中注册的事件
-         * @param {Boolean} [isCapture=false] 是否事件捕获，默认false
-         *
-         * @example
-         * // remove one listener
-         * event.un(ele, 'click', fn, false);
-         * event.un(ele, 'click', fn, true);
-         *
-         * // remove all listener
-         * event.un(ele, 'click', false);
-         * event.un(ele, 'click');
-         */
-        un: function (element, eventType, listener, isCapture) {
-            if (!element || !element.addEventListener) {
-                return;
-            }
-
-            var args = Array.prototype.slice.call(arguments);
-            var eventTypes = String(eventType).trim().split(regSpace);
-
-            dato.each(eventTypes, function (index, eventType) {
-                if (eventType) {
-                    args.splice(1, 1, eventType);
-                    _un.apply(window, args);
-                }
-            });
-        },
-
-        /**
-         * 获得某元素的事件队列长度
-         * @param {window|HTMLElement|Node} ele 元素
-         * @param {String} eventType 单个事件类型
-         * @param {Boolean} [isCapture=false] 是否为捕获事件，默认为 false
-         * @returns {Number} 事件队列长度，最小值为0
-         *
-         * @example
-         * event.length(ele, 'click');
-         * // => 0 or more
-         *
-         * event.length(ele, 'click', true);
-         * // => 0 or more
-         */
-        length: function (ele, eventType, isCapture) {
-            var id = ele[key];
-            eventType = String(eventType).trim();
-
-            if (!eventType) {
-                return 0;
-            }
-
-            return isCapture ?
-                (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
-                isCaptureOriginalListeners[id][eventType] || []).length :
-                (unCaptureOriginalListeners && unCaptureOriginalListeners[id] &&
-                unCaptureOriginalListeners[id][eventType] || []).length;
+     */
+    exports.extend = function (createEvent, copyEvent, detail) {
+        if (typeis(createEvent) === 'string') {
+            createEvent = this.create(createEvent);
         }
+
+        dato.each(mustEventProperties, function (index, prototype) {
+            if (prototype in copyEvent) {
+                try {
+                    // 某些浏览器不允许重写只读属性，如 iPhone safari
+                    createEvent[prototype] = copyEvent[prototype];
+                } catch (err) {
+                    // ignore
+                }
+            }
+        });
+
+        detail = detail || {};
+        createEvent.alienDetail = createEvent.alienDetail || {};
+
+        dato.each(detail, function (key, val) {
+            createEvent.alienDetail[key] = val;
+        });
+
+        return createEvent;
+    };
+
+    /**
+     * 事件监听
+     * @param {Object|HTMLElement|Node} element 元素
+     * @param {String} eventType 事件类型，多个事件使用空格分开
+     * @param {String} [selector] 事件委托时的选择器，默认空
+     * @param {Function} listener 事件回调
+     * @param {Boolean} [isCapture] 是否事件捕获，默认false
+     *
+     * @example
+     * // un capture
+     * event.on(ele, 'click', fn, false):
+     * event.on(ele, 'click', 'li', fn, false):
+     *
+     * // is capture
+     * event.on(ele, 'click', fn, true):
+     * event.on(ele, 'click', 'li', fn, true):
+     */
+    exports.on = function (element, eventType, selector, listener, isCapture) {
+        if (!element || !element.addEventListener) {
+            return;
+        }
+
+        var callback;
+        var eventTypes = String(eventType).trim().split(regSpace);
+        isCapture = arguments[arguments.length - 1];
+
+        if (typeis(isCapture) !== 'boolean') {
+            isCapture = !1;
+        }
+
+        // on self
+        // .on(body, 'click', fn);
+        if (typeis(arguments[2]) === 'function') {
+            callback = arguments[2];
+            listener = arguments[2];
+        }
+        // delegate
+        // .on(body, 'click', 'p', fn)
+        else if (typeis(listener) === 'function') {
+            callback = function (eve) {
+                // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
+                var closestElement = domSelector.closest(eve.target, selector);
+
+                if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
+                    return listener.call(closestElement[0], eve);
+                }
+            };
+        }
+
+        if (callback) {
+            dato.each(eventTypes, function (index, eventType) {
+                if (typeis(listener) === 'function' && eventType) {
+                    _on(element, eventType, callback, listener, isCapture);
+                }
+            });
+        }
+    };
+
+
+    /**
+     * 移除事件监听
+     * @param {window|HTMLElement|Node} element 元素
+     * @param {String} eventType 事件类型
+     * @param {Function} [listener=null] 回调，回调为空表示删除所有已经在 alien 中注册的事件
+     * @param {Boolean} [isCapture=false] 是否事件捕获，默认false
+     *
+     * @example
+     * // remove one listener
+     * event.un(ele, 'click', fn, false);
+     * event.un(ele, 'click', fn, true);
+     *
+     * // remove all listener
+     * event.un(ele, 'click', false);
+     * event.un(ele, 'click');
+     */
+    exports.un = function (element, eventType, listener, isCapture) {
+        if (!element || !element.addEventListener) {
+            return;
+        }
+
+        var args = Array.prototype.slice.call(arguments);
+        var eventTypes = String(eventType).trim().split(regSpace);
+
+        dato.each(eventTypes, function (index, eventType) {
+            if (eventType) {
+                args.splice(1, 1, eventType);
+                _un.apply(window, args);
+            }
+        });
+    };
+
+
+    /**
+     * 单次事件监听
+     * @param {Object|HTMLElement|Node} element 元素
+     * @param {String} eventType 事件类型，多个事件使用空格分开
+     * @param {String} [selector] 事件委托时的选择器，默认空
+     * @param {Function} listener 事件回调
+     * @param {Boolean} [isCapture] 是否事件捕获，默认false
+     *
+     * @example
+     * // un capture
+     * event.once(ele, 'click', fn, false):
+     * event.once(ele, 'click', 'li', fn, false):
+     *
+     * // is capture
+     * event.once(ele, 'click', fn, true):
+     * event.once(ele, 'click', 'li', fn, true):
+     */
+    exports.once = function (element, eventType, selector, listener, isCapture) {
+        var args = arguments;
+
+        listener = typeis.function(args[2]) ? args[2] : args[3];
+
+        var callback = function () {
+            exports.un(element, eventType, callback);
+            listener.call.apply(this, arguments);
+        };
+
+        exports.on(element, eventType, selector, callback, isCapture);
+    };
+
+    /**
+     * 获得某元素的事件队列长度
+     * @param {window|HTMLElement|Node} ele 元素
+     * @param {String} eventType 单个事件类型
+     * @param {Boolean} [isCapture=false] 是否为捕获事件，默认为 false
+     * @returns {Number} 事件队列长度，最小值为0
+     *
+     * @example
+     * event.length(ele, 'click');
+     * // => 0 or more
+     *
+     * event.length(ele, 'click', true);
+     * // => 0 or more
+     */
+    exports.length = function (ele, eventType, isCapture) {
+        var id = ele[key];
+        eventType = String(eventType).trim();
+
+        if (!eventType) {
+            return 0;
+        }
+
+        return isCapture ?
+            (isCaptureOriginalListeners && isCaptureOriginalListeners[id] &&
+            isCaptureOriginalListeners[id][eventType] || []).length :
+            (unCaptureOriginalListeners && unCaptureOriginalListeners[id] &&
+            unCaptureOriginalListeners[id][eventType] || []).length;
     };
 
 

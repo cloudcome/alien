@@ -129,20 +129,20 @@ define(function (require, exports, module) {
     var jud = 'string number function object undefined null nan element regexp boolean array window document global'.split(' ');
     var makeStatic = function (tp) {
         /**
-         * @property string
-         * @property number
-         * @property function
-         * @property object
-         * @property undefined
-         * @property null
-         * @property nan
-         * @property element
-         * @property regexp
-         * @property boolean
-         * @property array
-         * @property window
-         * @property document
-         * @property global
+         * @static string
+         * @static number
+         * @static function
+         * @static object
+         * @static undefined
+         * @static null
+         * @static nan
+         * @static element
+         * @static regexp
+         * @static boolean
+         * @static array
+         * @static window
+         * @static document
+         * @static global
          * @returns {boolean}
          */
         typeis[tp] = function (obj) {
