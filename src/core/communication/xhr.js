@@ -77,10 +77,13 @@ define(function (require, exports, module) {
             var xhr = new XMLHttpRequest();
             var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
             var oncallback = function (err, ret) {
+                if(err){
+                    err.message = err.message || 'network error';
+                }
+
                 the.emit('complete', err, ret);
 
                 if (err) {
-                    err.message = err.message || 'network error';
                     the.emit('error', err);
                 } else {
                     the.emit('success', ret);
