@@ -9,7 +9,9 @@ define(function (require, exports, module) {
     'use strict';
 
     var Validator = require('/src/ui/Validator/');
-    var v1 = new Validator('#form');
+    var v1 = new Validator('#form', {
+        successMsg: null
+    });
     var $submit = document.getElementById('submit');
 
     //Validator.registerRule({

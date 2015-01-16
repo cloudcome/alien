@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 表单验证
  * @author ydr.me
  * @create 2015-01-16 13:51
  */
@@ -32,7 +32,6 @@ define(function (require, exports, module) {
         dataMessageAttr: 'msg',
         formItemSelector: '.form-item',
         formMsgSelector: '.form-msg',
-        isVisibleOnSuccess: false,
         isBreakOnInvalid: false,
         validateEvent: 'focusout',
         successMsg: '填写正确'
@@ -127,6 +126,8 @@ define(function (require, exports, module) {
                     return;
                 }
 
+                var id = $input.id;
+                var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
                 var $formItem = selector.closest($input, options.formItemSelector)[0];
                 var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
                 var rule = attribute.data($input, options.dataRuleAttr);
@@ -161,6 +162,7 @@ define(function (require, exports, module) {
                 };
 
                 dato.extend(true, rule, standar);
+                rule.alias = rule.alias || ($label ? $label.innerText : udf);
                 the._validator.pushRule(rule);
                 the._nameItemMap[name] = $formItem;
                 the._nameMsgMap[name] = $formMsg;
@@ -282,6 +284,12 @@ define(function (require, exports, module) {
             attribute.removeClass($formItem, formItemStatusClass);
             attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
 
+            if (the._options.successMsg === null) {
+                attribute.state($formMsg, isSuccess ? 'hide' : 'show');
+            } else {
+                attribute.state($formMsg, 'show');
+            }
+
             return the;
         },
 
@@ -380,6 +388,13 @@ define(function (require, exports, module) {
      *
      * @param $form {Node|String} form 节点
      * @param [options] {Object} 配置
+     * @param [options.dataRuleAttr="validator"] {String} 存放验证规则的 data-attribute 名称
+     * @param [options.dataMessageAttr="msg"] {String} 存放验证消息的 data-attribute 名称
+     * @param [options.formItemSelector=".form-item"] {String} 表单项选择器
+     * @param [options.formMsgSelector=".form-msg"] {String} 表单消息选择器
+     * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
+     * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
+     * @param [options.successMsg="填写正确"] {String|null} 正确消息，如果为 null，则在正确时隐藏
      */
     module.exports = Validator;
     customRulesList.push([{
