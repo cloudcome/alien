@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var width = innerWidth.concat(['paddingLeft', 'paddingRight']);
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
-
+    var alienKey = 'alien-core-dom-attribute-';
     var attribute = module.exports = {
         /**
          * 设置、获取元素的属性
@@ -481,6 +481,10 @@ define(function (require, exports, module) {
             var none = 'none';
             var block = 'block !important';
 
+            if (!ele[alienKey + key]) {
+                ele[alienKey + key] = attribute.css(ele, 'display');
+            }
+
             // get
             if (!state) {
                 if (!ele || ele.nodeType !== 1) {
@@ -511,11 +515,12 @@ define(function (require, exports, module) {
             }
 
             if (nowState === 'show') {
+                ele[alienKey + key] = attribute.css(ele, 'display');
                 ele.style.display = none;
             } else {
                 while (this.state(ele) !== state) {
                     if (this.css(ele, key) === none) {
-                        this.css(ele, key, block);
+                        this.css(ele, key, ele[alienKey + key] || block);
                         ret.push(ele);
                     }
 
