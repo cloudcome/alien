@@ -24,6 +24,7 @@ define(function (require, exports, module) {
         // ignore
     };
     var udf;
+    var customRules = {};
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -32,59 +33,54 @@ define(function (require, exports, module) {
         isBreakOnInvalid: false
     };
     var Validator = klass.create({
-        STATIC: {},
+        STATIC: {
+            /**
+             * 注册自定义的验证规则
+             * @param options {Object} 规则配置
+             * @param rule {Function} 规则方法
+             * @param [isOverride=false] 是否覆盖已有规则
+             *
+             * @example
+             * // 添加一个检查后缀的自定义规则
+             * Validator.registerRule({
+             *     name: 'suffix',
+             *     type: 'array'
+             * }, function(suffix, val, next){
+             *     var sf = val.match(/\.[^.]*$/)[0];
+             *     var boolen = suffix.indexOf(sf) > -1;
+             *
+             *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+             * });
+             */
+            registerRule: function (options, fn, isOverride) {
+                if (!typeis.object(options)) {
+                    throw 'custom validate rule options must be an object';
+                }
+
+                if (!typeis.function(fn)) {
+                    throw 'custom validate rule function must be a function';
+                }
+
+                if (!customRules[options.name] || customRules[options.name] && isOverride) {
+                    customRules[options.name] = {
+                        name: options.name,
+                        type: options.type,
+                        function: options.function
+                    };
+                }
+            }
+        },
         constructor: function (options) {
             var the = this;
             // 规则列表，有顺序之分
             the._ruleList = [];
             // 已经存在的验证规则
             the._ruleNames = {};
-            the._customRules = {};
             the.rules = {};
             // 选项
             the._options = dato.extend(true, {}, defaults, options);
         },
 
-
-        /**
-         * 注册自定义的验证规则
-         * @param options {Object} 规则配置
-         * @param rule {Function} 规则方法
-         * @param [isOverride=false] 是否覆盖已有规则
-         *
-         * @example
-         * // 添加一个检查后缀的自定义规则
-         * validator.registerRule({
-         *     name: 'suffix',
-         *     type: 'array'
-         * }, function(suffix, val, next){
-         *     var sf = val.match(/\.[^.]*$/)[0];
-         *     var boolen = suffix.indexOf(sf) > -1;
-         *
-         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-         * });
-         */
-        registerRule: function (options, fn, isOverride) {
-            var the = this;
-
-            if (!typeis.object(options)) {
-                throw 'custom validate rule options must be an object';
-            }
-
-            if (!typeis.function(fn)) {
-                throw 'custom validate rule function must be a function';
-            }
-
-            if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
-                the._customRules[options.name] = {
-                    name: options.name,
-                    type: options.type,
-                    function: options.function
-                };
-            }
-
-            return the;
-        },
 
         /**
          * 添加单个验证规则
@@ -342,7 +338,7 @@ define(function (require, exports, module) {
                     return ondone(err);
                 }
 
-                howdo.each(the._customRules, function (ruleName, ruleInfo, next) {
+                howdo.each(customRules, function (ruleName, ruleInfo, next) {
                     var _rule = rule[ruleName];
 
                     if (typeis(_rule) !== ruleInfo.type) {
