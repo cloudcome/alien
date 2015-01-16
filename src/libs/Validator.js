@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     var howdo = require('../util/howdo.js');
     var types = 'string,number,email,url,boolean'.split(',');
     var noop = function () {
+        // ignore
     };
     var udf;
     var defaults = {
