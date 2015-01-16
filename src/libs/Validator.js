@@ -206,7 +206,7 @@ define(function (require, exports, module) {
             callback = typeis(callback) === 'function' ? callback : noop;
 
             howdo.each(the._ruleList, function (key, rule, next) {
-                the._validate(rule, data, function (err) {
+                the._validateOne(rule, data, function (err) {
                     if (!isBreakOnInvalid) {
                         errList.push(err);
                     }
@@ -258,12 +258,14 @@ define(function (require, exports, module) {
                 });
 
                 if (findIndex > -1) {
-                    the._validate(the._ruleList[findIndex], data, callback);
+                    the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                        callback(err, data[name]);
+                    });
                 } else {
-                    callback(null, data);
+                    callback(null, data[name]);
                 }
             } else {
-                callback(null, data);
+                callback(null, data[name]);
             }
         },
 
@@ -276,7 +278,7 @@ define(function (require, exports, module) {
          * @returns {*}
          * @private
          */
-        _validate: function (rule, data, callback) {
+        _validateOne: function (rule, data, callback) {
             var val = data[rule.name];
             var err;
             var type;
@@ -351,7 +353,7 @@ define(function (require, exports, module) {
                 }
 
                 // length
-                if (rule.length && type === 'string') {
+                if (typeis.number(rule.length) && type === 'string') {
                     err = new Error(rule.msg.length || rule.alias + '长度必须为' + rule.length + '字符');
 
                     if (info.stringLength !== rule.length) {
@@ -360,7 +362,7 @@ define(function (require, exports, module) {
                 }
 
                 // bytes
-                if (rule.bytes && type === 'string') {
+                if (typeis.number(rule.bytes) && type === 'string') {
                     err = new Error(rule.msg.bytes || rule.alias + '长度必须为' + rule.bytes + '字节');
 
                     if (info.stringBytes !== rule.bytes) {
@@ -369,7 +371,7 @@ define(function (require, exports, module) {
                 }
 
                 // minLength
-                if (rule.minLength && type === 'string') {
+                if (typeis.number(rule.minLength) && type === 'string') {
                     err = new Error(rule.msg.minLength || rule.alias + '长度不能少于' + rule.minLength + '字符');
 
                     if (info.stringLength < rule.minLength) {
@@ -378,7 +380,7 @@ define(function (require, exports, module) {
                 }
 
                 // minBytes
-                if (rule.minBytes && type === 'string') {
+                if (typeis.number(rule.minBytes) && type === 'string') {
                     err = new Error(rule.msg.minBytes || rule.alias + '长度不能少于' + rule.minBytes + '字节');
 
                     if (info.stringBytes < rule.minBytes) {
@@ -386,9 +388,8 @@ define(function (require, exports, module) {
                     }
                 }
 
-
                 // maxLength
-                if (rule.maxLength && type === 'string') {
+                if (typeis.number(rule.maxLength) && type === 'string') {
                     err = new Error(rule.msg.maxLength || rule.alias + '长度不能超过' + rule.maxLength + '字符');
 
                     if (info.stringLength > rule.maxLength) {
@@ -397,7 +398,7 @@ define(function (require, exports, module) {
                 }
 
                 // maxBytes
-                if (rule.maxBytes && type === 'string') {
+                if (typeis.number(rule.maxBytes) && type === 'string') {
                     err = new Error(rule.msg.maxBytes || rule.alias + '长度不能超过' + rule.maxBytes + '字节');
 
                     if (info.stringBytes > rule.maxBytes) {
@@ -406,7 +407,7 @@ define(function (require, exports, module) {
                 }
 
                 // inArray
-                if (rule.inArray) {
+                if (typeis.array(rule.inArray)) {
                     err = new Error(rule.msg.inArray || rule.alias + '必须是“' + rule.inArray.join('、') + '”其一');
                     if (rule.inArray.indexOf(val) === -1) {
                         return over(err);
@@ -414,7 +415,7 @@ define(function (require, exports, module) {
                 }
 
                 // min
-                if (rule.min && type === 'number') {
+                if (typeis.number(rule.min) && type === 'number') {
                     err = new Error(rule.msg.min || rule.alias + '不能小于' + rule.min);
                     if (val < rule.min) {
                         return over(err);
@@ -422,7 +423,7 @@ define(function (require, exports, module) {
                 }
 
                 // max
-                if (rule.max && type === 'number') {
+                if (typeis.number(rule.max) && type === 'number') {
                     err = new Error(rule.msg.max || rule.alias + '不能大于' + rule.max);
 
                     if (val > rule.max) {
@@ -431,7 +432,7 @@ define(function (require, exports, module) {
                 }
 
                 // regexp
-                if (rule.regexp && type === 'string') {
+                if (typeis.regexp(rule.regexp) && type === 'string') {
                     err = new Error(rule.msg.regexp || rule.alias + '不符合规则');
 
                     if (!rule.regexp.test(val)) {
