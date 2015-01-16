@@ -332,15 +332,21 @@ define(function (require, exports, module) {
     exports.once = function (element, eventType, selector, listener, isCapture) {
         var args = arguments;
 
+        selector = typeis.string(args[2]) ? args[2] : null;
         listener = typeis.function(args[2]) ? args[2] : args[3];
 
         var callback = function () {
             exports.un(element, eventType, callback);
-            listener.call.apply(this, arguments);
+            listener.apply(this, arguments);
         };
 
-        exports.on(element, eventType, selector, callback, isCapture);
+        if (selector) {
+            exports.on(element, eventType, selector, callback, isCapture);
+        } else {
+            exports.on(element, eventType, callback, isCapture);
+        }
     };
+
 
     /**
      * 获得某元素的事件队列长度
