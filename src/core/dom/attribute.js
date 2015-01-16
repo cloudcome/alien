@@ -326,7 +326,15 @@ define(function (require, exports, module) {
 
                     try {
                         return JSON.parse(ret);
-                    } catch (err) {
+                    } catch (err1) {
+                        var fn = new Function('', 'return ' + ret);
+
+                        try {
+                            ret = fn();
+                        } catch (err2) {
+                            // ignore
+                        }
+
                         return ret;
                     }
                 },
