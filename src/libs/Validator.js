@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var Validator = klass.create({
         STATIC: {
             /**
-             * 注册自定义的验证规则
+             * 注册自定义的静态验证规则
              * @param options {Object} 规则配置
              * @param rule {Function} 规则方法
              * @param [isOverride=false] 是否覆盖已有规则
@@ -53,14 +53,6 @@ define(function (require, exports, module) {
              * });
              */
             registerRule: function (options, fn, isOverride) {
-                if (!typeis.object(options)) {
-                    throw 'custom validate rule options must be an object';
-                }
-
-                if (!typeis.function(fn)) {
-                    throw 'custom validate rule function must be a function';
-                }
-
                 if (!customRules[options.name] || customRules[options.name] && isOverride) {
                     customRules[options.name] = {
                         name: options.name,
@@ -70,15 +62,49 @@ define(function (require, exports, module) {
                 }
             }
         },
+
+
         constructor: function (options) {
             var the = this;
             // 规则列表，有顺序之分
             the._ruleList = [];
             // 已经存在的验证规则
             the._ruleNames = {};
+            the._customRules = {};
             the.rules = {};
             // 选项
             the._options = dato.extend(true, {}, defaults, options);
+        },
+
+
+        /**
+         * 注册自定义的实例验证规则
+         * @param options {Object} 规则配置
+         * @param rule {Function} 规则方法
+         * @param [isOverride=false] 是否覆盖已有规则
+         *
+         * @example
+         * // 添加一个检查后缀的自定义规则
+         * validator.registerRule({
+             *     name: 'suffix',
+             *     type: 'array'
+             * }, function(suffix, val, next){
+             *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+             *     var boolean = suffix.indexOf(sf) > -1;
+             *
+             *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+             * });
+         */
+        registerRule: function (options, fn, isOverride) {
+            var the = this;
+
+            if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
+                the._customRules[options.name] = {
+                    name: options.name,
+                    type: options.type,
+                    fn: fn
+                };
+            }
         },
 
 
@@ -338,22 +364,34 @@ define(function (require, exports, module) {
                     return ondone(err);
                 }
 
-                howdo.each(customRules, function (ruleName, ruleInfo, next) {
-                    var _rule = rule[ruleName];
+                var runCustomRules = function (customRules) {
+                    return function (callback) {
+                        howdo.each(customRules, function (ruleName, ruleInfo, next) {
+                            var _rule = rule[ruleName];
 
-                    if (typeis(_rule) !== ruleInfo.type) {
-                        return next();
-                    }
+                            if (typeis(_rule) !== ruleInfo.type) {
+                                return next();
+                            }
 
-                    ruleInfo.fn.call(rule, _rule, val, function (err) {
-                        if (!err) {
-                            return next();
-                        }
+                            ruleInfo.fn.call(rule, _rule, val, function (err) {
+                                if (!err) {
+                                    return next();
+                                }
 
-                        err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
-                        next(err);
-                    });
-                }).follow(ondone);
+                                err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
+                                next(err);
+                            });
+                        }).follow(callback);
+                    };
+                };
+
+                howdo
+                    // 静态自定义验证规则
+                    .task(runCustomRules(customRules))
+                    // 实例自定义验证规则
+                    .task(runCustomRules(the._customRules))
+                    // 异步串行
+                    .follow(ondone);
             };
             var functionLength;
 
