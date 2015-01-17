@@ -327,9 +327,8 @@ define(function (require, exports, module) {
                     try {
                         return JSON.parse(ret);
                     } catch (err1) {
-                        var fn = new Function('', 'return ' + ret);
-
                         try {
+                            var fn = new Function('', 'return ' + ret);
                             ret = fn();
                         } catch (err2) {
                             // ignore
