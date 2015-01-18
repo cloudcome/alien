@@ -181,11 +181,9 @@ define(function (require, exports, module) {
             var to = the._getPos();
 
             animation.animate(the._$window, to, {
-                durtaion: options.duration,
+                duration: options.duration,
                 easing: options.easing
             }, function () {
-                the.emit('open');
-
                 if (typeis.function(callback)) {
                     callback.call(the);
                 }
