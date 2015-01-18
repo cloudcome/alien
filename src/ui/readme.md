@@ -7,8 +7,8 @@ var defaults = {
     height: 300
 };
 var dato = require('../../util/dato.js');
-var generator = require('../generator.js');
-var MyUI = generator({
+var ui = require('../base.js');
+var MyUI = ui.create({
     // 构造函数的静态属性、方法
     STATIC: {
         /**
