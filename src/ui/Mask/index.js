@@ -99,9 +99,7 @@ define(function (require, exports, module) {
             var the = this;
 
             event.on(the._$mask, 'click tap', function (eve) {
-                if (eve.target === the._$mask) {
-                    the.emit('hit');
-                }
+                the.emit('hit');
             });
         },
 
@@ -244,6 +242,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the.close();
+            event.un(the._$mask, 'click tap');
             modification.remove(the._$mask);
 
             if (typeis.function(callback)) {
