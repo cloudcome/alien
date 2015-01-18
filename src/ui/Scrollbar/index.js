@@ -350,10 +350,10 @@ define(function (require, exports, module) {
                 });
 
                 event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
-                event.on(the._$thumbX, 'click tap', function () {
+                event.on(the._$trackX, 'click tap', function () {
                     return false;
                 });
-                event.on(the._$thumbY, 'click tap', function () {
+                event.on(the._$trackY, 'click tap', function () {
                     return false;
                 });
 
@@ -606,8 +606,14 @@ define(function (require, exports, module) {
             var the = this;
 
             // 清除拖拽
-            event.un(the._$thumbX, 'dragsatrt drag dragend click tap');
-            event.un(the._$thumbY, 'dragsatrt drag dragend click tap');
+            var eve1 = 'dragsatrt drag dragend';
+            event.un(the._$thumbX, eve1);
+            event.un(the._$thumbY, eve1);
+
+            // 清楚单击、tap
+            var eve2 = 'click tap';
+            event.un(the._$trackX, eve2);
+            event.un(the._$trackY, eve2);
 
             // 清除监听
             event.un(the._$ele, updateEvent);
