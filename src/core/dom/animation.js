@@ -171,12 +171,11 @@ define(function (require, exports, module) {
             easingVal.push(easing);
         }
 
-        attribute.css(ele, 'transition-duration', durationVal.join(','));
-        attribute.css(ele, 'transition-delay', delayVal.join(','));
-        attribute.css(ele, 'transition-timing-function', easingVal.join(','));
-        attribute.css(ele, 'transition-property', keys.join(','));
-
         setTimeout(function () {
+            attribute.css(ele, 'transition-duration', durationVal.join(','));
+            attribute.css(ele, 'transition-delay', delayVal.join(','));
+            attribute.css(ele, 'transition-timing-function', easingVal.join(','));
+            attribute.css(ele, 'transition-property', keys.join(','));
             dato.each(fixTo, function (key, val) {
                 attribute.css(ele, key, val);
             });
