@@ -115,6 +115,10 @@ define(function (require, exports, module) {
             var nodes = selector.query('.j-flag', node);
 
             modification.insert(node, the._$window);
+            attribute.css(the._$window, {
+                width: options.width,
+                height: options.height
+            });
             the._$msg = node;
             the._$header = nodes[0];
             the._$title = nodes[1];
@@ -218,20 +222,6 @@ define(function (require, exports, module) {
             });
         }
     });
-
-    //event.on(document, 'keyup', function (eve) {
-    //    var mask;
-    //    var msg;
-    //
-    //    if (eve.which === 27 && Mask.maskWindowList.length) {
-    //        mask = Mask.getTopMask();
-    //        msg = mask.__msg;
-    //
-    //        if (msg && msg.emit('esc') !== false) {
-    //            msg.shake();
-    //        }
-    //    }
-    //});
 
     /**
      * 实例化一个 Msg 交互框
