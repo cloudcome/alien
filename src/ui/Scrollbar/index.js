@@ -17,6 +17,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/wheel
      * @requires core/event/drag
+     * @requires core/event/touch
      */
     'use strict';
 
@@ -32,7 +33,6 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/wheel.js');
-    var drag = require('../../core/event/drag.js');
     var bodyClass = 'alien-ui-scrollbar-body';
     //var trackClass = 'alien-ui-scrollbar-track';
     var trackXClass = 'alien-ui-scrollbar-track-x';
@@ -350,6 +350,12 @@ define(function (require, exports, module) {
                 });
 
                 event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
+                event.on(the._$thumbX, 'click tap', function () {
+                    return false;
+                });
+                event.on(the._$thumbY, 'click tap', function () {
+                    return false;
+                });
 
                 // 拖拽支持
                 event.on(the._$thumbX, 'dragstart', function (eve) {
@@ -600,8 +606,8 @@ define(function (require, exports, module) {
             var the = this;
 
             // 清除拖拽
-            event.un(the._$thumbX, 'dragsatrt drag dragend');
-            event.un(the._$thumbY, 'dragsatrt drag dragend');
+            event.un(the._$thumbX, 'dragsatrt drag dragend click tap');
+            event.un(the._$thumbY, 'dragsatrt drag dragend click tap');
 
             // 清除监听
             event.un(the._$ele, updateEvent);
@@ -619,6 +625,8 @@ define(function (require, exports, module) {
         }
     });
 
+    require('../../core/event/drag.js');
+    require('../../core/event/touch.js');
     modification.importStyle(style);
 
     /**
