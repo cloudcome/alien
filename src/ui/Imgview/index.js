@@ -311,7 +311,7 @@ define(function (require, exports, module) {
                 attribute.css(the._$next, 'display', 'none');
             }
 
-            the._mask.open()
+            the._mask.open();
             the._window.open();
 
             return the;
