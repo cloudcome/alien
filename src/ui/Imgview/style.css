@@ -5,9 +5,11 @@
 }
 
 .alien-ui-imgview {
+    position: relative;
     height: 100%;
     text-align: center;
     background: #fff;
+    overflow: hidden;
 }
 
 .alien-ui-imgview-main img {
@@ -22,10 +24,6 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 300px;
-    height: 140px;
-    margin-left: -150px;
-    margin-top: -70px;
     text-align: center;
 }
 
