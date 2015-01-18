@@ -84,7 +84,7 @@ define(function (require, exports, module) {
         var args = arguments;
         var argL = args.length;
         var keys = [];
-        var hasDispatch = 0;
+        var hasDispatch = false;
         // 修正 CSS 终点
         var fixTo = {};
         var durationVal = [];
@@ -122,14 +122,15 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                hasDispatch = 1;
+                hasDispatch = true;
                 animationMap[id] = null;
                 event.un(ele, transitionendEventType, listener);
                 attribute.css(ele, 'transition-duration', '');
                 attribute.css(ele, 'transition-delay', '');
                 attribute.css(ele, 'transition-timing-function', '');
                 attribute.css(ele, 'transition-property', '');
-                callback();
+
+                window[requestAnimationFrame](callback.bind(ele));
             }
         };
 
@@ -171,7 +172,7 @@ define(function (require, exports, module) {
             easingVal.push(easing);
         }
 
-        setTimeout(function () {
+        window[requestAnimationFrame](function () {
             attribute.css(ele, 'transition-duration', durationVal.join(','));
             attribute.css(ele, 'transition-delay', delayVal.join(','));
             attribute.css(ele, 'transition-timing-function', easingVal.join(','));
@@ -179,7 +180,7 @@ define(function (require, exports, module) {
             dato.each(fixTo, function (key, val) {
                 attribute.css(ele, key, val);
             });
-        }, 0);
+        });
     };
 
 
