@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+.alien-ui-window > *{
+    position: relative;
+    height: 100%;
+}
+
 @-webkit-keyframes alien-ui-window-shake {
     0%, 100% {
         -webkit-transform: translateX(0);
