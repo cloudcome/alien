@@ -68,6 +68,16 @@ define(function (require, exports, module) {
          */
         _init: function () {
             var the = this;
+
+            the._initNode();
+            the._initEvent();
+
+            return the;
+        },
+
+
+        _initNode: function () {
+            var the = this;
             var options = the._options;
             var style = {
                 display: 'none'
@@ -81,8 +91,10 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$mask, options.addClass);
             modification.insert(the._$mask, document.body);
+        },
 
-            return the;
+        _initEvent: function () {
+
         },
 
 
