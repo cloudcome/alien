@@ -85,7 +85,6 @@ define(function (require, exports, module) {
         var argL = args.length;
         var keys = [];
         var hasDispatch = 0;
-        var timeid = 0;
         // 修正 CSS 终点
         var fixTo = {};
         var durationVal = [];
@@ -119,11 +118,6 @@ define(function (require, exports, module) {
 
         var listener = function (eve) {
             if (eve && eve.target === ele) {
-                if (timeid) {
-                    clearTimeout(timeid);
-                    timeid = 0;
-                }
-
                 if (hasDispatch) {
                     return;
                 }
@@ -187,8 +181,6 @@ define(function (require, exports, module) {
                 attribute.css(ele, key, val);
             });
         }, 0);
-
-        timeid = setTimeout(listener, options.duration + options.delay + 50);
     };
 
 
