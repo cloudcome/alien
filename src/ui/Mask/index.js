@@ -264,4 +264,12 @@ define(function (require, exports, module) {
      */
     module.exports = Mask;
     modification.importStyle(style);
+    event.on(document, 'keyup', function (eve) {
+        var mask;
+
+        if (eve.which === 27 && Mask.maskWindowList.length) {
+            mask = Mask.getTopMask();
+            mask.emit('esc');
+        }
+    });
 });
