@@ -23,6 +23,8 @@ define(function (require, exports, module) {
 
     var ui = require('../base.js');
     var Dialog = require('../Dialog/');
+    var Mask = require('../Mask/');
+    var Window = require('../Window/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -74,7 +76,6 @@ define(function (require, exports, module) {
 
             the._initData();
             the._initNode();
-            the._initDialog();
             the._initEvent();
 
             return the;
@@ -107,6 +108,14 @@ define(function (require, exports, module) {
             var nodes = selector.query('.j-flag', nodeWrap);
 
             the._load(options.loading.src);
+            the._mask = new Mask(window, {
+                addClass: alienClass + '-bg'
+            });
+            the._$mask = the._mask.getNode();
+            the._window = new Window(null, {
+                parentNode: the._$mask
+            });
+            the._$window = the._window.getNode();
             modification.insert(nodeWrap, document.body, 'beforeend');
             the._$ele = nodeWrap;
             the._$loading = nodeLoading;
@@ -115,6 +124,7 @@ define(function (require, exports, module) {
             the._$next = nodes[2];
             the._$loadingParent = nodes[3];
             modification.insert(the._$loading, the._$loadingParent);
+            modification.insert(the._$ele, the._$window);
         },
 
 
@@ -141,18 +151,20 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var onclose = function () {
-                this.close();
+                the._window.close(function () {
+                    the._mask.close();
+                });
                 return false;
             };
 
             // 单击背景
-            the._dialog.on('hitbg', onclose);
+            the._mask.on('hit', onclose);
 
             // 按 esc
-            the._dialog.on('esc', onclose);
+            the._mask.on('esc', onclose);
 
             // 打开
-            the._dialog.on('open', function () {
+            the._window.on('open', function () {
                 the._show();
             });
 
@@ -253,12 +265,13 @@ define(function (require, exports, module) {
                     var ratio = info.width / info.height;
                     var height = width / ratio;
 
-                    the._dialog.setOptions({
+                    the._window.setOptions({
                         width: width,
                         height: height
                     });
-                    the._dialog.resize(function () {
+                    the._window.resize(function () {
                         var $img = modification.create('img', info);
+
                         the._$mainParent.innerHTML = '';
                         modification.insert($img, the._$mainParent, 'beforeend');
                         attribute.removeClass(the._$ele, alienClass + '-isloading');
@@ -279,7 +292,12 @@ define(function (require, exports, module) {
             the._list = list;
             the._index = index || 0;
             the._$mainParent.innerHTML = '';
-            the._dialog.setOptions({
+            the._window.setOptions({
+                width: 300,
+                height: 300
+            });
+
+            attribute.css(the._$window, {
                 width: 300,
                 height: 300
             });
@@ -292,7 +310,8 @@ define(function (require, exports, module) {
                 attribute.css(the._$next, 'display', 'none');
             }
 
-            the._dialog.open();
+            the._mask.open()
+            the._window.open();
 
             return the;
         },
@@ -304,7 +323,7 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            the._dialog.destroy(function () {
+            the._window.destroy(function () {
                 modification.remove(the._$ele);
             });
             event.un(the._$prev, 'click');

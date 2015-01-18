@@ -1,16 +1,13 @@
 @charset "utf-8";
 
-.alien-ui-imgview-dialog {
+.alien-ui-imgview-bg {
     background: rgba(0, 0, 0, 0.75);
 }
 
-.alien-ui-imgview-dialog .alien-ui-dialog-body {
-    overflow: hidden;
-    padding: 0;
-}
-
 .alien-ui-imgview {
+    height: 100%;
     text-align: center;
+    background: #fff;
 }
 
 .alien-ui-imgview-main img {
