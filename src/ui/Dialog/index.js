@@ -77,7 +77,6 @@ define(function (require, exports, module) {
                     zIndex: options.zIndex
                 });
                 the._$mask = the._mask.getNode();
-                the._mask.__diloag = the;
             }
 
             the._window = new Window(null, {
@@ -137,6 +136,22 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
 
+            if (the._mask) {
+                // esc
+                the._mask.on('esc', function () {
+                    if (the.emit('esc') !== false) {
+                        the.shake();
+                    }
+                });
+
+                // 单击背景
+                the._mask.on('hit', function () {
+                    if (the.emit('hitbg') !== false) {
+                        the.shake();
+                    }
+                });
+            }
+
             // 对话框打开
             the._window.on('open', function () {
                 if (the._scrollbar) {
@@ -150,13 +165,8 @@ define(function (require, exports, module) {
             });
 
             // 单击背景
-            event.on(the._$mask, 'click', function (eve) {
-                var $window = selector.closest(eve.target, '#' + the._$window.id)[0];
-
-                if (!$window && the.emit('hitbg') !== false) {
-                    the.shake();
-                    return false;
-                }
+            event.on(the._$dialog, 'click', function () {
+                return false;
             });
         },
 
@@ -299,21 +309,6 @@ define(function (require, exports, module) {
                     callback();
                 }
             });
-        }
-    });
-
-
-    event.on(document, 'keyup', function (eve) {
-        var mask;
-        var dialog;
-
-        if (eve.which === 27 && Mask.maskWindowList.length) {
-            mask = Mask.getTopMask();
-            dialog = mask.__diloag;
-
-            if (dialog && dialog.emit('esc') !== false) {
-                dialog.shake();
-            }
         }
     });
 
