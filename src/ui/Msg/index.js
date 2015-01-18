@@ -141,14 +141,25 @@ define(function (require, exports, module) {
             });
 
             // 单击背景
-            event.on(the._$mask, 'click', function (eve) {
-                var $window = selector.closest(eve.target, '#' + the._$window.id)[0];
-
-                if (!$window && the.emit('hitbg') !== false) {
-                    the.shake();
-                    return false;
-                }
+            event.on(the._$msg, 'click', function (eve) {
+                return false;
             });
+
+            if (the._mask) {
+                // esc
+                the._mask.on('esc', function () {
+                    if (the.emit('esc') !== false) {
+                        the.shake();
+                    }
+                });
+
+                // hitbg
+                the._mask.on('hit', function () {
+                    if (the.emit('hitbg') !== false) {
+                        the.shake();
+                    }
+                });
+            }
         },
 
 
@@ -208,19 +219,19 @@ define(function (require, exports, module) {
         }
     });
 
-    event.on(document, 'keyup', function (eve) {
-        var mask;
-        var msg;
-
-        if (eve.which === 27 && Mask.maskWindowList.length) {
-            mask = Mask.getTopMask();
-            msg = mask.__msg;
-
-            if (msg && msg.emit('esc') !== false) {
-                msg.shake();
-            }
-        }
-    });
+    //event.on(document, 'keyup', function (eve) {
+    //    var mask;
+    //    var msg;
+    //
+    //    if (eve.which === 27 && Mask.maskWindowList.length) {
+    //        mask = Mask.getTopMask();
+    //        msg = mask.__msg;
+    //
+    //        if (msg && msg.emit('esc') !== false) {
+    //            msg.shake();
+    //        }
+    //    }
+    //});
 
     /**
      * 实例化一个 Msg 交互框
