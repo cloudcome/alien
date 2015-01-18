@@ -353,16 +353,15 @@ define(function (require, exports, module) {
 
                 // 拖拽支持
                 event.on(the._$thumbX, 'dragstart', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = true;
                     x0 = eve.pageX;
                     left0 = parseFloat(attribute.css(the._$thumbX, 'left'));
                     attribute.addClass(the._$thumbX, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(the._$thumbX, 'drag', function (eve) {
-                    eve.preventDefault();
-
                     var left = left0 + eve.pageX - x0;
 
                     if (left < 0) {
@@ -374,12 +373,15 @@ define(function (require, exports, module) {
                     attribute.css(the._$thumbX, 'left', left);
                     the._scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
                     the._scrollX();
+
+                    return false;
                 });
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = false;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(the._$thumbY, 'dragstart', function (eve) {
@@ -391,8 +393,6 @@ define(function (require, exports, module) {
                 });
 
                 event.on(the._$thumbY, 'drag', function (eve) {
-                    eve.preventDefault();
-
                     var top = top0 + eve.pageY - y0;
 
                     if (top < 0) {
@@ -404,12 +404,15 @@ define(function (require, exports, module) {
                     attribute.css(the._$thumbY, 'top', top);
                     the._scrollTop = the._scrollTopMax * top / the._thumbTopMax;
                     the._scrollY();
+
+                    return false;
                 });
 
                 event.on(the._$thumbY, 'dragend', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = false;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(window, 'resize', the._onresize = control.debounce(the.resize.bind(the)));
