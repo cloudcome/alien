@@ -1,5 +1,5 @@
 /*!
- * core-dom-selector.js
+ * 核心 dom 选择器
  * @author ydr.me
  * 2014-09-14 17:23
  */
