@@ -249,6 +249,6 @@ define(function (require, exports) {
         var type = typeis(object);
         var ret = type === 'string' || type === 'boolean' || type === 'number' && isFinite(object);
 
-        return ret === !0 ? !0 : type;
+        return ret === true ? true : type;
     }
 });
