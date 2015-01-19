@@ -1,5 +1,5 @@
 /*!
- * dom-attribute.js
+ * 核心 dom 属性器
  * @author ydr.me
  * 2014-09-16 18:30
  */
@@ -36,593 +36,596 @@ define(function (require, exports, module) {
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
     var alienKey = 'alien-core-dom-attribute-';
-    var attribute = module.exports = {
-        /**
-         * 设置、获取元素的属性
-         * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} key 特征键、键值对、键数组
-         * @param {String} [val] 特征值
-         * @returns {*}
-         *
-         * @example
-         * // set
-         * attribute.attr(ele, 'href', 'http://ydr.me');
-         * attribute.attr(ele, {
+    /**
+     * 设置、获取元素的属性
+     * @param {HTMLElement} ele 元素
+     * @param {String/Object/Array} key 特征键、键值对、键数组
+     * @param {String} [val] 特征值
+     * @returns {*}
+     *
+     * @example
+     * // set
+     * attribute.attr(ele, 'href', 'http://ydr.me');
+     * attribute.attr(ele, {
          *    href: '',
          *    title: ''
          * });
-         *
-         * // get
-         * attribute.attr(ele, 'href');
-         * attribute.attr(ele, ['href', 'title']);
-         */
-        attr: function (ele, key, val) {
-            if (!ele || ele.nodeType !== 1 || !key) {
-                return;
+     *
+     * // get
+     * attribute.attr(ele, 'href');
+     * attribute.attr(ele, ['href', 'title']);
+     */
+    exports.attr = function (ele, key, val) {
+        if (!ele || ele.nodeType !== 1 || !key) {
+            return;
+        }
+
+        return _getSet(arguments, {
+            get: function (key) {
+                return ele.getAttribute(key);
+            },
+            set: function (key, val) {
+                ele.setAttribute(key, val);
             }
-
-            return _getSet(arguments, {
-                get: function (key) {
-                    return ele.getAttribute(key);
-                },
-                set: function (key, val) {
-                    ele.setAttribute(key, val);
-                }
-            });
-        },
+        });
+    };
 
 
-        /**
-         * 判断元素是否包含某个属性
-         * @param {HTMLElement} ele 元素
-         * @param {String} key 单个特征
-         * @returns {boolean}
-         *
-         * @example
-         * // 判断是否有某个属性
-         * attribute.hasAttr(ele, 'href');
-         * // => true
-         */
-        hasAttr: function (ele, key) {
-            if (!ele || ele.nodeType !== 1 || !key) {
-                return !1;
+    /**
+     * 判断元素是否包含某个属性
+     * @param {HTMLElement} ele 元素
+     * @param {String} key 单个特征
+     * @returns {boolean}
+     *
+     * @example
+     * // 判断是否有某个属性
+     * attribute.hasAttr(ele, 'href');
+     * // => true
+     */
+    exports.hasAttr = function (ele, key) {
+        if (!ele || ele.nodeType !== 1 || !key) {
+            return !1;
+        }
+
+        return ele.hasAttribute(key);
+    };
+
+
+    /**
+     * 移除元素的某个属性
+     * @param {HTMLElement} ele 元素
+     * @param {String} [key] 单个或多个特征属性，为空表示移除所有特征
+     *
+     * @example
+     * // 移除
+     * attribute.removeAttr(ele, 'href');
+     */
+    exports.removeAttr = function (ele, key) {
+        if (!ele || ele.nodeType !== 1) {
+            return;
+        }
+
+        var attrKeys = key ? key.split(regSpace) : ele.attributes;
+
+        dato.each(attrKeys, function (index, key) {
+            if (key) {
+                ele.removeAttribute(typeis(key) === 'attr' ? key.nodeName : key);
             }
-
-            return ele.hasAttribute(key);
-        },
-
-
-        /**
-         * 移除元素的某个属性
-         * @param {HTMLElement} ele 元素
-         * @param {String} [key] 单个或多个特征属性，为空表示移除所有特征
-         *
-         * @example
-         * // 移除
-         * attribute.removeAttr(ele, 'href');
-         */
-        removeAttr: function (ele, key) {
-            if (!ele || ele.nodeType !== 1) {
-                return;
-            }
-
-            var attrKeys = key ? key.split(regSpace) : ele.attributes;
-
-            dato.each(attrKeys, function (index, key) {
-                if (key) {
-                    ele.removeAttribute(typeis(key) === 'attr' ? key.nodeName : key);
-                }
-            });
-        },
+        });
+    };
 
 
-        /**
-         * 设置、获取元素的特性
-         * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} key 特性键、特性键值对、特性组
-         * @param {*} [val] 特性值
-         * @returns {*}
-         *
-         * @example
-         * // set
-         * attribute.prop(ele, 'hi', 'hey');
-         * attribute.prop(ele, {
+    /**
+     * 设置、获取元素的特性
+     * @param {HTMLElement} ele 元素
+     * @param {String/Object/Array} key 特性键、特性键值对、特性组
+     * @param {*} [val] 特性值
+     * @returns {*}
+     *
+     * @example
+     * // set
+     * attribute.prop(ele, 'hi', 'hey');
+     * attribute.prop(ele, {
          *     hi: 'hey',
          *     ha: 'hehe'
          * });
-         *
-         * // get
-         * attribute.prop(ele, 'hi');
-         * attribute.prop(ele, ['hi', 'ha']);
-         */
-        prop: function (ele, key, val) {
-            return _getSet(arguments, {
-                get: function (key) {
-                    return ele[key];
-                },
-                set: function (key, val) {
-                    ele[key] = val;
-                }
-            });
-        },
+     *
+     * // get
+     * attribute.prop(ele, 'hi');
+     * attribute.prop(ele, ['hi', 'ha']);
+     */
+    exports.prop = function (ele, key, val) {
+        return _getSet(arguments, {
+            get: function (key) {
+                return ele[key];
+            },
+            set: function (key, val) {
+                ele[key] = val;
+            }
+        });
+    };
 
 
-        /**
-         * 修正 css 键值
-         * @param {String} key css 键
-         * @param {*} [val] css 值
-         * @returns {{key: String, val: *}}
-         *
-         * @example
-         * attribute.fixCss('marginTop', 10);
-         * // => {
+    /**
+     * 修正 css 键值
+     * @param {String} key css 键
+     * @param {*} [val] css 值
+     * @returns {{key: String, val: *}}
+     *
+     * @example
+     * attribute.fixCss('marginTop', 10);
+     * // => {
          * //    key: 'margin-top',
          * //    val: '10px'
          * // }
-         */
-        fixCss: function (key, val) {
-            val = String(val).trim();
+     */
+    exports.fixCss = function (key, val) {
+        val = String(val).trim();
 
-            var important = null;
+        var important = null;
 
-            if (REG_IMPORTANT.test(val)) {
-                important = 'important';
-                val = val.replace(REG_IMPORTANT, '');
-            }
+        if (REG_IMPORTANT.test(val)) {
+            important = 'important';
+            val = val.replace(REG_IMPORTANT, '');
+        }
 
-            if (REG_TRANSFORM.test(key)) {
-                val = key + '(' + val + ')';
-                key = 'transform';
-            }
+        if (REG_TRANSFORM.test(key)) {
+            val = key + '(' + val + ')';
+            key = 'transform';
+        }
 
-            var fixVal = _toCssVal(key, val);
+        var fixVal = _toCssVal(key, val);
 
-            return {
-                key: compatible.css3(_toSepString(key)),
-                val: compatible.css3(fixVal) || fixVal,
-                important: important
-            };
-        },
+        return {
+            key: compatible.css3(_toSepString(key)),
+            val: compatible.css3(fixVal) || fixVal,
+            important: important
+        };
+    };
 
 
-        /**
-         * 设置、获取元素的样式
-         * @param {HTMLElement|Node} ele 元素
-         * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
-         *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
-         * @param {String|Number} [val] 样式属性值
-         * @returns {*}
-         *
-         * @example
-         * // set
-         * attribute.css(ele, 'width', 100);
-         * attribute.css(ele, 'width', 100);
-         * attribute.css(ele, {
+    /**
+     * 设置、获取元素的样式
+     * @param {HTMLElement|Node} ele 元素
+     * @param {String/Object/Array} key 样式属性、样式键值对、样式属性数组，
+     *                                     样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）
+     * @param {String|Number} [val] 样式属性值
+     * @returns {*}
+     *
+     * @example
+     * // set
+     * attribute.css(ele, 'width', 100);
+     * attribute.css(ele, 'width', 100);
+     * attribute.css(ele, {
          *    width: 100,
          *    height: '200px !important'
          * });
-         *
-         * // get
-         * attribute.css(ele, 'width');
-         * attribute.css(ele, 'width::after');
-         * attribute.css(ele, ['width','height']);
-         */
-        css: function (ele, key, val) {
-            if (!ele || ele.nodeType !== 1 || !key) {
-                return;
+     *
+     * // get
+     * attribute.css(ele, 'width');
+     * attribute.css(ele, 'width::after');
+     * attribute.css(ele, ['width','height']);
+     */
+    exports.css = function (ele, key, val) {
+        if (!ele || ele.nodeType !== 1 || !key) {
+            return;
+        }
+
+        var the = this;
+
+        return _getSet(arguments, {
+            get: function (key) {
+                var temp = key.split('::');
+                var pseudo = temp.length === 1 ? null : temp[temp.length - 1];
+
+                key = temp[0];
+                pseudo = pseudo ? pseudo : null;
+                return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
+            },
+            set: function (key, val) {
+                key = key.split('::')[0];
+
+                var fix = the.fixCss(key, val);
+
+                // ele.style[fix.key] = fix.val;
+                // 样式名, 样式值, 优先级
+                // object.setProperty (propertyName, propertyValue, priority);
+                ele.style.setProperty(fix.key, fix.val, fix.important);
             }
-
-            var the = this;
-
-            return _getSet(arguments, {
-                get: function (key) {
-                    var temp = key.split('::');
-                    var pseudo = temp.length === 1 ? null : temp[temp.length - 1];
-
-                    key = temp[0];
-                    pseudo = pseudo ? pseudo : null;
-                    return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
-                },
-                set: function (key, val) {
-                    key = key.split('::')[0];
-
-                    var fix = the.fixCss(key, val);
-
-                    // ele.style[fix.key] = fix.val;
-                    // 样式名, 样式值, 优先级
-                    // object.setProperty (propertyName, propertyValue, priority);
-                    ele.style.setProperty(fix.key, fix.val, fix.important);
-                }
-            });
-        },
+        });
+    };
 
 
-        /**
-         * 设置、获取元素的滚动条高度
-         * @param ele {HTMLElement|Node|window|document} 元素
-         * @param [top] {Number} 高度
-         * @returns {number|*}
-         *
-         * @example
-         * // get
-         * attribute.scrollTop(ele);
-         *
-         * // set
-         * attribute.scrollTop(ele, 100);
-         */
-        scrollTop: function (ele, top) {
-            if (top === undefined) {
-                return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
-            }
+    /**
+     * 设置、获取元素的滚动条高度
+     * @param ele {HTMLElement|Node|window|document} 元素
+     * @param [top] {Number} 高度
+     * @returns {number|*}
+     *
+     * @example
+     * // get
+     * attribute.scrollTop(ele);
+     *
+     * // set
+     * attribute.scrollTop(ele, 100);
+     */
+    exports.scrollTop = function (ele, top) {
+        if (top === undefined) {
+            return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
+        }
 
-            if (_isDispute(ele)) {
-                document.body.scrollTop = top;
-                document.documentElement.scrollTop = top;
-            } else {
-                ele.scrollTop = top;
-            }
-        },
-
-
-        /**
-         * 设置、获取元素的滚动条左距离
-         * @param ele {HTMLElement|Node|window|document} 元素
-         * @param [left] {Number} 高度
-         * @returns {number|*}
-         *
-         * @example
-         * // get
-         * attribute.scrollLeft(ele);
-         *
-         * // set
-         * attribute.scrollLeft(ele, 100);
-         */
-        scrollLeft: function (ele, left) {
-            if (left === undefined) {
-                return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
-            }
-
-            if (_isDispute(ele)) {
-                document.body.scrollLeft = left;
-                document.documentElement.scrollLeft = left;
-            } else {
-                ele.scrollLeft = left;
-            }
-        },
+        if (_isDispute(ele)) {
+            document.body.scrollTop = top;
+            document.documentElement.scrollTop = top;
+        } else {
+            ele.scrollTop = top;
+        }
+    };
 
 
-        /**
-         * 设置、获取元素的数据集
-         * @param {HTMLElement} ele 元素
-         * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
-         * @param {String} [dataVal] 数据集值
-         * @returns {*}
-         *
-         * @example
-         * // set
-         * attribute.data(ele, 'abc', 123);
-         * attribute.data(ele, 'def', {
+    /**
+     * 设置、获取元素的滚动条左距离
+     * @param ele {HTMLElement|Node|window|document} 元素
+     * @param [left] {Number} 高度
+     * @returns {number|*}
+     *
+     * @example
+     * // get
+     * attribute.scrollLeft(ele);
+     *
+     * // set
+     * attribute.scrollLeft(ele, 100);
+     */
+    exports.scrollLeft = function (ele, left) {
+        if (left === undefined) {
+            return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
+        }
+
+        if (_isDispute(ele)) {
+            document.body.scrollLeft = left;
+            document.documentElement.scrollLeft = left;
+        } else {
+            ele.scrollLeft = left;
+        }
+    };
+
+
+    /**
+     * 设置、获取元素的数据集
+     * @param {HTMLElement} ele 元素
+     * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
+     * @param {String} [dataVal] 数据集值
+     * @returns {*}
+     *
+     * @example
+     * // set
+     * attribute.data(ele, 'abc', 123);
+     * attribute.data(ele, 'def', {
          *    a: 1,
          *    b: 2
          * });
-         * // => <div data-abc="123" data-def='{"a":1,"b":2}'></div>
-         * // data 逻辑与jquery 的 data 是不一致的，所有的数据都是保存在 DOM 上的
-         *
-         * // get
-         * attribute.data(ele, 'abc');
-         * // => "123"
-         * attribute.data(ele, ['abc', 'def']);
-         * // 数据会优先被 JSON 解析，如果解析失败将返回原始字符串
-         * // => {a: 1, b: 2}
-         */
-        data: function (ele, key, val) {
-            if (!ele || ele.nodeType !== 1 || !key) {
-                return;
-            }
+     * // => <div data-abc="123" data-def='{"a":1,"b":2}'></div>
+     * // data 逻辑与jquery 的 data 是不一致的，所有的数据都是保存在 DOM 上的
+     *
+     * // get
+     * attribute.data(ele, 'abc');
+     * // => "123"
+     * attribute.data(ele, ['abc', 'def']);
+     * // 数据会优先被 JSON 解析，如果解析失败将返回原始字符串
+     * // => {a: 1, b: 2}
+     */
+    exports.data = function (ele, key, val) {
+        if (!ele || ele.nodeType !== 1 || !key) {
+            return;
+        }
 
-            return _getSet(arguments, {
-                get: function (key) {
-                    var ret = ele.dataset[_toHumpString(key)];
+        return _getSet(arguments, {
+            get: function (key) {
+                var ret = ele.dataset[_toHumpString(key)];
 
+                try {
+                    return JSON.parse(ret);
+                } catch (err1) {
                     try {
-                        return JSON.parse(ret);
-                    } catch (err1) {
-                        try {
-                            var fn = new Function('', 'return ' + ret);
-                            ret = fn();
-                        } catch (err2) {
-                            // ignore
-                        }
-
-                        return ret;
+                        var fn = new Function('', 'return ' + ret);
+                        ret = fn();
+                    } catch (err2) {
+                        // ignore
                     }
-                },
-                set: function (key, val) {
-                    if (typeis(val) === 'object') {
-                        try {
-                            val = JSON.stringify(val);
-                        } catch (err) {
-                            val = '';
-                        }
+
+                    return ret;
+                }
+            },
+            set: function (key, val) {
+                if (typeis(val) === 'object') {
+                    try {
+                        val = JSON.stringify(val);
+                    } catch (err) {
+                        val = '';
                     }
-                    ele.dataset[_toHumpString(key)] = val;
                 }
-            });
-        },
+                ele.dataset[_toHumpString(key)] = val;
+            }
+        });
+    };
 
 
-        /**
-         * 设置、获取元素的innerHTML
-         * @param {HTMLElement} ele 元素
-         * @param {String}      [html] html字符串
-         * @returns {String|undefined}
-         *
-         * @example
-         * // set
-         * attribute.html(ele, 'html');
-         *
-         * // get
-         * attribute.html(ele);
-         */
-        html: function (ele, html) {
+    /**
+     * 设置、获取元素的innerHTML
+     * @param {HTMLElement} ele 元素
+     * @param {String}      [html] html字符串
+     * @returns {String|undefined}
+     *
+     * @example
+     * // set
+     * attribute.html(ele, 'html');
+     *
+     * // get
+     * attribute.html(ele);
+     */
+    exports.html = function (ele, html) {
+        if (!ele || ele.nodeType !== 1) {
+            return;
+        }
+
+        return _getSet(arguments, {
+            get: function () {
+                return ele.innerHTML;
+            },
+            set: function (html) {
+                ele.innerHTML = html;
+            }
+        }, 1);
+    };
+
+
+    /**
+     * 设置、获取元素的innerText
+     * @param {HTMLElement} ele 元素
+     * @param {String}      [text]  text字符串
+     * @returns {String|undefined}
+     *
+     * @example
+     * // set
+     * attribute.text(ele, 'html');
+     *
+     * // get
+     * attribute.text(ele);
+     */
+    exports.text = function (ele, text) {
+        if (!ele || ele.nodeType !== 1) {
+            return;
+        }
+
+        return _getSet(arguments, {
+            get: function () {
+                return ele.innerText;
+            },
+            set: function (text) {
+                ele.innerText = text;
+            }
+        }, 1);
+    };
+
+
+    /**
+     * 添加元素的className
+     * @param {HTMLElement} ele 元素
+     * @param {String} className 多个className使用空格分开
+     * @returns {undefined}
+     *
+     * @example
+     * attribute.addClass(ele, 'class');
+     * attribute.addClass(ele, 'class1 class2');
+     */
+    exports.addClass = function (ele, className) {
+        if (!ele || ele.nodeType !== 1) {
+            return;
+        }
+
+        _class(ele, 0, className);
+    };
+
+
+    /**
+     * 移除元素的className
+     * @param {HTMLElement} ele 元素
+     * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
+     * @returns {undefined}
+     *
+     * @example
+     * // remove all className
+     * attribute.removeClass(ele);
+     * attribute.removeClass(ele, 'class');
+     * attribute.removeClass(ele, 'class1 class2');
+     */
+    exports.removeClass = function (ele, className) {
+        if (!ele || ele.nodeType !== 1) {
+            return;
+        }
+
+        _class(ele, 1, className);
+    };
+
+
+    /**
+     * 判断元素是否包含某个className
+     * @param {HTMLElement} ele 元素
+     * @param {String} className 单个className
+     * @returns {Boolean}
+     *
+     * @example
+     * attribute.hasClass(ele, 'class');
+     */
+    exports.hasClass = function (ele, className) {
+        if (!ele || ele.nodeType !== 1) {
+            return !1;
+        }
+
+        return _class(ele, 2, className);
+    };
+
+    /**
+     * 获得某元素的状况，可能值为`show`或`hide`
+     * @param {HTMLElement|Node} ele 元素
+     * @param {String} [state] 设置状态值，`show`或者`hide`
+     * @returns {String|Array} 获取值为`show`或`hide`，设置时返回改变过的 dom 数组
+     */
+    exports.state = function (ele, state) {
+        var nowState;
+        var temp;
+        var ret = [];
+        var key = 'display';
+        var none = 'none';
+        var block = 'block !important';
+        var nowDisplay = exports.css(ele, 'display');
+
+        if (!ele[alienKey + key] && nowDisplay !== 'none') {
+            ele[alienKey + key] = nowDisplay;
+        }
+
+        // get
+        if (!state) {
             if (!ele || ele.nodeType !== 1) {
-                return;
+                return 'hide';
             }
 
-            return _getSet(arguments, {
-                get: function () {
-                    return ele.innerHTML;
-                },
-                set: function (html) {
-                    ele.innerHTML = html;
-                }
-            }, 1);
-        },
-
-
-        /**
-         * 设置、获取元素的innerText
-         * @param {HTMLElement} ele 元素
-         * @param {String}      [text]  text字符串
-         * @returns {String|undefined}
-         *
-         * @example
-         * // set
-         * attribute.text(ele, 'html');
-         *
-         * // get
-         * attribute.text(ele);
-         */
-        text: function (ele, text) {
-            if (!ele || ele.nodeType !== 1) {
-                return;
+            // 本身就是隐藏的
+            if (this.css(ele, key) === none) {
+                return 'hide';
             }
 
-            return _getSet(arguments, {
-                get: function () {
-                    return ele.innerText;
-                },
-                set: function (text) {
-                    ele.innerText = text;
-                }
-            }, 1);
-        },
+            while ((temp = selector.parent(ele)) && temp.length) {
+                ele = temp[0];
 
-
-        /**
-         * 添加元素的className
-         * @param {HTMLElement} ele 元素
-         * @param {String} className 多个className使用空格分开
-         * @returns {undefined}
-         *
-         * @example
-         * attribute.addClass(ele, 'class');
-         * attribute.addClass(ele, 'class1 class2');
-         */
-        addClass: function (ele, className) {
-            if (!ele || ele.nodeType !== 1) {
-                return;
-            }
-
-            _class(ele, 0, className);
-        },
-
-
-        /**
-         * 移除元素的className
-         * @param {HTMLElement} ele 元素
-         * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
-         * @returns {undefined}
-         *
-         * @example
-         * // remove all className
-         * attribute.removeClass(ele);
-         * attribute.removeClass(ele, 'class');
-         * attribute.removeClass(ele, 'class1 class2');
-         */
-        removeClass: function (ele, className) {
-            if (!ele || ele.nodeType !== 1) {
-                return;
-            }
-
-            _class(ele, 1, className);
-        },
-
-
-        /**
-         * 判断元素是否包含某个className
-         * @param {HTMLElement} ele 元素
-         * @param {String} className 单个className
-         * @returns {Boolean}
-         *
-         * @example
-         * attribute.hasClass(ele, 'class');
-         */
-        hasClass: function (ele, className) {
-            if (!ele || ele.nodeType !== 1) {
-                return !1;
-            }
-
-            return _class(ele, 2, className);
-        },
-
-        /**
-         * 获得某元素的状况，可能值为`show`或`hide`
-         * @param {HTMLElement|Node} ele 元素
-         * @param {String} [state] 设置状态值，`show`或者`hide`
-         * @returns {String|Array} 获取值为`show`或`hide`，设置时返回改变过的 dom 数组
-         */
-        state: function (ele, state) {
-            var nowState;
-            var temp;
-            var ret = [];
-            var key = 'display';
-            var none = 'none';
-            var block = 'block !important';
-            var nowDisplay = attribute.css(ele, 'display');
-
-            if (!ele[alienKey + key] && nowDisplay !== 'none') {
-                ele[alienKey + key] = nowDisplay;
-            }
-
-            // get
-            if (!state) {
-                if (!ele || ele.nodeType !== 1) {
-                    return 'hide';
-                }
-
-                // 本身就是隐藏的
                 if (this.css(ele, key) === none) {
                     return 'hide';
                 }
-
-                while ((temp = selector.parent(ele)) && temp.length) {
-                    ele = temp[0];
-
-                    if (this.css(ele, key) === none) {
-                        return 'hide';
-                    }
-                }
-
-                return 'show';
             }
 
-            // set
-            nowState = this.state(ele);
-
-            if (nowState === state || !ele || ele.nodeType !== 1) {
-                return ret;
-            }
-
-            if (nowState === 'show') {
-                ele[alienKey + key] = attribute.css(ele, 'display');
-                ele.style.display = none;
-            } else {
-                while (this.state(ele) !== state) {
-                    if (this.css(ele, key) === none) {
-                        this.css(ele, key, ele[alienKey + key] || block);
-                        ret.push(ele);
-                    }
-
-                    if ((temp = selector.parent(ele)) && temp.length) {
-                        ele = temp[0];
-                    }
-                }
-            }
-
-            return ret;
-        },
-
-
-        /**
-         * 获取、设置元素距离文档边缘的 top 距离
-         * @param {Element} ele
-         * @param {Number} [val] 距离值
-         * @returns {Number|undefined|*}
-         *
-         * @example
-         * // set
-         * position.top(ele, 100);
-         *
-         * // get
-         * position.top(ele);
-         */
-        top: function () {
-            return _middleware('top', arguments, ['scrollTop']);
-        },
-
-
-        /**
-         * 获取、设置元素距离文档边缘的 left 距离
-         * @param {Element} ele
-         * @param {Number} [val] 距离值
-         * @returns {Number|undefined|*}
-         *
-         * @example
-         * // set
-         * position.left(ele, 100);
-         *
-         * // get
-         * position.left(ele);
-         */
-        left: function () {
-            return _middleware('left', arguments, ['scrollLeft']);
-        },
-
-
-        /**
-         * 获取、设置元素的占位宽度
-         * content-box: cssWidth + padding + border
-         * border-box:  cssWidth
-         * @param {Element} ele
-         * @param {Number} [val] 宽度值
-         * @returns {Number|undefined|*}
-         *
-         * @example
-         * // set
-         * position.width(ele, 100);
-         *
-         * // get
-         * position.width(ele);
-         */
-        outerWidth: function () {
-            return _middleware('width', arguments);
-        },
-
-
-        innerWidth: function () {
-            return _middleware('width', arguments, innerWidth);
-        },
-
-        width: function () {
-            return _middleware('width', arguments, width);
-        },
-
-
-        /**
-         * 获取、设置元素的占位高度
-         * content-box: cssHeight + padding + border
-         * border-box:  cssHeight
-         * @param {Element} ele
-         * @param {Number} [val] 高度值
-         * @returns {Number|undefined|*}
-         *
-         * @example
-         * // set
-         * position.height(ele, 100);
-         *
-         * // get
-         * position.height(ele);
-         */
-        outerHeight: function () {
-            return _middleware('height', arguments);
-        },
-        innerHeight: function () {
-            return _middleware('height', arguments, innerHeight);
-        },
-        height: function () {
-            return _middleware('height', arguments, height);
+            return 'show';
         }
+
+        // set
+        nowState = this.state(ele);
+
+        if (nowState === state || !ele || ele.nodeType !== 1) {
+            return ret;
+        }
+
+        if (nowState === 'show') {
+            ele[alienKey + key] = exports.css(ele, 'display');
+            ele.style.display = none;
+        } else {
+            while (this.state(ele) !== state) {
+                if (this.css(ele, key) === none) {
+                    this.css(ele, key, ele[alienKey + key] || block);
+                    ret.push(ele);
+                }
+
+                if ((temp = selector.parent(ele)) && temp.length) {
+                    ele = temp[0];
+                }
+            }
+        }
+
+        return ret;
+    };
+
+
+    /**
+     * 获取、设置元素距离文档边缘的 top 距离
+     * @param {Element} ele
+     * @param {Number} [val] 距离值
+     * @returns {Number|undefined|*}
+     *
+     * @example
+     * // set
+     * position.top(ele, 100);
+     *
+     * // get
+     * position.top(ele);
+     */
+    exports.top = function () {
+        return _middleware('top', arguments, ['scrollTop']);
+    };
+
+
+    /**
+     * 获取、设置元素距离文档边缘的 left 距离
+     * @param {Element} ele
+     * @param {Number} [val] 距离值
+     * @returns {Number|undefined|*}
+     *
+     * @example
+     * // set
+     * position.left(ele, 100);
+     *
+     * // get
+     * position.left(ele);
+     */
+    exports.left = function () {
+        return _middleware('left', arguments, ['scrollLeft']);
+    };
+
+
+    /**
+     * 获取、设置元素的占位宽度
+     * content-box: cssWidth + padding + border
+     * border-box:  cssWidth
+     * @param {Element} ele
+     * @param {Number} [val] 宽度值
+     * @returns {Number|undefined|*}
+     *
+     * @example
+     * // set
+     * position.width(ele, 100);
+     *
+     * // get
+     * position.width(ele);
+     */
+    exports.outerWidth = function () {
+        return _middleware('width', arguments);
+    };
+
+
+    exports.innerWidth = function () {
+        return _middleware('width', arguments, innerWidth);
+    };
+
+
+    exports.width = function () {
+        return _middleware('width', arguments, width);
+    };
+
+
+    /**
+     * 获取、设置元素的占位高度
+     * content-box: cssHeight + padding + border
+     * border-box:  cssHeight
+     * @param {Element} ele
+     * @param {Number} [val] 高度值
+     * @returns {Number|undefined|*}
+     *
+     * @example
+     * // set
+     * position.height(ele, 100);
+     *
+     * // get
+     * position.height(ele);
+     */
+    exports.outerHeight = function () {
+        return _middleware('height', arguments);
+    };
+
+
+    exports.innerHeight = function () {
+        return _middleware('height', arguments, innerHeight);
+    };
+
+
+    exports.height = function () {
+        return _middleware('height', arguments, height);
     };
 
 
@@ -806,7 +809,7 @@ define(function (require, exports, module) {
                 dato.each(extraKey, function (i, key) {
                     extraVal += key.indexOf('scroll') > -1 ?
                         -dato.parseFloat(attribute[key](window), 0) :
-                        dato.parseFloat(attribute.css(ele, key), 0);
+                        dato.parseFloat(exports.css(ele, key), 0);
                 });
             }
 
@@ -843,7 +846,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _setBoundingClientRect(ele, key, val, extraKey) {
-        var elePos = attribute.css(ele, 'position');
+        var elePos = exports.css(ele, 'position');
         var rect;
         var now;
         var width;
@@ -853,7 +856,7 @@ define(function (require, exports, module) {
 
         // 绝对定位的元素，先设置其 top、left值
         if (elePos === 'absolute') {
-            attribute.css(ele, {
+            exports.css(ele, {
                 top: ele.offsetTop,
                 left: ele.offsetLeft
             });
@@ -869,12 +872,12 @@ define(function (require, exports, module) {
             deleta -= attribute[extraKey](ele);
         }
 
-        if (attribute.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
-            css = dato.parseFloat(attribute.css(ele, 'margin-' + key), 0);
-            attribute.css(ele, 'margin-' + key, css + deleta);
+        if (exports.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
+            css = dato.parseFloat(exports.css(ele, 'margin-' + key), 0);
+            exports.css(ele, 'margin-' + key, css + deleta);
         } else {
-            css = dato.parseFloat(attribute.css(ele, key), 0);
-            attribute.css(ele, key, css + deleta);
+            css = dato.parseFloat(exports.css(ele, key), 0);
+            exports.css(ele, key, css + deleta);
         }
     }
 
@@ -888,10 +891,10 @@ define(function (require, exports, module) {
         var eles;
         var ret;
 
-        if (attribute.state(ele) === 'show') {
+        if (exports.state(ele) === 'show') {
             return doWhat(ele);
         } else {
-            eles = attribute.state(ele, 'show');
+            eles = exports.state(ele, 'show');
 
             ret = doWhat(ele);
 
