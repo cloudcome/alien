@@ -18,7 +18,7 @@ define(function (require, exports) {
     var defaults = {
         // 是否以严格模式读取和设置cookie，默认true
         // 严格模式下，将在读之后、写之前都会进行<code>encodeURIComponent</code>、<code>decodeURIComponent</code>操作
-        isStrict: !0,
+        isStrict: true,
         // 在无域名的时候，必须设置为空才能在本地写入
         domain: location.hostname || '',
         // 默认cookie有效期1个小时（单位秒）
