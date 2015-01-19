@@ -808,7 +808,7 @@ define(function (require, exports, module) {
             if (extraKey && eleType === 'element') {
                 dato.each(extraKey, function (i, key) {
                     extraVal += key.indexOf('scroll') > -1 ?
-                        -dato.parseFloat(attribute[key](window), 0) :
+                        -dato.parseFloat(exports[key](window), 0) :
                         dato.parseFloat(exports.css(ele, key), 0);
                 });
             }
@@ -869,7 +869,7 @@ define(function (require, exports, module) {
         deleta = val - now;
 
         if (key === 'top' || key === 'left') {
-            deleta -= attribute[extraKey](ele);
+            deleta -= exports[extraKey](ele);
         }
 
         if (exports.css(ele, 'position') === 'static' && key !== 'width' && key !== 'height') {
