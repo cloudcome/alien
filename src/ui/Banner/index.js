@@ -610,8 +610,6 @@ define(function (require, exports, module) {
         }
     });
 
-    modification.importStyle(style);
-
 
     /**
      * 构建一个 banner，标准的 DOM 结构为：<br>
@@ -624,9 +622,14 @@ define(function (require, exports, module) {
      * @param {String} [options.itemSelector="li"] banner 项目，默认"li"
      * @param {Number} [options.duration=456] banner 播放动画时间，默认456，单位毫秒
      * @param {String} [options.easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
-     * @param {Number} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
-     * @param {String} [options.addClass=""] banner 添加的 className
-     * @constructor
+     * @param {Boolean} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
+     * @param {String} [options.axis="+x"] banner 播放方向，x为左右，y为上下，+为正右边或正上方
+     * @param {Number} [options.boundaryRatio=0.3] banner 触摸过边界多少比例切换到下一张
+     * @param {null|String|HTMLElement|Node} [options.$navParent=null] banner 导航父级
+     * @param {null|Function} [options.navGenerator=null] banner 导航生成器
+     * @param {String} [options.navItemSelector="li"] banner 导航项目选择器
+     * @param {String} [options.navActiveClass="active"] banner 导航项目高亮类
      */
     module.exports = Banner;
+    modification.importStyle(style);
 });
