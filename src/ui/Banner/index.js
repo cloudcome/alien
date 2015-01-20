@@ -142,7 +142,7 @@ define(function (require, exports, module) {
                 });
 
                 $navParent.innerHTML = navHTML;
-                the._$navItems = selector.query(options.navItemSelector, options.$navParent);
+                the._$navItems = selector.query(options.navItemSelector, $navParent);
             }
 
             if (the._$items.length > 1) {
