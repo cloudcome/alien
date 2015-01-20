@@ -188,7 +188,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除某个元素
-     * @param {HTMLElement|Node} ele
+     * @param {Object} ele
      *
      * @example
      * modification.remove(ele);
