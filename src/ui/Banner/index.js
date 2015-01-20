@@ -16,7 +16,6 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires util/dato
      * @requires util/typeis
-     * @requires libs/Template
      */
     'use strict';
 
@@ -25,7 +24,6 @@ define(function (require, exports, module) {
     };
     var alienIndex = 0;
     var style = require('css!./style.css');
-    var template = require('html!./template.html');
     var ui = require('../base.js');
     var event = require('../../core/event/touch.js');
     var modification = require('../../core/dom/modification.js');
@@ -34,17 +32,15 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var Template = require('../../libs/Template.js');
-    var tpl = new Template(template);
     var alienClass = 'alien-ui-banner';
     var defaults = {
         width: 700,
         height: 300,
-        item: 'li',
+        itemSelector: 'li',
         duration: 678,
         timeout: 3456,
         easing: 'ease-in-out-back',
-        autoPlay: true,
+        isAutoPlay: true,
         // 运动方向
         // -x x 轴向左
         // +x x 轴向右
@@ -54,23 +50,14 @@ define(function (require, exports, module) {
         // 触摸超过边界多少比例的时候切换
         boundaryRatio: 0.3,
         // 导航生成器
-        navGenerator: null
+        $navParent: null,
+        navGenerator: null,
+        navItemSelector: 'li',
+        navActiveClass: 'active'
     };
 
     var Banner = ui.create({
         STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property {Number} [width=700] banner 宽度，默认700
-             * @property {Number} [height=300] banner 高度，默认300
-             * @property {String} [item="li"] banner 项目选择器，默认"li"
-             * @property {Number} [duration=456] banner 播放动画时间，默认456，单位毫秒
-             * @property {String} [easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
-             * @property {Boolean} [autoPlay=true] banner 是否自动播放
-             * @property {String} [axis="+x"] banner 正序方向
-             * @property {null|Function} [navGenerator=null] 使用一个函数生成导航，参数1为导航索引值
-             */
             defaults: defaults
         },
 
@@ -102,6 +89,8 @@ define(function (require, exports, module) {
             the._initData();
             the._initNode();
             the._initEvent();
+            the._activeNav(0);
+            the.play();
 
             return the;
         },
@@ -133,27 +122,28 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
             var options = the._options;
+            var navHTML = '';
             var $cloneStart0;
             var $cloneStart1;
             var $cloneEnd0;
             var $cloneEnd1;
-            var bannerData = {
-                id: the._id,
-                nav: []
-            };
-            var navFilter = typeis(options.nav) === 'function' ? options.nav : function () {
-                return '';
-            };
-            var $bannerWrap;
 
-            dato.each(the._$items, function (index) {
-                bannerData.nav.push(navFilter(index));
-            });
+            modification.wrap(the._$ele, '<div class="' + alienClass + '" ' +
+            'id="' + alienClass + (alienIndex++) + '">');
+            the._$banner = selector.parent(the._$ele)[0];
+            the._$items = selector.query(options.itemSelector, the._$ele);
 
-            the._$items = selector.query(options.item, the._$ele);
-            $bannerWrap = modification.parse(tpl.render(bannerData))[0];
-            modification.insert($bannerWrap, the._$ele, 'afterend');
-            modification.insert(the._$ele, $bannerWrap, 'afterbegin');
+            var length = the._$items.length;
+            var $navParent = selector.query(options.$navParent)[0];
+
+            if (typeis.function(options.navGenerator) && $navParent) {
+                dato.each(the._$items, function (index) {
+                    navHTML += options.navGenerator(index, length);
+                });
+
+                $navParent.innerHTML = navHTML;
+                the._$navItems = selector.query(options.navItemSelector, options.$navParent);
+            }
 
             if (the._$items.length > 1) {
                 // clone
@@ -179,16 +169,8 @@ define(function (require, exports, module) {
                 the._$items.push($cloneEnd1);
             }
 
-            the._$banner = $bannerWrap;
-            the._$nav = selector.query('.' + alienClass + '-nav', $bannerWrap)[0];
-
-            if (the._$nav) {
-                the._$navItems = selector.children(the._$nav);
-            } else {
-                the._$navItems = [];
-            }
-
             the._$clones = [$cloneStart0, $cloneStart1, $cloneEnd0, $cloneEnd1];
+            the._$navParent = $navParent;
         },
 
 
@@ -217,34 +199,24 @@ define(function (require, exports, module) {
                 the._toggleClone(true);
             };
 
-            // 单击导航
-            if (the._$navItems.length) {
-                event.on(the._$banner, 'click tap', '.' + alienClass + '-nav-item', function () {
-                    var index = attribute.data(this, 'index');
-                    var type = index > the._showIndex ? 'next' : 'prev';
+            // 单击 nav
+            if (the._$navParent) {
+                event.on(the._$navParent, 'tap click', options.navItemSelector, function () {
+                    var index = selector.index(this);
 
-                    if (the._showIndex === the._$items.length - 3 && index === 0) {
-                        type = 'next';
-                    } else if (the._showIndex === 0 && index === the._$items.length - 3) {
-                        type = 'prev';
-                    }
-
-                    the._clear();
-                    the.index(type, index);
+                    the.pause();
+                    the.index(index);
+                    the.play();
                 });
             }
 
             // 鼠标悬停
             event.on(the._$banner, 'mouseenter', function () {
-                the._isPrivatePlay = false;
-                the._clear();
+                the.pause();
             });
 
             event.on(the._$banner, 'mouseleave', function () {
-                if (options.autoPlay) {
-                    the._isPrivatePlay = true;
-                    the.play();
-                }
+                the.play();
             });
 
             // 触摸
@@ -275,14 +247,11 @@ define(function (require, exports, module) {
                 } else {
                     the.index(type, index, _touchdone);
                 }
+
+                the.play();
             });
 
             the.resize(options);
-
-            if (options.autoPlay) {
-                the._isPrivatePlay = true;
-                the.play();
-            }
         },
 
 
@@ -443,6 +412,17 @@ define(function (require, exports, module) {
         },
 
 
+        _activeNav: function (index) {
+            var the = this;
+
+            if (the._$navItems) {
+                dato.each(the._$navItems, function (_index, $item) {
+                    attribute[(index === _index ? 'add' : 'remove') + 'Class']($item, 'active');
+                });
+            }
+        },
+
+
         /**
          * 播放第几个项目
          * @param {String} [type] 展示方式，默认下一张
@@ -485,19 +465,9 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                var siblings;
-
+                the._activeNav(index);
                 the.emit('change', index, the._showIndex);
                 the._showIndex = index;
-
-                if (the._$navItems) {
-                    attribute.addClass(the._$navItems[index], alienClass + '-nav-item-active');
-                    siblings = selector.siblings(the._$navItems[index]);
-
-                    dato.each(siblings, function (i, sibling) {
-                        attribute.removeClass(sibling, alienClass + '-nav-item-active');
-                    });
-                }
 
                 callback.call(the);
             });
@@ -517,8 +487,10 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            the.pause();
             showIndex = the._beforeShowIndex(-1, showIndex);
             the.index('prev', showIndex, callback);
+            the.play();
 
             return the;
         },
@@ -537,8 +509,10 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            the.pause();
             showIndex = the._beforeShowIndex(1, showIndex);
             the.index('next', showIndex, callback);
+            the.play();
 
             return the;
         },
@@ -552,16 +526,11 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if (the._$items.length < 4) {
+            if (the._$items.length < 4 || !options.isAutoPlay) {
                 return the;
             }
 
             the._clear();
-
-            if (!the._isPrivatePlay) {
-                options.autoPlay = true;
-            }
-
             the._playTimeID = setTimeout(function () {
                 the.next();
                 the.play();
@@ -596,7 +565,6 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            the._options.autoPlay = false;
             the._clear();
 
             return the;
@@ -619,6 +587,7 @@ define(function (require, exports, module) {
 
             // 移除所有事件
             event.un(the._$banner, 'touch1start touch1move touch1end tap click mouseenter mouseleave');
+            event.un(the._$navParent, 'tap click');
 
             // 停止动画
             the.pause();
@@ -652,13 +621,11 @@ define(function (require, exports, module) {
      * @param {Object} [options] 配置
      * @param {Number} [options.width=700] banner 宽度，默认700
      * @param {Number} [options.height=300] banner 高度，默认300
-     * @param {String} [options.item="li"] banner 项目，默认"li"
+     * @param {String} [options.itemSelector="li"] banner 项目，默认"li"
      * @param {Number} [options.duration=456] banner 播放动画时间，默认456，单位毫秒
      * @param {String} [options.easing="ease-in-out-back"] banner 播放动画缓冲效果，默认"ease-in-out-back"
-     * @param {Number} [options.autoPlay=1] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
+     * @param {Number} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
      * @param {String} [options.addClass=""] banner 添加的 className
-     * @param {String} [options.navStyle="circle"] banner 导航的样式，内置有"circle"、"square"、"transparent"，如果为空则不显示导航
-     * @param {String} [options.navText=""] banner 导航的是否输出导航数字，内置有"number"
      * @constructor
      */
     module.exports = Banner;

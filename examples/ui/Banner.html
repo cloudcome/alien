@@ -49,24 +49,39 @@
             padding: 20px;
             margin: 10px;
         }
+
+        #nav li{
+            display: inline-block;
+            background: #eee;
+            color: #444;
+            padding: 10px;
+            line-height: 20px;
+        }
+
+        #nav li.active{
+            background: #444;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
 
 
-<ul id="slider1">
+<ul id="banner">
     <li><img src="http://img01.taobaocdn.com/imgextra/i1/436455194/T2oHtOXhVdXXXXXXXX_!!436455194.jpg" alt=""/></li>
     <li><img src="http://att.bbs.duowan.com/forum/201407/05/1327581ibfllypybayjzjx.png" alt=""/></li>
     <li><img src="http://img02.taobaocdn.com/imgextra/i2/919019292/T2u8IRXXRXXXXXXXXX_!!919019292.jpg" alt=""/></li>
 </ul>
+
+<ul id="nav"></ul>
 
 <hr/>
 
 <button id="prev">上一张</button>
 <b>第<span id="index">1</span>张</b>
 <button id="next">下一张</button>
-<button id="play">自动播放</button>
-<button id="pause">暂停播放</button>
+<button id="play">播放</button>
+<button id="pause">暂停</button>
 <button id="destroy">销毁实例</button>
 
 <hr/>

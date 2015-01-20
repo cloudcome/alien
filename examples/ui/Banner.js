@@ -7,74 +7,17 @@
 define(function (require) {
     'use strict';
 
-//var generator = require('/src/ui/generator.js');
-//var MyUI = generator({
-//    /**
-//     * 构造函数
-//     */
-//    constructor: function () {
-//        var the = this;
-//
-//        // 自动初始化
-//        the._init();
-//    },
-//
-//
-//    /**
-//     * 初始化
-//     * @private
-//     */
-//    _init: function () {
-//        var the = this;
-//
-//        the._initData();
-//        the._initNode();
-//        the._initEvent();
-//    },
-//
-//
-//    /**
-//     * 初始化数据
-//     * @private
-//     */
-//    _initData: function () {
-//        // code
-//    },
-//
-//
-//    /**
-//     * 初始化节点
-//     * @private
-//     */
-//    _initNode: function () {
-//        // code
-//    },
-//
-//
-//    /**
-//     * 初始化事件
-//     * @private
-//     */
-//    _initEvent: function () {
-//        // code
-//    },
-//
-//
-//    /**
-//     * 销毁实例
-//     */
-//    destroy: function () {
-//        // 1、节点的还原归位
-//        // 2、事件的解除绑定
-//    }
-//});
-
     var Banner = require('/src/ui/Banner/index.js');
     var $index = document.getElementById('index');
-    var banner = new Banner('#slider1', {
+    var banner = new Banner('#banner', {
         width: 460,
         height: 200,
-        axis: '+y'
+        axis: '+y',
+        navGenerator: function (index, length) {
+            return '<li>'+(index+1)+'</li>';
+        },
+        navSelector: 'li',
+        $navParent: document.getElementById('nav')
     });
 
     banner.on('change', function (index) {
