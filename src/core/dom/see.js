@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/dom/see
+     * @requires core/dom/selector
      */
     'use strict';
 
@@ -92,8 +93,29 @@ define(function (require, exports, module) {
     };
 
 
-    exports.inViewPort = function ($ele) {
+    /**
+     * 判断元素是否在当前视口内
+     * 1.元素不可见：返回 false
+     * 2.元素不在视口内：返回 false
+     * @param $ele {HTMLElement|Node|EventTarget}
+     * @returns {Boolean}
+     */
+    exports.isInViewport = function ($ele) {
+        if (!$ele || $ele.nodeType !== 1) {
+            return false;
+        }
 
+        if (exports.visibility($ele) === 'hidden') {
+            return false;
+        }
+
+        var bcr = $ele.getBoundingClientRect();
+
+        if (bcr.bottom < 0) {
+            return false;
+        }
+
+        return bcr.top < Math.max(window.innerHeight, document.documentElement.clientHeight);
     };
 
 
