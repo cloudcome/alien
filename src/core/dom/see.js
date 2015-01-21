@@ -1,0 +1,121 @@
+/*!
+ * dom 可视
+ * @author ydr.me
+ * @create 2015-01-21 14:58
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module core/dom/see
+     */
+    'use strict';
+
+    var selector = require('./selector.js');
+    var hiddenTagList = 'script link head meta style'.split(' ');
+    var alienKey = 'alien-core-dom-see';
+
+
+    /**
+     * 获得某元素的显示情况，可能值为`visible`或`hidden`
+     * @param {HTMLElement|Node} $ele 元素
+     * @param {String} [changeVisibility] 设置状态值，`visible`或者`hidden`
+     * @returns {String|Array} 获取值为`visible`或`hidden`，设置时返回改变过的 dom 数组
+     */
+    exports.visibility = function ($ele, changeVisibility) {
+        var nowVisibility;
+        var temp;
+        var ret = [];
+        var key = 'display';
+        var none = 'none';
+        var block = 'block !important';
+        var visible = 'visible';
+        var hidden = 'hidden';
+        var nowDisplay = _getCss($ele, key);
+
+        if ($ele && !$ele[alienKey + key] && nowDisplay !== 'none') {
+            $ele[alienKey + key] = nowDisplay;
+        }
+
+        // get
+        if (!changeVisibility) {
+            // 非 element
+            if (!$ele || $ele.nodeType !== 1) {
+                return hidden;
+            }
+
+            // 隐藏 element
+            if (hiddenTagList.indexOf($ele.tagName.toLowerCase()) > -1) {
+                return hidden;
+            }
+
+            // 本身就是隐藏的
+            if (_getCss($ele, key) === none) {
+                return hidden;
+            }
+
+            while ((temp = selector.parent($ele)) && temp.length && temp[0] !== document) {
+                $ele = temp[0];
+
+                if (_getCss($ele, key) === none) {
+                    return hidden;
+                }
+            }
+
+            return visible;
+        }
+
+        // set
+        nowVisibility = exports.visibility($ele);
+
+        if (nowVisibility === changeVisibility || !$ele || $ele.nodeType !== 1) {
+            return ret;
+        }
+
+        if (nowVisibility === visible) {
+            $ele[alienKey + key] = _getCss($ele, 'display');
+            $ele.style.display = none;
+        } else {
+            while ($ele !== document && exports.visibility($ele) !== changeVisibility) {
+                if (_getCss($ele, key) === none) {
+                    _setCss($ele, key, $ele[alienKey + key] || block, true);
+                    ret.push($ele);
+                }
+
+                if ((temp = selector.parent($ele)) && temp.length) {
+                    $ele = temp[0];
+                }
+            }
+        }
+
+        return ret;
+    };
+
+
+    exports.inViewPort = function ($ele) {
+
+    };
+
+
+    /**
+     * 获取元素的样式
+     * @param $ele
+     * @param key
+     * @private
+     */
+    function _getCss($ele, key) {
+        return $ele && $ele.nodeType === 1 ? getComputedStyle($ele).getPropertyValue(key) : undefined;
+    }
+
+    /**
+     * 设置元素的样式
+     * @param $ele
+     * @param key
+     * @param val
+     * @param isImportant
+     * @private
+     */
+    function _setCss($ele, key, val, isImportant) {
+        $ele.style.setProperty(key, val, isImportant ? 'important' : null);
+    }
+});
