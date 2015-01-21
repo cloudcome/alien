@@ -80,7 +80,6 @@ define(function (require, exports, module) {
         /**
          * 初始化
          * @public
-         * @returns {Banner}
          * @private
          */
         _init: function () {
@@ -91,6 +90,9 @@ define(function (require, exports, module) {
             the._initEvent();
             the._activeNav(0);
             the.play();
+            setTimeout(function(){
+                the.emit('change', 0);
+            }, 0);
 
             return the;
         },
@@ -317,7 +319,6 @@ define(function (require, exports, module) {
          * @param {Object} size  尺寸对象
          * @param {Number} [size.width]  宽度
          * @param {Number} [size.height]  高度
-         * @returns {Banner}
          */
         resize: function (size) {
             var the = this;
@@ -459,14 +460,13 @@ define(function (require, exports, module) {
             }
 
             set = the._calTranslate(-the._distance * (index + 2));
-            the.emit('beforechange', the._showIndex, index);
 
             animation.animate(the._$ele, set, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
                 the._activeNav(index);
-                the.emit('change', index, the._showIndex);
+                the.emit('change', index);
                 the._showIndex = index;
 
                 callback.call(the);
@@ -477,7 +477,6 @@ define(function (require, exports, module) {
         /**
          * 播放到上一个项目
          * @param {Function} [callback] 回调
-         * @returns {Banner}
          */
         prev: function (callback) {
             var the = this;
@@ -499,7 +498,6 @@ define(function (require, exports, module) {
         /**
          * 播放到下一个项目
          * @param {Function} [callback] 回调
-         * @returns {Banner}
          */
         next: function (callback) {
             var the = this;
@@ -520,7 +518,6 @@ define(function (require, exports, module) {
 
         /**
          * 自动播放
-         * @returns {Banner}
          */
         play: function () {
             var the = this;
@@ -556,7 +553,6 @@ define(function (require, exports, module) {
 
         /**
          * 暂停动画
-         * @returns {Banner}
          */
         pause: function () {
             var the = this;
