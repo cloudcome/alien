@@ -29,10 +29,10 @@ define(function (require, exports, module) {
         var ret = [];
         var key = 'display';
         var none = 'none';
-        var block = 'block !important';
+        var block = 'block';
         var visible = 'visible';
         var hidden = 'hidden';
-        var nowDisplay = _getCss($ele, key);
+        var nowDisplay = _getDisplay($ele);
 
         if ($ele && !$ele[alienKey + key] && nowDisplay !== 'none') {
             $ele[alienKey + key] = nowDisplay;
@@ -51,14 +51,14 @@ define(function (require, exports, module) {
             }
 
             // 本身就是隐藏的
-            if (_getCss($ele, key) === none) {
+            if (_getDisplay($ele) === none) {
                 return hidden;
             }
 
             while ((temp = selector.parent($ele)) && temp.length && temp[0] !== document) {
                 $ele = temp[0];
 
-                if (_getCss($ele, key) === none) {
+                if (_getDisplay($ele) === none) {
                     return hidden;
                 }
             }
@@ -74,12 +74,12 @@ define(function (require, exports, module) {
         }
 
         if (nowVisibility === visible) {
-            $ele[alienKey + key] = _getCss($ele, 'display');
+            $ele[alienKey + key] = _getDisplay($ele);
             $ele.style.display = none;
         } else {
             while ($ele !== document && exports.visibility($ele) !== changeVisibility) {
-                if (_getCss($ele, key) === none) {
-                    _setCss($ele, key, $ele[alienKey + key] || block, true);
+                if (_getDisplay($ele) === none) {
+                    _setDisplay($ele, $ele[alienKey + key] || block);
                     ret.push($ele);
                 }
 
@@ -122,22 +122,19 @@ define(function (require, exports, module) {
     /**
      * 获取元素的样式
      * @param $ele
-     * @param key
      * @private
      */
-    function _getCss($ele, key) {
-        return $ele && $ele.nodeType === 1 ? getComputedStyle($ele).getPropertyValue(key) : undefined;
+    function _getDisplay($ele) {
+        return $ele && $ele.nodeType === 1 ? getComputedStyle($ele).getPropertyValue('display') : undefined;
     }
 
     /**
      * 设置元素的样式
      * @param $ele
-     * @param key
      * @param val
-     * @param isImportant
      * @private
      */
-    function _setCss($ele, key, val, isImportant) {
-        $ele.style.setProperty(key, val, isImportant ? 'important' : null);
+    function _setDisplay($ele, val) {
+        $ele.style.display = val;
     }
 });
