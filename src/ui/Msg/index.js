@@ -144,11 +144,6 @@ define(function (require, exports, module) {
                 the.destroy();
             });
 
-            // 单击背景
-            event.on(the._$msg, 'click', function (eve) {
-                return false;
-            });
-
             if (the._mask) {
                 // esc
                 the._mask.on('esc', function () {
