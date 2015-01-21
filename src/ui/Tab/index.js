@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var dato = require('../../util/dato.js');
     var defaults = {
         index: 0,
-        event: 'click tap',
+        eventType: 'click tap',
         activeClass: 'active'
     };
     var Tab = ui.create({
@@ -71,7 +71,6 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            var eventType = the._options.event;
 
             // 这里异步调用的原因是
             // 主线程执行完毕再执行这里
@@ -79,7 +78,7 @@ define(function (require, exports, module) {
             setTimeout(function () {
                 the._getActive();
             }, 0);
-            event.on(the._$ele, eventType, 'a', the._ontrigger.bind(the));
+            event.on(the._$ele, the._options.eventType, 'a', the._ontrigger.bind(the));
         },
 
 
@@ -111,7 +110,7 @@ define(function (require, exports, module) {
 
             eve.preventDefault();
 
-            if(triggerIndex !== the._index){
+            if (triggerIndex !== the._index) {
                 the._index = triggerIndex;
                 the._getActive();
             }
@@ -140,10 +139,9 @@ define(function (require, exports, module) {
          */
         destroy: function () {
             var the = this;
-            var eventType = the._options.event;
 
             // 卸载事件绑定
-            event.un(the._$ele, eventType, the._ontrigger);
+            event.un(the._$ele, the._options.eventType, the._ontrigger);
         }
     });
 
