@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @requires util/typeis
      * @requires core/navigator/compatible
      * @requires core/dom/selector
+     * @requires core/dom/see
      */
     'use strict';
 
@@ -24,6 +25,7 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
+    var see = require('./see.js');
     var REG_PX = /margin|width|height|padding|top|right|bottom|left/i;
     var REG_TRANSFORM = /translate|scale|skew|rotate|matrix|perspective/i;
     var REG_IMPORTANT = /\s!important$/i;
@@ -465,73 +467,6 @@ define(function (require, exports, module) {
         return _class(ele, 2, className);
     };
 
-    /**
-     * 获得某元素的状况，可能值为`show`或`hide`
-     * @param {HTMLElement|Node} ele 元素
-     * @param {String} [state] 设置状态值，`show`或者`hide`
-     * @returns {String|Array} 获取值为`show`或`hide`，设置时返回改变过的 dom 数组
-     */
-    exports.state = function (ele, state) {
-        var nowState;
-        var temp;
-        var ret = [];
-        var key = 'display';
-        var none = 'none';
-        var block = 'block !important';
-        var nowDisplay = exports.css(ele, 'display');
-
-        if (!ele[alienKey + key] && nowDisplay !== 'none') {
-            ele[alienKey + key] = nowDisplay;
-        }
-
-        // get
-        if (!state) {
-            if (!ele || ele.nodeType !== 1) {
-                return 'hide';
-            }
-
-            // 本身就是隐藏的
-            if (this.css(ele, key) === none) {
-                return 'hide';
-            }
-
-            while ((temp = selector.parent(ele)) && temp.length) {
-                ele = temp[0];
-
-                if (this.css(ele, key) === none) {
-                    return 'hide';
-                }
-            }
-
-            return 'show';
-        }
-
-        // set
-        nowState = this.state(ele);
-
-        if (nowState === state || !ele || ele.nodeType !== 1) {
-            return ret;
-        }
-
-        if (nowState === 'show') {
-            ele[alienKey + key] = exports.css(ele, 'display');
-            ele.style.display = none;
-        } else {
-            while (this.state(ele) !== state) {
-                if (this.css(ele, key) === none) {
-                    this.css(ele, key, ele[alienKey + key] || block);
-                    ret.push(ele);
-                }
-
-                if ((temp = selector.parent(ele)) && temp.length) {
-                    ele = temp[0];
-                }
-            }
-        }
-
-        return ret;
-    };
-
 
     /**
      * 获取、设置元素距离文档边缘的 top 距离
@@ -891,15 +826,15 @@ define(function (require, exports, module) {
         var eles;
         var ret;
 
-        if (exports.state(ele) === 'show') {
+        if (see.visibility(ele) === 'visible') {
             return doWhat(ele);
         } else {
-            eles = exports.state(ele, 'show');
+            eles = see.visibility(ele, 'visible');
 
             ret = doWhat(ele);
 
             dato.each(eles, function (index, ele) {
-                ele.style.display = '';
+                ele.style.display = ele['alien-core-dom-see-display'] || '';
             });
 
             return ret;

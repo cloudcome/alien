@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
+    var see = require('../../core/dom/see.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
@@ -285,9 +286,9 @@ define(function (require, exports, module) {
             attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
 
             if (the._options.successMsg === null) {
-                attribute.state($formMsg, isSuccess ? 'hide' : 'show');
+                see.visibility($formMsg, isSuccess ? 'visible' : 'hidden');
             } else {
-                attribute.state($formMsg, 'show');
+                see.visibility($formMsg, 'visible');
             }
 
             return the;
