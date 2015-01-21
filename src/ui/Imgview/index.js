@@ -152,10 +152,6 @@ define(function (require, exports, module) {
                 return false;
             };
 
-            event.on(the._$window, 'click tap', function (eve) {
-                return false;
-            });
-
             // 单击背景
             the._mask.on('hit', onclose);
 
