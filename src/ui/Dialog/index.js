@@ -163,11 +163,6 @@ define(function (require, exports, module) {
             event.on(the._$close, 'click', function () {
                 the.close();
             });
-
-            // 单击背景
-            event.on(the._$dialog, 'click', function () {
-                return false;
-            });
         },
 
 
