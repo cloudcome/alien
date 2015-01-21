@@ -38,7 +38,7 @@ define(function (require, exports, module) {
     var alienKey = 'alien-core-dom-attribute-';
     /**
      * 设置、获取元素的属性
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String/Object/Array} key 特征键、键值对、键数组
      * @param {String} [val] 特征值
      * @returns {*}
@@ -73,7 +73,7 @@ define(function (require, exports, module) {
 
     /**
      * 判断元素是否包含某个属性
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} key 单个特征
      * @returns {boolean}
      *
@@ -93,7 +93,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除元素的某个属性
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} [key] 单个或多个特征属性，为空表示移除所有特征
      *
      * @example
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的特性
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String/Object/Array} key 特性键、特性键值对、特性组
      * @param {*} [val] 特性值
      * @returns {*}
@@ -292,7 +292,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的数据集
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
      * @param {String} [dataVal] 数据集值
      * @returns {*}
@@ -352,7 +352,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的innerHTML
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String}      [html] html字符串
      * @returns {String|undefined}
      *
@@ -381,7 +381,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的innerText
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String}      [text]  text字符串
      * @returns {String|undefined}
      *
@@ -410,7 +410,7 @@ define(function (require, exports, module) {
 
     /**
      * 添加元素的className
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} className 多个className使用空格分开
      * @returns {undefined}
      *
@@ -429,7 +429,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除元素的className
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
      * @returns {undefined}
      *
@@ -450,7 +450,7 @@ define(function (require, exports, module) {
 
     /**
      * 判断元素是否包含某个className
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} className 单个className
      * @returns {Boolean}
      *
@@ -535,7 +535,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 top 距离
-     * @param {Element} ele
+     * @param {HTMLElement|Node} ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
@@ -553,7 +553,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 left 距离
-     * @param {Element} ele
+     * @param {HTMLElement|Node} ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
@@ -573,7 +573,7 @@ define(function (require, exports, module) {
      * 获取、设置元素的占位宽度
      * content-box: cssWidth + padding + border
      * border-box:  cssWidth
-     * @param {Element} ele
+     * @param {HTMLElement|Node} ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
@@ -603,7 +603,7 @@ define(function (require, exports, module) {
      * 获取、设置元素的占位高度
      * content-box: cssHeight + padding + border
      * border-box:  cssHeight
-     * @param {Element} ele
+     * @param {HTMLElement|Node} ele
      * @param {Number} [val] 高度值
      * @returns {Number|undefined|*}
      *
@@ -736,7 +736,7 @@ define(function (require, exports, module) {
 
     /**
      * 操作元素的className
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {Number} type 操作类型，0=add，1=remove，2=has
      * @param {String} [className] 样式名称，多个样式使用空格分开
      * @returns {*}
@@ -839,7 +839,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置元素的位置
-     * @param {Element} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {String} key 键名
      * @param {Number} val 键值
      * @param {Number} extraKey 额外的键
@@ -883,7 +883,7 @@ define(function (require, exports, module) {
 
     /**
      * 切换显隐状态来计算元素尺寸
-     * @param {HTMLElement} ele 元素
+     * @param {HTMLElement|Node} ele 元素
      * @param {Function} doWhat 做
      * @private
      */

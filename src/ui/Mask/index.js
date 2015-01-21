@@ -158,7 +158,6 @@ define(function (require, exports, module) {
             }
 
             attribute.addClass(document.body, alienClass + '-overflow');
-            attribute.addClass(document.documentElement, alienClass + '-overflow');
 
             return the;
         },
@@ -219,7 +218,6 @@ define(function (require, exports, module) {
 
             if (!maskWindowLength) {
                 attribute.removeClass(document.body, alienClass + '-overflow');
-                attribute.removeClass(document.documentElement, alienClass + '-overflow');
             }
 
             return the;
@@ -262,6 +260,7 @@ define(function (require, exports, module) {
      * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
      */
     module.exports = Mask;
+    style += '.' + alienClass + '-overflow{margin-right:' + _getScrollbarWidth() + 'px !important;}';
     modification.importStyle(style);
     event.on(document, 'keyup', function (eve) {
         var mask;
@@ -271,4 +270,28 @@ define(function (require, exports, module) {
             mask.emit('esc');
         }
     });
+
+
+    /**
+     * 获得当前页面的滚动条宽度
+     * @returns {number}
+     * @private
+     */
+    function _getScrollbarWidth() {
+        var $div = modification.create('div', {
+            style: {
+                position: 'absolute',
+                width: 100,
+                height: 100,
+                overflow: 'scroll'
+            }
+        });
+
+        modification.insert($div, document.body);
+
+        var width = $div.offsetWidth - $div.clientWidth;
+        modification.remove($div);
+
+        return width;
+    }
 });
