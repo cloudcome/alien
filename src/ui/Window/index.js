@@ -22,6 +22,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var event = require('../../core/event/touch.js');
     var animation = require('../../core/dom/animation.js');
     var style = require('css!./style.css');
     var ui = require('../base.js');
@@ -69,6 +70,10 @@ define(function (require, exports, module) {
             modification.insert($pos, the._$content, 'afterend');
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
+
+            event.on(the._$window, 'click tap', function (eve) {
+                eve.stopPropagation();
+            });
 
             return the;
         },
@@ -273,6 +278,7 @@ define(function (require, exports, module) {
                 modification.insert(the._$content, the._$contentPos, 'afterend');
                 modification.remove(the._$contentPos);
                 modification.remove(the._$window);
+                event.un(the._$window, 'click tap');
 
                 if (typeis.function(callback)) {
                     callback();
