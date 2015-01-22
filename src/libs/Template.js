@@ -10,12 +10,14 @@ define(function (require, exports, module) {
      * @module libs/Template
      * @requires util/dato
      * @requires util/typeis
+     * @requires util/random
      * @requires util/class
      */
     'use strict';
 
     var dato = require('../util/dato.js');
     var typeis = require('../util/typeis.js');
+    var random = require('../util/random.js');
     var klass = require('../util/class.js');
     var regStringWrap = /([\\"])/g;
     var regBreakLineMac = /\n/g;
@@ -82,7 +84,6 @@ define(function (require, exports, module) {
             },
 
 
-
             /**
              * 添加过滤方法
              * @param {String} name 过滤方法名称
@@ -123,21 +124,27 @@ define(function (require, exports, module) {
                     return filters[name];
                 }
             }
-
-
-
         },
 
 
         /**
          * 构造函数
-         * @constructor
          * @param tmplate {String} 模板内容
          * @param [options] {Object} 模板配置
          */
         constructor: function (tmplate, options) {
             this._options = dato.extend(true, {}, defaults, options);
             this._init(tmplate);
+        },
+
+
+        /**
+         * 生成一个变量
+         * @returns {string}
+         * @private
+         */
+        _generatorVar: function () {
+            return 'alien_libs_template_' + random.string(20, '0aA');
         },
 
 
@@ -149,8 +156,7 @@ define(function (require, exports, module) {
          */
         _init: function (template) {
             var the = this;
-            //var options = the._options;
-            var _var = 'alienTemplateOutput_' + Date.now();
+            var _var = the._generatorVar();
             var fnStr = 'var ' + _var + '="";';
             var output = [];
             var parseTimes = 0;
@@ -256,7 +262,7 @@ define(function (require, exports, module) {
                     }
                     // /list
                     else if ($0 === '/list') {
-                        output.push('}' + _var + '+=' + $1 + ';');
+                        output.push('}, this);' + _var + '+=' + $1 + ';');
                     }
                     // var
                     else if (the._hasPrefix($0, 'var')) {
@@ -324,8 +330,9 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
-            var existFilters = dato.extend(!0, {}, filters, the._template.filters);
-            var self = dato.extend(!0, {}, {
+            var existFilters = dato.extend(true, {}, filters, the._template.filters);
+            var self = dato.extend(true, {}, {
+                each: dato.each,
                 escape: _escape,
                 filters: existFilters
             });
@@ -500,7 +507,9 @@ define(function (require, exports, module) {
         _parseList: function (str) {
             var matches = str.trim().match(regList);
             var parse;
-
+            var randomKey1 = this._generatorVar();
+            var randomKey2 = this._generatorVar();
+            var randomVal = this._generatorVar();
 
             if (!matches) {
                 throw new Error('parse error ' + str);
@@ -508,12 +517,13 @@ define(function (require, exports, module) {
 
             parse = {
                 list: matches[1] || '',
-                key: matches[4] ? matches[2] : '$index',
+                key: matches[4] ? matches[2] : randomKey2,
                 val: matches[4] ? matches[4] : matches[2]
             };
 
-            return 'for(var ' + parse.key + ' in ' + parse.list + '){var ' +
-                parse.val + '=' + parse.list + '[' + parse.key + '];';
+            return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
+                'var ' + parse.key + ' = ' + randomKey1 + ';' +
+                'var ' + parse.val + '=' + randomVal + ';';
         },
 
 
