@@ -73,6 +73,15 @@ define(function (require, exports, module) {
              */
             filters: filters,
 
+            /**
+             * 设置默认配置
+             * @param options
+             */
+            setDefaults: function (options) {
+                dato.extend(defaults, options);
+            },
+
+
 
             /**
              * 添加过滤方法
@@ -114,6 +123,9 @@ define(function (require, exports, module) {
                     return filters[name];
                 }
             }
+
+
+
         },
 
 
@@ -124,7 +136,7 @@ define(function (require, exports, module) {
          * @param [options] {Object} 模板配置
          */
         constructor: function (tmplate, options) {
-            this._options = dato.extend(!0, {}, defaults, options);
+            this._options = dato.extend(true, {}, defaults, options);
             this._init(tmplate);
         },
 
@@ -526,28 +538,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 模板引擎<br>
-     * <b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误</b><br>
-     * 1. 编码输出变量<br>
-     * {{data.name}}<br>
-     * 2. 取消编码输出变量<br>
-     * {{=data.name}}<br>
-     * 3. 判断语句（<code>if</code>）<br>
-     * {{if data.name1}}<br>
-     * {{else if data.name2}}<br>
-     * {{else}}<br>
-     * {{/if}}<br>
-     * 4. 循环语句（<code>list</code>）<br>
-     * {{list list as key,val}}<br>
-     * {{/list}}<br>
-     * {{list list as val}}<br>
-     * {{/list}}<br>
-     * 5. 过滤（<code>|</code>）<br>
-     * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>
-     * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>
-     * 6. 反斜杠转义，原样输出<br>
-     * \{{}} => {{}}<br>
-     *
+     * 模板引擎
      * @param {Object} [options] 配置
      * @param {Boolean} [options.compress=true] 是否压缩，默认为 true
      * @constructor
