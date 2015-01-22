@@ -26,6 +26,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /<!--[\s\S]*?-->/g;
+    var regElseIf = /^else\s+if\s/;
+    var regHash = /^#/;
     var escapes = [
         {
             reg: /</g,
@@ -220,11 +222,11 @@ define(function (require, exports, module) {
                     $1 = the._lineWrap($1);
 
                     // if abc
-                    if ($0.indexOf('if ') === 0) {
+                    if (the._hasPrefix($0, 'if')) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else if abc
-                    else if ($0.indexOf('else if ') === 0) {
+                    else if (regElseIf.test($0)) {
                         output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else
@@ -237,7 +239,7 @@ define(function (require, exports, module) {
                     }
                     // list list as key,val
                     // list list as val
-                    else if ($0.indexOf('list ') === 0) {
+                    else if (the._hasPrefix($0, 'list')) {
                         output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
                     // /list
@@ -245,11 +247,27 @@ define(function (require, exports, module) {
                         output.push('}' + _var + '+=' + $1 + ';');
                     }
                     // var
-                    else {
+                    else if (the._hasPrefix($0, 'var')) {
                         parseVar = the._parseVar($0);
 
                         if (parseVar) {
-                            output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
+                            output.push(parseVar);
+                        }
+                    }
+                    // #
+                    else if (regHash.test($0)) {
+                        parseVar = the._parseVar($0.replace(regHash, ''));
+
+                        if (parseVar) {
+                            output.push(parseVar);
+                        }
+                    }
+                    // exp
+                    else {
+                        parseVar = the._parseExp($0);
+
+                        if (parseVar) {
+                            output.push(_var + '+=' + the._parseExp($0) + '+' + $1 + ';');
                         }
                     }
 
@@ -266,6 +284,18 @@ define(function (require, exports, module) {
             the._fn = fnStr;
 
             return the;
+        },
+
+
+        /**
+         * 判断是否包含该前缀
+         * @param str
+         * @param pre
+         * @returns {boolean}
+         * @private
+         */
+        _hasPrefix: function (str, pre) {
+            return str.indexOf(pre + ' ') === 0;
         },
 
 
@@ -369,12 +399,24 @@ define(function (require, exports, module) {
 
 
         /**
-         * 解析变量
+         * 解析变量赋值
          * @param str
          * @returns {string}
          * @private
          */
         _parseVar: function (str) {
+            return this._parseExp(str, 'var') + ';';
+        },
+
+
+        /**
+         * 解析表达式
+         * @param str
+         * @param [pre]
+         * @returns {string}
+         * @private
+         */
+        _parseExp: function (str, pre) {
             var the = this;
             var matches = str.trim().match(regVar);
             var filters;
@@ -412,8 +454,11 @@ define(function (require, exports, module) {
 
             var isEscape = matches[1] !== '=';
 
-            return (isEscape ? 'this.escape(' : '(') +
-                exp + ')';
+            if (pre) {
+                return exp;
+            }
+
+            return (isEscape ? 'this.escape(' : '(') + exp + ')';
         },
 
 

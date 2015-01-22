@@ -47,13 +47,15 @@
 <body>
 
 <textarea id="template">
+    {{var year = new Date().getFullYear()}}
+    {{# name += " Xixi"}}
     <p>
-        {{if name === "Jane Yim"}}
+        {{if name}}
         {{name}}
         {{else}}
         Please login
         {{/if}}
-        喜欢的书有：
+        喜欢的书（{{year}}年）有：
     </p>
 
     <ul>
