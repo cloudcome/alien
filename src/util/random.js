@@ -90,7 +90,7 @@ define(function (require, exports) {
         max = pool.length - 1;
 
         while (length--) {
-            ret += pool[this.number(0, max)];
+            ret += pool[exports.number(0, max)];
         }
 
         return ret;

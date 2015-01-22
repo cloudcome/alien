@@ -108,11 +108,11 @@ define(function (require, exports) {
 
         // moz
         if (supportToBlob) {
-            $canvas = this.imgToBase64($img, options, !0);
+            $canvas = exports.imgToBase64($img, options, !0);
             return $canvas.toBlob(callback, options.type, options.quality);
         } else {
-            base64 = this.imgToBase64($img, options, !1);
-            callback(this.base64toBlob(base64));
+            base64 = exports.imgToBase64($img, options, !1);
+            callback(exports.base64toBlob(base64));
         }
     };
 

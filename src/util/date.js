@@ -321,7 +321,7 @@ define(function (require, exports, module) {
         var days = date;
 
         while (month--) {
-            days += this.getDaysInMonth(year, month);
+            days += exports.getDaysInMonth(year, month);
         }
 
         return days;
@@ -348,7 +348,7 @@ define(function (require, exports, module) {
         var i = 0;
 
         for (; i < month; i++) {
-            pastDate += this.getDaysInMonth(year, i);
+            pastDate += exports.getDaysInMonth(year, i);
         }
 
         return Math.ceil(pastDate / 7);

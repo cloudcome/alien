@@ -166,7 +166,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.plainObject = function (obj) {
-        return this(obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
+        return typeis(obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
     };
 
 
@@ -175,7 +175,7 @@ define(function (require, exports, module) {
      * @param obj {*}
      */
     typeis.emptyObject = function (obj) {
-        return this.plainObject(obj) && Object.keys(obj).length === 0;
+        return typeis.plainObject(obj) && Object.keys(obj).length === 0;
     };
 
 
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.url = function (string) {
-        return this(string) === 'string' && REG_URL.test(string);
+        return typeis(string) === 'string' && REG_URL.test(string);
     };
 
 
@@ -203,7 +203,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.email = function (string) {
-        return this(string) === 'string' && REG_EMAIL.test(string);
+        return typeis(string) === 'string' && REG_EMAIL.test(string);
     };
 
 
