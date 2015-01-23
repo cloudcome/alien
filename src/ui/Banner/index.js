@@ -59,8 +59,8 @@ define(function (require, exports, module) {
         STATIC: {
             defaults: defaults
         },
-
-
+        
+        
         constructor: function (ele, options) {
             var the = this;
 
