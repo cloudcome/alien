@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         width: 700,
         height: 300,
         itemSelector: 'li',
-        duration: 678,
+        duration: 345,
         timeout: 3456,
         easing: 'ease-in-out-back',
         isAutoPlay: true,
@@ -79,7 +79,6 @@ define(function (require, exports, module) {
 
         /**
          * 初始化
-         * @public
          * @private
          */
         _init: function () {
@@ -90,7 +89,7 @@ define(function (require, exports, module) {
             the._initEvent();
             the._activeNav(0);
             the.play();
-            setTimeout(function(){
+            setTimeout(function () {
                 the.emit('change', 0);
             }, 0);
 
@@ -178,11 +177,26 @@ define(function (require, exports, module) {
 
         /**
          * 切换克隆元素显隐
-         * @param isDisplay
+         * @param isDisplay {Boolean} 是否显示
+         * @param [duration] {Number} 动画时间
          * @private
          */
-        _toggleClone: function (isDisplay) {
-            attribute[(isDisplay ? 'remove' : 'add') + 'Class'](this._$banner, alienClass + '-touch');
+        _toggleClone: function (isDisplay, duration) {
+            var the = this;
+            var _toggle = function () {
+                if (the._toggleTimer) {
+                    clearTimeout(the._toggleTimer);
+                    the._toggleTimer = 0;
+                }
+
+                attribute[(isDisplay ? 'remove' : 'add') + 'Class'](the._$banner, alienClass + '-touch');
+            };
+
+            if (isDisplay) {
+                the._toggleTimer = setTimeout(_toggle, duration + 30);
+            } else {
+                _toggle();
+            }
         },
 
 
@@ -197,8 +211,8 @@ define(function (require, exports, module) {
             var touch0;
             var touch1;
             // 触摸结束
-            var _touchdone = function _touchdone() {
-                the._toggleClone(true);
+            var _touchdone = function (duration) {
+                the._toggleClone(true, duration);
             };
 
             // 单击 nav
@@ -223,8 +237,8 @@ define(function (require, exports, module) {
 
             // 触摸
             event.on(the._$banner, 'touch1start', function (eve) {
-                the.pause();
                 the._toggleClone(false);
+                the.pause();
                 translate = the._translate;
                 touch0 = eve['page' + the._direction];
                 eve.preventDefault();
@@ -237,23 +251,68 @@ define(function (require, exports, module) {
             });
 
             event.on(the._$banner, 'touch1end', function () {
-                var index = the._getIndex(touch1 - touch0, translate + touch1 - touch0);
+                var order = touch1 - touch0;
+                var index = the._getIndex(order, translate + order);
                 var type = touch1 <= touch0 && the._increase > 0 ||
                 touch1 >= touch0 && the._increase < 0 ? 'next' : 'prev';
+                var touchEasing = 'linear';
+                var remainDuration = the._calDuration(index, translate + order);
 
                 if (index === the._showIndex) {
                     animation.animate(the._$ele, the._calTranslate(the._translate), {
-                        duration: options.duration,
-                        easing: options.easing
-                    }, _touchdone);
+                        duration: 234,
+                        easing: touchEasing
+                    });
+                    _touchdone(234);
                 } else {
-                    the.index(type, index, _touchdone);
+                    the._index(type, index, noop, {
+                        duration: remainDuration,
+                        easing: touchEasing
+                    });
+                    _touchdone(remainDuration);
                 }
 
                 the.play();
             });
 
             the.resize(options);
+        },
+
+
+        /**
+         * 计算偏移量
+         * @param val
+         * @param [isOverWrite=true]
+         * @private
+         */
+        _calTranslate: function (val, isOverWrite) {
+            var the = this;
+            var sett = {};
+
+            if (isOverWrite !== false) {
+                the._translate = val;
+            }
+
+            sett['translate' + the._direction] = val + 'px';
+
+            return sett;
+        },
+
+
+        /**
+         * 计算剩余便宜动画时间
+         * @param index {Number} 显示的索引值
+         * @param distance {Number} 滑动的距离
+         * @private
+         */
+        _calDuration: function (index, distance) {
+            var the = this;
+            var options = the._options;
+            var delta = options.width * (index + 2) + distance;
+            var ratio = delta / options.width;
+            var duration = options.duration * ratio;
+
+            return Math.abs(duration > options.duration ? options.duration : duration);
         },
 
 
@@ -291,26 +350,6 @@ define(function (require, exports, module) {
                 return Math[order > 0 ? 'ceil' : 'floor'](distance / the._distance) +
                     (ratio > options.boundaryRatio ? (order > 0 ? -1 : 1) : 0);
             }
-        },
-
-
-        /**
-         * 计算偏移量
-         * @param val
-         * @param [isOverWrite=true]
-         * @private
-         */
-        _calTranslate: function (val, isOverWrite) {
-            var the = this;
-            var set = {};
-
-            if (isOverWrite !== false) {
-                the._translate = val;
-            }
-
-            set['translate' + the._direction] = val + 'px';
-
-            return set;
         },
 
 
@@ -434,23 +473,38 @@ define(function (require, exports, module) {
             var args = arguments;
             var argL = args.length;
             var the = this;
-            var options = the._options;
-            var count = the._$items.length - 2;
-            var set;
 
-            if (count < 2 || index === the._showIndex) {
-                return the;
-            }
-
-            if (typeis(args[0]) === 'number') {
+            if (typeis.number(args[0])) {
                 type = 'next';
                 index = args[0];
             }
 
-            callback = args[argL - 1];
-
-            if (typeis(callback) !== 'function') {
+            if (!typeis.function(args[argL - 1])) {
                 callback = noop;
+            }
+
+            the._index(type, index, callback);
+
+            return the;
+        },
+
+
+        /**
+         * 播放第几个项目
+         * @param {String} type 展示方式
+         * @param {Number} index 需要展示的序号
+         * @param {Function} callback 回调
+         * @param {Object} [otp] 额外参数
+         * @private
+         */
+        _index: function (type, index, callback, otp) {
+            var the = this;
+            var options = dato.extend(true, {}, the._options, otp);
+            var count = the._$items.length - 2;
+            var sett;
+
+            if (count < 2 || index === the._showIndex) {
+                return the;
             }
 
             the._beforeDisplayIndex(type, index);
@@ -459,9 +513,9 @@ define(function (require, exports, module) {
                 throw new Error('can not go to ' + type + ' ' + index);
             }
 
-            set = the._calTranslate(-the._distance * (index + 2));
+            sett = the._calTranslate(-the._distance * (index + 2));
 
-            animation.animate(the._$ele, set, {
+            animation.animate(the._$ele, sett, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {

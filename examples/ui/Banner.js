@@ -8,16 +8,23 @@ define(function (require) {
     'use strict';
 
     var Banner = require('/src/ui/Banner/index.js');
+    var control = require('/src/util/control.js');
     var $index = document.getElementById('index');
     var banner = new Banner('#banner', {
-        width: 460,
+        width: Math.min(window.innerWidth, 460),
         height: 200,
-        axis: '+y',
+        axis: '+x',
         navGenerator: function (index, length) {
             return '<li>'+(index+1)+'</li>';
         },
         navSelector: 'li',
         $navParent: document.getElementById('nav')
+    });
+    
+    window.onresize = control.debounce(function () {
+        banner.resize({
+            width: Math.min(window.innerWidth, 460)
+        });
     });
 
     banner.on('change', function (index) {
