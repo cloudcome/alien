@@ -241,7 +241,7 @@ define(function (require, exports, module) {
                 the.pause();
                 translate = the._translate;
                 touch0 = eve['page' + the._direction];
-                eve.preventDefault();
+                //eve.preventDefault();
             });
 
             event.on(the._$banner, 'touch1move', function (eve) {
@@ -251,6 +251,7 @@ define(function (require, exports, module) {
             });
 
             event.on(the._$banner, 'touch1end', function () {
+                touch1 = touch1 || touch0;
                 var order = touch1 - touch0;
                 var index = the._getIndex(order, translate + order);
                 var type = touch1 <= touch0 && the._increase > 0 ||
@@ -264,7 +265,7 @@ define(function (require, exports, module) {
                         easing: touchEasing
                     });
                     _touchdone(234);
-                } else {
+                } else if(Math.abs(order) > 50) {
                     the._index(type, index, noop, {
                         duration: remainDuration,
                         easing: touchEasing
