@@ -1,0 +1,8 @@
+{{if max}}
+<div class="alien-ui-pagination">
+    {{list pagination as pg}}
+    <div class="alien-ui-pagination-item {{if pg.type === 'ellipsis'}}alien-ui-pagination-disabled{{else if pg.active}}alien-ui-pagination-active{{else}}alien-ui-pagination-normal{{/if}}"
+          data-page="{{if pg.page}}{{pg.page}}{{/if}}">{{if pg.type === 'prev'}}上一页{{else if pg.type === 'next'}}下一页{{else if pg.type === 'ellipsis'}}...{{else}}{{pg.page}}{{/if}}</div>
+    {{/list}}
+</div>
+{{/if}}

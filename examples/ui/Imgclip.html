@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2014-10-28 15:14
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Imgclip.html</title>
+    <style>
+        body{
+            margin-top: 600px;
+        }
+        #demo{
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            text-align: center;
+            line-height: 300px;
+            border: 4px solid #eee;
+        }
+
+        #demo img{
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        pre {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="demo">
+    <img id="img" src="water.jpg" alt="water" width="680" height="510"/>
+</div>
+
+<h3>选区：<b id="ret">空</b></h3>
+
+<pre>
+var imgclip = new Imgclip('#img', {
+    minWidth: 100,
+    minHeight: 100,
+    ratio: 1.5
+}).on('clipend', function (selection) {
+    $ret.innerHTML = JSON.stringify(selection);
+});
+</pre>
+
+<script src="../coolie.min.js" data-main="./ui/Imgclip.js"></script>
+<script src="../coolie-config.js"></script>
+
+
+<!--<ul id="demo1">-->
+    <!--<li>1</li>-->
+    <!--<li>2</li>-->
+    <!--<li>3</li>-->
+    <!--<li>4</li>-->
+<!--</ul>-->
+<!--<ul id="demo2"></ul>-->
+<!--<script>-->
+    <!--var $demo1 = document.getElementById('demo1');-->
+    <!--var $demo2 = document.getElementById('demo2');-->
+    <!--var $list = $demo1.getElementsByTagName('li');-->
+    <!--var i = 0;-->
+    <!--var j = $list.length;-->
+
+    <!--for (; i < j; i++) {-->
+        <!--$demo2.appendChild($list[i]);-->
+    <!--}-->
+<!--</script>-->
+
+
+</body>
+</html>

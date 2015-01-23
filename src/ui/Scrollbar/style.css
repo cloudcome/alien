@@ -1,0 +1,72 @@
+.alien-ui-scrollbar {
+    position: relative;
+    overflow: hidden;
+}
+
+.alien-ui-scrollbar-body {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.alien-ui-scrollbar-body > textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.alien-ui-scrollbar-track {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.alien-ui-scrollbar-track-x {
+    left: 0;
+    height: 15px;
+    border-top-width: 1px;
+}
+
+.alien-ui-scrollbar-track-y {
+    top: 0;
+    width: 15px;
+    border-left-width: 1px;
+}
+
+.alien-ui-scrollbar-thumb {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    -webkit-transition-duration: 456ms;
+    -moz-transition-duration: 456ms;
+    transition-duration: 456ms;
+    -webkit-transition-property: background;
+    -moz-transition-property: background;
+    transition-property: background;
+}
+
+.alien-ui-scrollbar-thumb-x {
+    width: 100%;
+    height: 8px;
+    left: 0;
+    bottom: 3px;
+    margin-left: 3px;
+}
+
+.alien-ui-scrollbar-thumb-y {
+    width: 8px;
+    height: 100%;
+    top: 0;
+    right: 3px;
+    margin-top: 3px;
+}
+
+.alien-ui-scrollbar-thumb:hover,
+.alien-ui-scrollbar-thumb-active {
+    background: rgba(0, 0, 0, .6);
+}

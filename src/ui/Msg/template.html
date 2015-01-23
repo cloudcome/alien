@@ -1,0 +1,20 @@
+<div id="alien-ui-msg-{{id}}" class="alien-ui-msg" {{if !title && canDrag}}draggablefor="{{windowId}}"{{/if}}>
+
+    <div class="alien-ui-msg-header j-flag"
+         {{if !title}}style="display:none;"{{/if}}
+         {{if title && canDrag}}draggablefor="{{windowId}}"{{/if}}>
+        <div class="alien-ui-msg-title j-flag">{{=title}}</div>
+    </div>
+
+    <div class="alien-ui-msg-close j-flag" {{if !title}}style="display:none;"{{/if}}>&times;</div>
+
+    <div class="alien-ui-msg-body j-flag">{{=body}}</div>
+
+    <div class="alien-ui-msg-buttons j-flag alien-ui-msg-buttons-{{buttons.length}} alien-ui-msg-buttons-{{buttons.length > 3 ? 'vertical' : 'horizontal'}}"
+            {{if buttons.length == 0}}style="display:none;"{{/if}}>
+        {{list buttons as index,button}}
+        <div class="alien-ui-msg-button j-flag" data-index="{{index}}">{{button}}</div>
+        {{/list}}
+    </div>
+
+</div>

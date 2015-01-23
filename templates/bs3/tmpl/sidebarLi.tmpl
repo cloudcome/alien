@@ -1,0 +1,54 @@
+<?js
+// data is a doclet
+var data = obj;//console.log('SIDEBAR LI', data, "\n\n\n");
+var self = this;
+
+/**
+ *  This template is meant to render <li> elements in the sidebar. The sidebar links
+ *  are meant to scroll to the correct place on the page for associated doclets, so
+ *  some defaults are set. However, by adding some properties to the doclet object
+ *  which is passed to this template, the <li> (and it's content) can be modified.
+ *
+ *  @param {string|array}   [aClass]    Single class as a string or array of class names.
+ *  @param {string}         [aContent]  The content to go between the <a> tags.
+ *  @param {string}         [aHref]     The value of the anchor href attribute
+ *  @param {string|array}   [liClass]   Single class as a string or array of class names.
+ *  @param {string}         [liContent] The content to go between the <a> tags. The default
+ *                                      anchor element will NOT render in this case.
+ */
+var aClass      = (data.aClass)
+                    ? data.aClass
+                    : ''
+    , liClass   = (data.liClass)
+                    ? data.liClass
+                    : ''
+    , aContent  = (data.aContent)
+                    ? data.aContent
+                    : data.name
+    , liContent = (data.liContent)
+                    ? data.liContent
+                    : null
+    , aHref      = (data.href)
+                    ? data.href
+                    : '#' + data.id
+    , aClasses   = (function(){
+            var classes = [];
+            data.inherited && classes.push('inherited');
+            data.overrides && classes.push('overrides');
+            return (aClass.length) ? aClass + ' ' + classes.join(' ') : classes.join(' ');
+        }())
+    ;
+
+liClass += (data.deprecated)
+                    ? ' deprecated'
+                    : '';
+
+?>
+
+<li class="<?js= liClass ?>">
+    <?js if (liContent !== null) { ?>
+        <?js= liContent ?>
+    <?js } else { ?>
+        <a class="<?js= aClasses ?>" href="<?js= aHref ?>"><?js= aContent ?></a>
+    <?js } ?>
+</li>

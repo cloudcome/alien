@@ -1,0 +1,44 @@
+.alien-ui-editor {
+    position: relative;
+    background: #fff;
+}
+
+.alien-ui-editor-upload * {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.alien-ui-editor-inner {
+    position: relative;
+}
+
+.alien-ui-editor-textarea {
+    overflow: hidden;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.alien-ui-editor-upload {
+    text-align: center;
+}
+
+.alien-ui-editor-upload-preview {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    border: 4px solid #ddd;
+}
+
+.alien-ui-editor-upload-preview img {
+    vertical-align: middle;
+    width: auto;
+    height: auto;
+    max-width: 100px;
+    max-height: 100px;
+}

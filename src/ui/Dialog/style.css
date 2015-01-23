@@ -1,0 +1,76 @@
+.alien-ui-dialog-bg {
+    background: rgba(255, 255, 255, .3);
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.alien-ui-dialog {
+    box-shadow: 0 0 20px #A0A0A0;
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.alien-ui-dialog-header {
+    position: relative;
+    font-weight: normal;
+    overflow: hidden;
+    background: -moz-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+    background: -webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+    background: -o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+    background: -ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+    background: linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+}
+
+.alien-ui-dialog-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 12px;
+    cursor: move;
+    color: #444;
+}
+
+.alien-ui-dialog-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #ccc;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    cursor: pointer;
+    font: normal normal normal 30px/32px Arial;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.alien-ui-dialog-close:hover {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    color: #555;
+}
+
+.alien-ui-dialog-body {
+    position: relative;
+    padding: 20px;
+    overflow: auto;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.alien-ui-dialog-iframe {
+    display: block;
+    background: #fff;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}

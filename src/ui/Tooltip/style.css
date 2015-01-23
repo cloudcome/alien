@@ -1,0 +1,68 @@
+.alien-ui-tooltip {
+    position: absolute;
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    max-width: 300px;
+    word-break: break-all;
+    visibility: hidden;
+}
+
+.alien-ui-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: solid transparent;
+}
+
+.alien-ui-tooltip-top {
+    margin-top: -5px;
+}
+
+.alien-ui-tooltip-top .alien-ui-tooltip-arrow {
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: #000;
+}
+
+.alien-ui-tooltip-bottom {
+    margin-top: 5px;
+}
+
+.alien-ui-tooltip-bottom .alien-ui-tooltip-arrow {
+    top: -5px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #000;
+}
+
+.alien-ui-tooltip-right {
+    margin-left: 5px;
+}
+
+.alien-ui-tooltip-right .alien-ui-tooltip-arrow {
+    left: -5px;
+    top: 50%;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #000;
+}
+
+.alien-ui-tooltip-left {
+    margin-left: -5px;
+}
+
+.alien-ui-tooltip-left .alien-ui-tooltip-arrow {
+    right: -5px;
+    top: 50%;
+    margin-top: -5px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #000;
+}

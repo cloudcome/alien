@@ -1,0 +1,11 @@
+{{if max}}
+<div class="alien-ui-pager">
+    {{if page > 1}}
+    <div class="alien-ui-pager-page alien-ui-pager-prev" data-page="{{page-1}}">{{prev}}</div>
+    {{/if}}
+    <div class="alien-ui-pager-number">{{page}}</div>
+    {{if page < max}}
+    <div class="alien-ui-pager-page alien-ui-pager-next" data-page="{{page-1+2}}">{{next}}</div>
+    {{/if}}
+</div>
+{{/if}}

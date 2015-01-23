@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+ - touch.html
+ - @author ydr.me
+ - @create 2014-09-27 16:08
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>touch.html</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #demo {
+            position: absolute;
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            border: 4px solid #ddd;
+            line-height: 300px;
+            font-size: 30px;
+            z-index: 2;
+            top: 60px;
+            left: 0;
+        }
+        #demo2{
+            position: absolute;
+            background: #f5e79e;
+            border: 4px solid #d1c587;
+            width: 100%;
+            height: 300px;
+            top: 60px;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div id="ret1">touch event type</div>
+<div id="ret2">swipe event type</div>
+
+<div id="demo">touch me</div>
+<div id="demo2"></div>
+
+
+
+<script src="../../coolie.min.js" data-main="./core/event/touch.js"></script>
+<script src="../../coolie-config.js"></script>
+
+
+</body>
+</html>

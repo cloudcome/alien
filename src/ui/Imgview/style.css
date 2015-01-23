@@ -1,0 +1,83 @@
+@charset "utf-8";
+
+.alien-ui-imgview-bg {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.alien-ui-imgview {
+    text-align: center;
+    background: #fff;
+    overflow: hidden;
+}
+
+.alien-ui-imgview-main img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+.alien-ui-imgview-loading {
+    display: none;
+    color: #aaa;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+
+.alien-ui-imgview-loading-img {
+    vertical-align: top;
+}
+
+.alien-ui-imgview-loading-text {
+    line-height: 30px;
+    margin-top: 15px;
+}
+
+.alien-ui-imgview-prev,
+.alien-ui-imgview-next {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0 15px;
+    height: 36px;
+    line-height: 36px;
+    cursor: pointer;
+    background: #f6f6f6;
+}
+
+.alien-ui-imgview-prev:hover,
+.alien-ui-imgview-next:hover {
+    background: #428bca;
+    border-color: #428bca;
+    color: #fff;
+}
+
+.alien-ui-imgview-prev {
+    border-radius: 0 4px 4px 0;
+    left: 0;
+}
+
+.alien-ui-imgview-next {
+    border-radius: 4px 0 0 4px;
+    right: 0;
+}
+
+.alien-ui-imgview-ctrl-disabled,
+.alien-ui-imgview-ctrl-disabled:hover {
+    background: #f6f6f6;
+    cursor: not-allowed;
+    color: #ccc;
+    border-color: #ddd;
+}
+
+.alien-ui-imgview-isloading .alien-ui-imgview-body {
+    display: none;
+}
+
+.alien-ui-imgview-isloading .alien-ui-imgview-loading {
+    display: block;
+}

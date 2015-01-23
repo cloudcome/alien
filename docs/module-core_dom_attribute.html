@@ -1,0 +1,4541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Module: core/dom/attribute - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_DDB.html">libs/DDB</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Lex.html">libs/Lex</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
+<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
+<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
+<li><a href="module-ui_generator.html">ui/generator</a></li>
+<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
+<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
+<li><a href="module-ui_Pager.html">ui/Pager</a></li>
+<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
+<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
+<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
+<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
+<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-util_canvas.html">util/canvas</a></li>
+<li><a href="module-util_class.html">util/class</a></li>
+<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_data.html">util/data</a></li>
+<li><a href="module-util_date.html">util/date</a></li>
+<li><a href="module-util_easing.html">util/easing</a></li>
+<li><a href="module-util_hashbang.html">util/hashbang</a></li>
+<li><a href="module-util_querystring.html">util/querystring</a></li>
+<li><a href="module-util_random.html">util/random</a></li>
+<li><a href="module-util_selection.html">util/selection</a></li>
+<li><a href="module-util_typeis.html">util/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_Template-constructor.html">constructor</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+	                    <li class="sidebar-header">Methods &times; 19</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#addClass">addClass</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#attr">attr</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#css">css</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#data">data</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#fixCss">fixCss</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#hasAttr">hasAttr</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#hasClass">hasClass</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#html">html</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#left">left</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#outerHeight">outerHeight</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#outerWidth">outerWidth</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#prop">prop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#removeAttr">removeAttr</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#removeClass">removeClass</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#scrollLeft">scrollLeft</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#scrollTop">scrollTop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#state">state</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#text">text</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#top">top</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Module: core/dom/attribute</h1>
+
+		            
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            core/dom/attribute
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+                <blockquote class="description lead">处理有关 dom 属性的 API
+                    
+                </blockquote>
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-55136513570323599215882690623403" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-55136513570323599215882690623403">
+                <p><a href="core_dom_attribute.js.html#line9">core/dom/attribute.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:util/dato</li>
+        
+            <li><a href="module-util_typeis.html">module:util/typeis</a></li>
+        
+            <li><a href="module-core_navigator_compatible.html">module:core/navigator/compatible</a></li>
+        
+            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+        <section id="docs-methods">
+            <h3 class="subsection-title">Methods</h3>
+
+            <dl>
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="addClass">
+        <span class="type-signature">&lt;static> </span>addClass<span class="signature">(ele, className)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>添加元素的className
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>className</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">多个className使用空格分开</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>attribute.addClass(ele, 'class');attribute.addClass(ele, 'class1 class2');</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-6217989339493215062209839932620525" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-6217989339493215062209839932620525">
+                <p><a href="core_dom_attribute.js.html#line415">core/dom/attribute.js:415</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="attr">
+        <span class="type-signature">&lt;static> </span>attr<span class="signature">(ele, key, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的属性
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String/Object/Array</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">特征键、键值对、键数组</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">特征值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.attr(ele, 'href', 'http://ydr.me');attribute.attr(ele, {   href: '',   title: ''});// getattribute.attr(ele, 'href');attribute.attr(ele, ['href', 'title']);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-1017944118939340107540128682740033" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-1017944118939340107540128682740033">
+                <p><a href="core_dom_attribute.js.html#line59">core/dom/attribute.js:59</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="css">
+        <span class="type-signature">&lt;static> </span>css<span class="signature">(ele, key, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的样式
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String/Object/Array</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">样式属性、样式键值对、样式属性数组，                                    样式属性可以写成`width::after`（伪元素的width）或`width`（实际元素的width）</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">样式属性值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.css(ele, 'width', 100);attribute.css(ele, 'width', 100);attribute.css(ele, {   width: 100,   height: '200px !important'});// getattribute.css(ele, 'width');attribute.css(ele, 'width::after');attribute.css(ele, ['width','height']);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-278824975248426202223074436187744" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-278824975248426202223074436187744">
+                <p><a href="core_dom_attribute.js.html#line210">core/dom/attribute.js:210</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="data">
+        <span class="type-signature">&lt;static> </span>data<span class="signature">(ele, dataKey, <span class="optional">dataVal</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的数据集
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>dataKey</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String/Object/Array</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">数据集键、键值对、键数组</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>dataVal</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">数据集值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.data(ele, 'abc', 123);attribute.data(ele, 'def', {   a: 1,   b: 2});// => <div data-abc="123" data-def='{"a":1,"b":2}'></div>// data 逻辑与jquery 的 data 是不一致的，所有的数据都是保存在 DOM 上的// getattribute.data(ele, 'abc');// => "123"attribute.data(ele, ['abc', 'def']);// 数据会优先被 JSON 解析，如果解析失败将返回原始字符串// => {a: 1, b: 2}</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-90587310981936758433405789546669" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-90587310981936758433405789546669">
+                <p><a href="core_dom_attribute.js.html#line318">core/dom/attribute.js:318</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="fixCss">
+        <span class="type-signature">&lt;static> </span>fixCss<span class="signature">(key, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>修正 css 键值
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">css 键</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">css 值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>attribute.fixCss('marginTop', 10);// => {//    key: 'margin-top',//    val: '10px'// }</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-190759192919358611510060844011605" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-190759192919358611510060844011605">
+                <p><a href="core_dom_attribute.js.html#line163">core/dom/attribute.js:163</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="hasAttr">
+        <span class="type-signature">&lt;static> </span>hasAttr<span class="signature">(ele, key)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>判断元素是否包含某个属性
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">单个特征</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">boolean</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 判断是否有某个属性attribute.hasAttr(ele, 'href');// => true</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-454765650210902108146310062147677" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-454765650210902108146310062147677">
+                <p><a href="core_dom_attribute.js.html#line86">core/dom/attribute.js:86</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="hasClass">
+        <span class="type-signature">&lt;static> </span>hasClass<span class="signature">(ele, className)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>判断元素是否包含某个className
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>className</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">单个className</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>attribute.hasClass(ele, 'class');</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-7217654539272189030358623014762998" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-7217654539272189030358623014762998">
+                <p><a href="core_dom_attribute.js.html#line454">core/dom/attribute.js:454</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="html">
+        <span class="type-signature">&lt;static> </span>html<span class="signature">(ele, <span class="optional">html</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的innerHTML
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>html</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">html字符串</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.html(ele, 'html');// getattribute.html(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-36368661513552076885282089933753" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-36368661513552076885282089933753">
+                <p><a href="core_dom_attribute.js.html#line360">core/dom/attribute.js:360</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="left">
+        <span class="type-signature">&lt;static> </span>left<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取、设置元素距离文档边缘的 left 距离
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Element</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">距离值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setposition.left(ele, 100);// getposition.left(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-691268360475078203985263151116669" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-691268360475078203985263151116669">
+                <p><a href="core_dom_attribute.js.html#line555">core/dom/attribute.js:555</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="outerHeight">
+        <span class="type-signature">&lt;static> </span>outerHeight<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取、设置元素的占位高度content-box: cssHeight + padding + borderborder-box:  cssHeight
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Element</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">高度值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setposition.height(ele, 100);// getposition.height(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-132141860434785491377487792633474" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-132141860434785491377487792633474">
+                <p><a href="core_dom_attribute.js.html#line604">core/dom/attribute.js:604</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="outerWidth">
+        <span class="type-signature">&lt;static> </span>outerWidth<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取、设置元素的占位宽度content-box: cssWidth + padding + borderborder-box:  cssWidth
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Element</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">宽度值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setposition.width(ele, 100);// getposition.width(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-770671775331720707797401328571141" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-770671775331720707797401328571141">
+                <p><a href="core_dom_attribute.js.html#line575">core/dom/attribute.js:575</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="prop">
+        <span class="type-signature">&lt;static> </span>prop<span class="signature">(ele, key, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的特性
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String/Object/Array</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">特性键、特性键值对、特性组</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">特性值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.prop(ele, 'hi', 'hey');attribute.prop(ele, {    hi: 'hey',    ha: 'hehe'});// getattribute.prop(ele, 'hi');attribute.prop(ele, ['hi', 'ha']);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-51687027188017962856254375074059" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-51687027188017962856254375074059">
+                <p><a href="core_dom_attribute.js.html#line138">core/dom/attribute.js:138</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="removeAttr">
+        <span class="type-signature">&lt;static> </span>removeAttr<span class="signature">(ele, <span class="optional">key</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>移除元素的某个属性
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">单个或多个特征属性，为空表示移除所有特征</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 移除attribute.removeAttr(ele, 'href');</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-91899516736157246356242070905864" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-91899516736157246356242070905864">
+                <p><a href="core_dom_attribute.js.html#line104">core/dom/attribute.js:104</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="removeClass">
+        <span class="type-signature">&lt;static> </span>removeClass<span class="signature">(ele, <span class="optional">className</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>移除元素的className
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>className</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">多个className使用空格分开，留空表示移除所有className</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// remove all classNameattribute.removeClass(ele);attribute.removeClass(ele, 'class');attribute.removeClass(ele, 'class1 class2');</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-2576570215169340444975822092965245" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-2576570215169340444975822092965245">
+                <p><a href="core_dom_attribute.js.html#line436">core/dom/attribute.js:436</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="scrollLeft">
+        <span class="type-signature">&lt;static> </span>scrollLeft<span class="signature">(ele, <span class="optional">left</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的滚动条左距离
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">window</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">document</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>left</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">高度</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// getattribute.scrollLeft(ele);// setattribute.scrollLeft(ele, 100);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-59726078435778628606910596136004" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-59726078435778628606910596136004">
+                <p><a href="core_dom_attribute.js.html#line280">core/dom/attribute.js:280</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="scrollTop">
+        <span class="type-signature">&lt;static> </span>scrollTop<span class="signature">(ele, <span class="optional">top</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的滚动条高度
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">window</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">document</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">高度</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// getattribute.scrollTop(ele);// setattribute.scrollTop(ele, 100);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-61533837788738315906810930464417" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-61533837788738315906810930464417">
+                <p><a href="core_dom_attribute.js.html#line253">core/dom/attribute.js:253</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="state">
+        <span class="type-signature">&lt;static> </span>state<span class="signature">(ele, <span class="optional">state</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获得某元素的状况，可能值为`show`或`hide`
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">设置状态值，`show`或者`hide`</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
+        
+    
+</td>
+            <td class="param-desc">获取值为`show`或`hide`，设置时返回改变过的 dom 数组</td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-59441515570506454811454899609089" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-59441515570506454811454899609089">
+                <p><a href="core_dom_attribute.js.html#line468">core/dom/attribute.js:468</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="text">
+        <span class="type-signature">&lt;static> </span>text<span class="signature">(ele, <span class="optional">text</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置、获取元素的innerText
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">text字符串</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setattribute.text(ele, 'html');// getattribute.text(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-883263579336926317257686774246395" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-883263579336926317257686774246395">
+                <p><a href="core_dom_attribute.js.html#line389">core/dom/attribute.js:389</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="top">
+        <span class="type-signature">&lt;static> </span>top<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取、设置元素距离文档边缘的 top 距离
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Element</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">距离值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">undefined</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// setposition.top(ele, 100);// getposition.top(ele);</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-047019514255225666164949764497578" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-047019514255225666164949764497578">
+                <p><a href="core_dom_attribute.js.html#line537">core/dom/attribute.js:537</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

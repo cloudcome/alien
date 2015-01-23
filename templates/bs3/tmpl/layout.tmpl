@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><?js= title ?> - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<?js= this.nav ?>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	<?js if(title === "Index") { ?>
+
+		<div class="jumbotron">
+            <div class="container">
+                <h1>Alien documents</h1>
+                <p>Author: <a href="http://github.com/cloudcome/">cloudcome</a></p>
+                <p>Build: jsdoc <?js= env.version.number ?> <?js= (new Date()).toLocaleString() ?></p>
+            </div>
+        </div>
+
+	<?js }else{ ?>
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            <?js
+	                /**
+	                 *  The self (or this) var contains the following keys:
+	                 *
+	                 *  'path'                  // path to template being used
+	                 *  'layout'                // which template being used for main layout
+	                 *  'cache',                // content of each cached template
+	                 *  'settings'              // parse settings
+	                 *  'find'                  // helper function to find doclets
+	                 *  'linkto'
+	                 *  'resolveAuthorLinks'
+	                 *  'tutoriallink'
+	                 *  'htmlsafe'
+	                 *  'nav'
+	                 */
+	                var self            = this
+	                    , data  = {
+	                            members     : [],
+	                            methods     : [],
+	                            methodNames : [],
+	                            events      : [],
+	                            mixins      : [],
+	                            classes     : [],
+	                            namespaces  : [],
+	                        }
+	                    ;
+
+	                docs.forEach(function(doc, i) {
+	                    // each doc contains similar information that is found in the
+	                    // self.find results
+	                    //console.log('layout.tmpl - Processing doc: ' + doc.longname);
+	                    var members     = self.find({
+	                                            kind: 'member',
+	                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+	                                        })
+	                        , methods    = self.find({
+	                                            kind: 'function',
+	                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+	                                        })
+	                        , events     = self.find({
+	                                            kind: 'event',
+	                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+	                                        })
+	                        , mixins     = self.find({
+	                                            kind: 'mixer',
+	                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+	                                        })
+	                        , classes    = self.find({
+	                                            kind: 'class',
+	                                            memberof: title === 'Global' ? {isUndefined: true} : doc.longname
+	                                        });
+
+	                    //console.log("CLASSES", classes, "\n\n\n");
+	                    //doc.name == 'ToolTipCSControls' && console.log("METHODS", methods, "\n\n\n");
+	                    //console.log("MEMBERS", members, "\n\n\n");
+	                    //console.log("EVENTS", events, "\n\n\n");
+	                    //console.log("MIXINS", mixins, "\n\n\n");
+
+	                    // collect member names
+	                    if (members && members.length && members.forEach) {
+	                        members.forEach(function(p) {
+	                            data.members.push(p);
+	                        });
+	                    }
+
+	                    // collect method names
+	                    if (methods && methods.length && methods.forEach) {
+	                        //console.log('METHODS LOOP; methods.length = ' + methods.length);
+	                        methods.forEach(function(p) {
+	                            //doc.longname == 'Bar' && console.log('METHOD!  ', p,"\n\n\n");
+	                            data.methods.push(p);
+	                        });
+	                    }
+
+	                    // collect event names
+	                    if (events && events.length && events.forEach) {
+	                        events.forEach(function(p) {
+	                            data.events.push(p);
+	                        });
+	                    }
+
+	                    // collect mixin names
+	                    if (mixins && mixins.length && mixins.forEach) {
+	                        mixins.forEach(function(p) {
+	                            data.mixins.push(p);
+	                        });
+	                    }
+	                });
+	            ?>
+
+	            <ul class="nav sidebar-list">
+	                <?js if (data.members.length) { ?>
+	                    <li class="sidebar-header">Members &times; <?js= data.members.length ?></li>
+
+	                    <?js data.members.forEach(function(membr) { ?>
+	                        <?js= self.partial('sidebarLi.tmpl', membr) ?>
+	                    <?js }); ?>
+	                <?js } ?>
+
+	                <?js if (data.methods && data.methods.length && data.methods.forEach) { ?>
+	                    <li class="sidebar-header">Methods &times; <?js= data.methods.length ?></li>
+
+	                    <?js data.methods.forEach(function(meth) { ?>
+	                        <?js= self.partial('sidebarLi.tmpl', meth) ?>
+	                    <?js }); ?>
+	                <?js } ?>
+
+	                <?js if (data.events.length) { ?>
+	                    <li class="sidebar-header">Events &times; <?js= data.events.length ?></li>
+
+	                    <?js data.events.forEach(function(evt) {
+	                        evt.aHref = '#' + evt.id.replace(':', '-'); ?>
+	                        <?js= self.partial('sidebarLi.tmpl', evt) ?>
+	                    <?js }); ?>
+	                <?js } ?>
+
+	                <?js if (data.mixins.length) { ?>
+	                    <li class="sidebar-header">Mixins &times; <?js= data.mixins.length ?></li>
+
+	                    <?js data.mixins.forEach(function(mixn) {
+	                        mixn.aHref = '#' + mixn.id.replace(':', '-'); ?>
+	                        <?js= self.partial('sidebarLi.tmpl', mixn) ?>
+	                    <?js }); ?>
+	                <?js } ?>
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title"><?js= title ?></h1>
+
+		            <?js= content ?>
+	            </div>
+	        </section>
+	    </div>
+
+    <?js } ?>
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

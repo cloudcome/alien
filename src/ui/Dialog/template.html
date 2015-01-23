@@ -1,0 +1,14 @@
+<div id="alien-ui-dialog-{{id}}"
+    class="alien-ui-dialog"
+    {{if !title && canDrag}}draggablefor="{{windowId}}"{{/if}}>
+
+    <div class="alien-ui-dialog-header j-flag"
+         {{if !title}}style="display:none;"{{/if}}
+         {{if title && canDrag}}draggablefor="{{windowId}}"{{/if}}>
+        <div class="alien-ui-dialog-title j-flag">{{=title}}</div>
+    </div>
+
+    <div class="alien-ui-dialog-close j-flag"  {{if !title || hideClose}}style="display:none;"{{/if}}>&times;</div>
+
+    <div class="alien-ui-dialog-body j-flag"></div>
+</div>

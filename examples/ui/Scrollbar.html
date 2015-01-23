@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+ - Scrollbar.html
+ - @author ydr.me
+ - @create 2014-10-07 12:48
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Scrollbar.html</title>
+
+    <style>
+        button{
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        hr{
+            border-top: 0;
+            border-bottom: 1px solid #f57c3a;
+            margin: 20px 0;
+        }
+        #container {
+            position: relative;
+            width: 700px;
+            height: 300px;
+            border: 4px solid #627106;
+            overflow: hidden;
+        }
+
+        #demo {
+            width: 2000px;
+            line-height: 300px;
+            font-size: 300px;
+            background: #dbe2a7;
+            color: #778606;
+        }
+
+        #textwrap {
+            position: relative;
+            display: block;
+            border: 4px solid #627106;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #textarea {
+            display: block;
+            border: 0;
+            width: 100%;
+            height: 100px;
+            resize: none;
+            overflow: hidden;
+            outline: 0;
+            padding: 10px;
+            background: #dbe2a7;
+            color: #778606;
+            font-size: 30px;
+        }
+
+        .table-wrap{
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        table th {
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        pre{
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<pre>
+new Scrollbar('#demo')
+</pre>
+
+
+<button id="scrollTop">scrollTop</button>
+<button id="scrollBottom">scrollBottom</button>
+<button id="scrollLeft">scrollLeft</button>
+<button id="scrollRight">scrollRight</button>
+
+<div id="container">
+    <div id="demo">
+        这里是一块非常大的区域，这儿有很多的元素，包括图片、文件等，图片加载完毕最好要 update 一次滚动条
+    </div>
+</div>
+
+<hr/>
+
+<div id="textwrap">
+    <textarea name="textarea" id="textarea" placeholder="尝试在这里输入文字"></textarea>
+</div>
+
+<hr/>
+
+<div class="table-wrap">
+    <table id="table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>爱好</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <script>
+            var i = 1;
+            var j = 30;
+            var trs = '';
+
+            for (; i <= j; i++) {
+                trs += '<tr>' +
+                '<td>' + i + '</td>' +
+                '<td>王大锤' + i + '号</td>' +
+                '<td>爱好第' + i + '个</td>' +
+                '</tr>';
+            }
+
+            document.write(trs);
+        </script>
+        </tbody>
+    </table>
+</div>
+
+<script src="../coolie.min.js" data-main="./ui/Scrollbar.js"></script>
+<script src="../coolie-config.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+@charset "utf-8";
+.alien-ui-pagination {
+    display: inline-block;
+}
+
+.alien-ui-pagination::after {
+    clear: both;
+    content: ' ';
+    display: table;
+}
+
+.alien-ui-pagination-item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    min-width: 40px;
+    height: 36px;
+    line-height: 36px;
+    border-right-width: 0;
+    color: #1E77B6;
+    cursor: pointer;
+}
+
+.alien-ui-pagination-item:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.alien-ui-pagination-item:last-child {
+    border-right-width: 1px;
+    border-radius: 0 4px 4px 0;
+}
+
+.alien-ui-pagination-item:only-child {
+    border-radius: 4px;
+}
+
+.alien-ui-pagination-item:hover {
+    background: #428bca;
+    border-color: #428bca;
+    color: #fff;
+}
+
+.alien-ui-pagination-disabled,
+.alien-ui-pagination-disabled:hover {
+    cursor: not-allowed;
+    background: #f6f6f6;
+    color: #ccc;
+    border-color: #ddd;
+}
+
+.alien-ui-pagination-active,
+.alien-ui-pagination-active:hover {
+    background: #555;
+    border-color: #555;
+    color: #fff;
+    cursor: default;
+}

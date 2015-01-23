@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+ - Template.html
+ - @author ydr.me
+ - @create 2014-10-13 16:33
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Template.html</title>
+    <style>
+        textarea {
+            display: block;
+            width: 100%;
+            height: 200px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button{
+            padding: 10px 20px;
+        }
+
+        .pre {
+            background: #eee;
+            padding: 20px;
+        }
+
+        .text-center {
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<textarea id="template">
+    {{var year = new Date().getFullYear()}}
+    {{# name += " Xixi"}}
+    <p>
+        {{if name}}
+        {{name}}
+        {{else}}
+        Please login
+        {{/if}}
+        喜欢的书（{{year}}年）有：
+    </p>
+
+    <ul>
+        {{list books as index,book }}
+        <li>
+            <p>{{book.type}}类：</p>
+            <ol>
+                {{list book.list as item}}
+                <li>《{{item}}》</li>
+                {{/list}}
+            </ol>
+        </li>
+        {{/list}}
+    </ul>
+</textarea>
+
+
+<p class="text-center">+</p>
+<pre class="pre" id="data"></pre>
+<p class="text-center">
+    <button id="btn">=</button>
+</p>
+
+<div class="pre" id="render"></div>
+
+
+
+
+<script src="../coolie.min.js" data-main="./libs/Template.js"></script>
+<script src="../coolie-config.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+ - Msg.html
+ - @author ydr.me
+ - @create 2014-10-04 22:26
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Msg.html</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+
+        pre{
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<input type="text" name="text" id="text" placeholder="输入"/>
+<button id="btn0">0个按钮的 msg</button>
+<button id="btn1">1个按钮的 msg</button>
+<button id="btn2">2个按钮的 msg</button>
+<button id="btn3">3个按钮的 msg</button>
+<button id="btn4">4个按钮的 msg</button>
+<button id="btn5">5个按钮的 msg</button>
+
+<pre>
+new Msg({
+    content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
+    buttons: []
+});
+</pre>
+
+
+<script src="../coolie.min.js" data-main="./ui/Msg.js"></script>
+<script src="../coolie-config.js"></script>
+
+</body>
+</html>
