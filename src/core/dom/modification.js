@@ -21,6 +21,27 @@ define(function (require, exports, module) {
     var regDir = />/g;
     //var regComments = /\/\*+([\s\S]*?)\*+\//;
     var head = domSelector.query('head')[0] || document.documentElement;
+    var proto = DOMParser.prototype;
+    var nativeParse = proto.parseFromString;
+
+
+    // fallback
+    proto.parseFromString2 = function (markup, type) {
+        if (/^\s*text\/html\s*(?:;|$)/i.test(type)) {
+            var doc = document.implementation.createHTMLDocument('');
+            
+            if (markup.toLowerCase().indexOf('<!doctype') > -1) {
+                doc.documentElement.innerHTML = markup;
+            }else {
+                doc.body.innerHTML = markup;
+            }
+            
+            return doc;
+        } else {
+            return nativeParse.apply(this, arguments);
+        }
+    };
+
 
     /**
      * 解析字符串为节点，兼容IE10+
@@ -34,8 +55,13 @@ define(function (require, exports, module) {
      */
     exports.parse = function (htmlString) {
         var parser = new DOMParser();
+        var dom = parser.parseFromString(htmlString, 'text/html');
 
-        return parser.parseFromString(htmlString, 'text/html').body.childNodes;
+        if (!dom) {
+            dom = parser.parseFromString2(htmlString, 'text/html');
+        }
+
+        return dom.body.childNodes;
     };
 
 
