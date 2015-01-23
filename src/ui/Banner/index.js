@@ -40,6 +40,7 @@ define(function (require, exports, module) {
         timeout: 3456,
         easing: 'ease-in-out-back',
         isAutoPlay: true,
+        isLoop: true,
         // 运动方向
         // -x x 轴向左
         // +x x 轴向右
@@ -59,8 +60,8 @@ define(function (require, exports, module) {
         STATIC: {
             defaults: defaults
         },
-        
-        
+
+
         constructor: function (ele, options) {
             var the = this;
 
@@ -307,8 +308,8 @@ define(function (require, exports, module) {
         _calDuration: function (index, distance) {
             var the = this;
             var options = the._options;
-            var delta = options.width * (index + 2) + distance;
-            var ratio = delta / options.width;
+            var delta = the._distance * (index + 2) + distance;
+            var ratio = delta / the._distance;
             var duration = options.duration * ratio;
 
             return Math.abs(duration > options.duration ? options.duration : duration);
@@ -427,11 +428,9 @@ define(function (require, exports, module) {
         /**
          * 显示之前的定位与计算下一帧的位置
          * @param type
-         * @param showIndex
-         * @returns {*}
          * @private
          */
-        _beforeDisplayIndex: function (type, showIndex) {
+        _beforeDisplayIndex: function (type) {
             var the = this;
             var length = the._$items.length;
             var count = length - 4;
@@ -451,6 +450,11 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 高亮导航
+         * @param index
+         * @private
+         */
         _activeNav: function (index) {
             var the = this;
 
@@ -464,22 +468,21 @@ define(function (require, exports, module) {
 
         /**
          * 播放第几个项目
-         * @param {String} [type] 展示方式，默认下一张
          * @param {Number} index 需要展示的序号
          * @param {Function} [callback] 回调
          */
-        index: function (type, index, callback) {
-            var args = arguments;
-            var argL = args.length;
+        index: function (index, callback) {
             var the = this;
+            var type = the._increase > 0 ?
+                (the._showIndex > index ? 'prev' : 'next') :
+                (the._showIndex < index ? 'prev' : 'next');
+            var length = the._$items.length;
+            var count = length - 4;
 
-            if (typeis.number(args[0])) {
-                type = 'next';
-                index = args[0];
-            }
-
-            if (!typeis.function(args[argL - 1])) {
-                callback = noop;
+            if (count - 1 === the._showIndex && index === 0) {
+                type = the._increase > 0 ? 'next' : 'prev';
+            } else if (the._showIndex === 0 && index === count - 1) {
+                type = the._increase > 0 ? 'prev' : 'next';
             }
 
             the._index(type, index, callback);
@@ -512,6 +515,10 @@ define(function (require, exports, module) {
                 throw new Error('can not go to ' + type + ' ' + index);
             }
 
+            if (!typeis.function(callback)) {
+                callback = noop;
+            }
+
             sett = the._calTranslate(-the._distance * (index + 2));
 
             animation.animate(the._$ele, sett, {
@@ -541,7 +548,7 @@ define(function (require, exports, module) {
 
             the.pause();
             showIndex = the._beforeShowIndex(-1, showIndex);
-            the.index('prev', showIndex, callback);
+            the._index('prev', showIndex, callback);
             the.play();
 
             return the;
@@ -562,7 +569,7 @@ define(function (require, exports, module) {
 
             the.pause();
             showIndex = the._beforeShowIndex(1, showIndex);
-            the.index('next', showIndex, callback);
+            the._index('next', showIndex, callback);
             the.play();
 
             return the;

@@ -36,12 +36,12 @@ define(function (require, exports, module) {
         tap: {
             x: 30,
             y: 30,
-            timeout: 500
+            timeout: 400
         },
         taphold: {
             x: 30,
             y: 30,
-            timeout: 750
+            timeout: 800
         },
         swipe: {
             x: 30,
@@ -51,13 +51,17 @@ define(function (require, exports, module) {
     var x0;
     var y0;
     var t0;
-    var timeid;
+    var tapTimer;
+    var tapholdTimer;
+    
 
     event.on(document, touchstart, function (eve) {
         var firstTouch;
         var target;
         var touch1Event;
         var dispatchTouch1;
+
+        _reset(eve);
 
         if (eve.touches && eve.touches.length === 1) {
             attribute.css(body, 'touch-callout', 'none');
@@ -68,10 +72,29 @@ define(function (require, exports, module) {
             y0 = firstTouch.clientY;
             t0 = Date.now();
 
-            timeid = setTimeout(function () {
+            tapTimer = setTimeout(function () {
+                var tapEvent = event.create('tap');
+                tapTimer = 0;
+                event.extend(tapEvent, firstTouch);
+
+                var dispatchTap = event.dispatch(target, tapEvent);
+
+                if (dispatchTap && dispatchTap.defaultPrevented === true) {
+                    eve.preventDefault();
+                }
+            }, options.tap.timeout);
+
+            tapholdTimer = setTimeout(function () {
                 var tapholdEvent = event.create('taphold');
+
+                tapholdTimer = 0;
                 event.extend(tapholdEvent, firstTouch);
-                event.dispatch(target, tapholdEvent);
+
+                var dispatchTaphold = event.dispatch(target, tapholdEvent);
+
+                if (dispatchTaphold && dispatchTaphold.defaultPrevented === true) {
+                    eve.preventDefault();
+                }
             }, options.taphold.timeout);
 
             touch1Event = event.create('touch1start');
@@ -103,10 +126,14 @@ define(function (require, exports, module) {
             deltaY = Math.abs(firstTouch.clientY - y0);
             rect = target.getBoundingClientRect();
 
+            if (deltaX > options.tap.x || deltaY > options.tap.y) {
+                _reset(eve, 'p');
+            }
+
             // 在元素范围
             if (firstTouch.clientX > rect.left && firstTouch.clientY > rect.top && firstTouch.clientX < rect.right && firstTouch.clientY < rect.bottom) {
-                if (timeid && (deltaX > options.taphold.x || deltaY > options.taphold.y)) {
-                    _reset(eve);
+                if (deltaX > options.taphold.x || deltaY > options.taphold.y) {
+                    _reset(eve, 'd');
                 }
             }
 
@@ -126,8 +153,6 @@ define(function (require, exports, module) {
     });
 
     event.on(document, touchend, function (eve) {
-        _reset(eve);
-
         var firstTouch;
         var x1;
         var y1;
@@ -137,9 +162,7 @@ define(function (require, exports, module) {
         var deltaY;
         var deltaT;
         var target;
-        var tapEvent;
         var touch1Event;
-        var dispatchTap;
         var dispatchTouch1;
         var dispatchSwipe;
         var dispatchSwipedir;
@@ -155,10 +178,8 @@ define(function (require, exports, module) {
             deltaT = Date.now() - t0;
             target = firstTouch.target;
 
-            if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
-                tapEvent = event.create('tap');
-                event.extend(tapEvent, firstTouch);
-                dispatchTap = event.dispatch(target, tapEvent);
+            if (deltaX > options.tap.x || deltaY > options.tap.y || deltaT > options.tap.timeout) {
+                _reset(eve, 'p');
             }
 
             if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
@@ -184,8 +205,7 @@ define(function (require, exports, module) {
             });
             dispatchTouch1 = event.dispatch(target, touch1Event);
 
-            if (dispatchTap && dispatchTap.defaultPrevented === true ||
-                dispatchSwipe && dispatchSwipe.defaultPrevented === true ||
+            if (dispatchSwipe && dispatchSwipe.defaultPrevented === true ||
                 dispatchSwipedir && dispatchSwipedir.defaultPrevented === true ||
                 dispatchTouch1.defaultPrevented === true) {
                 eve.preventDefault();
@@ -201,14 +221,22 @@ define(function (require, exports, module) {
     /**
      * 重置定时器
      * @param {Event} eve 事件对象
+     * @param {String} [type="pd"] tap taphold
      * @private
      */
-    function _reset(eve) {
+    function _reset(eve, type) {
+        type = type || 'pd';
+
         if (eve.changedTouches && eve.changedTouches.length === 1 || eve.touches && eve.touches.length === 1) {
-            if (timeid) {
-                clearTimeout(timeid);
+            if (tapTimer && type.indexOf('p') > -1) {
+                clearTimeout(tapTimer);
+                tapTimer = 0;
             }
-            timeid = 0;
+
+            if (tapholdTimer && type.indexOf('d') > -1) {
+                clearTimeout(tapholdTimer);
+                tapholdTimer = 0;
+            }
         }
     }
 

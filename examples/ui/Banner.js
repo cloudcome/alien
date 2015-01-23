@@ -13,7 +13,8 @@ define(function (require) {
     var banner = new Banner('#banner', {
         width: Math.min(window.innerWidth, 460),
         height: 200,
-        axis: '+x',
+        axis: '-x',
+        isAutoPlay: false,
         navGenerator: function (index, length) {
             return '<li>'+(index+1)+'</li>';
         },
