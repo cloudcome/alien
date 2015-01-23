@@ -53,7 +53,7 @@ define(function (require, exports, module) {
     var t0;
     var tapTimer;
     var tapholdTimer;
-    
+
 
     event.on(document, touchstart, function (eve) {
         var firstTouch;
@@ -135,6 +135,8 @@ define(function (require, exports, module) {
                 if (deltaX > options.taphold.x || deltaY > options.taphold.y) {
                     _reset(eve, 'd');
                 }
+            } else {
+                _reset(eve, 'd');
             }
 
             touch1Event = event.create('touch1move');
@@ -178,8 +180,8 @@ define(function (require, exports, module) {
             deltaT = Date.now() - t0;
             target = firstTouch.target;
 
-            if (deltaX > options.tap.x || deltaY > options.tap.y || deltaT > options.tap.timeout) {
-                _reset(eve, 'p');
+            if (deltaX > options.tap.x || deltaY > options.tap.y || deltaT < options.taphold.timeout) {
+                _reset(eve, 'd');
             }
 
             if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
