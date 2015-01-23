@@ -2,7 +2,6 @@
  * Banner.js
  * @author ydr.me
  * @create 2014-10-10 22:36
- *
  */
 
 define(function (require, exports, module) {
