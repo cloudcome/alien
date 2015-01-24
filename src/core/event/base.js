@@ -152,8 +152,8 @@ define(function (require, exports, module) {
     /**
      * 触发事件
      * @param {HTMLElement|Node|EventTarget} ele 元素
-     * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
-     * @param {Event} [copyEvent] 需要复制的事件信息
+     * @param {Object|String} eventTypeOrEvent 事件类型或事件名称
+     * @param {Object} [copyEvent] 需要复制的事件信息
      * @returns {Object} event
      *
      * @example
@@ -186,16 +186,16 @@ define(function (require, exports, module) {
      * 扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
      * @param {String|Object} createEvent 创建事件
      * @param {Event} copyEvent 复制事件
-     * @param {Object} [detail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
+     * @param {Object} [alienDetail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
      * @returns {Object} 创建事件
      *
      * @example
      * event.extend('myclick', clickEvent, {
-         *     a: 1,
-         *     b: 2
-         * });
+     *     a: 1,
+     *     b: 2
+     * });
      */
-    exports.extend = function (createEvent, copyEvent, detail) {
+    exports.extend = function (createEvent, copyEvent, alienDetail) {
         if (typeis(createEvent) === 'string') {
             createEvent = this.create(createEvent);
         }
@@ -211,10 +211,10 @@ define(function (require, exports, module) {
             }
         });
 
-        detail = detail || {};
+        alienDetail = alienDetail || {};
         createEvent.alienDetail = createEvent.alienDetail || {};
 
-        dato.each(detail, function (key, val) {
+        dato.each(alienDetail, function (key, val) {
             createEvent.alienDetail[key] = val;
         });
 
