@@ -162,7 +162,7 @@ define(function (require, exports, module) {
          * // }
      */
     exports.fixCss = function (key, val) {
-        val = String(val).trim();
+        val = val === null ? '' : String(val).trim();
 
         var important = null;
 
