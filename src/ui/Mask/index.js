@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
-    var event = require('../../core/event/touch.js');
+    var event = require('../../core/event/base.js');
     var animation = require('../../core/dom/animation.js');
     var ui = require('../base.js');
     var style = require('css!./style.css');
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
 
-            event.on(the._$mask, 'click tap', function (eve) {
+            event.on(the._$mask, 'click', function (eve) {
                 the.emit('hit');
             });
         },
@@ -240,7 +240,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the.close();
-            event.un(the._$mask, 'click tap');
+            event.un(the._$mask, 'click');
             modification.remove(the._$mask);
 
             if (typeis.function(callback)) {

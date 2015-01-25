@@ -14,7 +14,12 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      *
      * @example
+     * event.on(ele, 'touch1start', fn);
+     * event.on(ele, 'touch1move', fn);
+     * event.on(ele, 'touch1end', fn);
+     * event.on(ele, 'touch1cancel', fn);
      * event.on(ele, 'tap', fn);
+     * event.on(ele, 'dbltap', fn);
      * event.on(ele, 'taphold', fn);
      * event.on(ele, 'swipe', fn);
      * event.on(ele, 'swipeup', fn);
@@ -26,190 +31,277 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
-    var body = document.body;
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';
     var touchcancel = 'touchcancel MSPointerCancel pointercancel';
-//    var mustEventProperties = 'target detail which clientX clientY pageX pageY screenX screenY'.split(' ');
+    var udf;
     var options = {
+        //minX: 30,
+        //minY: 30,
+        //tapTimeout: 300,
+        //holdTimeout: 300,
+        //swipeTimeout: 300,
         tap: {
             x: 30,
             y: 30,
-            timeout: 500
+            timeout: 250
         },
         taphold: {
-            x: 30,
-            y: 30,
-            timeout: 750
+            x: 50,
+            y: 50,
+            timeout: 600
         },
         swipe: {
-            x: 30,
-            y: 30
+            x: 50,
+            y: 50,
+            timeout: 250
         }
     };
-    var x0;
-    var y0;
-    var t0;
-    var timeid;
+    var cssTouch;
+    /**
+     * @type {Object}
+     * @property startX {Number} 开始触摸时的 x 坐标
+     * @property startY {Number} 开始触摸时的 y 坐标
+     * @property startTime {Number} 开始触摸时的时间戳
+     * @property startID {Number} 开始触摸时的 ID
+     * @property startTarget {Object} 开始触摸时的 element
+     * @property moveX {Number} 触摸过程中的 x 坐标
+     * @property moveY {Number} 触摸过程中的 y 坐标
+     * @property moveTime {Number} 触摸过程中的时间戳
+     * @property moveID {Number} 触摸过程中的 ID
+     * @property moveTarget {Object} 触摸过程中的 element
+     * @property moveDirection {String} 触摸过程中的矢量主方向
+     * @property endX {Number} 触摸结束时的 x 坐标
+     * @property endY {Number} 触摸结束时的 y 坐标
+     * @property endID {Number} 触摸结束时的 ID
+     * @property endTarget {Object} 触摸结束时的 element
+     * @property endTime {Number} 触摸结束时的时间戳
+     * @property changedX {Number} 触摸改变的 x 位移
+     * @property changedY {Number} 触摸改变的 y 位移
+     * @property changedDirection {String} 触摸改变的矢量主方向
+     * @property deltaX {Number} 触摸改变的 x 距离
+     * @property deltaY {Number} 触摸改变的 y 距离
+     * @property tapholdTimeid {Number} 长触定时器
+     */
+    var touch = {};
+
 
     event.on(document, touchstart, function (eve) {
-        var firstTouch;
-        var target;
-        var touch1Event;
-        var dispatchTouch1;
+        if (!eve.touches || eve.touches.length !== 1) {
+            return;
+        }
 
-        if (eve.touches && eve.touches.length === 1) {
-            attribute.css(body, 'touch-callout', 'none');
-            attribute.css(body, 'user-select', 'none');
-            firstTouch = eve.touches[0];
-            target = eve.target;
-            x0 = firstTouch.clientX;
-            y0 = firstTouch.clientY;
-            t0 = Date.now();
+        cssTouch = attribute.css(document.body, ['touch-callout', 'user-select']);
+        attribute.css(document.body, {
+            'touch-callout': 'none',
+            'user-select': 'none'
+        });
 
-            timeid = setTimeout(function () {
-                var tapholdEvent = event.create('taphold');
-                event.extend(tapholdEvent, firstTouch);
-                event.dispatch(target, tapholdEvent);
-            }, options.taphold.timeout);
+        var firstTouch = eve.touches[0];
 
-            touch1Event = event.create('touch1start');
-            event.extend(touch1Event, firstTouch, {
-                startX: x0,
-                startY: y0
-            });
-            dispatchTouch1 = event.dispatch(target, touch1Event);
+        _reset('taphold');
+        touch = {
+            lastTime: touch.lastTime
+        };
+        touch.startX = firstTouch.pageX;
+        touch.startY = firstTouch.pageY;
+        touch.startTime = eve.timeStamp || Date.now();
+        touch.startID = firstTouch.identifier;
+        touch.startTarget = firstTouch.target;
 
-            if (dispatchTouch1.defaultPrevented === true) {
+        var touch1startEvent = event.create('touch1start');
+
+        event.extend(touch1startEvent, firstTouch, touch);
+
+        var dispatchTouch1start = event.dispatch(touch.startTarget, touch1startEvent);
+
+        if (dispatchTouch1start && dispatchTouch1start.defaultPrevented === true) {
+            eve.preventDefault();
+        }
+
+        touch.tapholdTimeid = setTimeout(function () {
+            var tapholdEvent = event.create('taphold');
+
+            touch.tapholdTimeid = 0;
+            event.extend(tapholdEvent, firstTouch, touch);
+
+            var dispatchTaphold = event.dispatch(touch.startTarget, tapholdEvent);
+
+            if (dispatchTaphold && dispatchTaphold.defaultPrevented === true) {
                 eve.preventDefault();
             }
-        }
+        }, options.taphold.timeout);
     });
 
     event.on(document, touchmove, function (eve) {
-        var firstTouch;
-        var target;
-        var deltaX;
-        var deltaY;
-        var rect;
-        var touch1Event;
-        var dispatchTouch1;
+        if (!eve.touches || eve.touches.length !== 1) {
+            return;
+        }
 
-        if (eve.touches && eve.touches.length === 1) {
-            firstTouch = eve.touches[0];
-            target = firstTouch.target;
-            deltaX = Math.abs(firstTouch.clientX - x0);
-            deltaY = Math.abs(firstTouch.clientY - y0);
-            rect = target.getBoundingClientRect();
+        var firstTouch = eve.touches[0];
 
-            // 在元素范围
-            if (firstTouch.clientX > rect.left && firstTouch.clientY > rect.top && firstTouch.clientX < rect.right && firstTouch.clientY < rect.bottom) {
-                if (timeid && (deltaX > options.taphold.x || deltaY > options.taphold.y)) {
-                    _reset(eve);
-                }
-            }
+        touch.moveX = firstTouch.pageX;
+        touch.moveY = firstTouch.pageY;
+        touch.moveTime = eve.timeStamp || Date.now();
+        touch.moveID = firstTouch.identifier;
+        touch.moveTarget = firstTouch.target;
+        touch.changedX = touch.moveX - touch.startX;
+        touch.changedY = touch.moveY - touch.startY;
+        touch.deltaX = Math.abs(touch.changedX);
+        touch.deltaY = Math.abs(touch.changedY);
+        touch.moveDirection = _calDirection();
 
-            touch1Event = event.create('touch1move');
-            event.extend(touch1Event, firstTouch, {
-                moveX: firstTouch.clientX,
-                moveY: firstTouch.clientY,
-                deltaX: firstTouch.clientX - x0,
-                deltaY: firstTouch.clientY - y0
-            });
-            dispatchTouch1 = event.dispatch(target, touch1Event);
+        // 移动距离大于 taphold
+        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y) {
+            _reset('taphold');
+        }
 
-            if (dispatchTouch1.defaultPrevented === true) {
-                eve.preventDefault();
-            }
+        var touch1moveEvent = event.create('touch1move');
+
+        event.extend(touch1moveEvent, firstTouch, touch);
+
+        var dispatchTouch1move = event.dispatch(touch.startTarget, touch1moveEvent);
+
+        if (dispatchTouch1move && dispatchTouch1move.defaultPrevented === true) {
+            eve.preventDefault();
         }
     });
 
     event.on(document, touchend, function (eve) {
-        _reset(eve);
+        if (!eve.changedTouches || eve.changedTouches.length !== 1) {
+            return;
+        }
 
-        var firstTouch;
-        var x1;
-        var y1;
-        var x;
-        var y;
-        var deltaX;
-        var deltaY;
-        var deltaT;
-        var target;
-        var tapEvent;
-        var touch1Event;
-        var dispatchTap;
-        var dispatchTouch1;
-        var dispatchSwipe;
-        var dispatchSwipedir;
+        var firstTouch = eve.changedTouches[0];
 
-        if (eve.changedTouches && eve.changedTouches.length === 1) {
-            firstTouch = eve.changedTouches[0];
-            x1 = firstTouch.clientX;
-            y1 = firstTouch.clientY;
-            x = x1 - x0;
-            y = y1 - y0;
-            deltaX = Math.abs(x);
-            deltaY = Math.abs(y);
-            deltaT = Date.now() - t0;
-            target = firstTouch.target;
+        touch.moveTime = touch.moveTime === udf ? touch.startTime : touch.moveTime;
+        touch.moveX = touch.moveX === udf ? touch.startX : touch.moveX;
+        touch.moveY = touch.moveY === udf ? touch.startY : touch.moveY;
+        touch.moveID = touch.moveID === udf ? touch.startID : touch.moveID;
+        touch.moveTarget = touch.moveTarget === udf ? touch.startTarget : touch.moveTarget;
+        touch.moveAngle = touch.moveAngle === udf ? 0 : touch.moveAngle;
+        touch.moveDirection = touch.moveDirection === udf ? 'none' : touch.moveDirection;
+        touch.endX = firstTouch.pageX;
+        touch.endY = firstTouch.pageY;
+        touch.endTime = eve.timeStamp || Date.now();
+        touch.endID = firstTouch.identifier;
+        touch.endTarget = firstTouch.target;
+        touch.changedX = touch.endX - touch.startX;
+        touch.changedY = touch.endY - touch.startY;
+        touch.deltaX = Math.abs(touch.changedX);
+        touch.deltaY = Math.abs(touch.changedY);
+        touch.changedDirection = _calDirection();
+        touch.deltaTime = touch.endTime - touch.startTime;
 
-            if (deltaX < options.tap.x && deltaY < options.tap.y && deltaT < options.tap.timeout) {
-                tapEvent = event.create('tap');
-                event.extend(tapEvent, firstTouch);
-                dispatchTap = event.dispatch(target, tapEvent);
+        // 触发 tap
+        if (
+            touch.deltaTime < options.tap.timeout &&
+            touch.deltaX < options.tap.x &&
+            touch.deltaY < options.tap.y &&
+            touch.startID === touch.endID &&
+            touch.startTarget === touch.endTarget
+        ) {
+            setTimeout(function () {
+                var tapEvent = event.create('tap');
+
+                event.extend(tapEvent, firstTouch, touch);
+
+                var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
+
+                if (dispatchTap && dispatchTap.defaultPrevented === true) {
+                    eve.preventDefault();
+                }
+            }, 0);
+        }
+
+        // 移动距离大于 taphold || 时间不够
+        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y || touch.deltaTime < options.taphold.timeout) {
+            _reset('taphold');
+        }
+
+        // 触发 swipe
+        if (touch.changedDirection !== 'none' &&
+            touch.deltaX > options.swipe.x || touch.deltaY > options.swipe.y
+        ) {
+            var swipeEvent = event.create('swipe');
+
+            event.extend(swipeEvent, firstTouch, touch);
+
+            var dispatchSwipe = event.dispatch(touch.startTarget, swipeEvent);
+
+            if (dispatchSwipe && dispatchSwipe.defaultPrevented === true) {
+                eve.preventDefault();
             }
 
-            if (deltaX >= options.swipe.x || deltaY >= options.swipe.y) {
-                var dir = deltaX > deltaY ? (x > 0 ? 'right' : 'left') : (y > 0 ? 'down' : 'up');
-                var swipeDirEvent = event.create('swipe' + dir);
-                var swipeEvent = event.create('swipe');
+            var swipedirectionEvent = event.create('swipe' + touch.changedDirection);
 
-                event.extend(swipeDirEvent, firstTouch, {
-                    direction: dir
-                });
-                event.extend(swipeEvent, firstTouch);
+            event.extend(swipedirectionEvent, firstTouch, touch);
 
-                dispatchSwipe = event.dispatch(target, swipeEvent);
-                dispatchSwipedir = event.dispatch(target, swipeDirEvent);
-            }
+            var dispatchSwipedirection = event.dispatch(touch.startTarget, swipedirectionEvent);
 
-            touch1Event = event.create('touch1end');
-            event.extend(touch1Event, firstTouch, {
-                endX: x1,
-                endY: y1,
-                deltaX: x,
-                deltaY: y
-            });
-            dispatchTouch1 = event.dispatch(target, touch1Event);
-
-            if (dispatchTap && dispatchTap.defaultPrevented === true ||
-                dispatchSwipe && dispatchSwipe.defaultPrevented === true ||
-                dispatchSwipedir && dispatchSwipedir.defaultPrevented === true ||
-                dispatchTouch1.defaultPrevented === true) {
+            if (dispatchSwipedirection && dispatchSwipedirection.defaultPrevented === true) {
                 eve.preventDefault();
             }
         }
+
+        touch.lastTime = touch.endTime;
+        _cancel(eve);
     });
 
-    event.on(document, touchcancel, _reset);
+    event.on(document, touchcancel, _cancel);
+    event.on(window, 'scroll', _cancel);
 
-    event.on(window, 'scroll', _reset);
+
+    /**
+     * 取消 touch 事件检测
+     * @param {Event} [eve] 事件对象
+     * @private
+     */
+    function _cancel(eve) {
+        attribute.css(document.body, cssTouch);
+
+        var firstTouch = eve && eve.touches && eve.touches[0] ||
+            eve && eve.changedTouches && eve.changedTouches[0];
+        var touch1endEvent = event.create('touch1end');
+
+        event.extend(touch1endEvent, firstTouch, touch);
+
+        var dispatchTouch1end = event.dispatch(touch.startTarget, touch1endEvent);
+
+        if (dispatchTouch1end && dispatchTouch1end.defaultPrevented === true) {
+            eve.preventDefault();
+        }
+    }
 
 
     /**
      * 重置定时器
-     * @param {Event} eve 事件对象
+     * @param {String} key
      * @private
      */
-    function _reset(eve) {
-        if (eve.changedTouches && eve.changedTouches.length === 1 || eve.touches && eve.touches.length === 1) {
-            if (timeid) {
-                clearTimeout(timeid);
-            }
-            timeid = 0;
+    function _reset(key) {
+        key += 'Timeid';
+        if (touch[key]) {
+            clearTimeout(touch[key])
+            touch[key] = 0;
         }
+    }
+
+
+    /**
+     * 计算触摸方向
+     * @returns {string}
+     * @private
+     */
+    function _calDirection() {
+        if (touch.deltaX === 0 && touch.deltaY === 0) {
+            return 'none';
+        }
+
+        return touch.deltaX > touch.deltaY ?
+            (touch.changedX > 0 ? 'right' : 'left') :
+            (touch.changedY > 0 ? 'down' : 'up');
     }
 
 

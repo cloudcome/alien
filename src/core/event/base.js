@@ -38,9 +38,9 @@ define(function (require, exports, module) {
     var key = 'alien-core-event-base';
     var defaults = {
         // 是否冒泡
-        bubbles: !0,
+        bubbles: true,
         // 是否可以被阻止冒泡
-        cancelable: !0,
+        cancelable: true,
         // 事情细节
         detail: {}
     };
@@ -103,13 +103,13 @@ define(function (require, exports, module) {
      * @example
      * event.create('myclick');
      * event.create('myclick', {
-         *     bubbles: !0,
-         *     cancelable: !0,
-         *     detail: {
-         *        a: 1,
-         *        b: 2
-         *     },
-         * });
+     *     bubbles: true,
+     *     cancelable: true,
+     *     detail: {
+     *        a: 1,
+     *        b: 2
+     *     },
+     * });
      */
     exports.create = function (eventType, properties) {
         properties = dato.extend({}, defaults, properties);
@@ -128,7 +128,7 @@ define(function (require, exports, module) {
             } catch (err2) {
                 // <= 10
                 args = [eventType, !!properties.bubbles, !!properties.cancelable, window, {},
-                    0, 0, 0, 0, !1, !1, !1, !1, 0, null
+                    0, 0, 0, 0, false, false, false, false, 0, null
                 ];
 
                 if (htmlEvents.indexOf(eventType)) {
@@ -152,8 +152,8 @@ define(function (require, exports, module) {
     /**
      * 触发事件
      * @param {HTMLElement|Node|EventTarget} ele 元素
-     * @param {Event|String} eventTypeOrEvent 事件类型或事件名称
-     * @param {Event} [copyEvent] 需要复制的事件信息
+     * @param {Object|String} eventTypeOrEvent 事件类型或事件名称
+     * @param {Object} [copyEvent] 需要复制的事件信息
      * @returns {Object} event
      *
      * @example
@@ -181,26 +181,27 @@ define(function (require, exports, module) {
         return et;
     };
 
+
     /**
      * 扩展创建的事件对象，因自身创建的事件对象细节较少，需要从其他事件上 copy 过来
-     * @param {String|Event} createEvent 创建事件
+     * @param {String|Object} createEvent 创建事件
      * @param {Event} copyEvent 复制事件
-     * @param {Object} [detail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
-     * @returns {Event} 创建事件
+     * @param {Object} [alienDetail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）
+     * @returns {Object} 创建事件
      *
      * @example
      * event.extend('myclick', clickEvent, {
-         *     a: 1,
-         *     b: 2
-         * });
+     *     a: 1,
+     *     b: 2
+     * });
      */
-    exports.extend = function (createEvent, copyEvent, detail) {
+    exports.extend = function (createEvent, copyEvent, alienDetail) {
         if (typeis(createEvent) === 'string') {
             createEvent = this.create(createEvent);
         }
 
         dato.each(mustEventProperties, function (index, prototype) {
-            if (prototype in copyEvent) {
+            if (copyEvent && prototype in copyEvent) {
                 try {
                     // 某些浏览器不允许重写只读属性，如 iPhone safari
                     createEvent[prototype] = copyEvent[prototype];
@@ -210,15 +211,16 @@ define(function (require, exports, module) {
             }
         });
 
-        detail = detail || {};
+        alienDetail = alienDetail || {};
         createEvent.alienDetail = createEvent.alienDetail || {};
 
-        dato.each(detail, function (key, val) {
+        dato.each(alienDetail, function (key, val) {
             createEvent.alienDetail[key] = val;
         });
 
         return createEvent;
     };
+
 
     /**
      * 事件监听
@@ -247,7 +249,7 @@ define(function (require, exports, module) {
         isCapture = arguments[arguments.length - 1];
 
         if (typeis(isCapture) !== 'boolean') {
-            isCapture = !1;
+            isCapture = false;
         }
 
         // on self
@@ -259,6 +261,10 @@ define(function (require, exports, module) {
         // delegate
         // .on(body, 'click', 'p', fn)
         else if (typeis(listener) === 'function') {
+            if (canNotBubbleEvents.indexOf(eventType) > -1) {
+                console.warn(eventType, 'can not bubble in DOM tree');
+            }
+
             callback = function (eve) {
                 // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                 var closestElement = domSelector.closest(eve.target, selector);
@@ -379,6 +385,42 @@ define(function (require, exports, module) {
 
 
     /**
+     * 代理 event
+     * @param eve {Event} 事件
+     * @private
+     */
+    function _proxyEvent(eve) {
+        if ('alienDetail' in eve) {
+            return eve;
+        }
+
+        var buildEve = {};
+        var eventMethods = {
+            preventDefault: 'isDefaultPrevented',
+            stopImmediatePropagation: 'isImmediatePropagationStopped',
+            stopPropagation: 'isPropagationStopped'
+        };
+
+        for (var i in eve) {
+            buildEve[i] = eve[i];
+        }
+
+        dato.each(eventMethods, function (key, val) {
+            var eventMethod = eve[key];
+
+            buildEve[key] = function () {
+                return eventMethod.apply(eve, arguments);
+            };
+        });
+
+        buildEve.originalEvent = eve;
+        buildEve.alienDetail = {};
+
+        return buildEve;
+    }
+
+
+    /**
      * 添加事件监听队列
      * @param {HTMLElement|Object} element 元素
      * @param {String} eventType 单个事件类型
@@ -411,9 +453,11 @@ define(function (require, exports, module) {
             isCaptureActualListeners[id][eventType].push(actualListener);
 
             if (!isCaptureRealListeners[id][eventType]) {
-                isCaptureRealListeners[id][eventType] = !0;
+                isCaptureRealListeners[id][eventType] = true;
 
                 element.addEventListener(eventType, function (eve) {
+                    eve = _proxyEvent(eve);
+
                     var the = this;
                     var domId = the[key];
                     var eventType = eve.type;
@@ -429,16 +473,18 @@ define(function (require, exports, module) {
                             }
                         }
                     });
-                }, !0);
+                }, true);
             }
         } else {
             unCaptureOriginalListeners[id][eventType].push(originalListener);
             unCaptureActualListeners[id][eventType].push(actualListener);
 
             if (!unCaptureRealListeners[id][eventType]) {
-                unCaptureRealListeners[id][eventType] = !0;
+                unCaptureRealListeners[id][eventType] = true;
 
                 element.addEventListener(eventType, function (eve) {
+                    eve = _proxyEvent(eve);
+
                     var the = this;
                     var domId = the[key];
                     var eventType = eve.type;
@@ -454,7 +500,7 @@ define(function (require, exports, module) {
                             }
                         }
                     });
-                }, !1);
+                }, false);
             }
         }
     }
@@ -482,7 +528,7 @@ define(function (require, exports, module) {
             }
             // _un(ele, 'click', fn);
             else {
-                isCapture = !1;
+                isCapture = false;
             }
         }
 
