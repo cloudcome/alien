@@ -21,6 +21,7 @@ define(function (require, exports, module) {
 
     var ui = require('../base.js');
     var template = require('html!./template.html');
+    var style = require('css!./style.css');
     var dato = require('../../util/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -88,16 +89,16 @@ define(function (require, exports, module) {
             var $ele = the._$ele;
             var $tip = the._$tooltip;
             var options = the._options;
+            var scrL = attribute.scrollLeft(window);
+            var scrT = attribute.scrollTop(window);
             var eleW = attribute.outerWidth($ele);
             var eleH = attribute.outerHeight($ele);
-            var eleL = attribute.left($ele);
-            var eleT = attribute.top($ele);
+            var eleL = attribute.left($ele) - scrL;
+            var eleT = attribute.top($ele) - scrT;
             var tipW = attribute.outerWidth($tip);
             var tipH = attribute.outerHeight($tip);
             var winW = attribute.width(window);
             var winH = attribute.height(window);
-            var scrL = attribute.scrollLeft(window);
-            var scrT = attribute.scrollTop(window);
             var vieW = scrL + winW;
             var vieH = scrT + winH;
             var at = 'top';
@@ -207,7 +208,6 @@ define(function (require, exports, module) {
         }
     });
 
-    modification.importStyle(style);
 
     /**
      * 实例化一个 Tooltip
@@ -222,4 +222,5 @@ define(function (require, exports, module) {
      * var tp = new Tooltip(ele, options);
      */
     module.exports = Tooltip;
+    modification.importStyle(style);
 });
