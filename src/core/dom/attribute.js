@@ -240,7 +240,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的滚动条高度
-     * @param ele {HTMLElement|Node|window|document} 元素
+     * @param ele {HTMLElement|Node|Window|Document} 元素
      * @param [top] {Number} 高度
      * @returns {number|*}
      *
@@ -267,7 +267,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的滚动条左距离
-     * @param ele {HTMLElement|Node|window|document} 元素
+     * @param ele {HTMLElement|Node|Window|Document} 元素
      * @param [left] {Number} 高度
      * @returns {number|*}
      *
