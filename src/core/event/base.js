@@ -201,7 +201,7 @@ define(function (require, exports, module) {
         }
 
         dato.each(mustEventProperties, function (index, prototype) {
-            if (prototype in copyEvent) {
+            if (copyEvent && prototype in copyEvent) {
                 try {
                     // 某些浏览器不允许重写只读属性，如 iPhone safari
                     createEvent[prototype] = copyEvent[prototype];
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
         // .on(body, 'click', 'p', fn)
         else if (typeis(listener) === 'function') {
             if (canNotBubbleEvents.indexOf(eventType) > -1) {
-                console.warn(eventType, 'can not bubble in DOM');
+                console.warn(eventType, 'can not bubble in DOM tree');
             }
 
             callback = function (eve) {
@@ -385,6 +385,42 @@ define(function (require, exports, module) {
 
 
     /**
+     * 代理 event
+     * @param eve {Event} 事件
+     * @private
+     */
+    function _proxyEvent(eve) {
+        if ('alienDetail' in eve) {
+            return eve;
+        }
+
+        var buildEve = {};
+        var eventMethods = {
+            preventDefault: 'isDefaultPrevented',
+            stopImmediatePropagation: 'isImmediatePropagationStopped',
+            stopPropagation: 'isPropagationStopped'
+        };
+
+        for (var i in eve) {
+            buildEve[i] = eve[i];
+        }
+
+        dato.each(eventMethods, function (key, val) {
+            var eventMethod = eve[key];
+
+            buildEve[key] = function () {
+                return eventMethod.apply(eve, arguments);
+            };
+        });
+
+        buildEve.originalEvent = eve;
+        buildEve.alienDetail = {};
+
+        return buildEve;
+    }
+
+
+    /**
      * 添加事件监听队列
      * @param {HTMLElement|Object} element 元素
      * @param {String} eventType 单个事件类型
@@ -420,6 +456,8 @@ define(function (require, exports, module) {
                 isCaptureRealListeners[id][eventType] = true;
 
                 element.addEventListener(eventType, function (eve) {
+                    eve = _proxyEvent(eve);
+
                     var the = this;
                     var domId = the[key];
                     var eventType = eve.type;
@@ -445,6 +483,8 @@ define(function (require, exports, module) {
                 unCaptureRealListeners[id][eventType] = true;
 
                 element.addEventListener(eventType, function (eve) {
+                    eve = _proxyEvent(eve);
+
                     var the = this;
                     var domId = the[key];
                     var eventType = eve.type;

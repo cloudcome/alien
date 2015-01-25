@@ -9,19 +9,30 @@ define(function (require) {
 
     var Banner = require('/src/ui/Banner/index.js');
     var control = require('/src/util/control.js');
+    var event = require('/src/core/event/base.js');
     var $index = document.getElementById('index');
+    var $banner = document.getElementById('banner');
     var banner = new Banner('#banner', {
-        width: Math.min(window.innerWidth, 460),
+        width: Math.min(window.innerWidth, 300),
         height: 200,
-        axis: '-x',
+        duration: 1000,
+        axis: '+x',
         isAutoPlay: false,
         navGenerator: function (index, length) {
-            return '<li>'+(index+1)+'</li>';
+            return '<li>' + (index + 1) + '</li>';
         },
         navSelector: 'li',
         $navParent: document.getElementById('nav')
     });
-    
+
+    event.on($banner, 'click', '.prev', function () {
+        banner.prev();
+    });
+
+    event.on($banner, 'click', '.next', function () {
+        banner.next();
+    });
+
     window.onresize = control.debounce(function () {
         banner.resize({
             width: Math.min(window.innerWidth, 460)

@@ -27,6 +27,7 @@
 
         button{
             padding: 10px 20px;
+            line-height: 20px;
         }
 
         ul{
@@ -50,12 +51,32 @@
             margin: 10px;
         }
 
+        #banner li{
+            position: relative;
+        }
+
+        #banner .prev,
+        #banner .next{
+            position: absolute;
+            top: 50%;
+            margin-top: -10px;
+        }
+
+        #banner .prev{
+            left: 0;
+        }
+
+        #banner .next{
+            right: 0;
+        }
+
         #nav li{
             display: inline-block;
             background: #eee;
             color: #444;
-            padding: 10px;
+            padding: 20px;
             line-height: 20px;
+            margin-right: 10px;
         }
 
         #nav li.active{
@@ -68,11 +89,10 @@
 
 
 <ul id="banner">
-    <li><img src="http://img01.taobaocdn.com/imgextra/i1/436455194/T2oHtOXhVdXXXXXXXX_!!436455194.jpg" alt=""/></li>
-    <li><img src="http://dummyimage.com/600x400" alt=""/></li>
-    <li><img src="http://att.bbs.duowan.com/forum/201407/05/1327581ibfllypybayjzjx.png" alt=""/></li>
-    <li><img src="http://dummyimage.com/600x400/A83636/FFF" alt=""/></li>
-    <li><img src="http://img02.taobaocdn.com/imgextra/i2/919019292/T2u8IRXXRXXXXXXXXX_!!919019292.jpg" alt=""/></li>
+    <li><button class="prev">上一张</button><img src="http://dummyimage.com/600x400/1C518E/FFF&text=1" alt=""/><button class="next">下一张</button></li>
+    <li><button class="prev">上一张</button><img src="http://dummyimage.com/600x400/A83636/FFF&text=2" alt=""/><button class="next">下一张</button></li>
+    <li><button class="prev">上一张</button><img src="http://dummyimage.com/600x400/007E5C/FFF&text=3" alt=""/><button class="next">下一张</button></li>
+    <li><button class="prev">上一张</button><img src="http://dummyimage.com/600x400/946E1A/FFF&text=4" alt=""/><button class="next">下一张</button></li>
 </ul>
 
 <ul id="nav"></ul>
@@ -91,9 +111,9 @@
 <hr/>
 <pre>
 var banner = new Banner('#slider1', {
-    width: 460,
+    width: 300,
     height: 200,
-    axis: '+y'
+    axis: '+x'
 });
 </pre>
 
