@@ -200,6 +200,7 @@ define(function (require, exports, module) {
 
             attribute.css(the._$mask, 'display', 'none');
             the.visible = false;
+            the.emit('close');
 
             if (the._$cover === window) {
                 maskWindowLength--;
