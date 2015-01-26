@@ -207,11 +207,11 @@ define(function (require, exports, module) {
             var $trackY = the._$trackY;
             var $thumbY = the._$thumbY;
             // 尺寸比例
-            var thumbWidthRatio = the._containerWidth / the._scrollWidth;
-            var thumbHeightRatio = the._containerHeight / the._scrollHeight;
+            var thumbWidthRatio = the._scrollWidth === 0 ? 0 : the._containerWidth / the._scrollWidth;
+            var thumbHeightRatio = the._scrollHeight === 0 ? 0 : the._containerHeight / the._scrollHeight;
             // 距离比例
-            var thumbLeftRatio = the._scrollLeft / the._scrollLeftMax;
-            var thumbTopRatio = the._scrollTop / the._scrollTopMax;
+            var thumbLeftRatio = the._scrollLeftMax === 0 ? 0 : the._scrollLeft / the._scrollLeftMax;
+            var thumbTopRatio = the._scrollTopMax === 0 ? 0 : the._scrollTop / the._scrollTopMax;
             var options = the._options;
 
             the._trackWidth = attribute.width($trackX) - the._thumbXOffset;
@@ -249,6 +249,8 @@ define(function (require, exports, module) {
                     attribute.css($thumbX, thumbXSize);
                 }
             }
+
+            if (the._thumbTop.toString() === 'NaN')debugger;
 
             var thumbYSize = {
                 top: the._thumbTop,
