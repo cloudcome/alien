@@ -250,8 +250,6 @@ define(function (require, exports, module) {
                 }
             }
 
-            if (the._thumbTop.toString() === 'NaN')debugger;
-
             var thumbYSize = {
                 top: the._thumbTop,
                 height: the._thumbHeight
