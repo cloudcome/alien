@@ -129,6 +129,7 @@ define(function (require, exports, module) {
             var the = this;
 
             if (the.visible) {
+                animation.stop(the._$window);
                 return the;
             }
 
@@ -147,13 +148,13 @@ define(function (require, exports, module) {
 
             to.opacity = '';
             to.transform = '';
-
+            the.visible = true;
             animation.animate(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                the.visible = true;
                 the.emit('open');
+                console.log('open');
 
                 if (typeis.function(callback)) {
                     callback.call(the);
@@ -213,6 +214,7 @@ define(function (require, exports, module) {
             callback = typeis.function(callback) ? callback : noop;
 
             if (!the.visible) {
+                animation.stop(the._$window);
                 callback.call(the);
                 return the;
             }
@@ -222,14 +224,13 @@ define(function (require, exports, module) {
                 opacity: 0,
                 scale: 0
             };
-
-
+            the.visible = false;
             animation.animate(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                the.visible = false;
                 the.emit('close');
+                console.log('close');
 
                 attribute.css(the._$window, {
                     transform: '',

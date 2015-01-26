@@ -16,6 +16,8 @@ define(function (require) {
         remote: 'http://wap.baidu.com/'
     });
 
+    window.d1 = d1;
+
     document.getElementById('open1').onclick = function () {
         d1.open();
     };
