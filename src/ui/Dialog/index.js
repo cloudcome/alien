@@ -271,7 +271,6 @@ define(function (require, exports, module) {
         close: function (callback) {
             var the = this;
 
-
             the._window.close(function () {
                 if (the._mask) {
                     the._mask.close();

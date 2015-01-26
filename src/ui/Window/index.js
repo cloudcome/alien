@@ -147,11 +147,12 @@ define(function (require, exports, module) {
 
             to.opacity = '';
             to.transform = '';
-            the.visible = true;
+
             animation.animate(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                the.visible = true;
                 the.emit('open');
 
                 if (typeis.function(callback)) {
@@ -222,11 +223,12 @@ define(function (require, exports, module) {
                 scale: 0
             };
 
-            the.visible = false;
+
             animation.animate(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                the.visible = false;
                 the.emit('close');
 
                 attribute.css(the._$window, {
