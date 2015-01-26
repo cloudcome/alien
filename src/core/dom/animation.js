@@ -22,6 +22,7 @@ define(function (require, exports, module) {
 
     var udf;
     var attribute = require('./attribute.js');
+    var see = require('./see.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
     var eeeing = require('../../util/easing.js');
@@ -80,6 +81,7 @@ define(function (require, exports, module) {
             ele[alienKey] = ++index;
         }
 
+
         var id = ele[alienKey];
         var args = arguments;
         var argL = args.length;
@@ -117,7 +119,7 @@ define(function (require, exports, module) {
         }
 
         var listener = function (eve) {
-            if (eve && eve.target === ele) {
+            if (eve === true || eve && eve.target === ele) {
                 if (hasDispatch) {
                     return;
                 }
@@ -133,6 +135,7 @@ define(function (require, exports, module) {
                 window[requestAnimationFrame](callback.bind(ele));
             }
         };
+
 
         event.on(ele, transitionendEventType, listener);
         options = dato.extend({}, cssDefaults, options);
@@ -173,10 +176,16 @@ define(function (require, exports, module) {
         }
 
         window[requestAnimationFrame](function () {
-            attribute.css(ele, 'transition-duration', durationVal.join(','));
-            attribute.css(ele, 'transition-delay', delayVal.join(','));
-            attribute.css(ele, 'transition-timing-function', easingVal.join(','));
-            attribute.css(ele, 'transition-property', keys.join(','));
+            if (see.visibility(ele) === 'visible') {
+                attribute.css(ele, 'transition-duration', durationVal.join(','));
+                attribute.css(ele, 'transition-delay', delayVal.join(','));
+                attribute.css(ele, 'transition-timing-function', easingVal.join(','));
+                attribute.css(ele, 'transition-property', keys.join(','));
+            } else {
+                listener(true);
+            }
+
+            console.log(fixTo);
             dato.each(fixTo, function (key, val) {
                 attribute.css(ele, key, val);
             });
@@ -235,15 +244,15 @@ define(function (require, exports, module) {
      *
      * @example
      * animation.scrollTo(window, {
-         *    x: 100,
-         *    y: 100
-         * }, {
-         *    duration: 1000,
-         *    easing: 'linear',
-         *    delay: 100
-         * }, function(){
-         *    alert('OK');
-         * });
+     *    x: 100,
+     *    y: 100
+     * }, {
+     *    duration: 1000,
+     *    easing: 'linear',
+     *    delay: 100
+     * }, function(){
+     *    alert('OK');
+     * });
      */
     exports.scrollTo = function (ele, to, options, callback) {
         var args = arguments;
