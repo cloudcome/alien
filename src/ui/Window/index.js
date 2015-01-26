@@ -137,6 +137,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$window, {
+                display: 'block',
                 opacity: 0,
                 visibility: 'visible',
                 left: to.left,

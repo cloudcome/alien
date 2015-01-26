@@ -185,6 +185,7 @@ define(function (require, exports, module) {
                 listener(true);
             }
 
+            console.log(fixTo);
             dato.each(fixTo, function (key, val) {
                 attribute.css(ele, key, val);
             });
@@ -243,15 +244,15 @@ define(function (require, exports, module) {
      *
      * @example
      * animation.scrollTo(window, {
-         *    x: 100,
-         *    y: 100
-         * }, {
-         *    duration: 1000,
-         *    easing: 'linear',
-         *    delay: 100
-         * }, function(){
-         *    alert('OK');
-         * });
+     *    x: 100,
+     *    y: 100
+     * }, {
+     *    duration: 1000,
+     *    easing: 'linear',
+     *    delay: 100
+     * }, function(){
+     *    alert('OK');
+     * });
      */
     exports.scrollTo = function (ele, to, options, callback) {
         var args = arguments;
