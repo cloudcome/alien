@@ -28,6 +28,9 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-window';
+    var noop = function () {
+        // ignore
+    };
     var defaults = {
         parentNode: document.body,
         width: 500,
@@ -168,7 +171,10 @@ define(function (require, exports, module) {
         resize: function (size, callback) {
             var the = this;
 
+            callback = typeis.function(callback) ? callback : noop;
+
             if (!the.visible) {
+                callback.call(the);
                 return the;
             }
 
@@ -189,9 +195,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
-                if (typeis.function(callback)) {
-                    callback.call(the);
-                }
+                callback.call(the);
             });
 
             return the;
@@ -205,7 +209,10 @@ define(function (require, exports, module) {
         close: function (callback) {
             var the = this;
 
+            callback = typeis.function(callback) ? callback : noop;
+
             if (!the.visible) {
+                callback.call(the);
                 return the;
             }
 
@@ -227,9 +234,7 @@ define(function (require, exports, module) {
                     display: 'none'
                 });
 
-                if (typeis.function(callback)) {
-                    callback.call(the);
-                }
+                callback.call(the);
             });
 
             return the;
@@ -243,8 +248,6 @@ define(function (require, exports, module) {
         getNode: function () {
             return this._$window;
         },
-
-
 
 
         /**
