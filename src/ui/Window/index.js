@@ -155,7 +155,6 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('open');
-                console.log('open');
 
                 if (typeis.function(callback)) {
                     callback.call(the);
@@ -231,7 +230,6 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('close');
-                console.log('close');
 
                 attribute.css(the._$window, {
                     transform: '',
