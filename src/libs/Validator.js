@@ -37,7 +37,7 @@ define(function (require, exports, module) {
             /**
              * 注册自定义的静态验证规则
              * @param options {Object} 规则配置
-             * @param rule {Function} 规则方法
+             * @param fn {Function} 规则方法
              * @param [isOverride=false] 是否覆盖已有规则
              *
              * @example
@@ -573,9 +573,9 @@ define(function (require, exports, module) {
                     functionLength = rule.function.length;
 
                     if (functionLength === 3) {
-                        rule.function.call(window, val, data, over);
+                        rule.function.call(window, val, data, onover);
                     } else if (functionLength === 2) {
-                        rule.function.call(window, val, over);
+                        rule.function.call(window, val, onover);
                     } else {
                         throw 'arguments are `val,[data],next`';
                     }
