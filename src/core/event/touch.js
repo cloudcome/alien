@@ -261,6 +261,10 @@ define(function (require, exports, module) {
     function _cancel(eve) {
         attribute.css(document.body, cssTouch);
 
+        if (!touch.startTarget) {
+            return;
+        }
+
         var firstTouch = eve && eve.touches && eve.touches[0] ||
             eve && eve.changedTouches && eve.changedTouches[0];
         var touch1endEvent = event.create('touch1end');
