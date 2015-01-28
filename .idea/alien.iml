@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/static" />
+      <excludeFolder url="file://$MODULE_DIR$/templates" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="alien node_modules" level="project" />
+    <orderEntry type="library" name="Node.js v0.10.32 Core Modules" level="application" />
+    <orderEntry type="library" name="coolie" level="application" />
+    <orderEntry type="library" name="should" level="project" />
+    <orderEntry type="library" name="coolie" level="project" />
+  </component>
+</module>
