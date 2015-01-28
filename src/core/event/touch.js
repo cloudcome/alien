@@ -31,6 +31,7 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
+    var control = require('../../util/control.js');
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';
@@ -202,7 +203,7 @@ define(function (require, exports, module) {
             touch.startID === touch.endID &&
             touch.startTarget === touch.endTarget
         ) {
-            setTimeout(function () {
+            control.nextTick(function () {
                 var tapEvent = event.create('tap');
 
                 event.extend(tapEvent, firstTouch, touch);
@@ -212,7 +213,7 @@ define(function (require, exports, module) {
                 if (dispatchTap && dispatchTap.defaultPrevented === true) {
                     eve.preventDefault();
                 }
-            }, 0);
+            });
         }
 
         // 移动距离大于 taphold || 时间不够

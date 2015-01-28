@@ -36,6 +36,7 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
+    var control = require('../../util/control.js');
     var Autoheight = require('../Autoheight/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
@@ -127,7 +128,7 @@ define(function (require, exports, module) {
                     the._storeId = options.id;
                 }
             });
-            setTimeout(the._initVal.bind(the), 1);
+            control.nextTick(the._initVal, the);
 
             return the;
         },
@@ -653,9 +654,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            setTimeout(function () {
-                the._autoheight.resize();
-            }, 1);
+            control.nextTick(the._autoheight.resize, the)
         },
 
         /**
