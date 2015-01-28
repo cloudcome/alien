@@ -74,7 +74,7 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
 
-            event.on(the._$window, 'click', function (eve) {
+            event.on(the._$window, 'click tap', function (eve) {
                 eve.stopPropagation();
             });
 
