@@ -286,7 +286,7 @@ define(function (require, exports, module) {
             attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
 
             if (the._options.successMsg === null) {
-                see.visibility($formMsg, isSuccess ? 'visible' : 'hidden');
+                see.visibility($formMsg, isSuccess ? 'hidden' : 'visible');
             } else {
                 see.visibility($formMsg, 'visible');
             }
@@ -359,9 +359,7 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            dato.each(the._nameItemMap, function (name, $formItem) {
-                attribute.removeClass($formItem, formItemStatusClass);
-            });
+            attribute.removeClass(the._nameItemMap, formItemStatusClass);
             event.un(the._$form, the._options.validateEvent, the._onvalidate);
             event.un(the._$form, 'tap click', the._onsubmit);
             attribute.removeClass(the._$form, alienClass);

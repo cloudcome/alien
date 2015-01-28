@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
     var dato = require('../../util/dato.js');
+    var control = require('../../util/control.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -107,9 +108,9 @@ define(function (require, exports, module) {
 
                 if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
                     options.minHeight > 0 && the._wrapHeight < options.minHeight) {
-                    setTimeout(function () {
+                    control.nextTick(function () {
                         the.emit('error', new Error('图片尺寸至少需要' + options.minWidth + '×' + options.minHeight + 'px'));
-                    }, 0);
+                    });
                 } else {
                     adjust = _adjustSize(options.minWidth, options.minHeight, options.ratio, !0);
                     options.minWidth = adjust[0];

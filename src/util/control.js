@@ -144,4 +144,20 @@ define(function (require, exports, module) {
             }
         };
     };
+
+
+    /**
+     * 下一步
+     * @param callback {Function} 回调
+     * @param [context=window] {Object} 上下文
+     * @param [args=[]] {Array} 参数
+     */
+    exports.nextTick = function (callback, context, args) {
+        context = context || window;
+        args = args || [];
+
+        setTimeout(function () {
+            callback.apply(context, args);
+        }, 0);
+    };
 });

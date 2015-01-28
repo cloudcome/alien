@@ -58,15 +58,11 @@ define(function (require, exports, module) {
      * attribute.attr(ele, ['href', 'title']);
      */
     exports.attr = function (ele, key, val) {
-        if (!ele || ele.nodeType !== 1 || !key) {
-            return;
-        }
-
         return _getSet(arguments, {
-            get: function (key) {
+            get: function (ele, key) {
                 return ele.getAttribute(key);
             },
-            set: function (key, val) {
+            set: function (ele, key, val) {
                 ele.setAttribute(key, val);
             }
         });
@@ -138,10 +134,10 @@ define(function (require, exports, module) {
      */
     exports.prop = function (ele, key, val) {
         return _getSet(arguments, {
-            get: function (key) {
+            get: function (ele, key) {
                 return ele[key];
             },
-            set: function (key, val) {
+            set: function (ele, key, val) {
                 ele[key] = val;
             }
         });
@@ -199,9 +195,9 @@ define(function (require, exports, module) {
      * attribute.css(ele, 'width', 100);
      * attribute.css(ele, 'width', 100);
      * attribute.css(ele, {
-         *    width: 100,
-         *    height: '200px !important'
-         * });
+     *    width: 100,
+     *    height: '200px !important'
+     * });
      *
      * // get
      * attribute.css(ele, 'width');
@@ -209,14 +205,8 @@ define(function (require, exports, module) {
      * attribute.css(ele, ['width','height']);
      */
     exports.css = function (ele, key, val) {
-        if (!ele || ele.nodeType !== 1 || !key) {
-            return;
-        }
-
-        var the = this;
-
         return _getSet(arguments, {
-            get: function (key) {
+            get: function (ele, key) {
                 var temp = key.split('::');
                 var pseudo = temp.length === 1 ? null : temp[temp.length - 1];
 
@@ -224,10 +214,10 @@ define(function (require, exports, module) {
                 pseudo = pseudo ? pseudo : null;
                 return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
             },
-            set: function (key, val) {
+            set: function (ele, key, val) {
                 key = key.split('::')[0];
 
-                var fix = the.fixCss(key, val);
+                var fix = exports.fixCss(key, val);
 
                 // ele.style[fix.key] = fix.val;
                 // 样式名, 样式值, 优先级
@@ -295,8 +285,8 @@ define(function (require, exports, module) {
     /**
      * 设置、获取元素的数据集
      * @param {HTMLElement|Node} ele 元素
-     * @param {String/Object/Array} dataKey 数据集键、键值对、键数组
-     * @param {String} [dataVal] 数据集值
+     * @param {String/Object/Array} key 数据集键、键值对、键数组
+     * @param {String} [val] 数据集值
      * @returns {*}
      *
      * @example
@@ -317,12 +307,8 @@ define(function (require, exports, module) {
      * // => {a: 1, b: 2}
      */
     exports.data = function (ele, key, val) {
-        if (!ele || ele.nodeType !== 1 || !key) {
-            return;
-        }
-
         return _getSet(arguments, {
-            get: function (key) {
+            get: function (ele, key) {
                 var ret = ele.dataset[_toHumpString(key)];
 
                 try {
@@ -338,7 +324,7 @@ define(function (require, exports, module) {
                     return ret;
                 }
             },
-            set: function (key, val) {
+            set: function (ele, key, val) {
                 if (typeis(val) === 'object') {
                     try {
                         val = JSON.stringify(val);
@@ -366,15 +352,11 @@ define(function (require, exports, module) {
      * attribute.html(ele);
      */
     exports.html = function (ele, html) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
-
         return _getSet(arguments, {
-            get: function () {
+            get: function (ele) {
                 return ele.innerHTML;
             },
-            set: function (html) {
+            set: function (ele, html) {
                 ele.innerHTML = html;
             }
         }, 1);
@@ -395,15 +377,11 @@ define(function (require, exports, module) {
      * attribute.text(ele);
      */
     exports.text = function (ele, text) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
-
         return _getSet(arguments, {
-            get: function () {
+            get: function (ele) {
                 return ele.innerText;
             },
-            set: function (text) {
+            set: function (ele, text) {
                 ele.innerText = text;
             }
         }, 1);
@@ -412,7 +390,7 @@ define(function (require, exports, module) {
 
     /**
      * 添加元素的className
-     * @param {HTMLElement|Node} ele 元素
+     * @param {HTMLElement|Node|Array} ele 元素
      * @param {String} className 多个className使用空格分开
      * @returns {undefined}
      *
@@ -421,17 +399,17 @@ define(function (require, exports, module) {
      * attribute.addClass(ele, 'class1 class2');
      */
     exports.addClass = function (ele, className) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
+        var eles = typeis.array(ele) ? ele : [ele];
 
-        _class(ele, 0, className);
+        dato.each(eles, function (i, ele) {
+            _class(ele, 0, className);
+        });
     };
 
 
     /**
      * 移除元素的className
-     * @param {HTMLElement|Node} ele 元素
+     * @param {HTMLElement|Node|Array} ele 元素
      * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
      * @returns {undefined}
      *
@@ -442,11 +420,11 @@ define(function (require, exports, module) {
      * attribute.removeClass(ele, 'class1 class2');
      */
     exports.removeClass = function (ele, className) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
+        var eles = typeis.array(ele) ? ele : [ele];
 
-        _class(ele, 1, className);
+        dato.each(eles, function (i, ele) {
+            _class(ele, 1, className);
+        });
     };
 
 
@@ -633,38 +611,50 @@ define(function (require, exports, module) {
      * @private
      */
     function _getSet(args, getSet, argumentsSetLength) {
-        args = [].slice.call(args, 1);
         argumentsSetLength = argumentsSetLength || 2;
-        var arg0Type = typeis(args[0]);
+
+        var arg1Type = typeis(args[1]);
         var ret = {};
         var argsLength = args.length;
+        var eles = typeis.array(args[0]) ? args[0] : [args[0]];
+        var ele0 = eles[0];
+        var arg1 = args[1];
+        var arg2 = args[2];
 
         // .fn(ele);
-        if (argsLength === 0) {
-            return getSet.get();
+        if (argsLength === 1) {
+            return getSet.get(ele0);
         }
         // .fn(ele, 'name', '1');
-        else if (argsLength === 2 && argumentsSetLength === 2) {
-            return getSet.set(args[0], args[1]);
+        else if (argsLength === 3 && argumentsSetLength === 2) {
+            dato.each(eles, function (i, ele) {
+                getSet.set(ele, arg1, arg2);
+            });
         }
         // .fn(ele, {name: 1, id: 2});
-        else if (argsLength === 1 && arg0Type === 'object' && argumentsSetLength === 2) {
-            dato.each(args[0], function (key, val) {
-                getSet.set(key, val);
+        else if (argsLength === 2 && arg1Type === 'object' && argumentsSetLength === 2) {
+            dato.each(eles, function (i, ele) {
+                dato.each(arg1, function (key, val) {
+                    getSet.set(ele, key, val);
+                });
             });
         }
         // .fn(ele, ['name', 'id']);
-        else if (argsLength === 1 && arg0Type === 'array' && argumentsSetLength === 2) {
-            dato.each(args[0], function (index, key) {
-                ret[key] = getSet.get(key);
+        else if (argsLength === 2 && arg1Type === 'array' && argumentsSetLength === 2) {
+            dato.each(arg1, function (index, key) {
+                ret[key] = getSet.get(ele0, key);
             });
             return ret;
         }
         // .fn(ele, 'name');
-        else if (argsLength === 1 && arg0Type === 'string') {
-            return argumentsSetLength === 1 ?
-                getSet.set(args[0]) :
-                getSet.get(args[0]);
+        else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 1) {
+            dato.each(eles, function (i, ele) {
+                getSet.set(ele, arg1);
+            });
+        }
+        // .fn(ele, 'name');
+        else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 2) {
+            return getSet.get(ele0, arg1);
         }
     }
 

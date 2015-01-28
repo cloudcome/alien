@@ -175,17 +175,17 @@ define(function (require, exports, module) {
             easingVal.push(easing);
         }
 
-        window[requestAnimationFrame](function () {
-            if (see.visibility(ele) === 'visible') {
-                attribute.css(ele, 'transition-duration', durationVal.join(','));
-                attribute.css(ele, 'transition-delay', delayVal.join(','));
-                attribute.css(ele, 'transition-timing-function', easingVal.join(','));
-                attribute.css(ele, 'transition-property', keys.join(','));
-            } else {
-                listener(true);
-            }
 
-            console.log(fixTo);
+        if (see.visibility(ele) === 'visible') {
+            attribute.css(ele, 'transition-duration', durationVal.join(','));
+            attribute.css(ele, 'transition-delay', delayVal.join(','));
+            attribute.css(ele, 'transition-timing-function', easingVal.join(','));
+            attribute.css(ele, 'transition-property', keys.join(','));
+        } else {
+            listener(true);
+        }
+
+        window[requestAnimationFrame](function () {
             dato.each(fixTo, function (key, val) {
                 attribute.css(ele, key, val);
             });

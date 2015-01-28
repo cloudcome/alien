@@ -457,7 +457,7 @@ define(function (require, exports, module) {
                 the._trigger = true;
                 the._calScrollSize();
                 the._calTrackSize();
-            }, 10);
+            }, 20);
         },
 
 
