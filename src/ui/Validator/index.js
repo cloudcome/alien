@@ -286,7 +286,7 @@ define(function (require, exports, module) {
             attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
 
             if (the._options.successMsg === null) {
-                see.visibility($formMsg, isSuccess ? 'visible' : 'hidden');
+                see.visibility($formMsg, isSuccess ? 'hidden' : 'visible');
             } else {
                 see.visibility($formMsg, 'visible');
             }
