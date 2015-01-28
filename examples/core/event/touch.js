@@ -66,7 +66,7 @@ define(function (require) {
         console.log(eve);
     });
 
-    event.on(demo, 'touch1end', function (eve) {
+    event.on(demo, 'touhangeh1end', function (eve) {
         ret3.innerHTML += ' touch1end demo';
         demo.innerHTML = 'changedDirection: ' + eve.alienDetail.changedDirection;
         console.log(eve);

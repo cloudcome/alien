@@ -399,13 +399,9 @@ define(function (require, exports, module) {
      * attribute.addClass(ele, 'class1 class2');
      */
     exports.addClass = function (ele, className) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
+        var eles = typeis.array(ele) ? ele : [ele];
 
-        ele = typeis.array(ele) ? ele : [ele];
-
-        dato.each(ele, function (i, ele) {
+        dato.each(eles, function (i, ele) {
             _class(ele, 0, className);
         });
     };
@@ -413,7 +409,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除元素的className
-     * @param {HTMLElement|Node} ele 元素
+     * @param {HTMLElement|Node|Array} ele 元素
      * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
      * @returns {undefined}
      *
@@ -424,13 +420,9 @@ define(function (require, exports, module) {
      * attribute.removeClass(ele, 'class1 class2');
      */
     exports.removeClass = function (ele, className) {
-        if (!ele || ele.nodeType !== 1) {
-            return;
-        }
+        var eles = typeis.array(ele) ? ele : [ele];
 
-        ele = typeis.array(ele) ? ele : [ele];
-
-        dato.each(ele, function (i, ele) {
+        dato.each(eles, function (i, ele) {
             _class(ele, 1, className);
         });
     };
