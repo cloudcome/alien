@@ -359,9 +359,7 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            dato.each(the._nameItemMap, function (name, $formItem) {
-                attribute.removeClass($formItem, formItemStatusClass);
-            });
+            attribute.removeClass(the._nameItemMap, formItemStatusClass);
             event.un(the._$form, the._options.validateEvent, the._onvalidate);
             event.un(the._$form, 'tap click', the._onsubmit);
             attribute.removeClass(the._$form, alienClass);

@@ -126,10 +126,7 @@ define(function (require, exports, module) {
             var className = this._options.activeClass;
 
             attribute.addClass($active, className);
-
-            dato.each($siblings, function (index, $ele) {
-                attribute.removeClass($ele, className);
-            });
+            attribute.removeClass($siblings, className);
         },
 
 
