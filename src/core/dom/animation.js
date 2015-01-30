@@ -127,10 +127,12 @@ define(function (require, exports, module) {
                 hasDispatch = true;
                 animationMap[id] = null;
                 event.un(ele, transitionendEventType, listener);
-                attribute.css(ele, 'transition-duration', '');
-                attribute.css(ele, 'transition-delay', '');
-                attribute.css(ele, 'transition-timing-function', '');
-                attribute.css(ele, 'transition-property', '');
+                attribute.css(ele, {
+                    transitionDuration: '',
+                    transitionDelay: '',
+                    transitionTimingFunction: '',
+                    transitionProperty: ''
+                });
 
                 window[requestAnimationFrame](callback.bind(ele));
             }
@@ -177,18 +179,18 @@ define(function (require, exports, module) {
 
 
         if (see.visibility(ele) === 'visible') {
-            attribute.css(ele, 'transition-duration', durationVal.join(','));
-            attribute.css(ele, 'transition-delay', delayVal.join(','));
-            attribute.css(ele, 'transition-timing-function', easingVal.join(','));
-            attribute.css(ele, 'transition-property', keys.join(','));
+            attribute.css(ele, {
+                transitionDuration: durationVal.join(','),
+                transitionDelay: delayVal.join(','),
+                transitionTimingFunction: easingVal.join(','),
+                transitionProperty: keys.join(',')
+            });
         } else {
             listener(true);
         }
 
         window[requestAnimationFrame](function () {
-            dato.each(fixTo, function (key, val) {
-                attribute.css(ele, key, val);
-            });
+            attribute.css(ele, fixTo);
         });
     };
 
@@ -217,10 +219,12 @@ define(function (require, exports, module) {
             });
         }
 
-        attribute.css(ele, 'transition-duration', '');
-        attribute.css(ele, 'transition-delay', '');
-        attribute.css(ele, 'transition-timing-function', '');
-        attribute.css(ele, 'transition-property', '');
+        attribute.css(ele, {
+            transitionDuration: '',
+            transitionDelay: '',
+            transitionTimingFunction: '',
+            transitionProperty: ''
+        });
         event.dispatch(ele, transitionendEventType);
     };
 
