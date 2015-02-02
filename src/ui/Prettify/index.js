@@ -14,6 +14,13 @@
 
 
 define(function (require, exports, module) {
+    /**
+     * @module ui/Prettify/
+     * @reuqires core/dom/selector
+     * @reuqires core/dom/attribute
+     * @reuqires core/dom/modification
+     * @reuqires ui/base
+     */
     "use strict";
 
     var selector = require('../../core/dom/selector.js');
