@@ -27,6 +27,13 @@ define(function (require, exports, module) {
 
         var argl = args.length;
         var ret = {};
+        var i = argl;
+        
+        while(i--){
+            if(args[i] === undefined){
+                argl--;
+            }
+        }
 
         // e.g. .html();
         if (argl === 0 && setLength === 1) {
