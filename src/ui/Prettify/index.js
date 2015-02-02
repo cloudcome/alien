@@ -1602,6 +1602,8 @@ define(function (require, exports, module) {
     modification.importStyle(style);
 
     /**
+     * 语法高亮
+     * @param $pre {Element|Node|String} 节点或节点选择器
      * @example
      * var Prettify = require('ui/prettify.js');
      * var pf = new Prettify('pre');
