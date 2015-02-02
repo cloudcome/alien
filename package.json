@@ -35,7 +35,9 @@
     "url": "https://github.com/cloudcome/alien/issues"
   },
   "licenses": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "jsdoc": "^3.3.0-beta1"
+  },
   "devDependencies": {
     "jsdoc": "^3.3.0-alpha10",
     "karma": "^0.12.25",

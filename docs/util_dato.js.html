@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -188,7 +186,7 @@ define(function (require, exports, module) {
 
         // 数组 或 类似数组
         if (list &amp;&amp; list.length !== udf) {
-            for (i = 0, j = this.parseInt(list.length, 0); i &lt; j; i++) {
+            for (i = 0, j = exports.parseInt(list.length, 0); i &lt; j; i++) {
                 context = context || list[i];
                 if (callback.call(context, i, list[i]) === false) {
                     break;
@@ -252,10 +250,10 @@ define(function (require, exports, module) {
                     type = typeis(obj[i]);
                     if (type === 'object' &amp;&amp; isExtendDeep) {
                         source[i] = source[i] || {};
-                        this.extend.call(this, isExtendDeep, source[i], obj[i]);
+                        exports.extend.call(this, isExtendDeep, source[i], obj[i]);
                     } else if (type === 'array' &amp;&amp; isExtendDeep) {
                         source[i] = source[i] || [];
-                        this.extend.call(this, isExtendDeep, source[i], obj[i]);
+                        exports.extend.call(this, isExtendDeep, source[i], obj[i]);
                     } else {
                         source[i] = obj[i];
                     }
@@ -351,7 +349,7 @@ define(function (require, exports, module) {
 
         // 对象
         if (obj1Type === 'object' || obj1Type === 'array') {
-            this.each(obj1, function (key, val) {
+            exports.each(obj1, function (key, val) {
                 if (obj2[key] !== val) {
                     obj1Only.push(key);
                 } else {
@@ -359,7 +357,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            this.each(obj2, function (key, val) {
+            exports.each(obj2, function (key, val) {
                 if (obj1[key] !== val) {
                     obj2Only.push(key);
                 }
@@ -405,7 +403,7 @@ define(function (require, exports, module) {
      */
     exports.bytes = function (string, doubleLength) {
         string += '';
-        doubleLength = this.parseInt(doubleLength, 2);
+        doubleLength = exports.parseInt(doubleLength, 2);
 
         var i = 0,
             j = string.length,
