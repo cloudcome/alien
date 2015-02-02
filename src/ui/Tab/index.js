@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../util/dato.js');
-    var control = require('../../util/control.js');
+    var controller = require('../../util/controller.js');
     var defaults = {
         index: 0,
         eventType: 'click tap',
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
             // 这里异步调用的原因是
             // 主线程执行完毕再执行这里
             // 此时，实例化已经完成，就能够读取实例上添加的属性了
-            control.nextTick(the._getActive, the);
+            controller.nextTick(the._getActive, the);
             event.on(the._$ele, the._options.eventType, 'a', the._ontrigger.bind(the));
         },
 

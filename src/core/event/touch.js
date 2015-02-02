@@ -31,7 +31,7 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
-    var control = require('../../util/control.js');
+    var controller = require('../../util/controller.js');
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';
@@ -203,7 +203,7 @@ define(function (require, exports, module) {
             touch.startID === touch.endID &&
             touch.startTarget === touch.endTarget
         ) {
-            control.nextTick(function () {
+            controller.nextTick(function () {
                 var tapEvent = event.create('tap');
 
                 event.extend(tapEvent, firstTouch, touch);

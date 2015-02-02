@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var control = require('../../util/control.js');
+    var controller = require('../../util/controller.js');
     var alienClass = 'alien-ui-banner';
     var alienIndex = 0;
     var defaults = {
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
             }
         });
 
-        control.nextTick(function () {
+        controller.nextTick(function () {
             the.emit('change', the._showIndex);
         });
     };

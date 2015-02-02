@@ -10,5 +10,22 @@ define(function (require, exports, module) {
      * @module parent/storage
      */
     'use strict';
+    
+    var ls = window.localStorage;
 
+    exports.get = function (key) {
+
+    };
+
+    exports.set = function (key, val) {
+
+    };
+
+    exports.length = function () {
+
+    };
+
+    exports.remove = function () {
+
+    };
 });
