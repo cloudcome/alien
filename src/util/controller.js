@@ -119,7 +119,7 @@ define(function (require, exports, module) {
 
     /**
      * 切换执行
-     * @returns {Function
+     * @returns {Function}
      *
      * @example
      * document.onclick = controller.toggle(fn1, fn2, fn3);

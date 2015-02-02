@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/touch
      * @requires util/dato
+     * @requires util/controller
      */
     'use strict';
 

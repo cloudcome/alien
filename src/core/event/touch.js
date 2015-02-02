@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * @module core/event/touch
      * @requires core/event/base
      * @requires core/dom/attribute
+     * @requires util/controller
      *
      * @example
      * event.on(ele, 'touch1start', fn);

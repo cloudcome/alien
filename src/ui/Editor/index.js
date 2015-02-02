@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      * @requires util/typeis
      * @requires util/date
      * @requires util/random
+     * @requires util/controller
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -37,8 +38,8 @@ define(function (require, exports, module) {
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
     var controller = require('../../util/controller.js');
-    var Autoheight = require('../Autoheight/index.js');
-    var Dialog = require('../Dialog/index.js');
+    var Autoheight = require('../Autoheight/');
+    var Dialog = require('../Dialog/');
     var Msg = require('../Msg/index.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');

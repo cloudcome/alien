@@ -11,6 +11,7 @@ define(function (require, exports, module) {
      * @requires ui/base
      * @requires libs/Template
      * @requires util/dato
+     * @requires util/controller
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
