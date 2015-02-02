@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -253,16 +251,33 @@ define(function (require, exports, module) {
     var i = 0;
     var jud = 'string number function object undefined null nan element regexp boolean array window document global'.split(' ');
     var makeStatic = function (tp) {
+        /**
+         * 快捷判断
+         * @name typeis
+         * @property string {Function}
+         * @property number {Function}
+         * @property function {Function}
+         * @property object {Function}
+         * @property undefined {Function}
+         * @property null {Function}
+         * @property nan {Function}
+         * @property element {Function}
+         * @property regexp {Function}
+         * @property boolean {Function}
+         * @property array {Function}
+         * @property window {Function}
+         * @property document {Function}
+         * @property global {Function}
+         * @returns {boolean}
+         */
         typeis[tp] = function (obj) {
             return typeis(obj) === tp;
         };
     };
 
-
     for (; i &lt; jud.length; i++) {
         makeStatic(jud[i]);
     }
-
 
     /**
      * 判断是否为纯对象
@@ -274,7 +289,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.plainObject = function (obj) {
-        return this(obj) === 'object' &amp;&amp; Object.getPrototypeOf(obj) === Object.prototype;
+        return typeis(obj) === 'object' &amp;&amp; Object.getPrototypeOf(obj) === Object.prototype;
     };
 
 
@@ -283,7 +298,7 @@ define(function (require, exports, module) {
      * @param obj {*}
      */
     typeis.emptyObject = function (obj) {
-        return this.plainObject(obj) &amp;&amp; Object.keys(obj).length === 0;
+        return typeis.plainObject(obj) &amp;&amp; Object.keys(obj).length === 0;
     };
 
 
@@ -297,7 +312,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.url = function (string) {
-        return this(string) === 'string' &amp;&amp; REG_URL.test(string);
+        return typeis(string) === 'string' &amp;&amp; REG_URL.test(string);
     };
 
 
@@ -311,7 +326,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.email = function (string) {
-        return this(string) === 'string' &amp;&amp; REG_EMAIL.test(string);
+        return typeis(string) === 'string' &amp;&amp; REG_EMAIL.test(string);
     };
 
 

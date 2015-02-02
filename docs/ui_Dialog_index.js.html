@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -124,427 +122,198 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * Dialog.js
+ * 对话框
  * @author ydr.me
- * @create 2014-10-10 22:36
+ * @create 2015-01-11 16:53
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Dialog/index
-     * @requires ui/generator
-     * @requires libs/Template
-     * @requires core/dom/modification
-     * @requires core/dom/selector
-     * @requires core/dom/attribute
-     * @requires core/dom/animation
-     * @requires core/event/touch
+     * @module ui/Dialog/
+     * @requires ui/Mask/
+     * @requires ui/Window/
+     * @requires ui/Scrollbar/
      * @requires util/dato
      * @requires util/typeis
-     *
-     * @author ydr.me
-     * @create 2014-10-04 02:33
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/event/drag
+     * @requires libs/Template
+     * @requires ui/base
      */
-
     'use strict';
 
-
-    require('../../core/event/drag.js');
-    var style = require('css!./style.css');
-    var template = require('html!./template.html');
-    var generator = require('../generator.js');
-    var Template = require('../../libs/Template.js');
-    var tpl = new Template(template);
-    var modification = require('../../core/dom/modification.js');
-    var selector = require('../../core/dom/selector.js');
-    var attribute = require('../../core/dom/attribute.js');
-    var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/touch.js');
+    var Mask = require('../Mask/');
+    var Window = require('../Window/');
+    var Scrollbar = require('../Scrollbar/');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var alienIndex = 0;
-    var zIndex = 9999;
-    var body = document.body;
-    var alienClass = 'alien-ui-dialog';
-    var scrollbarWidth = _getScrollWidth();
-    // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-    var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
+    var event = require('../../core/event/drag.js');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var style = require('css!./style.css');
+    var tpl = new Template(template);
+    var ui = require('../base.js');
+    var $body = document.body;
+    var noop = function(){
+        // ignore
+    };
     var defaults = {
-        width: 500,
+        width: 600,
         height: 'auto',
         left: 'center',
         top: 'center',
         title: '无标题对话框',
-        canDrag: true,
-        hideClose: false,
-        duration: 345,
-        easing: 'ease-in-out-back',
         addClass: '',
-        // 优先级2
+        duration: 456,
+        easing: 'ease-in-out-back',
+        canDrag: true,
+        isModal: true,
+        hideClose: false,
         remote: null,
         remoteHeight: 400,
-        // 优先级1
-        content: null,
-        // 优先级1
-        isWrap: true,
-        isModal: true
+        zIndex: null
     };
-    // 打开的对话框队列
-    var openDialogs = [];
-    var dialogsMap = {};
-    var Dialog = generator({
-        STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property [width=500] {Number|String} 对话框宽度
-             * @property [height="auto"] {Number|String} 对话框高度
-             * @property [left="center"] {Number|String} 对话框左距离，默认水平居中
-             * @property [top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
-             * @property [title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
-             * @property [canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
-             * @property [duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
-             * @property [easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
-             * @property [remote=null] {null|String} 对话框打开远程地址，优先级2
-             * @property [remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
-             * @property [content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
-             * @property [isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-             * @property [isModal=true] {Boolean} 是否模态，默认 true
-             */
-            defaults: defaults
-        },
-
-        constructor: function (ele, options) {
+    var alienIndex = 0;
+    var alienClass = 'alien-ui-dialog';
+    var Dialog = ui.create({
+        constructor: function ($content, options) {
             var the = this;
 
-            the._$ele = selector.query(ele);
-
-            if (!the._$ele.length) {
-                throw new Error('instance element is empty');
-            }
-
-            the._id = alienIndex++;
-            the._$ele = the._$ele[0];
+            the._$content = selector.query($content)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
 
-        /**
-         * 初始化
-         * @returns {Dialog}
-         * @private
-         */
         _init: function () {
             var the = this;
+            var options = the._options;
 
-            the._hasOpen = false;
-            the._zIndex = 0;
-            dialogsMap[the._id] = the;
+            if (options.isModal) {
+                the._mask = new Mask(window, {
+                    addClass: alienClass + '-bg ' + options.addClass,
+                    zIndex: options.zIndex
+                });
+                the._$mask = the._mask.getNode();
+            }
+
+            the._window = new Window(null, {
+                parentNode: options.isModal ? the._$mask : $body,
+                width: options.width,
+                height: options.height,
+                left: options.left,
+                top: options.top,
+                duration: options.duration,
+                easing: options.easing,
+                zIndex: options.zIndex
+            });
+            the._$window = the._window.getNode();
             the._initNode();
+
+            if (options.isModal) {
+                the._scrollbar = new Scrollbar(the._$window);
+            }
+
             the._initEvent();
+
+            if (options.remote) {
+                the.setRemote(options.remote);
+            }
 
             return the;
         },
 
 
-        /**
-         * 初始化节点
-         * @returns {Dialog}
-         * @private
-         */
         _initNode: function () {
             var the = this;
             var options = the._options;
-            var dialogData = {
-                hideClose: options.hideClose,
-                id: the._id,
+            var html = tpl.render({
+                id: alienIndex++,
+                windowId: the._$window.id,
                 title: options.title,
-                isWrap: options.isWrap,
-                isModal: options.isModal,
-                canDrag: options.canDrag
-            };
-            var $tpl = modification.parse(tpl.render(dialogData))[0];
-            var $bg = options.isModal ? $tpl : null;
-            var $body;
-            var $dialog = options.isModal ? selector.query('.' + alienClass, $bg)[0] : $tpl;
+                canDrag: options.canDrag,
+                hideClose: options.hideClose
+            });
+            var node = modification.parse(html)[0];
+            var nodes = selector.query('.j-flag', node);
+            var $pos = modification.create('div');
 
-            modification.insert($bg ? $bg : $dialog, body, 'beforeend');
+            the._$dialog = node;
+            the._$header = nodes[0];
+            the._$title = nodes[1];
+            the._$close = nodes[2];
+            the._$body = nodes[3];
 
-            if (options.isWrap) {
-                $dialog = $dialog ? $dialog : selector.query('.' + alienClass, $bg)[0];
-                $body = selector.query('.' + alienClass + '-body', $dialog)[0];
-            }
-
-            the._$bg = $bg;
-            the._$body = $body;
-            the._$dialog = $dialog;
-            the._$title = selector.query('.' + alienClass + '-title', $dialog)[0];
-            attribute.addClass($dialog, options.addClass);
-            modification.insert(the._$ele, $body ? $body : $dialog, 'beforeend');
+            modification.insert(the._$dialog, the._$window);
+            modification.insert($pos, the._$content, 'afterend');
+            the._$pos = $pos;
+            modification.insert(the._$content, the._$body);
         },
 
 
-        /**
-         * 初始化事件
-         * @returns {Dialog}
-         * @private
-         */
         _initEvent: function () {
             var the = this;
-            var options = the._options;
-            var $dialog = the._$dialog;
-            var $bg = the._$bg;
 
-            event.on($dialog, 'click tap', '.' + alienClass + '-close', function () {
+            if (the._mask) {
+                // esc
+                the._mask.on('esc', function () {
+                    if (the.emit('esc') !== false) {
+                        the.shake();
+                    }
+                });
+
+                // 单击背景
+                the._mask.on('hit', function () {
+                    if (the.emit('hitbg') !== false) {
+                        the.shake();
+                    }
+                });
+            }
+
+            // 对话框打开
+            the._window.on('open', function () {
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
+            });
+
+            // 点击关闭
+            event.on(the._$close, 'click', function () {
                 the.close();
             });
-
-            event.on($bg, 'click tap', function (eve) {
-                eve.stopPropagation();
-
-                if (!selector.closest(eve.target, '.' + alienClass).length) {
-                    the.shake();
-                }
-            });
-
-            if (options.isModal) {
-                event.on(window, animationendEventType, function () {
-                    attribute.removeClass(the._$dialog, alienClass + '-shake');
-                });
-            }
-        },
-
-
-        /**
-         * 打开对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        open: function (callback) {
-            var the = this;
-            var $bg = the._$bg;
-            var $dialog = the._$dialog;
-            var to;
-            var options = the._options;
-            var findIndex;
-            var dialogStyle = {
-                display: 'block',
-                visibility: 'hidden',
-            };
-            var bodyStyle = {
-                width: options.width,
-                height: options.height
-            };
-
-            if (the._hasOpen) {
-                return the;
-            }
-
-            the._hasOpen = true;
-            findIndex = openDialogs.indexOf(the._id);
-
-            if (findIndex > -1) {
-                openDialogs.splice(findIndex, 1);
-            }
-
-            openDialogs.push(the._id);
-
-            if (options.isModal) {
-                attribute.addClass(body, alienClass + '-overflow');
-            }
-
-            if (options.content || options.remote) {
-                the._$ele.innerHTML = '';
-            }
-
-            if ($bg) {
-                attribute.css($bg, {
-                    display: 'block',
-                    zIndex: ++zIndex,
-                    opacity: 0
-                });
-            } else {
-                dialogStyle.zIndex = ++zIndex;
-            }
-
-            attribute.css($dialog, dialogStyle);
-            attribute.css(the._$body, bodyStyle);
-            the._zIndex = zIndex;
-            to = the._position();
-            to.opacity = '';
-            to.transform = '';
-
-            attribute.css($dialog, {
-                opacity: 0,
-                visibility: 'visible',
-                left: to.left,
-                top: to.top,
-                scale: 0
-            });
-
-            if ($bg) {
-                animation.animate($bg, {
-                    opacity: 1
-                }, {
-                    duration: options.duration,
-                    easing: options.easing
-                });
-            }
-
-            animation.animate($dialog, to, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                the.emit('open');
-
-                if (!options.content &amp;&amp; options.remote) {
-                    the.setRemote(options.remote);
-                }
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
-
-            if (options.content) {
-                the.setContent(options.content);
-            }
-
-            return the;
-        },
-
-
-        /**
-         * 关闭对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        close: function (callback) {
-            var the = this;
-            var $bg = the._$bg;
-            var $dialog = the._$dialog;
-            var options = the._options;
-            var findModal = false;
-            var index = openDialogs.length - 2;
-            var findIndex = -1;
-
-            if (!the._hasOpen) {
-                return the;
-            }
-
-            the._hasOpen = false;
-
-            dato.each(openDialogs, function (index, id) {
-                if (id === the._id) {
-                    findIndex = index;
-                    return false;
-                }
-            });
-
-            openDialogs.splice(findIndex, 1);
-
-            for (; index >= 0; index--) {
-                if (dialogsMap[openDialogs[index]]._options.isModal) {
-                    findModal = true;
-                    break;
-                }
-            }
-
-            if (!findModal) {
-                attribute.removeClass(body, alienClass + '-overflow');
-            }
-
-            if ($bg) {
-                animation.stop($bg);
-                animation.animate($bg, {
-                    opacity: 0
-                }, {
-                    duration: options.duration,
-                    easing: options.easing
-                }, function () {
-                    attribute.css($bg, 'display', 'none');
-                });
-            }
-
-            animation.stop($dialog);
-            animation.animate($dialog, {
-                opacity: 0,
-                scale: 0
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                attribute.css($dialog, {
-                    scale: 1,
-                    display: 'none'
-                });
-                the.emit('close');
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
-
-            return the;
-        },
-
-
-        /**
-         * 重新定位对话框
-         * @param {Function} [callback] 打开之后回调
-         * @returns {Dialog}
-         */
-        position: function (callback) {
-            var the = this;
-            var options = the._options;
-            var pos = the._position();
-
-            animation.animate(the._$dialog, pos, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
-
-            return the;
         },
 
 
         /**
          * 设置对话框标题
-         * @param title {String}
+         * @param title {String} 对话框标题
          */
         setTitle: function (title) {
             var the = this;
 
-            the._options.title = title;
+            the._$title.innerHTML = title;
 
-            if (the._$title) {
-                the._$title.innerHTML = title;
-            }
+            return the;
         },
 
 
         /**
-         * 对话框添加内容，并重新定位
-         * @param content {String}
+         * 设置对话框内容
+         * @param html {String} 对话框内容
          */
-        setContent: function (content) {
+        setContent: function (html) {
             var the = this;
-            var contentType = typeis(content);
 
-            the._$ele.innerHTML = '';
-
-            if (contentType === 'string') {
-                content = modification.create('#text', content);
-            }
-
-            modification.insert(content, the._$ele, 'beforeend');
-            the.position();
+            the._$body.innerHTML = html;
+            the.resize();
 
             return the;
         },
@@ -552,25 +321,31 @@ define(function (require, exports, module) {
 
         /**
          * 对话框添加远程地址，并重新定位
-         * @param {String} url 远程地址
-         * @param {Number} [height=400] 高度
+         * @param url {String} 远程地址
          * @returns {Dialog}
          */
-        setRemote: function (url, height) {
-
+        setRemote: function (url) {
             var the = this;
             var options = the._options;
             var $iframe = modification.create('iframe', {
                 src: url,
-                'class': alienClass + '-iframe',
+                class: alienClass + '-iframe',
                 style: {
-                    height: height || options.remoteHeight
+                    height: options.remoteHeight
                 }
             });
 
-            the._$ele.innerHTML = '';
-            modification.insert($iframe, the._$ele, 'beforeend');
-            the.position();
+            the._$body.innerHTML = '';
+            $iframe.onload = function () {
+                $iframe.onload = null;
+                options.remote = null;
+                the.resize();
+            };
+            $iframe.onerror = function () {
+                $iframe.onerror = null;
+                the.resize();
+            };
+            modification.insert($iframe, the._$body, 'beforeend');
 
             return the;
         },
@@ -578,156 +353,106 @@ define(function (require, exports, module) {
 
         /**
          * 晃动对话框以示提醒
-         * @returns {Dialog}
          */
         shake: function () {
             var the = this;
 
-            if (the.shakeTimeid) {
-                the.shakeTimeid = 0;
-                clearTimeout(the.shakeTimeid);
-                attribute.removeClass(the._$dialog, alienClass + '-shake');
-            }
-
-            attribute.addClass(the._$dialog, alienClass + '-shake');
+            the._window.shake();
 
             return the;
         },
 
 
         /**
-         * 销毁对话框
-         * @param {Function} [callback] 打开之后回调
+         * 打开 dialog
+         * @param [callback] {Function} 回调
          */
-        destroy: function (callback) {
+        open: function (callback) {
             var the = this;
 
-            // 关闭对话框
-            the.close(function () {
-                // 从对话框 map 里删除
-                delete(dialogsMap[the._id]);
+            if (the._mask) {
+                the._mask.open();
+            }
 
+            the._window.open(callback);
 
-                // 将内容放到 body 里
-                modification.insert(the._$ele, body, 'beforeend');
-
-                // 移除事件监听
-                event.un(the._$dialog, 'click tap');
-                event.un(the._$bg, 'click tap');
-                event.un(the._$dialog, animationendEventType);
-
-                // 在 DOM 里删除
-                modification.remove(the._$bg);
-
-                if (typeis(callback) === 'function') {
-                    callback.call(the);
-                }
-            });
+            return the;
         },
 
 
         /**
-         * 获取对话框需要定位的终点位置
-         * @returns {Object}
-         * @private
+         * 改变 dialog 尺寸
+         * @param [size] {Object} 尺寸
+         * @param [callback] {Function} 回调
          */
-        _position: function () {
+        resize: function (size, callback) {
+            this._window.resize(size, callback);
+        },
+
+
+        /**
+         * 关闭 dialog
+         * @param [callback] {Function} 回调
+         */
+        close: function (callback) {
             var the = this;
-            var options = the._options;
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
-            var pos = {};
 
-            animation.stop(the._$dialog, true);
+            the._window.close(function () {
+                if (the._mask) {
+                    the._mask.close();
+                }
 
-            attribute.css(the._$dialog, {
-                width: options.width,
-                height: options.height
+                if (typeis.function(callback)) {
+                    callback();
+                }
             });
 
-            pos.width = attribute.outerWidth(the._$dialog);
-            pos.height = attribute.outerHeight(the._$dialog);
-
-            if (options.left === 'center') {
-                pos.left = (winW - pos.width) / 2;
-                pos.left = pos.left &lt; 0 ? 0 : pos.left;
-            } else {
-                pos.left = options.left;
-            }
-
-            if (options.top === 'center') {
-                pos.top = (winH - pos.height) * 2 / 5;
-                pos.top = pos.top &lt; 0 ? 0 : pos.top;
-            } else {
-                pos.top = options.top;
-            }
-
-            return pos;
-        }
-    });
+            return the;
+        },
 
 
-    style += '.alien-ui-dialog-overflow{padding-right:' + scrollbarWidth + 'px;}';
-    modification.importStyle(style);
+        /**
+         * 销毁实例
+         */
+        destroy: function (callback) {
+            var the = this;
 
-    event.on(document, 'keyup', function (eve) {
-        var d;
+            the._window.destroy(function () {
+                modification.insert(the._$content, the._$pos, 'afterend');
+                modification.remove(the._$pos);
+                event.un(the._$close, 'click');
+                event.un(the._$mask, 'click');
+                modification.remove(the._$dialog);
+                the._mask.destroy();
 
-        if (eve.which === 27 &amp;&amp; openDialogs.length) {
-            d = dialogsMap[openDialogs[openDialogs.length - 1]];
-
-            if (d &amp;&amp; d.constructor === Dialog) {
-                d.shake();
-            }
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
         }
     });
 
 
     /**
-     * 获取当前页面的滚动条宽度
-     * @return {Number}
-     */
-    function _getScrollWidth() {
-        var $div = modification.create('div', {
-            style: {
-                width: 100,
-                height: 100,
-                position: 'absolute',
-                padding: 0,
-                margin: 0,
-                overflow: 'scroll'
-            }
-        });
-        var clientWidth;
-
-        modification.insert($div, body, 'beforeend');
-        clientWidth = $div.clientWidth;
-        modification.remove($div);
-
-        return 100 - clientWidth;
-    }
-
-    /**
-     * 实例化一个模态交互对话框
-     *
-     * @param ele {HTMLElement|Node|String} 元素或选择器
-     * @param [options] {Object}
-     * @param [options.width=500] {Number|String} 对话框宽度
-     * @param [options.height="auto"] {Number|String} 对话框高度
-     * @param [options.left="center"] {Number|String} 对话框左距离，默认水平居中
-     * @param [options.top="center"] {Number|String} 对话框上距离，默认垂直居中（为了美观，表现为2/5处）
-     * @param [options.title="无标题对话框"] {String|null} 对话框标题，为null时将隐藏标题栏
-     * @param [options.canDrag=true] {Boolean} 对话框是否可以被拖拽，标题栏存在时拖动标题栏，否则拖拽整体
-     * @param [options.duration=345] {Number} 对话框打开、关闭的动画时间，单位毫秒
-     * @param [options.easing="ease-in-out-back"] {String} 对话框打开、关闭的动画缓冲函数
-     * @param [options.addClass=""] {String} 对话框添加的 className
-     * @param [options.remote=null] {null|String} 对话框打开远程地址，优先级2
-     * @param [options.remoteHeight=400] {Number} 对话框打开远程地址的高度，单位像素
-     * @param [options.content=null] {null|HTMLElement|Node|String} 设置对话框的内容，优先级1
-     * @param [options.isWrap=true] {Boolean} 是否自动包裹对话框来，默认 true，优先级1
-     * @constructor
+     * 实例化一个对话框
+     * @param [options] {Object} 配置
+     * @param [options.width=600] {Number} 宽度
+     * @param [options.height="auto"] {Number|String} 高度
+     * @param [options.left="center"] {Number|String} 左位移
+     * @param [options.top="center"] {Number|String} 上位移
+     * @param [options.title="无标题对话框"] {null|String} 标题，为 null 时不显示标题
+     * @param [options.addClass=""] {String} 添加的 className
+     * @param [options.duration=456] {Number} 动画时间
+     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
+     * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
+     * @param [options.isModal=true] {Boolean} 是否为模态
+     * @param [options.hideClose=false] {Boolean} 是否隐藏关闭按钮
+     * @param [options.remote=null] {null} 远程地址
+     * @param [options.remoteHeight=400] {null} 远程地址高度
+     * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */
     module.exports = Dialog;
+    modification.importStyle(style);
 });</code></pre>
 
 

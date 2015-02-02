@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -135,12 +133,14 @@ define(function (require, exports, module) {
      * @module libs/Template
      * @requires util/dato
      * @requires util/typeis
+     * @requires util/random
      * @requires util/class
      */
     'use strict';
 
     var dato = require('../util/dato.js');
     var typeis = require('../util/typeis.js');
+    var random = require('../util/random.js');
     var klass = require('../util/class.js');
     var regStringWrap = /([\\"])/g;
     var regBreakLineMac = /\n/g;
@@ -151,6 +151,8 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
     var regComments = /&lt;!--[\s\S]*?-->/g;
+    var regElseIf = /^else\s+if\s/;
+    var regHash = /^#/;
     var escapes = [
         {
             reg: /&lt;/g,
@@ -195,6 +197,14 @@ define(function (require, exports, module) {
              * @static
              */
             filters: filters,
+
+            /**
+             * 设置默认配置
+             * @param options
+             */
+            setDefaults: function (options) {
+                dato.extend(defaults, options);
+            },
 
 
             /**
@@ -242,13 +252,22 @@ define(function (require, exports, module) {
 
         /**
          * 构造函数
-         * @constructor
          * @param tmplate {String} 模板内容
          * @param [options] {Object} 模板配置
          */
         constructor: function (tmplate, options) {
-            this._options = dato.extend(!0, {}, defaults, options);
+            this._options = dato.extend(true, {}, defaults, options);
             this._init(tmplate);
+        },
+
+
+        /**
+         * 生成一个变量
+         * @returns {string}
+         * @private
+         */
+        _generatorVar: function () {
+            return 'alien_libs_template_' + random.string(20, '0aA');
         },
 
 
@@ -260,8 +279,7 @@ define(function (require, exports, module) {
          */
         _init: function (template) {
             var the = this;
-            //var options = the._options;
-            var _var = 'alienTemplateOutput_' + Date.now();
+            var _var = the._generatorVar();
             var fnStr = 'var ' + _var + '="";';
             var output = [];
             var parseTimes = 0;
@@ -345,11 +363,11 @@ define(function (require, exports, module) {
                     $1 = the._lineWrap($1);
 
                     // if abc
-                    if ($0.indexOf('if ') === 0) {
+                    if (the._hasPrefix($0, 'if')) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else if abc
-                    else if ($0.indexOf('else if ') === 0) {
+                    else if (regElseIf.test($0)) {
                         output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else
@@ -362,19 +380,35 @@ define(function (require, exports, module) {
                     }
                     // list list as key,val
                     // list list as val
-                    else if ($0.indexOf('list ') === 0) {
+                    else if (the._hasPrefix($0, 'list')) {
                         output.push(the._parseList($0) + _var + '+=' + $1 + ';');
                     }
                     // /list
                     else if ($0 === '/list') {
-                        output.push('}' + _var + '+=' + $1 + ';');
+                        output.push('}, this);' + _var + '+=' + $1 + ';');
                     }
                     // var
-                    else {
+                    else if (the._hasPrefix($0, 'var')) {
                         parseVar = the._parseVar($0);
 
                         if (parseVar) {
-                            output.push(_var + '+=' + the._parseVar($0) + '+' + $1 + ';');
+                            output.push(parseVar);
+                        }
+                    }
+                    // #
+                    else if (regHash.test($0)) {
+                        parseVar = the._parseVar($0.replace(regHash, ''));
+
+                        if (parseVar) {
+                            output.push(parseVar);
+                        }
+                    }
+                    // exp
+                    else {
+                        parseVar = the._parseExp($0);
+
+                        if (parseVar) {
+                            output.push(_var + '+=' + the._parseExp($0) + '+' + $1 + ';');
                         }
                     }
 
@@ -395,6 +429,18 @@ define(function (require, exports, module) {
 
 
         /**
+         * 判断是否包含该前缀
+         * @param str
+         * @param pre
+         * @returns {boolean}
+         * @private
+         */
+        _hasPrefix: function (str, pre) {
+            return str.indexOf(pre + ' ') === 0;
+        },
+
+
+        /**
          * 渲染数据
          * @param {Object} data 数据
          * @returns {String} 返回渲染后的数据
@@ -407,8 +453,9 @@ define(function (require, exports, module) {
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
-            var existFilters = dato.extend(!0, {}, filters, the._template.filters);
-            var self = dato.extend(!0, {}, {
+            var existFilters = dato.extend(true, {}, filters, the._template.filters);
+            var self = dato.extend(true, {}, {
+                each: dato.each,
                 escape: _escape,
                 filters: existFilters
             });
@@ -494,12 +541,24 @@ define(function (require, exports, module) {
 
 
         /**
-         * 解析变量
+         * 解析变量赋值
          * @param str
          * @returns {string}
          * @private
          */
         _parseVar: function (str) {
+            return this._parseExp(str, 'var') + ';';
+        },
+
+
+        /**
+         * 解析表达式
+         * @param str
+         * @param [pre]
+         * @returns {string}
+         * @private
+         */
+        _parseExp: function (str, pre) {
             var the = this;
             var matches = str.trim().match(regVar);
             var filters;
@@ -513,7 +572,7 @@ define(function (require, exports, module) {
             // name || "123"
             if (matches[3] &amp;&amp; matches[3].slice(0, 2) === '||') {
                 //return ret + '?' + matches[2] + ':' + matches[3].slice(2) + ')';
-                exp = 'typeof(' + exp + ')!=="undefined"?' + exp + ':' + matches[3].slice(2);
+                exp = '(typeof(' + exp + ')!=="undefined"&amp;&amp;!!' + exp + ')?' + exp + ':' + matches[3].slice(2);
             } else if (matches[3] &amp;&amp; matches[3].slice(0, 1) === '|') {
                 filters = matches[3].split('|');
                 filters.shift();
@@ -537,8 +596,11 @@ define(function (require, exports, module) {
 
             var isEscape = matches[1] !== '=';
 
-            return (isEscape ? 'this.escape(' : '(') +
-                exp + ')';
+            if (pre) {
+                return exp;
+            }
+
+            return (isEscape ? 'this.escape(' : '(') + exp + ')';
         },
 
 
@@ -568,7 +630,9 @@ define(function (require, exports, module) {
         _parseList: function (str) {
             var matches = str.trim().match(regList);
             var parse;
-
+            var randomKey1 = this._generatorVar();
+            var randomKey2 = this._generatorVar();
+            var randomVal = this._generatorVar();
 
             if (!matches) {
                 throw new Error('parse error ' + str);
@@ -576,12 +640,13 @@ define(function (require, exports, module) {
 
             parse = {
                 list: matches[1] || '',
-                key: matches[4] ? matches[2] : '$index',
+                key: matches[4] ? matches[2] : randomKey2,
                 val: matches[4] ? matches[4] : matches[2]
             };
 
-            return 'for(var ' + parse.key + ' in ' + parse.list + '){var ' +
-                parse.val + '=' + parse.list + '[' + parse.key + '];';
+            return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
+                'var ' + parse.key + ' = ' + randomKey1 + ';' +
+                'var ' + parse.val + '=' + randomVal + ';';
         },
 
 
@@ -606,28 +671,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 模板引擎&lt;br>
-     * &lt;b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误&lt;/b>&lt;br>
-     * 1. 编码输出变量&lt;br>
-     * {{data.name}}&lt;br>
-     * 2. 取消编码输出变量&lt;br>
-     * {{=data.name}}&lt;br>
-     * 3. 判断语句（&lt;code>if&lt;/code>）&lt;br>
-     * {{if data.name1}}&lt;br>
-     * {{else if data.name2}}&lt;br>
-     * {{else}}&lt;br>
-     * {{/if}}&lt;br>
-     * 4. 循环语句（&lt;code>list&lt;/code>）&lt;br>
-     * {{list list as key,val}}&lt;br>
-     * {{/list}}&lt;br>
-     * {{list list as val}}&lt;br>
-     * {{/list}}&lt;br>
-     * 5. 过滤（&lt;code>|&lt;/code>）&lt;br>
-     * 第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter&lt;br>
-     * {{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}&lt;br>
-     * 6. 反斜杠转义，原样输出&lt;br>
-     * \{{}} => {{}}&lt;br>
-     *
+     * 模板引擎
      * @param {Object} [options] 配置
      * @param {Boolean} [options.compress=true] 是否压缩，默认为 true
      * @constructor

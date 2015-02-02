@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -124,277 +122,244 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * Msg.js
+ * Msg
  * @author ydr.me
- * @create 2014-10-10 22:36
+ * @create 2015-01-12 10:47
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Msg/index
-     * @requires ui/generator
-     * @requires util/dato
-     * @requires libs/Template
-     * @requires ui/Dialog/index
-     * @requires core/event/touch
-     * @requires core/dom/selector
-     * @requires core/dom/modification
-     * @requires core/dom/attribute
+     * @module ui/Msg/
+     * @module ui/Mask/
+     * @module ui/Window/
      */
+
     'use strict';
 
-    var generator = require('../generator.js');
-    var style = require('css!./style.css');
-    var template = require('html!./template.html');
+    var Mask = require('../Mask/');
+    var Window = require('../Window/');
+    var ui = require('../base.js');
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var Template = require('../../libs/Template.js');
-    var tpl = new Template(template);
-    var Dialog = require('../Dialog/index.js');
-    var event = require('../../core/event/touch.js');
     var selector = require('../../core/dom/selector.js');
-    var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
+    var event = require('../../core/event/drag.js');
+    var template = require('html!./template.html');
+    var style = require('css!./style.css');
+    var tpl = new Template(template);
     var alienIndex = 0;
-    var $body = document.body;
     var alienClass = 'alien-ui-msg';
+    var $body = document.body;
     var defaults = {
         width: 300,
         height: 'auto',
         left: 'center',
         top: 'center',
         title: '提示',
-        content: 'Hello world!',
+        content: '提示',
         addClass: '',
         buttons: null,
         canDrag: true,
-        timeout: -1
+        isModal: true,
+        duration: 345,
+        easing: 'ease-in-out-back',
+        zIndex: null
     };
-    var mouseevent = {};
-    var Msg = generator({
-        STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property [width=300] {Number|String} 消息框宽度
-             * @property [height="auto"] {Number|String} 消息框高度
-             * @property [left="center"] {Number|String} 消息框左距离，默认水平居中
-             * @property [top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
-             * @property [title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
-             * @property [content="Hello world!"] {String} 消息框内容
-             * @property [buttons=null] {Array|null} 消息框按钮数组，如：&lt;code>["确定", "取消"]&lt;/code>
-             * @property [canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
-             * @property [timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
-             */
-            defaults: defaults
-        },
-
-
+    var Msg = ui.create({
         constructor: function (options) {
             var the = this;
 
+            if (typeis.string(options)) {
+                options = {
+                    content: options
+                };
+            }
+
             the._options = dato.extend(true, {}, defaults, options);
-            the._id = alienIndex++;
+            the._options.buttons = the._options.buttons || [];
+            the.id = alienIndex++;
             the._init();
         },
 
 
-        /**
-         * 初始化
-         * @returns {Msg}
-         * @private
-         */
         _init: function () {
             var the = this;
-            var options = the._options;
 
-            options.buttons = options.buttons || [];
-            the._wrap();
-            the._timerId = 0;
-            the._timeout();
-            the._event();
+            the._initNode();
+            the._initEvent();
+
+            if (the._mask) {
+                the._mask.open();
+            }
+
+            the._window.open();
 
             return the;
         },
 
 
-        /**
-         * 包裹
-         * @private
-         */
-        _wrap: function () {
+        _initNode: function () {
             var the = this;
             var options = the._options;
-            var msgData = {
-                title: options.title,
-                canDrag: options.canDrag,
-                buttons: options.buttons,
-                id: the._id,
-                body: options.content
-            };
-            var $msg = tpl.render(msgData);
-            var $header;
 
-            $msg = modification.parse($msg)[0];
-            modification.insert($msg, $body, 'beforeend');
+            if (options.isModal) {
+                the._mask = new Mask(window, {
+                    addClass: alienClass + '-bg ' + options.addClass,
+                    zIndex: options.zIndex
+                });
+                the._mask.__msg = the;
+                the._$mask = the._mask.getNode();
+            }
 
-            the._dialog = new Dialog($msg, {
+            the._window = new Window(null, {
+                parentNode: the._mask ? the._$mask : $body,
                 width: options.width,
                 height: options.height,
                 left: options.left,
                 top: options.top,
-                isWrap: false,
-                canDrag: false,
-                title: null,
-                addClass: options.addClass
-            }).open();
+                duration: options.duration,
+                easing: options.easing,
+                zIndex: options.zIndex
+            });
+            the._$window = the._window.getNode();
 
-            if (options.canDrag) {
-                if (options.title) {
-                    $header = selector.query('.' + alienClass + '-header', $msg)[0];
-                    attribute.attr($header, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
-                } else {
-                    attribute.attr($msg, 'draggablefor', 'alien-ui-dialog-' + the._dialog._id);
-                }
-            }
+            var html = tpl.render({
+                id: the.id,
+                title: options.title,
+                canDrag: options.canDrag,
+                windowId: the._$window.id,
+                body: options.content,
+                buttons: options.buttons
+            });
+            var node = modification.parse(html)[0];
+            var nodes = selector.query('.j-flag', node);
 
-            the._$msg = $msg;
-            the._$body = selector.query('.' + alienClass + '-body', $msg)[0];
-        },
-
-        /**
-         * 超时处理
-         * @private
-         */
-        _timeout: function () {
-            var the = this;
-            var options = the._options;
-
-            if (options.timeout > 0) {
-                if (the._timerId) {
-                    clearTimeout(the._timerId);
-                }
-
-                the._timerId = setTimeout(function () {
-                    var dialog = the._dialog._dialog;
-                    var x0 = attribute.left(dialog);
-                    var y0 = attribute.top(dialog);
-                    var x1 = x0 + attribute.outerWidth(dialog);
-                    var y1 = y0 + attribute.outerHeight(dialog);
-                    var x = mouseevent.clientX;
-                    var y = mouseevent.clientY;
-
-                    if (!(x >= x0 &amp;&amp; x &lt;= x1 &amp;&amp; y >= y0 &amp;&amp; y &lt;= y1)) {
-                        the.destroy();
-                    }
-                }, options.timeout);
-            }
+            modification.insert(node, the._$window);
+            attribute.css(the._$window, {
+                width: options.width,
+                height: options.height
+            });
+            the._$msg = node;
+            the._$header = nodes[0];
+            the._$title = nodes[1];
+            the._$close = nodes[2];
+            the._$body = nodes[3];
+            the._$buttons = nodes[4];
         },
 
 
-        /**
-         * 响应事件
-         * @private
-         */
-        _event: function () {
+        _initEvent: function () {
             var the = this;
 
-            // 点击关闭对话框
-            event.on(the._dialog._$dialog, 'click tap', '.' + alienClass + '-close', function () {
+            // 关闭 msg
+            event.on(the._$close, 'click', function () {
                 the.destroy();
-                the.emit('close', -1);
             });
 
-            // 点击按钮响应事件
-            event.on(the._dialog._$dialog, 'click tap', '.' + alienClass + '-button', function (eve) {
+            // 点击按钮
+            event.on(the._$buttons, 'click', '.j-flag', function () {
+                var index = attribute.data(this, 'index');
+
+                the.emit('close', index);
                 the.destroy();
-                the.emit('close', attribute.data(eve.target, 'index'));
             });
 
-            // 鼠标进入、离开
-            if (the._options.timeout > 0) {
-                event.on(the._dialog._$dialog, 'mouseover dragstart drag', function () {
-                    if (the._timerId) {
-                        clearTimeout(the._timerId);
-                        the._timerId = 0;
+            if (the._mask) {
+                // esc
+                the._mask.on('esc', function () {
+                    if (the.emit('esc') !== false) {
+                        the.shake();
                     }
                 });
 
-                event.on(the._dialog._$dialog, 'mouseout dragend', function () {
-                    the._timeout();
+                // hitbg
+                the._mask.on('hit', function () {
+                    if (the.emit('hitbg') !== false) {
+                        the.shake();
+                    }
                 });
             }
         },
 
 
         /**
-         * 设置对话框内容
-         * @param content
-         * @returns {Msg}
+         * 设置 Msg 标题
+         * @param title {String} 对话框标题
          */
-        setContent: function (content) {
+        setTitle: function (title) {
             var the = this;
 
-            if (content) {
-                the._$body.innerHTML = the._options.content = String(content);
-            }
+            the._$title.innerHTML = title;
 
             return the;
         },
 
 
         /**
-         * 晃动消息框，以示提醒
-         * @returns {Msg}
+         * 设置 Msg 内容
+         * @param html {String} 对话框内容
+         */
+        setContent: function (html) {
+            var the = this;
+
+            the._$body.innerHTML = html;
+            the._window.resize();
+
+            return the;
+        },
+
+        /**
+         * 震晃窗口以示提醒
          */
         shake: function () {
-            this._dialog.shake();
+            var the = this;
 
-            return this;
+            the._window.shake();
+
+            return the;
         },
 
 
         /**
-         * 销毁消息框
+         * 销毁实例
          */
         destroy: function () {
             var the = this;
 
-            // 卸载事件
-            event.un(the._dialog._dialog, 'click tap mouseover dragstart drag mouseout dragend');
+            the._window.destroy(function () {
+                event.un(the._$close, 'click');
+                event.un(the._$buttons, 'click');
+                event.un(the._$mask, 'click');
 
-            // 销毁对话框
-            the._dialog.destroy(function () {
-                // 在 DOM 里删除
-                modification.remove(the._$msg);
+                if (the._mask) {
+                    the._mask.destroy();
+                }
             });
         }
     });
 
-    modification.importStyle(style);
-
-    event.on(document, 'mousemove', function (eve) {
-        mouseevent = eve;
-    });
-
-
     /**
-     * 实例化一个临时消息框
-     *
-     * @param {Object} [options]
-     * @param [options.width=300] {Number|String} 消息框宽度
-     * @param [options.height="auto"] {Number|String} 消息框高度
-     * @param [options.left="center"] {Number|String} 消息框左距离，默认水平居中
-     * @param [options.top="center"] {Number|String} 消息框上距离，默认垂直居中（为了美观，表现为2/5处）
-     * @param [options.title="提示"] {String|null} 消息框标题，为null时将隐藏标题栏
-     * @param [options.content="Hello world!"] {String} 消息框内容
-     * @param [options.addClass=""] {String} 消息框添加的 className
-     * @param [options.buttons=null] {Array|null} 消息框按钮数组，如：&lt;code>["确定", "取消"]&lt;/code>
-     * @param [options.canDrag] {Boolean} 是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true
-     * @param [options.timeout] {Number} 消息框消失时间，默认为-1为不消失，单位 ms
-     * @constructor
+     * 实例化一个 Msg 交互框
+     * @param [options] {Object} 配置
+     * @param [options.width=300] {Number} 宽度
+     * @param [options.height="auto"] {Number|String} 高度
+     * @param [options.left="center"] {Number|String} 左位移
+     * @param [options.top="center"] {Number|String} 上位移
+     * @param [options.title="提示"] {null|String} 标题，为 null 时不显示标题
+     * @param [options.content="提示"] {String} 内容
+     * @param [options.addClass=""] {String} 添加的类
+     * @param [options.buttons=null] {null|Array} 按钮数组，如["确定"]
+     * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
+     * @param [options.isModal=true] {Boolean} 是否为模态
+     * @param [options.duration=345] {Number} 动画时间
+     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
+     * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */
     module.exports = Msg;
+    modification.importStyle(style);
 });</code></pre>
 
 

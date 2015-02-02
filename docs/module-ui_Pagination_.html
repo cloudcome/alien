@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: ui/Tooltip - Alien documents</title>
+    <title>Module: ui/Pagination/ - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -112,7 +110,7 @@
 
 <li class="">
     
-        <a class="" href="#defaults">defaults</a>
+        <a class="" href="#~defaults">defaults</a>
     
 </li>
 
@@ -120,14 +118,23 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 1</li>
+	                    <li class="sidebar-header">Methods &times; 2</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#destroy">destroy</a>
+        <a class="" href="#~destroy">destroy</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~render">render</a>
     
 </li>
 
@@ -142,7 +149,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: ui/Tooltip</h1>
+		            <h1 class="page-title">Module: ui/Pagination/</h1>
 
 		            
 
@@ -153,7 +160,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            ui/Tooltip
+            ui/Pagination/
         
     
     </h2>
@@ -166,8 +173,8 @@
             
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="module:ui/Tooltip">
-        <span class="type-signature"></span>new require(ui/Tooltip)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id="module:ui/Pagination/">
+        <span class="type-signature"></span>new require(ui/Pagination/)<span class="signature">(ele, <span class="optional">options</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -176,7 +183,7 @@
 
         
         <div class="description lead">
-            <blockquote>实例化一个 Tooltip
+            <blockquote>实例化一个分页控制器
                 
             </blockquote>
         </div>
@@ -220,13 +227,7 @@
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
-        |
-    
 &nbsp;&nbsp;<span class="param-type label label-info">Element</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -245,7 +246,7 @@
 
             
 
-            <td class="description last">参考元素或选择器</td>
+            <td class="description last">元素，生成的分页将在此渲染</td>
         </tr>
 
 	
@@ -309,7 +310,7 @@
 
         <tr>
             
-                <td class="name"><code>zIndex</code></td>
+                <td class="name"><code>max</code></td>
             
 
             <td class="type">
@@ -337,25 +338,25 @@
             
                 <td class="default">
                 
-                    9999
+                    1
                 
                 </td>
             
 
-            <td class="description last">层级</td>
+            <td class="description last">分页总数</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>placement</code></td>
+                <td class="name"><code>page</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -377,25 +378,25 @@
             
                 <td class="default">
                 
-                    "auto"
+                    1
                 
                 </td>
             
 
-            <td class="description last">所在位置，可选：top、bottom、right、left</td>
+            <td class="description last">当前分数</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>body</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -417,12 +418,12 @@
             
                 <td class="default">
                 
-                    "Hello world!"
+                    3
                 
                 </td>
             
 
-            <td class="description last">提示内容</td>
+            <td class="description last">分页可见范围</td>
         </tr>
 
 	
@@ -439,11 +440,6 @@
         
 
         
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>var tp = new Tooltip(ele, options);</code></pre>
 
         
 
@@ -467,7 +463,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-873861237196251724586612498387694" data-toggle="tab">Source</a>
+                <a href="#tab-meta-28762841317802675416201641783118" data-toggle="tab">Source</a>
             </li>
 
         
@@ -488,8 +484,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-873861237196251724586612498387694">
-                <p><a href="ui_Tooltip_index.js.html#line225">ui/Tooltip/index.js:225</a></p>
+            <div class="tab-pane active" id="tab-meta-28762841317802675416201641783118">
+                <p><a href="ui_Pagination_index.js.html#line157">ui/Pagination/index.js:157</a></p>
             </div>
 
         
@@ -537,7 +533,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-5141374864615532920223055407405" data-toggle="tab">Source</a>
+                <a href="#tab-meta-80553288618102679545908086001873" data-toggle="tab">Source</a>
             </li>
 
         
@@ -558,8 +554,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-5141374864615532920223055407405">
-                <p><a href="ui_Tooltip_index.js.html#line9">ui/Tooltip/index.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-80553288618102679545908086001873">
+                <p><a href="ui_Pagination_index.js.html#line9">ui/Pagination/index.js:9</a></p>
             </div>
 
         
@@ -580,21 +576,21 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-ui_generator.html">module:ui/generator</a></li>
+            <li><a href="module-ui_base.html">module:ui/base</a></li>
         
             <li>module:util/dato</li>
+        
+            <li><a href="module-libs_Pagination.html">module:libs/Pagination</a></li>
         
             <li><a href="module-libs_Template.html">module:libs/Template</a></li>
         
             <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
         
-            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
-        
             <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
         
-            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
+            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
         
-            <li><a href="module-core_event_base.html">module:core/event/base</a></li>
+            <li><a href="module-core_event_touch.html">module:core/event/touch</a></li>
         </ul>
     
 
@@ -610,7 +606,7 @@
                 
 <section class="docs-member ">
     <dt>
-        <h4 class="name alert alert-info" id="defaults"><span class="type-signature">&lt;inner> </span>defaults</h4>
+        <h4 class="name alert alert-info" id="~defaults"><span class="type-signature">&lt;inner> </span>defaults</h4>
 
         
     </dt>
@@ -661,7 +657,7 @@
 
         <tr>
             
-                <td class="name"><code>zIndex</code></td>
+                <td class="name"><code>max</code></td>
             
 
             <td class="type">
@@ -687,25 +683,25 @@
             
                 <td class="default">
                 
-                    9999
+                    1
                 
                 </td>
             
 
-            <td class="description last">层级</td>
+            <td class="description last">分页总数</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>placement</code></td>
+                <td class="name"><code>page</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -725,25 +721,25 @@
             
                 <td class="default">
                 
-                    "auto"
+                    1
                 
                 </td>
             
 
-            <td class="description last">所在位置，可选：top、bottom、right、left</td>
+            <td class="description last">当前分数</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>size</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -763,12 +759,12 @@
             
                 <td class="default">
                 
-                    "Hello world!"
+                    3
                 
                 </td>
             
 
-            <td class="description last">提示内容</td>
+            <td class="description last">分页可见范围</td>
         </tr>
 
 	
@@ -792,7 +788,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-19360350281931469026710873004049" data-toggle="tab">Source</a>
+                <a href="#tab-meta-44010771042667336445851416792721" data-toggle="tab">Source</a>
             </li>
 
         
@@ -813,8 +809,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-19360350281931469026710873004049">
-                <p><a href="ui_Tooltip_index.js.html#line46">ui/Tooltip/index.js:46</a></p>
+            <div class="tab-pane active" id="tab-meta-44010771042667336445851416792721">
+                <p><a href="ui_Pagination_index.js.html#line42">ui/Pagination/index.js:42</a></p>
             </div>
 
         
@@ -841,7 +837,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="destroy">
+    <h4 class="name alert alert-warning" id="~destroy">
         <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
     </h4>
 
@@ -851,7 +847,7 @@
 
         
         <div class="description lead">
-            <blockquote>销毁实例
+            <blockquote>销毁
                 
             </blockquote>
         </div>
@@ -887,7 +883,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-128971111262217165920585051644593" data-toggle="tab">Source</a>
+                <a href="#tab-meta-978710759198293126133910450153053" data-toggle="tab">Source</a>
             </li>
 
         
@@ -908,8 +904,311 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-128971111262217165920585051644593">
-                <p><a href="ui_Tooltip_index.js.html#line201">ui/Tooltip/index.js:201</a></p>
+            <div class="tab-pane active" id="tab-meta-978710759198293126133910450153053">
+                <p><a href="ui_Pagination_index.js.html#line137">ui/Pagination/index.js:137</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~render">
+        <span class="type-signature">&lt;inner> </span>render<span class="signature">(<span class="optional">data</span>)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>渲染
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">分页数据
+                <h6>Properties</h6>
+                
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">重新配置总页数，默认为上一次配置的值</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>page</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">重新配置当前页数，默认为上一次配置的值</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">重新配置可视范围，默认为上一次配置的值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Pagination</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-09048480424098673589448656421155" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-09048480424098673589448656421155">
+                <p><a href="ui_Pagination_index.js.html#line121">ui/Pagination/index.js:121</a></p>
             </div>
 
         

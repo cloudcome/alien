@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -107,14 +105,14 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 3</li>
+	                    <li class="sidebar-header">Methods &times; 4</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#addFilter">addFilter</a>
+        <a class="" href="#~addFilter">addFilter</a>
     
 </li>
 
@@ -123,7 +121,7 @@
 
 <li class="">
     
-        <a class="" href="#getFilter">getFilter</a>
+        <a class="" href="#~constructor">constructor</a>
     
 </li>
 
@@ -132,7 +130,16 @@
 
 <li class="">
     
-        <a class="" href="#render">render</a>
+        <a class="" href="#~getFilter">getFilter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~render">render</a>
     
 </li>
 
@@ -181,7 +188,7 @@
 
         
         <div class="description lead">
-            <blockquote>模板引擎<br><b>注意点：不能在模板表达式里出现开始或结束符，否则会解析错误</b><br>1. 编码输出变量<br>{{data.name}}<br>2. 取消编码输出变量<br>{{=data.name}}<br>3. 判断语句（<code>if</code>）<br>{{if data.name1}}<br>{{else if data.name2}}<br>{{else}}<br>{{/if}}<br>4. 循环语句（<code>list</code>）<br>{{list list as key,val}}<br>{{/list}}<br>{{list list as val}}<br>{{/list}}<br>5. 过滤（<code>|</code>）<br>第1个参数实际为过滤函数的第2个函数，这个需要过滤函数扩展的时候明白，详细参考下文的addFilter<br>{{data.name|filter1|filter2:"def"|filter3:"def","ghi"}}<br>6. 反斜杠转义，原样输出<br>\{{}} => {{}}<br>
+            <blockquote>模板引擎
                 
             </blockquote>
         </div>
@@ -330,7 +337,9 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>var tpl = new Template('{{name}}');tpl.render({name: 'yundanran'});// => 'yundanran'</code></pre>
+    <pre class="prettyprint"><code>var tpl = new Template('{{name}}');
+tpl.render({name: 'yundanran'});
+// => 'yundanran'</code></pre>
 
         
 
@@ -354,7 +363,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-303286469075828811631851922720671" data-toggle="tab">Source</a>
+                <a href="#tab-meta-61592265986837456685262953396887" data-toggle="tab">Source</a>
             </li>
 
         
@@ -375,8 +384,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-303286469075828811631851922720671">
-                <p><a href="libs_Template.js.html#line515">libs/Template.js:515</a></p>
+            <div class="tab-pane active" id="tab-meta-61592265986837456685262953396887">
+                <p><a href="libs_Template.js.html#line561">libs/Template.js:561</a></p>
             </div>
 
         
@@ -424,7 +433,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0011467386502772577351424221415073" data-toggle="tab">Source</a>
+                <a href="#tab-meta-50235937046818449858886485453695" data-toggle="tab">Source</a>
             </li>
 
         
@@ -445,7 +454,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0011467386502772577351424221415073">
+            <div class="tab-pane active" id="tab-meta-50235937046818449858886485453695">
                 <p><a href="libs_Template.js.html#line9">libs/Template.js:9</a></p>
             </div>
 
@@ -471,17 +480,12 @@
         
             <li><a href="module-util_typeis.html">module:util/typeis</a></li>
         
+            <li><a href="module-util_random.html">module:util/random</a></li>
+        
             <li><a href="module-util_class.html">module:util/class</a></li>
         </ul>
     
 
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-libs_Template-constructor.html">constructor</a></dt>
-            <dd></dd>
-        </dl>
     
 
     
@@ -496,7 +500,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="addFilter">
+    <h4 class="name alert alert-warning" id="~addFilter">
         <span class="type-signature">&lt;inner> </span>addFilter<span class="signature">(name, callback, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
     </h4>
 
@@ -665,7 +669,11 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>tp.addFilter('test', function(val, arg1, arg2){    // code    // 规范定义，第1个参数为上一步的值    // 后续参数自定义个数});</code></pre>
+    <pre class="prettyprint"><code>tp.addFilter('test', function(val, arg1, arg2){
+    // code
+    // 规范定义，第1个参数为上一步的值
+    // 后续参数自定义个数
+});</code></pre>
 
         
 
@@ -689,7 +697,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-9091593679040675710060098208487" data-toggle="tab">Source</a>
+                <a href="#tab-meta-92038541845977319249788871966302" data-toggle="tab">Source</a>
             </li>
 
         
@@ -710,8 +718,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-9091593679040675710060098208487">
-                <p><a href="libs_Template.js.html#line333">libs/Template.js:333</a></p>
+            <div class="tab-pane active" id="tab-meta-92038541845977319249788871966302">
+                <p><a href="libs_Template.js.html#line382">libs/Template.js:382</a></p>
             </div>
 
         
@@ -736,7 +744,194 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="getFilter">
+    <h4 class="name alert alert-warning" id="~constructor">
+        <span class="type-signature">&lt;inner> </span>constructor<span class="signature">(tmplate, <span class="optional">options</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>构造函数
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>tmplate</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">模板内容</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">模板配置</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-0417925191577523956776534819509834" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-0417925191577523956776534819509834">
+                <p><a href="libs_Template.js.html#line135">libs/Template.js:135</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~getFilter">
         <span class="type-signature">&lt;inner> </span>getFilter<span class="signature">(<span class="optional">name</span>)</span><span class="type-signature"> 
     </h4>
 
@@ -846,7 +1041,11 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>tp.getFilter();// => return all filters Objecttp.getFilter('test');// => return test filter function</code></pre>
+    <pre class="prettyprint"><code>tp.getFilter();
+// => return all filters Object
+
+tp.getFilter('test');
+// => return test filter function</code></pre>
 
         
 
@@ -870,7 +1069,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-993574192514643176967533538118" data-toggle="tab">Source</a>
+                <a href="#tab-meta-45159732946194716611788768786937" data-toggle="tab">Source</a>
             </li>
 
         
@@ -891,8 +1090,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-993574192514643176967533538118">
-                <p><a href="libs_Template.js.html#line364">libs/Template.js:364</a></p>
+            <div class="tab-pane active" id="tab-meta-45159732946194716611788768786937">
+                <p><a href="libs_Template.js.html#line413">libs/Template.js:413</a></p>
             </div>
 
         
@@ -917,7 +1116,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="render">
+    <h4 class="name alert alert-warning" id="~render">
         <span class="type-signature">&lt;inner> </span>render<span class="signature">(data)</span><span class="type-signature"> 
     </h4>
 
@@ -1036,7 +1235,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-123372837668284773204783429391682" data-toggle="tab">Source</a>
+                <a href="#tab-meta-57554094283841556654069416690618" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1057,8 +1256,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-123372837668284773204783429391682">
-                <p><a href="libs_Template.js.html#line280">libs/Template.js:280</a></p>
+            <div class="tab-pane active" id="tab-meta-57554094283841556654069416690618">
+                <p><a href="libs_Template.js.html#line328">libs/Template.js:328</a></p>
             </div>
 
         

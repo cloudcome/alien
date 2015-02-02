@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: ui/Msg/index - Alien documents</title>
+    <title>Module: ui/Scrollbar/ - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -105,29 +103,16 @@
 
 	            <ul class="nav sidebar-list">
 	                
-	                    <li class="sidebar-header">Members &times; 1</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#defaults">defaults</a>
-    
-</li>
-
-	                    
-	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 3</li>
+	                    <li class="sidebar-header">Methods &times; 9</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#destroy">destroy</a>
+        <a class="" href="#~_init">_init</a>
     
 </li>
 
@@ -136,7 +121,7 @@
 
 <li class="">
     
-        <a class="" href="#setContent">setContent</a>
+        <a class="" href="#~_scrollX">_scrollX</a>
     
 </li>
 
@@ -145,7 +130,61 @@
 
 <li class="">
     
-        <a class="" href="#shake">shake</a>
+        <a class="" href="#~_scrollY">_scrollY</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~destroy">destroy</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~scrollBottom">scrollBottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~scrollLeft">scrollLeft</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~scrollRight">scrollRight</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~scrollTop">scrollTop</a>
     
 </li>
 
@@ -160,7 +199,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: ui/Msg/index</h1>
+		            <h1 class="page-title">Module: ui/Scrollbar/</h1>
 
 		            
 
@@ -171,7 +210,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            ui/Msg/index
+            ui/Scrollbar/
         
     
     </h2>
@@ -184,8 +223,8 @@
             
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="module:ui/Msg/index">
-        <span class="type-signature"></span>new require(ui/Msg/index)<span class="signature">(<span class="optional">options</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id="module:ui/Scrollbar/">
+        <span class="type-signature"></span>new require(ui/Scrollbar/)<span class="signature">(<span class="optional">optoions</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -194,7 +233,7 @@
 
         
         <div class="description lead">
-            <blockquote>实例化一个临时消息框
+            <blockquote>实例化一个自定义滚动条
                 
             </blockquote>
         </div>
@@ -232,7 +271,7 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>optoions</code></td>
             
 
             <td class="type">
@@ -259,7 +298,7 @@
 
             
 
-            <td class="description last">
+            <td class="description last">配置
                 <h6>Properties</h6>
                 
 
@@ -296,9 +335,46 @@
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
+        
     
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    700
+                
+                </td>
+            
+
+            <td class="description last">宽度</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -325,23 +401,20 @@
                 </td>
             
 
-            <td class="description last">消息框宽度</td>
+            <td class="description last">宽度</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>height</code></td>
+                <td class="name"><code>minX</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -363,27 +436,64 @@
             
                 <td class="default">
                 
-                    "auto"
+                    30
                 
                 </td>
             
 
-            <td class="description last">消息框高度</td>
+            <td class="description last">横向滚动条最小宽度</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>left</code></td>
+                <td class="name"><code>minY</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
+        
     
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    30
+                
+                </td>
+            
+
+            <td class="description last">纵向滚动条最小宽度</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>axis</code></td>
+            
+
+            <td class="type">
+            
+                
 &nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
@@ -406,28 +516,25 @@
             
                 <td class="default">
                 
-                    "center"
+                    "y"
                 
                 </td>
             
 
-            <td class="description last">消息框左距离，默认水平居中</td>
+            <td class="description last">滚轮滚动绑定滚动条方向</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>top</code></td>
+                <td class="name"><code>speed</code></td>
             
 
             <td class="type">
             
                 
 &nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -449,28 +556,25 @@
             
                 <td class="default">
                 
-                    "center"
+                    100
                 
                 </td>
             
 
-            <td class="description last">消息框上距离，默认垂直居中（为了美观，表现为2/5处）</td>
+            <td class="description last">滚轮滚动速度，单位 px</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>title</code></td>
+                <td class="name"><code>duration</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -492,19 +596,19 @@
             
                 <td class="default">
                 
-                    "提示"
+                    456
                 
                 </td>
             
 
-            <td class="description last">消息框标题，为null时将隐藏标题栏</td>
+            <td class="description last">动画时间，单位 ms</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>cssEasing</code></td>
             
 
             <td class="type">
@@ -532,12 +636,52 @@
             
                 <td class="default">
                 
-                    "Hello world!"
+                    "in-out"
                 
                 </td>
             
 
-            <td class="description last">消息框内容</td>
+            <td class="description last">CSS 动画缓冲类型</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>jsEasing</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "iswing"
+                
+                </td>
+            
+
+            <td class="description last">JS 动画缓冲类型</td>
         </tr>
 
 	
@@ -577,23 +721,20 @@
                 </td>
             
 
-            <td class="description last">消息框添加的 className</td>
+            <td class="description last">额外添加的 className</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>buttons</code></td>
+                <td class="name"><code>isStandAlone</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -615,88 +756,12 @@
             
                 <td class="default">
                 
-                    null
+                    false
                 
                 </td>
             
 
-            <td class="description last">消息框按钮数组，如：<code>["确定", "取消"]</code></td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>canDrag</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>timeout</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">消息框消失时间，默认为-1为不消失，单位 ms</td>
+            <td class="description last">是否为独立区域，独立区域即在滚动超过边际时不会释放对滚轮的阻止</td>
         </tr>
 
 	
@@ -736,7 +801,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-78525120043195784439259029459208" data-toggle="tab">Source</a>
+                <a href="#tab-meta-50872360682114967296391259878874" data-toggle="tab">Source</a>
             </li>
 
         
@@ -757,8 +822,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-78525120043195784439259029459208">
-                <p><a href="ui_Msg_index.js.html#line272">ui/Msg/index.js:272</a></p>
+            <div class="tab-pane active" id="tab-meta-50872360682114967296391259878874">
+                <p><a href="ui_Scrollbar_index.js.html#line654">ui/Scrollbar/index.js:654</a></p>
             </div>
 
         
@@ -806,7 +871,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-37307407497428363502480073366314" data-toggle="tab">Source</a>
+                <a href="#tab-meta-952871467918157609687226917594671" data-toggle="tab">Source</a>
             </li>
 
         
@@ -827,8 +892,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-37307407497428363502480073366314">
-                <p><a href="ui_Msg_index.js.html#line9">ui/Msg/index.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-952871467918157609687226917594671">
+                <p><a href="ui_Scrollbar_index.js.html#line9">ui/Scrollbar/index.js:9</a></p>
             </div>
 
         
@@ -849,21 +914,25 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-ui_generator.html">module:ui/generator</a></li>
+            <li><a href="module-ui_base.html">module:ui/base</a></li>
         
             <li>module:util/dato</li>
         
             <li><a href="module-libs_Template.html">module:libs/Template</a></li>
-        
-            <li><a href="module-ui_Dialog_index.html">module:ui/Dialog/index</a></li>
-        
-            <li><a href="module-core_event_touch.html">module:core/event/touch</a></li>
         
             <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
         
             <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
         
             <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
+        
+            <li><a href="module-core_event_wheel.html">module:core/event/wheel</a></li>
+        
+            <li><a href="module-core_event_drag.html">module:core/event/drag</a></li>
+        
+            <li><a href="module-core_event_touch.html">module:core/event/touch</a></li>
         </ul>
     
 
@@ -871,477 +940,6 @@
 
     
 
-    
-        <section id="docs-members">
-            <h3 class="subsection-title">Members</h3>
-
-            <dl>
-                
-<section class="docs-member ">
-    <dt>
-        <h4 class="name alert alert-info" id="defaults"><span class="type-signature">&lt;inner> </span>defaults</h4>
-
-        
-    </dt>
-    <dd>
-        
-        <div class="description lead">
-            <blockquote>
-                默认配置
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-        <h5 class="subsection-title">Properties:</h5>
-
-        <dl>
-
-<table class="props table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-		<th>Argument</th>
-		
-
-		
-		<th>Default</th>
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    300
-                
-                </td>
-            
-
-            <td class="description last">消息框宽度</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "auto"
-                
-                </td>
-            
-
-            <td class="description last">消息框高度</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>left</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "center"
-                
-                </td>
-            
-
-            <td class="description last">消息框左距离，默认水平居中</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>top</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "center"
-                
-                </td>
-            
-
-            <td class="description last">消息框上距离，默认垂直居中（为了美观，表现为2/5处）</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "提示"
-                
-                </td>
-            
-
-            <td class="description last">消息框标题，为null时将隐藏标题栏</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "Hello world!"
-                
-                </td>
-            
-
-            <td class="description last">消息框内容</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>buttons</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
-        |
-    
-&nbsp;&nbsp;<span class="param-type label label-info">null</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">消息框按钮数组，如：<code>["确定", "取消"]</code></td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>canDrag</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">是否允许拖拽，标题存在时拖拽标题，否则为自身，默认 true</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>timeout</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">消息框消失时间，默认为-1为不消失，单位 ms</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-</dl>
-
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-0008862279355525973633032364305109" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-0008862279355525973633032364305109">
-                <p><a href="ui_Msg_index.js.html#line51">ui/Msg/index.js:51</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-    </dd>
-</section>
-
-            </dl>
-        </section>
     
 
     
@@ -1352,7 +950,340 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="destroy">
+    <h4 class="name alert alert-warning" id="~_init">
+        <span class="type-signature">&lt;inner> </span>_init<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>初始化
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-75160269648768014670527055859566" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-75160269648768014670527055859566">
+                <p><a href="ui_Scrollbar_index.js.html#line90">ui/Scrollbar/index.js:90</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~_scrollX">
+        <span class="type-signature">&lt;inner> </span>_scrollX<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>x 轴滚动
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-92126024258323014641762338578701" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-92126024258323014641762338578701">
+                <p><a href="ui_Scrollbar_index.js.html#line495">ui/Scrollbar/index.js:495</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~_scrollY">
+        <span class="type-signature">&lt;inner> </span>_scrollY<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>y 轴滚动
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-99197823693975816484132600016892" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-99197823693975816484132600016892">
+                <p><a href="ui_Scrollbar_index.js.html#line550">ui/Scrollbar/index.js:550</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~destroy">
         <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
     </h4>
 
@@ -1362,7 +1293,7 @@
 
         
         <div class="description lead">
-            <blockquote>销毁消息框
+            <blockquote>销毁实例
                 
             </blockquote>
         </div>
@@ -1398,7 +1329,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-430923878680914640004156737122684717" data-toggle="tab">Source</a>
+                <a href="#tab-meta-002135985763743519803115084394812584" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1419,8 +1350,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-430923878680914640004156737122684717">
-                <p><a href="ui_Msg_index.js.html#line235">ui/Msg/index.js:235</a></p>
+            <div class="tab-pane active" id="tab-meta-002135985763743519803115084394812584">
+                <p><a href="ui_Scrollbar_index.js.html#line605">ui/Scrollbar/index.js:605</a></p>
             </div>
 
         
@@ -1445,8 +1376,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="setContent">
-        <span class="type-signature">&lt;inner> </span>setContent<span class="signature">(content)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="~resize">
+        <span class="type-signature">&lt;inner> </span>resize<span class="signature">()</span><span class="type-signature"> 
     </h4>
 
     
@@ -1455,7 +1386,7 @@
 
         
         <div class="description lead">
-            <blockquote>设置对话框内容
+            <blockquote>更新当前框架尺寸
                 
             </blockquote>
         </div>
@@ -1464,50 +1395,6 @@
         
 
         
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-	
-	</tbody>
-</table>
 
         
 
@@ -1520,7 +1407,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Msg</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -1553,7 +1440,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4392680081073195391821131343022" data-toggle="tab">Source</a>
+                <a href="#tab-meta-59214925346896053380177596118301" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1574,8 +1461,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4392680081073195391821131343022">
-                <p><a href="ui_Msg_index.js.html#line210">ui/Msg/index.js:210</a></p>
+            <div class="tab-pane active" id="tab-meta-59214925346896053380177596118301">
+                <p><a href="ui_Scrollbar_index.js.html#line152">ui/Scrollbar/index.js:152</a></p>
             </div>
 
         
@@ -1600,8 +1487,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="shake">
-        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="~scrollBottom">
+        <span class="type-signature">&lt;inner> </span>scrollBottom<span class="signature">()</span><span class="type-signature"> 
     </h4>
 
     
@@ -1610,7 +1497,7 @@
 
         
         <div class="description lead">
-            <blockquote>晃动消息框，以示提醒
+            <blockquote>滚动都底部
                 
             </blockquote>
         </div>
@@ -1631,7 +1518,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Msg</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
         
     
 </td>
@@ -1664,7 +1551,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-53553672600537543050120964180678" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6543199487496167770186121808365" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1685,8 +1572,341 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-53553672600537543050120964180678">
-                <p><a href="ui_Msg_index.js.html#line225">ui/Msg/index.js:225</a></p>
+            <div class="tab-pane active" id="tab-meta-6543199487496167770186121808365">
+                <p><a href="ui_Scrollbar_index.js.html#line590">ui/Scrollbar/index.js:590</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~scrollLeft">
+        <span class="type-signature">&lt;inner> </span>scrollLeft<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>滚动左边缘
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-229945490835234523931385846808553" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-229945490835234523931385846808553">
+                <p><a href="ui_Scrollbar_index.js.html#line518">ui/Scrollbar/index.js:518</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~scrollRight">
+        <span class="type-signature">&lt;inner> </span>scrollRight<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>滚动到右边缘
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-5016088588163257340584242483601" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-5016088588163257340584242483601">
+                <p><a href="ui_Scrollbar_index.js.html#line534">ui/Scrollbar/index.js:534</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~scrollTop">
+        <span class="type-signature">&lt;inner> </span>scrollTop<span class="signature">()</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>滚动到顶部
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Scrollbar</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-262378735933452846634631557390094" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-262378735933452846634631557390094">
+                <p><a href="ui_Scrollbar_index.js.html#line573">ui/Scrollbar/index.js:573</a></p>
             </div>
 
         
