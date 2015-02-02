@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
     var typeis = require('./typeis.js');
     var udf;
-    var canListTypeArr = 'array object nodelist htmlcollection'.split(' ');
+    var canListTypeArr = 'array object nodelist htmlcollection arguments'.split(' ');
     var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
     var REG_STRING_FIX = /[.*+?^=!:${}()|[\]\/\\]/g;
 
@@ -144,7 +144,7 @@ define(function (require, exports, module) {
 
     /**
      * 转换对象为一个纯数组，只要对象有length属性即可
-     * @param {Object} [data] 对象
+     * @param {Object} [obj] 对象
      * @param {Boolean} [isConvertWhole] 是否转换整个对象为数组中的第0个元素，当该对象无length属性时，默认false
      * @returns {Array}
      *

@@ -17,9 +17,9 @@ define(function (require, exports, module) {
 
     /**
      * getset 转换器
-     * @param getset
-     * @param args
-     * @param setLength
+     * @param getset {{get: Function, set: Function}} 获取与设置的 Map
+     * @param args {Object} 参数
+     * @param [setLength=2] 设置行为的参数个数
      * @returns {*}
      */
     exports.getset = function (getset, args, setLength) {
