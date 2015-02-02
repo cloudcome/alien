@@ -15,18 +15,33 @@ define(function (require, exports) {
 
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
+    var allocation = require('../../util/allocation.js');
     var defaults = {
         // 是否以严格模式读取和设置cookie，默认true
         // 严格模式下，将在读之后、写之前都会进行<code>encodeURIComponent</code>、<code>decodeURIComponent</code>操作
         isStrict: true,
         // 在无域名的时候，必须设置为空才能在本地写入
-        domain: location.hostname || '',
+        domain: location.hostname === 'localhost' ? '' : location.hostname,
         // 默认cookie有效期1个小时（单位秒）
         expires: 3600,
         // 默认cookie存储路径
         path: '/',
         // 是否加密cookie
         secure: false
+    };
+    var cookie = function (key, val, options, isGet) {
+        var args = dato.toArray(arguments);
+
+        options = dato.extend(true, {}, defaults, options);
+        args.pop();
+        return allocation.getset({
+            get: function (key) {
+                return _parse(options.isStrict)[key];
+            },
+            set: function (key, val) {
+                _set(key, val, options);
+            }
+        }, args);
     };
 
     /**
@@ -37,11 +52,7 @@ define(function (require, exports) {
      * @returns {String|Object}
      */
     exports.get = function (key, options) {
-        options = dato.extend(true, {}, defaults, options);
-
-        var ret = _parse(options.isStrict);
-
-        return key ? ret[key] : ret;
+        return cookie(key, undefined, options);
     };
 
 
@@ -55,52 +66,9 @@ define(function (require, exports) {
      * @param [options.expires=3600] {Number} 默认为3600，单位s
      * @param [options.path="/"] {String} 路径
      * @param [options.secure=false] {Boolean} 是否加密
-     * @returns {Boolean} true
      */
     exports.set = function (key, val, options) {
-        var arg0Type = typeis(arguments[0]);
-        var setMap = {};
-
-        if (arg0Type === 'string') {
-            setMap[key] = val;
-            options = dato.extend(true, {}, defaults, options);
-        } else {
-            setMap = key;
-            options = dato.extend(true, {}, defaults, val);
-        }
-
-        if (options.domain === 'localhost') {
-            options.domain = '';
-        }
-
-        dato.each(setMap, function (key, val) {
-            if (options.isStrict) {
-                key = _encode(key);
-                val = _encode(val);
-            }
-
-            var d = new Date();
-            var ret = [key + '=' + val];
-
-            d.setTime(d.getTime() + options.expires * 1000);
-            ret.push('expires=' + d.toUTCString());
-
-            if (options.path) {
-                ret.push('path=' + options.path);
-            }
-
-            if (options.domain) {
-                ret.push('domain=' + options.domain);
-            }
-
-            if (options.secure) {
-                ret.push('secure=secure');
-            }
-
-            document.cookie = ret.join(';') + ';';
-        });
-
-        return true;
+        cookie(key, val, options);
     };
 
 
@@ -129,8 +97,9 @@ define(function (require, exports) {
             expires: -1
         });
 
-        return this.set(map, options);
+        return exports.set(map, options);
     };
+
 
     /**
      * 解析当前 cookie
@@ -154,6 +123,41 @@ define(function (require, exports) {
         });
 
         return ret;
+    }
+
+
+    /**
+     * 设置 cookie
+     * @param key
+     * @param val
+     * @param options
+     * @private
+     */
+    function _set(key, val, options) {
+        if (options.isStrict) {
+            key = _encode(key);
+            val = _encode(val);
+        }
+
+        var d = new Date();
+        var ret = [key + '=' + val];
+
+        d.setTime(d.getTime() + options.expires * 1000);
+        ret.push('expires=' + d.toUTCString());
+
+        if (options.path) {
+            ret.push('path=' + options.path);
+        }
+
+        if (options.domain) {
+            ret.push('domain=' + options.domain);
+        }
+
+        if (options.secure) {
+            ret.push('secure=secure');
+        }
+
+        document.cookie = ret.join(';') + ';';
     }
 
     /**

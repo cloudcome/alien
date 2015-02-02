@@ -6,7 +6,22 @@
 
 
 define(function (require, exports, module) {
-    "use strict";
+    /**
+     * Banner
+     *
+     * @module ui/Banner/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/event/touch
+     * @requires ui/base
+     * @requires util/dato
+     * @requires util/typeis
+     * @requires util/controller
+     */
+
+     "use strict";
 
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -16,7 +31,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var dato = require('../../util/dato.js');
     var typeis = require('../../util/typeis.js');
-    var control = require('../../util/control.js');
+    var controller = require('../../util/controller.js');
     var alienClass = 'alien-ui-banner';
     var alienIndex = 0;
     var defaults = {
@@ -215,7 +230,7 @@ define(function (require, exports, module) {
             }
         });
 
-        control.nextTick(function () {
+        controller.nextTick(function () {
             the.emit('change', the._showIndex);
         });
     };

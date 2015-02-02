@@ -1,5 +1,5 @@
 /*!
- * 执行控制
+ * 控制器
  * @author ydr.me
  * @create 2014-12-20 16:42
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/control
+     * @module util/controller
      */
     'use strict';
 
@@ -21,7 +21,7 @@ define(function (require, exports, module) {
      * @returns {Function}
      *
      * @example
-     * window.onscroll = control.throttle(function(){
+     * window.onscroll = controller.throttle(function(){
      *    // 至少需要间隔 123ms 后执行
      * });
      */
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
      * @returns {Function}
      *
      * @example
-     * window.onscroll = control.debounce(function(){
+     * window.onscroll = controller.debounce(function(){
      *    // 只在最后一次触发的 123ms 后执行
      * });
      */
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
      * @returns {Function}
      *
      * @example
-     * document.onclick = control.once(function(){
+     * document.onclick = controller.once(function(){
      *     // 最多执行 1 次
      * });
      */
@@ -122,7 +122,7 @@ define(function (require, exports, module) {
      * @returns {Function}
      *
      * @example
-     * document.onclick = control.toggle(fn1, fn2, fn3);
+     * document.onclick = controller.toggle(fn1, fn2, fn3);
      * // 第 1 次执行 fn1
      * // 第 2 次执行 fn2
      * // 第 3 次执行 fn3
