@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      * @requires util/typeis
      * @requires util/date
      * @requires util/random
+     * @requires util/controller
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -36,9 +37,9 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
-    var control = require('../../util/control.js');
-    var Autoheight = require('../Autoheight/index.js');
-    var Dialog = require('../Dialog/index.js');
+    var controller = require('../../util/controller.js');
+    var Autoheight = require('../Autoheight/');
+    var Dialog = require('../Dialog/');
     var Msg = require('../Msg/index.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
@@ -128,7 +129,7 @@ define(function (require, exports, module) {
                     the._storeId = options.id;
                 }
             });
-            control.nextTick(the._initVal, the);
+            controller.nextTick(the._initVal, the);
 
             return the;
         },
@@ -381,9 +382,9 @@ define(function (require, exports, module) {
                 clearTimeout(the._timerId);
             }
 
-            window[requestAnimationFrame](function () {
-                the._autoheight.resize();
-            });
+            the._timerId = setTimeout(function () {
+                the._autoheight.resize.call(the._autoheight);
+            }, 60);
         },
 
 
@@ -654,7 +655,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            control.nextTick(the._autoheight.resize, the)
+            controller.nextTick(the._autoheight.resize, the._autoheight);
         },
 
         /**

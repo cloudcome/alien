@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module ui/Scrollbar/
      * @requires ui/base
      * @requires util/dato
+     * @requires util/controller
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -25,7 +26,7 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
-    var control = require('../../util/control.js');
+    var controller = require('../../util/controller.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
@@ -316,7 +317,7 @@ define(function (require, exports, module) {
 
             if (isPlaceholderScroll) {
                 // 更新内容尺寸
-                event.on(the._$ele, updateEvent, control.debounce(the.resize.bind(the)));
+                event.on(the._$ele, updateEvent, controller.debounce(the.resize.bind(the)));
 
                 // 自身滚动
                 event.on($scroll, 'scroll', the._onscroll.bind(the));
@@ -421,7 +422,7 @@ define(function (require, exports, module) {
                     return false;
                 });
 
-                event.on(window, 'resize', the._onresize = control.debounce(the.resize.bind(the)));
+                event.on(window, 'resize', the._onresize = controller.debounce(the.resize.bind(the)));
             } else {
                 event.on($scroll, 'scroll', function () {
                     if (the._scrollLeft !== $scroll.scrollLeft) {
