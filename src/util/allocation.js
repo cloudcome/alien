@@ -28,7 +28,7 @@ define(function (require, exports, module) {
         var argl = args.length;
         var ret = {};
         var i = argl;
-        
+
         while(i--){
             if(args[i] === undefined){
                 argl--;
