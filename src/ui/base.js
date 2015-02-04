@@ -38,8 +38,7 @@ define(function (require, exports, module) {
      * @param property {Object}
      * @property property.constructor {Function} 构造函数
      * @property [property.STATIC={}] {Object} 静态属性、方法，可以为空
-     * @param [superConstructor=null] {Function} 父类
-     * @param [isInheritStatic=false] {Boolean} 是否继承父类的静态方法
+     * @param [isInheritSuperStatic=false] {Boolean} 是否继承父类的静态方法
      *
      * @example
      * var Dialog = ui({

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2014-10-31 10:59
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Animation.html</title>
+    <style>
+        button{
+            padding: 10px 20px;
+        }
+        
+        .demo{
+            width: 100px;
+            height: 100px;
+            color: #fff;
+            font-size: 60px;
+            line-height: 100px;
+            text-align: center;
+        }
+        
+        #demo1{
+            background: #d43f3a;            
+        }
+
+        #demo2{
+            background: #43d475;
+        }
+
+        #demo3{
+            background: #4850d4;
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+<button id="start">开始3次重复动画</button>
+<button id="pause">暂停动画</button>
+<button id="stop">停止动画</button>
+
+<p id="ret"></p>
+
+<div id="demo1" class="demo">1</div>
+<div id="demo2" class="demo">2</div>
+<div id="demo3" class="demo">3</div>
+
+<script src="../coolie.min.js" data-main="./libs/Animation.js"></script>
+<script src="../coolie-config.js"></script>
+
+</body>
+</html>

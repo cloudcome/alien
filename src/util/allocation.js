@@ -21,6 +21,31 @@ define(function (require, exports, module) {
      * @param args {Object} 参数
      * @param [setLength=2] 设置行为的参数个数
      * @returns {*}
+     * 
+     * @example
+     * var fn = function(key, val){
+     *     return allocation.getset({
+     *         get: function(key){
+     *             return 'get ' + key;
+     *         },
+     *         set: function(key, val){
+     *             console.log('set ' + key + ' = ' + val);
+     *         }
+     *     }, arguments);
+     * };
+     * 
+     * fn('a');
+     * // => "get a"
+     *
+     * fn(['a', 'b']);
+     * // => {a: "get a", b: "get b"}
+     *
+     * fn('a', 1);
+     * // => set a = 1
+     *
+     * fn({a: 1, b: 2});
+     * // => set a = 1
+     * // => set b = 2
      */
     exports.getset = function (getset, args, setLength) {
         setLength = setLength || 2;
