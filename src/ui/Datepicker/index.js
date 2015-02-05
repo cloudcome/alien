@@ -20,6 +20,7 @@ define(function (require, exports, module) {
     var Template = require('../../libs/Template.js');
     var ui = require('../base.js');
     var html = require('html!./template.html');
+    var style = require('css!./style.css');
     var tpl = new Template(html);
     var alienClass = 'alien-ui-datepicker';
     var alienIndex = 0;
@@ -89,4 +90,5 @@ define(function (require, exports, module) {
     };
 
     module.exports = Datepicker;
+    modification.importStyle(style);
 });
