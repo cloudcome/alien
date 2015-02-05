@@ -26,30 +26,50 @@
         }
         
         .demo{
+            position: absolute;
             width: 100px;
             height: 100px;
             color: #fff;
             font-size: 60px;
             line-height: 100px;
             text-align: center;
+            opacity: 0;
         }
         
         #demo1{
-            background: #d43f3a;            
+            background: #d43f3a;
+            top: 100px;
+            left: 200px;
         }
 
         #demo2{
             background: #43d475;
+            top: 200px;
+            left: 300px;
         }
 
         #demo3{
             background: #4850d4;
+            top: 300px;
+            left: 200px;
+        }
+
+        #demo4{
+            background: #26b7d4;
+            left: 100px;
+            top: 200px;
+        }
+
+        #demo5{
+            background: #d4a81f;
+            left: 200px;
+            top: 200px;
         }
     </style>
 </head>
 <body ontouchstart="">
 
-<button id="start">开始3次重复动画</button>
+<button id="start">开始动画</button>
 <button id="pause">暂停动画</button>
 <button id="stop">停止动画</button>
 
@@ -58,6 +78,8 @@
 <div id="demo1" class="demo">1</div>
 <div id="demo2" class="demo">2</div>
 <div id="demo3" class="demo">3</div>
+<div id="demo4" class="demo">4</div>
+<div id="demo5" class="demo">5</div>
 
 <script src="../coolie.min.js" data-main="./libs/Animation.js"></script>
 <script src="../coolie-config.js"></script>

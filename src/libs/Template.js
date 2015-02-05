@@ -26,7 +26,8 @@ define(function (require, exports, module) {
     var regFilter = /^(.*?)(\s*:\s*(.+)\s*)?$/;
     var regIf = /^((else\s+)?if)\s+(.*)$/;
     var regSpace = /\s+/g;
-    var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
+    //var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
+    var regList = /^list\s+([^,]*)\s+as\s+([^,]*)(\s*,\s*([^,]*))?$/;
     var regComments = /<!--[\s\S]*?-->/g;
     var regElseIf = /^else\s+if\s/;
     var regHash = /^#/;

@@ -8,6 +8,12 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Animation
+     * @requires util/class
+     * @requires util/howdo
+     * @requires util/typeis
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/animation
      */
     'use strict';
 
@@ -72,9 +78,9 @@ define(function (require, exports, module) {
     };
 
 
-    pro.index = function (index) {
-
-    };
+    //pro.index = function (index) {
+    //
+    //};
 
 
     /**
@@ -113,14 +119,14 @@ define(function (require, exports, module) {
             });
     };
 
-    pro.pause = function () {
-
-    };
-
-
-    pro.stop = function () {
-
-    };
+    //pro.pause = function () {
+    //
+    //};
+    //
+    //
+    //pro.stop = function () {
+    //
+    //};
 
 
     /**
