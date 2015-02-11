@@ -37,12 +37,24 @@
             padding: 20px;
             margin: 10px;
         }
+
+        #fixed{
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        button{
+            padding: 10px 20px;
+        }
     </style>
 </head>
 <body ontouchstart="">
 
-<button id="btn1">打开 #demo window</button>
-<button id="btn3">随机 resize #demo window</button>
+<div id="fixed">
+    <button id="btn1">打开 #demo window</button>
+    <button id="btn3">随机 resize #demo window</button>
+</div>
 
 <div id="demo">
     <h1>#demo</h1>
