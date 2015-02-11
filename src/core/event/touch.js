@@ -109,16 +109,21 @@ define(function (require, exports, module) {
         // .on(body, 'click', fn);
         if (typeis(args[2]) === 'function') {
             listener = args[2];
+            
             dato.each(eventTypes, function (index, etype) {
                 if(touchEvents.indexOf(etype) === -1){
-                    oldOn($ele, etype, listener);
+                    oldOn($ele, etype, listener, isCapture);
                 }
             });
         }
         // delegate
         // .on(body, 'click', 'p', fn)
         else if (typeis(listener) === 'function') {
-            //
+            dato.each(eventTypes, function (index, etype) {
+                if(touchEvents.indexOf(etype) === -1){
+                    oldOn($ele, etype, selector, listener, isCapture);
+                }
+            });
         }
     };
     
