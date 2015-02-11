@@ -98,6 +98,7 @@ define(function (require, exports, module) {
             exports.stop(ele);
         }
 
+        options = dato.extend({}, cssDefaults, options);
         animationMap[id] = to;
         callback = args[argL - 1];
 
