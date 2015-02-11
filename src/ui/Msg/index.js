@@ -104,7 +104,8 @@ define(function (require, exports, module) {
                 top: options.top,
                 duration: options.duration,
                 easing: options.easing,
-                zIndex: options.zIndex
+                zIndex: options.zIndex,
+                addClass: options.isModal ? '' : options.addClass
             });
             the._$window = the._window.getNode();
 
