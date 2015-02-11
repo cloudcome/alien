@@ -27,7 +27,8 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var ui = require('../base.js');
     var alienIndex = 0;
-    var alienClass = 'alien-ui-window';
+    var alienBaseClass = 'alien-ui';
+    var alienClass = alienBaseClass + '-window';
     var noop = function () {
         // ignore
     };
@@ -94,10 +95,12 @@ define(function (require, exports, module) {
             var winH = attribute.height(window);
             var pos = {};
             var pre = attribute.css(the._$window, ['width', 'height']);
+            var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
             attribute.css(the._$window, {
                 width: options.width,
-                height: options.height
+                height: options.height,
+                position: hasMask ? 'absolute' : 'fixed'
             });
             pos.width = attribute.outerWidth(the._$window);
             pos.height = attribute.outerHeight(the._$window);
