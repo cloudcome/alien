@@ -33,10 +33,14 @@ define(function (require, exports, module) {
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
     var controller = require('../../util/controller.js');
+    var typeis = require('../../util/typeis.js');
+    var dato = require('../../util/dato.js');
+    var domSelector = require('../../core/dom/selector.js');
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';
     var touchcancel = 'touchcancel MSPointerCancel pointercancel';
+    var touchEvents = ['tap', 'taphold'];
     var udf;
     var options = {
         //minX: 30,
@@ -87,233 +91,36 @@ define(function (require, exports, module) {
      * @property tapholdTimeid {Number} 长触定时器
      */
     var touch = {};
+    var regSpace = /\s+/g;
+    var oldOn = event.on;
+    
+    event.on = function ($ele, eventType, selector, listener, isCapture) {
+        var args = arguments;
+        var argL = args.length;
+        var eventTypes = String(eventType).trim().split(regSpace);
+        
+        isCapture = args[argL - 1];
 
-
-    event.on(document, touchstart, function (eve) {
-        if (!eve.touches || eve.touches.length !== 1) {
-            return;
+        if (typeis(isCapture) !== 'boolean') {
+            isCapture = false;
         }
-
-        cssTouch = attribute.css(document.body, ['touch-callout', 'user-select']);
-        attribute.css(document.body, {
-            'touch-callout': 'none',
-            'user-select': 'none'
-        });
-
-        var firstTouch = eve.touches[0];
-
-        _reset('taphold');
-        touch = {
-            lastTime: touch.lastTime
-        };
-        touch.startX = firstTouch.pageX;
-        touch.startY = firstTouch.pageY;
-        touch.startTime = eve.timeStamp || Date.now();
-        touch.startID = firstTouch.identifier;
-        touch.startTarget = firstTouch.target;
-
-        var touch1startEvent = event.create('touch1start');
-
-        event.extend(touch1startEvent, firstTouch, touch);
-
-        var dispatchTouch1start = event.dispatch(touch.startTarget, touch1startEvent);
-
-        if (dispatchTouch1start && dispatchTouch1start.defaultPrevented === true) {
-            eve.preventDefault();
-        }
-
-        touch.tapholdTimeid = setTimeout(function () {
-            var tapholdEvent = event.create('taphold');
-
-            touch.tapholdTimeid = 0;
-            event.extend(tapholdEvent, firstTouch, touch);
-
-            var dispatchTaphold = event.dispatch(touch.startTarget, tapholdEvent);
-
-            if (dispatchTaphold && dispatchTaphold.defaultPrevented === true) {
-                eve.preventDefault();
-            }
-        }, options.taphold.timeout);
-    });
-
-    event.on(document, touchmove, function (eve) {
-        if (!eve.touches || eve.touches.length !== 1) {
-            return;
-        }
-
-        var firstTouch = eve.touches[0];
-
-        touch.moveX = firstTouch.pageX;
-        touch.moveY = firstTouch.pageY;
-        touch.moveTime = eve.timeStamp || Date.now();
-        touch.moveID = firstTouch.identifier;
-        touch.moveTarget = firstTouch.target;
-        touch.changedX = touch.moveX - touch.startX;
-        touch.changedY = touch.moveY - touch.startY;
-        touch.deltaX = Math.abs(touch.changedX);
-        touch.deltaY = Math.abs(touch.changedY);
-        touch.moveDirection = _calDirection();
-
-        // 移动距离大于 taphold
-        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y) {
-            _reset('taphold');
-        }
-
-        var touch1moveEvent = event.create('touch1move');
-
-        event.extend(touch1moveEvent, firstTouch, touch);
-
-        var dispatchTouch1move = event.dispatch(touch.startTarget, touch1moveEvent);
-
-        if (dispatchTouch1move && dispatchTouch1move.defaultPrevented === true) {
-            eve.preventDefault();
-        }
-    });
-
-    event.on(document, touchend, function (eve) {
-        if (!eve.changedTouches || eve.changedTouches.length !== 1) {
-            return;
-        }
-
-        var firstTouch = eve.changedTouches[0];
-
-        touch.moveTime = touch.moveTime === udf ? touch.startTime : touch.moveTime;
-        touch.moveX = touch.moveX === udf ? touch.startX : touch.moveX;
-        touch.moveY = touch.moveY === udf ? touch.startY : touch.moveY;
-        touch.moveID = touch.moveID === udf ? touch.startID : touch.moveID;
-        touch.moveTarget = touch.moveTarget === udf ? touch.startTarget : touch.moveTarget;
-        touch.moveAngle = touch.moveAngle === udf ? 0 : touch.moveAngle;
-        touch.moveDirection = touch.moveDirection === udf ? 'none' : touch.moveDirection;
-        touch.endX = firstTouch.pageX;
-        touch.endY = firstTouch.pageY;
-        touch.endTime = eve.timeStamp || Date.now();
-        touch.endID = firstTouch.identifier;
-        touch.endTarget = firstTouch.target;
-        touch.changedX = touch.endX - touch.startX;
-        touch.changedY = touch.endY - touch.startY;
-        touch.deltaX = Math.abs(touch.changedX);
-        touch.deltaY = Math.abs(touch.changedY);
-        touch.changedDirection = _calDirection();
-        touch.deltaTime = touch.endTime - touch.startTime;
-
-        // 触发 tap
-        if (
-            touch.deltaTime < options.tap.timeout &&
-            touch.deltaX < options.tap.x &&
-            touch.deltaY < options.tap.y &&
-            touch.startID === touch.endID &&
-            touch.startTarget === touch.endTarget
-        ) {
-            controller.nextTick(function () {
-                var tapEvent = event.create('tap');
-
-                event.extend(tapEvent, firstTouch, touch);
-
-                var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
-
-                if (dispatchTap && dispatchTap.defaultPrevented === true) {
-                    eve.preventDefault();
+        
+        // on self
+        // .on(body, 'click', fn);
+        if (typeis(args[2]) === 'function') {
+            listener = args[2];
+            dato.each(eventTypes, function (index, etype) {
+                if(touchEvents.indexOf(etype) === -1){
+                    oldOn($ele, etype, listener);
                 }
             });
         }
-
-        // 移动距离大于 taphold || 时间不够
-        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y || touch.deltaTime < options.taphold.timeout) {
-            _reset('taphold');
+        // delegate
+        // .on(body, 'click', 'p', fn)
+        else if (typeis(listener) === 'function') {
+            //
         }
-
-        // 触发 swipe
-        if (touch.changedDirection !== 'none' &&
-            touch.deltaX > options.swipe.x || touch.deltaY > options.swipe.y
-        ) {
-            var swipeEvent = event.create('swipe');
-
-            event.extend(swipeEvent, firstTouch, touch);
-
-            var dispatchSwipe = event.dispatch(touch.startTarget, swipeEvent);
-
-            if (dispatchSwipe && dispatchSwipe.defaultPrevented === true) {
-                eve.preventDefault();
-            }
-
-            var swipedirectionEvent = event.create('swipe' + touch.changedDirection);
-
-            event.extend(swipedirectionEvent, firstTouch, touch);
-
-            var dispatchSwipedirection = event.dispatch(touch.startTarget, swipedirectionEvent);
-
-            if (dispatchSwipedirection && dispatchSwipedirection.defaultPrevented === true) {
-                eve.preventDefault();
-            }
-        }
-
-        touch.lastTime = touch.endTime;
-        _cancel(eve);
-    });
-
-    event.on(document, touchcancel, _cancel);
-    event.on(window, 'scroll', _cancel);
-
-
-    /**
-     * 取消 touch 事件检测
-     * @param {Event} [eve] 事件对象
-     * @private
-     */
-    function _cancel(eve) {
-        attribute.css(document.body, cssTouch);
-
-        if (!touch.startTarget) {
-            return;
-        }
-
-        var firstTouch = eve && eve.touches && eve.touches[0] ||
-            eve && eve.changedTouches && eve.changedTouches[0];
-        var touch1endEvent = event.create('touch1end');
-
-        event.extend(touch1endEvent, firstTouch, touch);
-
-        var dispatchTouch1end = event.dispatch(touch.startTarget, touch1endEvent);
-
-        if (dispatchTouch1end && dispatchTouch1end.defaultPrevented === true) {
-            eve.preventDefault();
-        }
-    }
-
-
-    /**
-     * 重置定时器
-     * @param {String} key
-     * @private
-     */
-    function _reset(key) {
-        key += 'Timeid';
-        if (touch[key]) {
-            clearTimeout(touch[key])
-            touch[key] = 0;
-        }
-    }
-
-
-    /**
-     * 计算触摸方向
-     * @returns {string}
-     * @private
-     */
-    function _calDirection() {
-        if (touch.deltaX === 0 && touch.deltaY === 0) {
-            return 'none';
-        }
-
-        return touch.deltaX > touch.deltaY ?
-            (touch.changedX > 0 ? 'right' : 'left') :
-            (touch.changedY > 0 ? 'down' : 'up');
-    }
-
-
-    /**
-     * 出口
-     * @type {*|exports}
-     */
+    };
+    
     module.exports = event;
 });
