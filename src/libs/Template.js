@@ -30,6 +30,11 @@ define(function (require, exports, module) {
     var REH_LIST = /^list\s+([^,]*)\s+as\s+([^,]*)(\s*,\s*([^,]*))?$/;
     var REG_ELSE_IF = /^else\s+if\s/;
     var REG_HASH = /^#/;
+    var regLines = [{
+        'n': /\n/g,
+        'r': /\r/g,
+        't': /\t/g
+    }];
     var escapes = [
         {
             reg: /</g,
@@ -188,12 +193,12 @@ define(function (require, exports, module) {
                     // 多个连续开始符号
                     if (!$0 || $0 === '{') {
                         if (inIgnore) {
-                            output.push(_var + '+=' + the._lineWrap(openTag) + ';');
+                            output.push(_var + '+=' + _cleanPice(openTag) + ';');
                         }
                     }
                     // 忽略开始
                     else if ($0.slice(-1) === '\\') {
-                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + openTag) + ';');
+                        output.push(_var + '+=' + _cleanPice($0.slice(0, -1) + openTag) + ';');
                         inIgnore = true;
                         parseTimes--;
                     }
@@ -204,7 +209,7 @@ define(function (require, exports, module) {
 
                         inIgnore = false;
                         inExp = true;
-                        output.push(_var + '+=' + the._lineWrap($0) + ';');
+                        output.push(_var + '+=' + _cleanPice($0) + ';');
                     }
                 }
                 // 1个结束符
@@ -217,7 +222,7 @@ define(function (require, exports, module) {
                     if (inIgnore) {
                         output.push(
                             _var +
-                            '+=' + the._lineWrap((times > 1 ? openTag : '') +
+                            '+=' + _cleanPice((times > 1 ? openTag : '') +
                                 $0 + closeTag +
                                 (isEndIgnore ? $1.slice(0, -1) : $1)
                             ) +
@@ -240,7 +245,7 @@ define(function (require, exports, module) {
                         $1 = $1.slice(0, -1);
                     }
 
-                    $1 = the._lineWrap($1);
+                    $1 = _cleanPice($1);
 
                     // if abc
                     if (the._hasPrefix($0, 'if')) {
@@ -295,7 +300,7 @@ define(function (require, exports, module) {
                 }
                 // 多个结束符
                 else {
-                    output.push(_var + '+=' + the._lineWrap(value) + ';');
+                    output.push(_var + '+=' + _cleanPice(value) + ';');
                     inExp = false;
                     inIgnore = false;
                 }
@@ -330,6 +335,7 @@ define(function (require, exports, module) {
          */
         render: function (data) {
             var the = this;
+            var options = the._options;
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
@@ -365,7 +371,10 @@ define(function (require, exports, module) {
                 ret = err.message;
             }
 
-            return String(ret);
+
+            ret = String(ret);
+
+            return options.compress ? _cleanHTML(ret) : ret;
         },
 
 
@@ -527,25 +536,6 @@ define(function (require, exports, module) {
             return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
                 'var ' + parse.key + ' = ' + randomKey1 + ';' +
                 'var ' + parse.val + '=' + randomVal + ';';
-        },
-
-
-        /**
-         * 行包裹，删除多余空白、注释，替换换行符、双引号
-         * @param str
-         * @returns {string}
-         * @private
-         */
-        _lineWrap: function (str) {
-            var optioons = this._options;
-
-            str = str.replace(REG_STRING_WRAP, '\\$1');
-            
-            if(optioons.compress){
-                str = _cleanHTML(str);
-            }
-
-            return '"' + str + '"';
         }
     });
 
@@ -578,6 +568,28 @@ define(function (require, exports, module) {
         return str;
     }
 
+
+    /**
+     * 片段处理
+     * @param str
+     * @returns {string}
+     * @private
+     */
+    function _cleanPice(str){
+        str = str
+            .replace(REG_STRING_WRAP, '\\$1');
+
+        dato.each(regLines, function (index, map) {
+            var key = Object.keys(map)[0];
+            var val = map[key];
+
+            str = str.replace(val, '\\' + key);
+        });
+
+        return '"' + str + '"';
+    }
+    
+
     /**
      * 生成随机 42 位的 KEY
      * @returns {string}
@@ -593,10 +605,10 @@ define(function (require, exports, module) {
      * @param code
      * @private
      */
-    function _cleanHTML(code){
+    function _cleanHTML(code) {
         // 保存 <pre>
         var preMap = {};
-        
+
         code = code.replace(REG_PRES, function ($0) {
             var key = _generateKey();
 
@@ -614,7 +626,7 @@ define(function (require, exports, module) {
         dato.each(preMap, function (key, val) {
             code = code.replace(key, val);
         });
-        
+
         return code;
     }
 
