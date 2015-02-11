@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -107,14 +105,14 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 3</li>
+	                    <li class="sidebar-header">Methods &times; 4</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#pushRule">pushRule</a>
+        <a class="" href="#~pushRule">pushRule</a>
     
 </li>
 
@@ -123,7 +121,7 @@
 
 <li class="">
     
-        <a class="" href="#validateAll">validateAll</a>
+        <a class="" href="#~registerRule">registerRule</a>
     
 </li>
 
@@ -132,7 +130,16 @@
 
 <li class="">
     
-        <a class="" href="#validateOne">validateOne</a>
+        <a class="" href="#~validateAll">validateAll</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~validateOne">validateOne</a>
     
 </li>
 
@@ -194,7 +201,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4610564296599477531795401498675346" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4957681186497211522546132234856486" data-toggle="tab">Source</a>
             </li>
 
         
@@ -215,7 +222,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4610564296599477531795401498675346">
+            <div class="tab-pane active" id="tab-meta-4957681186497211522546132234856486">
                 <p><a href="libs_Validator.js.html#line9">libs/Validator.js:9</a></p>
             </div>
 
@@ -261,7 +268,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="pushRule">
+    <h4 class="name alert alert-warning" id="~pushRule">
         <span class="type-signature">&lt;inner> </span>pushRule<span class="signature">(rule, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
     </h4>
 
@@ -1222,7 +1229,72 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>validator.pushRule({   // 字段名称，必须，唯一性   name: 'username',   // 数据类型，必须，为 string/email/url/number/boolean/array 之一   type: 'string',   // 别称，当没有填写自定义错误消息时   // 提示为 username不能为空   // 当前设置别名之后   // 提示为 用户名不能为空   alias: '用户名',   // 验证前置   // val 当前字段值   // data 所有数据   onbefore: function(val, data){       return val + 'abc';   },   exist: false,   trim: true,   // 验证规则   required: true,   length: 10,   minLength: 4,   maxLength: 12,   bytes: 10,   minBytes: 4,   maxBytes: 12,   min: 4,   max: 4,   regexp: /^[a-z]\w{3,11}$/,   equal: 'cloudcome',   inArray: ['cloudcome', 'yundanran'],   // val 当前字段值   // [data 所有数据] 可选   // next 执行下一步   function: function(val, next){       // 这里可以是异步的       // 比如远程校验可以写在这里       ajax.post('./validate.json', {           username: val       }).on('success', function(json){           if(json.code>0){               next();           }else{               next(new Error(json.msg));           }       }).on('error', function(){           next(new Error('网络连接错误，验证失败'));       });   },   // 验证消息   msg: {       required: '用户名不能为空',       length: '用户名长度必须为10'       // 未自定义的消息，以默认输出       // 每个验证规则都必须配备一个消息体，       // 除了自定义的`function`   },   // 验证后置   onafter: function(val){       return val + 'abc';   }});</code></pre>
+    <pre class="prettyprint"><code>validator.pushRule({
+   // 字段名称，必须，唯一性
+   name: 'username',
+   // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+   type: 'string',
+   // 别称，当没有填写自定义错误消息时
+   // 提示为 username不能为空
+   // 当前设置别名之后
+   // 提示为 用户名不能为空
+   alias: '用户名',
+
+   // 验证前置
+   // val 当前字段值
+   // data 所有数据
+   onbefore: function(val, data){
+       return val + 'abc';
+   },
+   exist: false,
+   trim: true,
+
+   // 验证规则
+   required: true,
+   length: 10,
+   minLength: 4,
+   maxLength: 12,
+   bytes: 10,
+   minBytes: 4,
+   maxBytes: 12,
+   min: 4,
+   max: 4,
+   regexp: /^[a-z]\w{3,11}$/,
+   equal: 'cloudcome',
+   inArray: ['cloudcome', 'yundanran'],
+   // val 当前字段值
+   // [data 所有数据] 可选
+   // next 执行下一步
+   function: function(val, next){
+       // 这里可以是异步的
+       // 比如远程校验可以写在这里
+       ajax.post('./validate.json', {
+           username: val
+       }).on('success', function(json){
+           if(json.code>0){
+               next();
+           }else{
+               next(new Error(json.msg));
+           }
+       }).on('error', function(){
+           next(new Error('网络连接错误，验证失败'));
+       });
+   },
+
+   // 验证消息
+   msg: {
+       required: '用户名不能为空',
+       length: '用户名长度必须为10'
+       // 未自定义的消息，以默认输出
+       // 每个验证规则都必须配备一个消息体，
+       // 除了自定义的`function`
+   },
+
+   // 验证后置
+   onafter: function(val){
+       return val + 'abc';
+   }
+});</code></pre>
 
         
 
@@ -1246,7 +1318,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-75532562541775449202641611918807" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2030141483992338232630963274277747" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1267,8 +1339,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-75532562541775449202641611918807">
-                <p><a href="libs_Validator.js.html#line140">libs/Validator.js:140</a></p>
+            <div class="tab-pane active" id="tab-meta-2030141483992338232630963274277747">
+                <p><a href="libs_Validator.js.html#line205">libs/Validator.js:205</a></p>
             </div>
 
         
@@ -1293,7 +1365,250 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="validateAll">
+    <h4 class="name alert alert-warning" id="~registerRule">
+        <span class="type-signature">&lt;inner> </span>registerRule<span class="signature">(options, rule, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>注册自定义的实例验证规则
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">规则配置</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>rule</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">规则方法</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isOverride</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">是否覆盖已有规则</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 添加一个检查后缀的自定义规则
+validator.registerRule({
+    name: 'suffix',
+    type: 'array'
+}, function(suffix, val, next){
+    var sf = (val.match(/\.[^.]*$/) || [''])[0];
+    var boolean = suffix.indexOf(sf) > -1;
+
+    next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+});</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-68794305133633328764325976371765" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-68794305133633328764325976371765">
+                <p><a href="libs_Validator.js.html#line98">libs/Validator.js:98</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~validateAll">
         <span class="type-signature">&lt;inner> </span>validateAll<span class="signature">(data, callback)</span><span class="type-signature"></span>
     </h4>
 
@@ -1413,7 +1728,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-79928852990269668320971082430333" data-toggle="tab">Source</a>
+                <a href="#tab-meta-10803463310003287596139565575868" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1434,8 +1749,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-79928852990269668320971082430333">
-                <p><a href="libs_Validator.js.html#line199">libs/Validator.js:199</a></p>
+            <div class="tab-pane active" id="tab-meta-10803463310003287596139565575868">
+                <p><a href="libs_Validator.js.html#line264">libs/Validator.js:264</a></p>
             </div>
 
         
@@ -1460,7 +1775,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="validateOne">
+    <h4 class="name alert alert-warning" id="~validateOne">
         <span class="type-signature">&lt;inner> </span>validateOne<span class="signature">(data, callback)</span><span class="type-signature"></span>
     </h4>
 
@@ -1580,7 +1895,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-17993506090715528937911685789004" data-toggle="tab">Source</a>
+                <a href="#tab-meta-340646659489721067981391148641706" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1601,8 +1916,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-17993506090715528937911685789004">
-                <p><a href="libs_Validator.js.html#line244">libs/Validator.js:244</a></p>
+            <div class="tab-pane active" id="tab-meta-340646659489721067981391148641706">
+                <p><a href="libs_Validator.js.html#line309">libs/Validator.js:309</a></p>
             </div>
 
         

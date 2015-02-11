@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -114,7 +112,7 @@
 
 <li class="">
     
-        <a class="" href="#emit">emit</a>
+        <a class="" href="#.emit">emit</a>
     
 </li>
 
@@ -123,7 +121,7 @@
 
 <li class="">
     
-        <a class="" href="#matches">matches</a>
+        <a class="" href="#.matches">matches</a>
     
 </li>
 
@@ -132,7 +130,7 @@
 
 <li class="">
     
-        <a class="" href="#on">on</a>
+        <a class="" href="#.on">on</a>
     
 </li>
 
@@ -141,7 +139,7 @@
 
 <li class="">
     
-        <a class="" href="#parse">parse</a>
+        <a class="" href="#.parse">parse</a>
     
 </li>
 
@@ -150,7 +148,7 @@
 
 <li class="">
     
-        <a class="" href="#stringify">stringify</a>
+        <a class="" href="#.stringify">stringify</a>
     
 </li>
 
@@ -159,7 +157,7 @@
 
 <li class="">
     
-        <a class="" href="#un">un</a>
+        <a class="" href="#.un">un</a>
     
 </li>
 
@@ -198,7 +196,9 @@
 
         
             
-                <blockquote class="description lead">URL 的 hash 部分解析与设置<br>支持的 hashbang 格式为<code>#!/foo/bar/?a=1&b=2&b=3</code><br>必须以<code>#!</code>开头，后续的 querystring 必须符合标准
+                <blockquote class="description lead">URL 的 hash 部分解析与设置<br>
+支持的 hashbang 格式为<code>#!/foo/bar/?a=1&b=2&b=3</code><br>
+必须以<code>#!</code>开头，后续的 querystring 必须符合标准
                     
                 </blockquote>
             
@@ -225,7 +225,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0536395341623574545443794853053987" data-toggle="tab">Source</a>
+                <a href="#tab-meta-1742554435040801830017937580123544" data-toggle="tab">Source</a>
             </li>
 
         
@@ -246,7 +246,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0536395341623574545443794853053987">
+            <div class="tab-pane active" id="tab-meta-1742554435040801830017937580123544">
                 <p><a href="util_hashbang.js.html#line9">util/hashbang.js:9</a></p>
             </div>
 
@@ -292,7 +292,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="emit">
+    <h4 class="name alert alert-warning" id=".emit">
         <span class="type-signature">&lt;static> </span>emit<span class="signature">()</span><span class="type-signature"></span>
     </h4>
 
@@ -302,7 +302,10 @@
 
         
         <div class="description lead">
-            <blockquote>主动触发 hashchange 回调，但不能真实触发 window 的 hashchange 事件，防止影响其他监听通常用于页面初始化的时候触发，以匹配当前路由
+            <blockquote>主动触发 hashchange 回调，
+但不能真实触发 window 的 hashchange 事件，
+防止影响其他监听
+通常用于页面初始化的时候触发，以匹配当前路由
                 
             </blockquote>
         </div>
@@ -338,7 +341,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-79075280437245975166778457351029" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4728905304800719515175499022007" data-toggle="tab">Source</a>
             </li>
 
         
@@ -359,7 +362,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-79075280437245975166778457351029">
+            <div class="tab-pane active" id="tab-meta-4728905304800719515175499022007">
                 <p><a href="util_hashbang.js.html#line304">util/hashbang.js:304</a></p>
             </div>
 
@@ -385,7 +388,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="matches">
+    <h4 class="name alert alert-warning" id=".matches">
         <span class="type-signature">&lt;static> </span>matches<span class="signature">(hashbangString, route, <span class="optional">options</span>)</span><span class="type-signature"> 
     </h4>
 
@@ -652,7 +655,14 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>hashbang.matches('#!/id/abc123/', '/id/:id/');// =>// {//   id: "abc123"// }hashbang.matches('#!/name/abc123/', '/id/:id/');// => null</code></pre>
+    <pre class="prettyprint"><code>hashbang.matches('#!/id/abc123/', '/id/:id/');
+// =>
+// {
+//   id: "abc123"
+// }
+
+hashbang.matches('#!/name/abc123/', '/id/:id/');
+// => null</code></pre>
 
         
 
@@ -676,7 +686,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-6961363055743277797349585685879" data-toggle="tab">Source</a>
+                <a href="#tab-meta-282769126817584045693428255617619" data-toggle="tab">Source</a>
             </li>
 
         
@@ -697,7 +707,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-6961363055743277797349585685879">
+            <div class="tab-pane active" id="tab-meta-282769126817584045693428255617619">
                 <p><a href="util_hashbang.js.html#line191">util/hashbang.js:191</a></p>
             </div>
 
@@ -723,7 +733,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="on">
+    <h4 class="name alert alert-warning" id=".on">
         <span class="type-signature">&lt;static> </span>on<span class="signature">(part, <span class="optional">key</span>, listener)</span><span class="type-signature"></span>
     </h4>
 
@@ -885,7 +895,13 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>// pathchashbang.on('path', fn);hashbang.on('path', 0, fn);// queryhashbang.on('query', fn);hashbang.on('query', 'abc', fn);</code></pre>
+    <pre class="prettyprint"><code>// pathc
+hashbang.on('path', fn);
+hashbang.on('path', 0, fn);
+
+// query
+hashbang.on('query', fn);
+hashbang.on('query', 'abc', fn);</code></pre>
 
         
 
@@ -909,7 +925,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-89659956074319782557222240138799" data-toggle="tab">Source</a>
+                <a href="#tab-meta-984731356613338027281864546239376" data-toggle="tab">Source</a>
             </li>
 
         
@@ -930,7 +946,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-89659956074319782557222240138799">
+            <div class="tab-pane active" id="tab-meta-984731356613338027281864546239376">
                 <p><a href="util_hashbang.js.html#line261">util/hashbang.js:261</a></p>
             </div>
 
@@ -956,7 +972,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="parse">
+    <h4 class="name alert alert-warning" id=".parse">
         <span class="type-signature">&lt;static> </span>parse<span class="signature">(hashbangString, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
     </h4>
 
@@ -1129,7 +1145,15 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>hashbang.parse('#!/a/b/c?a=1&b=2');// =>// {//    path: ["a", "b", "c"],//    query: {//        a: "1",//        b: "2"//    }// }</code></pre>
+    <pre class="prettyprint"><code>hashbang.parse('#!/a/b/c?a=1&b=2');
+// =>
+// {
+//    path: ["a", "b", "c"],
+//    query: {
+//        a: "1",
+//        b: "2"
+//    }
+// }</code></pre>
 
         
 
@@ -1153,7 +1177,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-39072899916209288969709703233093" data-toggle="tab">Source</a>
+                <a href="#tab-meta-83577546244487175097120797727257" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1174,7 +1198,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-39072899916209288969709703233093">
+            <div class="tab-pane active" id="tab-meta-83577546244487175097120797727257">
                 <p><a href="util_hashbang.js.html#line98">util/hashbang.js:98</a></p>
             </div>
 
@@ -1200,7 +1224,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="stringify">
+    <h4 class="name alert alert-warning" id=".stringify">
         <span class="type-signature">&lt;static> </span>stringify<span class="signature">(hashbangObject, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
     </h4>
 
@@ -1373,7 +1397,15 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>hashbang.stringify({   path: ["a", "b", "c"],   query: {      a: 1,      b: 2,      c: 3   }});// => "#!/a/b/c/?a=1&b=2&c=3"</code></pre>
+    <pre class="prettyprint"><code>hashbang.stringify({
+   path: ["a", "b", "c"],
+   query: {
+      a: 1,
+      b: 2,
+      c: 3
+   }
+});
+// => "#!/a/b/c/?a=1&b=2&c=3"</code></pre>
 
         
 
@@ -1397,7 +1429,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-76442358782514931112968462985009" data-toggle="tab">Source</a>
+                <a href="#tab-meta-355913948500528936220493305008858" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1418,7 +1450,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-76442358782514931112968462985009">
+            <div class="tab-pane active" id="tab-meta-355913948500528936220493305008858">
                 <p><a href="util_hashbang.js.html#line150">util/hashbang.js:150</a></p>
             </div>
 
@@ -1444,7 +1476,7 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="un">
+    <h4 class="name alert alert-warning" id=".un">
         <span class="type-signature">&lt;static> </span>un<span class="signature">(part, <span class="optional">key</span>, <span class="optional">listener</span>)</span><span class="type-signature"></span>
     </h4>
 
@@ -1608,7 +1640,25 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>// path// 移除 path 0字段上的一个监听hashbang.un('path', 0, fn);// 移除 path 0字段上的所有监听hashbang.un('path', 0);// 移除 path 所有字段的一个监听hashbang.un('path', fn);// 移除 path 所有字段的所有监听hashbang.un('path');// query// 移除 query abc 键上的一个监听hashbang.un('query', 'abc', fn);// 移除 query abc 键上的所有监听hashbang.un('query', 'abc');// 移除 query 所有键上的一个监听hashbang.un('query', fn);// 移除 query 所有键上的所有监听hashbang.un('query');</code></pre>
+    <pre class="prettyprint"><code>// path
+// 移除 path 0字段上的一个监听
+hashbang.un('path', 0, fn);
+// 移除 path 0字段上的所有监听
+hashbang.un('path', 0);
+// 移除 path 所有字段的一个监听
+hashbang.un('path', fn);
+// 移除 path 所有字段的所有监听
+hashbang.un('path');
+
+// query
+// 移除 query abc 键上的一个监听
+hashbang.un('query', 'abc', fn);
+// 移除 query abc 键上的所有监听
+hashbang.un('query', 'abc');
+// 移除 query 所有键上的一个监听
+hashbang.un('query', fn);
+// 移除 query 所有键上的所有监听
+hashbang.un('query');</code></pre>
 
         
 
@@ -1632,7 +1682,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-25729951635003095421090822201222" data-toggle="tab">Source</a>
+                <a href="#tab-meta-43535897997207946982818259857595" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1653,7 +1703,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-25729951635003095421090822201222">
+            <div class="tab-pane active" id="tab-meta-43535897997207946982818259857595">
                 <p><a href="util_hashbang.js.html#line339">util/hashbang.js:339</a></p>
             </div>
 

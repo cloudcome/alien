@@ -10,9 +10,15 @@ define(function (require, exports, module) {
 
     var Mask = require('/src/ui/Window/');
     var random = require('/src/util/random.js');
+    var animation = require('/src/core/dom/animation.js');
+    var see = require('/src/core/dom/see.js');
     var win1 = new Mask('#demo', {
-        addClass: 'mask'
+        addClass: 'hehhhhh'
     });
+
+    window.win1 = win1;
+    window.animation = animation;
+    window.see = see;
 
     document.getElementById('btn1').onclick = function () {
         win1.open();

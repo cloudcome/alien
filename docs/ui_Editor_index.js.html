@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -132,8 +130,8 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Editor/index
-     * @requires ui/generator
+     * @module ui/Editor/
+     * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -150,7 +148,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -161,6 +159,7 @@ define(function (require, exports, module) {
     var typeis = require('../../util/typeis.js');
     var date = require('../../util/date.js');
     var random = require('../../util/random.js');
+    var control = require('../../util/control.js');
     var Autoheight = require('../Autoheight/index.js');
     var Dialog = require('../Dialog/index.js');
     var Msg = require('../Msg/index.js');
@@ -194,7 +193,7 @@ define(function (require, exports, module) {
         autoFocus: true
     };
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
-    var Editor = generator({
+    var Editor = ui.create({
         STATIC: {
             defaults: defaults
         },
@@ -233,7 +232,6 @@ define(function (require, exports, module) {
             the._calStoreId();
             attribute.css(the._$ele, {
                 display: 'block',
-                border: 0,
                 width: '100%',
                 margin: 0
             });
@@ -253,7 +251,7 @@ define(function (require, exports, module) {
                     the._storeId = options.id;
                 }
             });
-            setTimeout(the._initVal.bind(the), 1);
+            control.nextTick(the._initVal, the);
 
             return the;
         },
@@ -322,7 +320,7 @@ define(function (require, exports, module) {
                 event.un($dialog, 'load');
 
                 if (the._dialog) {
-                    the._dialog.position();
+                    the._dialog.resize();
                 }
             };
             var options = the._options;
@@ -344,12 +342,10 @@ define(function (require, exports, module) {
             event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
-            the._dialog = new Dialog('#' + alienClass + '-upload-' + the._id, {
-                width: 500,
+            the._dialog = new Dialog($dialog, {
                 title: '上传' + the._uploadList.length + '张图片（0%）',
                 hideClose: true
             }).open();
-            the._$dialog = $dialog;
             the._doUpload();
         },
 
@@ -358,7 +354,7 @@ define(function (require, exports, module) {
          * 销毁上传实例
          * @private
          */
-        _uploadDestroy: function () {
+        uploadDestroy: function () {
             var the = this;
 
             the._dialog.destroy(function () {
@@ -388,7 +384,7 @@ define(function (require, exports, module) {
                         content: err.message
                     });
                     msg.on('close', function () {
-                        the._uploadDestroy();
+                        the.uploadDestroy();
                     });
                     return;
                 }
@@ -403,10 +399,10 @@ define(function (require, exports, module) {
 
                 the.insert(html = html.join(' '));
                 the._selection[1] += html.length;
-                the._uploadDestroy();
+                the.uploadDestroy();
             };
 
-            the._options.uploadCallback(list, onprogress, ondone);
+            the._options.uploadCallback.call(the, list, onprogress, ondone);
         },
 
 
@@ -602,9 +598,11 @@ define(function (require, exports, module) {
             });
 
             if (the._uploadList.length) {
+                eve.preventDefault();
                 the._$ele.blur();
                 the._uploadDialog();
-            } else if (eve.dataTransfer &amp;&amp; eve.dataTransfer.files &amp;&amp; eve.dataTransfer.files.length) {
+            } else if (eve.dataTransfer &amp;&amp; eve.dataTransfer.files &amp;&amp; eve.dataTransfer.files.length ||
+                eve.clipboardData &amp;&amp; eve.clipboardData.files &amp;&amp; eve.clipboardData.files.length) {
                 eve.preventDefault();
                 return new Msg({
                     content: '请拖拽或粘贴图片文件',
@@ -779,9 +777,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            setTimeout(function () {
-                the._autoheight.resize();
-            }, 1);
+            control.nextTick(the._autoheight.resize, the)
         },
 
         /**
@@ -792,7 +788,7 @@ define(function (require, exports, module) {
 
             the._un();
             the._autoheight.destroy();
-            the._$ele.unwrap('div > div');
+            modification.unwrap(the._$ele, 'div>div');
         }
     });
 

@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -132,8 +130,8 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Scrollbar/index
-     * @requires ui/generator
+     * @module ui/Scrollbar/
+     * @requires ui/base
      * @requires util/dato
      * @requires libs/Template
      * @requires core/dom/selector
@@ -142,10 +140,11 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/wheel
      * @requires core/event/drag
+     * @requires core/event/touch
      */
     'use strict';
 
-    var generator = require('../generator.js');
+    var ui = require('../base.js');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../util/dato.js');
@@ -157,7 +156,6 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/wheel.js');
-    var drag = require('../../core/event/drag.js');
     var bodyClass = 'alien-ui-scrollbar-body';
     //var trackClass = 'alien-ui-scrollbar-track';
     var trackXClass = 'alien-ui-scrollbar-track-x';
@@ -188,7 +186,7 @@ define(function (require, exports, module) {
         addClass: '',
         isStandAlone: false
     };
-    var Scrollbar = generator({
+    var Scrollbar = ui.create({
         STATIC: {
             defaults: defaults
         },
@@ -243,7 +241,7 @@ define(function (require, exports, module) {
             attribute.addClass($temp, options.addClass);
             attribute.addClass($parent, the._className = $temp.className);
 
-            if(isPlaceholderScroll){
+            if (isPlaceholderScroll) {
                 modification.insert($trackY, $ele, 'afterend');
                 modification.insert($trackX, $ele, 'afterend');
                 modification.insert($body, $ele, 'afterend');
@@ -256,11 +254,11 @@ define(function (require, exports, module) {
                 the._$body = $body;
                 the._$scroll = isTextarea ? $ele : $body;
                 the._isTextarea = isTextarea;
-                the._thumbWidthOffset = the._$thumbX.offsetLeft * 2;
-                the._thumbHeightOffset = the._$thumbY.offsetTop * 2;
+                the._thumbXOffset = 3;
+                the._thumbYOffset = 3;
                 the.resize();
                 the._initEvent();
-            }else{
+            } else {
                 attribute.css($parent, {
                     overflow: 'auto !important'
                 });
@@ -278,10 +276,13 @@ define(function (require, exports, module) {
             var the = this;
 
             the._trigger = true;
-            the._calScrollSize();
-            the._calTrackSize();
-            the._scrollX();
-            the._scrollY();
+
+            if (isPlaceholderScroll) {
+                the._calScrollSize();
+                the._calTrackSize();
+                the._scrollX();
+                the._scrollY();
+            }
 
             return the;
         },
@@ -329,15 +330,15 @@ define(function (require, exports, module) {
             var $trackY = the._$trackY;
             var $thumbY = the._$thumbY;
             // 尺寸比例
-            var thumbWidthRatio = the._containerWidth / the._scrollWidth;
-            var thumbHeightRatio = the._containerHeight / the._scrollHeight;
+            var thumbWidthRatio = the._scrollWidth === 0 ? 0 : the._containerWidth / the._scrollWidth;
+            var thumbHeightRatio = the._scrollHeight === 0 ? 0 : the._containerHeight / the._scrollHeight;
             // 距离比例
-            var thumbLeftRatio = the._scrollLeft / the._scrollLeftMax;
-            var thumbTopRatio = the._scrollTop / the._scrollTopMax;
+            var thumbLeftRatio = the._scrollLeftMax === 0 ? 0 : the._scrollLeft / the._scrollLeftMax;
+            var thumbTopRatio = the._scrollTopMax === 0 ? 0 : the._scrollTop / the._scrollTopMax;
             var options = the._options;
 
-            the._trackWidth = attribute.width($trackX) - the._thumbWidthOffset;
-            the._trackHeight = attribute.height($trackY) - the._thumbHeightOffset;
+            the._trackWidth = attribute.width($trackX) - the._thumbXOffset;
+            the._trackHeight = attribute.height($trackY) - the._thumbYOffset;
             the._thumbWidth = the._trackWidth * thumbWidthRatio;
             the._thumbHeight = the._trackHeight * thumbHeightRatio;
 
@@ -349,8 +350,8 @@ define(function (require, exports, module) {
                 the._thumbHeight = options.minY;
             }
 
-            the._thumbLeftMax = the._trackWidth - the._thumbWidth;
-            the._thumbTopMax = the._trackHeight - the._thumbHeight;
+            the._thumbLeftMax = the._trackWidth - the._thumbWidth - the._thumbXOffset;
+            the._thumbTopMax = the._trackHeight - the._thumbHeight - the._thumbYOffset;
             the._thumbLeft = the._thumbLeftMax * thumbLeftRatio;
             the._thumbTop = the._thumbTopMax * thumbTopRatio;
 
@@ -472,19 +473,24 @@ define(function (require, exports, module) {
                 });
 
                 event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
+                event.on(the._$trackX, 'click tap', function () {
+                    return false;
+                });
+                event.on(the._$trackY, 'click tap', function () {
+                    return false;
+                });
 
                 // 拖拽支持
                 event.on(the._$thumbX, 'dragstart', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = true;
                     x0 = eve.pageX;
                     left0 = parseFloat(attribute.css(the._$thumbX, 'left'));
                     attribute.addClass(the._$thumbX, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(the._$thumbX, 'drag', function (eve) {
-                    eve.preventDefault();
-
                     var left = left0 + eve.pageX - x0;
 
                     if (left &lt; 0) {
@@ -496,12 +502,15 @@ define(function (require, exports, module) {
                     attribute.css(the._$thumbX, 'left', left);
                     the._scrollLeft = the._scrollLeftMax * left / the._thumbLeftMax;
                     the._scrollX();
+
+                    return false;
                 });
 
                 event.on(the._$thumbX, 'dragend', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = false;
                     attribute.removeClass(the._$thumbX, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(the._$thumbY, 'dragstart', function (eve) {
@@ -513,8 +522,6 @@ define(function (require, exports, module) {
                 });
 
                 event.on(the._$thumbY, 'drag', function (eve) {
-                    eve.preventDefault();
-
                     var top = top0 + eve.pageY - y0;
 
                     if (top &lt; 0) {
@@ -526,12 +533,15 @@ define(function (require, exports, module) {
                     attribute.css(the._$thumbY, 'top', top);
                     the._scrollTop = the._scrollTopMax * top / the._thumbTopMax;
                     the._scrollY();
+
+                    return false;
                 });
 
                 event.on(the._$thumbY, 'dragend', function (eve) {
-                    eve.preventDefault();
                     the._isDrag = false;
                     attribute.removeClass(the._$thumbY, thumbActiveClass);
+
+                    return false;
                 });
 
                 event.on(window, 'resize', the._onresize = control.debounce(the.resize.bind(the)));
@@ -570,7 +580,7 @@ define(function (require, exports, module) {
                 the._trigger = true;
                 the._calScrollSize();
                 the._calTrackSize();
-            }, 10);
+            }, 20);
         },
 
 
@@ -719,8 +729,14 @@ define(function (require, exports, module) {
             var the = this;
 
             // 清除拖拽
-            event.un(the._$thumbX, 'dragsatrt drag dragend');
-            event.un(the._$thumbY, 'dragsatrt drag dragend');
+            var eve1 = 'dragsatrt drag dragend';
+            event.un(the._$thumbX, eve1);
+            event.un(the._$thumbY, eve1);
+
+            // 清楚单击、tap
+            var eve2 = 'click tap';
+            event.un(the._$trackX, eve2);
+            event.un(the._$trackY, eve2);
 
             // 清除监听
             event.un(the._$ele, updateEvent);
@@ -738,6 +754,8 @@ define(function (require, exports, module) {
         }
     });
 
+    require('../../core/event/drag.js');
+    require('../../core/event/touch.js');
     modification.importStyle(style);
 
     /**

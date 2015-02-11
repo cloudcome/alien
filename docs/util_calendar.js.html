@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: ui/generator.js - Alien documents</title>
+    <title>Source: util/calendar.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -32,6 +32,7 @@
 <li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
 <li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
 <li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
@@ -44,7 +45,7 @@
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
-<li><a href="module-libs_Autoheight.html">libs/Autoheight</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Lex.html">libs/Lex</a></li>
@@ -52,19 +53,22 @@
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-ui_Banner_index.html">ui/Banner/index</a></li>
-<li><a href="module-ui_Dialog_index.html">ui/Dialog/index</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
-<li><a href="module-ui_Editor_index.html">ui/Editor/index</a></li>
-<li><a href="module-ui_generator.html">ui/generator</a></li>
-<li><a href="module-ui_Imgclip_index.html">ui/Imgclip/index</a></li>
-<li><a href="module-ui_Msg_index.html">ui/Msg/index</a></li>
-<li><a href="module-ui_Pager.html">ui/Pager</a></li>
-<li><a href="module-ui_Pagination.html">ui/Pagination</a></li>
-<li><a href="module-ui_Resize_index.html">ui/Resize/index</a></li>
-<li><a href="module-ui_Scrollbar_index.html">ui/Scrollbar/index</a></li>
-<li><a href="module-ui_Tab_index.html">ui/Tab/index</a></li>
-<li><a href="module-ui_Tooltip.html">ui/Tooltip</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
 <li><a href="module-util_control.html">util/control</a></li>
@@ -76,12 +80,6 @@
 <li><a href="module-util_random.html">util/random</a></li>
 <li><a href="module-util_selection.html">util/selection</a></li>
 <li><a href="module-util_typeis.html">util/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-libs_Template-constructor.html">constructor</a></li>
 </ul>
 </li>
 </ul>
@@ -116,7 +114,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: ui/generator.js</h1>
+		            <h1 class="page-title">Source: util/calendar.js</h1>
 
 		            
 
@@ -124,107 +122,137 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * UI 类生成器
+ * 日历
  * @author ydr.me
- * @create 2014-11-11 20:07
+ * @create 2015-01-10 16:55
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/generator
+     * @module util/calendar
+     * @requires util/date
      * @requires util/dato
      * @requires util/typeis
-     * @requires util/class
-     * @requires libs/Emitter
      */
+
     'use strict';
 
-    var dato = require('../util/dato.js');
-    var typeis = require('../util/typeis.js');
-    var klass = require('../util/class.js');
-    var Emitter = require('../libs/Emitter.js');
-    var udf;
-    var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
+
+    var date = require('./date.js');
+    var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
+    var defaults = {
+        // 激活的日期
+        activeDate: null,
+        // 是否为自然月
+        isNatualMonth: false,
+        // 一周的第一天星期几
+        firstDayInWeek: 0
+    };
+
 
     /**
-     * 创建一个 UI 类
-     * @param property {Object}
-     * @property property.constructor {Function} 构造函数
-     * @property [property.STATIC={}] {Object} 静态属性、方法，可以为空
-     * @param [superConstructor=null] {Function} 父类
-     * @param [isInheritStatic=false] {Boolean} 是否继承父类的静态方法
-     *
-     * @example
-     * var Dialog = ui({
-     *     constructor: fn,
-     *     STATIC: {},
-     *     myClassName: fn
-     * });
+     * 月历
+     * @param year {Number} 年
+     * @param month {Number} 月
+     * @param [options] {Object} 配置
+     * @param [options.activeDate=null] {Date|Number|Array} 高亮的日期，默认为今天
+     * @param [options.isNatualMonth=false] {Boolean} 是否为自然月，默认 false
+     * @param [options.firstDayInWeek=0] {Number} 一周的第一天星期几，默认为0，即星期日
      */
-    module.exports = function (property, isInheritSuperStatic) {
-        var proto = {};
+    exports.month = function calendar(year, month, options) {
+        options = dato.extend({}, defaults, options);
+        month = options.isNatualMonth ? month - 1 : month;
+        options.activeDate = typeis.array(options.activeDate) ? options.activeDate : [options.activeDate];
 
-        if (typeis(property) !== 'object') {
-            throw 'UI class property must be an obejct';
+        var list = [];
+        var prevDate = new Date(year, month - 1);
+        var thisDate = new Date(year, month, 1);
+        var thisMonthDays = date.getDaysInMonth(year, month);
+        var thisMonthFirstDateDay = thisDate.getDay();
+        thisMonthFirstDateDay = thisMonthFirstDateDay &lt; options.firstDayInWeek ? thisMonthFirstDateDay + 7 : thisMonthFirstDateDay;
+        var deltaDays = thisMonthFirstDateDay - options.firstDayInWeek;
+        var prevMonthDays = date.getDaysInMonth(year, month - 1);
+        var i = 0;
+
+        // 上月
+        for (; i &lt; deltaDays; i++) {
+            list.push({
+                year: prevDate.getFullYear(),
+                month: prevDate.getMonth() + 1,
+                date: prevMonthDays - i,
+                type: i
+            });
         }
 
-        if (typeis(property.constructor) !== 'function') {
-            throw 'UI class property.constructor must be a function';
+        list.reverse();
+
+        // 本月
+        for (i = 1; i &lt;= thisMonthDays; i++) {
+            list.push({
+                year: thisDate.getFullYear(),
+                month: thisDate.getMonth() + 1,
+                date: i,
+                type: 'this'
+            });
         }
 
-        dato.each(property, function (key, val) {
-            proto[key] = val;
+        deltaDays = list.length % 7;
 
-            if (warningPropertyList.indexOf(key) > -1) {
-                console.warn(property.constructor.toString() + ' rewrite Emitter\' property in prototype of `' + key + '`');
+        // 下月
+        if (deltaDays) {
+            var nextDate = new Date(year, month + 1);
+
+            for (i = 1; i &lt;= 7 - deltaDays; i++) {
+                list.push({
+                    year: nextDate.getFullYear(),
+                    month: nextDate.getMonth() + 1,
+                    date: i,
+                    type: 'next'
+                });
             }
+        }
+
+
+        var activeDateMap = [];
+        options.activeDate.forEach(function (d) {
+            d = date.parse(d);
+
+            var id = _buildDateid({
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                date: d.getDate()
+            });
+
+            activeDateMap[id] = 1;
         });
 
-        proto.constructor = function () {
-            Emitter.apply(this, arguments);
-            property.constructor.apply(this, arguments);
-        };
+        list.forEach(function (item) {
+            item.id = _buildDateid(item);
+            item.active = !!activeDateMap[item.id];
+        });
 
-        // 添加默认方法
-        if (property.getOptions === udf) {
-            proto.getOptions = function (key) {
-                var the = this;
-                var keyType = typeis(key);
-                var ret = [];
+        // 分组
+        var group = [];
 
-                the.emit('getoptions');
-                if (keyType === 'string' || keyType === 'number') {
-                    return the._options &amp;&amp; the._options[key];
-                } else if (keyType === 'array') {
-                    dato.each(key, function (index, k) {
-                        ret.push(the._options &amp;&amp; the._options[k]);
-                    });
-
-                    return ret;
-                } else {
-                    return the._options;
-                }
-            };
+        while (list.length) {
+            group.push(list.splice(0, 7));
         }
 
-        if (property.setOptions === udf) {
-            proto.setOptions = function (key, val) {
-                var the = this;
-                var keyType = typeis(key);
-
-                if (keyType === 'string' || keyType === 'number') {
-                    the._options ? the._options[key] = val : udf;
-                } else if (keyType === 'object') {
-                    dato.extend(the._options, key);
-                }
-
-                the.emit('setoptions', the._options);
-            };
-        }
-
-        return klass.create(proto, Emitter, isInheritSuperStatic);
+        return group;
     };
+
+
+    /**
+     * 生成日期ID
+     * @param item {Object} 日对象
+     * @private
+     */
+    function _buildDateid(item) {
+        return [item.year, dato.fillNumber(item.month, 2), dato.fillNumber(item.date, 2)].join('') * 1;
+    }
+
 });</code></pre>
 
 
