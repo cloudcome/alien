@@ -30,12 +30,12 @@ define(function (require, exports, module) {
      *
      * // 子类
      * var Child = function(){
-         *     // 执行一次父类的方法
-         *     Father.apply(this, arguments);
-         *
-         *     // 这里执行子类的方法、属性
-         *     this.sth = 123;
-         * };
+     *     // 执行一次父类的方法
+     *     Father.apply(this, arguments);
+     *
+     *     // 这里执行子类的方法、属性
+     *     this.sth = 123;
+     * };
      *
      * klass.inherit(Child, Father);
      *

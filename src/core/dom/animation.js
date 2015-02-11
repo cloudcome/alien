@@ -81,7 +81,6 @@ define(function (require, exports, module) {
             ele[alienKey] = ++index;
         }
 
-
         var id = ele[alienKey];
         var args = arguments;
         var argL = args.length;
@@ -99,6 +98,7 @@ define(function (require, exports, module) {
             exports.stop(ele);
         }
 
+        options = dato.extend({}, cssDefaults, options);
         animationMap[id] = to;
         callback = args[argL - 1];
 
@@ -119,6 +119,11 @@ define(function (require, exports, module) {
         }
 
         var listener = function (eve) {
+            if(timeid){
+                clearTimeout(timeid);
+                timeid = 0;
+            }
+            
             if (eve === true || eve && eve.target === ele) {
                 if (hasDispatch) {
                     return;
@@ -140,6 +145,9 @@ define(function (require, exports, module) {
 
 
         event.on(ele, transitionendEventType, listener);
+        var timeid = setTimeout(function () {
+            listener(true);
+        }, options.duration + options.delay + 20);
         options = dato.extend({}, cssDefaults, options);
 
         var easing = eeeing.css3[options.easing];

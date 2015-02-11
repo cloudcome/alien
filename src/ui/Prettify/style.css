@@ -1,0 +1,59 @@
+@charset "utf-8";
+/*!
+ * bootstrap theme for google-prettyprint
+ * @author ydr.me
+ * @form bootstrap v2
+ * @version 1.0
+ */
+
+.prettyprint{
+    overflow: auto;
+}
+
+.prettyprint .com {
+    color: #93a1a1;
+}
+
+.prettyprint .lit {
+    color: #195f91;
+}
+
+.prettyprint.pun, .prettyprint .opn, .prettyprint .clo {
+    color: #93a1a1;
+}
+
+.prettyprint .fun {
+    color: #dc322f;
+}
+
+.prettyprint .str, .prettyprint .atv {
+    color: #D14;
+}
+
+.prettyprint .kwd, .prettyprint .linenums .tag {
+    color: #1e347b;
+}
+
+.prettyprint .typ, .prettyprint .atn, .prettyprint .dec, .prettyprint .var {
+    color: teal;
+}
+
+.prettyprint .pln {
+    color: #48484c;
+}
+
+.prettyprint ol.linenums {
+    margin: 0 0 0 33px;
+    padding: 0;
+    border: 0;
+    list-style-position: outside;
+}
+
+.prettyprint ol.linenums li {
+    padding-left: 12px;
+    color: #bebec5;
+    line-height: 24px;
+    font-size: 14px;
+    text-shadow: 0 1px 0 #fff;
+}
+

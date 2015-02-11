@@ -1,0 +1,22 @@
+<table class="alien-ui-datepicker-list">
+    <thead>
+    <tr>
+        {{list thead as th}}
+        <th>{{th}}</th>
+        {{/list}}
+    </tr>
+    </thead>
+    <tbody>
+    {{list tbody as index,tr}}
+    <tr>
+        {{list tr as td}}
+        <td data-id="{{td.id}}" 
+            data-year="{{td.year}}"
+            data-month="{{td.month}}"
+            data-date="{{td.date}}"
+            class="alien-ui-datepicker-{{td.type}} {{td.active ? 'alien-ui-datepicker-active' : ''}}">{{td.date}}</td>
+        {{/list}}
+    </tr>
+    {{/list}}
+    </tbody>
+</table>

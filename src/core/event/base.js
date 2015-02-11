@@ -245,8 +245,10 @@ define(function (require, exports, module) {
         }
 
         var callback;
+        var args = arguments;
+        var argL = args.length;
         var eventTypes = String(eventType).trim().split(regSpace);
-        isCapture = arguments[arguments.length - 1];
+        isCapture = args[argL - 1];
 
         if (typeis(isCapture) !== 'boolean') {
             isCapture = false;
@@ -254,9 +256,9 @@ define(function (require, exports, module) {
 
         // on self
         // .on(body, 'click', fn);
-        if (typeis(arguments[2]) === 'function') {
-            callback = arguments[2];
-            listener = arguments[2];
+        if (typeis(args[2]) === 'function') {
+            callback = args[2];
+            listener = args[2];
         }
         // delegate
         // .on(body, 'click', 'p', fn)

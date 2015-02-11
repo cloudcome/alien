@@ -209,7 +209,7 @@ define(function (require, exports, module) {
 
     /**
      * 判断能否转换为合法Date
-     * @param  {*}
+     * @param  {*} anything
      * @return {Boolean}
      * @version 1.0
      * 2014年5月2日21:07:33

@@ -65,8 +65,8 @@ define(function (require, exports, module) {
 
             easeBoth: function (t) {
                 return (t *= 2) < 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
+                .5 * t * t :
+                .5 * (1 - (--t) * (t - 2));
             },
 
             easeInStrong: function (t) {
@@ -79,8 +79,8 @@ define(function (require, exports, module) {
 
             easeBothStrong: function (t) {
                 return (t *= 2) < 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
+                .5 * t * t * t * t :
+                .5 * (2 - (t -= 2) * t * t * t);
             },
 
             easeOutQuart: function (t) {
@@ -145,5 +145,43 @@ define(function (require, exports, module) {
         }
     }
     ;
-})
-;
+});
+
+
+function anonymous(alienTemplateData_1423132028795/**/) {
+    try {
+        var thead = alienTemplateData_1423132028795["thead"];
+        var tbody = alienTemplateData_1423132028795["tbody"];
+        var alien_libs_template_GYE6vAAhe5EQatYyU3FN = "";
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += "<table class=\"alien-ui-datepicker-list\"> <thead> <tr> ";
+        this.each(thead, function (alien_libs_template_JDkSIEqmrNFJ55zVv4GI, alien_libs_template_iQGFJsUiqv8HPSCN1XEr) {
+            var alien_libs_template_JoUA1PO3lh9USssrrp3f = alien_libs_template_JDkSIEqmrNFJ55zVv4GI;
+            var th = alien_libs_template_iQGFJsUiqv8HPSCN1XEr;
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " <th>";
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(th) + "</th> ";
+        }, this);
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " </tr> </thead> <tbody> ";
+        this.each(tbody, function (alien_libs_template_9yIUiLZ8OMMLpDQcKHYW, alien_libs_template_ULstP1jS2Ne97N31VAFb) {
+            var index = alien_libs_template_9yIUiLZ8OMMLpDQcKHYW;
+            var tr = alien_libs_template_ULstP1jS2Ne97N31VAFb;
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " <tr> ";
+            this.each(tr[index], function (alien_libs_template_ZpeM5Y1ZId6eClxUfBkj, alien_libs_template_qz88hd9330CBdrAMgtiD) {
+                var alien_libs_template_AwymWFhy5qoriGF5zzUz = alien_libs_template_ZpeM5Y1ZId6eClxUfBkj;
+                var td = alien_libs_template_qz88hd9330CBdrAMgtiD;
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += " <td data-id=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.id) + "\" data-year=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.year) + "\" data-month=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.month) + "\" data-date=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "\" class=\"alien-ui-datepicker-";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.type) + " ";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.active ? 'alien-ui-datepicker-active' : '') + "\">";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "</td> ";
+            }, this);
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " </tr> ";
+        }, this);
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " </tbody> </table>";
+        return alien_libs_template_GYE6vAAhe5EQatYyU3FN
+    } catch (err) {
+        return err.message;
+    }
+}
