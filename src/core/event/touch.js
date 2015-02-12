@@ -39,20 +39,18 @@ define(function (require, exports, module) {
     var touchcancel = 'touchcancel MSPointerCancel pointercancel';
     var udf;
     var options = {
-        //minX: 30,
-        //minY: 30,
-        //tapTimeout: 300,
-        //holdTimeout: 300,
-        //swipeTimeout: 300,
         tap: {
             x: 30,
             y: 30,
-            timeout: 250
+            timeout: 150
+        },
+        dbltap: {
+            timeout: 300
         },
         taphold: {
             x: 50,
             y: 50,
-            timeout: 600
+            timeout: 500
         },
         swipe: {
             x: 50,
@@ -84,7 +82,9 @@ define(function (require, exports, module) {
      * @property changedDirection {String} 触摸改变的矢量主方向
      * @property deltaX {Number} 触摸改变的 x 距离
      * @property deltaY {Number} 触摸改变的 y 距离
+     * @property dbltapTimeid {Number} 双触定时器
      * @property tapholdTimeid {Number} 长触定时器
+     * @property inDbltap {Boolean} 是否在双触期间
      */
     var touch = {};
     var lastTapDefaultPrevented = false;
@@ -217,6 +217,26 @@ define(function (require, exports, module) {
                     lastTapDefaultPrevented = true;
                 }
             });
+
+            // 触发 dbltap
+            if (touch.endTime - touch.lastTime < options.dbltap.timeout && !touch.inDbltap) {
+                setTimeout(function () {
+                    touch.inDbltap = false;
+                }, options.dbltap.timeout);
+
+                controller.nextTick(function () {
+                    var dbltapEvent = event.create('dbltap');
+
+                    event.extend(dbltapEvent, firstTouch, touch);
+
+                    var dispatchDbltap = event.dispatch(touch.startTarget, dbltapEvent);
+
+                    if (dispatchDbltap && dispatchDbltap.defaultPrevented === true) {
+                        eve.preventDefault();
+                        lastTapDefaultPrevented = true;
+                    }
+                });
+            }
         }
 
         // 移动距离大于 taphold || 时间不够

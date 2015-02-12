@@ -9,7 +9,7 @@ define(function (require) {
         window.alert(123);
     });
 
-    event.on(demo2, 'tap', function () {
+    event.on(demo2, 'dbltap', function () {
         demo2.style.display = 'none';
         return false;
     });
