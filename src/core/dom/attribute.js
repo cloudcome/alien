@@ -154,9 +154,10 @@ define(function (require, exports, module) {
      * @example
      * attribute.fixCss('marginTop', 10);
      * // => {
-         * //    key: 'margin-top',
-         * //    val: '10px'
-         * // }
+     * //    key: 'margin-top',
+     * //    val: '10px',
+     * //    imp: false
+     * // }
      */
     exports.fixCss = function (key, val) {
         val = val === null ? '' : String(val).trim();
@@ -178,7 +179,7 @@ define(function (require, exports, module) {
         return {
             key: compatible.css3(_toSepString(key)),
             val: compatible.css3(fixVal) || fixVal,
-            important: important
+            imp: important
         };
     };
 
@@ -223,7 +224,7 @@ define(function (require, exports, module) {
                 // ele.style[fix.key] = fix.val;
                 // 样式名, 样式值, 优先级
                 // object.setProperty (propertyName, propertyValue, priority);
-                ele.style.setProperty(fix.key, fix.val, fix.important);
+                ele.style.setProperty(fix.key, fix.val, fix.imp);
             }
         });
     };

@@ -1,10 +1,8 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Editor = require('/src/ui/Editor/index.js');
-    var xhr = require('/src/core/communication/xhr.js');
-
-
+    var Editor = require('../../src/ui/Editor/index.js');
+    var xhr = require('../../src/core/communication/xhr.js');
     var editor = new Editor('#editor', {
         uploadCallback: function (list, progress, done) {
             var fd = new FormData();
