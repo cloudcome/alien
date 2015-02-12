@@ -87,6 +87,7 @@ define(function (require, exports, module) {
      * @property tapholdTimeid {Number} 长触定时器
      */
     var touch = {};
+    var lastTapDefaultPrevented = false;
 
 
     event.on(document, touchstart, function (eve) {
@@ -213,6 +214,7 @@ define(function (require, exports, module) {
 
                 if (dispatchTap && dispatchTap.defaultPrevented === true) {
                     eve.preventDefault();
+                    lastTapDefaultPrevented = true;
                 }
             });
         }
@@ -253,6 +255,16 @@ define(function (require, exports, module) {
 
     event.on(document, touchcancel, _cancel);
     event.on(window, 'scroll', _cancel);
+    /**
+     * @see https://github.com/madrobby/zepto/pull/746
+     * 修正 tap 点透的 BUG，监听 click 捕获阶段，并停止事件传递
+     */
+    event.on(document, 'click', function (eve) {
+        if (lastTapDefaultPrevented) {
+            lastTapDefaultPrevented = false;
+            eve.stopPropagation();
+        }
+    }, true);
 
 
     /**
