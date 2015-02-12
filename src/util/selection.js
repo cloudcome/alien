@@ -20,7 +20,7 @@ define(function (require, exports) {
      * @return {Object}
      */
     exports.getPos = function ($ele) {
-        if($ele.selectionStart){
+        if ($ele && $ele.setSelectionRange) {
             return [$ele.selectionStart, $ele.selectionEnd];
         }
 
@@ -31,20 +31,21 @@ define(function (require, exports) {
     /**
      * 设置选区
      * @param $ele {Object} 元素
-     * @param [start] {Number} 开始位置，默认为0
-     * @param [end] {Number} 结束位置，默认等于start
+     * @param [pos] {Array} 开始位置与结束位置
      *
      * @example
-     * selection.setPos($ele, 1);
-     * selection.setPos($ele, 1, 10);
+     * selection.setPos($ele, [1]);
+     * selection.setPos($ele, [1, 10]);
      */
-    exports.setPos = function ($ele, start, end) {
-        start = dato.parseInt(start, 0);
-        end = end ? dato.parseInt(end, 0): start;
-
+    exports.setPos = function ($ele, pos) {
         if ($ele && $ele.setSelectionRange) {
-            $ele.setSelectionRange(start, end);
-            $ele.focus();
+            $ele.setSelectionRange(pos[0] || 0, pos[1] || pos[0] || 0);
         }
+    };
+    
+    
+    
+    exports.getOffset = function ($ele) {
+        
     };
 });

@@ -633,7 +633,7 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
 
-            editor.setPos($ele, the._selection[0], the._selection[1]);
+            editor.setPos($ele, [the._selection]);
         },
 
 

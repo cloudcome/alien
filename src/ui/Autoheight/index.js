@@ -24,6 +24,8 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var dato = require('../../util/dato.js');
+    var selection = require('../../util/selection.js');
+    var controller = require('../../util/controller.js');
     var style = require('css!./style.css');
     var alienClass = 'alien-ui-autoheight';
     var defaults = {};
@@ -115,11 +117,13 @@ define(function (require, exports, module) {
             attribute.css($ele, {
                 overflow: 'hidden'
             });
+            the._pos = selection.getPos($ele);
             // 先插入字符，重新排版后还原
             $ele.value = ' ';
             the._$ele.style.height = 'auto';
             the._innerHeight = attribute.innerHeight(the._$ele);
             $ele.value = value;
+            selection.setPos($ele, the._pos);
         },
 
 
@@ -140,8 +144,12 @@ define(function (require, exports, module) {
          */
         resize: function () {
             var the = this;
+            
             the._initSize();
             adjust.call(the);
+            controller.nextTick(function () {
+                the._$ele.focus();
+            });
         },
 
 
