@@ -318,13 +318,13 @@ define(function (require, exports, module) {
      * @param {Object} [to.x] x轴终点
      * @param {Object} [to.y] y轴终点
      * @param {Object} [options] 配置
-     * @param {Object} [options.duration=567] 动画时间，默认789，单位 ms
-     * @param {Object} [options.easing] 动画缓冲，默认 swing
+     * @param {Number} [options.duration=567] 动画时间，默认789，单位 ms
+     * @param {String} [options.easing] 动画缓冲，默认 swing
      * 默认配置的缓冲函数有：linear、easeIn、easeOut、easeBoth、easeInStrong、easeOutStrong
      * easeBothStrong、easeOutQuart、easeInOutExpo、easeOutExpo、swing、swingFrom、swingTo
      * backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有一个参数t，表示时间比 = 已耗时 / 总时间，
      * 计算值=开始值 + ( 结束值 - 开始值 ) * 时间比
-     * @param {Object} [options.delay] 动画延时，默认0，单位ms
+     * @param {Number} [options.delay] 动画延时，默认0，单位ms
      * @param {Function} [callback] 回调
      * @returns {undefined}
      *

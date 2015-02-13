@@ -13,7 +13,31 @@ define(function (require, exports) {
     'use strict';
 
     var dato = require('./dato.js');
+    var selector = require('../core/dom/selector.js');
+    var attribute = require('../core/dom/attribute.js');
+    var modification = require('../core/dom/modification.js');
+    var $div = modification.create('div', {
+        style:{
+            position: 'absolute',
+            top: '-9999em',
+            left: '-9999em'
+        }
+    });
+    var typographyStyles = [
+        'font',
+        'letterSpacing',
+        'textTransform',
+        'wordSpacing',
+        'textIndent',
+        'whiteSpace',
+        'lineHeight',
+        'padding',
+        'width',
+        'height',
+        'border'
+    ];
 
+    
     /**
      * 获取选区
      * @param  {Object} $ele 元素
@@ -39,13 +63,33 @@ define(function (require, exports) {
      */
     exports.setPos = function ($ele, pos) {
         if ($ele && $ele.setSelectionRange) {
-            $ele.setSelectionRange(pos[0] || 0, pos[1] || pos[0] || 0);
+            var pos0 = dato.parseInt(pos[0], 0);
+            $ele.setSelectionRange(pos0, dato.parseInt(pos[1], pos0));
         }
     };
-    
-    
-    
+
+
+    /**
+     * 获取光标所在的坐标
+     * @param $ele
+     */
     exports.getOffset = function ($ele) {
-        
+        if ($ele && $ele.setSelectionRange) {
+            var style = attribute.css($ele, typographyStyles);
+            var pos0 = exports.getPos($ele)[0];
+            var val = $ele.value;
+
+            val = val.slice(0, pos0) + '<i style="display:inline;font-size:0;"></i>' + val.slice(pos0);
+            $div.innerHTML = val;
+            attribute.css($div, style);
+            
+            var $i = selector.query('i', $div)[0];
+            
+            return [$i.offsetLeft, $i.offsetTop];
+        }
+
+        return [0, 0];
     };
+
+    modification.insert($div, document.body);
 });
