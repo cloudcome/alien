@@ -44,15 +44,19 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +65,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +76,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -181,7 +186,7 @@ event.on(ele, 'swipeleft', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-64344810810871422720641989726573" data-toggle="tab">Source</a>
+                <a href="#tab-meta-500486070755869206195505824871361" data-toggle="tab">Source</a>
             </li>
 
         
@@ -202,7 +207,139 @@ event.on(ele, 'swipeleft', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-64344810810871422720641989726573">
+            <div class="tab-pane active" id="tab-meta-500486070755869206195505824871361">
+                <p><a href="core_event_touch-new.js.html#line9">core/event/touch-new.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-core_event_base.html">module:core/event/base</a></li>
+        
+            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-util_controller.html">module:util/controller</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            core/event/touch
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+                <blockquote class="description lead">扩展触摸事件支持
+                    
+                </blockquote>
+            
+
+            
+                <h4>Example</h4>
+                
+    <pre class="prettyprint"><code>event.on(ele, 'touch1start', fn);
+event.on(ele, 'touch1move', fn);
+event.on(ele, 'touch1end', fn);
+event.on(ele, 'touch1cancel', fn);
+event.on(ele, 'tap', fn);
+event.on(ele, 'dbltap', fn);
+event.on(ele, 'taphold', fn);
+event.on(ele, 'swipe', fn);
+event.on(ele, 'swipeup', fn);
+event.on(ele, 'swiperight', fn);
+event.on(ele, 'swipebottom', fn);
+event.on(ele, 'swipeleft', fn);</code></pre>
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-2582088476046928154357839375734" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-2582088476046928154357839375734">
                 <p><a href="core_event_touch.js.html#line9">core/event/touch.js:9</a></p>
             </div>
 
@@ -227,6 +364,8 @@ event.on(ele, 'swipeleft', fn);</code></pre>
             <li><a href="module-core_event_base.html">module:core/event/base</a></li>
         
             <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-util_controller.html">module:util/controller</a></li>
         </ul>
     
 

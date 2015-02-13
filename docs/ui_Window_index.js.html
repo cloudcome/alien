@@ -44,15 +44,19 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +65,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +76,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -150,7 +155,8 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var ui = require('../base.js');
     var alienIndex = 0;
-    var alienClass = 'alien-ui-window';
+    var alienBaseClass = 'alien-ui';
+    var alienClass = alienBaseClass + '-window';
     var noop = function () {
         // ignore
     };
@@ -193,9 +199,12 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);
-            modification.insert($pos, the._$content, 'afterend');
-            the._$contentPos = $pos;
-            modification.insert(the._$content, the._$window);
+
+            if (the._$content) {
+                modification.insert($pos, the._$content, 'afterend');
+                the._$contentPos = $pos;
+                modification.insert(the._$content, the._$window);
+            }
 
             event.on(the._$window, 'click tap', function (eve) {
                 eve.stopPropagation();
@@ -217,10 +226,12 @@ define(function (require, exports, module) {
             var winH = attribute.height(window);
             var pos = {};
             var pre = attribute.css(the._$window, ['width', 'height']);
+            var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
             attribute.css(the._$window, {
                 width: options.width,
-                height: options.height
+                height: options.height,
+                position: hasMask ? 'absolute' : 'fixed'
             });
             pos.width = attribute.outerWidth(the._$window);
             pos.height = attribute.outerHeight(the._$window);
@@ -367,8 +378,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取当前 mask 节点
-         * @returns {HTMLElementNode}
+         * 获取当前 window 节点
          */
         getNode: function () {
             return this._$window;
@@ -403,8 +413,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
             var destroy = function () {
-                modification.insert(the._$content, the._$contentPos, 'afterend');
-                modification.remove(the._$contentPos);
+                if (the._$content) {
+                    modification.insert(the._$content, the._$contentPos, 'afterend');
+                    modification.remove(the._$contentPos);
+                }
+
                 modification.remove(the._$window);
                 event.un(the._$window, 'click');
 
@@ -424,7 +437,7 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个窗口实例
-     * @param $content {Object} 内容节点
+     * @param $content {Object} 内容节点，为 null 时创建一个新的 window
      * @param [options] {Object} 配置
      * @param [options.width="auto"] {Number|String} 窗口宽度
      * @param [options.height="auto"] {Number|String} 窗口高度
