@@ -99,7 +99,11 @@ define(function (require, exports, module) {
             var the = this;
 
             event.on(the._$mask, 'click tap', function (eve) {
-                the.emit('hit');
+                var $window = selector.closest(eve.target, '.alien-ui-window')[0];
+
+                if(!$window){
+                    the.emit('hit');
+                }
             });
         },
 

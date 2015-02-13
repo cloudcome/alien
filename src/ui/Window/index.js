@@ -78,10 +78,6 @@ define(function (require, exports, module) {
                 modification.insert(the._$content, the._$window);
             }
 
-            event.on(the._$window, 'click tap', function (eve) {
-                eve.stopPropagation();
-            });
-
             return the;
         },
 
