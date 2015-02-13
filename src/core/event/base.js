@@ -163,7 +163,7 @@ define(function (require, exports, module) {
      * event.dispatch(ele, myclikEvent, eve);
      */
     exports.dispatch = function (ele, eventTypeOrEvent, copyEvent) {
-        var et = typeis(eventTypeOrEvent) === 'string' ?
+        var et = typeis.string(eventTypeOrEvent) ?
             this.create(eventTypeOrEvent) :
             eventTypeOrEvent;
 
@@ -196,7 +196,7 @@ define(function (require, exports, module) {
      * });
      */
     exports.extend = function (createEvent, copyEvent, alienDetail) {
-        if (typeis(createEvent) === 'string') {
+        if (typeis.string(createEvent)) {
             createEvent = this.create(createEvent);
         }
 
@@ -250,19 +250,19 @@ define(function (require, exports, module) {
         var eventTypes = String(eventType).trim().split(regSpace);
         isCapture = args[argL - 1];
 
-        if (typeis(isCapture) !== 'boolean') {
+        if (!typeis.function(isCapture)) {
             isCapture = false;
         }
 
         // on self
         // .on(body, 'click', fn);
-        if (typeis(args[2]) === 'function') {
+        if (typeis.function(args[2])) {
             callback = args[2];
             listener = args[2];
         }
         // delegate
         // .on(body, 'click', 'p', fn)
-        else if (typeis(listener) === 'function') {
+        else if (typeis.function(listener)) {
             if (canNotBubbleEvents.indexOf(eventType) > -1) {
                 console.warn(eventType, 'can not bubble in DOM tree');
             }
@@ -279,7 +279,7 @@ define(function (require, exports, module) {
 
         if (callback) {
             dato.each(eventTypes, function (index, eventType) {
-                if (typeis(listener) === 'function' && eventType) {
+                if (typeis.function(callback) && typeis.function(listener) && eventType) {
                     _on(element, eventType, callback, listener, isCapture);
                 }
             });
@@ -465,7 +465,7 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     dato.each(isCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (typeis.function(listener) && listener.call(the, eve) === false) {
+                        if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();
@@ -492,7 +492,7 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     dato.each(unCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (typeis.function(listener) && listener.call(the, eve) === false) {
+                        if (listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();

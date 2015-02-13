@@ -50,7 +50,5 @@ define(function (require) {
 
     an.on('end', function () {
         $ret2.innerHTML = '动画队列完成';
-
-
     });
 });
