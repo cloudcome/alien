@@ -31,13 +31,21 @@ define(function (require, exports, module) {
             percent = REG_NUM.test(percent) ? percent * 100 + '%' : percent;
             mainStyle += percent + '{';
 
+            var transformKey = '';
+            var transformVals = [];
+
             dato.each(properties, function (key, val) {
                 var fix = attribute.fixCss(key, val);
 
-                mainStyle += fix.key + ':' + fix.val + (fix.imp ? ' !important' : '') + ';';
+                if (fix.key.indexOf('transform') > -1) {
+                    transformKey = fix.key;
+                    transformVals.push(fix.val + (fix.imp ? ' !important' : ''));
+                } else {
+                    mainStyle += fix.key + ':' + fix.val + (fix.imp ? ' !important' : '') + ';';
+                }
             });
 
-            mainStyle += '}';
+            mainStyle += (transformVals.length ? transformKey + ':' + transformVals.join(' ') : '') + '}';
         });
 
         var style = '';

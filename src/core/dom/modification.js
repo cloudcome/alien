@@ -24,7 +24,6 @@ define(function (require, exports, module) {
     var head = domSelector.query('head')[0] || document.documentElement;
     var proto = DOMParser.prototype;
     var nativeParse = proto.parseFromString;
-    var REG_HTML_STRING = /^<[a-z\d]+\b/;
 
 
     // fallback
@@ -158,12 +157,8 @@ define(function (require, exports, module) {
         position = position || 'beforeend';
 
         if (typeis.string(source)) {
-            if (REG_HTML_STRING.test(source)) {
-                target.insertAdjacentHTML(position, source);
-            } else {
-                target.insertAdjacentText(position, source);
-            }
-        } else if(source && source.nodeType) {
+            target.insertAdjacentHTML(position, source);
+        } else if (source && source.nodeType) {
             _insertElement(source, target, position);
         }
     };

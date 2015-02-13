@@ -516,7 +516,7 @@ define(function (require, exports, module) {
      * @param {Boolean} isCapture 是否事件捕获
      * @private
      */
-    function _un(element, eventType, originalEvent, isCapture) {
+    function _un(element, eventType, originalListener, isCapture) {
         var domId = element[key];
         var findIndex;
         var args = arguments;
@@ -524,9 +524,9 @@ define(function (require, exports, module) {
 
         if (argL === 3) {
             // _un(ele, 'click', true);
-            if (typeis(args[2]) === 'boolean') {
+            if (typeis.boolean(args[2])) {
                 isCapture = args[2];
-                originalEvent = null;
+                originalListener = null;
             }
             // _un(ele, 'click', fn);
             else {
@@ -536,8 +536,8 @@ define(function (require, exports, module) {
 
         if (domId) {
             if (isCapture) {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -548,8 +548,8 @@ define(function (require, exports, module) {
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -561,7 +561,7 @@ define(function (require, exports, module) {
                 }
             }
         } else {
-            element.removeEventListener(eventType, originalEvent, isCapture);
+            element.removeEventListener(eventType, originalListener, isCapture);
         }
     }
 });

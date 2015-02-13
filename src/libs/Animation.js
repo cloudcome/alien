@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     var klass = require('../util/class.js');
     var howdo = require('../util/howdo.js');
     var typeis = require('../util/typeis.js');
+    var dato = require('../util/dato.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var animation = require('../core/dom/animation.js');
@@ -71,7 +72,7 @@ define(function (require, exports, module) {
      */
     pro.push = function ($ele, to, options) {
         this._queueList.push({
-            $ele: selector.query($ele)[0],
+            $eles: selector.query($ele),
             to: to,
             options: options
         });
@@ -106,10 +107,28 @@ define(function (require, exports, module) {
             .each(repeatQueue, function (i, u, next) {
                 howdo
                     .each(the._queueList, function (j, queue, next) {
-                        animation.animate(queue.$ele, queue.to, queue.options, function () {
-                            next();
-                            the.emit('change', j, i + 1);
-                        });
+                        var toType = typeis(queue.to);
+                        var to;
+
+                        if (toType === 'string') {
+                            to = dato.extend({}, queue.options, {
+                                name: queue.to
+                            });
+                            
+                            howdo.each(queue.$eles, function (k, $ele, done) {
+                                animation.keyframes($ele, to, done);
+                            }).together(function () {
+                                next();
+                                the.emit('change', j, i + 1);
+                            });
+                        } else {
+                            howdo.each(queue.$eles, function (k, $ele, done) {
+                                animation.animate($ele, queue.to, queue.options, done);
+                            }).together(function () {
+                                next();
+                                the.emit('change', j, i + 1);
+                            });
+                        }
                     })
                     .follow(next);
             })
