@@ -32,20 +32,20 @@ define(function (require, exports, module) {
             mainStyle += percent + '{';
 
             var transformKey = '';
-            var transformVals = [];
+            var transformVal = [];
 
             dato.each(properties, function (key, val) {
                 var fix = attribute.fixCss(key, val);
 
                 if (fix.key.indexOf('transform') > -1) {
                     transformKey = fix.key;
-                    transformVals.push(fix.val + (fix.imp ? ' !important' : ''));
+                    transformVal.push(fix.val + (fix.imp ? ' !important' : ''));
                 } else {
                     mainStyle += fix.key + ':' + fix.val + (fix.imp ? ' !important' : '') + ';';
                 }
             });
 
-            mainStyle += (transformVals.length ? transformKey + ':' + transformVals.join(' ') : '') + '}';
+            mainStyle += (transformVal.length ? transformKey + ':' + transformVal.join(' ') : '') + '}';
         });
 
         var style = '';

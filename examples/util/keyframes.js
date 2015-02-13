@@ -9,19 +9,19 @@ define(function (require) {
     var pengzhuang = keyframes({
         0: {
             scale: 0.8,
-            translateX: '-10px'
+            translateX: -10
         },
         0.3: {
             scale: 1.2,
-            translateX: '60px'
+            translateX: 60
         },
         0.6: {
             scale: 0.9,
-            translateX: '-30px'
+            translateX: -30
         },
         1: {
             scale: 1,
-            translateX: '20px'
+            translateX: 20
         }
     });
     
