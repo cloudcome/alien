@@ -27,7 +27,8 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var ui = require('../base.js');
     var alienIndex = 0;
-    var alienClass = 'alien-ui-window';
+    var alienBaseClass = 'alien-ui';
+    var alienClass = alienBaseClass + '-window';
     var noop = function () {
         // ignore
     };
@@ -70,9 +71,12 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);
-            modification.insert($pos, the._$content, 'afterend');
-            the._$contentPos = $pos;
-            modification.insert(the._$content, the._$window);
+
+            if (the._$content) {
+                modification.insert($pos, the._$content, 'afterend');
+                the._$contentPos = $pos;
+                modification.insert(the._$content, the._$window);
+            }
 
             event.on(the._$window, 'click tap', function (eve) {
                 eve.stopPropagation();
@@ -94,10 +98,12 @@ define(function (require, exports, module) {
             var winH = attribute.height(window);
             var pos = {};
             var pre = attribute.css(the._$window, ['width', 'height']);
+            var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
             attribute.css(the._$window, {
                 width: options.width,
-                height: options.height
+                height: options.height,
+                position: hasMask ? 'absolute' : 'fixed'
             });
             pos.width = attribute.outerWidth(the._$window);
             pos.height = attribute.outerHeight(the._$window);
@@ -244,8 +250,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取当前 mask 节点
-         * @returns {HTMLElementNode}
+         * 获取当前 window 节点
          */
         getNode: function () {
             return this._$window;
@@ -280,8 +285,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
             var destroy = function () {
-                modification.insert(the._$content, the._$contentPos, 'afterend');
-                modification.remove(the._$contentPos);
+                if (the._$content) {
+                    modification.insert(the._$content, the._$contentPos, 'afterend');
+                    modification.remove(the._$contentPos);
+                }
+
                 modification.remove(the._$window);
                 event.un(the._$window, 'click');
 
@@ -301,7 +309,7 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个窗口实例
-     * @param $content {Object} 内容节点
+     * @param $content {Object} 内容节点，为 null 时创建一个新的 window
      * @param [options] {Object} 配置
      * @param [options.width="auto"] {Number|String} 窗口宽度
      * @param [options.height="auto"] {Number|String} 窗口高度

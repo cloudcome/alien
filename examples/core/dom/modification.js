@@ -4,7 +4,7 @@ define(function (require) {
     var body = document.body;
     var script = document.getElementById('script');
     var p1 = document.getElementById('p1');
-    var domModification = require('/src/core/dom/modification.js');
+    var domModification = require('../../../src/core/dom/modification.js');
     var index = 0;
 
     console.log('==========================');
@@ -47,8 +47,13 @@ define(function (require) {
     console.log(domModification.unwrap(p1, 'ul li ul li'));
 
 
+    domModification.insert('字符串', document.body);
+    domModification.insert('<h1>HTML 标签</h1>', document.body);
+    domModification.insert(' <h1>HTML 标签 字符串</h1>', document.body);
+
+
     function _create() {
-        var id = 'id-' + Date.now()
+        var id = 'id-' + Date.now();
         var div = domModification.create('div', {
             id: id,
             style: {
@@ -58,7 +63,7 @@ define(function (require) {
                 'margin-bottom': '10px'
             }
         });
-        div.innerHTML = '第'+(++index)+'个div';
+        div.innerHTML = '第' + (++index) + '个div';
 
         return div;
     }

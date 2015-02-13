@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var dato = require('../../util/dato.js');
+    var typeis = require('../../util/typeis.js');
     var domSelector = require('./selector.js');
     var attribute = require('./attribute.js');
     var regSpace = /\s+/g;
@@ -29,13 +30,13 @@ define(function (require, exports, module) {
     proto.parseFromString2 = function (markup, type) {
         if (/^\s*text\/html\s*(?:;|$)/i.test(type)) {
             var doc = document.implementation.createHTMLDocument('');
-            
+
             if (markup.toLowerCase().indexOf('<!doctype') > -1) {
                 doc.documentElement.innerHTML = markup;
-            }else {
+            } else {
                 doc.body.innerHTML = markup;
             }
-            
+
             return doc;
         } else {
             return nativeParse.apply(this, arguments);
@@ -134,10 +135,9 @@ define(function (require, exports, module) {
 
     /**
      * 将源插入到指定的目标位置，并返回指定的元素
-     * @param {Object} source 源
+     * @param {HTMLElement|Node|String} source 源
      * @param {Object} target 目标
      * @param {String} [position="beforeend"] 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
-     * @param {Boolean} [isReturnSource] 是否返回源，默认false
      * @returns {Object|null}
      *
      * @example
@@ -153,62 +153,14 @@ define(function (require, exports, module) {
      * modification.insert(source, target, 'beforeend');
      * modification.insert(source, target, 'afterend');
      */
-    exports.insert = function (source, target, position, isReturnSource) {
-        if (!source || !source.nodeType || !target || !target.nodeType) {
-            return null;
-        }
-
+    exports.insert = function (source, target, position) {
         position = position || 'beforeend';
 
-        switch (position) {
-            // 源插入到目标外部之前
-            case 'beforebegin':
-                if (target && source && target.parentNode) {
-                    target.parentNode.insertBefore(source, target);
-
-                    return isReturnSource ? source : target;
-                }
-
-                break;
-
-            // 源插入到目标内部最前
-            case 'afterbegin':
-                if (source && target) {
-                    if (target.firstChild) {
-                        target.insertBefore(source, target.firstChild);
-                    } else {
-                        target.appendChild(source);
-                    }
-
-                    return isReturnSource ? source : target;
-                }
-
-                break;
-
-            // 源插入到目标内部最后
-            case 'beforeend':
-                if (target && source) {
-                    target.appendChild(source);
-
-                    return isReturnSource ? source : target;
-                }
-
-                break;
-
-            // 源插入到目标外部之后
-            case 'afterend':
-                if (target && source && target.parentNode) {
-                    target.nextSibling ?
-                        target.parentNode.insertBefore(source, target.nextSibling) :
-                        target.parentNode.appendChild(source);
-
-                    return isReturnSource ? source : target;
-                }
-
-                break;
+        if (typeis.string(source)) {
+            target.insertAdjacentHTML(position, source);
+        } else if (source && source.nodeType) {
+            _insertElement(source, target, position);
         }
-
-        return null;
     };
 
 
@@ -255,7 +207,8 @@ define(function (require, exports, module) {
             // 这里必须复制对象
             // 因为后面的 DOM 修改会影响这里，因为 target 是一个对象引用
             wrap = dato.extend([], target);
-            target = this.insert(wrap[0], source, 'beforebegin', !0);
+            this.insert(wrap[0], source, 'beforebegin');
+            target = wrap[0];
 
             if (target) {
                 // #div1>#div2>#div3
@@ -338,4 +291,55 @@ define(function (require, exports, module) {
             style.appendChild(this.create('#text', styleText));
         }
     };
+
+
+    /**
+     * 插入 Element
+     * @param source
+     * @param target
+     * @param position
+     */
+    function _insertElement(source, target, position) {
+        switch (position) {
+            // 源插入到目标外部之前
+            case 'beforebegin':
+                if (target && source && target.parentNode) {
+                    target.parentNode.insertBefore(source, target);
+                }
+
+                break;
+
+            // 源插入到目标内部最前
+            case 'afterbegin':
+                if (source && target) {
+                    if (target.firstChild) {
+                        target.insertBefore(source, target.firstChild);
+                    } else {
+                        target.appendChild(source);
+                    }
+                }
+
+                break;
+
+            // 源插入到目标内部最后
+            case 'beforeend':
+                if (target && source) {
+                    target.appendChild(source);
+                }
+
+                break;
+
+            // 源插入到目标外部之后
+            case 'afterend':
+                if (target && source && target.parentNode) {
+                    if (target.nextSibling) {
+                        target.parentNode.insertBefore(source, target.nextSibling);
+                    } else {
+                        target.parentNode.appendChild(source);
+                    }
+                }
+
+                break;
+        }
+    }
 });

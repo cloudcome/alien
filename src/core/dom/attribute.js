@@ -26,7 +26,9 @@ define(function (require, exports, module) {
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
     var see = require('./see.js');
-    var REG_PX = /margin|width|height|padding|top|right|bottom|left/i;
+    var allocation = require('../../util/allocation.js');
+    var REG_PX = /margin|width|height|padding|top|right|bottom|left|translate/i;
+    var REG_DEG = /rotate|skew/i;
     var REG_TRANSFORM = /translate|scale|skew|rotate|matrix|perspective/i;
     var REG_IMPORTANT = /\s!important$/i;
     // +123.456
@@ -153,9 +155,10 @@ define(function (require, exports, module) {
      * @example
      * attribute.fixCss('marginTop', 10);
      * // => {
-         * //    key: 'margin-top',
-         * //    val: '10px'
-         * // }
+     * //    key: 'margin-top',
+     * //    val: '10px',
+     * //    imp: false
+     * // }
      */
     exports.fixCss = function (key, val) {
         val = val === null ? '' : String(val).trim();
@@ -167,17 +170,18 @@ define(function (require, exports, module) {
             val = val.replace(REG_IMPORTANT, '');
         }
 
-        if (REG_TRANSFORM.test(key)) {
-            val = key + '(' + val + ')';
-            key = 'transform';
-        }
-
+        var fixkey = key;
         var fixVal = _toCssVal(key, val);
 
+        if (REG_TRANSFORM.test(key)) {
+            fixkey = 'transform';
+            fixVal = key + '(' + fixVal + ')';
+        }
+
         return {
-            key: compatible.css3(_toSepString(key)),
+            key: compatible.css3(_toSepString(fixkey)),
             val: compatible.css3(fixVal) || fixVal,
-            important: important
+            imp: important
         };
     };
 
@@ -205,6 +209,10 @@ define(function (require, exports, module) {
      * attribute.css(ele, ['width','height']);
      */
     exports.css = function (ele, key, val) {
+        var transformKey = '';
+        var transformVal = [];
+        var important = '';
+
         return _getSet(arguments, {
             get: function (ele, key) {
                 var temp = key.split('::');
@@ -215,14 +223,27 @@ define(function (require, exports, module) {
                 return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
             },
             set: function (ele, key, val) {
-                key = key.split('::')[0];
+                key = key.split('::', 1)[0];
 
                 var fix = exports.fixCss(key, val);
 
-                // ele.style[fix.key] = fix.val;
-                // 样式名, 样式值, 优先级
-                // object.setProperty (propertyName, propertyValue, priority);
-                ele.style.setProperty(fix.key, fix.val, fix.important);
+                if (fix.key.indexOf('transform') > -1) {
+                    transformKey = fix.key;
+                    transformVal.push(fix.val);
+
+                    if (!important && fix.imp) {
+                        important = fix.imp;
+                    }
+                } else {
+                    // 样式名, 样式值, 优先级
+                    // object.setProperty (propertyName, propertyValue, priority);
+                    ele.style.setProperty(fix.key, fix.val, fix.imp);
+                }
+            },
+            onset: function () {
+                if (transformVal.length) {
+                    ele.style.setProperty(transformKey, transformVal.join(' '), important);
+                }
             }
         });
     };
@@ -577,14 +598,15 @@ define(function (require, exports, module) {
      * @private
      */
     function _toCssVal(key, val) {
-        if (!REG_PX.test(key)) {
+        if (!REG_PX.test(key) && !REG_DEG.test(key)) {
             return val;
         }
 
         val += '';
 
         if (regNum.test(val)) {
-            return val.replace(regEndPoint, '') + 'px';
+            return val.replace(regEndPoint, '') +
+                (REG_PX.test(key) ? 'px' : 'deg');
         }
 
         return val;
@@ -611,51 +633,63 @@ define(function (require, exports, module) {
      * @private
      */
     function _getSet(args, getSet, argumentsSetLength) {
-        argumentsSetLength = argumentsSetLength || 2;
+        var $ele = args[0];
 
-        var arg1Type = typeis(args[1]);
-        var ret = {};
-        var argsLength = args.length;
-        var eles = typeis.array(args[0]) ? args[0] : [args[0]];
-        var ele0 = eles[0];
-        var arg1 = args[1];
-        var arg2 = args[2];
+        return allocation.getset({
+            get: function (key) {
+                return getSet.get($ele, key);
+            },
+            set: function (key, val) {
+                getSet.set($ele, key, val);
+            },
+            onset: getSet.onset
+        }, [].slice.call(args, 1), argumentsSetLength);
 
-        // .fn(ele);
-        if (argsLength === 1) {
-            return getSet.get(ele0);
-        }
-        // .fn(ele, 'name', '1');
-        else if (argsLength === 3 && argumentsSetLength === 2) {
-            dato.each(eles, function (i, ele) {
-                getSet.set(ele, arg1, arg2);
-            });
-        }
-        // .fn(ele, {name: 1, id: 2});
-        else if (argsLength === 2 && arg1Type === 'object' && argumentsSetLength === 2) {
-            dato.each(eles, function (i, ele) {
-                dato.each(arg1, function (key, val) {
-                    getSet.set(ele, key, val);
-                });
-            });
-        }
-        // .fn(ele, ['name', 'id']);
-        else if (argsLength === 2 && arg1Type === 'array' && argumentsSetLength === 2) {
-            dato.each(arg1, function (index, key) {
-                ret[key] = getSet.get(ele0, key);
-            });
-            return ret;
-        }
-        // .fn(ele, 'name');
-        else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 1) {
-            dato.each(eles, function (i, ele) {
-                getSet.set(ele, arg1);
-            });
-        }
-        // .fn(ele, 'name');
-        else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 2) {
-            return getSet.get(ele0, arg1);
-        }
+        //argumentsSetLength = argumentsSetLength || 2;
+        //
+        //var arg1Type = typeis(args[1]);
+        //var ret = {};
+        //var argsLength = args.length;
+        //var eles = typeis.array(args[0]) ? args[0] : [args[0]];
+        //var ele0 = eles[0];
+        //var arg1 = args[1];
+        //var arg2 = args[2];
+        //
+        //// .fn(ele);
+        //if (argsLength === 1) {
+        //    return getSet.get(ele0);
+        //}
+        //// .fn(ele, 'name', '1');
+        //else if (argsLength === 3 && argumentsSetLength === 2) {
+        //    dato.each(eles, function (i, ele) {
+        //        getSet.set(ele, arg1, arg2);
+        //    });
+        //}
+        //// .fn(ele, {name: 1, id: 2});
+        //else if (argsLength === 2 && arg1Type === 'object' && argumentsSetLength === 2) {
+        //    dato.each(eles, function (i, ele) {
+        //        dato.each(arg1, function (key, val) {
+        //            getSet.set(ele, key, val);
+        //        });
+        //    });
+        //}
+        //// .fn(ele, ['name', 'id']);
+        //else if (argsLength === 2 && arg1Type === 'array' && argumentsSetLength === 2) {
+        //    dato.each(arg1, function (index, key) {
+        //        ret[key] = getSet.get(ele0, key);
+        //    });
+        //    return ret;
+        //}
+        //// .fn(ele, 'name');
+        //else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 1) {
+        //    dato.each(eles, function (i, ele) {
+        //        getSet.set(ele, arg1);
+        //    });
+        //}
+        //// .fn(ele, 'name');
+        //else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 2) {
+        //    return getSet.get(ele0, arg1);
+        //}
     }
 
 

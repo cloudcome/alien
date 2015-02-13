@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+.alien-ui-datepicker-list{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.alien-ui-datepicker-list th,
+.alien-ui-datepicker-list td{
+    padding: 10px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.alien-ui-datepicker-list th{
+    background: #f5f5f5;
+}

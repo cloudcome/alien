@@ -21,7 +21,7 @@ define(function (require, exports, module) {
      * @requires util/controller
      */
 
-     "use strict";
+    "use strict";
 
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -170,16 +170,16 @@ define(function (require, exports, module) {
         var translate0;
 
         // 鼠标移入
-        event.on(the._$wrap, 'mouseenter', the._autoPlay.bind(false));
+        event.on(the._$wrap, 'mouseenter', the._autoPlay.bind(the, false));
 
         // 鼠标移开
-        event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(true));
+        event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(the, true));
 
         // 触摸开始
         event.on(the._$wrap, 'touch1start', function (eve) {
             hasScroll = false;
             translate0 = the._translate;
-            the._autoPlay(false);
+            the._autoPlay(the, false);
         });
 
         // 触摸过程

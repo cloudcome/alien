@@ -31,7 +31,6 @@ define(function (require, exports) {
 
     /**
      * 将图片对象绘制到 canvas 上
-     * @param $canvas {Element} canvas 对象
      * @param $img {HTMLImageElement} img 对象
      * @param options {Object} 参数
      * @param [options.srcX=0] {Number} 源图片区域起点 x 坐标，默认为0
@@ -87,7 +86,7 @@ define(function (require, exports) {
 
     /**
      * 图片转换为二进制对象
-     * @param $img {HTMLImageELement} 图片对象
+     * @param $img {HTMLImageElement} 图片对象
      * @param options {Object} 配置
      * @param [options.srcX=0] {Number} 源图片区域起点 x 坐标，默认为0
      * @param [options.srcY=0] {Number} 源图片区域起点 y 坐标，默认为0

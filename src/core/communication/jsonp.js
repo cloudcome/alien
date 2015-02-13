@@ -18,6 +18,7 @@ define(function (require, exports, module) {
 
     var dato = require('../../util/dato.js');
     var klass = require('../../util/class.js');
+    var random = require('../../util/random.js');
     var Emitter = require('../../libs/Emitter.js');
     var qs = require('../../util/querystring.js');
     var modification = require('../../core/dom/modification.js');
@@ -29,7 +30,7 @@ define(function (require, exports, module) {
         // 请求参数
         query: null,
         // 是否保留缓存
-        isCache: !1
+        isCache: false
     };
     var regQ = /\?$/;
     var index = 0;
@@ -53,7 +54,7 @@ define(function (require, exports, module) {
                 options.query._ = ++index;
             }
 
-            var name = 'alienJSONP' + Date.now() + String(Math.random()).slice(2);
+            var name = 'alienJSONP' + random.string(9, 'aA0_');
             var qss = qs.stringify(options.query);
             var script = modification.create('script', {
                 async: 'async',

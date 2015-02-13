@@ -37,6 +37,7 @@ define(function (require, exports, module) {
      * @param [options.activeDate=null] {Date|Number|Array} 高亮的日期，默认为今天
      * @param [options.isNatualMonth=false] {Boolean} 是否为自然月，默认 false
      * @param [options.firstDayInWeek=0] {Number} 一周的第一天星期几，默认为0，即星期日
+     * @returns [Array] 月历数组
      */
     exports.month = function calendar(year, month, options) {
         options = dato.extend({}, defaults, options);

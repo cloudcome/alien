@@ -2,7 +2,7 @@
 <!--
  - 文件描述
  - @author ydr.me
- - @create 2014-12-17 22:13
+ - @create 2014-10-30 19:17
  -->
 <html>
 <head lang="zh-cn">
@@ -19,55 +19,41 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>Window.html</title>
+    <title>keyframes.html</title>
     <style>
-        body{
-            height: 2000px;
-        }
-        #demo {
-            width: auto;
-            height: 100%;
-            background: #fed;
-        }
-
-        pre {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #f5f5f5;
-            padding: 20px;
-            margin: 10px;
+        @-webkit-keyframes abc {
+            0% {
+                width: 200px;
+            }
+            100% {
+                width: 100px;
+            }
+            50% {
+                width: 300px;
+            }
         }
 
-        #fixed{
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        button{
+        #btn {
             padding: 10px 20px;
+        }
+
+        #demo {
+            width: 100px;
+            height: 100px;
+            background: #000;
         }
     </style>
 </head>
 <body ontouchstart="">
 
-<div id="fixed">
-    <button id="btn1">打开 #demo window</button>
-    <button id="btn3">随机 resize #demo window</button>
-</div>
+<button id="btn">开始</button>
 
-<div id="demo">
-    <h1>#demo</h1>
+<div id="demo"></div>
 
-    <button id="btn2">关闭 #demo window</button>
-</div>
+<div id="ret"></div>
 
-<pre>
-</pre>
-
-<script src="../coolie.min.js" data-main="./ui/Window.js"></script>
+<script src="../coolie.min.js" data-main="./util/keyframes.js"></script>
 <script src="../coolie-config.js"></script>
-
 
 </body>
 </html>

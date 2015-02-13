@@ -53,7 +53,7 @@ define(function (require, exports) {
     /**
      * 随机字符串
      * @param [length=6] {Number} 随机字符串长度
-     * @param [dictionary='a'] {String} 字典
+     * @param [dictionary='aA0'] {String} 字典
      *
      * @example
      * // 字典对应关系

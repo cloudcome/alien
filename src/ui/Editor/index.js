@@ -382,9 +382,9 @@ define(function (require, exports, module) {
                 clearTimeout(the._timerId);
             }
 
-            window[requestAnimationFrame](function () {
-                the._autoheight.resize();
-            });
+            the._timerId = setTimeout(function () {
+                the._autoheight.resize.call(the._autoheight);
+            }, 60);
         },
 
 
@@ -633,7 +633,7 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
 
-            editor.setPos($ele, the._selection[0], the._selection[1]);
+            editor.setPos($ele, [the._selection]);
         },
 
 
@@ -655,7 +655,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            controller.nextTick(the._autoheight.resize, the)
+            controller.nextTick(the._autoheight.resize, the._autoheight);
         },
 
         /**

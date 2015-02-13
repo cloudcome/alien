@@ -13,14 +13,44 @@ define(function (require, exports, module) {
 
     var typeis = require('./typeis.js');
     var dato = require('./dato.js');
+    var noop = function(){
+        // ignore
+    };
 
 
     /**
      * getset 转换器
-     * @param getset {{get: Function, set: Function}} 获取与设置的 Map
+     * @param getset {{get: Function, set: Function, onget: Function, onset: Function}} 获取与设置的 Map
      * @param args {Object} 参数
      * @param [setLength=2] 设置行为的参数个数
      * @returns {*}
+     * 
+     * @example
+     * var fn = function(key, val){
+     *     return allocation.getset({
+     *         get: function(key){
+     *             return 'get ' + key;
+     *         },
+     *         set: function(key, val){
+     *             console.log('set ' + key + ' = ' + val);
+     *         },
+     *         // 所有 set 结束之后
+     *         onset: function(){}
+     *     }, arguments);
+     * };
+     * 
+     * fn('a');
+     * // => "get a"
+     *
+     * fn(['a', 'b']);
+     * // => {a: "get a", b: "get b"}
+     *
+     * fn('a', 1);
+     * // => set a = 1
+     *
+     * fn({a: 1, b: 2});
+     * // => set a = 1
+     * // => set b = 2
      */
     exports.getset = function (getset, args, setLength) {
         setLength = setLength || 2;
@@ -28,12 +58,14 @@ define(function (require, exports, module) {
         var argl = args.length;
         var ret = {};
         var i = argl;
-        
+
         while(i--){
             if(args[i] === undefined){
                 argl--;
             }
         }
+
+        getset.onset = typeis.function(getset.onset) ? getset.onset : noop;
 
         // e.g. .html();
         if (argl === 0 && setLength === 1) {
@@ -42,6 +74,7 @@ define(function (require, exports, module) {
         // e.g. .html(html);
         else if (argl === 1 && setLength === 1) {
             getset.set(args[0]);
+            getset.onset(args[0]);
         }
         // e.g. .css({width: 100});
         // e.g. .css(['width', 'height']);
@@ -51,6 +84,7 @@ define(function (require, exports, module) {
                 dato.each(args[0], function (key, val) {
                     getset.set(key, val);
                 });
+                getset.onset();
             } else if (typeis.array(args[0])) {
                 dato.each(args[0], function (index, key) {
                     ret[key] = getset.get(key);
@@ -63,7 +97,8 @@ define(function (require, exports, module) {
         }
         // e.g. .css('width', 100);
         else if (argl === 2 && setLength === 2) {
-            return getset.set(args[0], args[1]);
+            getset.set(args[0], args[1]);
+            getset.onset();
         }
     };
 });

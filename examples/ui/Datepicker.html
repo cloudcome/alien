@@ -18,7 +18,7 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>Msg.html</title>
+    <title>月历</title>
     <style>
         button {
             padding: 10px 20px;
@@ -33,40 +33,13 @@
             margin: 10px;
         }
 
-        #fixed{
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        body{
-            padding-top: 900px;
-        }
     </style>
 </head>
 <body>
 
-<div id="fixed">
-    <input type="text" name="text" id="text" placeholder="输入"/>
-    <button id="btn0">0个按钮的 msg</button>
-    <button id="btn1">1个按钮的 msg</button>
-    <button id="btn2">2个按钮的 msg</button>
-    <button id="btn3">3个按钮的 msg</button>
-    <button id="btn4">4个按钮的 msg</button>
-    <button id="btn5">5个按钮的 msg</button>
-    <button id="btn6">打开 msg 并在 2s 后消失</button>
-</div>
 
 
-<pre>
-new Msg({
-    content: '腾格里额里斯镇，沙漠深处，数个足球场大小的长方形的排污池并排居于沙漠之中，周边用水泥砌成，围有一人高绿色网状铁丝栏。',
-    buttons: []
-});
-</pre>
-
-
-<script src="../coolie.min.js" data-main="./ui/Msg.js"></script>
+<script src="../coolie.min.js" data-main="./ui/Datepicker.js"></script>
 <script src="../coolie-config.js"></script>
 
 </body>

@@ -19,17 +19,22 @@ define(function (require, exports, module) {
     var typeis = require('../util/typeis.js');
     var random = require('../util/random.js');
     var klass = require('../util/class.js');
-    var regStringWrap = /([\\"])/g;
-    var regBreakLineMac = /\n/g;
-    var regBreakLineWin = /\r/g;
-    var regVar = /^(=)?\s*([^|]+?)(\|.*)?$/;
-    var regFilter = /^(.*?)(\s*:\s*(.+)\s*)?$/;
-    var regIf = /^((else\s+)?if)\s+(.*)$/;
-    var regSpace = /\s+/g;
-    var regList = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
-    var regComments = /<!--[\s\S]*?-->/g;
-    var regElseIf = /^else\s+if\s/;
-    var regHash = /^#/;
+    var REG_STRING_WRAP = /([\\"])/g;
+    var REG_LINES = /[\n\r\t]/g;
+    var REG_SPACES = /\s{2,}/g;
+    var REG_PRES = /<pre\b.*?>[\s\S]*?<\/pre>/ig;
+    var REG_VAR = /^(=)?\s*([^|]+?)(\|.*)?$/;
+    var REG_FILTER = /^(.*?)(\s*:\s*(.+)\s*)?$/;
+    var REG_IF = /^((else\s+)?if)\s+(.*)$/;
+    //var REH_LIST = /^list\s+\b([^,]*)\b\s+as\s+\b([^,]*)\b(\s*,\s*\b([^,]*))?$/;
+    var REH_LIST = /^list\s+([^,]*)\s+as\s+([^,]*)(\s*,\s*([^,]*))?$/;
+    var REG_ELSE_IF = /^else\s+if\s/;
+    var REG_HASH = /^#/;
+    var regLines = [{
+        'n': /\n/g,
+        'r': /\r/g,
+        't': /\t/g
+    }];
     var escapes = [
         {
             reg: /</g,
@@ -55,6 +60,9 @@ define(function (require, exports, module) {
     var openTag = '{{';
     var closeTag = '}}';
     var defaults = {
+        /**
+         * @type Boolean
+         */
         compress: true
     };
     var filters = {};
@@ -185,12 +193,12 @@ define(function (require, exports, module) {
                     // 多个连续开始符号
                     if (!$0 || $0 === '{') {
                         if (inIgnore) {
-                            output.push(_var + '+=' + the._lineWrap(openTag) + ';');
+                            output.push(_var + '+=' + _cleanPice(openTag) + ';');
                         }
                     }
                     // 忽略开始
                     else if ($0.slice(-1) === '\\') {
-                        output.push(_var + '+=' + the._lineWrap($0.slice(0, -1) + openTag) + ';');
+                        output.push(_var + '+=' + _cleanPice($0.slice(0, -1) + openTag) + ';');
                         inIgnore = true;
                         parseTimes--;
                     }
@@ -201,7 +209,7 @@ define(function (require, exports, module) {
 
                         inIgnore = false;
                         inExp = true;
-                        output.push(_var + '+=' + the._lineWrap($0) + ';');
+                        output.push(_var + '+=' + _cleanPice($0) + ';');
                     }
                 }
                 // 1个结束符
@@ -214,7 +222,7 @@ define(function (require, exports, module) {
                     if (inIgnore) {
                         output.push(
                             _var +
-                            '+=' + the._lineWrap((times > 1 ? openTag : '') +
+                            '+=' + _cleanPice((times > 1 ? openTag : '') +
                                 $0 + closeTag +
                                 (isEndIgnore ? $1.slice(0, -1) : $1)
                             ) +
@@ -237,14 +245,14 @@ define(function (require, exports, module) {
                         $1 = $1.slice(0, -1);
                     }
 
-                    $1 = the._lineWrap($1);
+                    $1 = _cleanPice($1);
 
                     // if abc
                     if (the._hasPrefix($0, 'if')) {
                         output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else if abc
-                    else if (regElseIf.test($0)) {
+                    else if (REG_ELSE_IF.test($0)) {
                         output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
                     // else
@@ -273,8 +281,8 @@ define(function (require, exports, module) {
                         }
                     }
                     // #
-                    else if (regHash.test($0)) {
-                        parseVar = the._parseVar($0.replace(regHash, ''));
+                    else if (REG_HASH.test($0)) {
+                        parseVar = the._parseVar($0.replace(REG_HASH, ''));
 
                         if (parseVar) {
                             output.push(parseVar);
@@ -292,7 +300,7 @@ define(function (require, exports, module) {
                 }
                 // 多个结束符
                 else {
-                    output.push(_var + '+=' + the._lineWrap(value) + ';');
+                    output.push(_var + '+=' + _cleanPice(value) + ';');
                     inExp = false;
                     inIgnore = false;
                 }
@@ -327,6 +335,7 @@ define(function (require, exports, module) {
          */
         render: function (data) {
             var the = this;
+            var options = the._options;
             var _var = 'alienTemplateData_' + Date.now();
             var vars = [];
             var fn;
@@ -362,7 +371,10 @@ define(function (require, exports, module) {
                 ret = err.message;
             }
 
-            return String(ret);
+
+            ret = String(ret);
+
+            return options.compress ? _cleanHTML(ret) : ret;
         },
 
 
@@ -437,7 +449,7 @@ define(function (require, exports, module) {
          */
         _parseExp: function (str, pre) {
             var the = this;
-            var matches = str.trim().match(regVar);
+            var matches = str.trim().match(REG_VAR);
             var filters;
 
             if (!matches) {
@@ -454,7 +466,7 @@ define(function (require, exports, module) {
                 filters = matches[3].split('|');
                 filters.shift();
                 filters.forEach(function (filter) {
-                    var matches = filter.match(regFilter);
+                    var matches = filter.match(REG_FILTER);
                     var args;
                     var name;
 
@@ -488,7 +500,7 @@ define(function (require, exports, module) {
          * @private
          */
         _parseIfAndElseIf: function (str) {
-            var matches = str.trim().match(regIf);
+            var matches = str.trim().match(REG_IF);
 
             if (!matches) {
                 throw new Error('parse error ' + str);
@@ -505,7 +517,7 @@ define(function (require, exports, module) {
          * @private
          */
         _parseList: function (str) {
-            var matches = str.trim().match(regList);
+            var matches = str.trim().match(REH_LIST);
             var parse;
             var randomKey1 = this._generatorVar();
             var randomKey2 = this._generatorVar();
@@ -524,33 +536,12 @@ define(function (require, exports, module) {
             return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
                 'var ' + parse.key + ' = ' + randomKey1 + ';' +
                 'var ' + parse.val + '=' + randomVal + ';';
-        },
-
-
-        /**
-         * 行包裹，删除多余空白、注释，替换换行符、双引号
-         * @param str
-         * @returns {string}
-         * @private
-         */
-        _lineWrap: function (str) {
-            var optioons = this._options;
-
-            str = str.replace(regStringWrap, '\\$1');
-            str = optioons.compress ?
-                str.replace(regSpace, ' ').replace(regComments, '')
-                    .replace(regBreakLineMac, '').replace(regBreakLineWin, '') :
-                str.replace(regBreakLineMac, '\\n').replace(regBreakLineWin, '\\r');
-
-            return '"' + str + '"';
         }
     });
 
 
     /**
      * 模板引擎
-     * @param {Object} [options] 配置
-     * @param {Boolean} [options.compress=true] 是否压缩，默认为 true
      * @constructor
      *
      * @example
@@ -576,4 +567,67 @@ define(function (require, exports, module) {
 
         return str;
     }
+
+
+    /**
+     * 片段处理
+     * @param str
+     * @returns {string}
+     * @private
+     */
+    function _cleanPice(str){
+        str = str
+            .replace(REG_STRING_WRAP, '\\$1');
+
+        dato.each(regLines, function (index, map) {
+            var key = Object.keys(map)[0];
+            var val = map[key];
+
+            str = str.replace(val, '\\' + key);
+        });
+
+        return '"' + str + '"';
+    }
+    
+
+    /**
+     * 生成随机 42 位的 KEY
+     * @returns {string}
+     * @private
+     */
+    function _generateKey() {
+        return ':' + random.string(40, 'aA0') + ':';
+    }
+
+
+    /**
+     * 清理 HTML
+     * @param code
+     * @private
+     */
+    function _cleanHTML(code) {
+        // 保存 <pre>
+        var preMap = {};
+
+        code = code.replace(REG_PRES, function ($0) {
+            var key = _generateKey();
+
+            preMap[key] = $0;
+
+            return key;
+        });
+
+
+        code = code
+            .replace(REG_LINES, '')
+            .replace(REG_SPACES, ' ');
+
+
+        dato.each(preMap, function (key, val) {
+            code = code.replace(key, val);
+        });
+
+        return code;
+    }
+
 });

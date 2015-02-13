@@ -42,6 +42,7 @@ define(function (require, exports, module) {
         canDrag: true,
         isModal: true,
         duration: 345,
+        timeout: 0,
         easing: 'ease-in-out-back',
         zIndex: null
     };
@@ -74,6 +75,10 @@ define(function (require, exports, module) {
 
             the._window.open();
 
+            if (the._options.timeout) {
+                setTimeout(the.destroy.bind(the), the._options.timeout);
+            }
+
             return the;
         },
 
@@ -99,7 +104,8 @@ define(function (require, exports, module) {
                 top: options.top,
                 duration: options.duration,
                 easing: options.easing,
-                zIndex: options.zIndex
+                zIndex: options.zIndex,
+                addClass: options.isModal ? '' : options.addClass
             });
             the._$window = the._window.getNode();
 
@@ -232,6 +238,7 @@ define(function (require, exports, module) {
      * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
      * @param [options.isModal=true] {Boolean} 是否为模态
      * @param [options.duration=345] {Number} 动画时间
+     * @param [options.timeout=0] {Number} 大于0时，消息框停留时间，超时后自动消失
      * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
      * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */

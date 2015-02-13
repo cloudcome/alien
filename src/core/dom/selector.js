@@ -58,6 +58,9 @@ define(function (require, exports, module) {
                 case 'window':
                     ret = window;
                     break;
+
+                default :
+                    ret = selector;
             }
 
             return dato.toArray(ret, true);
