@@ -44,15 +44,19 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +65,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +76,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -105,7 +110,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 3</li>
+	                    <li class="sidebar-header">Methods &times; 4</li>
 
 	                    
 	                        
@@ -113,6 +118,15 @@
 <li class="">
     
         <a class="" href="#.animate">animate</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.keyframes">keyframes</a>
     
 </li>
 
@@ -196,7 +210,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-422999466303735977246385447215289" data-toggle="tab">Source</a>
+                <a href="#tab-meta-91906635602936153531240322627127" data-toggle="tab">Source</a>
             </li>
 
         
@@ -217,7 +231,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-422999466303735977246385447215289">
+            <div class="tab-pane active" id="tab-meta-91906635602936153531240322627127">
                 <p><a href="core_dom_animation.js.html#line10">core/dom/animation.js:10</a></p>
             </div>
 
@@ -427,6 +441,8 @@
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -462,6 +478,10 @@
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">缓冲类型，默认为`in-out`，内置的有
@@ -503,6 +523,12 @@ ease-in-out-expo、ease-in-out-circ、ease-in-out-back，也可以提供自定�
             
 
             
+                <td class="default">
+                
+                    567
+                
+                </td>
+            
 
             <td class="description last">动画时间，默认789，单位ms</td>
         </tr>
@@ -536,6 +562,12 @@ ease-in-out-expo、ease-in-out-circ、ease-in-out-back，也可以提供自定�
                 </td>
             
 
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
             
 
             <td class="description last">延迟时间，默认0，单位ms</td>
@@ -620,7 +652,7 @@ animation.animate(ele, to, property, callback);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-0565711131785064946867713388055563" data-toggle="tab">Source</a>
+                <a href="#tab-meta-64172849711030728385649796109647" data-toggle="tab">Source</a>
             </li>
 
         
@@ -641,8 +673,530 @@ animation.animate(ele, to, property, callback);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-0565711131785064946867713388055563">
-                <p><a href="core_dom_animation.js.html#line75">core/dom/animation.js:75</a></p>
+            <div class="tab-pane active" id="tab-meta-64172849711030728385649796109647">
+                <p><a href="core_dom_animation.js.html#line88">core/dom/animation.js:88</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".keyframes">
+        <span class="type-signature">&lt;static> </span>keyframes<span class="signature">(ele, options, <span class="optional">onanimationend</span>, <span class="optional">onanimationiteration</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>运行一段帧动画，并监听动画回调
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>ele</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">元素</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">配置
+                <h6>Properties</h6>
+                
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">关键帧名称</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>duration</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    567
+                
+                </td>
+            
+
+            <td class="description last">动画时间</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>delay</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">开始动画延迟时间</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>easing</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "in-out"
+                
+                </td>
+            
+
+            <td class="description last">动画缓冲类型</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">动画次数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>direction</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "normal"
+                
+                </td>
+            
+
+            <td class="description last">动画方向，可选 normal、alternate</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>onanimationend</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">动画结束回调</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>onanimationiteration</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">动画迭代回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-2875775336287915721020032349042594" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-2875775336287915721020032349042594">
+                <p><a href="core_dom_animation.js.html#line272">core/dom/animation.js:272</a></p>
             </div>
 
         
@@ -929,6 +1483,8 @@ animation.animate(ele, to, property, callback);</code></pre>
 		
 
 		
+		<th class="th-dft">Default</th>
+		
 
 		<th class="last">Description</th>
 	</tr>
@@ -945,7 +1501,7 @@ animation.animate(ele, to, property, callback);</code></pre>
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -964,6 +1520,12 @@ animation.animate(ele, to, property, callback);</code></pre>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    567
+                
+                </td>
             
 
             <td class="description last">动画时间，默认789，单位 ms</td>
@@ -979,7 +1541,7 @@ animation.animate(ele, to, property, callback);</code></pre>
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -998,6 +1560,10 @@ animation.animate(ele, to, property, callback);</code></pre>
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">动画缓冲，默认 swing
@@ -1017,7 +1583,7 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
         
     
 
@@ -1036,6 +1602,10 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">动画延时，默认0，单位ms</td>
@@ -1144,7 +1714,7 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
 
             
             <li class="active">
-                <a href="#tab-meta-680304124020046347325686365366" data-toggle="tab">Source</a>
+                <a href="#tab-meta-59997335541993388669379956554621" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1165,8 +1735,8 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
         
         
 
-            <div class="tab-pane active" id="tab-meta-680304124020046347325686365366">
-                <p><a href="core_dom_animation.js.html#line261">core/dom/animation.js:261</a></p>
+            <div class="tab-pane active" id="tab-meta-59997335541993388669379956554621">
+                <p><a href="core_dom_animation.js.html#line345">core/dom/animation.js:345</a></p>
             </div>
 
         
@@ -1370,7 +1940,7 @@ animation.top(ele, false);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-64667910453863448136518732644618" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0276927009690552959584815774578601" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1391,8 +1961,8 @@ animation.top(ele, false);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-64667910453863448136518732644618">
-                <p><a href="core_dom_animation.js.html#line208">core/dom/animation.js:208</a></p>
+            <div class="tab-pane active" id="tab-meta-0276927009690552959584815774578601">
+                <p><a href="core_dom_animation.js.html#line229">core/dom/animation.js:229</a></p>
             </div>
 
         

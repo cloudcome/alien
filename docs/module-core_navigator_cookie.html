@@ -44,15 +44,19 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +65,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +76,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -192,7 +197,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-716509427875280443292139819823205" data-toggle="tab">Source</a>
+                <a href="#tab-meta-172681880183517935284723199438304" data-toggle="tab">Source</a>
             </li>
 
         
@@ -213,7 +218,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-716509427875280443292139819823205">
+            <div class="tab-pane active" id="tab-meta-172681880183517935284723199438304">
                 <p><a href="core_navigator_cookie.js.html#line9">core/navigator/cookie.js:9</a></p>
             </div>
 
@@ -488,7 +493,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-461321072420105348551926130894572" data-toggle="tab">Source</a>
+                <a href="#tab-meta-91524364426732068337828828953207" data-toggle="tab">Source</a>
             </li>
 
         
@@ -509,8 +514,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-461321072420105348551926130894572">
-                <p><a href="core_navigator_cookie.js.html#line39">core/navigator/cookie.js:39</a></p>
+            <div class="tab-pane active" id="tab-meta-91524364426732068337828828953207">
+                <p><a href="core_navigator_cookie.js.html#line54">core/navigator/cookie.js:54</a></p>
             </div>
 
         
@@ -884,7 +889,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-991765683749690708712289738468826" data-toggle="tab">Source</a>
+                <a href="#tab-meta-998135853093117511747640324756503" data-toggle="tab">Source</a>
             </li>
 
         
@@ -905,8 +910,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-991765683749690708712289738468826">
-                <p><a href="core_navigator_cookie.js.html#line117">core/navigator/cookie.js:117</a></p>
+            <div class="tab-pane active" id="tab-meta-998135853093117511747640324756503">
+                <p><a href="core_navigator_cookie.js.html#line85">core/navigator/cookie.js:85</a></p>
             </div>
 
         
@@ -932,7 +937,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".set">
-        <span class="type-signature">&lt;static> </span>set<span class="signature">(key, <span class="optional">val</span>, <span class="optional">options</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>set<span class="signature">(key, <span class="optional">val</span>, <span class="optional">options</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -1316,24 +1321,6 @@
         
 
         
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-</td>
-            <td class="param-desc">true</td>
-        </tr>
-    </tbody>
-</table>
-
-            
 
         
 
@@ -1357,7 +1344,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-45453766756691045186596468556672" data-toggle="tab">Source</a>
+                <a href="#tab-meta-96730172727257019964968175627291" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1378,8 +1365,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-45453766756691045186596468556672">
-                <p><a href="core_navigator_cookie.js.html#line60">core/navigator/cookie.js:60</a></p>
+            <div class="tab-pane active" id="tab-meta-96730172727257019964968175627291">
+                <p><a href="core_navigator_cookie.js.html#line70">core/navigator/cookie.js:70</a></p>
             </div>
 
         

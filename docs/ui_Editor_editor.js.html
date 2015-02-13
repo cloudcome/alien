@@ -44,15 +44,19 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +65,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +76,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -158,7 +163,7 @@ define(function (require, exports, module) {
         var length = start + string.length;
 
         $ele.value = old.slice(0, start) + string + old.slice(end);
-        selection.setPos($ele, length);
+        selection.setPos($ele, [length]);
     };
 
 
@@ -190,7 +195,7 @@ define(function (require, exports, module) {
         }
 
         $ele.value = neo;
-        selection.setPos($ele, setPos);
+        selection.setPos($ele, [setPos]);
     };
 
 
@@ -218,7 +223,7 @@ define(function (require, exports, module) {
         }
 
         $ele.value = neo;
-        selection.setPos($ele, setPos);
+        selection.setPos($ele, [setPos]);
     };
 
 
@@ -249,7 +254,7 @@ define(function (require, exports, module) {
             if (spaceLength >= length) {
                 newValue = value.slice(0, startOfLinePos[findIndex]) + value.slice(startOfLinePos[findIndex] + length);
                 $ele.value = newValue;
-                selection.setPos($ele, selectionStart - length);
+                selection.setPos($ele, [selectionStart - length]);
             }
         }
     };
@@ -277,7 +282,7 @@ define(function (require, exports, module) {
      * @param $ele
      */
     exports.focusEnd = function ($ele) {
-        selection.setPos($ele, $ele.value.length);
+        selection.setPos($ele, [$ele.value.length]);
     };
 
 
