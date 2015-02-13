@@ -21,7 +21,7 @@ define(function (require) {
         0.5: {
             scale: 1.2,
             rotate: -15,
-            opacity: .5
+            opacity: 0.5
         },
         1: {
             scale: 1,
