@@ -25,7 +25,6 @@ define(function (require, exports, module) {
         }
     });
     
-    window.editor = editor;
 
     //btn1.onclick = function () {
     //    editor.toggleFullscreen();

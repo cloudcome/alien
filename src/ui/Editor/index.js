@@ -194,13 +194,6 @@ define(function (require, exports, module) {
                 uploads: the._uploadList
             };
             var $dialog;
-            var imgLoad = function () {
-                event.un($dialog, 'load');
-
-                if (the._dialog) {
-                    the._dialog.resize();
-                }
-            };
             var options = the._options;
 
             if (typeis(options.uploadCallback) !== 'function') {
@@ -217,7 +210,6 @@ define(function (require, exports, module) {
 
             the._savePos();
             $dialog = modification.parse(tpl.render(dt))[0];
-            event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
             the._dialog = new Dialog($dialog, {

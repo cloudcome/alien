@@ -160,7 +160,7 @@ define(function (require, exports, module) {
         event.on(ele, transitionendEventType, listener);
         var timeid = setTimeout(function () {
             listener(true);
-        }, options.duration + options.delay + 20);
+        }, options.duration + options.delay + 100);
         options = dato.extend({}, cssDefaults, options);
 
         var easing = eeeing.css3[options.easing];
