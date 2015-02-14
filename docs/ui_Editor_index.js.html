@@ -56,6 +56,7 @@
 <li><a href="module-parent_getset.html">parent/getset</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -322,13 +323,6 @@ define(function (require, exports, module) {
                 uploads: the._uploadList
             };
             var $dialog;
-            var imgLoad = function () {
-                event.un($dialog, 'load');
-
-                if (the._dialog) {
-                    the._dialog.resize();
-                }
-            };
             var options = the._options;
 
             if (typeis(options.uploadCallback) !== 'function') {
@@ -345,7 +339,6 @@ define(function (require, exports, module) {
 
             the._savePos();
             $dialog = modification.parse(tpl.render(dt))[0];
-            event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
             the._dialog = new Dialog($dialog, {
