@@ -170,7 +170,7 @@ define(function (require, exports, module) {
             // 重置选区
             the._reset();
             the._resize = new Resize(the._$sele, the._options);
-            the._on();
+            the._initEvent();
             the.on('clipstart clipend', the._updateClipRange);
         },
 
@@ -217,7 +217,7 @@ define(function (require, exports, module) {
          * 事件监听
          * @private
          */
-        _on: function () {
+        _initEvent: function () {
             var the = this;
             var x0;
             var y0;
@@ -232,14 +232,72 @@ define(function (require, exports, module) {
             var isReset = !1;
             var options = the._options;
 
-            event.on(the._$wrap, 'dragstart', function (eve) {
+            event.on(the._$sele, 'dragstart', function (eve) {
+                if (state === 2) {
+                    state = 3;
+                    left0 = dato.parseFloat(attribute.css(the._$sele, 'left'), 0);
+                    top0 = dato.parseFloat(attribute.css(the._$sele, 'top'), 0);
+                    x0 = eve.pageX;
+                    y0 = eve.pageY;
+                    the.emit('clipstart', the._selection);
+                }
+            });
+
+            event.on(the._$sele, 'drag', function (eve) {
                 eve.preventDefault();
 
                 var left;
                 var top;
 
+                if (state === 3) {
+                    left = left0 + eve.pageX - x0;
+                    top = top0 + eve.pageY - y0;
+
+                    if (left <= 0) {
+                        left = 0;
+                    } else if (left >= the._maxLeft) {
+                        left = the._maxLeft;
+                    }
+
+                    if (top <= 0) {
+                        top = 0;
+                    } else if (top >= the._maxTop) {
+                        top = the._maxTop;
+                    }
+
+                    the._selection.left = left;
+                    the._selection.top = top;
+
+                    attribute.css(the._$sele, {
+                        left: left,
+                        top: top
+                    });
+                    attribute.css(the._$img, {
+                        left: -left,
+                        top: -top
+                    });
+                    the.emit('clip', the._selection);
+                }
+            });
+
+            event.on(the._$sele, 'dragend', function (eve) {
+                eve.preventDefault();
+
+                if (state === 3) {
+                    state = 2;
+                    the._ratioSelection();
+                    the.emit('clipend', the._selection);
+                }
+            });
+
+            event.on(the._$wrap, 'dragstart', function (eve) {
+                eve.preventDefault();
+                
+                var left;
+                var top;
+
                 // 开始新选区
-                if (state === 0 || state === 2) {
+                if ((state === 0 || state === 2) && eve.target === this) {
                     isReset = state === 2;
                     state = 1;
                     left = attribute.left(the._$wrap);
@@ -328,66 +386,6 @@ define(function (require, exports, module) {
                     animation.animate(the._$sele, selectionProp, animationOptions);
                     animation.stop(the._$img);
                     animation.animate(the._$img, imgProp, animationOptions);
-                    the._ratioSelection();
-                    the.emit('clipend', the._selection);
-                }
-            });
-
-            event.on(the._$sele, 'dragstart', function (eve) {
-                eve.preventDefault();
-
-                if (state === 2) {
-                    state = 3;
-                    left0 = dato.parseFloat(attribute.css(the._$sele, 'left'), 0);
-                    top0 = dato.parseFloat(attribute.css(the._$sele, 'top'), 0);
-                    x0 = eve.pageX;
-                    y0 = eve.pageY;
-                    the.emit('clipstart', the._selection);
-                }
-            });
-
-            event.on(the._$sele, 'drag', function (eve) {
-                eve.preventDefault();
-
-                var left;
-                var top;
-
-                if (state === 3) {
-                    left = left0 + eve.pageX - x0;
-                    top = top0 + eve.pageY - y0;
-
-                    if (left <= 0) {
-                        left = 0;
-                    } else if (left >= the._maxLeft) {
-                        left = the._maxLeft;
-                    }
-
-                    if (top <= 0) {
-                        top = 0;
-                    } else if (top >= the._maxTop) {
-                        top = the._maxTop;
-                    }
-
-                    the._selection.left = left;
-                    the._selection.top = top;
-
-                    attribute.css(the._$sele, {
-                        left: left,
-                        top: top
-                    });
-                    attribute.css(the._$img, {
-                        left: -left,
-                        top: -top
-                    });
-                    the.emit('clip', the._selection);
-                }
-            });
-
-            event.on(the._$sele, 'dragend', function (eve) {
-                eve.preventDefault();
-
-                if (state === 3) {
-                    state = 2;
                     the._ratioSelection();
                     the.emit('clipend', the._selection);
                 }
