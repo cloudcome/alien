@@ -132,7 +132,7 @@ define(function (require, exports, module) {
             var $wrap;
 
             if (attribute.css($ele.parentNode, 'position') === 'static') {
-                attribute.css($ele.parentNode, 'postion', 'relative');
+                attribute.css($ele.parentNode, 'position', 'relative');
             }
 
             the._id = alienIndex++;
