@@ -35,7 +35,7 @@ define(function (require, exports, module) {
         addClass: '',
         lang: {
             // 星期前缀，如：“星期”或“周”等
-            weekPrefix: '周',
+            weekPrefix: '',
             weeks: ['日', '一', '二', '三', '四', '五', '六']
         }
     };

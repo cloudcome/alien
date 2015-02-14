@@ -44,3 +44,7 @@
     max-width: none;
     max-height: none;
 }
+
+.alien-ui-imgclip-selection .alien-ui-resize{
+    cursor: move;
+}
