@@ -56,6 +56,7 @@
 <li><a href="module-parent_getset.html">parent/getset</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -288,7 +289,7 @@ define(function (require, exports, module) {
         event.on(ele, transitionendEventType, listener);
         var timeid = setTimeout(function () {
             listener(true);
-        }, options.duration + options.delay + 20);
+        }, options.duration + options.delay + 100);
         options = dato.extend({}, cssDefaults, options);
 
         var easing = eeeing.css3[options.easing];

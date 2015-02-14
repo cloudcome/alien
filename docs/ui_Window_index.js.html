@@ -56,6 +56,7 @@
 <li><a href="module-parent_getset.html">parent/getset</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -205,10 +206,6 @@ define(function (require, exports, module) {
                 the._$contentPos = $pos;
                 modification.insert(the._$content, the._$window);
             }
-
-            event.on(the._$window, 'click tap', function (eve) {
-                eve.stopPropagation();
-            });
 
             return the;
         },

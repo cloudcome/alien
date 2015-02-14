@@ -56,6 +56,7 @@
 <li><a href="module-parent_getset.html">parent/getset</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -143,10 +144,16 @@
 
         
             
-                <blockquote class="description lead">文档准备完毕后回调
+                <blockquote class="description lead">监听准备完毕后回调或文档已准备立即回调
                     
                 </blockquote>
             
+
+            
+                <h4>Example</h4>
+                
+    <pre class="prettyprint"><code>var ready = require('/src/event/ready.js');
+ready(fn);</code></pre>
 
             
 
@@ -170,7 +177,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-80719766789115979025725587271154" data-toggle="tab">Source</a>
+                <a href="#tab-meta-556599801639095509308137698099" data-toggle="tab">Source</a>
             </li>
 
         
@@ -191,8 +198,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-80719766789115979025725587271154">
-                <p><a href="core_event_ready.js.html#line9">core/event/ready.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-556599801639095509308137698099">
+                <p><a href="core_event_ready.js.html#line35">core/event/ready.js:35</a></p>
             </div>
 
         
@@ -209,16 +216,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li><a href="module-core_event_base.html">module:core/event/base</a></li>
-        
-            <li>module:util/dato</li>
-        
-            <li><a href="module-util_typeis.html">module:util/typeis</a></li>
-        </ul>
     
 
     
@@ -259,16 +256,10 @@
 
         
             
-                <blockquote class="description lead">监听准备完毕后回调或文档已准备立即回调
+                <blockquote class="description lead">文档准备完毕后回调
                     
                 </blockquote>
             
-
-            
-                <h4>Example</h4>
-                
-    <pre class="prettyprint"><code>var ready = require('/src/event/ready.js');
-ready(fn);</code></pre>
 
             
 
@@ -292,7 +283,7 @@ ready(fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-930078514153137816399247338995337" data-toggle="tab">Source</a>
+                <a href="#tab-meta-81952750310301789058376583270729" data-toggle="tab">Source</a>
             </li>
 
         
@@ -313,8 +304,8 @@ ready(fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-930078514153137816399247338995337">
-                <p><a href="core_event_ready.js.html#line35">core/event/ready.js:35</a></p>
+            <div class="tab-pane active" id="tab-meta-81952750310301789058376583270729">
+                <p><a href="core_event_ready.js.html#line9">core/event/ready.js:9</a></p>
             </div>
 
         
@@ -331,6 +322,16 @@ ready(fn);</code></pre>
 
     
 
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-core_event_base.html">module:core/event/base</a></li>
+        
+            <li>module:util/dato</li>
+        
+            <li><a href="module-util_typeis.html">module:util/typeis</a></li>
+        </ul>
     
 
     
