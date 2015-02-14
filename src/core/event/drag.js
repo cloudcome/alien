@@ -81,7 +81,7 @@ define(function (require, exports, module) {
                 eve.preventDefault();
             }
         }
-    }, true);
+    });
 
     event.on(document, drag, function (eve) {
         var _eve = eve.type === 'mousemove' && eve.button === 0 ? eve : (
@@ -134,7 +134,7 @@ define(function (require, exports, module) {
 
             eve.preventDefault();
         }
-    }, true);
+    });
 
     event.on(document, dragend, function (eve) {
         var _eve = eve.type === 'mousemove' && eve.button === 0 ?
@@ -178,7 +178,7 @@ define(function (require, exports, module) {
         state = 0;
         x0 = null;
         y0 = null;
-    }, true);
+    });
 
 
     module.exports = event;
