@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: utils/hashbang.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
+<li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_data.html">utils/data</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 4</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallafter">validateallafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: utils/hashbang.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * hashbang.js
+ * @author ydr.me
+ * 2014-09-24 14:50
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * URL 的 hash 部分解析与设置&lt;br>
+     * 支持的 hashbang 格式为&lt;code>#!/foo/bar/?a=1&amp;b=2&amp;b=3&lt;/code>&lt;br>
+     * 必须以&lt;code>#!&lt;/code>开头，后续的 querystring 必须符合标准
+     *
+     * @module utils/hashbang
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/querystring
+     * @requires core/event/base
+     */
+    'use strict';
+
+    var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
+    var qs = require('./querystring.js');
+    var event = require('../core/event/base.js');
+    var regHash = /#.*$/;
+    var regHashbang = /^#!\//;
+    var regColon = /:([^\/]+)/g;
+    var regStar = /\*/g;
+    var regEndSlash = /\/$/;
+    var regSep = /\//g;
+    var regOther = /[.+^=!${}()|[\]\\]/g;
+    var pathListenerMap = {};
+    var pathAllListener = [];
+    var queryListenerMap = {};
+    var queryAllListener = [];
+    var matchesDefaults = {
+        // 是否忽略大小写，默认 true
+        isIgnoreCase: true,
+        // 是否忽略末尾斜杠，默认 true
+        isIgnoreEndSlash: true
+    };
+    var hashchangeCallback = function (eve) {
+        var newObject = exports.parse(eve.newURL);
+        var oldObject = exports.parse(eve.oldURL);
+        var pathDifferentKeys = dato.compare(newObject.path || [], oldObject.path || []).different;
+        var queryDifferentKeys = dato.compare(newObject.query || {}, oldObject.query || {}).different;
+        var args = [eve, newObject, oldObject];
+
+        if (pathDifferentKeys.length) {
+            dato.each(pathAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
+
+        dato.each(pathDifferentKeys, function (i, key) {
+            if (pathListenerMap[key]) {
+                dato.each(pathListenerMap[key], function (j, listener) {
+                    listener.apply(window, args);
+                });
+            }
+        });
+
+        if (queryDifferentKeys.length) {
+            dato.each(queryAllListener, function (i, listener) {
+                listener.apply(window, args);
+            });
+        }
+
+        dato.each(queryDifferentKeys, function (i, key) {
+            if (queryListenerMap[key]) {
+                dato.each(queryListenerMap[key], function (j, listener) {
+                    listener.apply(window, args);
+                });
+            }
+        });
+    };
+
+    /**
+     * 解析 hashbang 字符串为对象
+     * @static
+     * @param {String} hashbangString 原始字符串或URL
+     * @param {String} [sep] query 部分分隔符，默认`&amp;`
+     * @param {String} [eq] query 部分等于符，默认`=`
+     * @returns {Object} 包含`path`和`query`两个字段
+     *
+     * @example
+     * hashbang.parse('#!/a/b/c?a=1&amp;b=2');
+     * // =>
+     * // {
+         * //    path: ["a", "b", "c"],
+         * //    query: {
+         * //        a: "1",
+         * //        b: "2"
+         * //    }
+         * // }
+     */
+    exports.parse = function (hashbangString, sep, eq) {
+        var dftRet = {path: [], query: {}};
+
+        if (typeis(hashbangString) !== 'string') {
+            return dftRet;
+        }
+
+        hashbangString = (hashbangString.match(regHash) || [''])[0];
+
+        if (!regHashbang.test(hashbangString)) {
+            return dftRet;
+        }
+
+        sep = sep || '&amp;';
+        eq = eq || '=';
+
+        // #!/a/b/c/d/?a=1&amp;b=2&amp;c=3
+        var hashbangGroup = hashbangString.replace(regHashbang, '/').split('#')[0];
+        var hashGroup = hashbangGroup.split('?');
+        var hashPathStack = [];
+
+        dato.each(hashGroup[0].split('/'), function (index, item) {
+            item = _decode(item);
+            if (item.length) {
+                hashPathStack.push(_decode(item));
+            }
+        });
+
+        return {
+            path: hashPathStack,
+            query: qs.parse(hashGroup[1], sep, eq)
+        };
+    };
+
+    /**
+     * 将 hashbang 对象字符化
+     * @param {Object} hashbangObject 对象，包含`path`和`query`两个字段
+     * @param {String} [sep] query 部分分隔符，默认`&amp;`
+     * @param {String} [eq] query 部分等于符，默认`=`
+     * @returns {string} hashbang 字符串
+     *
+     * @example
+     * hashbang.stringify({
+         *    path: ["a", "b", "c"],
+         *    query: {
+         *       a: 1,
+         *       b: 2,
+         *       c: 3
+         *    }
+         * });
+     * // => "#!/a/b/c/?a=1&amp;b=2&amp;c=3"
+     */
+    exports.stringify = function (hashbangObject, sep, eq) {
+        sep = sep || '&amp;';
+        eq = eq || '=';
+        hashbangObject.path = hashbangObject.path || [];
+        hashbangObject.query = hashbangObject.query || {};
+
+        var hashPath = [];
+        var hashQuerystring = qs.stringify(hashbangObject.query, sep, eq);
+
+        if (typeis(hashbangObject.path) === 'string') {
+            return '#!' + hashbangObject.path +
+                (hashQuerystring ? '?' + hashQuerystring : '');
+        }
+
+        dato.each(hashbangObject.path, function (index, path) {
+            hashPath.push(_encode(path));
+        });
+
+        return '#!' + (hashPath.length ? '/' + hashPath.join('/') : '') + '/' +
+            (hashQuerystring ? '?' + hashQuerystring : '');
+    };
+
+    /**
+     * 匹配 URL path 部分
+     * @param {String} hashbangString hash 字符串
+     * @param {String} route 正怎字符串
+     * @param {Object} [options] 参数配置
+     * @param {Object} [options.isIgnoreCase] 是否忽略大小写，默认 false
+     * @param {Object} [options.isIgnoreEndSlash] 是否忽略末尾斜杠，默认 true
+     * @returns {*}
+     *
+     * @example
+     * hashbang.matches('#!/id/abc123/', '/id/:id/');
+     * // =>
+     * // {
+         * //   id: "abc123"
+         * // }
+     *
+     * hashbang.matches('#!/name/abc123/', '/id/:id/');
+     * // => null
+     */
+    exports.matches = function (hashbangString, route, options) {
+        // /id/:id/ => /id/abc123/   √
+
+        options = dato.extend({}, matchesDefaults, options);
+
+        var temp;
+        var keys = [0];
+        var matched;
+        var routeSource = route;
+        var reg;
+        var ret = null;
+
+        if (typeis(hashbangString) !== 'string') {
+            return ret;
+        }
+
+        temp = hashbangString.split('#');
+        temp.shift();
+        hashbangString = '#' + temp.join('');
+        hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+
+        if (options.isIgnoreEndSlash) {
+            route += regEndSlash.test(route) ? '?' : '/?';
+        }
+
+        route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/').replace(regStar, '.*');
+        route.replace(regOther, '\\$&amp;');
+
+        try {
+            reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');
+        } catch (err) {
+            return ret;
+        }
+
+        while ((matched = regColon.exec(routeSource)) !== null) {
+            keys.push(matched[1]);
+        }
+
+        matched = hashbangString.match(reg);
+
+        if (!matched) {
+            return ret;
+        }
+
+        ret = {};
+
+        dato.each(keys, function (index, key) {
+            if (index &amp;&amp; matched[index]) {
+                ret[key] = matched[index];
+            }
+        });
+
+        return ret;
+    };
+
+    /**
+     * 监听 hashbang
+     * @param {String} part 监听部分，可以为`query`或`path`
+     * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
+     * @param {Function} listener 监听回调
+     *
+     * @example
+     * // pathc
+     * hashbang.on('path', fn);
+     * hashbang.on('path', 0, fn);
+     *
+     * // query
+     * hashbang.on('query', fn);
+     * hashbang.on('query', 'abc', fn);
+     */
+    exports.on = function (part, key, listener) {
+        if (!_isSafePart(part)) {
+            throw new Error('hashbang `part` must be `path` or `query`');
+        }
+
+        var args = arguments;
+        var argL = args.length;
+        var listenerMap;
+
+        if (argL === 2) {
+            listener = args[1];
+
+            if (typeis(listener) === 'function') {
+                if (part === 'query') {
+                    queryAllListener.push(listener);
+                } else {
+                    pathAllListener.push(listener);
+                }
+            }
+        } else if (argL === 3) {
+            listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
+
+            if (typeis(key) !== 'array') {
+                key = [key];
+            }
+
+            dato.each(key, function (index, k) {
+                listenerMap[k] = listenerMap[k] || [];
+
+                if (typeis(listener) === 'function') {
+                    listenerMap[k].push(listener);
+                }
+            });
+        }
+    };
+
+
+    /**
+     * 主动触发 hashchange 回调，
+     * 但不能真实触发 window 的 hashchange 事件，
+     * 防止影响其他监听
+     * 通常用于页面初始化的时候触发，以匹配当前路由
+     */
+    exports.emit = function () {
+        hashchangeCallback({
+            newURL: location.href,
+            oldURL: ''
+        });
+    };
+
+
+    /**
+     * 移除监听 hashbang
+     * @param {String} part 监听部分，可以为`query`或`path`
+     * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
+     * @param {Function} [listener] 监听回调，回调为空表示删除该键的所有监听队列
+     *
+     * @example
+     * // path
+     * // 移除 path 0字段上的一个监听
+     * hashbang.un('path', 0, fn);
+     * // 移除 path 0字段上的所有监听
+     * hashbang.un('path', 0);
+     * // 移除 path 所有字段的一个监听
+     * hashbang.un('path', fn);
+     * // 移除 path 所有字段的所有监听
+     * hashbang.un('path');
+     *
+     * // query
+     * // 移除 query abc 键上的一个监听
+     * hashbang.un('query', 'abc', fn);
+     * // 移除 query abc 键上的所有监听
+     * hashbang.un('query', 'abc');
+     * // 移除 query 所有键上的一个监听
+     * hashbang.un('query', fn);
+     * // 移除 query 所有键上的所有监听
+     * hashbang.un('query');
+     */
+    exports.un = function (part, key, listener) {
+        if (!_isSafePart(part)) {
+            throw new Error('hashbang `part` must be `path` or `query`');
+        }
+
+        var args = arguments;
+        var argL = args.length;
+        var findIndex;
+        var arg1Type = typeis(args[1]);
+        var arg2Type = typeis(args[2]);
+        var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
+
+        if (argL === 1) {
+            if (part === 'query') {
+                queryAllListener = [];
+            } else {
+                pathAllListener = [];
+            }
+        } else if (argL === 2 &amp;&amp; arg1Type === 'function') {
+            listener = args[1];
+            listenerMap = part === 'query' ? queryAllListener : pathAllListener;
+
+            findIndex = listenerMap.indexOf(listener);
+
+            if (findIndex > -1) {
+                listenerMap.splice(findIndex, 1);
+            }
+        } else if (argL === 2 &amp;&amp; (arg1Type === 'string' || arg1Type === 'array')) {
+            key = arg1Type === 'array' ? key : [key];
+
+            dato.each(key, function (index, k) {
+                listenerMap[k] = [];
+            });
+        } else if (argL === 3 &amp;&amp; (arg1Type === 'string' || arg1Type === 'array') &amp;&amp; arg2Type === 'function') {
+            key = arg1Type === 'array' ? key : [key];
+
+            dato.each(key, function (index, k) {
+                var findIndex = listenerMap.indexOf(listener);
+
+                if (findIndex > -1) {
+                    listenerMap[k].splice(findIndex, 1);
+                }
+            });
+        }
+    };
+
+    event.on(window, 'hashchange', hashchangeCallback);
+
+
+    /**
+     * 判断 hashbang 部分是否合法
+     * @param {*} part
+     * @returns {boolean}
+     * @private
+     */
+    function _isSafePart(part) {
+        return part === 'path' || part === 'query';
+    }
+
+
+    /**
+     * 编码
+     * @param {String} string 字符串
+     * @returns {string}
+     * @private
+     */
+    function _encode(string) {
+        return encodeURIComponent(string);
+    }
+
+    /**
+     * 解码
+     * @param {String} string 字符串
+     * @returns {string}
+     * @private
+     */
+    function _decode(string) {
+        try {
+            return decodeURIComponent(string);
+        } catch (err) {
+            return '';
+        }
+    }
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

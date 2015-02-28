@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: utils/controller.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
+<li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_data.html">utils/data</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 4</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallafter">validateallafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: utils/controller.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * 控制器
+ * @author ydr.me
+ * @create 2014-12-20 16:42
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module utils/controller
+     */
+    'use strict';
+
+    var typeis = require('./typeis.js');
+
+    /**
+     * 至少间隔一段时间执行
+     * @param fn {Function} 需要控制的方法
+     * @param [wait=123] {Number} 反复执行控制的时间，单位毫秒
+     * @param [isExecAtFirstTime=true] {Boolean} 是否第一次执行
+     * @returns {Function}
+     *
+     * @example
+     * window.onscroll = controller.throttle(function(){
+     *    // 至少需要间隔 123ms 后执行
+     * });
+     */
+    exports.throttle = function (fn, wait, isExecAtFirstTime) {
+        var time1 = 0;
+        var hasExec = false;
+
+        wait = wait || 123;
+
+        if (typeis(isExecAtFirstTime) === 'undefined') {
+            isExecAtFirstTime = true;
+        }
+
+        return function () {
+            if (isExecAtFirstTime &amp;&amp; !hasExec) {
+                hasExec = true;
+                fn.apply(this, arguments);
+            }
+
+            if (!time1) {
+                time1 = Date.now();
+            }
+
+            if (Date.now() - time1 > wait) {
+                fn.apply(this, arguments);
+                time1 = Date.now();
+            }
+        };
+    };
+
+    /**
+     * 至少在最后一次触发的一段时间后执行
+     * @param fn {Function} 需要控制的方法
+     * @param [wait=123] {Number} 反复执行控制的时间，单位毫秒
+     * @param [isExecAtFirstTime=true] {Boolean} 是否第一次执行
+     * @returns {Function}
+     *
+     * @example
+     * window.onscroll = controller.debounce(function(){
+     *    // 只在最后一次触发的 123ms 后执行
+     * });
+     */
+    exports.debounce = function (fn, wait, isExecAtFirstTime) {
+        var timer = 0;
+        var hasExec = false;
+
+        wait = wait || 123;
+
+        if (typeis(isExecAtFirstTime) === 'undefined') {
+            isExecAtFirstTime = true;
+        }
+
+        return function () {
+            var the = this;
+            var args = arguments;
+
+            if (timer) {
+                clearTimeout(timer);
+            }
+
+            if (isExecAtFirstTime &amp;&amp; !hasExec) {
+                hasExec = true;
+                fn.apply(this, arguments);
+            }
+
+            timer = setTimeout(function () {
+                fn.apply(the, args);
+                timer = 0;
+            }, wait);
+        };
+    };
+
+
+    /**
+     * 只执行一次
+     * @param fn {Function} 需要执行的方法
+     * @returns {Function}
+     *
+     * @example
+     * document.onclick = controller.once(function(){
+     *     // 最多执行 1 次
+     * });
+     */
+    exports.once = function (fn) {
+        var hasExec = false;
+
+        return function () {
+            if (!hasExec) {
+                hasExec = true;
+                fn.apply(this, arguments);
+            }
+        };
+    };
+
+
+    /**
+     * 切换执行
+     * @returns {Function}
+     *
+     * @example
+     * document.onclick = controller.toggle(fn1, fn2, fn3);
+     * // 第 1 次执行 fn1
+     * // 第 2 次执行 fn2
+     * // 第 3 次执行 fn3
+     * // 第 4 次执行 fn1
+     * // 第 5 次执行 fn2
+     * // 第 6 次执行 fn3
+     * // ...
+     */
+    exports.toggle = function (/*fn*/) {
+        var fns = Array.prototype.slice.call(arguments);
+        var index = 0;
+        var length = fns.length;
+
+        return function () {
+            fns[index++].apply(this, arguments);
+
+            if (index >= length) {
+                index = 0;
+            }
+        };
+    };
+
+
+    /**
+     * 下一步
+     * @param callback {Function} 回调
+     * @param [context=window] {Object} 上下文
+     * @param [args=[]] {Array} 参数
+     */
+    exports.nextTick = function (callback, context, args) {
+        context = context || window;
+        args = args || [];
+
+        setTimeout(function () {
+            callback.apply(context, args);
+        }, 0);
+    };
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>
