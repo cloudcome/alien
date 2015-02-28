@@ -22,6 +22,26 @@ define(function (require, exports, module) {
     //    }
     //});
 
+    v1.pushRule({
+        name: 'username',
+        function: function (val, next) {
+            v1.emitMsg('username', '正在第1/2次异步验证……', 'warning');
+            setTimeout(function () {
+                next();
+            }, 1000);
+        }
+    });
+
+    v1.pushRule({
+        name: 'username',
+        function: function (val, next) {
+            v1.emitMsg('username', '正在第2/2次异步验证……', 'warning');
+            setTimeout(function () {
+                next();
+            }, 1000);
+        }
+    });
+
     v1.on('validateallbefore', function ($form) {
         $submit.disabled = true;
     });
