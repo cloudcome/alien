@@ -1,3 +1,8 @@
+# 默认过滤
+- trim【true】是否过滤左右空白
+- exist【false】是否存在才进行验证
+
+
 # 标准规则
 - type【false】 数据类型
 - required【false】 是否必填
@@ -16,7 +21,8 @@
 
 
 # 扩展规则
--
+- equalName【-】与之相等的 name
+- suffix【-】后缀数组
 
 
 # 自定义规则

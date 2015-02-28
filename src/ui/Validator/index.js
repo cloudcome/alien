@@ -36,7 +36,7 @@ define(function (require, exports, module) {
         formMsgSelector: '.form-msg',
         isBreakOnInvalid: false,
         validateEvent: 'focusout',
-        successMsg: '填写正确'
+        successMsg: null
     };
     var Validator = ui.create({
         STATIC: {
@@ -84,6 +84,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the.id = alienIndex++;
+            the._allRules = {};
             the._initRule();
             the._initCustomRules();
             the._initEvent();
@@ -146,6 +147,7 @@ define(function (require, exports, module) {
                     type: typeArray.indexOf(type) > -1 ? type : 'string'
                 };
 
+                // regexp
                 if ($input.pattern) {
                     try {
                         standar.regexp = new RegExp($input.pattern);
@@ -156,8 +158,14 @@ define(function (require, exports, module) {
 
                 // 验证前置
                 rule.onbefore = function (val, data) {
-                    if (this.equalName) {
-                        this.equal = data[this.equalName];
+                    var self = this;
+
+                    if (self.equalName) {
+                        var equalRule = the._allRules[self.equalName];
+
+                        self.equal = the._getVal(self.equalName);
+                        self.msg.equal = self.msg.equal || self.alias +
+                        (equalRule ? '必须与' + equalRule.alias + '相同' : '不正确');
                     }
 
                     return val;
@@ -169,6 +177,7 @@ define(function (require, exports, module) {
                 the._nameItemMap[name] = $formItem;
                 the._nameMsgMap[name] = $formMsg;
                 the._nameInputMap[name] = $input;
+                the._allRules[name] = rule;
             });
         },
 
@@ -228,6 +237,11 @@ define(function (require, exports, module) {
          */
         _getVal: function (name) {
             var $input = this._nameInputMap[name];
+
+            if (!$input) {
+                return udf;
+            }
+
             var type = $input.type;
             var multiple = $input.multiple;
             var tagName = $input.tagName.toLowerCase();
@@ -394,18 +408,21 @@ define(function (require, exports, module) {
      * @param [options.formMsgSelector=".form-msg"] {String} 表单消息选择器
      * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
      * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
-     * @param [options.successMsg="填写正确"] {String|null} 正确消息，如果为 null，则在正确时隐藏
+     * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
      */
     module.exports = Validator;
-    customRulesList.push([{
+
+    Validator.registerRule({
         name: 'suffix',
         type: 'array'
     }, function (suffix, val, next) {
         var sf = (val.match(/\.[^.]*$/) || [''])[0];
-        var boolean = suffix.indexOf(sf) > -1;
+        var reg = new RegExp('(' + suffix.map(function (sf) {
+            return dato.fixRegExp(sf);
+        }).join('|') + ')$', 'i');
 
-        next(boolean ? null : new Error(this.alias + '的后缀必须为“' +
+        next(reg.test(sf) ? null : new Error(this.alias + '的后缀必须为“' +
         suffix.join('/') + '”' +
         (suffix.length > 1 ? '之一' : '')), val);
-    }]);
+    });
 });

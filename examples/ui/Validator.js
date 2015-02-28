@@ -22,11 +22,11 @@ define(function (require, exports, module) {
     //    }
     //});
 
-    v1.on('validateallbefore', function ($ele) {
+    v1.on('validateallbefore', function ($form) {
         $submit.disabled = true;
     });
 
-    v1.on('validateallafter', function ($ele) {
+    v1.on('validateallafter', function ($form) {
         $submit.disabled = false;
     });
 });
