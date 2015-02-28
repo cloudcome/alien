@@ -250,7 +250,7 @@ define(function (require, exports, module) {
         var eventTypes = String(eventType).trim().split(regSpace);
         isCapture = args[argL - 1];
 
-        if (!typeis.function(isCapture)) {
+        if (!typeis.boolean(isCapture)) {
             isCapture = false;
         }
 

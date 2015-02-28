@@ -170,7 +170,7 @@ define(function (require, exports, module) {
             // 重置选区
             the._reset();
             the._resize = new Resize(the._$sele, the._options);
-            the._on();
+            the._initEvent();
             the.on('clipstart clipend', the._updateClipRange);
         },
 
@@ -217,7 +217,7 @@ define(function (require, exports, module) {
          * 事件监听
          * @private
          */
-        _on: function () {
+        _initEvent: function () {
             var the = this;
             var x0;
             var y0;
