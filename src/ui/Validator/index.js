@@ -28,6 +28,7 @@ define(function (require, exports, module) {
         // ignore
     };
     var customRulesList = [];
+    var REG_END_MAO = /[:：]+$/;
     var defaults = {
         dataRuleAttr: 'validator',
         dataMessageAttr: 'msg',
@@ -42,7 +43,7 @@ define(function (require, exports, module) {
             /**
              * 注册自定义的静态验证规则
              * @param options {Object} 规则配置
-             * @param rule {Function} 规则方法
+             * @param fn {Function} 规则方法
              * @param [isOverride=false] 是否覆盖已有规则
              *
              * @example
@@ -163,7 +164,7 @@ define(function (require, exports, module) {
                 };
 
                 dato.extend(true, rule, standar);
-                rule.alias = rule.alias || ($label ? $label.innerText : udf);
+                rule.alias = rule.alias || ($label ? $label.innerText.trim().replace(REG_END_MAO, '') : udf);
                 the._validator.pushRule(rule);
                 the._nameItemMap[name] = $formItem;
                 the._nameMsgMap[name] = $formMsg;

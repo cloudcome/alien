@@ -80,7 +80,7 @@ define(function (require, exports, module) {
         /**
          * 注册自定义的实例验证规则
          * @param options {Object} 规则配置
-         * @param rule {Function} 规则方法
+         * @param fn {Function} 规则方法
          * @param [isOverride=false] 是否覆盖已有规则
          *
          * @example
