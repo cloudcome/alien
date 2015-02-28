@@ -9,8 +9,8 @@ define(function (require, exports, module) {
     /**
      * @module ui/Scrollbar/
      * @requires ui/base
-     * @requires util/dato
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/controller
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification

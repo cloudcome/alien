@@ -12,9 +12,9 @@ define(function (require, exports, module) {
      *
      * @module core/dom/animation
      * @requires core/dom/attribute
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/easing
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/easing
      * @requires core/navigator/compatible
      * @requires core/event/base
      */

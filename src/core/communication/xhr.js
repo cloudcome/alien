@@ -8,10 +8,10 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/xhr
-     * @requires util/typeis
-     * @requires util/dato
-     * @requires util/class
-     * @requires util/querystring
+     * @requires utils/typeis
+     * @requires utils/dato
+     * @requires utils/class
+     * @requires utils/querystring
      * @requires libs/Emitter
      */
     'use strict';

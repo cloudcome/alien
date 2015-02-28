@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Pagination/
      * @requires ui/base
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Pagination
      * @requires libs/Template
      * @requires core/dom/selector

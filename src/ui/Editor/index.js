@@ -14,11 +14,11 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/base
      * @requires ui/Editor/editor
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/date
-     * @requires util/random
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/date
+     * @requires utils/random
+     * @requires utils/controller
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index

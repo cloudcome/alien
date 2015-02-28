@@ -8,8 +8,8 @@
 define(function (require, exports) {
     /**
      * @module core/navigator/cookie
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      */
     'use strict';
 

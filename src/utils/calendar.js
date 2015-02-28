@@ -7,10 +7,10 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/calendar
-     * @requires util/date
-     * @requires util/dato
-     * @requires util/typeis
+     * @module utils/calendar
+     * @requires utils/date
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';

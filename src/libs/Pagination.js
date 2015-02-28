@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Pagination
-     * @requires util/dato
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/class
      */
     'use strict';
 

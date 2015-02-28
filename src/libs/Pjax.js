@@ -13,8 +13,8 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/communication/xhr
      * @requires core/event/base
-     * @requires util/dato
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/class
      * @requires core/libs/Emitter
      */
     'use strict';

@@ -7,8 +7,8 @@
 
 define(function (require, exports) {
     /**
-     * @module util/canvas
-     * @requires util/dato
+     * @module utils/canvas
+     * @requires utils/dato
      * @requires core/dom/modification
      * @requires core/navigator/compatible
      */

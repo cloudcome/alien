@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/upload
-     * @requires util/typeis
-     * @requires util/dato
+     * @requires utils/typeis
+     * @requires utils/dato
      * @requires core/communication/xhr
      */
     'use strict';

@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      * @requires ui/Mask/
      * @requires ui/Window/
      * @requires ui/Scrollbar/
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification

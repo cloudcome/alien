@@ -11,9 +11,9 @@ define(function (require, exports) {
      * querystring 的解析与设置<br>
      * 合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
      *
-     * @module util/querystring
-     * @requires util/dato
-     * @requires util/typeis
+     * @module utils/querystring
+     * @requires utils/dato
+     * @requires utils/typeis
      */
     'use strict';
 

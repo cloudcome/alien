@@ -16,9 +16,9 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/touch
      * @requires ui/base
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/controller
      */
 
     "use strict";

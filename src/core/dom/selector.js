@@ -10,8 +10,8 @@ define(function (require, exports, module) {
      * 选择器返回结果全部都是数组，即使是返回的只有1个元素
      *
      * @module core/dom/selector
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/navigator/compatible
      */
     'use strict';

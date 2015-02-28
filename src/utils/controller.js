@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/controller
+     * @module utils/controller
      */
     'use strict';
 

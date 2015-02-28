@@ -9,8 +9,8 @@ define(function (require, exports, module) {
     /**
      * 处理有关 dom 属性的 API
      * @module core/dom/attribute
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/navigator/compatible
      * @requires core/dom/selector
      * @requires core/dom/see

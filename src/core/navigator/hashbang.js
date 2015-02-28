@@ -12,9 +12,9 @@ define(function (require, exports) {
      * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
      *
      * @module core/navigator/hashbang
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/hashbang
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/hashbang
      */
     'use strict';
 

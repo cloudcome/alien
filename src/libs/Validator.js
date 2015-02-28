@@ -8,10 +8,10 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Validator
-     * @requires util/class
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/howdo
+     * @requires utils/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/howdo
      */
     'use strict';
 

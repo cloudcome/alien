@@ -8,9 +8,9 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Emitter
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/class
      */
     'use strict';
 

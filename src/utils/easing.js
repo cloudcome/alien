@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/easing
+     * @module utils/easing
      * @link https://github.com/chenmnkken/easyjs/blob/master/core/src/anim.js#L20
      */
     'use strict';

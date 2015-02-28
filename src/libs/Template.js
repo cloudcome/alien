@@ -8,10 +8,10 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Template
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/random
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/random
+     * @requires utils/class
      */
     'use strict';
 

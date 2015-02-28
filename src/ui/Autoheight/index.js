@@ -14,7 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/base
-     * @requires util/dato
+     * @requires utils/dato
      */
     'use strict';
 

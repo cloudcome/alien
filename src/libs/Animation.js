@@ -8,9 +8,9 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Animation
-     * @requires util/class
-     * @requires util/howdo
-     * @requires util/typeis
+     * @requires utils/class
+     * @requires utils/howdo
+     * @requires utils/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/animation

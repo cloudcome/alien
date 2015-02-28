@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Mask/
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification

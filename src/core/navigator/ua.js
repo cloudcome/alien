@@ -16,7 +16,7 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/ua
-     * @requires util/dato
+     * @requires utils/dato
      */
     'use strict';
 

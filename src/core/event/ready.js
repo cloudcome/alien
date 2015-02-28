@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      *
      * @module core/event/ready
      * @requires core/event/base
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';

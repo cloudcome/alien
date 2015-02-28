@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Tooltip/
      * @requires ui/base
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/attribute

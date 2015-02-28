@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/storage
-     * @requires util/allocation
-     * @requires util/dato
+     * @requires utils/allocation
+     * @requires utils/dato
      */
     'use strict';
 

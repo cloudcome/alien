@@ -7,8 +7,8 @@
 
 define(function (require, exports) {
     /**
-     * @module util/selection
-     * @require util/dato
+     * @module utils/selection
+     * @require utils/dato
      */
     'use strict';
 

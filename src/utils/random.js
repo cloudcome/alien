@@ -7,8 +7,8 @@
 
 define(function (require, exports) {
     /**
-     * @module util/random
-     * @requires util/dato
+     * @module utils/random
+     * @requires utils/dato
      */
     'use strict';
 

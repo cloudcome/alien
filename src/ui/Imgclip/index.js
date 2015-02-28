@@ -10,8 +10,8 @@ define(function (require, exports, module) {
      * @module ui/Imgclip/
      * @requires ui/base
      * @requires libs/Template
-     * @requires util/dato
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/controller
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute

@@ -11,10 +11,10 @@ define(function (require, exports, module) {
      * 支持的 hashbang 格式为<code>#!/foo/bar/?a=1&b=2&b=3</code><br>
      * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
      *
-     * @module util/hashbang
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/querystring
+     * @module utils/hashbang
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/querystring
      * @requires core/event/base
      */
     'use strict';

@@ -7,9 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module util/date
-     * @requires util/dato
-     * @requires util/typeis
+     * @module utils/date
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';

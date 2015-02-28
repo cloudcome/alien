@@ -8,10 +8,10 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/jsonp
-     * @requires util/dato
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/class
      * @requires libs/Emitter
-     * @requires util/querystring
+     * @requires utils/querystring
      * @requires core/dom/modification
      */
     'use strict';
