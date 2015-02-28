@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: core/event/wheel.js - Alien documents</title>
+    <title>Source: util/allocation.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -74,27 +74,18 @@
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
 <li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
 <li><a href="module-ui_Window_.html">ui/Window/</a></li>
-<li><a href="module-utils_calendar.html">utils/calendar</a></li>
-<li><a href="module-utils_canvas.html">utils/canvas</a></li>
-<li><a href="module-utils_class.html">utils/class</a></li>
-<li><a href="module-utils_controller.html">utils/controller</a></li>
-<li><a href="module-utils_data.html">utils/data</a></li>
-<li><a href="module-utils_date.html">utils/date</a></li>
-<li><a href="module-utils_easing.html">utils/easing</a></li>
-<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
-<li><a href="module-utils_querystring.html">utils/querystring</a></li>
-<li><a href="module-utils_random.html">utils/random</a></li>
-<li><a href="module-utils_selection.html">utils/selection</a></li>
-<li><a href="module-utils_typeis.html">utils/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
+<li><a href="module-util_canvas.html">util/canvas</a></li>
+<li><a href="module-util_class.html">util/class</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
+<li><a href="module-util_data.html">util/data</a></li>
+<li><a href="module-util_date.html">util/date</a></li>
+<li><a href="module-util_easing.html">util/easing</a></li>
+<li><a href="module-util_hashbang.html">util/hashbang</a></li>
+<li><a href="module-util_querystring.html">util/querystring</a></li>
+<li><a href="module-util_random.html">util/random</a></li>
+<li><a href="module-util_selection.html">util/selection</a></li>
+<li><a href="module-util_typeis.html">util/typeis</a></li>
 </ul>
 </li>
 </ul>
@@ -122,46 +113,6 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 4</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallafter">validateallafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallbefore">validateallbefore</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateoneafter">validateoneafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateonebefore">validateonebefore</a>
-    
-</li>
-
-	                    
-	                
 
 	                
 	            </ul>
@@ -169,7 +120,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: core/event/wheel.js</h1>
+		            <h1 class="page-title">Source: util/allocation.js</h1>
 
 		            
 
@@ -177,90 +128,108 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * wheel.js
+ * 分配器
  * @author ydr.me
- * @create 2014-10-07 14:45
+ * @create 2015-02-02 15:24
  */
 
 
 define(function (require, exports, module) {
     /**
-     * 扩展滚轮事件
-     * @module core/event/wheel
-     * @requires core/event/base
-     *
-     * @example
-     * event.on(ele, 'wheelstart', function(eve){});
-     * event.on(ele, 'wheelchange', function(eve){
-     *     // 滚轮的距离在 eve.alienDetail 里
-     *     // eve.alienDetail.deltaY &lt; 0 ? 向下滚轮 ：向上滚轮
-     * });
-     * event.on(ele, 'wheelend', function(eve){});
+     * @module parent/getset
      */
     'use strict';
 
-    var event = require('./base.js');
-    var mousewheel = 'wheel mousewheel DOMMouseScroll MozMousePixelScroll';
-    var timeout = 500;
-    var timeid = 0;
-    var isStart = !1;
+    var typeis = require('./typeis.js');
+    var dato = require('./dato.js');
+    var noop = function(){
+        // ignore
+    };
 
-    event.on(document, mousewheel, function (eve) {
-        var startEvent = event.create('wheelstart');
-        var changeEvent = event.create('wheelchange');
-        var endEvent = event.create('wheelend');
-        var ele = eve.target;
-        var deltaY = 0;
-        var dispatchStart;
-        var dispatchChange;
 
-        if (timeid) {
-            clearTimeout(timeid);
-            timeid = 0;
-        }
+    /**
+     * getset 转换器
+     * @param getset {{get: Function, set: Function, onget: Function, onset: Function}} 获取与设置的 Map
+     * @param args {Object} 参数
+     * @param [setLength=2] 设置行为的参数个数
+     * @returns {*}
+     * 
+     * @example
+     * var fn = function(key, val){
+     *     return allocation.getset({
+     *         get: function(key){
+     *             return 'get ' + key;
+     *         },
+     *         set: function(key, val){
+     *             console.log('set ' + key + ' = ' + val);
+     *         },
+     *         // 所有 set 结束之后
+     *         onset: function(){}
+     *     }, arguments);
+     * };
+     * 
+     * fn('a');
+     * // => "get a"
+     *
+     * fn(['a', 'b']);
+     * // => {a: "get a", b: "get b"}
+     *
+     * fn('a', 1);
+     * // => set a = 1
+     *
+     * fn({a: 1, b: 2});
+     * // => set a = 1
+     * // => set b = 2
+     */
+    exports.getset = function (getset, args, setLength) {
+        setLength = setLength || 2;
 
-        timeid = setTimeout(function () {
-            event.dispatch(ele, endEvent);
-            isStart = !1;
-        }, timeout);
+        var argl = args.length;
+        var ret = {};
+        var i = argl;
 
-        if (!isStart) {
-            isStart = !0;
-
-            event.extend(startEvent, eve);
-            dispatchStart = event.dispatch(ele, startEvent);
-
-            if (dispatchStart.defaultPrevented === true) {
-                eve.preventDefault();
+        while(i--){
+            if(args[i] === undefined){
+                argl--;
             }
         }
 
-        // chrome
-        if ('wheelDeltaY' in eve) {
-            deltaY = eve.wheelDeltaY > 0 ? 1 : -1;
-        }
-        // ie9/firefox
-        else if ('deltaY' in eve) {
-            deltaY = eve.deltaY > 0 ? -1 : 1;
-        }
-        // ie8/ie7/ie6
-        else if ('wheelDelta' in eve) {
-            deltaY = eve.wheelDelta > 0 ? 1 : -1;
-        }
+        getset.onset = typeis.function(getset.onset) ? getset.onset : noop;
 
-        event.extend(changeEvent, eve, {
-            deltaX: 0,
-            deltaY: deltaY,
-            deltaZ: 0
-        });
-        dispatchChange = event.dispatch(ele, changeEvent);
-
-        if (dispatchChange.defaultPrevented === true) {
-            eve.preventDefault();
+        // e.g. .html();
+        if (argl === 0 &amp;&amp; setLength === 1) {
+            return getset.get();
         }
-    });
+        // e.g. .html(html);
+        else if (argl === 1 &amp;&amp; setLength === 1) {
+            getset.set(args[0]);
+            getset.onset(args[0]);
+        }
+        // e.g. .css({width: 100});
+        // e.g. .css(['width', 'height']);
+        // e.g. .css('width');
+        else if (argl === 1 &amp;&amp; setLength === 2) {
+            if (typeis.object(args[0])) {
+                dato.each(args[0], function (key, val) {
+                    getset.set(key, val);
+                });
+                getset.onset();
+            } else if (typeis.array(args[0])) {
+                dato.each(args[0], function (index, key) {
+                    ret[key] = getset.get(key);
+                });
 
-    module.exports = event;
+                return ret;
+            } else {
+                return getset.get(args[0]);
+            }
+        }
+        // e.g. .css('width', 100);
+        else if (argl === 2 &amp;&amp; setLength === 2) {
+            getset.set(args[0], args[1]);
+            getset.onset();
+        }
+    };
 });</code></pre>
 
 

@@ -53,7 +53,7 @@ define(function (require, exports, module) {
     var top;
     var style =
         '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
-    var preventDefault = !1;
+    var preventDefault = false;
 
     modification.importStyle(style);
 
@@ -93,15 +93,22 @@ define(function (require, exports, module) {
         var dispatchDrag;
 
         // 发生了变化
-        if (state === 1 && x0 !== null && y0 !== null && x1 !== null && y1 !== null && (x0 !== x1 || y0 !== y1)) {
+        if (
+            state === 1 &&
+            x0 !== null &&
+            y0 !== null &&
+            x1 !== null &&
+            y1 !== null &&
+            (x0 !== x1 || y0 !== y1)
+        ) {
             state = 2;
             dispatchDragstart = event.dispatch(ele, 'dragstart', _eve);
 
             // 已经取消了默认事件
             if (dispatchDragstart.defaultPrevented === true) {
-                preventDefault = !0;
+                preventDefault = true;
             } else {
-                preventDefault = !1;
+                preventDefault = false;
                 clone = modification.create('div', {
                     style: {
                         position: 'absolute',

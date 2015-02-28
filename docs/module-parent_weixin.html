@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: core/event/wheel.js - Alien documents</title>
+    <title>Module: parent/weixin - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -74,27 +74,18 @@
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
 <li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
 <li><a href="module-ui_Window_.html">ui/Window/</a></li>
-<li><a href="module-utils_calendar.html">utils/calendar</a></li>
-<li><a href="module-utils_canvas.html">utils/canvas</a></li>
-<li><a href="module-utils_class.html">utils/class</a></li>
-<li><a href="module-utils_controller.html">utils/controller</a></li>
-<li><a href="module-utils_data.html">utils/data</a></li>
-<li><a href="module-utils_date.html">utils/date</a></li>
-<li><a href="module-utils_easing.html">utils/easing</a></li>
-<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
-<li><a href="module-utils_querystring.html">utils/querystring</a></li>
-<li><a href="module-utils_random.html">utils/random</a></li>
-<li><a href="module-utils_selection.html">utils/selection</a></li>
-<li><a href="module-utils_typeis.html">utils/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
+<li><a href="module-util_canvas.html">util/canvas</a></li>
+<li><a href="module-util_class.html">util/class</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
+<li><a href="module-util_data.html">util/data</a></li>
+<li><a href="module-util_date.html">util/date</a></li>
+<li><a href="module-util_easing.html">util/easing</a></li>
+<li><a href="module-util_hashbang.html">util/hashbang</a></li>
+<li><a href="module-util_querystring.html">util/querystring</a></li>
+<li><a href="module-util_random.html">util/random</a></li>
+<li><a href="module-util_selection.html">util/selection</a></li>
+<li><a href="module-util_typeis.html">util/typeis</a></li>
 </ul>
 </li>
 </ul>
@@ -122,46 +113,6 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 4</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallafter">validateallafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallbefore">validateallbefore</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateoneafter">validateoneafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateonebefore">validateonebefore</a>
-    
-</li>
-
-	                    
-	                
 
 	                
 	            </ul>
@@ -169,101 +120,108 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: core/event/wheel.js</h1>
+		            <h1 class="page-title">Module: parent/weixin</h1>
 
 		            
 
 
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            parent/weixin
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
     
 
-<pre class="prettyprint source"><code>/*!
- * wheel.js
- * @author ydr.me
- * @create 2014-10-07 14:45
- */
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
+            
+            <li class="active">
+                <a href="#tab-meta-242996449349448089416204560548067" data-toggle="tab">Source</a>
+            </li>
 
-define(function (require, exports, module) {
-    /**
-     * 扩展滚轮事件
-     * @module core/event/wheel
-     * @requires core/event/base
-     *
-     * @example
-     * event.on(ele, 'wheelstart', function(eve){});
-     * event.on(ele, 'wheelchange', function(eve){
-     *     // 滚轮的距离在 eve.alienDetail 里
-     *     // eve.alienDetail.deltaY &lt; 0 ? 向下滚轮 ：向上滚轮
-     * });
-     * event.on(ele, 'wheelend', function(eve){});
-     */
-    'use strict';
+        
+        
+        
+        
+    </ul>
 
-    var event = require('./base.js');
-    var mousewheel = 'wheel mousewheel DOMMouseScroll MozMousePixelScroll';
-    var timeout = 500;
-    var timeid = 0;
-    var isStart = !1;
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
-    event.on(document, mousewheel, function (eve) {
-        var startEvent = event.create('wheelstart');
-        var changeEvent = event.create('wheelchange');
-        var endEvent = event.create('wheelend');
-        var ele = eve.target;
-        var deltaY = 0;
-        var dispatchStart;
-        var dispatchChange;
+            <div class="tab-pane active" id="tab-meta-242996449349448089416204560548067">
+                <p><a href="libs_Weixin.js.html#line9">libs/Weixin.js:9</a></p>
+            </div>
 
-        if (timeid) {
-            clearTimeout(timeid);
-            timeid = 0;
-        }
+        
+        
+        
+        
+    </div>
+</dl>
 
-        timeid = setTimeout(function () {
-            event.dispatch(ele, endEvent);
-            isStart = !1;
-        }, timeout);
+        
+    </div>
 
-        if (!isStart) {
-            isStart = !0;
+    
 
-            event.extend(startEvent, eve);
-            dispatchStart = event.dispatch(ele, startEvent);
+    
 
-            if (dispatchStart.defaultPrevented === true) {
-                eve.preventDefault();
-            }
-        }
+    
 
-        // chrome
-        if ('wheelDeltaY' in eve) {
-            deltaY = eve.wheelDeltaY > 0 ? 1 : -1;
-        }
-        // ie9/firefox
-        else if ('deltaY' in eve) {
-            deltaY = eve.deltaY > 0 ? -1 : 1;
-        }
-        // ie8/ie7/ie6
-        else if ('wheelDelta' in eve) {
-            deltaY = eve.wheelDelta > 0 ? 1 : -1;
-        }
+    
 
-        event.extend(changeEvent, eve, {
-            deltaX: 0,
-            deltaY: deltaY,
-            deltaZ: 0
-        });
-        dispatchChange = event.dispatch(ele, changeEvent);
+    
 
-        if (dispatchChange.defaultPrevented === true) {
-            eve.preventDefault();
-        }
-    });
+    
 
-    module.exports = event;
-});</code></pre>
+    
 
+    
 
+    
+</article>
+
+</section>
 
 
 

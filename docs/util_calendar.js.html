@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: core/event/wheel.js - Alien documents</title>
+    <title>Source: util/calendar.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -74,27 +74,18 @@
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
 <li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
 <li><a href="module-ui_Window_.html">ui/Window/</a></li>
-<li><a href="module-utils_calendar.html">utils/calendar</a></li>
-<li><a href="module-utils_canvas.html">utils/canvas</a></li>
-<li><a href="module-utils_class.html">utils/class</a></li>
-<li><a href="module-utils_controller.html">utils/controller</a></li>
-<li><a href="module-utils_data.html">utils/data</a></li>
-<li><a href="module-utils_date.html">utils/date</a></li>
-<li><a href="module-utils_easing.html">utils/easing</a></li>
-<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
-<li><a href="module-utils_querystring.html">utils/querystring</a></li>
-<li><a href="module-utils_random.html">utils/random</a></li>
-<li><a href="module-utils_selection.html">utils/selection</a></li>
-<li><a href="module-utils_typeis.html">utils/typeis</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
-<ul class="dropdown-menu">
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-util_calendar.html">util/calendar</a></li>
+<li><a href="module-util_canvas.html">util/canvas</a></li>
+<li><a href="module-util_class.html">util/class</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
+<li><a href="module-util_data.html">util/data</a></li>
+<li><a href="module-util_date.html">util/date</a></li>
+<li><a href="module-util_easing.html">util/easing</a></li>
+<li><a href="module-util_hashbang.html">util/hashbang</a></li>
+<li><a href="module-util_querystring.html">util/querystring</a></li>
+<li><a href="module-util_random.html">util/random</a></li>
+<li><a href="module-util_selection.html">util/selection</a></li>
+<li><a href="module-util_typeis.html">util/typeis</a></li>
 </ul>
 </li>
 </ul>
@@ -122,46 +113,6 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 4</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallafter">validateallafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateallbefore">validateallbefore</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateoneafter">validateoneafter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:validateonebefore">validateonebefore</a>
-    
-</li>
-
-	                    
-	                
 
 	                
 	            </ul>
@@ -169,7 +120,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: core/event/wheel.js</h1>
+		            <h1 class="page-title">Source: util/calendar.js</h1>
 
 		            
 
@@ -177,90 +128,138 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * wheel.js
+ * 日历
  * @author ydr.me
- * @create 2014-10-07 14:45
+ * @create 2015-01-10 16:55
  */
 
 
 define(function (require, exports, module) {
     /**
-     * 扩展滚轮事件
-     * @module core/event/wheel
-     * @requires core/event/base
-     *
-     * @example
-     * event.on(ele, 'wheelstart', function(eve){});
-     * event.on(ele, 'wheelchange', function(eve){
-     *     // 滚轮的距离在 eve.alienDetail 里
-     *     // eve.alienDetail.deltaY &lt; 0 ? 向下滚轮 ：向上滚轮
-     * });
-     * event.on(ele, 'wheelend', function(eve){});
+     * @module util/calendar
+     * @requires util/date
+     * @requires util/dato
+     * @requires util/typeis
      */
+
     'use strict';
 
-    var event = require('./base.js');
-    var mousewheel = 'wheel mousewheel DOMMouseScroll MozMousePixelScroll';
-    var timeout = 500;
-    var timeid = 0;
-    var isStart = !1;
 
-    event.on(document, mousewheel, function (eve) {
-        var startEvent = event.create('wheelstart');
-        var changeEvent = event.create('wheelchange');
-        var endEvent = event.create('wheelend');
-        var ele = eve.target;
-        var deltaY = 0;
-        var dispatchStart;
-        var dispatchChange;
+    var date = require('./date.js');
+    var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
+    var defaults = {
+        // 激活的日期
+        activeDate: null,
+        // 是否为自然月
+        isNatualMonth: false,
+        // 一周的第一天星期几
+        firstDayInWeek: 0
+    };
 
-        if (timeid) {
-            clearTimeout(timeid);
-            timeid = 0;
+
+    /**
+     * 月历
+     * @param year {Number} 年
+     * @param month {Number} 月
+     * @param [options] {Object} 配置
+     * @param [options.activeDate=null] {Date|Number|Array} 高亮的日期，默认为今天
+     * @param [options.isNatualMonth=false] {Boolean} 是否为自然月，默认 false
+     * @param [options.firstDayInWeek=0] {Number} 一周的第一天星期几，默认为0，即星期日
+     * @returns [Array] 月历数组
+     */
+    exports.month = function calendar(year, month, options) {
+        options = dato.extend({}, defaults, options);
+        month = options.isNatualMonth ? month - 1 : month;
+        options.activeDate = typeis.array(options.activeDate) ? options.activeDate : [options.activeDate];
+
+        var list = [];
+        var prevDate = new Date(year, month - 1);
+        var thisDate = new Date(year, month, 1);
+        var thisMonthDays = date.getDaysInMonth(year, month);
+        var thisMonthFirstDateDay = thisDate.getDay();
+        thisMonthFirstDateDay = thisMonthFirstDateDay &lt; options.firstDayInWeek ? thisMonthFirstDateDay + 7 : thisMonthFirstDateDay;
+        var deltaDays = thisMonthFirstDateDay - options.firstDayInWeek;
+        var prevMonthDays = date.getDaysInMonth(year, month - 1);
+        var i = 0;
+
+        // 上月
+        for (; i &lt; deltaDays; i++) {
+            list.push({
+                year: prevDate.getFullYear(),
+                month: prevDate.getMonth() + 1,
+                date: prevMonthDays - i,
+                type: i
+            });
         }
 
-        timeid = setTimeout(function () {
-            event.dispatch(ele, endEvent);
-            isStart = !1;
-        }, timeout);
+        list.reverse();
 
-        if (!isStart) {
-            isStart = !0;
+        // 本月
+        for (i = 1; i &lt;= thisMonthDays; i++) {
+            list.push({
+                year: thisDate.getFullYear(),
+                month: thisDate.getMonth() + 1,
+                date: i,
+                type: 'this'
+            });
+        }
 
-            event.extend(startEvent, eve);
-            dispatchStart = event.dispatch(ele, startEvent);
+        deltaDays = list.length % 7;
 
-            if (dispatchStart.defaultPrevented === true) {
-                eve.preventDefault();
+        // 下月
+        if (deltaDays) {
+            var nextDate = new Date(year, month + 1);
+
+            for (i = 1; i &lt;= 7 - deltaDays; i++) {
+                list.push({
+                    year: nextDate.getFullYear(),
+                    month: nextDate.getMonth() + 1,
+                    date: i,
+                    type: 'next'
+                });
             }
         }
 
-        // chrome
-        if ('wheelDeltaY' in eve) {
-            deltaY = eve.wheelDeltaY > 0 ? 1 : -1;
-        }
-        // ie9/firefox
-        else if ('deltaY' in eve) {
-            deltaY = eve.deltaY > 0 ? -1 : 1;
-        }
-        // ie8/ie7/ie6
-        else if ('wheelDelta' in eve) {
-            deltaY = eve.wheelDelta > 0 ? 1 : -1;
-        }
 
-        event.extend(changeEvent, eve, {
-            deltaX: 0,
-            deltaY: deltaY,
-            deltaZ: 0
+        var activeDateMap = [];
+        options.activeDate.forEach(function (d) {
+            d = date.parse(d);
+
+            var id = _buildDateid({
+                year: d.getFullYear(),
+                month: d.getMonth() + 1,
+                date: d.getDate()
+            });
+
+            activeDateMap[id] = 1;
         });
-        dispatchChange = event.dispatch(ele, changeEvent);
 
-        if (dispatchChange.defaultPrevented === true) {
-            eve.preventDefault();
+        list.forEach(function (item) {
+            item.id = _buildDateid(item);
+            item.active = !!activeDateMap[item.id];
+        });
+
+        // 分组
+        var group = [];
+
+        while (list.length) {
+            group.push(list.splice(0, 7));
         }
-    });
 
-    module.exports = event;
+        return group;
+    };
+
+
+    /**
+     * 生成日期ID
+     * @param item {Object} 日对象
+     * @private
+     */
+    function _buildDateid(item) {
+        return [item.year, dato.fillNumber(item.month, 2), dato.fillNumber(item.date, 2)].join('') * 1;
+    }
+
 });</code></pre>
 
 

@@ -227,7 +227,7 @@ define(function (require, exports, module) {
 
                 var fix = exports.fixCss(key, val);
 
-                if (fix.key.indexOf('transform') > -1) {
+                if (fix.key && fix.key.indexOf('transform') > -1) {
                     transformKey = fix.key;
                     transformVal.push(fix.val);
 
