@@ -375,25 +375,7 @@ define(function (require, exports, module) {
             var val = data[rule.name];
             var err;
             var type;
-            var onover = function (err) {
-                var ondone = function (err) {
-                    // onafter
-                    if (!err) {
-                        rule.onafters.forEach(function (fn) {
-                            data[rule.name] = fn.call(rule, val, data);
-                        });
-                    }
-
-                    // callback
-                    if (typeis(callback) === 'function') {
-                        callback(err, data);
-                    }
-                };
-
-                if (err) {
-                    return ondone(err);
-                }
-
+            var runCustom = function (next) {
                 var runCustomRules = function (customRules) {
                     return function (callback) {
                         howdo.each(customRules, function (ruleName, ruleInfo, next) {
@@ -421,7 +403,20 @@ define(function (require, exports, module) {
                     // 实例自定义验证规则
                     .task(runCustomRules(the._customRules))
                     // 异步串行
-                    .follow(ondone);
+                    .follow(next);
+            };
+            var onover = function (err) {
+                // onafter
+                if (!err) {
+                    rule.onafters.forEach(function (fn) {
+                        data[rule.name] = fn.call(rule, val, data);
+                    });
+                }
+
+                // callback
+                if (typeis(callback) === 'function') {
+                    callback(err, data);
+                }
             };
 
             // onbefore
@@ -596,18 +591,24 @@ define(function (require, exports, module) {
                     }
                 }
 
-                // function
-                howdo.each(rule.functions, function (index, fn, next) {
-                    var fnLen = fn.length;
-
-                    if (fnLen === 3) {
-                        fn.call(window, val, data, next);
-                    } else if (fnLen === 2) {
-                        fn.call(window, val, next);
-                    } else {
-                        next();
+                runCustom(function (err) {
+                    if (err) {
+                        return onover(err);
                     }
-                }).follow(onover);
+
+                    // function
+                    howdo.each(rule.functions, function (index, fn, next) {
+                        var fnLen = fn.length;
+
+                        if (fnLen === 3) {
+                            fn.call(window, val, data, next);
+                        } else if (fnLen === 2) {
+                            fn.call(window, val, next);
+                        } else {
+                            next();
+                        }
+                    }).follow(onover);
+                });
             } else {
                 onover();
             }
