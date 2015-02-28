@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var calendar = require('../../util/calendar.js');
-    var dato = require('../../util/dato.js');
+    var calendar = require('../../utils/calendar.js');
+    var dato = require('../../utils/dato.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');

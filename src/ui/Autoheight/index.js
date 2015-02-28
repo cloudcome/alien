@@ -24,9 +24,9 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var dato = require('../../util/dato.js');
-    var selection = require('../../util/selection.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var selection = require('../../utils/selection.js');
+    var controller = require('../../utils/controller.js');
     var style = require('css!./style.css');
     var alienClass = 'alien-ui-autoheight';
     var defaults = {};

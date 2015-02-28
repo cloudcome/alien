@@ -21,12 +21,12 @@ define(function (require, exports, module) {
     var regSep = /^-+|-+$/g;
     var regSplit = /[A-Z]/g;
     var regSpace = /\s+/;
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
     var see = require('./see.js');
-    var allocation = require('../../util/allocation.js');
+    var allocation = require('../../utils/allocation.js');
     var REG_PX = /margin|width|height|padding|top|right|bottom|left|translate/i;
     var REG_DEG = /rotate|skew/i;
     var REG_TRANSFORM = /translate|scale|skew|rotate|matrix|perspective/i;

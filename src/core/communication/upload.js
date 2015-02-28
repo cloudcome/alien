@@ -14,8 +14,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var typeis = require('../../util/typeis.js');
-    var dato = require('../../util/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
     var xhr = require('./xhr.js');
     var defaults = {
         url: location.href,

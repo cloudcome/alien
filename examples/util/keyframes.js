@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var keyframes = require('../../src/util/keyframes.js');
+    var keyframes = require('../../src/utils/keyframes.js');
     var animation = require('../../src/core/dom/animation.js');
     var modification = require('../../src/core/dom/modification.js');
     var $demo = document.getElementById('demo');

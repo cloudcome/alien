@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');

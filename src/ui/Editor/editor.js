@@ -13,8 +13,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var selection = require('../../util/selection.js');
-    var dato = require('../../util/dato.js');
+    var selection = require('../../utils/selection.js');
+    var dato = require('../../utils/dato.js');
     var REG_LINEEND = /\n/g;
     var REG_START_SPACE = /^\s+/;
     var udf;

@@ -32,7 +32,7 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
-    var controller = require('../../util/controller.js');
+    var controller = require('../../utils/controller.js');
     var touchstart = 'touchstart MSPointerDown pointerdown';
     var touchmove = 'touchmove MSPointerMove pointermove';
     var touchend = 'touchend MSPointerUp pointerup';

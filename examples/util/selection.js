@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var selection = require('../../src/util/selection.js');
+    var selection = require('../../src/utils/selection.js');
     var $textarea = document.getElementById('textarea');
     var $iframe = document.getElementById('iframe');
     var $start = document.getElementById('start');

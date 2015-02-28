@@ -23,9 +23,9 @@ define(function (require, exports, module) {
     var udf;
     var attribute = require('./attribute.js');
     var see = require('./see.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var eeeing = require('../../util/easing.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var eeeing = require('../../utils/easing.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
     var cssDefaults = {

@@ -29,9 +29,9 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var ui = require('../base.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var alienClass = 'alien-ui-banner';
     var alienIndex = 0;
     var defaults = {

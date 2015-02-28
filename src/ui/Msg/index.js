@@ -17,8 +17,8 @@ define(function (require, exports, module) {
     var Mask = require('../Mask/');
     var Window = require('../Window/');
     var ui = require('../base.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');

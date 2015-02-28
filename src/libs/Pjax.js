@@ -24,8 +24,8 @@ define(function (require, exports, module) {
     var attribute = require('../core/dom/attribute.js');
     var xhr = require('../core/communication/xhr.js');
     var event = require('../core/event/base.js');
-    var dato = require('../util/dato.js');
-    var klass = require('../util/class.js');
+    var dato = require('../utils/dato.js');
+    var klass = require('../utils/class.js');
     var Emeitter = require('./Emitter.js');
     var history = window.history;
     var localStorage = window.localStorage;

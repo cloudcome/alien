@@ -25,8 +25,8 @@ define(function (require, exports, module) {
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
-    var dato = require('../../util/dato.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');

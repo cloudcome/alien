@@ -33,8 +33,8 @@ define(function (require, exports, module) {
     var templateWrap = require('html!./wrap.html');
     var templateLoading = require('html!./loading.html');
     var style = require('css!./style.css');
-    var dato = require('../../util/dato.js');
-    var howdo = require('../../util/howdo.js');
+    var dato = require('../../utils/dato.js');
+    var howdo = require('../../utils/howdo.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
     var alienClass = 'alien-ui-imgview';

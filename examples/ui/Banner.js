@@ -8,7 +8,7 @@ define(function (require) {
     'use strict';
 
     var Banner = require('../../src/ui/Banner/index.js');
-    var control = require('../../src/util/controller.js');
+    var control = require('../../src/utils/controller.js');
     var event = require('../../src/core/event/base.js');
     var selector = require('../../src/core/dom/selector.js');
     var attribute = require('../../src/core/dom/attribute.js');

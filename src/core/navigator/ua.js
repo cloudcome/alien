@@ -20,7 +20,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
 
     //////////////
     // Constants

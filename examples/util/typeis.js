@@ -8,7 +8,7 @@
 define(function (require) {
     'use strict';
 
-    var typeis = require('../../src/util/typeis.js');
+    var typeis = require('../../src/utils/typeis.js');
 
     debugger;
 });

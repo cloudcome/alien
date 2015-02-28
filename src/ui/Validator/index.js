@@ -16,8 +16,8 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var see = require('../../core/dom/see.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var Vldor = require('../../libs/Validator.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-validator';

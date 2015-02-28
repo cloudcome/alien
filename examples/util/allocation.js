@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var allocation = require('../../src/util/allocation.js');
+    var allocation = require('../../src/utils/allocation.js');
     var hehe = function () {
         return allocation.getset({
             get: function (key) {

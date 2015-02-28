@@ -18,10 +18,10 @@ define(function (require, exports, module) {
     'use strict';
 
     var Emitter = require('./Emitter.js');
-    var klass = require('../util/class.js');
-    var howdo = require('../util/howdo.js');
-    var typeis = require('../util/typeis.js');
-    var dato = require('../util/dato.js');
+    var klass = require('../utils/class.js');
+    var howdo = require('../utils/howdo.js');
+    var typeis = require('../utils/typeis.js');
+    var dato = require('../utils/dato.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var animation = require('../core/dom/animation.js');

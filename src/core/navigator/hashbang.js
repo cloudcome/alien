@@ -18,9 +18,9 @@ define(function (require, exports) {
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var hashbang = require('../../util/hashbang.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var hashbang = require('../../utils/hashbang.js');
     var hasEmit = false;
 
 

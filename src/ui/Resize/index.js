@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');

@@ -21,8 +21,8 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var controller = require('../../utils/controller.js');
     var defaults = {
         index: 0,
         eventType: 'click tap',

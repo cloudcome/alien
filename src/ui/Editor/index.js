@@ -33,11 +33,11 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var compatible = require('../../core/navigator/compatible.js');
     var editor = require('./editor.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var date = require('../../util/date.js');
-    var random = require('../../util/random.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var date = require('../../utils/date.js');
+    var random = require('../../utils/random.js');
+    var controller = require('../../utils/controller.js');
     var Autoheight = require('../Autoheight/');
     var Dialog = require('../Dialog/');
     var Msg = require('../Msg/index.js');

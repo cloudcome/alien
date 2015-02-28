@@ -3,7 +3,7 @@ define(function (require) {
 
     var hashbang = require('/src/core/navigator/hashbang.js');
     var dato = require('/src/util/dato.js');
-    var random = require('../../../src/util/random.js');
+    var random = require('../../../src/utils/random.js');
     var $routers = document.getElementById('routers');
     var $ret = document.getElementById('ret');
     var routes = [{

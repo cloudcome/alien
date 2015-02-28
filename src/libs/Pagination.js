@@ -13,8 +13,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var dato = require('./../util/dato.js');
-    var klass = require('./../util/class.js');
+    var dato = require('./../utils/dato.js');
+    var klass = require('./../utils/class.js');
     var defaults = {
         max: 1,
         page: 1,

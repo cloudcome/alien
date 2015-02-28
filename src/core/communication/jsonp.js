@@ -16,11 +16,11 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var klass = require('../../util/class.js');
-    var random = require('../../util/random.js');
+    var dato = require('../../utils/dato.js');
+    var klass = require('../../utils/class.js');
+    var random = require('../../utils/random.js');
     var Emitter = require('../../libs/Emitter.js');
-    var qs = require('../../util/querystring.js');
+    var qs = require('../../utils/querystring.js');
     var modification = require('../../core/dom/modification.js');
     var defaults = {
         // 可选 var 和 function
