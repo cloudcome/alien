@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var calendar = require('/src/util/calendar.js');
+    var calendar = require('/src/utils/calendar.js');
     var date = new Date();
     var year = date.getFullYear();
     var month = date.getMonth();

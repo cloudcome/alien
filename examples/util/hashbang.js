@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var hashbang = require('/src/util/hashbang.js');
+    var hashbang = require('/src/utils/hashbang.js');
 
     hashbang.on('path', function (eve, neo, old) {
         console.log('====== path ======');

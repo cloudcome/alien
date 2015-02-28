@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var DDB = require('/src/libs/DDB.js');
-    var random = require('/src/util/random.js');
+    var random = require('/src/utils/random.js');
     var data = {
         name: '云淡然',
         loves: []

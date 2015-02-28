@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var qs = require('/src/util/querystring.js');
+    var qs = require('/src/utils/querystring.js');
 
     window.qs = qs;
 });

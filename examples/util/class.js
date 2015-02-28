@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var klass = require('/src/util/class.js');
+    var klass = require('/src/utils/class.js');
 
     var Father = klass.create({
         constructor: function (name) {

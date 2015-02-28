@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var date = require('/src/util/date.js');
+    var date = require('/src/utils/date.js');
     var now = new Date();
     var YYYY = now.getFullYear();
     var M = now.getMonth();

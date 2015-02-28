@@ -101,7 +101,7 @@ define(function (require) {
 
     })();
 
-    var canvas = require('/src/util/canvas.js');
+    var canvas = require('/src/utils/canvas.js');
     var $canvas = document.getElementById('canvas');
     var $img = document.getElementById('img');
     var $textarea = document.getElementById('textarea');

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var control = require('/src/util/control.js');
+    var control = require('/src/utils/control.js');
 
     window.addEventListener('scroll', control.throttle(function () {
         console.log('throttle onsrcoll', Date.now());

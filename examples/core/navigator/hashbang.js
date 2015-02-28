@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var hashbang = require('/src/core/navigator/hashbang.js');
-    var dato = require('/src/util/dato.js');
+    var dato = require('/src/utils/dato.js');
     var random = require('../../../src/utils/random.js');
     var $routers = document.getElementById('routers');
     var $ret = document.getElementById('ret');

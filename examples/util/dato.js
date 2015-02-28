@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var dato = require('/src/util/dato.js');
+    var dato = require('/src/utils/dato.js');
 
     debugger;
 });
