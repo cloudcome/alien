@@ -139,6 +139,7 @@ define(function (require, exports, module) {
 
         /**
          * 重新定位尺寸
+         * @public
          */
         resize: function () {
             var the = this;
@@ -158,6 +159,7 @@ define(function (require, exports, module) {
 
         /**
          * 销毁实例
+         * @public
          */
         destroy: function () {
             var the = this;
@@ -168,5 +170,8 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
     document.body.appendChild($mirror);
+    /**
+     * 实例化一个 Autoheight
+     */
     module.exports = Autoheight;
 });

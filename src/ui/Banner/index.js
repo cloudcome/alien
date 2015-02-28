@@ -7,8 +7,6 @@
 
 define(function (require, exports, module) {
     /**
-     * Banner
-     *
      * @module ui/Banner/
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -93,7 +91,8 @@ define(function (require, exports, module) {
 
     /**
      * 尺寸重置
-     * @param [size]
+     * @method resize
+     * @param [size] {{width:Number,height:Number}} 尺寸
      */
     pro.resize = function (size) {
         var the = this;
@@ -123,6 +122,8 @@ define(function (require, exports, module) {
 
         the._translate = -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height);
         attribute.css(the._$list, the._calTranslate(the._showIndex + 1));
+
+        return the;
     };
 
 
@@ -321,7 +322,6 @@ define(function (require, exports, module) {
 
     /**
      * 边界索引
-     * @param index
      * @returns {*}
      * @private
      */
@@ -340,6 +340,7 @@ define(function (require, exports, module) {
 
     /**
      * 上一张
+     * @method prev
      * @param [callback] {Function} 回调
      */
     pro.prev = function (callback) {
@@ -354,6 +355,7 @@ define(function (require, exports, module) {
 
     /**
      * 下一张
+     * @method next
      * @param [callback] {Function} 回调
      */
     pro.next = function (callback) {
@@ -368,8 +370,9 @@ define(function (require, exports, module) {
 
     /**
      * 动画到某一张
-     * @param index
-     * @param callback
+     * @method index
+     * @param index {Number} 索引值
+     * @param callback {Function} 回调
      * @returns {Banner}
      */
     pro.index = function (index, callback) {
@@ -406,6 +409,7 @@ define(function (require, exports, module) {
 
     /**
      * 暂停播放
+     * @method pause
      * @returns {Banner}
      */
     pro.pause = function () {
@@ -421,6 +425,7 @@ define(function (require, exports, module) {
 
     /**
      * 开始播放
+     * @method play
      * @returns {Banner}
      */
     pro.play = function () {
@@ -436,6 +441,7 @@ define(function (require, exports, module) {
 
     /**
      * 销毁实例
+     * @method destroy
      */
     pro.destroy = function () {
         var the = this;
@@ -449,9 +455,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 构建一个 banner，标准的 DOM 结构为：<br>
-     *     <code>ul#banner1>li*N</code>
+     * 构建一个 banner，标准的 DOM 结构为：<code>ul#banner1>li*N</code>
      *
+     * @constructor
      * @param {HTMLElement|Node} $list banner 列表
      * @param {Object} [options] 配置
      * @param {Number} [options.width=700] banner 宽度，默认700
