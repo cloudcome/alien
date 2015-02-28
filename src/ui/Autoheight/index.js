@@ -8,7 +8,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Autoheight/
+     * @module ui/Autoheight/
      * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification

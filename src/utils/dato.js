@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module utils/data
+     * @module utils/dato
      * @requires utils/typeis
      */
 
