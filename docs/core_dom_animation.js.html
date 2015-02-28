@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: core/dom/animation.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_base.html">ui/base</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
+<li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_data.html">utils/data</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
+<li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
+<li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 46</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallafter">validateallafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: core/dom/animation.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * animation.js
+ * @author ydr.me
+ * @ref https://github.com/visionmedia/move.js
+ * 2014-09-20 11:08
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * 单次动画，如果要实现动画队列，使用`howdo`配合起来使用即可实现
+     *
+     * @module core/dom/animation
+     * @requires core/dom/attribute
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/easing
+     * @requires core/navigator/compatible
+     * @requires core/event/base
+     */
+    'use strict';
+
+    var udf;
+    var attribute = require('./attribute.js');
+    var see = require('./see.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var eeeing = require('../../utils/easing.js');
+    var compatible = require('../navigator/compatible.js');
+    var event = require('../event/base.js');
+    var cssDefaults = {
+        easing: 'in-out',
+        duration: 567,
+        delay: 0
+    };
+    var jsDefaults = {
+        easing: 'swing',
+        duration: 567,
+        delay: 0
+    };
+    var animationDefaults = {
+        name: '',
+        easing: 'in-out',
+        duration: 567,
+        delay: 0,
+        count: 1,
+        direction: 'normal'
+    };
+    var css = 'transition-property';
+    //var transitionendEventPrefix = compatible.css3(css).replace(css, '').replace(/-/g, '');
+    //var transitionendEventType = transitionendEventPrefix ? transitionendEventPrefix + 'TransitionEnd' : 'transitionend';
+    //var animationendEventType = compatible.html5('onanimationend', window, true);
+    //var animationiterationEventType = compatible.html5('onanimationiteration', window, true);
+    var animationendEventType = 'webkitAnimationEnd oanimationend msAnimationEnd mozAnimationEnd animationend';
+    var animationiterationEventType = 'webkitAnimationIteration oAnimationIteration msAnimationIteration mozAnimationIteration animationiteration';
+    var transitionendEventType = 'webkitTransitionEnd oTransitionEnd msTransitionEnd mozTransitionEnd transitionend';
+    var noop = function () {
+        // ignore
+    };
+    var alienKey = 'alien-core-dom-animation-';
+    var index = 0;
+    var animationMap = {};
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
+
+    /**
+     * 动画，不会判断当前动画终点与当前是否一致
+     *
+     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} to 终点
+     * @param {Object} [options] 配置
+     * @param {String} [options.easing] 缓冲类型，默认为`in-out`，内置的有
+     * in、out、in-out、snap、linear、ease-in-quad、ease-in-cubic、ease-in-quart、
+     * ease-in-sine、ease-in-expo、ease-in-circ、ease-in-back、ease-out-quad、
+     * ease-out-cubic、ease-out-quart、ease-out-sine、ease-out-expo、ease-out-circ、
+     * ease-out-back、ease-in-out-quad、ease-in-out-cubic、ease-in-out-quart、ease-in-out-sine、
+     * ease-in-out-expo、ease-in-out-circ、ease-in-out-back，也可以提供自定义的缓冲类型，格式为 css3的
+     * `ransition-timing-function`的值，为`cubic-bezier(...)`
+     * @param {Number} [options.duration=567] 动画时间，默认789，单位ms
+     * @param {Number} [options.delay=0] 延迟时间，默认0，单位ms
+     * @param {Function} [callback] 回调
+     *
+     * @example
+     * animation.animate(ele, to);
+     * animation.animate(ele, to, property);
+     * animation.animate(ele, to, callback);
+     * animation.animate(ele, to, property, callback);
+     */
+    exports.animate = function (ele, to, options, callback) {
+        if (attribute.css(ele, 'display') === 'none') {
+            return;
+        }
+
+        if (!ele[alienKey]) {
+            ele[alienKey] = ++index;
+        }
+
+        var id = ele[alienKey];
+        var args = arguments;
+        var argL = args.length;
+        var keys = [];
+        var hasDispatch = false;
+        // 修正 CSS 终点
+        var fixTo = {};
+        var durationVal = [];
+        var delayVal = [];
+        var easingVal = [];
+        var i = 0;
+
+        // 如果正在动画，则停止当前动画
+        if (animationMap[id]) {
+            exports.stop(ele);
+        }
+
+        options = dato.extend({}, cssDefaults, options);
+        animationMap[id] = to;
+        callback = args[argL - 1];
+
+        if (argL === 3) {
+            // .animate(element, to, callback);
+            if (typeis(args[2]) === 'function') {
+                options = {};
+            }
+            // .animate(element, to, property);
+            else {
+                callback = noop;
+            }
+        }
+        // .animate(element, to);
+        else if (argL === 2) {
+            options = {};
+            callback = noop;
+        }
+
+        var listener = function (eve) {
+            if (timeid) {
+                clearTimeout(timeid);
+                timeid = 0;
+            }
+
+            if (eve === true || eve &amp;&amp; eve.target === ele) {
+                if (hasDispatch) {
+                    return;
+                }
+
+                hasDispatch = true;
+                animationMap[id] = null;
+                event.un(ele, transitionendEventType, listener);
+                attribute.css(ele, {
+                    transitionDuration: '',
+                    transitionDelay: '',
+                    transitionTimingFunction: '',
+                    transitionProperty: ''
+                });
+
+                window[requestAnimationFrame](callback.bind(ele));
+            }
+        };
+
+
+        event.on(ele, transitionendEventType, listener);
+        var timeid = setTimeout(function () {
+            listener(true);
+        }, options.duration + options.delay + 100);
+        options = dato.extend({}, cssDefaults, options);
+
+        var easing = eeeing.css3[options.easing];
+
+        if (!easing) {
+            easing = options.easing;
+        }
+
+        dato.each(to, function (key, val) {
+            var obj = attribute.fixCss(key, val);
+            var temp = {};
+            temp[obj.key] = obj.val;
+
+            dato.extend(fixTo, temp);
+            keys.push(obj.key);
+        });
+
+        // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
+        // 因此，此时需要计算出 left、top 值
+        if (keys.indexOf('left') > -1) {
+            // 先定位好
+            attribute.left(ele, attribute.left(ele));
+            attribute.css(ele, 'left', dato.parseFloat(attribute.css(ele, 'left'), 0));
+        }
+
+        if (keys.indexOf('top') > -1) {
+            // 先定位好
+            attribute.top(ele, attribute.top(ele));
+            attribute.css(ele, 'top', dato.parseFloat(attribute.css(ele, 'top'), 0));
+        }
+
+        for (; i &lt; keys.length; i++) {
+            durationVal.push(options.duration + 'ms');
+            delayVal.push(options.delay + 'ms');
+            easingVal.push(easing);
+        }
+
+
+        if (see.visibility(ele) === 'visible') {
+            attribute.css(ele, {
+                transitionDuration: durationVal.join(','),
+                transitionDelay: delayVal.join(','),
+                transitionTimingFunction: easingVal.join(','),
+                transitionProperty: keys.join(',')
+            });
+        } else {
+            listener(true);
+        }
+
+        window[requestAnimationFrame](function () {
+            attribute.css(ele, fixTo);
+        });
+    };
+
+
+    /**
+     * 停止当前动画
+     * @param ele {HTMLElement|Node} 元素
+     * @param [toEnd=false] {Boolean} 是否立即停止到动画终点，默认 false
+     * @returns {undefined}
+     *
+     * @example
+     * animation.top(ele, true);
+     * animation.top(ele, false);
+     */
+    exports.stop = function (ele, toEnd) {
+        var id = ele[alienKey];
+        var to;
+
+        if (!id || !(to = animationMap[id])) {
+            return;
+        }
+
+        if (!toEnd) {
+            dato.each(to, function (key) {
+                attribute.css(ele, key, attribute.css(ele, key));
+            });
+        }
+
+        attribute.css(ele, {
+            transitionDuration: '',
+            transitionDelay: '',
+            transitionTimingFunction: '',
+            transitionProperty: ''
+        });
+        event.dispatch(ele, transitionendEventType);
+    };
+
+
+    // animation-name	规定需要绑定到选择器的 keyframe 名称。。
+    // animation-duration	规定完成动画所花费的时间，以秒或毫秒计。
+    // animation-timing-function	规定动画的速度曲线。
+    // animation-delay	规定在动画开始之前的延迟。
+    // animation-iteration-count	规定动画应该播放的次数。
+    // animation-direction	规定是否应该轮流反向播放动画。
+    /**
+     * 运行一段帧动画，并监听动画回调
+     * @param ele {HTMLElement|Node} 元素
+     * @param options {Object} 配置
+     * @param options.name {String} 关键帧名称
+     * @param [options.duration=567] {Number} 动画时间
+     * @param [options.delay=0] {Number} 开始动画延迟时间
+     * @param [options.easing="in-out"] {String} 动画缓冲类型
+     * @param [options.count=1] {Number} 动画次数
+     * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate
+     * @param [onanimationend] {Function} 动画结束回调
+     * @param [onanimationiteration] {Function} 动画迭代回调
+     */
+    exports.keyframes = function (ele, options, onanimationend, onanimationiteration) {
+        options = dato.extend({}, animationDefaults, options);
+
+        if (!options.name) {
+            return;
+        }
+
+        var easing = eeeing.css3[options.easing];
+
+        if (!easing) {
+            easing = options.easing;
+        }
+
+        var css = {
+            animationName: options.name,
+            animationDuration: options.duration + 'ms',
+            animationTimingFunction: easing,
+            animationDelay: options.delay + 'ms',
+            animationIterationCount: options.count,
+            animationDirection: options.direction
+        };
+        
+        event.on(ele, animationiterationEventType, onanimationiteration);
+        event.once(ele, animationendEventType, function (eve) {
+            if (options.name === eve.animationName) {
+                onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
+                onanimationend.apply(ele, arguments);
+            }
+            
+            event.un(ele, animationiterationEventType, onanimationiteration);
+
+            attribute.css(ele, {
+                animationName: '',
+                animationDuration: '',
+                animationTimingFunction: '',
+                animationDelay: '',
+                animationIterationCount: '',
+                animationDirection: ''
+            });
+        });
+        attribute.css(ele, css);
+    };
+
+
+    /**
+     * 平滑滚动
+     * @param {HTMLElement|Node|window|document} ele 要滚动的元素
+     * @param {Object} to 终点
+     * @param {Object} [to.x] x轴终点
+     * @param {Object} [to.y] y轴终点
+     * @param {Object} [options] 配置
+     * @param {Number} [options.duration=567] 动画时间，默认789，单位 ms
+     * @param {String} [options.easing] 动画缓冲，默认 swing
+     * 默认配置的缓冲函数有：linear、easeIn、easeOut、easeBoth、easeInStrong、easeOutStrong
+     * easeBothStrong、easeOutQuart、easeInOutExpo、easeOutExpo、swing、swingFrom、swingTo
+     * backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有一个参数t，表示时间比 = 已耗时 / 总时间，
+     * 计算值=开始值 + ( 结束值 - 开始值 ) * 时间比
+     * @param {Number} [options.delay] 动画延时，默认0，单位ms
+     * @param {Function} [callback] 回调
+     * @returns {undefined}
+     *
+     * @example
+     * animation.scrollTo(window, {
+     *    x: 100,
+     *    y: 100
+     * }, {
+     *    duration: 1000,
+     *    easing: 'linear',
+     *    delay: 100
+     * }, function(){
+     *    alert('OK');
+     * });
+     */
+    exports.scrollTo = function (ele, to, options, callback) {
+        var args = arguments;
+        var from = {
+            x: attribute.scrollLeft(ele),
+            y: attribute.scrollTop(ele)
+        };
+        var totalDistance;
+        var pastTime = 0;
+        var beginTimestamp;
+
+        if (typeis(args[2]) === 'function') {
+            callback = args[2];
+        }
+
+        if (typeis(callback) !== 'function') {
+            callback = noop;
+        }
+
+        to = to || {};
+        to.x = to.x === udf ? from.x : to.x;
+        to.y = to.y === udf ? from.y : to.y;
+        options = dato.extend(!0, {}, jsDefaults, options);
+
+        totalDistance = {
+            x: to.x - from.x,
+            y: to.y - from.y
+        };
+
+        if (!totalDistance.x &amp;&amp; !totalDistance.y) {
+            return callback.call(ele);
+        }
+
+        setTimeout(_progress, options.delay);
+
+        function _progress() {
+            if (!beginTimestamp) {
+                beginTimestamp = Date.now();
+            }
+
+            // 时间超过 || 距离超过
+            if (pastTime >= options.duration) {
+                if (totalDistance.x) {
+                    attribute.scrollLeft(ele, to.x);
+                }
+
+                if (totalDistance.y) {
+                    attribute.scrollTop(ele, to.y);
+                }
+
+                callback.call(ele);
+            } else {
+                window[requestAnimationFrame](function () {
+                    if (!eeeing.js[options.easing]) {
+                        throw new Error('can not find easing name of ' + options.easing);
+                    }
+
+                    pastTime = Date.now() - beginTimestamp;
+
+                    var easing = eeeing.js[options.easing];
+                    // 时间比 = 已耗时 / 总时间
+                    var t = pastTime / options.duration;
+                    // 当前值 = 开始值 + ( 结束值 - 开始值 ) * 时间比
+                    var x = from.x + (to.x - from.x) * easing(t);
+                    var y = from.y + (to.y - from.y) * easing(t);
+
+                    if (totalDistance.x) {
+                        attribute.scrollLeft(ele, x);
+                    }
+
+                    if (totalDistance.y) {
+                        attribute.scrollTop(ele, y);
+                    }
+
+                    _progress();
+                });
+            }
+        }
+    };
+});
+
+</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>
