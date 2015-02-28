@@ -170,6 +170,11 @@ define(function (require, exports, module) {
                     .on('close', function (index) {
                         if (index === 0) {
                             the._$ele.value = storeVal;
+                            /**
+                             * 编辑器内容变化之后
+                             * @event change
+                             * @param value {String} 变化之后的内容
+                             */
                             the.emit('change', storeVal);
                             the._autoheight.resize();
                         }
@@ -593,6 +598,12 @@ define(function (require, exports, module) {
 
             history.push(now);
             the._saveLocal();
+
+            /**
+             * 编辑器内容变化之后
+             * @event change
+             * @param value {String} 变化之后的内容
+             */
             the.emit('change', now);
         },
 

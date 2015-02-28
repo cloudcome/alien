@@ -229,10 +229,6 @@ define(function (require, exports, module) {
                 the._autoPlay(true);
             }
         });
-
-        controller.nextTick(function () {
-            the.emit('change', the._showIndex);
-        });
     };
 
 
@@ -308,6 +304,12 @@ define(function (require, exports, module) {
             easing: options.easing
         }, function () {
             the._showIndex = index;
+
+            /**
+             * banner 索引变化之后
+             * @event change
+             * @param index {Number} 索引
+             */
             the.emit('change', index);
 
             if (typeis.function(callback)) {

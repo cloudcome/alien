@@ -149,6 +149,10 @@ define(function (require, exports, module) {
                 attribute.css($tip, 'visibility', 'visible');
                 attribute.addClass($tip, tooltipClass + '-' + at);
                 the._animate(true, function () {
+                    /**
+                     * 提示框打开之后
+                     * @event open
+                     */
                     the.emit('open');
                 });
             }
@@ -202,6 +206,10 @@ define(function (require, exports, module) {
             var the = this;
 
             the._animate(false, function () {
+                /**
+                 * 提示框关闭之后
+                 * @event close
+                 */
                 the.emit('close');
                 modification.remove(the._$tooltip);
             });

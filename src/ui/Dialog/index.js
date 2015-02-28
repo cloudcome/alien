@@ -142,6 +142,10 @@ define(function (require, exports, module) {
             if (the._mask) {
                 // esc
                 the._mask.on('esc', function () {
+                    /**
+                     * 按 ESC 之后
+                     * @event esc
+                     */
                     if (the.emit('esc') !== false) {
                         the.shake();
                     }
@@ -149,6 +153,10 @@ define(function (require, exports, module) {
 
                 // 单击背景
                 the._mask.on('hit', function () {
+                    /**
+                     * 单击背景之后
+                     * @event hitbg
+                     */
                     if (the.emit('hitbg') !== false) {
                         the.shake();
                     }

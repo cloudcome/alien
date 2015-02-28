@@ -252,6 +252,11 @@ define(function (require, exports, module) {
             the._ctrl();
             the._load(the._list[the._index], function (err, info) {
                 if (err) {
+                    /**
+                     * 图片加载出现错误
+                     * @event error
+                     * @param error {Error} 错误对象
+                     */
                     return the.emit('error', err);
                 }
 

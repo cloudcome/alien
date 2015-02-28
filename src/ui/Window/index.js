@@ -156,6 +156,10 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                /**
+                 * 窗口打开之后
+                 * @event open
+                 */
                 the.emit('open');
 
                 if (typeis.function(callback)) {
@@ -231,6 +235,10 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                /**
+                 * 窗口关闭之后
+                 * @event close
+                 */
                 the.emit('close');
 
                 attribute.css(the._$window, {

@@ -427,12 +427,24 @@ define(function (require, exports, module) {
                 event.on($scroll, 'scroll', function () {
                     if (the._scrollLeft !== $scroll.scrollLeft) {
                         the._scrollLeft = $scroll.scrollLeft;
-                        the.emit('changex', the._scrollLeft);
+
+                        /**
+                         * X 轴方向滚动
+                         * @event scrollx
+                         * @param scrollLeft {Number} 滚动条左边位移
+                         */
+                        the.emit('scrollx', the._scrollLeft);
                     }
 
                     if (the._scrollTop !== $scroll.scrollTop) {
                         the._scrollTop = $scroll.scrollTop;
-                        the.emit('changey', the._scrollTop);
+
+                        /**
+                         * Y 轴方向滚动
+                         * @event scrolly
+                         * @param scrollTop {Number} 滚动条顶部位移
+                         */
+                        the.emit('scrolly', the._scrollTop);
                     }
                 });
             }
@@ -508,7 +520,13 @@ define(function (require, exports, module) {
 
             the._thumbLeft = the._thumbLeftMax * the._scrollLeft / the._scrollLeftMax;
             the._setScroll();
-            the.emit('changex', the._scrollLeft);
+
+            /**
+             * X 轴方向滚动
+             * @event scrollx
+             * @param scrollLeft {Number} 滚动条左边位移
+             */
+            the.emit('scrollx', the._scrollLeft);
         },
 
 
@@ -563,7 +581,13 @@ define(function (require, exports, module) {
 
             the._thumbTop = the._thumbTopMax * the._scrollTop / the._scrollTopMax;
             the._setScroll();
-            the.emit('changey', the._scrollTop);
+
+            /**
+             * Y 轴方向滚动
+             * @event scrolly
+             * @param scrollTop {Number} 滚动条顶部位移
+             */
+            the.emit('scrolly', the._scrollTop);
         },
 
 

@@ -110,6 +110,11 @@ define(function (require, exports, module) {
                 if (options.minWidth > 0 && the._wrapWidth < options.minWidth ||
                     options.minHeight > 0 && the._wrapHeight < options.minHeight) {
                     controller.nextTick(function () {
+                        /**
+                         * 图片裁剪出现错误
+                         * @event error
+                         * @param err {Error} 错误对象
+                         */
                         the.emit('error', new Error('图片尺寸至少需要' + options.minWidth + '×' + options.minHeight + 'px'));
                     });
                 } else {
@@ -258,6 +263,12 @@ define(function (require, exports, module) {
                         left: -the._selection.left,
                         top: -the._selection.top
                     });
+
+                    /**
+                     * 裁剪开始
+                     * @event clipstart
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipstart', the._selection);
                 }
             });
@@ -289,6 +300,12 @@ define(function (require, exports, module) {
                         width: the._selection.width = width,
                         height: the._selection.height = height
                     });
+
+                    /**
+                     * 裁剪中
+                     * @event clip
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clip', the._selection);
                 }
             });
@@ -329,6 +346,12 @@ define(function (require, exports, module) {
                     animation.stop(the._$img);
                     animation.animate(the._$img, imgProp, animationOptions);
                     the._ratioSelection();
+
+                    /**
+                     * 裁剪结束
+                     * @event clipend
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipend', the._selection);
                 }
             });
@@ -342,6 +365,12 @@ define(function (require, exports, module) {
                     top0 = dato.parseFloat(attribute.css(the._$sele, 'top'), 0);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
+
+                    /**
+                     * 裁剪开始
+                     * @event clipstart
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipstart', the._selection);
                 }
             });
@@ -379,6 +408,12 @@ define(function (require, exports, module) {
                         left: -left,
                         top: -top
                     });
+
+                    /**
+                     * 裁剪中
+                     * @event clip
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clip', the._selection);
                 }
             });
@@ -389,6 +424,12 @@ define(function (require, exports, module) {
                 if (state === 3) {
                     state = 2;
                     the._ratioSelection();
+
+                    /**
+                     * 裁剪结束
+                     * @event clipend
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipend', the._selection);
                 }
             });
@@ -396,6 +437,12 @@ define(function (require, exports, module) {
             the._resize.on('resizestart', function () {
                 if (state === 2) {
                     state = 4;
+
+                    /**
+                     * 裁剪开始
+                     * @event clipstart
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipstart', the._selection);
                 }
             });
@@ -404,6 +451,12 @@ define(function (require, exports, module) {
                 if (state === 4) {
                     the._selection.width = size.width;
                     the._selection.height = size.height;
+
+                    /**
+                     * 裁剪中
+                     * @event clip
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clip', the._selection);
                 }
             });
@@ -412,6 +465,12 @@ define(function (require, exports, module) {
                 if (state === 4) {
                     state = 2;
                     the._ratioSelection();
+
+                    /**
+                     * 裁剪结束
+                     * @event clipend
+                     * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                     */
                     the.emit('clipend', the._selection);
                 }
             });
@@ -425,7 +484,13 @@ define(function (require, exports, module) {
                         attribute.css(the._$bg, 'display', 'none');
                         attribute.css(the._$sele, 'display', 'none');
                         the._reset();
-                        the.emit('destroy', the._selection);
+
+                        /**
+                         * 裁剪取消
+                         * @event cancel
+                         * @param selection {{width:Number,height:Number,left:Number,top:Number,srcWidth:Number,srcHeight:Number,srcLeft:Number,srcTop:Number}} 裁剪区域
+                         */
+                        the.emit('cancel', the._selection);
                     }
                 }
             });

@@ -95,6 +95,14 @@ define(function (require, exports, module) {
             $activeContent = $activeContent.length ? $activeContent[0] : null;
             the._toggleClass($activeTab);
             the._toggleClass($activeContent);
+
+            /**
+             * Tab 索引发生变化后
+             * @event change
+             * @param index {Number} 变化后的索引
+             * @param $activeTab {HTMLElement} 被激活的 tab 标签
+             * @param $activeContent {HTMLElement} 被激活的 tab 内容
+             */
             the.emit('change', the._index, $activeTab, $activeContent);
         },
 

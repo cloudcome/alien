@@ -4,7 +4,7 @@
   "private": true,
   "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
   "scripts": {
-    "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+    "doc": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "test": "node ./node_modules/mocha/bin/mocha -R spec -t 10000 ./test/**/*.test.js"
   },
@@ -35,11 +35,9 @@
     "url": "https://github.com/cloudcome/alien/issues"
   },
   "licenses": "MIT",
-  "dependencies": {
-    "jsdoc": "^3.3.0-beta1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "jsdoc": "^3.3.0-alpha10",
+    "jsdoc": "^3.3.0-beta1",
     "karma": "^0.12.25",
     "karma-mocha": "^0.1.9",
     "mocha": "^2.0.1",

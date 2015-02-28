@@ -1617,6 +1617,10 @@ define(function (require, exports, module) {
             the._$pres = selector.query($pre);
             attribute.addClass(the._$pres, 'prettyprint');
             $prettyPrint(function () {
+                /**
+                 * 代码美化完毕后
+                 * @event done
+                 */
                 the.emit('done');
             });
         }

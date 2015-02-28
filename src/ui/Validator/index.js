@@ -425,8 +425,19 @@ define(function (require, exports, module) {
 
             callback = typeis.function(callback) ? callback : noop;
             data[name] = the._getVal(name);
+
+            /**
+             * 表单项目验证之前回调
+             * @event validateonebefore
+             * @param $input {HTMLElement}
+             */
             the.emit('validateonebefore', $input);
             the._validator.validateOne(data, function (err) {
+                /**
+                 * 表单项目验证之后回调
+                 * @event validateoneafter
+                 * @param $input {HTMLElement}
+                 */
                 the.emit('validateoneafter', $input);
                 the.emitMsg(name, err ? err.message : the._options.successMsg, err ? 'error' : 'success');
                 callback.apply(this, arguments);
@@ -449,9 +460,22 @@ define(function (require, exports, module) {
                 data[name] = the._getVal(name);
             });
 
+            /**
+             * 表单所有项目验证之前回调
+             * @event validateallbefore
+             * @param $form {HTMLElement} 表单
+             * @param errs {Array|null} 错误消息数组
+             */
             the.emit('validateallbefore', the._$form);
             the._validator.validateAll(data, function (errs) {
                 callback.apply(this, arguments);
+
+                /**
+                 * 表单所有项目验证之后回调
+                 * @event validateallafter
+                 * @param $form {HTMLElement} 表单
+                 * @param errs {Array|null} 错误消息数组
+                 */
                 the.emit('validateallafter', the._$form, errs);
 
                 if (!errs) {

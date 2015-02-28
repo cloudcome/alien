@@ -73,18 +73,27 @@
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
 <li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
 <li><a href="module-ui_Window_.html">ui/Window/</a></li>
-<li><a href="module-util_calendar.html">util/calendar</a></li>
-<li><a href="module-util_canvas.html">util/canvas</a></li>
-<li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_controller.html">util/controller</a></li>
-<li><a href="module-util_data.html">util/data</a></li>
-<li><a href="module-util_date.html">util/date</a></li>
-<li><a href="module-util_easing.html">util/easing</a></li>
-<li><a href="module-util_hashbang.html">util/hashbang</a></li>
-<li><a href="module-util_querystring.html">util/querystring</a></li>
-<li><a href="module-util_random.html">util/random</a></li>
-<li><a href="module-util_selection.html">util/selection</a></li>
-<li><a href="module-util_typeis.html">util/typeis</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_data.html">utils/data</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
+<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
 </ul>
 </li>
 </ul>
@@ -111,6 +120,46 @@
 
 	                
 
+	                
+	                    <li class="sidebar-header">Events &times; 4</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallafter">validateallafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+    
+</li>
+
+	                    
 	                
 
 	                
@@ -142,11 +191,11 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/base
      * @requires ui/Editor/editor
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/date
-     * @requires util/random
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/date
+     * @requires utils/random
+     * @requires utils/controller
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -161,11 +210,11 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var compatible = require('../../core/navigator/compatible.js');
     var editor = require('./editor.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var date = require('../../util/date.js');
-    var random = require('../../util/random.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var date = require('../../utils/date.js');
+    var random = require('../../utils/random.js');
+    var controller = require('../../utils/controller.js');
     var Autoheight = require('../Autoheight/');
     var Dialog = require('../Dialog/');
     var Msg = require('../Msg/index.js');
@@ -322,13 +371,6 @@ define(function (require, exports, module) {
                 uploads: the._uploadList
             };
             var $dialog;
-            var imgLoad = function () {
-                event.un($dialog, 'load');
-
-                if (the._dialog) {
-                    the._dialog.resize();
-                }
-            };
             var options = the._options;
 
             if (typeis(options.uploadCallback) !== 'function') {
@@ -345,7 +387,6 @@ define(function (require, exports, module) {
 
             the._savePos();
             $dialog = modification.parse(tpl.render(dt))[0];
-            event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
             the._dialog = new Dialog($dialog, {

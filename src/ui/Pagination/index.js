@@ -105,6 +105,12 @@ define(function (require, exports, module) {
 
             if (page !== the._options.page) {
                 the._options.page = page;
+
+                /**
+                 * 页码变化后
+                 * @event change
+                 * @param page {Number} 变化后的页码
+                 */
                 the.emit('change', page);
             }
         },
