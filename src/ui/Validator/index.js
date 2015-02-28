@@ -404,6 +404,8 @@ define(function (require, exports, module) {
         var sf = (val.match(/\.[^.]*$/) || [''])[0];
         var boolean = suffix.indexOf(sf) > -1;
 
-        next(boolean ? null : new Error(this.alias + '的后缀不正确'), val);
+        next(boolean ? null : new Error(this.alias + '的后缀必须为“' +
+        suffix.join('/') + '”' +
+        (suffix.length > 1 ? '之一' : '')), val);
     }]);
 });
