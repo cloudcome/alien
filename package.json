@@ -1,6 +1,6 @@
 {
   "name": "alien",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
   "scripts": {
@@ -35,9 +35,11 @@
     "url": "https://github.com/cloudcome/alien/issues"
   },
   "licenses": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "jsdoc": "^3.3.0-beta1"
+  },
   "devDependencies": {
-    "jsdoc": "^3.3.0-beta1",
+    "jsdoc": "^3.3.0-alpha10",
     "karma": "^0.12.25",
     "karma-mocha": "^0.1.9",
     "mocha": "^2.0.1",
