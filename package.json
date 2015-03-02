@@ -1,11 +1,11 @@
 {
   "name": "alien",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
   "scripts": {
-    "docl": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
-    "docw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+    "docs": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
+    "docsw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "test": "node ./node_modules/mocha/bin/mocha -R spec -t 10000 ./test/**/*.test.js"
   },
   "preferGlobal": false,
