@@ -8,17 +8,17 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Validator
-     * @requires util/class
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/howdo
+     * @requires utils/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/howdo
      */
     'use strict';
 
-    var klass = require('../util/class.js');
-    var dato = require('../util/dato.js');
-    var typeis = require('../util/typeis.js');
-    var howdo = require('../util/howdo.js');
+    var klass = require('../utils/class.js');
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var howdo = require('../utils/howdo.js');
     var types = 'string,number,email,url,boolean'.split(',');
     var noop = function () {
         // ignore
@@ -80,20 +80,20 @@ define(function (require, exports, module) {
         /**
          * 注册自定义的实例验证规则
          * @param options {Object} 规则配置
-         * @param rule {Function} 规则方法
+         * @param fn {Function} 规则方法
          * @param [isOverride=false] 是否覆盖已有规则
          *
          * @example
          * // 添加一个检查后缀的自定义规则
          * validator.registerRule({
-             *     name: 'suffix',
-             *     type: 'array'
-             * }, function(suffix, val, next){
-             *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
-             *     var boolean = suffix.indexOf(sf) > -1;
-             *
-             *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-             * });
+         *     name: 'suffix',
+         *     type: 'array'
+         * }, function(suffix, val, next){
+         *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+         *     var boolean = suffix.indexOf(sf) > -1;
+         *
+         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+         * });
          */
         registerRule: function (options, fn, isOverride) {
             var the = this;
@@ -204,11 +204,26 @@ define(function (require, exports, module) {
          */
         pushRule: function (rule, isOverride) {
             var the = this;
+            var pushFn = function (father) {
+                if (typeis.function(rule.onbefore)) {
+                    father.onbefores.push(rule.onbefore);
+                    rule.onbefore = udf;
+                }
 
-            if (!the._ruleNames[rule.name] || isOverride) {
-                // 是否存在并且覆盖
-                var isExistAndIsOverride = the._ruleNames[rule.name] && isOverride;
+                if (typeis.function(rule.onafter)) {
+                    father.onafters.push(rule.onafter);
+                    rule.onafter = udf;
+                }
 
+                if (typeis.function(rule.function)) {
+                    father.functions.push(rule.function);
+                    rule.function = udf;
+                }
+            };
+            // 是否存在
+            var isExist = !!the._ruleNames[rule.name];
+
+            if (!isExist || isOverride) {
                 if (!rule.type || types.indexOf(rule.type) === -1) {
                     throw '`rule.type` must be one of [' + types.join('/') + ']';
                 }
@@ -235,20 +250,33 @@ define(function (require, exports, module) {
 
                 rule.trim = !!rule.trim;
 
-                if (isExistAndIsOverride) {
+                // 存在并且覆盖
+                if (isExist && isOverride) {
                     the._ruleList.forEach(function (existRule) {
                         if (rule.name === existRule.name) {
+                            existRule.onbefores = existRule.onbefores || [];
                             dato.extend(true, existRule, rule);
                             the.rules[rule.name] = existRule;
                         }
                     });
-                } else {
+                }
+                // 不存在
+                else if (!isExist) {
                     the._ruleList.push(rule);
                     the._ruleNames[rule.name] = true;
                     the.rules[rule.name] = rule;
+
+                    // 函数数组
+                    rule.onbefores = [];
+                    rule.onafters = [];
+                    rule.functions = [];
+
+                    pushFn(rule);
                 }
-            } else {
-                throw '`' + rule.name + '` is exist, use `isOverride` to override this rule';
+            }
+            // 存在不覆盖
+            else if (isExist && !isOverride) {
+                pushFn(the.rules[rule.name]);
             }
 
             return the;
@@ -347,23 +375,7 @@ define(function (require, exports, module) {
             var val = data[rule.name];
             var err;
             var type;
-            var onover = function (err) {
-                var ondone = function (err) {
-                    // onafter
-                    if (typeis(rule.onafter) === 'function' && !err) {
-                        data[rule.name] = rule.onafter.call(rule, val, data);
-                    }
-
-                    // callback
-                    if (typeis(callback) === 'function') {
-                        callback(err, data);
-                    }
-                };
-
-                if (err) {
-                    return ondone(err);
-                }
-
+            var runCustom = function (next) {
                 var runCustomRules = function (customRules) {
                     return function (callback) {
                         howdo.each(customRules, function (ruleName, ruleInfo, next) {
@@ -391,14 +403,26 @@ define(function (require, exports, module) {
                     // 实例自定义验证规则
                     .task(runCustomRules(the._customRules))
                     // 异步串行
-                    .follow(ondone);
+                    .follow(next);
             };
-            var functionLength;
+            var onover = function (err) {
+                // onafter
+                if (!err) {
+                    rule.onafters.forEach(function (fn) {
+                        data[rule.name] = fn.call(rule, val, data);
+                    });
+                }
+
+                // callback
+                if (typeis(callback) === 'function') {
+                    callback(err, data);
+                }
+            };
 
             // onbefore
-            if (typeis(rule.onbefore) === 'function') {
-                data[rule.name] = val = rule.onbefore.call(rule, val, data);
-            }
+            rule.onbefores.forEach(function (fn) {
+                data[rule.name] = val = fn.call(rule, val, data);
+            });
 
             type = typeis(val);
 
@@ -567,21 +591,24 @@ define(function (require, exports, module) {
                     }
                 }
 
-
-                // function
-                if (typeis(rule.function) === 'function') {
-                    functionLength = rule.function.length;
-
-                    if (functionLength === 3) {
-                        rule.function.call(window, val, data, onover);
-                    } else if (functionLength === 2) {
-                        rule.function.call(window, val, onover);
-                    } else {
-                        throw 'arguments are `val,[data],next`';
+                runCustom(function (err) {
+                    if (err) {
+                        return onover(err);
                     }
-                } else {
-                    onover();
-                }
+
+                    // function
+                    howdo.each(rule.functions, function (index, fn, next) {
+                        var fnLen = fn.length;
+
+                        if (fnLen === 3) {
+                            fn.call(window, val, data, next);
+                        } else if (fnLen === 2) {
+                            fn.call(window, val, next);
+                        } else {
+                            next();
+                        }
+                    }).follow(onover);
+                });
             } else {
                 onover();
             }

@@ -8,14 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module core/event/base
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/dom/selector
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var domSelector = require('../dom/selector.js');
     var regSpace = /\s+/g;
     // 原始事件：用户传入的事件
@@ -163,7 +163,7 @@ define(function (require, exports, module) {
      * event.dispatch(ele, myclikEvent, eve);
      */
     exports.dispatch = function (ele, eventTypeOrEvent, copyEvent) {
-        var et = typeis(eventTypeOrEvent) === 'string' ?
+        var et = typeis.string(eventTypeOrEvent) ?
             this.create(eventTypeOrEvent) :
             eventTypeOrEvent;
 
@@ -196,7 +196,7 @@ define(function (require, exports, module) {
      * });
      */
     exports.extend = function (createEvent, copyEvent, alienDetail) {
-        if (typeis(createEvent) === 'string') {
+        if (typeis.string(createEvent)) {
             createEvent = this.create(createEvent);
         }
 
@@ -250,19 +250,19 @@ define(function (require, exports, module) {
         var eventTypes = String(eventType).trim().split(regSpace);
         isCapture = args[argL - 1];
 
-        if (typeis(isCapture) !== 'boolean') {
+        if (!typeis.boolean(isCapture)) {
             isCapture = false;
         }
 
         // on self
         // .on(body, 'click', fn);
-        if (typeis(args[2]) === 'function') {
+        if (typeis.function(args[2])) {
             callback = args[2];
             listener = args[2];
         }
         // delegate
         // .on(body, 'click', 'p', fn)
-        else if (typeis(listener) === 'function') {
+        else if (typeis.function(listener)) {
             if (canNotBubbleEvents.indexOf(eventType) > -1) {
                 console.warn(eventType, 'can not bubble in DOM tree');
             }
@@ -279,7 +279,7 @@ define(function (require, exports, module) {
 
         if (callback) {
             dato.each(eventTypes, function (index, eventType) {
-                if (typeis(listener) === 'function' && eventType) {
+                if (typeis.function(callback) && typeis.function(listener) && eventType) {
                     _on(element, eventType, callback, listener, isCapture);
                 }
             });
@@ -516,7 +516,7 @@ define(function (require, exports, module) {
      * @param {Boolean} isCapture 是否事件捕获
      * @private
      */
-    function _un(element, eventType, originalEvent, isCapture) {
+    function _un(element, eventType, originalListener, isCapture) {
         var domId = element[key];
         var findIndex;
         var args = arguments;
@@ -524,9 +524,9 @@ define(function (require, exports, module) {
 
         if (argL === 3) {
             // _un(ele, 'click', true);
-            if (typeis(args[2]) === 'boolean') {
+            if (typeis.boolean(args[2])) {
                 isCapture = args[2];
-                originalEvent = null;
+                originalListener = null;
             }
             // _un(ele, 'click', fn);
             else {
@@ -536,8 +536,8 @@ define(function (require, exports, module) {
 
         if (domId) {
             if (isCapture) {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -548,8 +548,8 @@ define(function (require, exports, module) {
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -561,7 +561,7 @@ define(function (require, exports, module) {
                 }
             }
         } else {
-            element.removeEventListener(eventType, originalEvent, isCapture);
+            element.removeEventListener(eventType, originalListener, isCapture);
         }
     }
 });

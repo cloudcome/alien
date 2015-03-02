@@ -10,14 +10,14 @@ define(function (require, exports, module) {
      * 选择器返回结果全部都是数组，即使是返回的只有1个元素
      *
      * @module core/dom/selector
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/navigator/compatible
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
 
@@ -58,6 +58,9 @@ define(function (require, exports, module) {
                 case 'window':
                     ret = window;
                     break;
+
+                default :
+                    ret = selector;
             }
 
             return dato.toArray(ret, true);

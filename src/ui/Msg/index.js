@@ -17,8 +17,8 @@ define(function (require, exports, module) {
     var Mask = require('../Mask/');
     var Window = require('../Window/');
     var ui = require('../base.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -146,6 +146,11 @@ define(function (require, exports, module) {
             event.on(the._$buttons, 'click', '.j-flag', function () {
                 var index = attribute.data(this, 'index');
 
+                /**
+                 * 消息框被关闭后
+                 * @event close
+                 * @param index {Number} 选择的按钮索引
+                 */
                 the.emit('close', index);
                 the.destroy();
             });
@@ -153,6 +158,10 @@ define(function (require, exports, module) {
             if (the._mask) {
                 // esc
                 the._mask.on('esc', function () {
+                    /**
+                     * 当前消息框被按 ESC 后
+                     * @event esc
+                     */
                     if (the.emit('esc') !== false) {
                         the.shake();
                     }
@@ -160,6 +169,10 @@ define(function (require, exports, module) {
 
                 // hitbg
                 the._mask.on('hit', function () {
+                    /**
+                     * 当前消息框被触碰背景后
+                     * @event hitbg
+                     */
                     if (the.emit('hitbg') !== false) {
                         the.shake();
                     }

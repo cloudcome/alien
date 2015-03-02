@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Window/
-     * @requires util/dato
+     * @requires utils/dato
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -17,8 +17,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -71,13 +71,12 @@ define(function (require, exports, module) {
             });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);
-            modification.insert($pos, the._$content, 'afterend');
-            the._$contentPos = $pos;
-            modification.insert(the._$content, the._$window);
 
-            event.on(the._$window, 'click tap', function (eve) {
-                eve.stopPropagation();
-            });
+            if (the._$content) {
+                modification.insert($pos, the._$content, 'afterend');
+                the._$contentPos = $pos;
+                modification.insert(the._$content, the._$window);
+            }
 
             return the;
         },
@@ -157,6 +156,10 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                /**
+                 * 窗口打开之后
+                 * @event open
+                 */
                 the.emit('open');
 
                 if (typeis.function(callback)) {
@@ -232,6 +235,10 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
+                /**
+                 * 窗口关闭之后
+                 * @event close
+                 */
                 the.emit('close');
 
                 attribute.css(the._$window, {
@@ -247,8 +254,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取当前 mask 节点
-         * @returns {HTMLElementNode}
+         * 获取当前 window 节点
          */
         getNode: function () {
             return this._$window;
@@ -283,8 +289,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
             var destroy = function () {
-                modification.insert(the._$content, the._$contentPos, 'afterend');
-                modification.remove(the._$contentPos);
+                if (the._$content) {
+                    modification.insert(the._$content, the._$contentPos, 'afterend');
+                    modification.remove(the._$contentPos);
+                }
+
                 modification.remove(the._$window);
                 event.un(the._$window, 'click');
 
@@ -304,7 +313,7 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个窗口实例
-     * @param $content {Object} 内容节点
+     * @param $content {Object} 内容节点，为 null 时创建一个新的 window
      * @param [options] {Object} 配置
      * @param [options.width="auto"] {Number|String} 窗口宽度
      * @param [options.height="auto"] {Number|String} 窗口高度

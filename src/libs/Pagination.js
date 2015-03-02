@@ -8,13 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Pagination
-     * @requires util/dato
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/class
      */
     'use strict';
 
-    var dato = require('./../util/dato.js');
-    var klass = require('./../util/class.js');
+    var dato = require('./../utils/dato.js');
+    var klass = require('./../utils/class.js');
     var defaults = {
         max: 1,
         page: 1,

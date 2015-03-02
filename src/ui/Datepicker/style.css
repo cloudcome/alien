@@ -1,6 +1,10 @@
 @charset "utf-8";
+.alien-ui-datepicker{
+    max-width: 320px;
+}
 
 .alien-ui-datepicker-list{
+    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }

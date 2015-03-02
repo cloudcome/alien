@@ -8,15 +8,15 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Emitter
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/class
      */
     'use strict';
 
-    var dato = require('../util/dato.js');
-    var typeis = require('../util/typeis.js');
-    var klass = require('../util/class.js');
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var klass = require('../utils/class.js');
     var regSpace = /\s+/g;
     var Emitter = klass.create({
         constructor: function () {

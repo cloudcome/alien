@@ -8,16 +8,16 @@
 define(function (require, exports, module) {
     /**
      * @module ui/base
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/class
      * @requires libs/Emitter
      */
     'use strict';
 
-    var dato = require('../util/dato.js');
-    var typeis = require('../util/typeis.js');
-    var klass = require('../util/class.js');
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var klass = require('../utils/class.js');
     var Emitter = require('../libs/Emitter.js');
     var udf;
     var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
@@ -78,6 +78,10 @@ define(function (require, exports, module) {
                 var keyType = typeis(key);
                 var ret = [];
 
+                /**
+                 * 获取 ui 配置
+                 * @event getoptions
+                 */
                 the.emit('getoptions');
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options && the._options[key];
@@ -104,6 +108,10 @@ define(function (require, exports, module) {
                     dato.extend(the._options, key);
                 }
 
+                /**
+                 * 设置 ui 配置
+                 * @event setoptions
+                 */
                 the.emit('setoptions', the._options);
             };
         }

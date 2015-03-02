@@ -12,15 +12,15 @@ define(function (require, exports, module) {
      * 合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
      *
      * @module core/navigator/querystring
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/querystring
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/querystring
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var qs = require('../../util/querystring.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var qs = require('../../utils/querystring.js');
 
 
     /**

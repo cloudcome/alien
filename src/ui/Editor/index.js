@@ -14,11 +14,11 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/base
      * @requires ui/Editor/editor
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/date
-     * @requires util/random
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/date
+     * @requires utils/random
+     * @requires utils/controller
      * @requires ui/Scrollbar/index
      * @requires ui/Dialog/index
      * @requires ui/Msg/index
@@ -33,11 +33,11 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var compatible = require('../../core/navigator/compatible.js');
     var editor = require('./editor.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var date = require('../../util/date.js');
-    var random = require('../../util/random.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var date = require('../../utils/date.js');
+    var random = require('../../utils/random.js');
+    var controller = require('../../utils/controller.js');
     var Autoheight = require('../Autoheight/');
     var Dialog = require('../Dialog/');
     var Msg = require('../Msg/index.js');
@@ -170,6 +170,11 @@ define(function (require, exports, module) {
                     .on('close', function (index) {
                         if (index === 0) {
                             the._$ele.value = storeVal;
+                            /**
+                             * 编辑器内容变化之后
+                             * @event change
+                             * @param value {String} 变化之后的内容
+                             */
                             the.emit('change', storeVal);
                             the._autoheight.resize();
                         }
@@ -194,13 +199,6 @@ define(function (require, exports, module) {
                 uploads: the._uploadList
             };
             var $dialog;
-            var imgLoad = function () {
-                event.un($dialog, 'load');
-
-                if (the._dialog) {
-                    the._dialog.resize();
-                }
-            };
             var options = the._options;
 
             if (typeis(options.uploadCallback) !== 'function') {
@@ -217,7 +215,6 @@ define(function (require, exports, module) {
 
             the._savePos();
             $dialog = modification.parse(tpl.render(dt))[0];
-            event.on($dialog, 'load', 'img', imgLoad);
             modification.insert($dialog, document.body, 'beforeend');
             the._$dialog = $dialog;
             the._dialog = new Dialog($dialog, {
@@ -601,6 +598,12 @@ define(function (require, exports, module) {
 
             history.push(now);
             the._saveLocal();
+
+            /**
+             * 编辑器内容变化之后
+             * @event change
+             * @param value {String} 变化之后的内容
+             */
             the.emit('change', now);
         },
 
@@ -633,7 +636,7 @@ define(function (require, exports, module) {
             var the = this;
             var $ele = the._$ele;
 
-            editor.setPos($ele, the._selection[0], the._selection[1]);
+            editor.setPos($ele, [the._selection]);
         },
 
 

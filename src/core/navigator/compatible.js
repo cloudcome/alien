@@ -8,11 +8,11 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/compatible
-     * @requires util/dato
+     * @requires utils/dato
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
     var regCss3 = /^-(webkit|moz|ms)-/i;

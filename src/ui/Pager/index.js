@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/touch
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Template
      */
     'use strict';
@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');
@@ -93,6 +93,12 @@ define(function (require, exports, module) {
 
                 if (page !== the._options.page) {
                     the._options.page = page;
+
+                    /**
+                     * 页码变化后
+                     * @event change
+                     * @param page {Number} 变化后的页码
+                     */
                     the.emit('change', the._options.page);
                 }
             }

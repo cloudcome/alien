@@ -16,11 +16,11 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/ua
-     * @requires util/dato
+     * @requires utils/dato
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
 
     //////////////
     // Constants

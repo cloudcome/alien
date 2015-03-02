@@ -8,15 +8,15 @@
 define(function (require, exports, module) {
     /**
      * @module core/navigator/storage
-     * @requires util/allocation
-     * @requires util/dato
+     * @requires utils/allocation
+     * @requires utils/dato
      */
     'use strict';
 
     var ls = window.localStorage;
-    var allocation = require('./../../util/allocation.js');
-    var typeis = require('./../../util/typeis.js');
-    var dato = require('./../../util/dato.js');
+    var allocation = require('./../../utils/allocation.js');
+    var typeis = require('./../../utils/typeis.js');
+    var dato = require('./../../utils/dato.js');
     var gs = function () {
         return allocation.getset({
             get: function (key) {

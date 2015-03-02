@@ -11,15 +11,15 @@ define(function (require, exports, module) {
      *
      * @module core/event/ready
      * @requires core/event/base
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';
 
     var event = require('./base.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var callbacks = [];
     var isReady;
 

@@ -8,8 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Mask/
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -18,8 +18,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -99,7 +99,15 @@ define(function (require, exports, module) {
             var the = this;
 
             event.on(the._$mask, 'click tap', function (eve) {
-                the.emit('hit');
+                var $window = selector.closest(eve.target, '.alien-ui-window')[0];
+
+                if(!$window){
+                    /**
+                     * 触碰了遮罩
+                     * @event hit
+                     */
+                    the.emit('hit');
+                }
             });
         },
 
@@ -150,6 +158,11 @@ define(function (require, exports, module) {
             pos.zIndex = the._options.zIndex || ui.getZindex();
             attribute.css(the._$mask, pos);
             the.visible = true;
+
+            /**
+             * 遮罩打开
+             * @event open
+             */
             the.emit('open');
 
             if (the._$cover === window) {
@@ -181,6 +194,10 @@ define(function (require, exports, module) {
                 duation: options.duration,
                 easing: options.easing
             }, function () {
+                /**
+                 * 遮罩改变尺寸后
+                 * @event resize
+                 */
                 the.emit('resize');
             });
 
@@ -200,6 +217,11 @@ define(function (require, exports, module) {
 
             attribute.css(the._$mask, 'display', 'none');
             the.visible = false;
+
+            /**
+             * 遮罩关闭后
+             * @event close
+             */
             the.emit('close');
 
             if (the._$cover === window) {
@@ -268,6 +290,11 @@ define(function (require, exports, module) {
 
         if (eve.which === 27 && Mask.maskWindowList.length) {
             mask = Mask.getTopMask();
+
+            /**
+             * 当前遮罩被按 ESC 后
+             * @event esc
+             */
             mask.emit('esc');
         }
     });

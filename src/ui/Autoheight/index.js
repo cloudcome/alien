@@ -8,13 +8,13 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Autoheight/
+     * @module ui/Autoheight/
      * @requires ui/base
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
      * @requires core/event/base
-     * @requires util/dato
+     * @requires utils/dato
      */
     'use strict';
 
@@ -22,16 +22,16 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
+    var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
+    var selection = require('../../utils/selection.js');
+    var controller = require('../../utils/controller.js');
     var style = require('css!./style.css');
     var alienClass = 'alien-ui-autoheight';
     var defaults = {};
     var typographyStyles = [
-        'fontFamily',
-        'fontSize',
-        'fontWeight',
-        'fontStyle',
+        'font',
         'letterSpacing',
         'textTransform',
         'wordSpacing',
@@ -45,8 +45,8 @@ define(function (require, exports, module) {
         tabindex: -1,
         style: {
             position: 'absolute',
-            top: -9999,
-            left: -9999,
+            top: '-9999em',
+            left: '-9999em',
             border: 0,
             boxSizing: 'content-box',
             wordWrap: 'break-word',
@@ -115,11 +115,13 @@ define(function (require, exports, module) {
             attribute.css($ele, {
                 overflow: 'hidden'
             });
+            the._pos = selection.getPos($ele);
             // 先插入字符，重新排版后还原
             $ele.value = ' ';
             the._$ele.style.height = 'auto';
             the._innerHeight = attribute.innerHeight(the._$ele);
             $ele.value = value;
+            selection.setPos($ele, the._pos);
         },
 
 
@@ -137,16 +139,27 @@ define(function (require, exports, module) {
 
         /**
          * 重新定位尺寸
+         * @public
          */
         resize: function () {
             var the = this;
+
             the._initSize();
             adjust.call(the);
+
+            var offsetY = selection.getOffset(the._$ele)[1];
+
+            animation.scrollTo(window, {
+                y: attribute.top(the._$ele) + offsetY
+            }, {
+                duration: 1
+            });
         },
 
 
         /**
          * 销毁实例
+         * @public
          */
         destroy: function () {
             var the = this;
@@ -157,5 +170,8 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
     document.body.appendChild($mirror);
+    /**
+     * 实例化一个 Autoheight
+     */
     module.exports = Autoheight;
 });

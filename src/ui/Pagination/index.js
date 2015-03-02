@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Pagination/
      * @requires ui/base
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Pagination
      * @requires libs/Template
      * @requires core/dom/selector
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -105,6 +105,12 @@ define(function (require, exports, module) {
 
             if (page !== the._options.page) {
                 the._options.page = page;
+
+                /**
+                 * 页码变化后
+                 * @event change
+                 * @param page {Number} 变化后的页码
+                 */
                 the.emit('change', page);
             }
         },

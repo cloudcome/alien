@@ -16,8 +16,8 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var see = require('../../core/dom/see.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var Vldor = require('../../libs/Validator.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-validator';
@@ -28,6 +28,7 @@ define(function (require, exports, module) {
         // ignore
     };
     var customRulesList = [];
+    var REG_END_MAO = /[:：]+$/;
     var defaults = {
         dataRuleAttr: 'validator',
         dataMessageAttr: 'msg',
@@ -35,14 +36,14 @@ define(function (require, exports, module) {
         formMsgSelector: '.form-msg',
         isBreakOnInvalid: false,
         validateEvent: 'focusout',
-        successMsg: '填写正确'
+        successMsg: null
     };
     var Validator = ui.create({
         STATIC: {
             /**
              * 注册自定义的静态验证规则
              * @param options {Object} 规则配置
-             * @param rule {Function} 规则方法
+             * @param fn {Function} 规则方法
              * @param [isOverride=false] 是否覆盖已有规则
              *
              * @example
@@ -83,6 +84,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the.id = alienIndex++;
+            the._nameRuleMap = {};
             the._initRule();
             the._initCustomRules();
             the._initEvent();
@@ -145,6 +147,7 @@ define(function (require, exports, module) {
                     type: typeArray.indexOf(type) > -1 ? type : 'string'
                 };
 
+                // regexp
                 if ($input.pattern) {
                     try {
                         standar.regexp = new RegExp($input.pattern);
@@ -155,19 +158,26 @@ define(function (require, exports, module) {
 
                 // 验证前置
                 rule.onbefore = function (val, data) {
-                    if (this.equalName) {
-                        this.equal = data[this.equalName];
+                    var self = this;
+
+                    if (self.equalName) {
+                        var equalRule = the._nameRuleMap[self.equalName];
+
+                        self.equal = the._getVal(self.equalName);
+                        self.msg.equal = self.msg.equal || self.alias +
+                        (equalRule ? '必须与' + equalRule.alias + '相同' : '不正确');
                     }
 
                     return val;
                 };
 
                 dato.extend(true, rule, standar);
-                rule.alias = rule.alias || ($label ? $label.innerText : udf);
+                rule.alias = rule.alias || ($label ? $label.innerText.trim().replace(REG_END_MAO, '') : udf);
                 the._validator.pushRule(rule);
                 the._nameItemMap[name] = $formItem;
                 the._nameMsgMap[name] = $formMsg;
                 the._nameInputMap[name] = $input;
+                the._nameRuleMap[name] = rule;
             });
         },
 
@@ -227,6 +237,11 @@ define(function (require, exports, module) {
          */
         _getVal: function (name) {
             var $input = this._nameInputMap[name];
+
+            if (!$input) {
+                return udf;
+            }
+
             var type = $input.type;
             var multiple = $input.multiple;
             var tagName = $input.tagName.toLowerCase();
@@ -268,12 +283,115 @@ define(function (require, exports, module) {
 
 
         /**
+         * 添加单个验证规则
+         * @param {Object}     rule 验证规则对象
+         * @param {String}     rule.name                数据字段名称【必须】
+         * @param {String}     rule.type                数据类型【必须】
+         * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
+         * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
+         * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
+         * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
+         * @param {Boolean}    [rule.required]          验证规则：是否必填
+         * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
+         * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
+         * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
+         * @param {*}          [rule.equal]             验证规则：全等于指定值
+         * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
+         * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
+         * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
+         * @param {Object}     [rule.msg]               验证出错的消息
+         * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
+         *
+         * @example
+         * validator.pushRule({
+         *    // 字段名称，必须，唯一性
+         *    name: 'username',
+         *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+         *    type: 'string',
+         *    // 别称，当没有填写自定义错误消息时
+         *    // 提示为 username不能为空
+         *    // 当前设置别名之后
+         *    // 提示为 用户名不能为空
+         *    alias: '用户名',
+         *
+         *    // 验证前置
+         *    // val 当前字段值
+         *    // data 所有数据
+         *    onbefore: function(val, data){
+         *        return val + 'abc';
+         *    },
+         *    exist: false,
+         *    trim: true,
+         *
+         *    // 验证规则
+         *    required: true,
+         *    length: 10,
+         *    minLength: 4,
+         *    maxLength: 12,
+         *    bytes: 10,
+         *    minBytes: 4,
+         *    maxBytes: 12,
+         *    min: 4,
+         *    max: 4,
+         *    regexp: /^[a-z]\w{3,11}$/,
+         *    equal: 'cloudcome',
+         *    inArray: ['cloudcome', 'yundanran'],
+         *    // val 当前字段值
+         *    // [data 所有数据] 可选
+         *    // next 执行下一步
+         *    function: function(val, next){
+         *        // 这里可以是异步的
+         *        // 比如远程校验可以写在这里
+         *        ajax.post('./validate.json', {
+         *            username: val
+         *        }).on('success', function(json){
+         *            if(json.code>0){
+         *                next();
+         *            }else{
+         *                next(new Error(json.msg));
+         *            }
+         *        }).on('error', function(){
+         *            next(new Error('网络连接错误，验证失败'));
+         *        });
+         *    },
+         *
+         *    // 验证消息
+         *    msg: {
+         *        required: '用户名不能为空',
+         *        length: '用户名长度必须为10'
+         *        // 未自定义的消息，以默认输出
+         *        // 每个验证规则都必须配备一个消息体，
+         *        // 除了自定义的`function`
+         *    },
+         *
+         *    // 验证后置
+         *    onafter: function(val){
+         *        return val + 'abc';
+         *    }
+         * });
+         */
+        pushRule: function (rule, isOverride) {
+            var the = this;
+
+            the._validator.pushRule(rule, isOverride);
+
+            return the;
+        },
+
+
+        /**
          * 触发表单消息
          * @param name {String} 需要验证的表单 name
          * @param message {String} 消息
-         * @param [isSuccess=false] 是否为成功消息
+         * @param [type="error"] 消息类型
          */
-        emitMsg: function (name, message, isSuccess) {
+        emitMsg: function (name, message, type) {
             var the = this;
             var $formItem = the._nameItemMap[name];
             var $formMsg = the._nameMsgMap[name];
@@ -283,10 +401,10 @@ define(function (require, exports, module) {
             }
 
             attribute.removeClass($formItem, formItemStatusClass);
-            attribute.addClass($formItem, 'has-' + (isSuccess ? 'success' : 'error'));
+            attribute.addClass($formItem, 'has-' + type);
 
             if (the._options.successMsg === null) {
-                see.visibility($formMsg, isSuccess ? 'hidden' : 'visible');
+                see.visibility($formMsg, type === 'success' ? 'hidden' : 'visible');
             } else {
                 see.visibility($formMsg, 'visible');
             }
@@ -307,10 +425,21 @@ define(function (require, exports, module) {
 
             callback = typeis.function(callback) ? callback : noop;
             data[name] = the._getVal(name);
+
+            /**
+             * 表单项目验证之前回调
+             * @event validateonebefore
+             * @param $input {HTMLElement}
+             */
             the.emit('validateonebefore', $input);
             the._validator.validateOne(data, function (err) {
+                /**
+                 * 表单项目验证之后回调
+                 * @event validateoneafter
+                 * @param $input {HTMLElement}
+                 */
                 the.emit('validateoneafter', $input);
-                the.emitMsg(name, err ? err.message : the._options.successMsg, !err);
+                the.emitMsg(name, err ? err.message : the._options.successMsg, err ? 'error' : 'success');
                 callback.apply(this, arguments);
             });
 
@@ -331,9 +460,22 @@ define(function (require, exports, module) {
                 data[name] = the._getVal(name);
             });
 
+            /**
+             * 表单所有项目验证之前回调
+             * @event validateallbefore
+             * @param $form {HTMLElement} 表单
+             * @param errs {Array|null} 错误消息数组
+             */
             the.emit('validateallbefore', the._$form);
             the._validator.validateAll(data, function (errs) {
                 callback.apply(this, arguments);
+
+                /**
+                 * 表单所有项目验证之后回调
+                 * @event validateallafter
+                 * @param $form {HTMLElement} 表单
+                 * @param errs {Array|null} 错误消息数组
+                 */
                 the.emit('validateallafter', the._$form, errs);
 
                 if (!errs) {
@@ -342,9 +484,9 @@ define(function (require, exports, module) {
 
                 dato.each(the._nameInputMap, function (name) {
                     if (errs[name]) {
-                        the.emitMsg(name, errs[name].message);
+                        the.emitMsg(name, errs[name].message, 'error');
                     } else {
-                        the.emitMsg(name, the._options.successMsg, true);
+                        the.emitMsg(name, the._options.successMsg, 'success');
                     }
                 });
             });
@@ -393,16 +535,21 @@ define(function (require, exports, module) {
      * @param [options.formMsgSelector=".form-msg"] {String} 表单消息选择器
      * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
      * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
-     * @param [options.successMsg="填写正确"] {String|null} 正确消息，如果为 null，则在正确时隐藏
+     * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
      */
     module.exports = Validator;
-    customRulesList.push([{
+
+    Validator.registerRule({
         name: 'suffix',
         type: 'array'
     }, function (suffix, val, next) {
         var sf = (val.match(/\.[^.]*$/) || [''])[0];
-        var boolean = suffix.indexOf(sf) > -1;
+        var reg = new RegExp('(' + suffix.map(function (sf) {
+            return dato.fixRegExp(sf);
+        }).join('|') + ')$', 'i');
 
-        next(boolean ? null : new Error(this.alias + '的后缀不正确'), val);
-    }]);
+        next(reg.test(sf) ? null : new Error(this.alias + '的后缀必须为“' +
+        suffix.join('/') + '”' +
+        (suffix.length > 1 ? '之一' : '')), val);
+    });
 });

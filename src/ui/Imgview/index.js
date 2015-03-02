@@ -15,8 +15,8 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/event/base
      * @requires libs/Template
-     * @requires util/dato
-     * @requires util/howdo
+     * @requires utils/dato
+     * @requires utils/howdo
      */
     'use strict';
 
@@ -33,8 +33,8 @@ define(function (require, exports, module) {
     var templateWrap = require('html!./wrap.html');
     var templateLoading = require('html!./loading.html');
     var style = require('css!./style.css');
-    var dato = require('../../util/dato.js');
-    var howdo = require('../../util/howdo.js');
+    var dato = require('../../utils/dato.js');
+    var howdo = require('../../utils/howdo.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
     var alienClass = 'alien-ui-imgview';
@@ -252,6 +252,11 @@ define(function (require, exports, module) {
             the._ctrl();
             the._load(the._list[the._index], function (err, info) {
                 if (err) {
+                    /**
+                     * 图片加载出现错误
+                     * @event error
+                     * @param error {Error} 错误对象
+                     */
                     return the.emit('error', err);
                 }
 

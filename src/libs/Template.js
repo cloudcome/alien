@@ -8,17 +8,17 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Template
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/random
-     * @requires util/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/random
+     * @requires utils/class
      */
     'use strict';
 
-    var dato = require('../util/dato.js');
-    var typeis = require('../util/typeis.js');
-    var random = require('../util/random.js');
-    var klass = require('../util/class.js');
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var random = require('../utils/random.js');
+    var klass = require('../utils/class.js');
     var REG_STRING_WRAP = /([\\"])/g;
     var REG_LINES = /[\n\r\t]/g;
     var REG_SPACES = /\s{2,}/g;

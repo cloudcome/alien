@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Tooltip/
      * @requires ui/base
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
@@ -149,6 +149,10 @@ define(function (require, exports, module) {
                 attribute.css($tip, 'visibility', 'visible');
                 attribute.addClass($tip, tooltipClass + '-' + at);
                 the._animate(true, function () {
+                    /**
+                     * 提示框打开之后
+                     * @event open
+                     */
                     the.emit('open');
                 });
             }
@@ -202,6 +206,10 @@ define(function (require, exports, module) {
             var the = this;
 
             the._animate(false, function () {
+                /**
+                 * 提示框关闭之后
+                 * @event close
+                 */
                 the.emit('close');
                 modification.remove(the._$tooltip);
             });

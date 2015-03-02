@@ -12,15 +12,15 @@ define(function (require, exports) {
      * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
      *
      * @module core/navigator/hashbang
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/hashbang
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/hashbang
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var hashbang = require('../../util/hashbang.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var hashbang = require('../../utils/hashbang.js');
     var hasEmit = false;
 
 

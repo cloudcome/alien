@@ -8,13 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Editor/editor
-     * @requires util/selection
-     * @requires util/dato
+     * @requires utils/selection
+     * @requires utils/dato
      */
     'use strict';
 
-    var selection = require('../../util/selection.js');
-    var dato = require('../../util/dato.js');
+    var selection = require('../../utils/selection.js');
+    var dato = require('../../utils/dato.js');
     var REG_LINEEND = /\n/g;
     var REG_START_SPACE = /^\s+/;
     var udf;
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
         var length = start + string.length;
 
         $ele.value = old.slice(0, start) + string + old.slice(end);
-        selection.setPos($ele, length);
+        selection.setPos($ele, [length]);
     };
 
 
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
         }
 
         $ele.value = neo;
-        selection.setPos($ele, setPos);
+        selection.setPos($ele, [setPos]);
     };
 
 
@@ -95,7 +95,7 @@ define(function (require, exports, module) {
         }
 
         $ele.value = neo;
-        selection.setPos($ele, setPos);
+        selection.setPos($ele, [setPos]);
     };
 
 
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
             if (spaceLength >= length) {
                 newValue = value.slice(0, startOfLinePos[findIndex]) + value.slice(startOfLinePos[findIndex] + length);
                 $ele.value = newValue;
-                selection.setPos($ele, selectionStart - length);
+                selection.setPos($ele, [selectionStart - length]);
             }
         }
     };
@@ -154,7 +154,7 @@ define(function (require, exports, module) {
      * @param $ele
      */
     exports.focusEnd = function ($ele) {
-        selection.setPos($ele, $ele.value.length);
+        selection.setPos($ele, [$ele.value.length]);
     };
 
 

@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Resize/
      * @requires ui/base
-     * @requires util/dato
+     * @requires utils/dato
      * @requires libs/Template
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
-    var dato = require('../../util/dato.js');
+    var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
@@ -73,7 +73,7 @@ define(function (require, exports, module) {
             modification.insert($wrap, $ele, 'beforeend');
             the._$e = selector.query('.' + alienPrefix + '-e', $wrap)[0];
             the._$s = selector.query('.' + alienPrefix + '-s', $wrap)[0];
-            the._pos = {
+            the._size = {
                 width: attribute.innerWidth($ele),
                 height: attribute.innerHeight($ele)
             };
@@ -117,14 +117,20 @@ define(function (require, exports, module) {
                     inDrag = !0;
                     x0 = eve.pageX;
                     y0 = eve.pageY;
-                    the._pos = {
+                    the._size = {
                         width: attribute.innerWidth(the._$ele),
                         height: attribute.innerHeight(the._$ele)
                     };
-                    val0 = the._pos[prop];
+                    val0 = the._size[prop];
                     min = options['min' + upperCase];
                     max = options['max' + upperCase];
-                    the.emit('resizestart', the._pos);
+
+                    /**
+                     * 尺寸改变前
+                     * @event resizestart
+                     * @param size {{width:Number,height:Number}} 尺寸
+                     */
+                    the.emit('resizestart', the._size);
                 }
             });
 
@@ -149,15 +155,20 @@ define(function (require, exports, module) {
                         val = max;
                     }
 
-                    the._pos[prop] = val;
+                    the._size[prop] = val;
                     attribute['inner' + upperCase](the._$ele, val);
 
                     if (options.ratio) {
                         attribute['inner' + upperCase2](the._$ele, val2 = isWidth ? val / options.ratio : val * options.ratio);
-                        the._pos[prop2] = val2;
+                        the._size[prop2] = val2;
                     }
 
-                    the.emit('resize', the._pos);
+                    /**
+                     * 尺寸改变中
+                     * @event resize
+                     * @param size {{width:Number,height:Number}} 尺寸
+                     */
+                    the.emit('resize', the._size);
                 }
             });
 
@@ -166,7 +177,13 @@ define(function (require, exports, module) {
 
                 if (inDrag) {
                     inDrag = !1;
-                    the.emit('resizeend', the._pos);
+
+                    /**
+                     * 尺寸改变后
+                     * @event resizeend
+                     * @param size {{width:Number,height:Number}} 尺寸
+                     */
+                    the.emit('resizeend', the._size);
                 }
             });
         },

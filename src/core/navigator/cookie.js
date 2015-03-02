@@ -8,14 +8,14 @@
 define(function (require, exports) {
     /**
      * @module core/navigator/cookie
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      */
     'use strict';
 
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var allocation = require('../../util/allocation.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var allocation = require('../../utils/allocation.js');
     var defaults = {
         // 是否以严格模式读取和设置cookie，默认true
         // 严格模式下，将在读之后、写之前都会进行<code>encodeURIComponent</code>、<code>decodeURIComponent</code>操作

@@ -7,8 +7,6 @@
 
 define(function (require, exports, module) {
     /**
-     * Banner
-     *
      * @module ui/Banner/
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -16,12 +14,12 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/touch
      * @requires ui/base
-     * @requires util/dato
-     * @requires util/typeis
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/controller
      */
 
-     "use strict";
+    "use strict";
 
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -29,9 +27,9 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var ui = require('../base.js');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var alienClass = 'alien-ui-banner';
     var alienIndex = 0;
     var defaults = {
@@ -93,7 +91,8 @@ define(function (require, exports, module) {
 
     /**
      * 尺寸重置
-     * @param [size]
+     * @method resize
+     * @param [size] {{width:Number,height:Number}} 尺寸
      */
     pro.resize = function (size) {
         var the = this;
@@ -123,6 +122,8 @@ define(function (require, exports, module) {
 
         the._translate = -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height);
         attribute.css(the._$list, the._calTranslate(the._showIndex + 1));
+
+        return the;
     };
 
 
@@ -170,16 +171,16 @@ define(function (require, exports, module) {
         var translate0;
 
         // 鼠标移入
-        event.on(the._$wrap, 'mouseenter', the._autoPlay.bind(false));
+        event.on(the._$wrap, 'mouseenter', the._autoPlay.bind(the, false));
 
         // 鼠标移开
-        event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(true));
+        event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(the, true));
 
         // 触摸开始
         event.on(the._$wrap, 'touch1start', function (eve) {
             hasScroll = false;
             translate0 = the._translate;
-            the._autoPlay(false);
+            the._autoPlay(the, false);
         });
 
         // 触摸过程
@@ -228,10 +229,6 @@ define(function (require, exports, module) {
             } else {
                 the._autoPlay(true);
             }
-        });
-
-        controller.nextTick(function () {
-            the.emit('change', the._showIndex);
         });
     };
 
@@ -308,6 +305,12 @@ define(function (require, exports, module) {
             easing: options.easing
         }, function () {
             the._showIndex = index;
+
+            /**
+             * banner 索引变化之后
+             * @event change
+             * @param index {Number} 索引
+             */
             the.emit('change', index);
 
             if (typeis.function(callback)) {
@@ -319,7 +322,6 @@ define(function (require, exports, module) {
 
     /**
      * 边界索引
-     * @param index
      * @returns {*}
      * @private
      */
@@ -338,6 +340,7 @@ define(function (require, exports, module) {
 
     /**
      * 上一张
+     * @method prev
      * @param [callback] {Function} 回调
      */
     pro.prev = function (callback) {
@@ -352,6 +355,7 @@ define(function (require, exports, module) {
 
     /**
      * 下一张
+     * @method next
      * @param [callback] {Function} 回调
      */
     pro.next = function (callback) {
@@ -366,8 +370,9 @@ define(function (require, exports, module) {
 
     /**
      * 动画到某一张
-     * @param index
-     * @param callback
+     * @method index
+     * @param index {Number} 索引值
+     * @param callback {Function} 回调
      * @returns {Banner}
      */
     pro.index = function (index, callback) {
@@ -404,6 +409,7 @@ define(function (require, exports, module) {
 
     /**
      * 暂停播放
+     * @method pause
      * @returns {Banner}
      */
     pro.pause = function () {
@@ -419,6 +425,7 @@ define(function (require, exports, module) {
 
     /**
      * 开始播放
+     * @method play
      * @returns {Banner}
      */
     pro.play = function () {
@@ -434,6 +441,7 @@ define(function (require, exports, module) {
 
     /**
      * 销毁实例
+     * @method destroy
      */
     pro.destroy = function () {
         var the = this;
@@ -447,9 +455,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 构建一个 banner，标准的 DOM 结构为：<br>
-     *     <code>ul#banner1>li*N</code>
+     * 构建一个 banner，标准的 DOM 结构为：<code>ul#banner1>li*N</code>
      *
+     * @constructor
      * @param {HTMLElement|Node} $list banner 列表
      * @param {Object} [options] 配置
      * @param {Number} [options.width=700] banner 宽度，默认700

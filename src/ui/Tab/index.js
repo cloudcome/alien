@@ -12,8 +12,8 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/event/touch
-     * @requires util/dato
-     * @requires util/controller
+     * @requires utils/dato
+     * @requires utils/controller
      */
     'use strict';
 
@@ -21,8 +21,8 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../util/dato.js');
-    var controller = require('../../util/controller.js');
+    var dato = require('../../utils/dato.js');
+    var controller = require('../../utils/controller.js');
     var defaults = {
         index: 0,
         eventType: 'click tap',
@@ -95,6 +95,14 @@ define(function (require, exports, module) {
             $activeContent = $activeContent.length ? $activeContent[0] : null;
             the._toggleClass($activeTab);
             the._toggleClass($activeContent);
+
+            /**
+             * Tab 索引发生变化后
+             * @event change
+             * @param index {Number} 变化后的索引
+             * @param $activeTab {HTMLElement} 被激活的 tab 标签
+             * @param $activeContent {HTMLElement} 被激活的 tab 内容
+             */
             the.emit('change', the._index, $activeTab, $activeContent);
         },
 

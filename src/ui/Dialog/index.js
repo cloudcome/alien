@@ -11,8 +11,8 @@ define(function (require, exports, module) {
      * @requires ui/Mask/
      * @requires ui/Window/
      * @requires ui/Scrollbar/
-     * @requires util/dato
-     * @requires util/typeis
+     * @requires utils/dato
+     * @requires utils/typeis
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -26,8 +26,8 @@ define(function (require, exports, module) {
     var Mask = require('../Mask/');
     var Window = require('../Window/');
     var Scrollbar = require('../Scrollbar/');
-    var dato = require('../../util/dato.js');
-    var typeis = require('../../util/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -142,6 +142,10 @@ define(function (require, exports, module) {
             if (the._mask) {
                 // esc
                 the._mask.on('esc', function () {
+                    /**
+                     * 按 ESC 之后
+                     * @event esc
+                     */
                     if (the.emit('esc') !== false) {
                         the.shake();
                     }
@@ -149,6 +153,10 @@ define(function (require, exports, module) {
 
                 // 单击背景
                 the._mask.on('hit', function () {
+                    /**
+                     * 单击背景之后
+                     * @event hitbg
+                     */
                     if (the.emit('hitbg') !== false) {
                         the.shake();
                     }

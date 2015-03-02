@@ -8,14 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module core/communication/upload
-     * @requires util/typeis
-     * @requires util/dato
+     * @requires utils/typeis
+     * @requires utils/dato
      * @requires core/communication/xhr
      */
     'use strict';
 
-    var typeis = require('../../util/typeis.js');
-    var dato = require('../../util/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
     var xhr = require('./xhr.js');
     var defaults = {
         url: location.href,
