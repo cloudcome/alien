@@ -47,7 +47,6 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
-<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
@@ -57,6 +56,7 @@
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -78,8 +78,8 @@
 <li><a href="module-utils_canvas.html">utils/canvas</a></li>
 <li><a href="module-utils_class.html">utils/class</a></li>
 <li><a href="module-utils_controller.html">utils/controller</a></li>
-<li><a href="module-utils_data.html">utils/data</a></li>
 <li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
 <li><a href="module-utils_easing.html">utils/easing</a></li>
 <li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
 <li><a href="module-utils_querystring.html">utils/querystring</a></li>
@@ -92,18 +92,18 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
 <li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
@@ -473,7 +473,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-58612484647892427817330795805901" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2269199856091290718453327240422368" data-toggle="tab">Source</a>
             </li>
 
         
@@ -494,1900 +494,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-58612484647892427817330795805901">
-                <p><a href="ui_Window_index.js.html#line9">ui/Window/index.js:9</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-        
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li>module:utils/dato</li>
-        
-            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
-        
-            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
-        
-            <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
-        
-            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
-        
-            <li><a href="module-ui_base.html">module:ui/base</a></li>
-        </ul>
-    
-
-    
-
-    
-
-    
-
-    
-        <section id="docs-methods">
-            <h3 class="subsection-title">Methods</h3>
-
-            <dl>
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~close">
-        <span class="type-signature">&lt;inner> </span>close<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>关闭窗口
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">打开之后回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-62910704198293399980912196915597" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-62910704198293399980912196915597">
-                <p><a href="ui_Window_index.js.html#line217">ui/Window/index.js:217</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~destroy">
-        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>销毁实例
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-596549339825287511799033847637475" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-596549339825287511799033847637475">
-                <p><a href="ui_Msg_index.js.html#line225">ui/Msg/index.js:225</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~destroy">
-        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>销毁实例
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-68388012656942010935664086136967" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-68388012656942010935664086136967">
-                <p><a href="ui_Window_index.js.html#line289">ui/Window/index.js:289</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~getNode">
-        <span class="type-signature">&lt;inner> </span>getNode<span class="signature">()</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>获取当前 window 节点
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-4506074669770896437479245639406145" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-4506074669770896437479245639406145">
-                <p><a href="ui_Window_index.js.html#line259">ui/Window/index.js:259</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~open">
-        <span class="type-signature">&lt;inner> </span>open<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>打开窗口
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">打开之后回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-440943436231464157485824374016374" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-440943436231464157485824374016374">
-                <p><a href="ui_Window_index.js.html#line130">ui/Window/index.js:130</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~resize">
-        <span class="type-signature">&lt;inner> </span>resize<span class="signature">(<span class="optional">size</span>, <span class="optional">callback</span>)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>改变 window 尺寸
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>size</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">尺寸</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">回调</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-396767100784927623949780222028494" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-396767100784927623949780222028494">
-                <p><a href="ui_Window_index.js.html#line179">ui/Window/index.js:179</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~setContent">
-        <span class="type-signature">&lt;inner> </span>setContent<span class="signature">(html)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>设置 Msg 内容
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>html</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">对话框内容</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-6933667710982263834702136926353" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-6933667710982263834702136926353">
-                <p><a href="ui_Msg_index.js.html#line201">ui/Msg/index.js:201</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~setTitle">
-        <span class="type-signature">&lt;inner> </span>setTitle<span class="signature">(title)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>设置 Msg 标题
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">对话框标题</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-45660023787058898803414995782077" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-45660023787058898803414995782077">
-                <p><a href="ui_Msg_index.js.html#line188">ui/Msg/index.js:188</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~shake">
-        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>震晃窗口以示提醒
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-70129580749198793047235768754035" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-70129580749198793047235768754035">
-                <p><a href="ui_Window_index.js.html#line267">ui/Window/index.js:267</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~shake">
-        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>震晃窗口以示提醒
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-9184672313276678021510431077331305" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-9184672313276678021510431077331305">
-                <p><a href="ui_Msg_index.js.html#line213">ui/Msg/index.js:213</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            </dl>
-        </section>
-    
-
-    
-
-    
-        <h3 class="subsection-title">Events</h3>
-
-        <dl>
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>窗口关闭之后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-3521867403760552417406420852057636" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-3521867403760552417406420852057636">
-                <p><a href="ui_Window_index.js.html#line238">ui/Window/index.js:238</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>消息框被关闭后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">选择的按钮索引</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-0842553370166579471283450257033" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-0842553370166579471283450257033">
-                <p><a href="ui_Msg_index.js.html#line149">ui/Msg/index.js:149</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:esc">
-        esc : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>当前消息框被按 ESC 后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-103272430133074525771912829950452" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-103272430133074525771912829950452">
-                <p><a href="ui_Msg_index.js.html#line161">ui/Msg/index.js:161</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:hitbg">
-        hitbg : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>当前消息框被触碰背景后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-4833620728459209214132810709998" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-4833620728459209214132810709998">
-                <p><a href="ui_Msg_index.js.html#line172">ui/Msg/index.js:172</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:open">
-        open : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>窗口打开之后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-1728527995292097322782052541151643" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-1728527995292097322782052541151643">
-                <p><a href="ui_Window_index.js.html#line159">ui/Window/index.js:159</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        </dl>
-    
-</article>
-
-</section>
-
-
-
-
-
-
-<section>
-
-<header class="page-header">
-    <h2 class="page-subtitle">
-        
-            ui/Window/
-        
-    
-    </h2>
-    
-</header>
-
-<article>
-    <div class="container-overview">
-        
-
-        
-            
-
-            
-
-            
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-98214167566038677411052698735148" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-98214167566038677411052698735148">
+            <div class="tab-pane active" id="tab-meta-2269199856091290718453327240422368">
                 <p><a href="ui_Msg_index.js.html#line9">ui/Msg/index.js:9</a></p>
             </div>
 
@@ -2529,7 +636,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-063361118314787757438828747253865" data-toggle="tab">Source</a>
+                <a href="#tab-meta-113347507314756512247532589826733" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2550,7 +657,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-063361118314787757438828747253865">
+            <div class="tab-pane active" id="tab-meta-113347507314756512247532589826733">
                 <p><a href="ui_Window_index.js.html#line217">ui/Window/index.js:217</a></p>
             </div>
 
@@ -2622,7 +729,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-901707163313403715884921606630087" data-toggle="tab">Source</a>
+                <a href="#tab-meta-340228584362193949813719450030476" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2643,7 +750,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-901707163313403715884921606630087">
+            <div class="tab-pane active" id="tab-meta-340228584362193949813719450030476">
                 <p><a href="ui_Msg_index.js.html#line225">ui/Msg/index.js:225</a></p>
             </div>
 
@@ -2715,7 +822,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-6683215927332642623147836420685" data-toggle="tab">Source</a>
+                <a href="#tab-meta-134208643576130275535214631818235" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2736,7 +843,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-6683215927332642623147836420685">
+            <div class="tab-pane active" id="tab-meta-134208643576130275535214631818235">
                 <p><a href="ui_Window_index.js.html#line289">ui/Window/index.js:289</a></p>
             </div>
 
@@ -2808,7 +915,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-151630857028067111842055758461356" data-toggle="tab">Source</a>
+                <a href="#tab-meta-94237043568864460775359240360558" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2829,7 +936,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-151630857028067111842055758461356">
+            <div class="tab-pane active" id="tab-meta-94237043568864460775359240360558">
                 <p><a href="ui_Window_index.js.html#line259">ui/Window/index.js:259</a></p>
             </div>
 
@@ -2963,7 +1070,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4365470481570816546572230290622" data-toggle="tab">Source</a>
+                <a href="#tab-meta-618252195883542320942077599465847" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2984,7 +1091,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4365470481570816546572230290622">
+            <div class="tab-pane active" id="tab-meta-618252195883542320942077599465847">
                 <p><a href="ui_Window_index.js.html#line130">ui/Window/index.js:130</a></p>
             </div>
 
@@ -3152,7 +1259,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-1650261222384878957753870636225" data-toggle="tab">Source</a>
+                <a href="#tab-meta-61152119562029847031617956236005" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3173,7 +1280,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-1650261222384878957753870636225">
+            <div class="tab-pane active" id="tab-meta-61152119562029847031617956236005">
                 <p><a href="ui_Window_index.js.html#line179">ui/Window/index.js:179</a></p>
             </div>
 
@@ -3295,7 +1402,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-744106021476909524640677217394114" data-toggle="tab">Source</a>
+                <a href="#tab-meta-31602965365163986910245777107775" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3316,7 +1423,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-744106021476909524640677217394114">
+            <div class="tab-pane active" id="tab-meta-31602965365163986910245777107775">
                 <p><a href="ui_Msg_index.js.html#line201">ui/Msg/index.js:201</a></p>
             </div>
 
@@ -3438,7 +1545,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-236837375210598113610680936835706" data-toggle="tab">Source</a>
+                <a href="#tab-meta-56861742050386978544412453193218" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3459,7 +1566,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-236837375210598113610680936835706">
+            <div class="tab-pane active" id="tab-meta-56861742050386978544412453193218">
                 <p><a href="ui_Msg_index.js.html#line188">ui/Msg/index.js:188</a></p>
             </div>
 
@@ -3531,7 +1638,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-338366909185424458704416304826736" data-toggle="tab">Source</a>
+                <a href="#tab-meta-80168313696049155690468796528876" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3552,7 +1659,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-338366909185424458704416304826736">
+            <div class="tab-pane active" id="tab-meta-80168313696049155690468796528876">
                 <p><a href="ui_Window_index.js.html#line267">ui/Window/index.js:267</a></p>
             </div>
 
@@ -3624,7 +1731,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-01454854733310639947389331739395857" data-toggle="tab">Source</a>
+                <a href="#tab-meta-34385828929953277019222706090658903" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3645,7 +1752,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-01454854733310639947389331739395857">
+            <div class="tab-pane active" id="tab-meta-34385828929953277019222706090658903">
                 <p><a href="ui_Msg_index.js.html#line213">ui/Msg/index.js:213</a></p>
             </div>
 
@@ -3726,7 +1833,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-907651718007400610372493672184646" data-toggle="tab">Source</a>
+                <a href="#tab-meta-368334589758887914495721203275025" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3747,7 +1854,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-907651718007400610372493672184646">
+            <div class="tab-pane active" id="tab-meta-368334589758887914495721203275025">
                 <p><a href="ui_Window_index.js.html#line238">ui/Window/index.js:238</a></p>
             </div>
 
@@ -3869,7 +1976,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-9309061560779816492396302055568" data-toggle="tab">Source</a>
+                <a href="#tab-meta-95346615090966229714874036144465" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3890,7 +1997,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-9309061560779816492396302055568">
+            <div class="tab-pane active" id="tab-meta-95346615090966229714874036144465">
                 <p><a href="ui_Msg_index.js.html#line149">ui/Msg/index.js:149</a></p>
             </div>
 
@@ -3962,7 +2069,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-599172339774668218755874503403902" data-toggle="tab">Source</a>
+                <a href="#tab-meta-045526443747803578630203425418586" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3983,7 +2090,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-599172339774668218755874503403902">
+            <div class="tab-pane active" id="tab-meta-045526443747803578630203425418586">
                 <p><a href="ui_Msg_index.js.html#line161">ui/Msg/index.js:161</a></p>
             </div>
 
@@ -4055,7 +2162,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-703118167351931312807333352975547" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0518687365110963647496191412210464" data-toggle="tab">Source</a>
             </li>
 
         
@@ -4076,7 +2183,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-703118167351931312807333352975547">
+            <div class="tab-pane active" id="tab-meta-0518687365110963647496191412210464">
                 <p><a href="ui_Msg_index.js.html#line172">ui/Msg/index.js:172</a></p>
             </div>
 
@@ -4148,7 +2255,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-01614545565098524264591118786484" data-toggle="tab">Source</a>
+                <a href="#tab-meta-71452823560684928381830716971308" data-toggle="tab">Source</a>
             </li>
 
         
@@ -4169,7 +2276,1900 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-01614545565098524264591118786484">
+            <div class="tab-pane active" id="tab-meta-71452823560684928381830716971308">
+                <p><a href="ui_Window_index.js.html#line159">ui/Window/index.js:159</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        </dl>
+    
+</article>
+
+</section>
+
+
+
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            ui/Window/
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-75555055192671725405780640430748" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-75555055192671725405780640430748">
+                <p><a href="ui_Window_index.js.html#line9">ui/Window/index.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+        
+            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
+        
+            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
+        
+            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
+        
+            <li><a href="module-ui_base.html">module:ui/base</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+        <section id="docs-methods">
+            <h3 class="subsection-title">Methods</h3>
+
+            <dl>
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~close">
+        <span class="type-signature">&lt;inner> </span>close<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>关闭窗口
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">打开之后回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-46386402519419799367318120785058" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-46386402519419799367318120785058">
+                <p><a href="ui_Window_index.js.html#line217">ui/Window/index.js:217</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~destroy">
+        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>销毁实例
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-0271268147043883845236896607093513" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-0271268147043883845236896607093513">
+                <p><a href="ui_Msg_index.js.html#line225">ui/Msg/index.js:225</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~destroy">
+        <span class="type-signature">&lt;inner> </span>destroy<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>销毁实例
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-420974348671734339988901112228632" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-420974348671734339988901112228632">
+                <p><a href="ui_Window_index.js.html#line289">ui/Window/index.js:289</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~getNode">
+        <span class="type-signature">&lt;inner> </span>getNode<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取当前 window 节点
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-45558692188933496631554537452757" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-45558692188933496631554537452757">
+                <p><a href="ui_Window_index.js.html#line259">ui/Window/index.js:259</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~open">
+        <span class="type-signature">&lt;inner> </span>open<span class="signature">(<span class="optional">callback</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>打开窗口
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">打开之后回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-311686402652412657029793753754348" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-311686402652412657029793753754348">
+                <p><a href="ui_Window_index.js.html#line130">ui/Window/index.js:130</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~resize">
+        <span class="type-signature">&lt;inner> </span>resize<span class="signature">(<span class="optional">size</span>, <span class="optional">callback</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>改变 window 尺寸
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">尺寸</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-932123235194012512222550669685006" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-932123235194012512222550669685006">
+                <p><a href="ui_Window_index.js.html#line179">ui/Window/index.js:179</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~setContent">
+        <span class="type-signature">&lt;inner> </span>setContent<span class="signature">(html)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置 Msg 内容
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>html</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">对话框内容</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-220728029031306501202417048625648" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-220728029031306501202417048625648">
+                <p><a href="ui_Msg_index.js.html#line201">ui/Msg/index.js:201</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~setTitle">
+        <span class="type-signature">&lt;inner> </span>setTitle<span class="signature">(title)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>设置 Msg 标题
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">对话框标题</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-0080274494830518966191119719296694" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-0080274494830518966191119719296694">
+                <p><a href="ui_Msg_index.js.html#line188">ui/Msg/index.js:188</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~shake">
+        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>震晃窗口以示提醒
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-2921036118641495723855185322463512" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-2921036118641495723855185322463512">
+                <p><a href="ui_Window_index.js.html#line267">ui/Window/index.js:267</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~shake">
+        <span class="type-signature">&lt;inner> </span>shake<span class="signature">()</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>震晃窗口以示提醒
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-307386903557926444419312896206975" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-307386903557926444419312896206975">
+                <p><a href="ui_Msg_index.js.html#line213">ui/Msg/index.js:213</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>窗口关闭之后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-398104579653590934261974156834185" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-398104579653590934261974156834185">
+                <p><a href="ui_Window_index.js.html#line238">ui/Window/index.js:238</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框被关闭后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">选择的按钮索引</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-5959178516641259154929265845567" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-5959178516641259154929265845567">
+                <p><a href="ui_Msg_index.js.html#line149">ui/Msg/index.js:149</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:esc">
+        esc : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>当前消息框被按 ESC 后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-5070773966144772780497435014695" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-5070773966144772780497435014695">
+                <p><a href="ui_Msg_index.js.html#line161">ui/Msg/index.js:161</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:hitbg">
+        hitbg : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>当前消息框被触碰背景后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-48026671423576776930400696583092" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-48026671423576776930400696583092">
+                <p><a href="ui_Msg_index.js.html#line172">ui/Msg/index.js:172</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:open">
+        open : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>窗口打开之后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-488871503854170447624181874562055" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-488871503854170447624181874562055">
                 <p><a href="ui_Window_index.js.html#line159">ui/Window/index.js:159</a></p>
             </div>
 

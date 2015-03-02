@@ -47,7 +47,6 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
-<li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
@@ -57,6 +56,7 @@
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
@@ -78,8 +78,8 @@
 <li><a href="module-utils_canvas.html">utils/canvas</a></li>
 <li><a href="module-utils_class.html">utils/class</a></li>
 <li><a href="module-utils_controller.html">utils/controller</a></li>
-<li><a href="module-utils_data.html">utils/data</a></li>
 <li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
 <li><a href="module-utils_easing.html">utils/easing</a></li>
 <li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
 <li><a href="module-utils_querystring.html">utils/querystring</a></li>
@@ -92,18 +92,18 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
 <li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
@@ -582,8 +582,6 @@
 
 define(function (require, exports, module) {
     /**
-     * Banner
-     *
      * @module ui/Banner/
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -668,7 +666,8 @@ define(function (require, exports, module) {
 
     /**
      * 尺寸重置
-     * @param [size]
+     * @method resize
+     * @param [size] {{width:Number,height:Number}} 尺寸
      */
     pro.resize = function (size) {
         var the = this;
@@ -698,6 +697,8 @@ define(function (require, exports, module) {
 
         the._translate = -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height);
         attribute.css(the._$list, the._calTranslate(the._showIndex + 1));
+
+        return the;
     };
 
 
@@ -896,7 +897,6 @@ define(function (require, exports, module) {
 
     /**
      * 边界索引
-     * @param index
      * @returns {*}
      * @private
      */
@@ -915,6 +915,7 @@ define(function (require, exports, module) {
 
     /**
      * 上一张
+     * @method prev
      * @param [callback] {Function} 回调
      */
     pro.prev = function (callback) {
@@ -929,6 +930,7 @@ define(function (require, exports, module) {
 
     /**
      * 下一张
+     * @method next
      * @param [callback] {Function} 回调
      */
     pro.next = function (callback) {
@@ -943,8 +945,9 @@ define(function (require, exports, module) {
 
     /**
      * 动画到某一张
-     * @param index
-     * @param callback
+     * @method index
+     * @param index {Number} 索引值
+     * @param callback {Function} 回调
      * @returns {Banner}
      */
     pro.index = function (index, callback) {
@@ -981,6 +984,7 @@ define(function (require, exports, module) {
 
     /**
      * 暂停播放
+     * @method pause
      * @returns {Banner}
      */
     pro.pause = function () {
@@ -996,6 +1000,7 @@ define(function (require, exports, module) {
 
     /**
      * 开始播放
+     * @method play
      * @returns {Banner}
      */
     pro.play = function () {
@@ -1011,6 +1016,7 @@ define(function (require, exports, module) {
 
     /**
      * 销毁实例
+     * @method destroy
      */
     pro.destroy = function () {
         var the = this;
@@ -1024,9 +1030,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 构建一个 banner，标准的 DOM 结构为：&lt;br>
-     *     &lt;code>ul#banner1>li*N&lt;/code>
+     * 构建一个 banner，标准的 DOM 结构为：&lt;code>ul#banner1>li*N&lt;/code>
      *
+     * @constructor
      * @param {HTMLElement|Node} $list banner 列表
      * @param {Object} [options] 配置
      * @param {Number} [options.width=700] banner 宽度，默认700
