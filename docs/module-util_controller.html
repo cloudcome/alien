@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: util/control - Alien documents</title>
+    <title>Module: util/controller - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -163,7 +169,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: util/control</h1>
+		            <h1 class="page-title">Module: util/controller</h1>
 
 		            
 
@@ -174,7 +180,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            util/control
+            util/controller
         
     
     </h2>
@@ -210,7 +216,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-602054757066071013802698580548167" data-toggle="tab">Source</a>
+                <a href="#tab-meta-532309656497091025738991564139724" data-toggle="tab">Source</a>
             </li>
 
         
@@ -231,8 +237,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-602054757066071013802698580548167">
-                <p><a href="util_control.js.html#line9">util/control.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-532309656497091025738991564139724">
+                <p><a href="util_controller.js.html#line9">util/controller.js:9</a></p>
             </div>
 
         
@@ -456,7 +462,7 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>window.onscroll = control.debounce(function(){
+    <pre class="prettyprint"><code>window.onscroll = controller.debounce(function(){
    // 只在最后一次触发的 123ms 后执行
 });</code></pre>
 
@@ -482,7 +488,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-457877001026645307267191680148244" data-toggle="tab">Source</a>
+                <a href="#tab-meta-408964489120990046547046075575054" data-toggle="tab">Source</a>
             </li>
 
         
@@ -503,8 +509,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-457877001026645307267191680148244">
-                <p><a href="util_control.js.html#line67">util/control.js:67</a></p>
+            <div class="tab-pane active" id="tab-meta-408964489120990046547046075575054">
+                <p><a href="util_controller.js.html#line67">util/controller.js:67</a></p>
             </div>
 
         
@@ -721,7 +727,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-53835013764910414700433728285134" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85440552816726279891820251941681" data-toggle="tab">Source</a>
             </li>
 
         
@@ -742,8 +748,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-53835013764910414700433728285134">
-                <p><a href="util_control.js.html#line155">util/control.js:155</a></p>
+            <div class="tab-pane active" id="tab-meta-85440552816726279891820251941681">
+                <p><a href="util_controller.js.html#line155">util/controller.js:155</a></p>
             </div>
 
         
@@ -863,7 +869,7 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>document.onclick = control.once(function(){
+    <pre class="prettyprint"><code>document.onclick = controller.once(function(){
     // 最多执行 1 次
 });</code></pre>
 
@@ -889,7 +895,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-223846375010907654110360487829894" data-toggle="tab">Source</a>
+                <a href="#tab-meta-035389346536248927530425454024225" data-toggle="tab">Source</a>
             </li>
 
         
@@ -910,8 +916,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-223846375010907654110360487829894">
-                <p><a href="util_control.js.html#line108">util/control.js:108</a></p>
+            <div class="tab-pane active" id="tab-meta-035389346536248927530425454024225">
+                <p><a href="util_controller.js.html#line108">util/controller.js:108</a></p>
             </div>
 
         
@@ -1127,7 +1133,7 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>window.onscroll = control.throttle(function(){
+    <pre class="prettyprint"><code>window.onscroll = controller.throttle(function(){
    // 至少需要间隔 123ms 后执行
 });</code></pre>
 
@@ -1153,7 +1159,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-07233213935978717637955602258444" data-toggle="tab">Source</a>
+                <a href="#tab-meta-147326906677335506931207166053355" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1174,8 +1180,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-07233213935978717637955602258444">
-                <p><a href="util_control.js.html#line28">util/control.js:28</a></p>
+            <div class="tab-pane active" id="tab-meta-147326906677335506931207166053355">
+                <p><a href="util_controller.js.html#line28">util/controller.js:28</a></p>
             </div>
 
         
@@ -1245,7 +1251,7 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>document.onclick = control.toggle(fn1, fn2, fn3);
+    <pre class="prettyprint"><code>document.onclick = controller.toggle(fn1, fn2, fn3);
 // 第 1 次执行 fn1
 // 第 2 次执行 fn2
 // 第 3 次执行 fn3
@@ -1276,7 +1282,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-72843484883196652998683135956526" data-toggle="tab">Source</a>
+                <a href="#tab-meta-48312742542475467507571103051305" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1297,8 +1303,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-72843484883196652998683135956526">
-                <p><a href="util_control.js.html#line134">util/control.js:134</a></p>
+            <div class="tab-pane active" id="tab-meta-48312742542475467507571103051305">
+                <p><a href="util_controller.js.html#line134">util/controller.js:134</a></p>
             </div>
 
         

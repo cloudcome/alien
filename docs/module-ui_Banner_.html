@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: libs/DDB.js - Alien documents</title>
+    <title>Module: ui/Banner/ - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -114,223 +120,134 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: libs/DDB.js</h1>
+		            <h1 class="page-title">Module: ui/Banner/</h1>
 
 		            
 
 
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            ui/Banner/
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+                <blockquote class="description lead">Banner
+                    
+                </blockquote>
+            
+
+            
+
+            
+
+
+<dl class="details">
     
 
-<pre class="prettyprint source"><code>/*!
- * DDB.js
- * @author ydr.me
- * @create 2014年11月21日 16:01:20
- */
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
+            
+            <li class="active">
+                <a href="#tab-meta-468023857101798061915911859832704" data-toggle="tab">Source</a>
+            </li>
 
-/**
+        
+        
+        
+        
+    </ul>
 
- // AST
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
- {
-    node: $ele,
-    children: {
-        node: $ele,
-        children: {
-           ...
-        }
-    }
- }
+            <div class="tab-pane active" id="tab-meta-468023857101798061915911859832704">
+                <p><a href="ui_Banner_index.js.html#line9">ui/Banner/index.js:9</a></p>
+            </div>
 
- */
+        
+        
+        
+        
+    </div>
+</dl>
 
+        
+    </div>
 
-define(function (require, exports, module) {
-    /**
-     * DOM-DATA-Binding
-     * @module libs/DDB
-     * @requires util/class
-     * @requires util/dato
-     * @requires util/random
-     * @requires core/dom/selector
-     * @requires core/dom/attribute
-     * @requires core/dom/modification
-     * @requires core/event/base
-     * @requires libs/Emitter
-     */
-    'use strict';
+    
 
-    var klass = require('../util/class.js');
-    var dato = require('../util/dato.js');
-    var random = require('../util/random.js');
-    var selector = require('../core/dom/selector.js');
-    var attribute = require('../core/dom/attribute.js');
-    var modification = require('../core/dom/modification.js');
-    var event = require('../core/event/base.js');
-    var Emitter = require('./Emitter.js');
-    var alienKey = 'alien-libs-DDB';
-    var REG_ALIEN_ATTR = /^al-/i;
-    var DDB = klass.create({
-        constructor: function ($ele) {
-            var the = this;
+    
 
-            the._$ele = selector.query($ele);
+    
+        <h3 class="subsection-title">Requires</h3>
 
-            if (!the._$ele.length) {
-                throw new Error('instance require an element');
-            }
+        <ul>
+            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
+        
+            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
+        
+            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
+        
+            <li><a href="module-core_event_touch.html">module:core/event/touch</a></li>
+        
+            <li><a href="module-ui_base.html">module:ui/base</a></li>
+        
+            <li>module:util/dato</li>
+        
+            <li><a href="module-util_typeis.html">module:util/typeis</a></li>
+        
+            <li><a href="module-util_controller.html">module:util/controller</a></li>
+        </ul>
+    
 
-            Emitter.apply(the, arguments);
-            the._$ele = the._$ele[0];
-            the._init();
-        },
+    
 
+    
 
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
+    
 
-            the._data = {};
-            the._parser = [];
-            the._scanNodes(the._$ele);
-        },
+    
 
+    
 
-        /**
-         * 扫描节点
-         * @private
-         */
-        _scanNodes: function ($ele) {
-            var the = this;
+    
+</article>
 
-            dato.each($ele.childNodes, function (index, $ele) {
-                if ($ele.nodeType === 1) {
-                    $ele[alienKey] = {};
-                    the._parser.push($ele);
-                    the._parseElement($ele);
-                }
-            });
-        },
-
-
-        /**
-         * 解析元素
-         * @private
-         */
-        _parseElement: function ($ele) {
-            var the = this;
-
-            the._parseAttrs($ele);
-            the._scanNodes($ele);
-        },
-
-
-        /**
-         * 解析属性
-         * @private
-         */
-        _parseAttrs: function ($ele) {
-            var the = this;
-            var attrs = $ele.attributes;
-
-            dato.each(attrs, function (index, attr) {
-                var name = attr.name.toLowerCase();
-                var val = attr.value;
-                var relName;
-
-                if (REG_ALIEN_ATTR.test(name)) {
-                    relName = name.slice(3);
-
-                    switch (relName) {
-                        case 'style':
-                        case 'html':
-                        case 'class':
-                        case 'model':
-                        case 'repeat':
-                            $ele[alienKey][relName] = {
-                                // 表达式
-                                exp: val,
-                                // 绑定数据
-                                data: {}
-                            };
-                            break;
-                    }
-
-                    if (relName === 'model') {
-                        $ele[alienKey][relName].data[val] = $ele.value;
-                        the._listenModel($ele);
-                    }
-                }
-            });
-        },
-
-
-        /**
-         * 监听数据模型
-         * @param $ele
-         * @private
-         */
-        _listenModel: function ($ele) {
-            var the = this;
-
-            event.on($ele, 'change input', function(){
-                the._data[this[alienKey].model.exp] = this.value;
-                the.update(the._data);
-            });
-        },
-
-
-        /**
-         * 执行表达式
-         * @param type
-         * @param exp
-         * @param data
-         * @private
-         */
-        _exec: function (type, exp, data) {
-            switch (type) {
-                case 'style':
-                    break;
-                case 'html':
-                    break;
-                case 'class':
-                    break;
-                case 'model':
-                    break;
-                case 'repeat':
-                    break;
-            }
-        },
-
-
-        /**
-         * 更新渲染数据
-         * @param data
-         */
-        update: function (data) {
-            var the = this;
-
-            dato.extend(true, the._data, data);
-            the.emit('change', the._data);
-        },
-
-
-        /**
-         * 销毁实例
-         */
-        destroy: function () {
-
-        }
-    }, Emitter);
-
-
-    module.exports = DDB;
-});</code></pre>
-
-
+</section>
 
 
 

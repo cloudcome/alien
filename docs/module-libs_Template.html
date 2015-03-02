@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -179,7 +185,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id="module:libs/Template">
-        <span class="type-signature"></span>new require(libs/Template)<span class="signature">(<span class="optional">options</span>)</span><span class="type-signature"></span>
+        <span class="type-signature"></span>new require(libs/Template)<span class="signature">()</span><span class="type-signature"></span>
     </h4>
 
     
@@ -197,138 +203,6 @@
         
 
         
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">配置
-                <h6>Properties</h6>
-                
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-		<th class="th-dft">Default</th>
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>compress</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last">是否压缩，默认为 true</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-            </td>
-        </tr>
-
-	
-	</tbody>
-</table>
 
         
 
@@ -363,7 +237,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-61592265986837456685262953396887" data-toggle="tab">Source</a>
+                <a href="#tab-meta-591043718392029442278943047858775" data-toggle="tab">Source</a>
             </li>
 
         
@@ -384,8 +258,8 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-61592265986837456685262953396887">
-                <p><a href="libs_Template.js.html#line561">libs/Template.js:561</a></p>
+            <div class="tab-pane active" id="tab-meta-591043718392029442278943047858775">
+                <p><a href="libs_Template.js.html#line552">libs/Template.js:552</a></p>
             </div>
 
         
@@ -433,7 +307,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-50235937046818449858886485453695" data-toggle="tab">Source</a>
+                <a href="#tab-meta-217594411456957466580813094042242" data-toggle="tab">Source</a>
             </li>
 
         
@@ -454,7 +328,7 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-50235937046818449858886485453695">
+            <div class="tab-pane active" id="tab-meta-217594411456957466580813094042242">
                 <p><a href="libs_Template.js.html#line9">libs/Template.js:9</a></p>
             </div>
 
@@ -697,7 +571,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-92038541845977319249788871966302" data-toggle="tab">Source</a>
+                <a href="#tab-meta-53639313718304044813466416671872" data-toggle="tab">Source</a>
             </li>
 
         
@@ -718,8 +592,8 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-92038541845977319249788871966302">
-                <p><a href="libs_Template.js.html#line382">libs/Template.js:382</a></p>
+            <div class="tab-pane active" id="tab-meta-53639313718304044813466416671872">
+                <p><a href="libs_Template.js.html#line394">libs/Template.js:394</a></p>
             </div>
 
         
@@ -884,7 +758,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-0417925191577523956776534819509834" data-toggle="tab">Source</a>
+                <a href="#tab-meta-84037098055705436320368191227317" data-toggle="tab">Source</a>
             </li>
 
         
@@ -905,8 +779,8 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-0417925191577523956776534819509834">
-                <p><a href="libs_Template.js.html#line135">libs/Template.js:135</a></p>
+            <div class="tab-pane active" id="tab-meta-84037098055705436320368191227317">
+                <p><a href="libs_Template.js.html#line143">libs/Template.js:143</a></p>
             </div>
 
         
@@ -1069,7 +943,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-45159732946194716611788768786937" data-toggle="tab">Source</a>
+                <a href="#tab-meta-990921408403664838661070773378015" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1090,8 +964,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-45159732946194716611788768786937">
-                <p><a href="libs_Template.js.html#line413">libs/Template.js:413</a></p>
+            <div class="tab-pane active" id="tab-meta-990921408403664838661070773378015">
+                <p><a href="libs_Template.js.html#line425">libs/Template.js:425</a></p>
             </div>
 
         
@@ -1235,7 +1109,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-57554094283841556654069416690618" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3074252358637752522559748031199" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1256,8 +1130,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-57554094283841556654069416690618">
-                <p><a href="libs_Template.js.html#line328">libs/Template.js:328</a></p>
+            <div class="tab-pane active" id="tab-meta-3074252358637752522559748031199">
+                <p><a href="libs_Template.js.html#line336">libs/Template.js:336</a></p>
             </div>
 
         

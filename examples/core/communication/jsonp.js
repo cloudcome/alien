@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var jsonp = require('/src/core/communication/jsonp.js');
+    var jsonp = require('../../../src/core/communication/jsonp.js');
 
     jsonp({
         type: 'function',

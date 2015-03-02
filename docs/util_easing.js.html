@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -188,8 +194,8 @@ define(function (require, exports, module) {
 
             easeBoth: function (t) {
                 return (t *= 2) &lt; 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
+                .5 * t * t :
+                .5 * (1 - (--t) * (t - 2));
             },
 
             easeInStrong: function (t) {
@@ -202,8 +208,8 @@ define(function (require, exports, module) {
 
             easeBothStrong: function (t) {
                 return (t *= 2) &lt; 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
+                .5 * t * t * t * t :
+                .5 * (2 - (t -= 2) * t * t * t);
             },
 
             easeOutQuart: function (t) {
@@ -268,8 +274,46 @@ define(function (require, exports, module) {
         }
     }
     ;
-})
-;
+});
+
+
+function anonymous(alienTemplateData_1423132028795/**/) {
+    try {
+        var thead = alienTemplateData_1423132028795["thead"];
+        var tbody = alienTemplateData_1423132028795["tbody"];
+        var alien_libs_template_GYE6vAAhe5EQatYyU3FN = "";
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += "&lt;table class=\"alien-ui-datepicker-list\"> &lt;thead> &lt;tr> ";
+        this.each(thead, function (alien_libs_template_JDkSIEqmrNFJ55zVv4GI, alien_libs_template_iQGFJsUiqv8HPSCN1XEr) {
+            var alien_libs_template_JoUA1PO3lh9USssrrp3f = alien_libs_template_JDkSIEqmrNFJ55zVv4GI;
+            var th = alien_libs_template_iQGFJsUiqv8HPSCN1XEr;
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;th>";
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(th) + "&lt;/th> ";
+        }, this);
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tr> &lt;/thead> &lt;tbody> ";
+        this.each(tbody, function (alien_libs_template_9yIUiLZ8OMMLpDQcKHYW, alien_libs_template_ULstP1jS2Ne97N31VAFb) {
+            var index = alien_libs_template_9yIUiLZ8OMMLpDQcKHYW;
+            var tr = alien_libs_template_ULstP1jS2Ne97N31VAFb;
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;tr> ";
+            this.each(tr[index], function (alien_libs_template_ZpeM5Y1ZId6eClxUfBkj, alien_libs_template_qz88hd9330CBdrAMgtiD) {
+                var alien_libs_template_AwymWFhy5qoriGF5zzUz = alien_libs_template_ZpeM5Y1ZId6eClxUfBkj;
+                var td = alien_libs_template_qz88hd9330CBdrAMgtiD;
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;td data-id=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.id) + "\" data-year=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.year) + "\" data-month=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.month) + "\" data-date=\"";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "\" class=\"alien-ui-datepicker-";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.type) + " ";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.active ? 'alien-ui-datepicker-active' : '') + "\">";
+                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "&lt;/td> ";
+            }, this);
+            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tr> ";
+        }, this);
+        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tbody> &lt;/table>";
+        return alien_libs_template_GYE6vAAhe5EQatYyU3FN
+    } catch (err) {
+        return err.message;
+    }
+}
 </code></pre>
 
 

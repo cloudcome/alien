@@ -33,17 +33,30 @@
             margin: 10px;
         }
 
+        #fixed{
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        body{
+            padding-top: 900px;
+        }
     </style>
 </head>
 <body>
 
-<input type="text" name="text" id="text" placeholder="输入"/>
-<button id="btn0">0个按钮的 msg</button>
-<button id="btn1">1个按钮的 msg</button>
-<button id="btn2">2个按钮的 msg</button>
-<button id="btn3">3个按钮的 msg</button>
-<button id="btn4">4个按钮的 msg</button>
-<button id="btn5">5个按钮的 msg</button>
+<div id="fixed">
+    <input type="text" name="text" id="text" placeholder="输入"/>
+    <button id="btn0">0个按钮的 msg</button>
+    <button id="btn1">1个按钮的 msg</button>
+    <button id="btn2">2个按钮的 msg</button>
+    <button id="btn3">3个按钮的 msg</button>
+    <button id="btn4">4个按钮的 msg</button>
+    <button id="btn5">5个按钮的 msg</button>
+    <button id="btn6">打开 msg 并在 2s 后消失</button>
+</div>
+
 
 <pre>
 new Msg({

@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -286,7 +292,7 @@ define(function (require, exports, module) {
      * event.dispatch(ele, myclikEvent, eve);
      */
     exports.dispatch = function (ele, eventTypeOrEvent, copyEvent) {
-        var et = typeis(eventTypeOrEvent) === 'string' ?
+        var et = typeis.string(eventTypeOrEvent) ?
             this.create(eventTypeOrEvent) :
             eventTypeOrEvent;
 
@@ -319,7 +325,7 @@ define(function (require, exports, module) {
      * });
      */
     exports.extend = function (createEvent, copyEvent, alienDetail) {
-        if (typeis(createEvent) === 'string') {
+        if (typeis.string(createEvent)) {
             createEvent = this.create(createEvent);
         }
 
@@ -368,22 +374,24 @@ define(function (require, exports, module) {
         }
 
         var callback;
+        var args = arguments;
+        var argL = args.length;
         var eventTypes = String(eventType).trim().split(regSpace);
-        isCapture = arguments[arguments.length - 1];
+        isCapture = args[argL - 1];
 
-        if (typeis(isCapture) !== 'boolean') {
+        if (!typeis.function(isCapture)) {
             isCapture = false;
         }
 
         // on self
         // .on(body, 'click', fn);
-        if (typeis(arguments[2]) === 'function') {
-            callback = arguments[2];
-            listener = arguments[2];
+        if (typeis.function(args[2])) {
+            callback = args[2];
+            listener = args[2];
         }
         // delegate
         // .on(body, 'click', 'p', fn)
-        else if (typeis(listener) === 'function') {
+        else if (typeis.function(listener)) {
             if (canNotBubbleEvents.indexOf(eventType) > -1) {
                 console.warn(eventType, 'can not bubble in DOM tree');
             }
@@ -400,7 +408,7 @@ define(function (require, exports, module) {
 
         if (callback) {
             dato.each(eventTypes, function (index, eventType) {
-                if (typeis(listener) === 'function' &amp;&amp; eventType) {
+                if (typeis.function(callback) &amp;&amp; typeis.function(listener) &amp;&amp; eventType) {
                     _on(element, eventType, callback, listener, isCapture);
                 }
             });
@@ -637,7 +645,7 @@ define(function (require, exports, module) {
      * @param {Boolean} isCapture 是否事件捕获
      * @private
      */
-    function _un(element, eventType, originalEvent, isCapture) {
+    function _un(element, eventType, originalListener, isCapture) {
         var domId = element[key];
         var findIndex;
         var args = arguments;
@@ -645,9 +653,9 @@ define(function (require, exports, module) {
 
         if (argL === 3) {
             // _un(ele, 'click', true);
-            if (typeis(args[2]) === 'boolean') {
+            if (typeis.boolean(args[2])) {
                 isCapture = args[2];
-                originalEvent = null;
+                originalListener = null;
             }
             // _un(ele, 'click', fn);
             else {
@@ -657,8 +665,8 @@ define(function (require, exports, module) {
 
         if (domId) {
             if (isCapture) {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         isCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -669,8 +677,8 @@ define(function (require, exports, module) {
                     isCaptureActualListeners[domId][eventType] = [];
                 }
             } else {
-                if (typeis(originalEvent) === 'function') {
-                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalEvent);
+                if (typeis.function(originalListener)) {
+                    findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
                         unCaptureOriginalListeners[domId][eventType].splice(findIndex, 1);
@@ -682,7 +690,7 @@ define(function (require, exports, module) {
                 }
             }
         } else {
-            element.removeEventListener(eventType, originalEvent, isCapture);
+            element.removeEventListener(eventType, originalListener, isCapture);
         }
     }
 });

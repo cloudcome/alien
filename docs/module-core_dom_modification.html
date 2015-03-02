@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -228,7 +234,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-460763926850631833208354611415416" data-toggle="tab">Source</a>
+                <a href="#tab-meta-97403427655808635759497636463493" data-toggle="tab">Source</a>
             </li>
 
         
@@ -249,7 +255,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-460763926850631833208354611415416">
+            <div class="tab-pane active" id="tab-meta-97403427655808635759497636463493">
                 <p><a href="core_dom_modification.js.html#line9">core/dom/modification.js:9</a></p>
             </div>
 
@@ -500,7 +506,7 @@ modification.create('div', {id:'id-123'});
 
             
             <li class="active">
-                <a href="#tab-meta-73177757090888925176329885143787" data-toggle="tab">Source</a>
+                <a href="#tab-meta-280860659899190074545137560926378" data-toggle="tab">Source</a>
             </li>
 
         
@@ -521,8 +527,8 @@ modification.create('div', {id:'id-123'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-73177757090888925176329885143787">
-                <p><a href="core_dom_modification.js.html#line85">core/dom/modification.js:85</a></p>
+            <div class="tab-pane active" id="tab-meta-280860659899190074545137560926378">
+                <p><a href="core_dom_modification.js.html#line86">core/dom/modification.js:86</a></p>
             </div>
 
         
@@ -648,7 +654,7 @@ modification.create('div', {id:'id-123'});
 
             
             <li class="active">
-                <a href="#tab-meta-409107678569853330123962834477425" data-toggle="tab">Source</a>
+                <a href="#tab-meta-248221720801666387543713843915612" data-toggle="tab">Source</a>
             </li>
 
         
@@ -669,8 +675,8 @@ modification.create('div', {id:'id-123'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-409107678569853330123962834477425">
-                <p><a href="core_dom_modification.js.html#line318">core/dom/modification.js:318</a></p>
+            <div class="tab-pane active" id="tab-meta-248221720801666387543713843915612">
+                <p><a href="core_dom_modification.js.html#line271">core/dom/modification.js:271</a></p>
             </div>
 
         
@@ -696,7 +702,7 @@ modification.create('div', {id:'id-123'});
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".insert">
-        <span class="type-signature">&lt;static> </span>insert<span class="signature">(source, target, <span class="optional">position</span>, <span class="optional">isReturnSource</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>insert<span class="signature">(source, target, <span class="optional">position</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -751,7 +757,13 @@ modification.create('div', {id:'id-123'});
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
         
     
 
@@ -854,44 +866,6 @@ modification.create('div', {id:'id-123'});
         </tr>
 
 	
-
-        <tr>
-            
-                <td class="name"><code>isReturnSource</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">是否返回源，默认false</td>
-        </tr>
-
-	
 	</tbody>
 </table>
 
@@ -957,7 +931,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-8469183065462857964027599664405" data-toggle="tab">Source</a>
+                <a href="#tab-meta-04612198192626238770441486267373" data-toggle="tab">Source</a>
             </li>
 
         
@@ -978,7 +952,7 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-8469183065462857964027599664405">
+            <div class="tab-pane active" id="tab-meta-04612198192626238770441486267373">
                 <p><a href="core_dom_modification.js.html#line156">core/dom/modification.js:156</a></p>
             </div>
 
@@ -1127,7 +1101,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-04364748299121857938273620326072" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0791915114969015147414905903860927" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1148,8 +1122,8 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-04364748299121857938273620326072">
-                <p><a href="core_dom_modification.js.html#line56">core/dom/modification.js:56</a></p>
+            <div class="tab-pane active" id="tab-meta-0791915114969015147414905903860927">
+                <p><a href="core_dom_modification.js.html#line57">core/dom/modification.js:57</a></p>
             </div>
 
         
@@ -1275,7 +1249,7 @@ modification.insert(source, target, 'afterend');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-583231272175908140928777237422764" data-toggle="tab">Source</a>
+                <a href="#tab-meta-595972346840426302808113140054047" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1296,8 +1270,8 @@ modification.insert(source, target, 'afterend');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-583231272175908140928777237422764">
-                <p><a href="core_dom_modification.js.html#line222">core/dom/modification.js:222</a></p>
+            <div class="tab-pane active" id="tab-meta-595972346840426302808113140054047">
+                <p><a href="core_dom_modification.js.html#line174">core/dom/modification.js:174</a></p>
             </div>
 
         
@@ -1452,7 +1426,7 @@ modification.unwrap(ele, '#div1 #div2 #div3');
 
             
             <li class="active">
-                <a href="#tab-meta-89863326190970849281349207740277" data-toggle="tab">Source</a>
+                <a href="#tab-meta-64441381068900236573632447980344" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1473,8 +1447,8 @@ modification.unwrap(ele, '#div1 #div2 #div3');
         
         
 
-            <div class="tab-pane active" id="tab-meta-89863326190970849281349207740277">
-                <p><a href="core_dom_modification.js.html#line287">core/dom/modification.js:287</a></p>
+            <div class="tab-pane active" id="tab-meta-64441381068900236573632447980344">
+                <p><a href="core_dom_modification.js.html#line240">core/dom/modification.js:240</a></p>
             </div>
 
         
@@ -1651,7 +1625,7 @@ modification.unwrap(ele, '#div1 #div2 #div3');
 
             
             <li class="active">
-                <a href="#tab-meta-100836043944582349600675974506885" data-toggle="tab">Source</a>
+                <a href="#tab-meta-27186397416517149014098104089499" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1672,8 +1646,8 @@ modification.unwrap(ele, '#div1 #div2 #div3');
         
         
 
-            <div class="tab-pane active" id="tab-meta-100836043944582349600675974506885">
-                <p><a href="core_dom_modification.js.html#line246">core/dom/modification.js:246</a></p>
+            <div class="tab-pane active" id="tab-meta-27186397416517149014098104089499">
+                <p><a href="core_dom_modification.js.html#line198">core/dom/modification.js:198</a></p>
             </div>
 
         

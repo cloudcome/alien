@@ -63,4 +63,16 @@ define(function (require) {
                 });
             });
     };
+
+
+    document.getElementById('btn6').onclick = function () {
+        new Msg({
+            isModal: false,
+            title: null,
+            content: '注意啦！！2000ms 后自动消失',
+            buttons: [],
+            timeout: 2000
+        });
+    };
+
 });

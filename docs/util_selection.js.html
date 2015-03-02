@@ -44,15 +44,20 @@
 <li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
 <li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
 <li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
 <li><a href="module-libs_Autoheight_.html">libs/Autoheight/</a></li>
-<li><a href="module-libs_DDB.html">libs/DDB</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
-<li><a href="module-libs_Lex.html">libs/Lex</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_weixin.html">parent/weixin</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
@@ -61,6 +66,7 @@
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
@@ -71,7 +77,7 @@
 <li><a href="module-util_calendar.html">util/calendar</a></li>
 <li><a href="module-util_canvas.html">util/canvas</a></li>
 <li><a href="module-util_class.html">util/class</a></li>
-<li><a href="module-util_control.html">util/control</a></li>
+<li><a href="module-util_controller.html">util/controller</a></li>
 <li><a href="module-util_data.html">util/data</a></li>
 <li><a href="module-util_date.html">util/date</a></li>
 <li><a href="module-util_easing.html">util/easing</a></li>
@@ -136,14 +142,38 @@ define(function (require, exports) {
     'use strict';
 
     var dato = require('./dato.js');
+    var selector = require('../core/dom/selector.js');
+    var attribute = require('../core/dom/attribute.js');
+    var modification = require('../core/dom/modification.js');
+    var $div = modification.create('div', {
+        style:{
+            position: 'absolute',
+            top: '-9999em',
+            left: '-9999em'
+        }
+    });
+    var typographyStyles = [
+        'font',
+        'letterSpacing',
+        'textTransform',
+        'wordSpacing',
+        'textIndent',
+        'whiteSpace',
+        'lineHeight',
+        'padding',
+        'width',
+        'height',
+        'border'
+    ];
 
+    
     /**
      * 获取选区
      * @param  {Object} $ele 元素
      * @return {Object}
      */
     exports.getPos = function ($ele) {
-        if($ele.selectionStart){
+        if ($ele &amp;&amp; $ele.setSelectionRange) {
             return [$ele.selectionStart, $ele.selectionEnd];
         }
 
@@ -154,22 +184,43 @@ define(function (require, exports) {
     /**
      * 设置选区
      * @param $ele {Object} 元素
-     * @param [start] {Number} 开始位置，默认为0
-     * @param [end] {Number} 结束位置，默认等于start
+     * @param [pos] {Array} 开始位置与结束位置
      *
      * @example
-     * selection.setPos($ele, 1);
-     * selection.setPos($ele, 1, 10);
+     * selection.setPos($ele, [1]);
+     * selection.setPos($ele, [1, 10]);
      */
-    exports.setPos = function ($ele, start, end) {
-        start = dato.parseInt(start, 0);
-        end = end ? dato.parseInt(end, 0): start;
-
+    exports.setPos = function ($ele, pos) {
         if ($ele &amp;&amp; $ele.setSelectionRange) {
-            $ele.setSelectionRange(start, end);
-            $ele.focus();
+            var pos0 = dato.parseInt(pos[0], 0);
+            $ele.setSelectionRange(pos0, dato.parseInt(pos[1], pos0));
         }
     };
+
+
+    /**
+     * 获取光标所在的坐标
+     * @param $ele
+     */
+    exports.getOffset = function ($ele) {
+        if ($ele &amp;&amp; $ele.setSelectionRange) {
+            var style = attribute.css($ele, typographyStyles);
+            var pos0 = exports.getPos($ele)[0];
+            var val = $ele.value;
+
+            val = val.slice(0, pos0) + '&lt;i style="display:inline;font-size:0;">&lt;/i>' + val.slice(pos0);
+            $div.innerHTML = val;
+            attribute.css($div, style);
+            
+            var $i = selector.query('i', $div)[0];
+            
+            return [$i.offsetLeft, $i.offsetTop];
+        }
+
+        return [0, 0];
+    };
+
+    modification.insert($div, document.body);
 });</code></pre>
 
 
