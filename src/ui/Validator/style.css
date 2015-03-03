@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+.has-error input,
+.has-error select,
+.has-error textarea{
+    border-color: #a94442;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    color: #be1b18;
+}
+
+.has-error label,
+.has-error .form-msg{
+    color: #be1b18;
+}
+
+.has-warning input,
+.has-warning select,
+.has-warning textarea{
+    border-color: #8a6d3b;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    color: #be7f14;
+}
+
+.has-warning label,
+.has-warning .form-msg{
+    color: #be7f14;
+}
+
+.has-success input,
+.has-success select,
+.has-success textarea{
+    border-color: #3c763d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    color: #2E9B2F;
+}
+
+.has-success label,
+.has-success .form-msg{
+    color: #2E9B2F;
+}

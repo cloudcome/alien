@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var REG_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
     var REG_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
     var REG_INVALID = /invalid/i;
+    var REG_ELEMENT = /element/;
 
 
     /**
@@ -117,7 +118,7 @@ define(function (require, exports, module) {
 
         var ret = Object.prototype.toString.call(object).slice(8, -1).toLowerCase();
 
-        if (/element/.test(ret)) {
+        if (REG_ELEMENT.test(ret)) {
             return 'element';
         } else if (isNaN(object) && ret === 'number') {
             return 'nan';

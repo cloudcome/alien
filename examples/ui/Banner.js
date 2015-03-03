@@ -24,7 +24,8 @@ define(function (require) {
         navGenerator: function (index, length) {
             return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
         },
-        $navParent: $nav
+        $navParent: $nav,
+        index: 2
     });
 
     event.on($banner, 'click', '.prev', function () {
@@ -50,12 +51,7 @@ define(function (require) {
     });
 
     banner.on('change', function (index) {
-        var $navItem = this.$navItems[index];
-        var $siblings = selector.siblings($navItem);
-
         $index.innerHTML = index + 1;
-        attribute.removeClass($siblings, 'active')
-        attribute.addClass($navItem, 'active');
     });
 
     document.getElementById('prev').onclick = function () {

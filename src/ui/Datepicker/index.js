@@ -39,17 +39,16 @@ define(function (require, exports, module) {
             weeks: ['日', '一', '二', '三', '四', '五', '六']
         }
     };
-    var Datepicker = ui.create({
-        constructor: function (options) {
-            var the = this;
+    var Datepicker = ui.create(function (options) {
+        var the = this;
 
-            the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        }
+        the._options = dato.extend(true, {}, defaults, options);
+        the._init();
     });
-    var pro = Datepicker.prototype;
 
-    pro._init = function () {
+    Datepicker.defaults = defaults;
+
+    Datepicker.fn._init = function () {
         var the = this;
         var options = the._options;
 
@@ -57,7 +56,7 @@ define(function (require, exports, module) {
         the.render(options.year, options.month, options);
     };
 
-    pro._initNode = function () {
+    Datepicker.fn._initNode = function () {
         var the = this;
         var options = the._options;
         var $wrap = modification.create('div', {
@@ -69,7 +68,7 @@ define(function (require, exports, module) {
         the._$wrap = $wrap;
     };
 
-    pro.render = function (year, month) {
+    Datepicker.fn.render = function (year, month) {
         var the = this;
         var options = the._options;
         var list = calendar.month(year, month, options);

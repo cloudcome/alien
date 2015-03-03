@@ -110,12 +110,18 @@
 
 <hr/>
 <pre>
-var banner = new Banner('#slider1', {
-    width: 300,
+var banner = new Banner('#banner', {
+    width: Math.min(window.innerWidth, 300),
     height: 200,
-    axis: '+x'
-});
-</pre>
+    axis: '-y',
+    interval: 1000,
+    isAutoPlay: false,
+    navGenerator: function (index, length) {
+        return '&ltli data-index="' + index + '"&gt;' + (index + 1) + '/' + length + '&lt;/li&gt;';
+    },
+    $navParent: $nav,
+    index: 2
+});</pre>
 
 
 <script src="../coolie.min.js" data-main="./ui/Banner.js"></script>

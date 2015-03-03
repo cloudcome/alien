@@ -124,9 +124,7 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个类（构造函数）
-     * @param {Object} property
-     * @param {Function} property.constructor 构造函数
-     * @param {Object} [property.STATIC]  静态属性
+     * @param {Function} constructor 构造函数
      * @param {Function} [superConstructor=null] 父类
      * @param {Boolean} [isInheritStatic=false] 是否继承父类的静态方法
      *
@@ -135,16 +133,10 @@ define(function (require, exports, module) {
      *     this.name = name;
      * });
      *
-     * Father.extend({
-     *     sayName: function(){
-     *         console.log(this.name);
-     *     }
-     * });
-     *
      * var pro = Father.prototype;
      *
-     * pro.saySex = function(){
-     *     console.log();
+     * pro.sayName = function(){
+     *     console.log(this.name);
      * };
      *
      * var Child = klass.create(function(name, age){
@@ -167,7 +159,7 @@ define(function (require, exports, module) {
             }
 
             if (isConstructorFn) {
-                constructor.apply(this, arguments);
+                return constructor.apply(this, arguments);
             }
         };
 
@@ -175,10 +167,13 @@ define(function (require, exports, module) {
             exports.inherit(c, superConstructor, isInheritStatic);
         }
 
-        c.prototype.constructor = c;
         c.fn = c.prototype;
-        c.extend = function (properties) {
+        c.prototype.constructor = c;
+        c.prototype.extend = function(properties){
             dato.extend(true, c.prototype, properties);
+        };
+        c.extend = function (properties) {
+            dato.extend(true, c, properties);
         };
 
         return c;
