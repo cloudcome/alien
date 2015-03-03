@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -239,7 +239,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-71925940108485525448162269312888" data-toggle="tab">Source</a>
+                <a href="#tab-meta-028524244669824849208398933988065" data-toggle="tab">Source</a>
             </li>
 
         
@@ -260,7 +260,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-71925940108485525448162269312888">
+            <div class="tab-pane active" id="tab-meta-028524244669824849208398933988065">
                 <p><a href="ui_base.js.html#line9">ui/base.js:9</a></p>
             </div>
 
@@ -307,7 +307,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".create">
-        <span class="type-signature">&lt;static> </span>create<span class="signature">(property, <span class="optional">isInheritSuperStatic</span>)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;static> </span>create<span class="signature">(constructor, <span class="optional">isInheritSuperStatic</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -356,13 +356,13 @@
 
         <tr>
             
-                <td class="name"><code>property</code></td>
+                <td class="name"><code>constructor</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
         
     
 
@@ -385,7 +385,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last">构造函数</td>
         </tr>
 
 	
@@ -439,11 +439,7 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>var Dialog = ui({
-    constructor: fn,
-    STATIC: {},
-    myClassName: fn
-});</code></pre>
+    <pre class="prettyprint"><code>var Dialog = ui.create(fn);</code></pre>
 
         
 
@@ -451,93 +447,6 @@
 
 
 <dl class="details">
-    
-
-        <h5 class="subsection-title">Properties:</h5>
-
-        <dl>
-
-<table class="props table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-		<th>Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>property.constructor</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">构造函数</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>property.STATIC=</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">{Object} 静态属性、方法，可以为空</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-</dl>
-
     
 
     
@@ -554,7 +463,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-33945303666405382688448131084442" data-toggle="tab">Source</a>
+                <a href="#tab-meta-674242308828979737957389932125807" data-toggle="tab">Source</a>
             </li>
 
         
@@ -575,8 +484,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-33945303666405382688448131084442">
-                <p><a href="ui_base.js.html#line50">ui/base.js:50</a></p>
+            <div class="tab-pane active" id="tab-meta-674242308828979737957389932125807">
+                <p><a href="ui_base.js.html#line44">ui/base.js:44</a></p>
             </div>
 
         
@@ -665,7 +574,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-396541853202506920217515365220606" data-toggle="tab">Source</a>
+                <a href="#tab-meta-123693285044282678337806302588433" data-toggle="tab">Source</a>
             </li>
 
         
@@ -686,7 +595,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-396541853202506920217515365220606">
+            <div class="tab-pane active" id="tab-meta-123693285044282678337806302588433">
                 <p><a href="ui_base.js.html#line31">ui/base.js:31</a></p>
             </div>
 
@@ -767,7 +676,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-17811452248133729307538957800716" data-toggle="tab">Source</a>
+                <a href="#tab-meta-150135173695161943953855400905013" data-toggle="tab">Source</a>
             </li>
 
         
@@ -788,8 +697,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-17811452248133729307538957800716">
-                <p><a href="ui_base.js.html#line81">ui/base.js:81</a></p>
+            <div class="tab-pane active" id="tab-meta-150135173695161943953855400905013">
+                <p><a href="ui_base.js.html#line60">ui/base.js:60</a></p>
             </div>
 
         
@@ -860,7 +769,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-439413004554808141847216875758022" data-toggle="tab">Source</a>
+                <a href="#tab-meta-97850093571469195215731582138687" data-toggle="tab">Source</a>
             </li>
 
         
@@ -881,8 +790,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-439413004554808141847216875758022">
-                <p><a href="ui_base.js.html#line111">ui/base.js:111</a></p>
+            <div class="tab-pane active" id="tab-meta-97850093571469195215731582138687">
+                <p><a href="ui_base.js.html#line90">ui/base.js:90</a></p>
             </div>
 
         

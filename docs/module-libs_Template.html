@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -137,16 +137,38 @@
 
 	            <ul class="nav sidebar-list">
 	                
+	                    <li class="sidebar-header">Members &times; 2</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.defaults">defaults</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.filters">filters</a>
+    
+</li>
+
+	                    
+	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 4</li>
+	                    <li class="sidebar-header">Methods &times; 3</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#~addFilter">addFilter</a>
+        <a class="" href="#.addFilter">addFilter</a>
     
 </li>
 
@@ -155,7 +177,7 @@
 
 <li class="">
     
-        <a class="" href="#~constructor">constructor</a>
+        <a class="" href="#.getFilter">getFilter</a>
     
 </li>
 
@@ -164,16 +186,7 @@
 
 <li class="">
     
-        <a class="" href="#~getFilter">getFilter</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~render">render</a>
+        <a class="" href="#~setDefaults">setDefaults</a>
     
 </li>
 
@@ -265,7 +278,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-2072498376946896318817889457568526" data-toggle="tab">Source</a>
+                <a href="#tab-meta-820060139056295224683603667654097" data-toggle="tab">Source</a>
             </li>
 
         
@@ -286,8 +299,8 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-2072498376946896318817889457568526">
-                <p><a href="libs_Template.js.html#line552">libs/Template.js:552</a></p>
+            <div class="tab-pane active" id="tab-meta-820060139056295224683603667654097">
+                <p><a href="libs_Template.js.html#line543">libs/Template.js:543</a></p>
             </div>
 
         
@@ -335,7 +348,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-513553195167332909044240415096283" data-toggle="tab">Source</a>
+                <a href="#tab-meta-204493792029097689599664218258113" data-toggle="tab">Source</a>
             </li>
 
         
@@ -356,7 +369,7 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-513553195167332909044240415096283">
+            <div class="tab-pane active" id="tab-meta-204493792029097689599664218258113">
                 <p><a href="libs_Template.js.html#line9">libs/Template.js:9</a></p>
             </div>
 
@@ -393,6 +406,176 @@ tpl.render({name: 'yundanran'});
     
 
     
+        <section id="docs-members">
+            <h3 class="subsection-title">Members</h3>
+
+            <dl>
+                
+<section class="docs-member ">
+    <dt>
+        <h4 class="name alert alert-info" id=".defaults"><span class="type-signature">&lt;static> </span>defaults</h4>
+
+        
+    </dt>
+    <dd>
+        
+        <div class="description lead">
+            <blockquote>
+                默认配置
+            </blockquote>
+        </div>
+        
+
+        
+            <h5>Type: 
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+</h5>
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-76707024360075593653998514637351" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-76707024360075593653998514637351">
+                <p><a href="libs_Template.js.html#line80">libs/Template.js:80</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-member ">
+    <dt>
+        <h4 class="name alert alert-info" id=".filters"><span class="type-signature">&lt;static> </span>filters</h4>
+
+        
+    </dt>
+    <dd>
+        
+        <div class="description lead">
+            <blockquote>
+                静态过滤方法
+            </blockquote>
+        </div>
+        
+
+        
+            <h5>Type: 
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+</h5>
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-98278520861640576294694640673697" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-98278520861640576294694640673697">
+                <p><a href="libs_Template.js.html#line88">libs/Template.js:88</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
 
     
         <section id="docs-methods">
@@ -402,8 +585,8 @@ tpl.render({name: 'yundanran'});
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="~addFilter">
-        <span class="type-signature">&lt;inner> </span>addFilter<span class="signature">(name, callback, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id=".addFilter">
+        <span class="type-signature">&lt;static> </span>addFilter<span class="signature">(name, callback, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -412,7 +595,7 @@ tpl.render({name: 'yundanran'});
 
         
         <div class="description lead">
-            <blockquote>添加过滤函数，默认无任何过滤函数
+            <blockquote>添加过滤方法
                 
             </blockquote>
         </div>
@@ -481,7 +664,7 @@ tpl.render({name: 'yundanran'});
                 </td>
             
 
-            <td class="description last">过滤函数名称</td>
+            <td class="description last">过滤方法名称</td>
         </tr>
 
 	
@@ -517,7 +700,7 @@ tpl.render({name: 'yundanran'});
                 </td>
             
 
-            <td class="description last">过滤方法</td>
+            <td class="description last">方法</td>
         </tr>
 
 	
@@ -557,203 +740,7 @@ tpl.render({name: 'yundanran'});
                 </td>
             
 
-            <td class="description last">覆盖实例的过滤方法，默认为false</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>tp.addFilter('test', function(val, arg1, arg2){
-    // code
-    // 规范定义，第1个参数为上一步的值
-    // 后续参数自定义个数
-});</code></pre>
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-895700564142316609597651264630258" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-895700564142316609597651264630258">
-                <p><a href="libs_Template.js.html#line394">libs/Template.js:394</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~constructor">
-        <span class="type-signature">&lt;inner> </span>constructor<span class="signature">(tmplate, <span class="optional">options</span>)</span><span class="type-signature"></span>
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>构造函数
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>tmplate</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">模板内容</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">模板配置</td>
+            <td class="description last">是否强制覆盖，默认 false</td>
         </tr>
 
 	
@@ -786,7 +773,7 @@ tpl.render({name: 'yundanran'});
 
             
             <li class="active">
-                <a href="#tab-meta-075893691973760726875218704808503" data-toggle="tab">Source</a>
+                <a href="#tab-meta-397368383361026645683352556079626" data-toggle="tab">Source</a>
             </li>
 
         
@@ -807,8 +794,8 @@ tpl.render({name: 'yundanran'});
         
         
 
-            <div class="tab-pane active" id="tab-meta-075893691973760726875218704808503">
-                <p><a href="libs_Template.js.html#line143">libs/Template.js:143</a></p>
+            <div class="tab-pane active" id="tab-meta-397368383361026645683352556079626">
+                <p><a href="libs_Template.js.html#line106">libs/Template.js:106</a></p>
             </div>
 
         
@@ -833,8 +820,8 @@ tpl.render({name: 'yundanran'});
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="~getFilter">
-        <span class="type-signature">&lt;inner> </span>getFilter<span class="signature">(<span class="optional">name</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id=".getFilter">
+        <span class="type-signature">&lt;static> </span>getFilter<span class="signature">(<span class="optional">name</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -843,7 +830,7 @@ tpl.render({name: 'yundanran'});
 
         
         <div class="description lead">
-            <blockquote>获取过滤函数
+            <blockquote>获取过滤方法
                 
             </blockquote>
         </div>
@@ -908,7 +895,7 @@ tpl.render({name: 'yundanran'});
 
             
 
-            <td class="description last">过滤函数名称，name为空时返回所有过滤方法</td>
+            <td class="description last">获取过滤方法的名称，为空表示获取全部过滤方法</td>
         </tr>
 
 	
@@ -933,21 +920,12 @@ tpl.render({name: 'yundanran'});
         
     
 </td>
-            <td class="param-desc"></td>
+            <td class="param-desc">放回过滤方法或过滤方法的集合</td>
         </tr>
     </tbody>
 </table>
 
             
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>tp.getFilter();
-// => return all filters Object
-
-tp.getFilter('test');
-// => return test filter function</code></pre>
 
         
 
@@ -971,7 +949,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-72072757221758371695912405848503" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6143208574503665491495740134269" data-toggle="tab">Source</a>
             </li>
 
         
@@ -992,8 +970,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-72072757221758371695912405848503">
-                <p><a href="libs_Template.js.html#line425">libs/Template.js:425</a></p>
+            <div class="tab-pane active" id="tab-meta-6143208574503665491495740134269">
+                <p><a href="libs_Template.js.html#line130">libs/Template.js:130</a></p>
             </div>
 
         
@@ -1018,8 +996,8 @@ tp.getFilter('test');
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="~render">
-        <span class="type-signature">&lt;inner> </span>render<span class="signature">(data)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="~setDefaults">
+        <span class="type-signature">&lt;inner> </span>setDefaults<span class="signature">(options)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -1028,7 +1006,7 @@ tp.getFilter('test');
 
         
         <div class="description lead">
-            <blockquote>渲染数据
+            <blockquote>设置默认配置
                 
             </blockquote>
         </div>
@@ -1064,16 +1042,10 @@ tp.getFilter('test');
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
             
             </td>
 
@@ -1081,7 +1053,7 @@ tp.getFilter('test');
 
             
 
-            <td class="description last">数据</td>
+            <td class="description last"></td>
         </tr>
 
 	
@@ -1091,29 +1063,6 @@ tp.getFilter('test');
         
 
         
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-</td>
-            <td class="param-desc">返回渲染后的数据</td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>tp.render(data);</code></pre>
 
         
 
@@ -1137,7 +1086,7 @@ tp.getFilter('test');
 
             
             <li class="active">
-                <a href="#tab-meta-979588206857442946425677626393735" data-toggle="tab">Source</a>
+                <a href="#tab-meta-565882103284820927808646694757044" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1158,8 +1107,8 @@ tp.getFilter('test');
         
         
 
-            <div class="tab-pane active" id="tab-meta-979588206857442946425677626393735">
-                <p><a href="libs_Template.js.html#line336">libs/Template.js:336</a></p>
+            <div class="tab-pane active" id="tab-meta-565882103284820927808646694757044">
+                <p><a href="libs_Template.js.html#line94">libs/Template.js:94</a></p>
             </div>
 
         

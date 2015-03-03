@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -582,7 +582,6 @@
 
 define(function (require, exports, module) {
     /**
-     * 处理有关 dom 属性的 API
      * @module core/dom/attribute
      * @requires utils/dato
      * @requires utils/typeis
@@ -614,7 +613,11 @@ define(function (require, exports, module) {
     var width = innerWidth.concat(['paddingLeft', 'paddingRight']);
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
-    var alienKey = 'alien-core-dom-attribute-';
+    //var alienKey = 'alien-core-dom-attribute-';
+    var isRelativeToViewport = _isRelativeToViewport();
+
+
+
     /**
      * 设置、获取元素的属性
      * @param {HTMLElement|Node} ele 元素
@@ -626,9 +629,9 @@ define(function (require, exports, module) {
      * // set
      * attribute.attr(ele, 'href', 'http://ydr.me');
      * attribute.attr(ele, {
-         *    href: '',
-         *    title: ''
-         * });
+     *    href: '',
+     *    title: ''
+     * });
      *
      * // get
      * attribute.attr(ele, 'href');
@@ -1044,36 +1047,36 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 top 距离
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.top(ele, 100);
+     * position.top($ele, 100);
      *
      * // get
-     * position.top(ele);
+     * position.top($ele);
      */
-    exports.top = function () {
+    exports.top = function ($ele, val) {
         return _middleware('top', arguments, ['scrollTop']);
     };
 
 
     /**
      * 获取、设置元素距离文档边缘的 left 距离
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.left(ele, 100);
+     * position.left($ele, 100);
      *
      * // get
-     * position.left(ele);
+     * position.left($ele);
      */
-    exports.left = function () {
+    exports.left = function ($ele, val) {
         return _middleware('left', arguments, ['scrollLeft']);
     };
 
@@ -1082,18 +1085,18 @@ define(function (require, exports, module) {
      * 获取、设置元素的占位宽度
      * content-box: cssWidth + padding + border
      * border-box:  cssWidth
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.width(ele, 100);
+     * position.width($ele, 100);
      *
      * // get
-     * position.width(ele);
+     * position.width($ele);
      */
-    exports.outerWidth = function () {
+    exports.outerWidth = function ($ele, val) {
         return _middleware('width', arguments);
     };
 
@@ -1137,6 +1140,27 @@ define(function (require, exports, module) {
         return _middleware('height', arguments, height);
     };
 
+
+    /**
+     * 返回当前文档上处于指定坐标位置最顶层的可见元素, 坐标是相对于包含该文档的浏览器窗口的左上角为原点来计算的, 通常 x 和 y 坐标都应为正数.
+     * @param clientX {Number} 元素位置x
+     * @param clientY {Number} 元素位置y
+     * @returns {HTMLElement}
+     * @ref https://github.com/moll/js-element-from-point
+     */
+    exports.getElementFromPoint = function (clientX, clientY) {
+        if(!isRelativeToViewport){
+            clientX += window.pageXOffset;
+            clientY += window.pageYOffset;
+        }
+
+        return document.elementFromPoint(clientX, clientY);
+    };
+
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////[ private ]/////////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
     /**
      * 转换字符串为驼峰格式
@@ -1325,7 +1349,7 @@ define(function (require, exports, module) {
      * 中间件
      * @param {String} key 求值类型
      * @param {Array} args 参数数组
-     * @param {Array} extraKey 额外附加
+     * @param {Array} [extraKey] 额外附加
      * @returns {Number|undefined|*}
      * @private
      */
@@ -1438,6 +1462,24 @@ define(function (require, exports, module) {
 
             return ret;
         }
+    }
+
+
+    /**
+     * 测试是否相对于视口计算
+     * @returns {boolean}
+     */
+    function _isRelativeToViewport() {
+        var x = window.pageXOffset ? window.pageXOffset + window.innerWidth - 1 : 0;
+        var y = window.pageYOffset ? window.pageYOffset + window.innerHeight - 1 : 0;
+
+        if (!x &amp;&amp; !y) {
+            return true;
+        }
+
+        // Test with a point larger than the viewport. If it returns an element,
+        // then that means elementFromPoint takes page coordinates.
+        return !document.elementFromPoint(x, y);
     }
 });</code></pre>
 

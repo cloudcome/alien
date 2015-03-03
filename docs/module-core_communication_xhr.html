@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -139,7 +139,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 2</li>
+	                    <li class="sidebar-header">Methods &times; 3</li>
 
 	                    
 	                        
@@ -156,6 +156,15 @@
 <li class="">
     
         <a class="" href="#.get">get</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.post">post</a>
     
 </li>
 
@@ -217,7 +226,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4820155680645257646059641847387" data-toggle="tab">Source</a>
+                <a href="#tab-meta-7294589420780549231505224015564" data-toggle="tab">Source</a>
             </li>
 
         
@@ -238,7 +247,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4820155680645257646059641847387">
+            <div class="tab-pane active" id="tab-meta-7294589420780549231505224015564">
                 <p><a href="core_communication_xhr.js.html#line9">core/communication/xhr.js:9</a></p>
             </div>
 
@@ -814,7 +823,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-82720830873586246106136806774884" data-toggle="tab">Source</a>
+                <a href="#tab-meta-52974298875778915000848236959428" data-toggle="tab">Source</a>
             </li>
 
         
@@ -835,8 +844,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-82720830873586246106136806774884">
-                <p><a href="core_communication_xhr.js.html#line199">core/communication/xhr.js:199</a></p>
+            <div class="tab-pane active" id="tab-meta-52974298875778915000848236959428">
+                <p><a href="core_communication_xhr.js.html#line198">core/communication/xhr.js:198</a></p>
             </div>
 
         
@@ -1002,7 +1011,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-86712710792198787948004414793104" data-toggle="tab">Source</a>
+                <a href="#tab-meta-40243222913704817532783898059279" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1023,8 +1032,196 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-86712710792198787948004414793104">
-                <p><a href="core_communication_xhr.js.html#line208">core/communication/xhr.js:208</a></p>
+            <div class="tab-pane active" id="tab-meta-40243222913704817532783898059279">
+                <p><a href="core_communication_xhr.js.html#line209">core/communication/xhr.js:209</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".post">
+        <span class="type-signature">&lt;static> </span>post<span class="signature">(url, data)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>ajax POST 请求
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">请求地址</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">请求数据</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-362319933017715844740530429407954" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-362319933017715844740530429407954">
+                <p><a href="core_communication_xhr.js.html#line224">core/communication/xhr.js:224</a></p>
             </div>
 
         

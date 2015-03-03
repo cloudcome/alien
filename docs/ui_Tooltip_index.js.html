@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -616,180 +616,167 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = ui.create({
-        STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property [zIndex=9999] {Number} 层级
-             * @property [placement="auto"] {String} 所在位置，可选：top、bottom、right、left
-             * @property [content="Hello world!"] {String} 提示内容
-             */
-            defaults: defaults
-        },
+    var Tooltip = ui.create(function (ele, options) {
+        var the = this;
 
-        constructor: function (ele, options) {
-            var the = this;
+        ele = selector.query(ele);
 
-            ele = selector.query(ele);
+        if (!ele.length) {
+            throw new Error('instance element is empty');
+        }
 
-            if (!ele.length) {
-                throw new Error('instance element is empty');
-            }
-
-            the._$ele = ele[0];
-            the._options = dato.extend(!0, {}, defaults, options);
-            the._id = alienIndex++;
-            the._init();
-        },
+        the._$ele = ele[0];
+        the._options = dato.extend(!0, {}, defaults, options);
+        the._id = alienIndex++;
+        the._init();
+    });
 
 
-        _init: function () {
-            var the = this;
-            var tooltip = tpl.render({
-                id: the._id
-            });
-            var $tooltip = modification.parse(tooltip)[0];
-            var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
+    Tooltip.fn._init = function () {
+        var the = this;
+        var tooltip = tpl.render({
+            id: the._id
+        });
+        var $tooltip = modification.parse(tooltip)[0];
+        var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
 
-            $body.innerHTML = the._options.body;
-            modification.insert($tooltip, document.body, 'beforeend');
-            the._$tooltip = $tooltip;
-            the._position(1);
-            the._position(2);
-        },
+        $body.innerHTML = the._options.body;
+        modification.insert($tooltip, document.body, 'beforeend');
+        the._$tooltip = $tooltip;
+        the._position(1);
+        the._position(2);
+    };
 
-        _position: function (times) {
-            var the = this;
-            var $ele = the._$ele;
-            var $tip = the._$tooltip;
-            var options = the._options;
-            var scrL = attribute.scrollLeft(window);
-            var scrT = attribute.scrollTop(window);
-            var eleW = attribute.outerWidth($ele);
-            var eleH = attribute.outerHeight($ele);
-            var eleL = attribute.left($ele) - scrL;
-            var eleT = attribute.top($ele) - scrT;
-            var tipW = attribute.outerWidth($tip);
-            var tipH = attribute.outerHeight($tip);
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
-            var vieW = scrL + winW;
-            var vieH = scrT + winH;
-            var at = 'top';
-            var left;
-            var top;
+    Tooltip.fn._position = function (times) {
+        var the = this;
+        var $ele = the._$ele;
+        var $tip = the._$tooltip;
+        var options = the._options;
+        var scrL = attribute.scrollLeft(window);
+        var scrT = attribute.scrollTop(window);
+        var eleW = attribute.outerWidth($ele);
+        var eleH = attribute.outerHeight($ele);
+        var eleL = attribute.left($ele) - scrL;
+        var eleT = attribute.top($ele) - scrT;
+        var tipW = attribute.outerWidth($tip);
+        var tipH = attribute.outerHeight($tip);
+        var winW = attribute.width(window);
+        var winH = attribute.height(window);
+        var vieW = scrL + winW;
+        var vieH = scrT + winH;
+        var at = 'top';
+        var left;
+        var top;
 
-            switch (options.placement) {
-                case 'auto':
-                    // 上下右左
-                    if (eleL + eleW / 2 - tipW / 2 > scrL &amp;&amp; eleT - tipH > scrT &amp;&amp; eleL + eleW / 2 + tipW / 2 &lt; vieW) {
-                        at = 'top';
-                    } else if (eleL + eleW / 2 + tipW / 2 &lt; vieW &amp;&amp; eleT + eleH + tipH &lt; vieH &amp;&amp; eleL + eleW / 2 - tipW / 2 > scrL) {
-                        at = 'bottom';
-                    } else if (eleT + eleH / 2 - tipH / 2 > scrT &amp;&amp; eleL + eleW + tipW &lt; vieW &amp;&amp; eleT + eleH / 2 + tipH / 2 &lt; vieH) {
-                        at = 'right';
-                    } else if (eleT + eleH / 2 + tipH / 2 &lt; vieH &amp;&amp; eleL - tipW > scrL &amp;&amp; eleT + eleH / 2 - tipH / 2 > scrT) {
-                        at = 'left';
-                    } else {
-                        at = 'top';
-                    }
-                    break;
-                default:
-                    at = options.placement;
-            }
+        switch (options.placement) {
+            case 'auto':
+                // 上下右左
+                if (eleL + eleW / 2 - tipW / 2 > scrL &amp;&amp; eleT - tipH > scrT &amp;&amp; eleL + eleW / 2 + tipW / 2 &lt; vieW) {
+                    at = 'top';
+                } else if (eleL + eleW / 2 + tipW / 2 &lt; vieW &amp;&amp; eleT + eleH + tipH &lt; vieH &amp;&amp; eleL + eleW / 2 - tipW / 2 > scrL) {
+                    at = 'bottom';
+                } else if (eleT + eleH / 2 - tipH / 2 > scrT &amp;&amp; eleL + eleW + tipW &lt; vieW &amp;&amp; eleT + eleH / 2 + tipH / 2 &lt; vieH) {
+                    at = 'right';
+                } else if (eleT + eleH / 2 + tipH / 2 &lt; vieH &amp;&amp; eleL - tipW > scrL &amp;&amp; eleT + eleH / 2 - tipH / 2 > scrT) {
+                    at = 'left';
+                } else {
+                    at = 'top';
+                }
+                break;
+            default:
+                at = options.placement;
+        }
 
-            switch (at) {
-                case 'top':
-                    left = eleL + eleW / 2 - tipW / 2;
-                    top = eleT - tipH;
-                    break;
-                case 'right':
-                    left = eleL + eleW;
-                    top = eleT + eleH / 2 - tipH / 2;
-                    break;
-                case 'bottom':
-                    left = eleL + eleW / 2 - tipW / 2;
-                    top = eleT + eleH;
-                    break;
-                case 'left':
-                    left = eleL - tipW;
-                    top = eleT + eleH / 2 - tipH / 2;
-                    break;
-            }
+        switch (at) {
+            case 'top':
+                left = eleL + eleW / 2 - tipW / 2;
+                top = eleT - tipH;
+                break;
+            case 'right':
+                left = eleL + eleW;
+                top = eleT + eleH / 2 - tipH / 2;
+                break;
+            case 'bottom':
+                left = eleL + eleW / 2 - tipW / 2;
+                top = eleT + eleH;
+                break;
+            case 'left':
+                left = eleL - tipW;
+                top = eleT + eleH / 2 - tipH / 2;
+                break;
+        }
 
-            the._at = at;
+        the._at = at;
 
-            if (times === 2) {
-                attribute.css($tip, 'visibility', 'visible');
-                attribute.addClass($tip, tooltipClass + '-' + at);
-                the._animate(true, function () {
-                    /**
-                     * 提示框打开之后
-                     * @event open
-                     */
-                    the.emit('open');
-                });
-            }
-
-            attribute.css($tip, {
-                left: left + scrL,
-                top: top + scrT
-            });
-        },
-
-
-        /**
-         * 动画
-         * @param isShow
-         * @param callback
-         * @private
-         */
-        _animate: function (isShow, callback) {
-            var the = this;
-            var options = the._options;
-            var at = the._at;
-            var from = {
-                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-                '(' +
-                (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
-                ')',
-                opacity: isShow ? 0 : 1
-            };
-            var to = {
-                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-                '(' +
-                (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
-                ')',
-                opacity: isShow ? 1 : 0
-            };
-            var $tip = the._$tooltip;
-
-            attribute.css($tip, from);
-            animation.animate($tip, to, {
-                duration: options.duration,
-                easing: options.easing
-            }, callback);
-        },
-
-
-        /**
-         * 销毁实例
-         * @public
-         */
-        destroy: function () {
-            var the = this;
-
-            the._animate(false, function () {
+        if (times === 2) {
+            attribute.css($tip, 'visibility', 'visible');
+            attribute.addClass($tip, tooltipClass + '-' + at);
+            the._animate(true, function () {
                 /**
-                 * 提示框关闭之后
-                 * @event close
+                 * 提示框打开之后
+                 * @event open
                  */
-                the.emit('close');
-                modification.remove(the._$tooltip);
+                the.emit('open');
             });
         }
-    });
+
+        attribute.css($tip, {
+            left: left + scrL,
+            top: top + scrT
+        });
+    };
+
+
+    /**
+     * 动画
+     * @param isShow
+     * @param callback
+     * @private
+     */
+    Tooltip.fn._animate = function (isShow, callback) {
+        var the = this;
+        var options = the._options;
+        var at = the._at;
+        var from = {
+            transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+            '(' +
+            (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
+            ')',
+            opacity: isShow ? 0 : 1
+        };
+        var to = {
+            transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+            '(' +
+            (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
+            ')',
+            opacity: isShow ? 1 : 0
+        };
+        var $tip = the._$tooltip;
+
+        attribute.css($tip, from);
+        animation.animate($tip, to, {
+            duration: options.duration,
+            easing: options.easing
+        }, callback);
+    };
+
+
+    /**
+     * 销毁实例
+     * @public
+     */
+    Tooltip.fn.destroy = function () {
+        var the = this;
+
+        the._animate(false, function () {
+            /**
+             * 提示框关闭之后
+             * @event close
+             */
+            the.emit('close');
+            modification.remove(the._$tooltip);
+        });
+    };
 
 
     /**

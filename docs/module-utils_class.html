@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -221,7 +221,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-840977529762312810929661151021719" data-toggle="tab">Source</a>
+                <a href="#tab-meta-457235447363927967075940074864775" data-toggle="tab">Source</a>
             </li>
 
         
@@ -242,7 +242,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-840977529762312810929661151021719">
+            <div class="tab-pane active" id="tab-meta-457235447363927967075940074864775">
                 <p><a href="utils_class.js.html#line9">utils/class.js:9</a></p>
             </div>
 
@@ -285,7 +285,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".create">
-        <span class="type-signature">&lt;static> </span>create<span class="signature">(property, <span class="optional">superConstructor</span>, <span class="optional">isInheritStatic</span>)</span><span class="type-signature"></span>
+        <span class="type-signature">&lt;static> </span>create<span class="signature">(constructor, <span class="optional">superConstructor</span>, <span class="optional">isInheritStatic</span>)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -334,63 +334,6 @@
 
         <tr>
             
-                <td class="name"><code>property</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
                 <td class="name"><code>constructor</code></td>
             
 
@@ -415,49 +358,12 @@
             
 
             
-
-            <td class="description last">构造函数</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>STATIC</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
+                <td class="default">
                 
                 </td>
             
 
-            
-
-            <td class="description last">静态属性</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-            </td>
+            <td class="description last">构造函数</td>
         </tr>
 
 	
@@ -551,38 +457,23 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>var Father = klass.create({
-    // 构造方法
-    constructor: function (name) {
-        this.name = name;
-    },
-    // 原型属性及方法
-    say: function () {
-        console.log('hi, i am ' + this.name);
-    },
-    // 静态属性及方法
-    STATIC: {
-        a: 1,
-        b: 2
-    }
+    <pre class="prettyprint"><code>var Father = klass.create(function(name){
+    this.name = name;
 });
 
-var Child = klass.create({
-    // 构造方法
-    constructor: function (name, age) {
-        Father.apply(this, arguments);
-        this.age = age;
-    },
-    // 原型属性及方法
-    speak: function () {
-        console.log(this.name + ' is ' + this.age);
-    },
-    // 静态属性及方法
-    STATIC:{
-        c: 3,
-        d: 4
-    }
+var pro = Father.prototype;
+
+pro.sayName = function(){
+    console.log(this.name);
+};
+
+var Child = klass.create(function(name, age){
+   this.age = age;
 }, Father, true);
+
+Child.fn.speak = function(){
+    console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
+};
 
 var f1 = new Father('Fimme');
 var c1 = new Child('Cmoo', 20);</code></pre>
@@ -609,7 +500,7 @@ var c1 = new Child('Cmoo', 20);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-1709672240540385206677479739300907" data-toggle="tab">Source</a>
+                <a href="#tab-meta-247219390468671926558001041412354" data-toggle="tab">Source</a>
             </li>
 
         
@@ -630,8 +521,8 @@ var c1 = new Child('Cmoo', 20);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-1709672240540385206677479739300907">
-                <p><a href="utils_class.js.html#line116">utils/class.js:116</a></p>
+            <div class="tab-pane active" id="tab-meta-247219390468671926558001041412354">
+                <p><a href="utils_class.js.html#line153">utils/class.js:153</a></p>
             </div>
 
         
@@ -864,7 +755,7 @@ Child.prototype = {};</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-553530775243416422652500867843628" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2331032087095081842633064137771726" data-toggle="tab">Source</a>
             </li>
 
         
@@ -885,7 +776,7 @@ Child.prototype = {};</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-553530775243416422652500867843628">
+            <div class="tab-pane active" id="tab-meta-2331032087095081842633064137771726">
                 <p><a href="utils_class.js.html#line45">utils/class.js:45</a></p>
             </div>
 

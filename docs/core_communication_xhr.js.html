@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -627,173 +627,181 @@ define(function (require, exports, module) {
         mimeType: null
     };
     var regProtocol = /^([\w-]+:)\/\//;
-    var XHR = klass.create({
-        STATIC: {},
-        constructor: function (options) {
-            var the = this;
+    var XHR = klass.create(function (options) {
+        var the = this;
 
-            Emitter.apply(the);
+        options = dato.extend(true, {}, defaults, options);
 
-            options = dato.extend(!0, {}, defaults, options);
+        var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
+        var hasCrossDomain = requestDomain &amp;&amp; requestDomain !== window.location.host;
 
-            var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
-            var hasCrossDomain = requestDomain &amp;&amp; requestDomain !== window.location.host;
-
-            if (!options.headers) {
-                options.headers = {};
-            }
-
-            if (!options.headers['x-request-with'] &amp;&amp; !hasCrossDomain) {
-                options.headers['x-request-with'] = 'XMLHttpRequest';
-            }
-
-            options.method = options.method.toUpperCase();
-
-            var xhr = new XMLHttpRequest();
-            var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
-            var oncallback = function (err, ret) {
-                if(err){
-                    err.message = err.message || 'network error';
-                }
-
-                the.emit('complete', err, ret);
-
-                if (err) {
-                    the.emit('error', err);
-                } else {
-                    the.emit('success', ret);
-                }
-
-                the.emit('finish', err, ret);
-            };
-
-            xhr.onload = function () {
-                var responseText = xhr.responseText;
-                var json;
-                var err;
-
-                // 200 - 300
-                if ((xhr.status >= 200 &amp;&amp; xhr.status &lt; 300) ||
-                        // 304
-                    xhr.status === 304 ||
-                        // file
-                    (xhr.status === 0 &amp;&amp; protocol === 'file:')) {
-                    switch (options.type) {
-                        case 'json':
-                            try {
-                                json = JSON.parse(responseText);
-                            } catch (_err) {
-                                err = _err;
-                            }
-
-                            oncallback(err, json);
-                            break;
-
-                        default:
-                            oncallback(null, responseText);
-                    }
-                } else {
-                    oncallback(new Error('response status is ' + xhr.status));
-                }
-            };
-
-            xhr.onabort = function () {
-                oncallback(new Error('transmission has aborted'));
-            };
-
-            xhr.ontimeout = function () {
-                oncallback(new Error('transmission has timeout'));
-            };
-
-            xhr.onerror = oncallback;
-
-            xhr.upload.onprogress = function (eve) {
-                eve.alienDetail = eve.alienDetail || {};
-                eve.alienDetail.complete = 0;
-                eve.alienDetail.percent = '0%';
-
-                if (eve.lengthComputable) {
-                    eve.alienDetail.complete = eve.loaded / eve.total;
-                    eve.alienDetail.percent = (eve.alienDetail.complete * 100) + '%';
-                }
-
-                the.emit(xhr, 'progress', eve);
-            };
-
-            xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
-
-            if (options.isCORS) {
-                xhr.withCredentials = true;
-            }
-
-            if (options.mimeType) {
-                xhr.overrideMimeType(options.mimeType);
-            }
-
-            // 当 data 为 formdata 时，删除 content-type header
-            if(options.data &amp;&amp; options.data.constructor === FormData){
-                delete options.headers['content-type'];
-            }
-
-            dato.each(options.headers, function (key, val) {
-                xhr.setRequestHeader(key, val);
-            });
-            xhr.send(_buildData(options));
-
-            the.xhr = xhr;
-            return the;
-        },
-        abort: function () {
-            var the = this;
-
-            the.xhr.abort();
-
-            return the;
+        if (!options.headers) {
+            options.headers = {};
         }
+
+        if (!options.headers['x-request-with'] &amp;&amp; !hasCrossDomain) {
+            options.headers['x-request-with'] = 'XMLHttpRequest';
+        }
+
+        options.method = options.method.toUpperCase();
+
+        var xhr = new XMLHttpRequest();
+        var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
+        var oncallback = function (err, ret) {
+            if (err) {
+                err.message = err.message || 'network error';
+            }
+
+            the.emit('complete', err, ret);
+
+            if (err) {
+                the.emit('error', err);
+            } else {
+                the.emit('success', ret);
+            }
+
+            the.emit('finish', err, ret);
+        };
+
+        xhr.onload = function () {
+            var responseText = xhr.responseText;
+            var json;
+            var err;
+
+            // 200 - 300
+            if ((xhr.status >= 200 &amp;&amp; xhr.status &lt; 300) ||
+                    // 304
+                xhr.status === 304 ||
+                    // file
+                (xhr.status === 0 &amp;&amp; protocol === 'file:')) {
+                switch (options.type) {
+                    case 'json':
+                        try {
+                            json = JSON.parse(responseText);
+                        } catch (_err) {
+                            err = _err;
+                        }
+
+                        oncallback(err, json);
+                        break;
+
+                    default:
+                        oncallback(null, responseText);
+                }
+            } else {
+                oncallback(new Error('response status is ' + xhr.status));
+            }
+        };
+
+        xhr.onabort = function () {
+            oncallback(new Error('transmission has aborted'));
+        };
+
+        xhr.ontimeout = function () {
+            oncallback(new Error('transmission has timeout'));
+        };
+
+        xhr.onerror = oncallback;
+
+        xhr.upload.onprogress = function (eve) {
+            eve.alienDetail = eve.alienDetail || {};
+            eve.alienDetail.complete = 0;
+            eve.alienDetail.percent = '0%';
+
+            if (eve.lengthComputable) {
+                eve.alienDetail.complete = eve.loaded / eve.total;
+                eve.alienDetail.percent = (eve.alienDetail.complete * 100) + '%';
+            }
+
+            the.emit(xhr, 'progress', eve);
+        };
+
+        xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
+
+        if (options.isCORS) {
+            xhr.withCredentials = true;
+        }
+
+        if (options.mimeType) {
+            xhr.overrideMimeType(options.mimeType);
+        }
+
+        // 当 data 为 formdata 时，删除 content-type header
+        if (options.data &amp;&amp; options.data.constructor === FormData) {
+            delete options.headers['content-type'];
+        }
+
+        dato.each(options.headers, function (key, val) {
+            xhr.setRequestHeader(key, val);
+        });
+        xhr.send(_buildData(options));
+
+        the.xhr = xhr;
+        return the;
     }, Emitter);
 
 
-    module.exports = {
-        /**
-         * ajax 请求
-         * @param {Object} [options] 配置参数
-         * @param {String} [options.url] 请求地址
-         * @param {String} [options.method] 请求方法，默认 GET
-         * @param {Object} [options.headers] 请求头
-         * @param {String} [options.type=json] 数据类型，默认 json
-         * @param {String|Object} [options.query] URL querstring
-         * @param {*} [options.data] 请求数据
-         * @param {Boolean} [options.isAsync] 是否异步，默认 true
-         * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
-         * @param {String} [options.username] 请求鉴权用户名
-         * @param {String} [options.password] 请求鉴权密码
-         *
-         * @example
-         * xhr.ajax().on('success', fn).on('error', fn);
-         */
-        ajax: function (options) {
-            return new XHR(options);
-        },
-        /**
-         * ajax GET 请求
-         * @param url {String} 请求地址
-         * @param query {String|Object} 请求参数
-         * @returns {*}
-         */
-        get: function (url, query) {
-            return this.ajax({
-                method: 'GET',
-                url: url,
-                query: query
-            });
-        },
-        post: function (url, data) {
-            return this.ajax({
-                method: 'POST',
-                url: url,
-                data: data
-            });
-        }
+    /**
+     * 中止当前请求
+     */
+    XHR.fn.abort = function () {
+        var the = this;
+
+        the.xhr.abort();
+
+        return the;
+    };
+
+
+    /**
+     * ajax 请求
+     * @param {Object} [options] 配置参数
+     * @param {String} [options.url] 请求地址
+     * @param {String} [options.method] 请求方法，默认 GET
+     * @param {Object} [options.headers] 请求头
+     * @param {String} [options.type=json] 数据类型，默认 json
+     * @param {String|Object} [options.query] URL querstring
+     * @param {*} [options.data] 请求数据
+     * @param {Boolean} [options.isAsync] 是否异步，默认 true
+     * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+     * @param {String} [options.username] 请求鉴权用户名
+     * @param {String} [options.password] 请求鉴权密码
+     *
+     * @example
+     * xhr.ajax().on('success', fn).on('error', fn);
+     */
+    exports.ajax = function (options) {
+        return new XHR(options);
+    };
+
+
+    /**
+     * ajax GET 请求
+     * @param url {String} 请求地址
+     * @param query {String|Object} 请求参数
+     * @returns {*}
+     */
+    exports.get = function (url, query) {
+        return this.ajax({
+            method: 'GET',
+            url: url,
+            query: query
+        });
+    };
+
+
+    /**
+     * ajax POST 请求
+     * @param url {String} 请求地址
+     * @param data {String|Object} 请求数据
+     * @returns {*}
+     */
+    exports.post = function (url, data) {
+        return this.ajax({
+            method: 'POST',
+            url: url,
+            data: data
+        });
     };
 
 

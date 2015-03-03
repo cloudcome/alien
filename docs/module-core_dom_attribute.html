@@ -92,19 +92,19 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Window_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -139,7 +139,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 18</li>
+	                    <li class="sidebar-header">Methods &times; 19</li>
 
 	                    
 	                        
@@ -183,6 +183,15 @@
 <li class="">
     
         <a class="" href="#.fixCss">fixCss</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.getElementFromPoint">getElementFromPoint</a>
     
 </li>
 
@@ -338,10 +347,6 @@
 
         
             
-                <blockquote class="description lead">处理有关 dom 属性的 API
-                    
-                </blockquote>
-            
 
             
 
@@ -365,7 +370,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-79745266353711495474296975880861" data-toggle="tab">Source</a>
+                <a href="#tab-meta-876426485599953843092496972531" data-toggle="tab">Source</a>
             </li>
 
         
@@ -386,7 +391,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-79745266353711495474296975880861">
+            <div class="tab-pane active" id="tab-meta-876426485599953843092496972531">
                 <p><a href="core_dom_attribute.js.html#line9">core/dom/attribute.js:9</a></p>
             </div>
 
@@ -584,7 +589,7 @@ attribute.addClass(ele, 'class1 class2');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-62190384208224719793607930187136" data-toggle="tab">Source</a>
+                <a href="#tab-meta-75489116739481695640482602175325" data-toggle="tab">Source</a>
             </li>
 
         
@@ -605,8 +610,8 @@ attribute.addClass(ele, 'class1 class2');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-62190384208224719793607930187136">
-                <p><a href="core_dom_attribute.js.html#line422">core/dom/attribute.js:422</a></p>
+            <div class="tab-pane active" id="tab-meta-75489116739481695640482602175325">
+                <p><a href="core_dom_attribute.js.html#line425">core/dom/attribute.js:425</a></p>
             </div>
 
         
@@ -838,7 +843,7 @@ attribute.attr(ele, ['href', 'title']);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-33829042292200035720414791721851" data-toggle="tab">Source</a>
+                <a href="#tab-meta-73715173942036938708336825948209" data-toggle="tab">Source</a>
             </li>
 
         
@@ -859,8 +864,8 @@ attribute.attr(ele, ['href', 'title']);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-33829042292200035720414791721851">
-                <p><a href="core_dom_attribute.js.html#line62">core/dom/attribute.js:62</a></p>
+            <div class="tab-pane active" id="tab-meta-73715173942036938708336825948209">
+                <p><a href="core_dom_attribute.js.html#line65">core/dom/attribute.js:65</a></p>
             </div>
 
         
@@ -1098,7 +1103,7 @@ attribute.css(ele, ['width','height']);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-3761816229671247780347538646311" data-toggle="tab">Source</a>
+                <a href="#tab-meta-58426618296653036990409530699253" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1119,8 +1124,8 @@ attribute.css(ele, ['width','height']);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-3761816229671247780347538646311">
-                <p><a href="core_dom_attribute.js.html#line211">core/dom/attribute.js:211</a></p>
+            <div class="tab-pane active" id="tab-meta-58426618296653036990409530699253">
+                <p><a href="core_dom_attribute.js.html#line214">core/dom/attribute.js:214</a></p>
             </div>
 
         
@@ -1357,7 +1362,7 @@ attribute.data(ele, ['abc', 'def']);
 
             
             <li class="active">
-                <a href="#tab-meta-304312532534822806310961116105318" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3047987953759737543519278988242" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1378,8 +1383,8 @@ attribute.data(ele, ['abc', 'def']);
         
         
 
-            <div class="tab-pane active" id="tab-meta-304312532534822806310961116105318">
-                <p><a href="core_dom_attribute.js.html#line330">core/dom/attribute.js:330</a></p>
+            <div class="tab-pane active" id="tab-meta-3047987953759737543519278988242">
+                <p><a href="core_dom_attribute.js.html#line333">core/dom/attribute.js:333</a></p>
             </div>
 
         
@@ -1572,7 +1577,7 @@ attribute.data(ele, ['abc', 'def']);
 
             
             <li class="active">
-                <a href="#tab-meta-74266655673272919442250323481858" data-toggle="tab">Source</a>
+                <a href="#tab-meta-434516909299418339816207198891789" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1593,8 +1598,193 @@ attribute.data(ele, ['abc', 'def']);
         
         
 
-            <div class="tab-pane active" id="tab-meta-74266655673272919442250323481858">
-                <p><a href="core_dom_attribute.js.html#line163">core/dom/attribute.js:163</a></p>
+            <div class="tab-pane active" id="tab-meta-434516909299418339816207198891789">
+                <p><a href="core_dom_attribute.js.html#line166">core/dom/attribute.js:166</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".getElementFromPoint">
+        <span class="type-signature">&lt;static> </span>getElementFromPoint<span class="signature">(clientX, clientY)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>返回当前文档上处于指定坐标位置最顶层的可见元素, 坐标是相对于包含该文档的浏览器窗口的左上角为原点来计算的, 通常 x 和 y 坐标都应为正数.
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>clientX</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">元素位置x</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>clientY</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">元素位置y</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-55192752089351429021789468824863" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-55192752089351429021789468824863">
+                <p><a href="core_dom_attribute.js.html#line576">core/dom/attribute.js:576</a></p>
             </div>
 
         
@@ -1767,7 +1957,7 @@ attribute.hasAttr(ele, 'href');
 
             
             <li class="active">
-                <a href="#tab-meta-58913860539905735248938575387001" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0277368533425033117741888016462326" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1788,8 +1978,8 @@ attribute.hasAttr(ele, 'href');
         
         
 
-            <div class="tab-pane active" id="tab-meta-58913860539905735248938575387001">
-                <p><a href="core_dom_attribute.js.html#line85">core/dom/attribute.js:85</a></p>
+            <div class="tab-pane active" id="tab-meta-0277368533425033117741888016462326">
+                <p><a href="core_dom_attribute.js.html#line88">core/dom/attribute.js:88</a></p>
             </div>
 
         
@@ -1960,7 +2150,7 @@ attribute.hasAttr(ele, 'href');
 
             
             <li class="active">
-                <a href="#tab-meta-228916416410356767829564404673874" data-toggle="tab">Source</a>
+                <a href="#tab-meta-96239136904478075107463314197958" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1981,8 +2171,8 @@ attribute.hasAttr(ele, 'href');
         
         
 
-            <div class="tab-pane active" id="tab-meta-228916416410356767829564404673874">
-                <p><a href="core_dom_attribute.js.html#line461">core/dom/attribute.js:461</a></p>
+            <div class="tab-pane active" id="tab-meta-96239136904478075107463314197958">
+                <p><a href="core_dom_attribute.js.html#line464">core/dom/attribute.js:464</a></p>
             </div>
 
         
@@ -2180,7 +2370,7 @@ attribute.html(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-18395693833008409021667687920853496" data-toggle="tab">Source</a>
+                <a href="#tab-meta-072439694544300446039567864499986" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2201,8 +2391,8 @@ attribute.html(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-18395693833008409021667687920853496">
-                <p><a href="core_dom_attribute.js.html#line375">core/dom/attribute.js:375</a></p>
+            <div class="tab-pane active" id="tab-meta-072439694544300446039567864499986">
+                <p><a href="core_dom_attribute.js.html#line378">core/dom/attribute.js:378</a></p>
             </div>
 
         
@@ -2228,7 +2418,7 @@ attribute.html(ele);</code></pre>
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".left">
-        <span class="type-signature">&lt;static> </span>left<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>left<span class="signature">($ele, <span class="optional">val</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -2275,7 +2465,7 @@ attribute.html(ele);</code></pre>
 
         <tr>
             
-                <td class="name"><code>ele</code></td>
+                <td class="name"><code>$ele</code></td>
             
 
             <td class="type">
@@ -2376,10 +2566,10 @@ attribute.html(ele);</code></pre>
             <h5>Example</h5>
             
     <pre class="prettyprint"><code>// set
-position.left(ele, 100);
+position.left($ele, 100);
 
 // get
-position.left(ele);</code></pre>
+position.left($ele);</code></pre>
 
         
 
@@ -2403,7 +2593,7 @@ position.left(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-93559152772650128526126656215638" data-toggle="tab">Source</a>
+                <a href="#tab-meta-228884011274203668291570891160518" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2424,8 +2614,8 @@ position.left(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-93559152772650128526126656215638">
-                <p><a href="core_dom_attribute.js.html#line501">core/dom/attribute.js:501</a></p>
+            <div class="tab-pane active" id="tab-meta-228884011274203668291570891160518">
+                <p><a href="core_dom_attribute.js.html#line504">core/dom/attribute.js:504</a></p>
             </div>
 
         
@@ -2628,7 +2818,7 @@ position.height(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-86335453367792077836751958820969" data-toggle="tab">Source</a>
+                <a href="#tab-meta-76552943582646559585753495339304" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2649,8 +2839,8 @@ position.height(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-86335453367792077836751958820969">
-                <p><a href="core_dom_attribute.js.html#line551">core/dom/attribute.js:551</a></p>
+            <div class="tab-pane active" id="tab-meta-76552943582646559585753495339304">
+                <p><a href="core_dom_attribute.js.html#line554">core/dom/attribute.js:554</a></p>
             </div>
 
         
@@ -2676,7 +2866,7 @@ position.height(ele);</code></pre>
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".outerWidth">
-        <span class="type-signature">&lt;static> </span>outerWidth<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>outerWidth<span class="signature">($ele, <span class="optional">val</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -2725,7 +2915,7 @@ border-box:  cssWidth
 
         <tr>
             
-                <td class="name"><code>ele</code></td>
+                <td class="name"><code>$ele</code></td>
             
 
             <td class="type">
@@ -2826,10 +3016,10 @@ border-box:  cssWidth
             <h5>Example</h5>
             
     <pre class="prettyprint"><code>// set
-position.width(ele, 100);
+position.width($ele, 100);
 
 // get
-position.width(ele);</code></pre>
+position.width($ele);</code></pre>
 
         
 
@@ -2853,7 +3043,7 @@ position.width(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-9776503625325859015682351076975465" data-toggle="tab">Source</a>
+                <a href="#tab-meta-108158120186999441525194295682013" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2874,8 +3064,8 @@ position.width(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-9776503625325859015682351076975465">
-                <p><a href="core_dom_attribute.js.html#line521">core/dom/attribute.js:521</a></p>
+            <div class="tab-pane active" id="tab-meta-108158120186999441525194295682013">
+                <p><a href="core_dom_attribute.js.html#line524">core/dom/attribute.js:524</a></p>
             </div>
 
         
@@ -3107,7 +3297,7 @@ attribute.prop(ele, ['hi', 'ha']);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-41560724214650692431876165792346" data-toggle="tab">Source</a>
+                <a href="#tab-meta-665489587699994412045709369704127" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3128,8 +3318,8 @@ attribute.prop(ele, ['hi', 'ha']);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-41560724214650692431876165792346">
-                <p><a href="core_dom_attribute.js.html#line137">core/dom/attribute.js:137</a></p>
+            <div class="tab-pane active" id="tab-meta-665489587699994412045709369704127">
+                <p><a href="core_dom_attribute.js.html#line140">core/dom/attribute.js:140</a></p>
             </div>
 
         
@@ -3303,7 +3493,7 @@ attribute.removeAttr(ele, 'href');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-45283455611206594277168642729521" data-toggle="tab">Source</a>
+                <a href="#tab-meta-73310882854275427705541905015707" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3324,8 +3514,8 @@ attribute.removeAttr(ele, 'href');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-45283455611206594277168642729521">
-                <p><a href="core_dom_attribute.js.html#line103">core/dom/attribute.js:103</a></p>
+            <div class="tab-pane active" id="tab-meta-73310882854275427705541905015707">
+                <p><a href="core_dom_attribute.js.html#line106">core/dom/attribute.js:106</a></p>
             </div>
 
         
@@ -3522,7 +3712,7 @@ attribute.removeClass(ele, 'class1 class2');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-820902364794164939547117007896304" data-toggle="tab">Source</a>
+                <a href="#tab-meta-210587561130523686373512933496386" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3543,8 +3733,8 @@ attribute.removeClass(ele, 'class1 class2');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-820902364794164939547117007896304">
-                <p><a href="core_dom_attribute.js.html#line443">core/dom/attribute.js:443</a></p>
+            <div class="tab-pane active" id="tab-meta-210587561130523686373512933496386">
+                <p><a href="core_dom_attribute.js.html#line446">core/dom/attribute.js:446</a></p>
             </div>
 
         
@@ -3748,7 +3938,7 @@ attribute.scrollLeft(ele, 100);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-908164826920256701266529969871" data-toggle="tab">Source</a>
+                <a href="#tab-meta-7763533005490899009429601486772299" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3769,8 +3959,8 @@ attribute.scrollLeft(ele, 100);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-908164826920256701266529969871">
-                <p><a href="core_dom_attribute.js.html#line292">core/dom/attribute.js:292</a></p>
+            <div class="tab-pane active" id="tab-meta-7763533005490899009429601486772299">
+                <p><a href="core_dom_attribute.js.html#line295">core/dom/attribute.js:295</a></p>
             </div>
 
         
@@ -3974,7 +4164,7 @@ attribute.scrollTop(ele, 100);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-59130882006138562592346810270101" data-toggle="tab">Source</a>
+                <a href="#tab-meta-25081106321886181529641253873706" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3995,8 +4185,8 @@ attribute.scrollTop(ele, 100);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-59130882006138562592346810270101">
-                <p><a href="core_dom_attribute.js.html#line265">core/dom/attribute.js:265</a></p>
+            <div class="tab-pane active" id="tab-meta-25081106321886181529641253873706">
+                <p><a href="core_dom_attribute.js.html#line268">core/dom/attribute.js:268</a></p>
             </div>
 
         
@@ -4194,7 +4384,7 @@ attribute.text(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-57447809935547418721102171111852" data-toggle="tab">Source</a>
+                <a href="#tab-meta-651717446045958305726652033627" data-toggle="tab">Source</a>
             </li>
 
         
@@ -4215,8 +4405,8 @@ attribute.text(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-57447809935547418721102171111852">
-                <p><a href="core_dom_attribute.js.html#line400">core/dom/attribute.js:400</a></p>
+            <div class="tab-pane active" id="tab-meta-651717446045958305726652033627">
+                <p><a href="core_dom_attribute.js.html#line403">core/dom/attribute.js:403</a></p>
             </div>
 
         
@@ -4242,7 +4432,7 @@ attribute.text(ele);</code></pre>
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".top">
-        <span class="type-signature">&lt;static> </span>top<span class="signature">(ele, <span class="optional">val</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>top<span class="signature">($ele, <span class="optional">val</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -4289,7 +4479,7 @@ attribute.text(ele);</code></pre>
 
         <tr>
             
-                <td class="name"><code>ele</code></td>
+                <td class="name"><code>$ele</code></td>
             
 
             <td class="type">
@@ -4390,10 +4580,10 @@ attribute.text(ele);</code></pre>
             <h5>Example</h5>
             
     <pre class="prettyprint"><code>// set
-position.top(ele, 100);
+position.top($ele, 100);
 
 // get
-position.top(ele);</code></pre>
+position.top($ele);</code></pre>
 
         
 
@@ -4417,7 +4607,7 @@ position.top(ele);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-960125678684562443850648822262883" data-toggle="tab">Source</a>
+                <a href="#tab-meta-092841843608766817767120408825576" data-toggle="tab">Source</a>
             </li>
 
         
@@ -4438,8 +4628,8 @@ position.top(ele);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-960125678684562443850648822262883">
-                <p><a href="core_dom_attribute.js.html#line483">core/dom/attribute.js:483</a></p>
+            <div class="tab-pane active" id="tab-meta-092841843608766817767120408825576">
+                <p><a href="core_dom_attribute.js.html#line486">core/dom/attribute.js:486</a></p>
             </div>
 
         
