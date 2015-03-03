@@ -16,22 +16,18 @@ define(function (require, exports, module) {
     var dato = require('../util/dato.js');
     var Emitter = require('./Emitter.js');
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
-    var Weixin = klass.create({
-        constructor: function (config, shareData) {
-            var the = this;
+    var Weixin = klass.create(function (config, shareData) {
+        var the = this;
 
-            Emitter.apply(the, arguments);
-            the._config = dato.extend({
-                jsApiList: jsApiList
-            }, config);
-            wx.config(the._config);
-            the._shareData = shareData;
-            the._init();
-        }
+        the._config = dato.extend({
+            jsApiList: jsApiList
+        }, config);
+        wx.config(the._config);
+        the._shareData = shareData;
+        the._init();
     }, Emitter);
-    var pro = Weixin.prototype;
 
-    pro._init = function () {
+    Weixin.fn._init = function () {
         var the = this;
 
         the._initEvent();
@@ -39,7 +35,7 @@ define(function (require, exports, module) {
         return the;
     };
 
-    pro._initEvent = function () {
+    Weixin.fn._initEvent = function () {
         var the = this;
 
         // success：接口调用成功时执行的回调函数。
@@ -117,7 +113,7 @@ define(function (require, exports, module) {
                     the.emit('complete', res);
                 });
             });
-            
+
             //绑定‘分享到朋友圈’按钮
             WeixinJSBridge.on('menu:share:timeline', function (argv) {
                 WeixinJSBridge.invoke('shareTimeline', {
@@ -129,7 +125,7 @@ define(function (require, exports, module) {
                     the.emit('complete', res);
                 });
             });
-            
+
             //绑定‘分享到微博’按钮
             WeixinJSBridge.on('menu:share:weibo', function (argv) {
                 WeixinJSBridge.invoke('shareWeibo', {
@@ -146,9 +142,8 @@ define(function (require, exports, module) {
     /**
      * 设置分享给朋友的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setShareAppMessage = function (shareData) {
+    Weixin.fn.setShareAppMessage = function (shareData) {
         var the = this;
 
         the._shareAppMessageData = shareData;
@@ -159,9 +154,8 @@ define(function (require, exports, module) {
     /**
      * 设置分享到朋友圈的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setShareTimeLineData = function (shareData) {
+    Weixin.fn.setShareTimeLineData = function (shareData) {
         var the = this;
 
         the._shareTimeLineData = shareData;
@@ -171,9 +165,8 @@ define(function (require, exports, module) {
     /**
      * 设置分享到 QQ 的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setShareQQData = function (shareData) {
+    Weixin.fn.setShareQQData = function (shareData) {
         var the = this;
 
         the._shareQQData = shareData;
@@ -184,9 +177,8 @@ define(function (require, exports, module) {
     /**
      * 设置分享到微博的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setShareWeiboAppData = function (shareData) {
+    Weixin.fn.setShareWeiboAppData = function (shareData) {
         var the = this;
 
         the._shareWeiboAppData = shareData;
@@ -197,9 +189,8 @@ define(function (require, exports, module) {
     /**
      * 设置收藏的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setFavoriteData = function (shareData) {
+    Weixin.fn.setFavoriteData = function (shareData) {
         var the = this;
 
         the._favoriteData = shareData;
@@ -210,18 +201,17 @@ define(function (require, exports, module) {
     /**
      * 设置分享到 facebook 的数据
      * @param shareData
-     * @returns {Weixin}
      */
-    pro.setFacebookData = function (shareData) {
+    Weixin.fn.setFacebookData = function (shareData) {
         var the = this;
 
         the._shareFacebookData = shareData;
         return the;
     };
 
-    
-    pro.wx = wx;
-    
+
+    Weixin.fn.wx = wx;
+
 
     /**
      * 配置微信 JS SDK

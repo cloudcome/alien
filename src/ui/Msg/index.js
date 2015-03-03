@@ -46,196 +46,195 @@ define(function (require, exports, module) {
         easing: 'ease-in-out-back',
         zIndex: null
     };
-    var Msg = ui.create({
-        constructor: function (options) {
-            var the = this;
+    var Msg = ui.create(function (options) {
+        var the = this;
 
-            if (typeis.string(options)) {
-                options = {
-                    content: options
-                };
-            }
+        if (typeis.string(options)) {
+            options = {
+                content: options
+            };
+        }
 
-            the._options = dato.extend(true, {}, defaults, options);
-            the._options.buttons = the._options.buttons || [];
-            the.id = alienIndex++;
-            the._init();
-        },
+        the._options = dato.extend(true, {}, defaults, options);
+        the._options.buttons = the._options.buttons || [];
+        the.id = alienIndex++;
+        the._init();
 
 
-        _init: function () {
-            var the = this;
+    });
 
-            the._initNode();
-            the._initEvent();
+    Msg.fn._init = function () {
+        var the = this;
 
-            if (the._mask) {
-                the._mask.open();
-            }
+        the._initNode();
+        the._initEvent();
 
-            the._window.open();
+        if (the._mask) {
+            the._mask.open();
+        }
 
-            if (the._options.timeout) {
-                setTimeout(the.destroy.bind(the), the._options.timeout);
-            }
+        the._window.open();
 
-            return the;
-        },
+        if (the._options.timeout) {
+            setTimeout(the.destroy.bind(the), the._options.timeout);
+        }
+
+        return the;
+    };
 
 
-        _initNode: function () {
-            var the = this;
-            var options = the._options;
+    Msg.fn._initNode = function () {
+        var the = this;
+        var options = the._options;
 
-            if (options.isModal) {
-                the._mask = new Mask(window, {
-                    addClass: alienClass + '-bg ' + options.addClass,
-                    zIndex: options.zIndex
-                });
-                the._mask.__msg = the;
-                the._$mask = the._mask.getNode();
-            }
-
-            the._window = new Window(null, {
-                parentNode: the._mask ? the._$mask : $body,
-                width: options.width,
-                height: options.height,
-                left: options.left,
-                top: options.top,
-                duration: options.duration,
-                easing: options.easing,
-                zIndex: options.zIndex,
-                addClass: options.isModal ? '' : options.addClass
+        if (options.isModal) {
+            the._mask = new Mask(window, {
+                addClass: alienClass + '-bg ' + options.addClass,
+                zIndex: options.zIndex
             });
-            the._$window = the._window.getNode();
+            the._mask.__msg = the;
+            the._$mask = the._mask.getNode();
+        }
 
-            var html = tpl.render({
-                id: the.id,
-                title: options.title,
-                canDrag: options.canDrag,
-                windowId: the._$window.id,
-                body: options.content,
-                buttons: options.buttons
-            });
-            var node = modification.parse(html)[0];
-            var nodes = selector.query('.j-flag', node);
+        the._window = new Window(null, {
+            parentNode: the._mask ? the._$mask : $body,
+            width: options.width,
+            height: options.height,
+            left: options.left,
+            top: options.top,
+            duration: options.duration,
+            easing: options.easing,
+            zIndex: options.zIndex,
+            addClass: options.isModal ? '' : options.addClass
+        });
+        the._$window = the._window.getNode();
 
-            modification.insert(node, the._$window);
-            attribute.css(the._$window, {
-                width: options.width,
-                height: options.height
-            });
-            the._$msg = node;
-            the._$header = nodes[0];
-            the._$title = nodes[1];
-            the._$close = nodes[2];
-            the._$body = nodes[3];
-            the._$buttons = nodes[4];
-        },
+        var html = tpl.render({
+            id: the.id,
+            title: options.title,
+            canDrag: options.canDrag,
+            windowId: the._$window.id,
+            body: options.content,
+            buttons: options.buttons
+        });
+        var node = modification.parse(html)[0];
+        var nodes = selector.query('.j-flag', node);
+
+        modification.insert(node, the._$window);
+        attribute.css(the._$window, {
+            width: options.width,
+            height: options.height
+        });
+        the._$msg = node;
+        the._$header = nodes[0];
+        the._$title = nodes[1];
+        the._$close = nodes[2];
+        the._$body = nodes[3];
+        the._$buttons = nodes[4];
+    };
 
 
-        _initEvent: function () {
-            var the = this;
+    Msg.fn._initEvent = function () {
+        var the = this;
 
-            // 关闭 msg
-            event.on(the._$close, 'click', function () {
-                the.destroy();
-            });
+        // 关闭 msg
+        event.on(the._$close, 'click', function () {
+            the.destroy();
+        });
 
-            // 点击按钮
-            event.on(the._$buttons, 'click', '.j-flag', function () {
-                var index = attribute.data(this, 'index');
+        // 点击按钮
+        event.on(the._$buttons, 'click', '.j-flag', function () {
+            var index = attribute.data(this, 'index');
 
+            /**
+             * 消息框被关闭后
+             * @event close
+             * @param index {Number} 选择的按钮索引
+             */
+            the.emit('close', index);
+            the.destroy();
+        });
+
+        if (the._mask) {
+            // esc
+            the._mask.on('esc', function () {
                 /**
-                 * 消息框被关闭后
-                 * @event close
-                 * @param index {Number} 选择的按钮索引
+                 * 当前消息框被按 ESC 后
+                 * @event esc
                  */
-                the.emit('close', index);
-                the.destroy();
+                if (the.emit('esc') !== false) {
+                    the.shake();
+                }
             });
 
-            if (the._mask) {
-                // esc
-                the._mask.on('esc', function () {
-                    /**
-                     * 当前消息框被按 ESC 后
-                     * @event esc
-                     */
-                    if (the.emit('esc') !== false) {
-                        the.shake();
-                    }
-                });
-
-                // hitbg
-                the._mask.on('hit', function () {
-                    /**
-                     * 当前消息框被触碰背景后
-                     * @event hitbg
-                     */
-                    if (the.emit('hitbg') !== false) {
-                        the.shake();
-                    }
-                });
-            }
-        },
-
-
-        /**
-         * 设置 Msg 标题
-         * @param title {String} 对话框标题
-         */
-        setTitle: function (title) {
-            var the = this;
-
-            the._$title.innerHTML = title;
-
-            return the;
-        },
-
-
-        /**
-         * 设置 Msg 内容
-         * @param html {String} 对话框内容
-         */
-        setContent: function (html) {
-            var the = this;
-
-            the._$body.innerHTML = html;
-            the._window.resize();
-
-            return the;
-        },
-
-        /**
-         * 震晃窗口以示提醒
-         */
-        shake: function () {
-            var the = this;
-
-            the._window.shake();
-
-            return the;
-        },
-
-
-        /**
-         * 销毁实例
-         */
-        destroy: function () {
-            var the = this;
-
-            the._window.destroy(function () {
-                event.un(the._$close, 'click');
-                event.un(the._$buttons, 'click');
-                event.un(the._$mask, 'click');
-
-                if (the._mask) {
-                    the._mask.destroy();
+            // hitbg
+            the._mask.on('hit', function () {
+                /**
+                 * 当前消息框被触碰背景后
+                 * @event hitbg
+                 */
+                if (the.emit('hitbg') !== false) {
+                    the.shake();
                 }
             });
         }
-    });
+    };
+
+
+    /**
+     * 设置 Msg 标题
+     * @param title {String} 对话框标题
+     */
+    Msg.fn.setTitle = function (title) {
+        var the = this;
+
+        the._$title.innerHTML = title;
+
+        return the;
+    };
+
+
+    /**
+     * 设置 Msg 内容
+     * @param html {String} 对话框内容
+     */
+    Msg.fn.setContent = function (html) {
+        var the = this;
+
+        the._$body.innerHTML = html;
+        the._window.resize();
+
+        return the;
+    };
+
+    /**
+     * 震晃窗口以示提醒
+     */
+    Msg.fn.shake = function () {
+        var the = this;
+
+        the._window.shake();
+
+        return the;
+    };
+
+
+    /**
+     * 销毁实例
+     */
+    Msg.fn.destroy = function () {
+        var the = this;
+
+        the._window.destroy(function () {
+            event.un(the._$close, 'click');
+            event.un(the._$buttons, 'click');
+            event.un(the._$mask, 'click');
+
+            if (the._mask) {
+                the._mask.destroy();
+            }
+        });
+    };
 
     /**
      * 实例化一个 Msg 交互框

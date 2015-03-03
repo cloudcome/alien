@@ -28,11 +28,8 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var Animation = klass.create({
-        constructor: function () {
+    var Animation = klass.create(function () {
             var the = this;
-
-            Emitter.call(the);
 
             /**
              * 队列列表
@@ -47,21 +44,7 @@ define(function (require, exports, module) {
              * @private
              */
             the._queueIndex = 0;
-        }
     }, Emitter);
-    var pro = Animation.prototype;
-    //var arrPro = ['push', 'pop', 'unshift', 'shift', 'slice', 'splice'];
-    //
-    //arrPro.forEach(function (prop) {
-    //    /**
-    //     * 添加、删除动画
-    //     * @param css
-    //     * @param options
-    //     */
-    //    pro[prop] = function (css, options) {
-    //
-    //    };
-    //});
 
 
     /**
@@ -70,7 +53,7 @@ define(function (require, exports, module) {
      * @param to
      * @param options
      */
-    pro.push = function ($ele, to, options) {
+    Animation.fn.push = function ($ele, to, options) {
         this._queueList.push({
             $eles: selector.query($ele),
             to: to,
@@ -79,7 +62,7 @@ define(function (require, exports, module) {
     };
 
 
-    //pro.index = function (index) {
+    //Animation.fn.index = function (index) {
     //
     //};
 
@@ -89,7 +72,7 @@ define(function (require, exports, module) {
      * @param [repeatTimes=1] {Number} 重复次数
      * @param [callback] {Function} 执行完毕回调
      */
-    pro.start = function (repeatTimes, callback) {
+    Animation.fn.start = function (repeatTimes, callback) {
         var the = this;
         var args = arguments;
 
@@ -138,12 +121,12 @@ define(function (require, exports, module) {
             });
     };
 
-    //pro.pause = function () {
+    //Animation.fn.pause = function () {
     //
     //};
     //
     //
-    //pro.stop = function () {
+    //Animation.fn.stop = function () {
     //
     //};
 

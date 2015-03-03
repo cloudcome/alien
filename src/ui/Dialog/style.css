@@ -46,13 +46,13 @@
     text-align: center;
     cursor: pointer;
     font: normal normal normal 30px/32px Arial;
-    -webkit-transition: all .3s;
-    transition: all .3s;
+    -webkit-transition: all .2s;
+    transition: all .2s;
 }
 
 .alien-ui-dialog-close:hover {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
     color: #555;
 }
 

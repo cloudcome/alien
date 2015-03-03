@@ -1608,21 +1608,18 @@ define(function (require, exports, module) {
      * var Prettify = require('ui/prettify.js');
      * var pf = new Prettify('pre');
      */
-    module.exports = ui.create({
-        STATIC: {},
-        constructor: function ($pre) {
-            var the = this;
+    module.exports = ui.create(function ($pre) {
+        var the = this;
 
-            the._options = {};
-            the._$pres = selector.query($pre);
-            attribute.addClass(the._$pres, 'prettyprint');
-            $prettyPrint(function () {
-                /**
-                 * 代码美化完毕后
-                 * @event done
-                 */
-                the.emit('done');
-            });
-        }
+        the._options = {};
+        the._$pres = selector.query($pre);
+        attribute.addClass(the._$pres, 'prettyprint');
+        $prettyPrint(function () {
+            /**
+             * 代码美化完毕后
+             * @event done
+             */
+            the.emit('done');
+        });
     });
 });

@@ -37,116 +37,101 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = ui.create({
-        STATIC: {
-            /**
-             * 默认配置
-             * @name defaults
-             * @property [max=1] {Number} 分页总数
-             * @property [page=1] {Number} 当前分数
-             * @property [size=3] {Number} 分页可见范围
-             */
-            defaults: defaults
-        },
+    var Pagination = ui.create(function ($parent, options) {
+        var the = this;
 
 
-        constructor: function ($parent, options) {
-            var the = this;
+        the._$ele = selector.query($parent);
 
-
-            the._$ele = selector.query($parent);
-
-            if (!the._$ele.length) {
-                throw new Error('instance element is empty');
-            }
-
-            the._$ele = the._$ele[0];
-            the._options = dato.extend(!0, {}, defaults, options);
-            the._init();
-        },
-
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-
-            attribute.addClass(the._$ele, the._options.addClass);
-            the._initEvent();
-            the.render();
-
-            return the;
-        },
-
-
-        /**
-         * 初始化事件
-         * @private
-         */
-        _initEvent: function () {
-            var the = this;
-
-            event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
-        },
-
-
-        /**
-         * 翻页回调
-         * @param eve
-         * @private
-         */
-        _onpage: function (eve) {
-            var the = this;
-            var page = attribute.data(eve.target, 'page');
-
-            page = dato.parseInt(page, 1);
-
-            if (page !== the._options.page) {
-                the._options.page = page;
-
-                /**
-                 * 页码变化后
-                 * @event change
-                 * @param page {Number} 变化后的页码
-                 */
-                the.emit('change', page);
-            }
-        },
-
-
-        /**
-         * 渲染
-         * @param {Object} [data] 分页数据
-         * @param {Number} [data.max] 重新配置总页数，默认为上一次配置的值
-         * @param {Number} [data.page] 重新配置当前页数，默认为上一次配置的值
-         * @param {Number} [data.size] 重新配置可视范围，默认为上一次配置的值
-         * @returns {Pagination}
-         */
-        render: function (data) {
-            var the = this;
-            var options = dato.extend(the._options, data);
-            var list = new libsPagination(options);
-
-            the._$ele.innerHTML = tpl.render(dato.extend(options, {
-                pagination: list
-            }));
-
-            return the;
-        },
-
-
-        /**
-         * 销毁
-         */
-        destroy: function () {
-            var the = this;
-
-            event.un(the._$ele, 'click tap', the._onpage);
-            the._$ele.innerHTML = '';
+        if (!the._$ele.length) {
+            throw new Error('instance element is empty');
         }
+
+        the._$ele = the._$ele[0];
+        the._options = dato.extend(!0, {}, defaults, options);
+        the._init();
     });
+
+    /**
+     * 初始化
+     * @private
+     */
+    Pagination.fn._init = function () {
+        var the = this;
+
+        attribute.addClass(the._$ele, the._options.addClass);
+        the._initEvent();
+        the.render();
+
+        return the;
+    };
+
+
+    /**
+     * 初始化事件
+     * @private
+     */
+    Pagination.fn._initEvent = function () {
+        var the = this;
+
+        event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
+    };
+
+
+    /**
+     * 翻页回调
+     * @param eve
+     * @private
+     */
+    Pagination.fn._onpage = function (eve) {
+        var the = this;
+        var page = attribute.data(eve.target, 'page');
+
+        page = dato.parseInt(page, 1);
+
+        if (page !== the._options.page) {
+            the._options.page = page;
+
+            /**
+             * 页码变化后
+             * @event change
+             * @param page {Number} 变化后的页码
+             */
+            the.emit('change', page);
+        }
+    };
+
+
+    /**
+     * 渲染
+     * @param {Object} [data] 分页数据
+     * @param {Number} [data.max] 重新配置总页数，默认为上一次配置的值
+     * @param {Number} [data.page] 重新配置当前页数，默认为上一次配置的值
+     * @param {Number} [data.size] 重新配置可视范围，默认为上一次配置的值
+     * @returns {Pagination}
+     */
+    Pagination.fn.render = function (data) {
+        var the = this;
+        var options = dato.extend(the._options, data);
+        var list = new libsPagination(options);
+
+        the._$ele.innerHTML = tpl.render(dato.extend(options, {
+            pagination: list
+        }));
+
+        return the;
+    };
+
+
+    /**
+     * 销毁
+     */
+    Pagination.fn.destroy = function () {
+        var the = this;
+
+        event.un(the._$ele, 'click tap', the._onpage);
+        the._$ele.innerHTML = '';
+    };
 
     modification.importStyle(style);
 

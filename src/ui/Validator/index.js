@@ -14,6 +14,8 @@ define(function (require, exports, module) {
     var ui = require('../base.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
+    var style = require('css!./style.css');
     var see = require('../../core/dom/see.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
@@ -23,7 +25,7 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-validator';
     var udf;
     var inputSelector = 'input,select,textarea';
-    var formItemStatusClass = 'has-error has-success';
+    var formItemStatusClass = 'has-error has-success has-warning';
     var noop = function () {
         // ignore
     };
@@ -38,278 +40,251 @@ define(function (require, exports, module) {
         validateEvent: 'focusout',
         successMsg: null
     };
-    var Validator = ui.create({
-        STATIC: {
-            /**
-             * 注册自定义的静态验证规则
-             * @param options {Object} 规则配置
-             * @param fn {Function} 规则方法
-             * @param [isOverride=false] 是否覆盖已有规则
-             *
-             * @example
-             * // 添加一个检查后缀的自定义规则
-             * Validator.registerRule({
-             *     name: 'suffix',
-             *     type: 'array'
-             * }, function(suffix, val, next){
-             *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
-             *     var boolean = suffix.indexOf(sf) > -1;
-             *
-             *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-             * });
-             */
-            registerRule: function (options, fn, isOverride) {
-                customRulesList.push(arguments);
-            }
-        },
-        /**
-         * 构造函数
-         * @param $form
-         * @param options
-         */
-        constructor: function ($form, options) {
-            var the = this;
+    var Validator = ui.create(function ($form, options) {
+        var the = this;
 
-            the._$form = selector.query($form)[0];
-            the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
+        the._$form = selector.query($form)[0];
+        the._options = dato.extend(true, {}, defaults, options);
+        the._init();
+    });
 
 
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
+    /**
+     * 初始化
+     * @private
+     */
+    Validator.fn._init = function () {
+        var the = this;
 
-            the.id = alienIndex++;
-            the._nameRuleMap = {};
-            the._initRule();
-            the._initCustomRules();
-            the._initEvent();
+        the.id = alienIndex++;
+        the._nameRuleMap = {};
+        the._initRule();
+        the._initCustomRules();
+        the._initEvent();
 
-            return the;
-        },
-
-
-        /**
-         * 添加自定义规则
-         * 添加到实例上，避免污染
-         * @private
-         */
-        _initCustomRules: function () {
-            var the = this;
-
-            dato.each(customRulesList, function (index, args) {
-                the._validator.registerRule.apply(the._validator, args);
-            });
-        },
+        return the;
+    };
 
 
-        /**
-         * 初始化验证规则
-         * @private
-         */
-        _initRule: function () {
-            var the = this;
-            var options = the._options;
-            var $inputs = selector.query(inputSelector, the._$form);
-            var typeArray = ['url', 'email', 'number', 'string'];
+    /**
+     * 添加自定义规则
+     * 添加到实例上，避免污染
+     * @private
+     */
+    Validator.fn._initCustomRules = function () {
+        var the = this;
 
-            attribute.addClass(the._$form, alienClass);
-            the._validator = new Vldor();
-            the._nameItemMap = {};
-            the._nameMsgMap = {};
-            the._nameInputMap = {};
-            dato.each($inputs, function (index, $input) {
-                var name = $input.name;
-
-                if (!name) {
-                    return;
-                }
-
-                var id = $input.id;
-                var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
-                var $formItem = selector.closest($input, options.formItemSelector)[0];
-                var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
-                var rule = attribute.data($input, options.dataRuleAttr);
-                var msg = attribute.data($input, options.dataMessageAttr);
-                var type = attribute.attr($input, 'type');
-                var standar = {
-                    name: name,
-                    msg: msg,
-                    maxLength: $input.maxLength,
-                    min: dato.parseInt($input.min, udf),
-                    max: dato.parseInt($input.max, udf),
-                    step: dato.parseInt($input.step, udf),
-                    required: $input.required,
-                    type: typeArray.indexOf(type) > -1 ? type : 'string'
-                };
-
-                // regexp
-                if ($input.pattern) {
-                    try {
-                        standar.regexp = new RegExp($input.pattern);
-                    } catch (err) {
-                        // ignore
-                    }
-                }
-
-                // 验证前置
-                rule.onbefore = function (val, data) {
-                    var self = this;
-
-                    if (self.equalName) {
-                        var equalRule = the._nameRuleMap[self.equalName];
-
-                        self.equal = the._getVal(self.equalName);
-                        self.msg.equal = self.msg.equal || self.alias +
-                        (equalRule ? '必须与' + equalRule.alias + '相同' : '不正确');
-                    }
-
-                    return val;
-                };
-
-                dato.extend(true, rule, standar);
-                rule.alias = rule.alias || ($label ? $label.innerText.trim().replace(REG_END_MAO, '') : udf);
-                the._validator.pushRule(rule);
-                the._nameItemMap[name] = $formItem;
-                the._nameMsgMap[name] = $formMsg;
-                the._nameInputMap[name] = $input;
-                the._nameRuleMap[name] = rule;
-            });
-        },
+        dato.each(customRulesList, function (index, args) {
+            the._validator.registerRule.apply(the._validator, args);
+        });
+    };
 
 
-        /**
-         * 初始化事件
-         * @private
-         */
-        _initEvent: function () {
-            var the = this;
-            var options = the._options;
+    /**
+     * 初始化验证规则
+     * @private
+     */
+    Validator.fn._initRule = function () {
+        var the = this;
+        var options = the._options;
+        var $inputs = selector.query(inputSelector, the._$form);
+        var typeArray = ['url', 'email', 'number', 'string'];
 
-            if (options.validateEvent) {
-                event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
-            }
-
-            event.on(the._$form, 'tap click', 'input[type=submit],button', the._onsubmit.bind(the));
-        },
-
-
-        /**
-         * 正在验证
-         * @param eve
-         * @private
-         */
-        _onvalidate: function (eve) {
-            var the = this;
-            var $input = eve.target;
+        attribute.addClass(the._$form, alienClass);
+        the._validator = new Vldor();
+        the._nameItemMap = {};
+        the._nameMsgMap = {};
+        the._nameInputMap = {};
+        dato.each($inputs, function (index, $input) {
             var name = $input.name;
 
-            the.validateOne(name);
-        },
-
-
-        /**
-         * 提交验证
-         * @param eve
-         * @private
-         */
-        _onsubmit: function (eve) {
-            var $ele = eve.target;
-            var $btn = selector.closest($ele, 'button')[0] || $ele;
-
-            if ($btn.type !== 'submit' || $btn.disabled || attribute.hasClass($btn, 'disabled')) {
+            if (!name) {
                 return;
             }
 
-            this.validateAll();
-            eve.preventDefault();
-        },
+            var id = $input.id;
+            var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
+            var $formItem = selector.closest($input, options.formItemSelector)[0];
+            var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
+            var rule = attribute.data($input, options.dataRuleAttr);
+            var msg = attribute.data($input, options.dataMessageAttr);
+            var type = attribute.attr($input, 'type');
+            var standar = {
+                name: name,
+                msg: msg,
+                maxLength: $input.maxLength,
+                min: dato.parseInt($input.min, udf),
+                max: dato.parseInt($input.max, udf),
+                step: dato.parseInt($input.step, udf),
+                required: $input.required,
+                type: typeArray.indexOf(type) > -1 ? type : 'string'
+            };
 
+            attribute.data($formMsg, 'original', $formMsg.innerHTML);
 
-        /**
-         * 获取输入框的值
-         * @param name
-         * @private
-         */
-        _getVal: function (name) {
-            var $input = this._nameInputMap[name];
-
-            if (!$input) {
-                return udf;
+            // regexp
+            if ($input.pattern) {
+                try {
+                    standar.regexp = new RegExp($input.pattern);
+                } catch (err) {
+                    // ignore
+                }
             }
 
-            var type = $input.type;
-            var multiple = $input.multiple;
-            var tagName = $input.tagName.toLowerCase();
-            var val;
+            // 验证前置
+            rule.onbefore = function (val, data) {
+                var self = this;
 
-            type = tagName === 'select' || tagName === 'textarea' ? tagName : type;
+                if (self.equalName) {
+                    var equalRule = the._nameRuleMap[self.equalName];
 
-            switch (type) {
-                case 'checkbox':
+                    self.equal = the._getVal(self.equalName);
+                    self.msg.equal = self.msg.equal || self.alias +
+                    (equalRule ? '必须与' + equalRule.alias + '相同' : '不正确');
+                }
+
+                return val;
+            };
+
+            dato.extend(true, rule, standar);
+            rule.alias = rule.alias || ($label ? $label.innerText.trim().replace(REG_END_MAO, '') : udf);
+            the._validator.pushRule(rule);
+            the._nameItemMap[name] = $formItem;
+            the._nameMsgMap[name] = $formMsg;
+            the._nameInputMap[name] = $input;
+            the._nameRuleMap[name] = rule;
+        });
+    };
+
+
+    /**
+     * 初始化事件
+     * @private
+     */
+    Validator.fn._initEvent = function () {
+        var the = this;
+        var options = the._options;
+
+        if (options.validateEvent) {
+            event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
+        }
+
+        event.on(the._$form, 'tap click', 'input[type=submit],button', the._onsubmit.bind(the));
+    };
+
+
+    /**
+     * 正在验证
+     * @param eve
+     * @private
+     */
+    Validator.fn._onvalidate = function (eve) {
+        var the = this;
+        var $input = eve.target;
+        var name = $input.name;
+
+        the.validateOne(name);
+    };
+
+
+    /**
+     * 提交验证
+     * @param eve
+     * @private
+     */
+    Validator.fn._onsubmit = function (eve) {
+        var $ele = eve.target;
+        var $btn = selector.closest($ele, 'button')[0] || $ele;
+
+        if ($btn.type !== 'submit' || $btn.disabled || attribute.hasClass($btn, 'disabled')) {
+            return;
+        }
+
+        this.validateAll();
+        eve.preventDefault();
+    };
+
+
+    /**
+     * 获取输入框的值
+     * @param name
+     * @private
+     */
+    Validator.fn._getVal = function (name) {
+        var $input = this._nameInputMap[name];
+
+        if (!$input) {
+            return udf;
+        }
+
+        var type = $input.type;
+        var multiple = $input.multiple;
+        var tagName = $input.tagName.toLowerCase();
+        var val;
+
+        type = tagName === 'select' || tagName === 'textarea' ? tagName : type;
+
+        switch (type) {
+            case 'checkbox':
+                val = [];
+                dato.each(selector.query('input[name=' + name + '][type=checkbox]:checked'), function (index, $checkbox) {
+                    val.push($checkbox.value);
+                });
+                break;
+
+            case 'radio':
+                $input = selector.query('input[name=' + name + '][type=radio]:checked')[0];
+                val = $input ? $input.value : udf;
+                break;
+
+            case 'select':
+                if (multiple) {
                     val = [];
-                    dato.each(selector.query('input[name=' + name + '][type=checkbox]:checked'), function (index, $checkbox) {
-                        val.push($checkbox.value);
+                    dato.each(selector.query('select[name=' + name + '] > option:selected'), function (index, $option) {
+                        val.push($option.value);
                     });
-                    break;
-
-                case 'radio':
-                    $input = selector.query('input[name=' + name + '][type=radio]:checked')[0];
+                } else {
+                    $input = selector.query('select[name=' + name + ']')[0];
                     val = $input ? $input.value : udf;
-                    break;
+                }
+                break;
 
-                case 'select':
-                    if (multiple) {
-                        val = [];
-                        dato.each(selector.query('select[name=' + name + '] > option:selected'), function (index, $option) {
-                            val.push($option.value);
-                        });
-                    } else {
-                        $input = selector.query('select[name=' + name + ']')[0];
-                        val = $input ? $input.value : udf;
-                    }
-                    break;
+            default:
+                val = $input.value;
+        }
 
-                default:
-                    val = $input.value;
-            }
-
-            return val;
-        },
+        return val;
+    };
 
 
-        /**
-         * 添加单个验证规则
-         * @param {Object}     rule 验证规则对象
-         * @param {String}     rule.name                数据字段名称【必须】
-         * @param {String}     rule.type                数据类型【必须】
-         * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
-         * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
-         * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
-         * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
-         * @param {Boolean}    [rule.required]          验证规则：是否必填
-         * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
-         * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
-         * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
-         * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
-         * @param {*}          [rule.equal]             验证规则：全等于指定值
-         * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
-         * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
-         * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
-         * @param {Object}     [rule.msg]               验证出错的消息
-         * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
-         *
-         * @example
-         * validator.pushRule({
+    /**
+     * 添加单个验证规则
+     * @param {Object}     rule 验证规则对象
+     * @param {String}     rule.name                数据字段名称【必须】
+     * @param {String}     rule.type                数据类型【必须】
+     * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
+     * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
+     * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
+     * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
+     * @param {Boolean}    [rule.required]          验证规则：是否必填
+     * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
+     * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
+     * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
+     * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
+     * @param {*}          [rule.equal]             验证规则：全等于指定值
+     * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
+     * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
+     * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
+     * @param {Object}     [rule.msg]               验证出错的消息
+     * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
+     *
+     * @example
+     * validator.pushRule({
          *    // 字段名称，必须，唯一性
          *    name: 'username',
          *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
@@ -375,138 +350,156 @@ define(function (require, exports, module) {
          *        return val + 'abc';
          *    }
          * });
-         */
-        pushRule: function (rule, isOverride) {
-            var the = this;
+     */
+    Validator.fn.pushRule = function (rule, isOverride) {
+        var the = this;
 
-            the._validator.pushRule(rule, isOverride);
+        the._validator.pushRule(rule, isOverride);
 
-            return the;
-        },
+        return the;
+    };
 
+
+    /**
+     * 触发表单消息
+     * @param name {String} 需要验证的表单 name
+     * @param message {String} 消息
+     * @param [type="error"] 消息类型
+     */
+    Validator.fn.emitMsg = function (name, message, type) {
+        var the = this;
+        var $formItem = the._nameItemMap[name];
+        var $formMsg = the._nameMsgMap[name];
+
+        if ($formMsg) {
+            $formMsg.innerHTML = message;
+        }
+
+        attribute.removeClass($formItem, formItemStatusClass);
+        attribute.addClass($formItem, 'has-' + type);
+
+        return the;
+    };
+
+
+    /**
+     * 单个验证
+     * @param name {String} 需要验证的表单 name
+     * @param [callback] {Function} 回调
+     */
+    Validator.fn.validateOne = function (name, callback) {
+        var the = this;
+        var data = {};
+        var $input = the._nameInputMap[name];
+
+        callback = typeis.function(callback) ? callback : noop;
+        data[name] = the._getVal(name);
 
         /**
-         * 触发表单消息
-         * @param name {String} 需要验证的表单 name
-         * @param message {String} 消息
-         * @param [type="error"] 消息类型
+         * 表单项目验证之前回调
+         * @event validateonebefore
+         * @param $input {HTMLElement}
          */
-        emitMsg: function (name, message, type) {
-            var the = this;
-            var $formItem = the._nameItemMap[name];
-            var $formMsg = the._nameMsgMap[name];
-
-            if ($formMsg) {
-                $formMsg.innerHTML = message;
-            }
-
-            attribute.removeClass($formItem, formItemStatusClass);
-            attribute.addClass($formItem, 'has-' + type);
-
-            if (the._options.successMsg === null) {
-                see.visibility($formMsg, type === 'success' ? 'hidden' : 'visible');
-            } else {
-                see.visibility($formMsg, 'visible');
-            }
-
-            return the;
-        },
-
-
-        /**
-         * 单个验证
-         * @param name {String} 需要验证的表单 name
-         * @param [callback] {Function} 回调
-         */
-        validateOne: function (name, callback) {
-            var the = this;
-            var data = {};
-            var $input = the._nameInputMap[name];
-
-            callback = typeis.function(callback) ? callback : noop;
-            data[name] = the._getVal(name);
-
+        the.emit('validateonebefore', $input);
+        the._validator.validateOne(data, function (err) {
             /**
-             * 表单项目验证之前回调
-             * @event validateonebefore
+             * 表单项目验证之后回调
+             * @event validateoneafter
              * @param $input {HTMLElement}
              */
-            the.emit('validateonebefore', $input);
-            the._validator.validateOne(data, function (err) {
-                /**
-                 * 表单项目验证之后回调
-                 * @event validateoneafter
-                 * @param $input {HTMLElement}
-                 */
-                the.emit('validateoneafter', $input);
-                the.emitMsg(name, err ? err.message : the._options.successMsg, err ? 'error' : 'success');
-                callback.apply(this, arguments);
-            });
+            the.emit('validateoneafter', $input);
+            the.emitMsg(name, err ? err.message : this.rules[name].msg.success || the._options.successMsg, err ? 'error' : 'success');
+            callback.apply(this, arguments);
+        });
 
-            return the;
-        },
+        return the;
+    };
 
+
+    /**
+     * 全部验证
+     * @param [callback] {Function} 回调
+     */
+    Validator.fn.validateAll = function (callback) {
+        var the = this;
+        var data = {};
+
+        dato.each(the._nameItemMap, function (name, $item) {
+            attribute.removeClass($item, formItemStatusClass);
+        });
+
+        callback = typeis.function(callback) ? callback : noop;
+
+        dato.each(the._nameInputMap, function (name) {
+            data[name] = the._getVal(name);
+        });
 
         /**
-         * 全部验证
-         * @param [callback] {Function} 回调
+         * 表单所有项目验证之前回调
+         * @event validateallbefore
+         * @param $form {HTMLElement} 表单
+         * @param errs {Array|null} 错误消息数组
          */
-        validateAll: function (callback) {
-            var the = this;
-            var data = {};
+        the.emit('validateallbefore', the._$form);
+        the._validator.validateAll(data, function (errs) {
+            var self = this;
 
-            callback = typeis.function(callback) ? callback : noop;
-            dato.each(the._nameInputMap, function (name) {
-                data[name] = the._getVal(name);
-            });
+            callback.apply(self, arguments);
 
             /**
-             * 表单所有项目验证之前回调
-             * @event validateallbefore
+             * 表单所有项目验证之后回调
+             * @event validateallafter
              * @param $form {HTMLElement} 表单
              * @param errs {Array|null} 错误消息数组
              */
-            the.emit('validateallbefore', the._$form);
-            the._validator.validateAll(data, function (errs) {
-                callback.apply(this, arguments);
+            the.emit('validateallafter', the._$form, errs);
 
-                /**
-                 * 表单所有项目验证之后回调
-                 * @event validateallafter
-                 * @param $form {HTMLElement} 表单
-                 * @param errs {Array|null} 错误消息数组
-                 */
-                the.emit('validateallafter', the._$form, errs);
-
-                if (!errs) {
-                    return;
+            dato.each(the._nameInputMap, function (name) {
+                if (errs && errs[name]) {
+                    the.emitMsg(name, errs[name].message, 'error');
+                } else {
+                    the.emitMsg(name, self.rules[name].msg.success || the._options.successMsg, 'success');
                 }
-
-                dato.each(the._nameInputMap, function (name) {
-                    if (errs[name]) {
-                        the.emitMsg(name, errs[name].message, 'error');
-                    } else {
-                        the.emitMsg(name, the._options.successMsg, 'success');
-                    }
-                });
             });
+        });
 
-            return the;
-        },
+        return the;
+    };
 
 
-        /**
-         * 销毁实例
-         */
-        destroy: function () {
-            var the = this;
+    /**
+     * 销毁实例
+     */
+    Validator.fn.destroy = function () {
+        var the = this;
 
-            attribute.removeClass(the._nameItemMap, formItemStatusClass);
-            event.un(the._$form, the._options.validateEvent, the._onvalidate);
-            event.un(the._$form, 'tap click', the._onsubmit);
-            attribute.removeClass(the._$form, alienClass);
-        }
-    });
+        attribute.removeClass(the._nameItemMap, formItemStatusClass);
+        event.un(the._$form, the._options.validateEvent, the._onvalidate);
+        event.un(the._$form, 'tap click', the._onsubmit);
+        attribute.removeClass(the._$form, alienClass);
+    };
+
+    /**
+     * 注册自定义的静态验证规则
+     * @param options {Object} 规则配置
+     * @param fn {Function} 规则方法
+     * @param [isOverride=false] 是否覆盖已有规则
+     *
+     * @example
+     * // 添加一个检查后缀的自定义规则
+     * Validator.registerRule({
+     *     name: 'suffix',
+     *     type: 'array'
+     * }, function(suffix, val, next){
+     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+     *     var boolean = suffix.indexOf(sf) > -1;
+     *
+     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+     * });
+     */
+    Validator.registerRule = function (options, fn, isOverride) {
+        customRulesList.push(arguments);
+    };
 
 
     /**
@@ -538,6 +531,7 @@ define(function (require, exports, module) {
      * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
      */
     module.exports = Validator;
+    modification.importStyle(style);
 
     Validator.registerRule({
         name: 'suffix',

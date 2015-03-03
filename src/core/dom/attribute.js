@@ -7,7 +7,6 @@
 
 define(function (require, exports, module) {
     /**
-     * 处理有关 dom 属性的 API
      * @module core/dom/attribute
      * @requires utils/dato
      * @requires utils/typeis
@@ -39,7 +38,11 @@ define(function (require, exports, module) {
     var width = innerWidth.concat(['paddingLeft', 'paddingRight']);
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
-    var alienKey = 'alien-core-dom-attribute-';
+    //var alienKey = 'alien-core-dom-attribute-';
+    var isRelativeToViewport = _isRelativeToViewport();
+
+
+
     /**
      * 设置、获取元素的属性
      * @param {HTMLElement|Node} ele 元素
@@ -51,9 +54,9 @@ define(function (require, exports, module) {
      * // set
      * attribute.attr(ele, 'href', 'http://ydr.me');
      * attribute.attr(ele, {
-         *    href: '',
-         *    title: ''
-         * });
+     *    href: '',
+     *    title: ''
+     * });
      *
      * // get
      * attribute.attr(ele, 'href');
@@ -469,36 +472,36 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 top 距离
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.top(ele, 100);
+     * position.top($ele, 100);
      *
      * // get
-     * position.top(ele);
+     * position.top($ele);
      */
-    exports.top = function () {
+    exports.top = function ($ele, val) {
         return _middleware('top', arguments, ['scrollTop']);
     };
 
 
     /**
      * 获取、设置元素距离文档边缘的 left 距离
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.left(ele, 100);
+     * position.left($ele, 100);
      *
      * // get
-     * position.left(ele);
+     * position.left($ele);
      */
-    exports.left = function () {
+    exports.left = function ($ele, val) {
         return _middleware('left', arguments, ['scrollLeft']);
     };
 
@@ -507,18 +510,18 @@ define(function (require, exports, module) {
      * 获取、设置元素的占位宽度
      * content-box: cssWidth + padding + border
      * border-box:  cssWidth
-     * @param {HTMLElement|Node} ele
+     * @param {HTMLElement|Node} $ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
      * @example
      * // set
-     * position.width(ele, 100);
+     * position.width($ele, 100);
      *
      * // get
-     * position.width(ele);
+     * position.width($ele);
      */
-    exports.outerWidth = function () {
+    exports.outerWidth = function ($ele, val) {
         return _middleware('width', arguments);
     };
 
@@ -562,6 +565,27 @@ define(function (require, exports, module) {
         return _middleware('height', arguments, height);
     };
 
+
+    /**
+     * 返回当前文档上处于指定坐标位置最顶层的可见元素, 坐标是相对于包含该文档的浏览器窗口的左上角为原点来计算的, 通常 x 和 y 坐标都应为正数.
+     * @param clientX {Number} 元素位置x
+     * @param clientY {Number} 元素位置y
+     * @returns {HTMLElement}
+     * @ref https://github.com/moll/js-element-from-point
+     */
+    exports.getElementFromPoint = function (clientX, clientY) {
+        if(!isRelativeToViewport){
+            clientX += window.pageXOffset;
+            clientY += window.pageYOffset;
+        }
+
+        return document.elementFromPoint(clientX, clientY);
+    };
+
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////[ private ]/////////////////////////////
+    ////////////////////////////////////////////////////////////////////
 
     /**
      * 转换字符串为驼峰格式
@@ -750,7 +774,7 @@ define(function (require, exports, module) {
      * 中间件
      * @param {String} key 求值类型
      * @param {Array} args 参数数组
-     * @param {Array} extraKey 额外附加
+     * @param {Array} [extraKey] 额外附加
      * @returns {Number|undefined|*}
      * @private
      */
@@ -863,5 +887,23 @@ define(function (require, exports, module) {
 
             return ret;
         }
+    }
+
+
+    /**
+     * 测试是否相对于视口计算
+     * @returns {boolean}
+     */
+    function _isRelativeToViewport() {
+        var x = window.pageXOffset ? window.pageXOffset + window.innerWidth - 1 : 0;
+        var y = window.pageYOffset ? window.pageYOffset + window.innerHeight - 1 : 0;
+
+        if (!x && !y) {
+            return true;
+        }
+
+        // Test with a point larger than the viewport. If it returns an element,
+        // then that means elementFromPoint takes page coordinates.
+        return !document.elementFromPoint(x, y);
     }
 });
