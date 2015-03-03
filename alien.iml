@@ -6,5 +6,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="alien node_modules" level="project" />
+    <orderEntry type="library" name="alien" level="application" />
+    <orderEntry type="library" name="coolie.js" level="application" />
   </component>
 </module>

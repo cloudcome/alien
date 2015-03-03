@@ -9,18 +9,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var Validator = require('/src/ui/Validator/');
-    var v1 = new Validator('#form', {
-        successMsg: null
-    });
+    var v1 = new Validator('#form');
     var $submit = document.getElementById('submit');
-
-    //Validator.registerRule({
-    //    name: 'upperFirst',
-    //    type: 'string',
-    //    fn: function () {
-    //
-    //    }
-    //});
 
     v1.pushRule({
         name: 'username',
@@ -40,6 +30,10 @@ define(function (require, exports, module) {
                 next();
             }, 1000);
         }
+    });
+
+    v1.on('validateonebefore', function ($item) {
+        console.log($item);
     });
 
     v1.on('validateallbefore', function ($form) {

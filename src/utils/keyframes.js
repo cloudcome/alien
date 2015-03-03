@@ -58,9 +58,4 @@ define(function (require, exports, module) {
 
         return name;
     };
-
-
-    function _toObjString(obj) {
-
-    }
 });

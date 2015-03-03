@@ -19,6 +19,7 @@ define(function (require, exports, module) {
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
     var howdo = require('../utils/howdo.js');
+    var Emitter = require('./Emitter.js');
     var types = 'string,number,email,url,boolean'.split(',');
     var noop = function () {
         // ignore
@@ -66,6 +67,8 @@ define(function (require, exports, module) {
 
         constructor: function (options) {
             var the = this;
+
+            Emitter.call(the);
             // 规则列表，有顺序之分
             the._ruleList = [];
             // 已经存在的验证规则
@@ -299,7 +302,7 @@ define(function (require, exports, module) {
 
             howdo.each(the._ruleList, function (key, rule, next) {
                 the._validateOne(rule, data, function (err) {
-                    if (!isBreakOnInvalid) {
+                    if (!isBreakOnInvalid && err) {
                         errList.push(err);
                     }
 
@@ -613,7 +616,7 @@ define(function (require, exports, module) {
                 onover();
             }
         }
-    });
+    }, Emitter);
 
     module.exports = Validator;
 

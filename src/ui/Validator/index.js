@@ -478,12 +478,8 @@ define(function (require, exports, module) {
                  */
                 the.emit('validateallafter', the._$form, errs);
 
-                if (!errs) {
-                    return;
-                }
-
                 dato.each(the._nameInputMap, function (name) {
-                    if (errs[name]) {
+                    if (errs && errs[name]) {
                         the.emitMsg(name, errs[name].message, 'error');
                     } else {
                         the.emitMsg(name, the._options.successMsg, 'success');
