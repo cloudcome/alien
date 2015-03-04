@@ -32,15 +32,15 @@ define(function (require, exports, module) {
         }
     });
 
-    v1.on('validateonebefore', function ($item) {
+    v1.on('validateonestart', function ($item) {
         console.log($item);
     });
 
-    v1.on('validateallbefore', function ($form) {
+    v1.on('validateallstart', function ($form) {
         $submit.disabled = true;
     });
 
-    v1.on('validateallafter', function ($form) {
+    v1.on('validateallend', function ($form) {
         $submit.disabled = false;
     });
 });

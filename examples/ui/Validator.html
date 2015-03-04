@@ -34,7 +34,7 @@
                       pattern="^[a-zA-Z][\w.]{4,11}$"
                       data-validator="{alias: '用户名', minLength: 4, suffix: ['.abc', '.def']}"
                       data-msg="{minLength: '用户名不能少于4个字符'}"/></p>
-            <p class="form-msg">表单消息。</p>
+            <p class="form-msg">开头为字母，长度为<b>4-11</b>位的字母、数字、点组合，后缀为“.abc”或“.def”。</p>
         </li>
 
         <li class="form-item">
@@ -44,7 +44,7 @@
                       data-validator="{minLength: 4}"
                       id="password"
                       data-msg="{minLength: '密码不能少于4个字符',success: '密码填写对了哦'}"/></p>
-            <p class="form-msg">表单消息。</p>
+            <p class="form-msg">最小4位，最长12位。</p>
         </li>
 
         <li class="form-item">
@@ -54,7 +54,7 @@
                       data-validator="{equalName: 'password'}"
                       id="password2"
                       data-msg=""/></p>
-            <p class="form-msg"></p>
+            <p class="form-msg">确认密码。</p>
         </li>
 
         <li>
