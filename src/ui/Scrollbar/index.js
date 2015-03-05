@@ -85,7 +85,6 @@ define(function (require, exports, module) {
 
     /**
      * 初始化
-     * @returns {Scrollbar}
      */
     Scrollbar.fn._init = function () {
         var the = this;
@@ -133,29 +132,35 @@ define(function (require, exports, module) {
             the._isTextarea = isTextarea;
             the._thumbXOffset = 3;
             the._thumbYOffset = 3;
-            the.resize();
             the._initEvent();
         } else {
             attribute.css($parent, {
                 overflow: 'auto !important'
             });
+            the._$scroll = isTextarea ? $ele : $parent;
+
+            if (isTextarea) {
+                attribute.css($ele, {
+                    overflow: 'auto !important'
+                });
+            }
         }
 
+        the.resize();
         return the;
     };
 
 
     /**
      * 更新当前框架尺寸
-     * @returns {Scrollbar}
      */
     Scrollbar.fn.resize = function () {
         var the = this;
 
         the._trigger = true;
+        the._calScrollSize();
 
         if (isPlaceholderScroll) {
-            the._calScrollSize();
             the._calTrackSize();
             the._scrollX();
             the._scrollY();
@@ -202,6 +207,11 @@ define(function (require, exports, module) {
      */
     Scrollbar.fn._calTrackSize = function () {
         var the = this;
+
+        if (!isPlaceholderScroll) {
+            return the;
+        }
+
         var $trackX = the._$trackX;
         var $thumbX = the._$thumbX;
         var $trackY = the._$trackY;
@@ -502,7 +512,6 @@ define(function (require, exports, module) {
 
     /**
      * x 轴滚动
-     * @returns {Scrollbar}
      */
     Scrollbar.fn._scrollX = function () {
         var the = this;
@@ -561,7 +570,6 @@ define(function (require, exports, module) {
 
     /**
      * y 轴滚动
-     * @returns {Scrollbar}
      */
     Scrollbar.fn._scrollY = function () {
         var the = this;
