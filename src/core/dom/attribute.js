@@ -38,9 +38,8 @@ define(function (require, exports, module) {
     var width = innerWidth.concat(['paddingLeft', 'paddingRight']);
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
-    //var alienKey = 'alien-core-dom-attribute-';
+    //var alienKey = '-alien-core-dom-attribute-';
     var isRelativeToViewport = _isRelativeToViewport();
-
 
 
     /**
@@ -363,6 +362,17 @@ define(function (require, exports, module) {
 
 
     /**
+     * 移除元素的数据集
+     * @param $ele {HTMLElement|Node} 元素
+     * @param key {String} 键
+     * @returns {*}
+     */
+    exports.removeData = function ($ele, key) {
+        return exports.removeAttr($ele, 'data-' + key);
+    };
+
+
+    /**
      * 设置、获取元素的innerHTML
      * @param {HTMLElement|Node} ele 元素
      * @param {String}      [html] html字符串
@@ -574,7 +584,7 @@ define(function (require, exports, module) {
      * @ref https://github.com/moll/js-element-from-point
      */
     exports.getElementFromPoint = function (clientX, clientY) {
-        if(!isRelativeToViewport){
+        if (!isRelativeToViewport) {
             clientX += window.pageXOffset;
             clientY += window.pageYOffset;
         }
