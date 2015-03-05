@@ -31,7 +31,7 @@ define(function (require, exports, module) {
 
         wait = wait || 123;
 
-        if (typeis(isExecAtFirstTime) === 'undefined') {
+        if (typeis.undefined(isExecAtFirstTime)) {
             isExecAtFirstTime = true;
         }
 
@@ -70,7 +70,7 @@ define(function (require, exports, module) {
 
         wait = wait || 123;
 
-        if (typeis(isExecAtFirstTime) === 'undefined') {
+        if (typeis.undefined(isExecAtFirstTime)) {
             isExecAtFirstTime = true;
         }
 

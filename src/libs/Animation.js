@@ -29,21 +29,21 @@ define(function (require, exports, module) {
         // ignore
     };
     var Animation = klass.create(function () {
-            var the = this;
+        var the = this;
 
-            /**
-             * 队列列表
-             * @type {Array}
-             * @private
-             */
-            the._queueList = [];
+        /**
+         * 队列列表
+         * @type {Array}
+         * @private
+         */
+        the._queueList = [];
 
-            /**
-             * 当前队列索引
-             * @type {number}
-             * @private
-             */
-            the._queueIndex = 0;
+        /**
+         * 当前队列索引
+         * @type {number}
+         * @private
+         */
+        the._queueIndex = 0;
     }, Emitter);
 
 
@@ -86,6 +86,12 @@ define(function (require, exports, module) {
         var repeatQueue = [];
         repeatQueue.length = repeatTimes;
 
+        /**
+         * 动画开始时
+         * @event start
+         */
+        the.emit('start');
+
         howdo
             .each(repeatQueue, function (i, u, next) {
                 howdo
@@ -97,11 +103,17 @@ define(function (require, exports, module) {
                             to = dato.extend({}, queue.options, {
                                 name: queue.to
                             });
-                            
+
                             howdo.each(queue.$eles, function (k, $ele, done) {
                                 animation.keyframes($ele, to, done);
                             }).together(function () {
                                 next();
+                                /**
+                                 * 动画发生变化时
+                                 * @event change
+                                 * @prarm index {Number} 动画索引
+                                 * @prarm times {Number} 动画重复次数
+                                 */
                                 the.emit('change', j, i + 1);
                             });
                         } else {
@@ -109,6 +121,12 @@ define(function (require, exports, module) {
                                 animation.animate($ele, queue.to, queue.options, done);
                             }).together(function () {
                                 next();
+                                /**
+                                 * 动画发生变化时
+                                 * @event change
+                                 * @prarm index {Number} 动画索引
+                                 * @prarm times {Number} 动画重复次数
+                                 */
                                 the.emit('change', j, i + 1);
                             });
                         }
@@ -116,6 +134,10 @@ define(function (require, exports, module) {
                     .follow(next);
             })
             .follow(function () {
+                /**
+                 * 动画结束时
+                 * @event end
+                 */
                 the.emit('end');
                 callback.call(the);
             });
@@ -134,10 +156,11 @@ define(function (require, exports, module) {
     /**
      * 创建一系列动画
      * @example
-     * var qe = new Queue();
-     * qe.push(function(){
+     * var an = new Animation();
+     * an.push(function(){
      *
      * });
+     * an.start();
      */
     module.exports = Animation;
 });
