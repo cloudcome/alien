@@ -16,9 +16,9 @@ define(function (require) {
     var $banner = document.getElementById('banner');
     var $nav = document.getElementById('nav');
     var banner = new Banner('#banner', {
-        width: Math.min(window.innerWidth, 300),
+        width: window.innerWidth,
         height: 200,
-        axis: '-y',
+        axis: '+x',
         interval: 1000,
         isAutoPlay: false,
         navGenerator: function (index, length) {

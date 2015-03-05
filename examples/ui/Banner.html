@@ -49,6 +49,7 @@
             background: #f5f5f5;
             padding: 20px;
             margin: 10px;
+            overflow-x: auto;
         }
 
         #banner li{
@@ -111,13 +112,13 @@
 <hr/>
 <pre>
 var banner = new Banner('#banner', {
-    width: Math.min(window.innerWidth, 300),
+    width: window.innerWidth,
     height: 200,
-    axis: '-y',
+    axis: '+x',
     interval: 1000,
     isAutoPlay: false,
     navGenerator: function (index, length) {
-        return '&ltli data-index="' + index + '"&gt;' + (index + 1) + '/' + length + '&lt;/li&gt;';
+        return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
     },
     $navParent: $nav,
     index: 2

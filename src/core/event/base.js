@@ -465,7 +465,8 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     dato.each(isCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (listener.call(the, eve) === false) {
+                        // 需要在此时判断 listener，有可能该 listener 已经被解除绑定
+                        if (typeis.function(listener) && listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();
@@ -492,7 +493,8 @@ define(function (require, exports, module) {
                     var eventType = eve.type;
 
                     dato.each(unCaptureActualListeners[domId][eventType], function (index, listener) {
-                        if (listener.call(the, eve) === false) {
+                        // 需要在此时判断 listener，有可能该 listener 已经被解除绑定
+                        if (typeis.function(listener) && listener.call(the, eve) === false) {
                             try {
                                 eve.preventDefault();
                                 eve.stopPropagation();
