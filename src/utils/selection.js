@@ -71,7 +71,8 @@ define(function (require, exports) {
 
     /**
      * 获取光标所在的坐标
-     * @param $ele
+     * @param $ele {Object} 元素
+     * @returns {Array}
      */
     exports.getOffset = function ($ele) {
         if ($ele && $ele.setSelectionRange) {
