@@ -65,7 +65,5 @@ define(function (require, exports, module) {
         });
     };
 
-    module.exports = function (options) {
-        return new Lazy(options);
-    };
+    module.exports = Lazy;
 });
