@@ -68,59 +68,6 @@ define(function (require, exports, module) {
 
 
 
-    //exports.create = function (property, superConstructor, isInheritStatic) {
-    //    var type = typeis(property);
-    //    var constructorType;
-    //    var superConstructorType = typeis(superConstructor);
-    //    var STATIC;
-    //
-    //    if (type !== 'object') {
-    //        throw new Error('property must be an object');
-    //    }
-    //
-    //    // 必须有构造函数
-    //    if (!property.hasOwnProperty('constructor')) {
-    //        throw new Error('property must be have a `constructor` function');
-    //    }
-    //
-    //    constructorType = typeis(property.constructor);
-    //
-    //    if (constructorType !== 'function') {
-    //        throw new Error('property `constructor` must be a function');
-    //    }
-    //
-    //    if (superConstructorType !== 'undefined' && superConstructorType === 'function') {
-    //        exports.inherit(property.constructor, superConstructor, isInheritStatic);
-    //    }
-    //
-    //    STATIC = property.STATIC || {};
-    //    delete(property.STATIC);
-    //
-    //    // 必须静态对象
-    //    if (typeis(STATIC) !== 'object') {
-    //        throw new Error('constructor static property must be an object');
-    //    }
-    //
-    //    // 不能重写静态`super_`属性，保留字段
-    //    if (STATIC.super_) {
-    //        throw new Error('unable to rewrite constructor static property `super_` value');
-    //    }
-    //
-    //    // 添加静态方法、属性
-    //    dato.each(STATIC, function (key, val) {
-    //        if (key !== 'prototype' && key !== 'constructor') {
-    //            property.constructor[key] = val;
-    //        }
-    //    });
-    //
-    //    // 添加原型链方法、属性
-    //    dato.each(property, function (key, val) {
-    //        property.constructor.prototype[key] = val;
-    //    });
-    //
-    //    return property.constructor;
-    //};
-
 
     /**
      * 创建一个类（构造函数）
