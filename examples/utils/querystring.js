@@ -3,5 +3,5 @@ define(function (require) {
 
     var qs = require('/src/utils/querystring.js');
 
-    window.qs = qs;
+    debugger;
 });

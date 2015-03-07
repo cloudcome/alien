@@ -12,6 +12,10 @@ define(function (require, exports, module) {
     'use strict';
 
     var typeis = require('./typeis.js');
+    var compatible = require('../core/navigator/compatible.js');
+    // MutationObserver 给开发者们提供了一种能在某个范围内的 DOM 树发生变化时作出适当反应的能力.
+    // 该 API 设计用来替换掉在 DOM3 事件规范中引入的 Mutation 事件.
+    var MutationObserver = compatible.html5('MutationObserver', window);
 
     /**
      * 至少间隔一段时间执行
@@ -156,8 +160,39 @@ define(function (require, exports, module) {
         context = context || window;
         args = args || [];
 
-        setTimeout(function () {
+        var $doc = document;
+        var $body = $doc.body;
+        var fn = exports.once(function () {
             callback.apply(context, args);
-        }, 0);
+        });
+
+        // chrome18+, safari6+, firefox14+,ie11+,opera15
+        if (MutationObserver) {
+            var $input = $doc.createElement('input');
+            var observer = new MutationObserver(fn);
+
+            observer.observe($input, {
+                attributes: true
+            });
+            $input.value = Math.random();
+
+            return;
+        } else if (window.VBArray) {
+            var $script = $doc.createElement('script');
+
+            // IE下这个通常只要1ms,而且没有副作用，不会发现请求
+            $script.onreadystatechange = function () {
+                fn(); //在interactive阶段就触发
+                $script.onreadystatechange = null;
+                $body.removeChild($script);
+                $script = null;
+            };
+
+            $body.appendChild($script);
+
+            return;
+        }
+
+        setTimeout(fn, 0);
     };
 });

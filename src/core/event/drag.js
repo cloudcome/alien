@@ -34,9 +34,9 @@ define(function (require, exports, module) {
     var modification = require('../dom/modification.js');
     var animation = require('../dom/animation.js');
     var selector = require('../dom/selector.js');
-    var dragstart = 'mousedown taphold';
-    var drag = 'mousemove touchmove MSPointerMove pointermove';
-    var dragend = 'mouseup touchend MSPointerUp pointerup touchcancel MSPointerCancel pointercancel';
+    var dragstartEvent = 'mousedown taphold';
+    var dragEvent = 'mousemove touchmove MSPointerMove pointermove';
+    var dragendEvent = 'mouseup touchend MSPointerUp pointerup touchcancel MSPointerCancel pointercancel';
     var x0 = null;
     var y0 = null;
     // 0 = 未开始拖动
@@ -51,13 +51,14 @@ define(function (require, exports, module) {
     var dragfor;
     var left;
     var top;
+    var className = 'alien-core-event-drag';
     var style =
-        '.alien-ui-drag-clone{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
+        '.' + className + '{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
     var preventDefault = false;
 
     modification.importStyle(style);
 
-    event.on(document, dragstart, function (eve) {
+    event.on(document, dragstartEvent, function (eve) {
         var _eve = eve.type === 'mousedown' && eve.button === 0 ? eve : (
             eve.touches && eve.touches.length ? eve.touches[0] : null
         );
@@ -83,7 +84,7 @@ define(function (require, exports, module) {
         }
     });
 
-    event.on(document, drag, function (eve) {
+    event.on(document, dragEvent, function (eve) {
         var _eve = eve.type === 'mousemove' && eve.button === 0 ? eve : (
             eve.touches && eve.touches.length ? eve.touches[0] : null
         );
@@ -116,15 +117,20 @@ define(function (require, exports, module) {
                         height: attribute.height(dragfor) - 2,
                         left: attribute.left(dragfor),
                         top: attribute.top(dragfor),
-                        zIndex: 99999999999999
+                        zIndex: Math.pow(2, 53)
                     },
-                    'class': 'alien-ui-drag-clone'
+                    class: className
                 });
                 modification.insert(clone, document.body, 'beforeend');
             }
         }
 
         if (state === 2) {
+            /**
+             * 拖拽
+             * @event drag
+             * @param event {Object} 事件对象
+             */
             dispatchDrag = event.dispatch(ele, 'drag', _eve);
 
             if (dispatchDrag.defaultPrevented !== true) {
@@ -136,7 +142,7 @@ define(function (require, exports, module) {
         }
     });
 
-    event.on(document, dragend, function (eve) {
+    event.on(document, dragendEvent, function (eve) {
         var _eve = eve.type === 'mousemove' && eve.button === 0 ?
             eve :
             (eve.touches && eve.touches.length ?
