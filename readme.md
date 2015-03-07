@@ -72,19 +72,22 @@
 |	|	|-- Template.js
 |	|	|-- Template.md
 |	|	`-- Validator.js
+|	|	`-- Weixin.js
 |	|-- ui UI
 |	|	|-- Autoheight textarea 自动增高
 |	|	|-- Banner
 |	|	|-- Dialog
-|	|	|-- Editor
+|	|	|-- Editor markdown 编辑器
 |	|	|-- Imgclip
 |	|	|-- Imgview
 |	|	|-- Mask
 |	|	|-- Msg
 |	|	|-- Pager
 |	|	|-- Pagination
+|	|	|-- Prettify
 |	|	|-- Resize
 |	|	|-- Scrollbar
+|	|	|-- Scrollspy 视口滚动
 |	|	|-- Tab
 |	|	|-- Tooltip
 |	|	|-- Validator
@@ -96,16 +99,18 @@
 |	|	|-- calendar.js
 |	|	|-- canvas.js
 |	|	|-- class.js
-|	|	|-- control.js
+|	|	|-- controller.js
 |	|	|-- date.js
 |	|	|-- dato.js
 |	|	|-- easing.js
 |	|	|-- hashbang.js
 |	|	|-- howdo.js
+|	|	|-- keyframes.js
 |	|	|-- querystring.js
 |	|	|-- random.js
 |	|	|-- selection.js
 |	|	`-- typeis.js
+|	|	`-- url.js
 |	`-- readme.md
 |-- static 文档所需要的静态文件
 |-- templates 文档的模板
