@@ -8,6 +8,12 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Validator/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/event/touch
+     * @requires utils/typeis
+     * @requires libs/Validator
      */
     'use strict';
 
@@ -16,7 +22,6 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var style = require('css!./style.css');
-    var see = require('../../core/dom/see.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
@@ -165,11 +170,59 @@ define(function (require, exports, module) {
         var the = this;
         var options = the._options;
 
+        event.on(the._$form, 'focusin', inputSelector, the._onfocusin.bind(the));
+
         if (options.validateEvent) {
             event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
         }
 
         event.on(the._$form, 'tap click', 'input[type=submit],button', the._onsubmit.bind(the));
+
+        the._validator.on('validatestart', function (name) {
+            var $item = the._nameItemMap[name];
+
+            attribute.removeClass($item, formItemStatusClass);
+            attribute.addClass($item, 'has-warning');
+            the.emit(this.alienEvent.type, the._nameInputMap[name]);
+        });
+
+        the._validator.on('validateend', function (name, data) {
+            the.emit(this.alienEvent.type, the._nameInputMap[name], data);
+        });
+
+        the._validator.on('validateonestart', function (name) {
+            the.emit(this.alienEvent.type, the._nameItemMap[name]);
+        });
+
+        the._validator.on('validateoneend', function (name, err) {
+            the.emit(this.alienEvent.type, the._nameItemMap[name], err);
+        });
+
+        the._validator.on('validateallstart', function () {
+            dato.each(the._nameItemMap, function (name, $item) {
+                attribute.removeClass($item, formItemStatusClass);
+            });
+
+            the.emit(this.alienEvent.type, the._$form);
+        });
+
+        the._validator.on('validateallend', function (errs) {
+            the.emit(this.alienEvent.type, the._$form, errs);
+        });
+    };
+
+
+    /**
+     * 聚焦时回调
+     * @param eve
+     * @private
+     */
+    Validator.fn._onfocusin = function (eve) {
+        var the = this;
+        var $input = eve.target;
+
+        this.emitMsg($input.name, false);
+        this.emit('focusin', $input);
     };
 
 
@@ -363,8 +416,8 @@ define(function (require, exports, module) {
     /**
      * 触发表单消息
      * @param name {String} 需要验证的表单 name
-     * @param message {String} 消息
-     * @param [type="error"] 消息类型
+     * @param message {String|undefined|false} 消息
+     * @param type {String} 消息类型
      */
     Validator.fn.emitMsg = function (name, message, type) {
         var the = this;
@@ -372,11 +425,14 @@ define(function (require, exports, module) {
         var $formMsg = the._nameMsgMap[name];
 
         if ($formMsg) {
-            $formMsg.innerHTML = message;
+            $formMsg.innerHTML = message === false ? attribute.data($formMsg, 'original') : message;
         }
 
         attribute.removeClass($formItem, formItemStatusClass);
-        attribute.addClass($formItem, 'has-' + type);
+
+        if (type) {
+            attribute.addClass($formItem, 'has-' + type);
+        }
 
         return the;
     };
@@ -394,20 +450,7 @@ define(function (require, exports, module) {
 
         callback = typeis.function(callback) ? callback : noop;
         data[name] = the._getVal(name);
-
-        /**
-         * 表单项目验证之前回调
-         * @event validateonebefore
-         * @param $input {HTMLElement}
-         */
-        the.emit('validateonebefore', $input);
         the._validator.validateOne(data, function (err) {
-            /**
-             * 表单项目验证之后回调
-             * @event validateoneafter
-             * @param $input {HTMLElement}
-             */
-            the.emit('validateoneafter', $input);
             the.emitMsg(name, err ? err.message : this.rules[name].msg.success || the._options.successMsg, err ? 'error' : 'success');
             callback.apply(this, arguments);
         });
@@ -424,35 +467,15 @@ define(function (require, exports, module) {
         var the = this;
         var data = {};
 
-        dato.each(the._nameItemMap, function (name, $item) {
-            attribute.removeClass($item, formItemStatusClass);
-        });
-
         callback = typeis.function(callback) ? callback : noop;
 
         dato.each(the._nameInputMap, function (name) {
             data[name] = the._getVal(name);
         });
-
-        /**
-         * 表单所有项目验证之前回调
-         * @event validateallbefore
-         * @param $form {HTMLElement} 表单
-         * @param errs {Array|null} 错误消息数组
-         */
-        the.emit('validateallbefore', the._$form);
         the._validator.validateAll(data, function (errs) {
             var self = this;
 
             callback.apply(self, arguments);
-
-            /**
-             * 表单所有项目验证之后回调
-             * @event validateallafter
-             * @param $form {HTMLElement} 表单
-             * @param errs {Array|null} 错误消息数组
-             */
-            the.emit('validateallafter', the._$form, errs);
 
             dato.each(the._nameInputMap, function (name) {
                 if (errs && errs[name]) {
@@ -474,6 +497,7 @@ define(function (require, exports, module) {
         var the = this;
 
         attribute.removeClass(the._nameItemMap, formItemStatusClass);
+        event.un(the._$form, 'focusin', the._onfocusin);
         event.un(the._$form, the._options.validateEvent, the._onvalidate);
         event.un(the._$form, 'tap click', the._onsubmit);
         attribute.removeClass(the._$form, alienClass);

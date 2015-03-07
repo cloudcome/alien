@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
     var regSpace = /\s+/g;
+    var alienId = 0;
     var Emitter = klass.create(function () {
         this._eventsPool = {};
         this._eventsLimit = 999;
@@ -123,7 +124,14 @@ define(function (require, exports, module) {
 
         _middleware(eventType, function (et) {
             if (the._eventsPool[et]) {
+                var time = Date.now();
                 dato.each(the._eventsPool[et], function (index, listener) {
+                    context.alienEvent = {
+                        type: et,
+                        timestamp: time,
+                        id: alienId++
+                    };
+
                     if (listener.apply(context, emitArgs) === false) {
                         ret = false;
                     }

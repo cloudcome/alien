@@ -36,14 +36,20 @@ define(function (require, exports, module) {
         parentNode: document.body,
         width: 500,
         height: 'auto',
-        left: 'center',
         top: 'center',
+        right: null,
+        bottom: null,
+        left: 'center',
         duration: 456,
         easing: 'ease-in-out-back',
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        zIndex: null
+        zIndex: null,
+        // 窗口打开动画
+        open: null,
+        // 窗口关闭动画
+        close: null
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -108,15 +114,23 @@ define(function (require, exports, module) {
         if (options.left === 'center') {
             pos.left = (winW - pos.width) / 2;
             pos.left = pos.left < 0 ? 0 : pos.left;
-        } else {
+        } else if (options.left !== null) {
             pos.left = options.left;
         }
 
         if (options.top === 'center') {
             pos.top = (winH - pos.height) * 2 / 5;
             pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
-        } else {
+        } else if (options.top !== null) {
             pos.top = options.top;
+        }
+
+        if (options.right !== null) {
+            pos.right = options.right;
+        }
+
+        if (options.bottom !== null) {
+            pos.bottom = options.bottom;
         }
 
         return pos;
@@ -135,8 +149,29 @@ define(function (require, exports, module) {
             return the;
         }
 
-        var to = the._getPos();
+
         var options = the._options;
+        var onopen = function () {
+            /**
+             * 窗口打开之后
+             * @event open
+             */
+            the.emit('open');
+
+            if (typeis.function(callback)) {
+                callback.call(the);
+            }
+        };
+
+        var to = the._getPos();
+        the.visible = true;
+        to.opacity = '';
+        to.transform = '';
+
+        if (typeis.function(options.open)) {
+            options.open.call(the, the._$window, to, onopen);
+            return the;
+        }
 
         attribute.css(the._$window, {
             display: 'block',
@@ -149,23 +184,10 @@ define(function (require, exports, module) {
             zIndex: options.zIndex || ui.getZindex()
         });
 
-        to.opacity = '';
-        to.transform = '';
-        the.visible = true;
         animation.animate(the._$window, to, {
             duration: options.duration,
             easing: options.easing
-        }, function () {
-            /**
-             * 窗口打开之后
-             * @event open
-             */
-            the.emit('open');
-
-            if (typeis.function(callback)) {
-                callback.call(the);
-            }
-        });
+        }, onopen);
 
         return the;
     };
@@ -226,15 +248,7 @@ define(function (require, exports, module) {
         }
 
         var options = the._options;
-        var to = {
-            opacity: 0,
-            scale: 0
-        };
-        the.visible = false;
-        animation.animate(the._$window, to, {
-            duration: options.duration,
-            easing: options.easing
-        }, function () {
+        var onclose = function () {
             /**
              * 窗口关闭之后
              * @event close
@@ -247,7 +261,24 @@ define(function (require, exports, module) {
             });
 
             callback.call(the);
-        });
+        };
+
+        the.visible = false;
+
+        if (typeis.function(options.close)) {
+            options.close.call(the, the._$window, onclose);
+            return the;
+        }
+
+        var to = {
+            opacity: 0,
+            scale: 0
+        };
+
+        animation.animate(the._$window, to, {
+            duration: options.duration,
+            easing: options.easing
+        }, onclose);
 
         return the;
     };

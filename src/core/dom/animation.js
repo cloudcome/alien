@@ -57,7 +57,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var alienKey = 'alien-core-dom-animation-';
+    var alienKey = '-alien-core-dom-animation-';
     var index = 0;
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);

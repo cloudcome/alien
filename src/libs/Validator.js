@@ -295,6 +295,11 @@ define(function (require, exports, module) {
         data = typeis(data) === 'object' ? data : {};
         callback = typeis(callback) === 'function' ? callback : noop;
 
+        /**
+         * 所有字段验证开始
+         * @event validateallstart
+         */
+        the.emit('validateallstart');
         howdo.each(the._ruleList, function (key, rule, next) {
             the._validateOne(rule, data, function (err) {
                 if (!isBreakOnInvalid) {
@@ -321,6 +326,13 @@ define(function (require, exports, module) {
                 }
             });
 
+            /**
+             * 所有字段验证结束
+             * @event validateallend
+             * @param errs {Array} 错误消息数组
+             * @param data {Object} 验证过滤后的数据
+             */
+            the.emit('validateallend', errs, data);
             callback.call(the, errs, data);
         });
     };
@@ -340,6 +352,12 @@ define(function (require, exports, module) {
         callback = typeis(callback) === 'function' ? callback : noop;
 
         if (name) {
+            /**
+             * 单个字段验证开始
+             * @event validateonestart
+             * @param name {String} 字段名称
+             */
+            the.emit('validateonestart', name);
             dato.each(the._ruleList, function (index, rule) {
                 if (rule.name === name) {
                     findIndex = index;
@@ -349,12 +367,43 @@ define(function (require, exports, module) {
 
             if (findIndex > -1) {
                 the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                    /**
+                     * 单个字段验证结束
+                     * @event validateoneend
+                     * @param name {String} 字段名称
+                     * @param error {Error} 错误消息
+                     * @param value {*} 字段值
+                     */
+                    the.emit('validateoneend', name, err, data[name]);
                     callback.call(the, err, data[name]);
                 });
             } else {
+                /**
+                 * 单个字段验证结束
+                 * @event validateoneend
+                 * @param name {String} 字段名称
+                 * @param error {Error} 错误消息
+                 * @param value {*} 字段值
+                 */
+                the.emit('validateoneend', name, null, data[name]);
                 callback.call(the, null, data[name]);
             }
         } else {
+            /**
+             * 单个字段验证开始
+             * @event validateonestart
+             * @param name {String} 字段名称
+             */
+            the.emit('validateonestart', name);
+
+            /**
+             * 单个字段验证结束
+             * @event validateoneend
+             * @param name {String} 字段名称
+             * @param error {Error} 错误消息
+             * @param value {*} 字段值
+             */
+            the.emit('validateoneend', name, null, data[name]);
             callback.call(the, null, data[name]);
         }
     };
@@ -411,11 +460,26 @@ define(function (require, exports, module) {
                 });
             }
 
+            /**
+             * 单个字段验证结束
+             * @event validateend
+             * @param name {String} 字段名称
+             * @param data {Object} 验证过滤后的数据
+             */
+            the.emit('validateend', rule.name, data);
+
             // callback
             if (typeis(callback) === 'function') {
                 callback.call(the, err, data);
             }
         };
+
+        /**
+         * 单个字段验证开始
+         * @event validateend
+         * @param name {String} 字段名称
+         */
+        the.emit('validatestart', rule.name);
 
         // onbefore
         rule.onbefores.forEach(function (fn) {
