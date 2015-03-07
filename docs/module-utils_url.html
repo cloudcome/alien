@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: utils/querystring - Alien documents</title>
+    <title>Module: utils/url - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -178,7 +178,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: utils/querystring</h1>
+		            <h1 class="page-title">Module: utils/url</h1>
 
 		            
 
@@ -189,7 +189,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            utils/querystring
+            utils/url
         
     
     </h2>
@@ -201,11 +201,6 @@
         
 
         
-            
-                <blockquote class="description lead">querystring 的解析与设置<br>
-合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
-                    
-                </blockquote>
             
 
             
@@ -230,7 +225,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-50915604270994662925056309904903" data-toggle="tab">Source</a>
+                <a href="#tab-meta-512116521131247346989421104080975" data-toggle="tab">Source</a>
             </li>
 
         
@@ -251,8 +246,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-50915604270994662925056309904903">
-                <p><a href="utils_querystring.js.html#line10">utils/querystring.js:10</a></p>
+            <div class="tab-pane active" id="tab-meta-512116521131247346989421104080975">
+                <p><a href="utils_url.js.html#line9">utils/url.js:9</a></p>
             </div>
 
         
@@ -273,9 +268,9 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+            <li><a href="module-utils_querystring.html">module:utils/querystring</a></li>
         
-            <li><a href="module-utils_typeis.html">module:utils/typeis</a></li>
+            <li><a href="module-utils_hashbang.html">module:utils/hashbang</a></li>
         </ul>
     
 
@@ -294,7 +289,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".parse">
-        <span class="type-signature">&lt;static> </span>parse<span class="signature">(querystring, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>parse<span class="signature">(url)</span><span class="type-signature"> 
     </h4>
 
     
@@ -303,7 +298,7 @@
 
         
         <div class="description lead">
-            <blockquote>解析
+            <blockquote>url 解析
                 
             </blockquote>
         </div>
@@ -327,8 +322,6 @@
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
 		
 
@@ -341,7 +334,7 @@
 
         <tr>
             
-                <td class="name"><code>querystring</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
@@ -355,86 +348,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">字符串</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
+            <td class="description last">url 地址</td>
         </tr>
 
 	
@@ -464,12 +381,6 @@
             
 
         
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.parse("a=1&b=1&b=2&b=3");
-// => {a: "1",b: ["1","2","3"]}</code></pre>
-
-        
 
         
 
@@ -491,7 +402,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-89962444198317838797569239977747" data-toggle="tab">Source</a>
+                <a href="#tab-meta-297447504242882137155503276735544" data-toggle="tab">Source</a>
             </li>
 
         
@@ -512,8 +423,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-89962444198317838797569239977747">
-                <p><a href="utils_querystring.js.html#line73">utils/querystring.js:73</a></p>
+            <div class="tab-pane active" id="tab-meta-297447504242882137155503276735544">
+                <p><a href="utils_url.js.html#line26">utils/url.js:26</a></p>
             </div>
 
         
@@ -539,7 +450,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".stringify">
-        <span class="type-signature">&lt;static> </span>stringify<span class="signature">(object, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>stringify<span class="signature">(obj)</span><span class="type-signature"> 
     </h4>
 
     
@@ -548,7 +459,7 @@
 
         
         <div class="description lead">
-            <blockquote>字符化
+            <blockquote>url 字符化
                 
             </blockquote>
         </div>
@@ -572,8 +483,6 @@
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
 		
 
@@ -586,7 +495,7 @@
 
         <tr>
             
-                <td class="name"><code>object</code></td>
+                <td class="name"><code>obj</code></td>
             
 
             <td class="type">
@@ -600,86 +509,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">query 对象</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
+            <td class="description last">url 信息</td>
         </tr>
 
 	
@@ -697,7 +530,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">string</span>
         
     
 </td>
@@ -707,12 +540,6 @@
 </table>
 
             
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.stringify({a:1,b:[1,2,3]});
-// => "a=1&b=1&b=2&b=3"</code></pre>
 
         
 
@@ -736,7 +563,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-253593180095776942036330862902105" data-toggle="tab">Source</a>
+                <a href="#tab-meta-539601301774382677156220539473" data-toggle="tab">Source</a>
             </li>
 
         
@@ -757,8 +584,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-253593180095776942036330862902105">
-                <p><a href="utils_querystring.js.html#line37">utils/querystring.js:37</a></p>
+            <div class="tab-pane active" id="tab-meta-539601301774382677156220539473">
+                <p><a href="utils_url.js.html#line51">utils/url.js:51</a></p>
             </div>
 
         

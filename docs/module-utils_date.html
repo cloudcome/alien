@@ -69,6 +69,7 @@
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
 <li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
@@ -86,34 +87,41 @@
 <li><a href="module-utils_random.html">utils/random</a></li>
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Tab/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
 <li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +288,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-53369397576898349203409622423351" data-toggle="tab">Source</a>
+                <a href="#tab-meta-048466405831277377159863382112235" data-toggle="tab">Source</a>
             </li>
 
         
@@ -301,7 +309,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-53369397576898349203409622423351">
+            <div class="tab-pane active" id="tab-meta-048466405831277377159863382112235">
                 <p><a href="utils_date.js.html#line9">utils/date.js:9</a></p>
             </div>
 
@@ -604,7 +612,7 @@ date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
 
             
             <li class="active">
-                <a href="#tab-meta-45034789619967348653030344285071" data-toggle="tab">Source</a>
+                <a href="#tab-meta-92867771838791676693415720947087" data-toggle="tab">Source</a>
             </li>
 
         
@@ -625,7 +633,7 @@ date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
         
         
 
-            <div class="tab-pane active" id="tab-meta-45034789619967348653030344285071">
+            <div class="tab-pane active" id="tab-meta-92867771838791676693415720947087">
                 <p><a href="utils_date.js.html#line88">utils/date.js:88</a></p>
             </div>
 
@@ -866,7 +874,7 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
 
             
             <li class="active">
-                <a href="#tab-meta-221574732102453713626778265461326" data-toggle="tab">Source</a>
+                <a href="#tab-meta-391381536843255167228913891594857" data-toggle="tab">Source</a>
             </li>
 
         
@@ -887,7 +895,7 @@ date.from(Date.now() + 200*12*30*24*60*60*1000);
         
         
 
-            <div class="tab-pane active" id="tab-meta-221574732102453713626778265461326">
+            <div class="tab-pane active" id="tab-meta-391381536843255167228913891594857">
                 <p><a href="utils_date.js.html#line429">utils/date.js:429</a></p>
             </div>
 
@@ -1126,7 +1134,7 @@ date.getDaysInMonth(2014, 9);
 
             
             <li class="active">
-                <a href="#tab-meta-54058064403943727335814668331295" data-toggle="tab">Source</a>
+                <a href="#tab-meta-98295920295640837264764471910894" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1147,7 +1155,7 @@ date.getDaysInMonth(2014, 9);
         
         
 
-            <div class="tab-pane active" id="tab-meta-54058064403943727335814668331295">
+            <div class="tab-pane active" id="tab-meta-98295920295640837264764471910894">
                 <p><a href="utils_date.js.html#line302">utils/date.js:302</a></p>
             </div>
 
@@ -1415,7 +1423,7 @@ date.getDaysInMonth(2014, 9);
 
             
             <li class="active">
-                <a href="#tab-meta-689202862326055806266111391596496" data-toggle="tab">Source</a>
+                <a href="#tab-meta-438325874041765934009591343346983" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1436,7 +1444,7 @@ date.getDaysInMonth(2014, 9);
         
         
 
-            <div class="tab-pane active" id="tab-meta-689202862326055806266111391596496">
+            <div class="tab-pane active" id="tab-meta-438325874041765934009591343346983">
                 <p><a href="utils_date.js.html#line318">utils/date.js:318</a></p>
             </div>
 
@@ -1711,7 +1719,7 @@ date.getWeeksInMonth(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-90350209339521837066022937651724" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4569258980918675712681201100349426" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1732,7 +1740,7 @@ date.getWeeksInMonth(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-90350209339521837066022937651724">
+            <div class="tab-pane active" id="tab-meta-4569258980918675712681201100349426">
                 <p><a href="utils_date.js.html#line371">utils/date.js:371</a></p>
             </div>
 
@@ -1987,7 +1995,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-24810309871099896878800415433943" data-toggle="tab">Source</a>
+                <a href="#tab-meta-386877931421622633882934807334095" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2008,7 +2016,7 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-24810309871099896878800415433943">
+            <div class="tab-pane active" id="tab-meta-386877931421622633882934807334095">
                 <p><a href="utils_date.js.html#line344">utils/date.js:344</a></p>
             </div>
 
@@ -2154,7 +2162,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-7393576425965875055988565320149064" data-toggle="tab">Source</a>
+                <a href="#tab-meta-112579367123544226432823506183922" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2175,7 +2183,7 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-7393576425965875055988565320149064">
+            <div class="tab-pane active" id="tab-meta-112579367123544226432823506183922">
                 <p><a href="utils_date.js.html#line285">utils/date.js:285</a></p>
             </div>
 
@@ -2368,7 +2376,7 @@ date.getWeeksInYear(2014, 9, 24);
 
             
             <li class="active">
-                <a href="#tab-meta-86236578831449155077184475958347" data-toggle="tab">Source</a>
+                <a href="#tab-meta-187356559094041595786347012035549" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2389,7 +2397,7 @@ date.getWeeksInYear(2014, 9, 24);
         
         
 
-            <div class="tab-pane active" id="tab-meta-86236578831449155077184475958347">
+            <div class="tab-pane active" id="tab-meta-187356559094041595786347012035549">
                 <p><a href="utils_date.js.html#line254">utils/date.js:254</a></p>
             </div>
 
@@ -2596,7 +2604,7 @@ date.range('in 1 year');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-55855902959592647098901881836355" data-toggle="tab">Source</a>
+                <a href="#tab-meta-69219707930460579719170026946813" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2617,7 +2625,7 @@ date.range('in 1 year');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-55855902959592647098901881836355">
+            <div class="tab-pane active" id="tab-meta-69219707930460579719170026946813">
                 <p><a href="utils_date.js.html#line531">utils/date.js:531</a></p>
             </div>
 

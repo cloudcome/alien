@@ -69,6 +69,7 @@
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
 <li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
@@ -86,34 +87,41 @@
 <li><a href="module-utils_random.html">utils/random</a></li>
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Tab/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
 <li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
 </ul>
 </li>
 </ul>
@@ -239,7 +247,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-8732356762047857012736865784972906" data-toggle="tab">Source</a>
+                <a href="#tab-meta-21021667961031199024316089460626245" data-toggle="tab">Source</a>
             </li>
 
         
@@ -260,7 +268,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-8732356762047857012736865784972906">
+            <div class="tab-pane active" id="tab-meta-21021667961031199024316089460626245">
                 <p><a href="core_dom_animation.js.html#line10">core/dom/animation.js:10</a></p>
             </div>
 
@@ -681,7 +689,7 @@ animation.animate(ele, to, property, callback);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-66732063819654294009021408855915" data-toggle="tab">Source</a>
+                <a href="#tab-meta-876478399615734810799216432496905" data-toggle="tab">Source</a>
             </li>
 
         
@@ -702,7 +710,7 @@ animation.animate(ele, to, property, callback);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-66732063819654294009021408855915">
+            <div class="tab-pane active" id="tab-meta-876478399615734810799216432496905">
                 <p><a href="core_dom_animation.js.html#line88">core/dom/animation.js:88</a></p>
             </div>
 
@@ -1203,7 +1211,7 @@ animation.animate(ele, to, property, callback);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-40545000322163105002424652222543955" data-toggle="tab">Source</a>
+                <a href="#tab-meta-132267358247190717358985175378621" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1224,7 +1232,7 @@ animation.animate(ele, to, property, callback);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-40545000322163105002424652222543955">
+            <div class="tab-pane active" id="tab-meta-132267358247190717358985175378621">
                 <p><a href="core_dom_animation.js.html#line272">core/dom/animation.js:272</a></p>
             </div>
 
@@ -1743,7 +1751,7 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
 
             
             <li class="active">
-                <a href="#tab-meta-306676881853491076463387191761285" data-toggle="tab">Source</a>
+                <a href="#tab-meta-677807802567258508482411038130522" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1764,7 +1772,7 @@ backIn、backOut、bounce、doubleSqrt，也可以自定义缓冲函数，只有
         
         
 
-            <div class="tab-pane active" id="tab-meta-306676881853491076463387191761285">
+            <div class="tab-pane active" id="tab-meta-677807802567258508482411038130522">
                 <p><a href="core_dom_animation.js.html#line345">core/dom/animation.js:345</a></p>
             </div>
 
@@ -1969,7 +1977,7 @@ animation.top(ele, false);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-100110888481140144282426598947495" data-toggle="tab">Source</a>
+                <a href="#tab-meta-89196262229233987825447714421898" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1990,7 +1998,7 @@ animation.top(ele, false);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-100110888481140144282426598947495">
+            <div class="tab-pane active" id="tab-meta-89196262229233987825447714421898">
                 <p><a href="core_dom_animation.js.html#line229">core/dom/animation.js:229</a></p>
             </div>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: utils/querystring - Alien documents</title>
+    <title>Module: ui/Scrollspy/ - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -147,29 +147,29 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 2</li>
 
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#.parse">parse</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#.stringify">stringify</a>
-    
-</li>
-
-	                    
 	                
+	                    <li class="sidebar-header">Events &times; 2</li>
 
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:enterviewport">enterviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:leaveviewport">leaveviewport</a>
+    
+</li>
+
+	                    
 	                
 
 	                
@@ -178,7 +178,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: utils/querystring</h1>
+		            <h1 class="page-title">Module: ui/Scrollspy/</h1>
 
 		            
 
@@ -189,7 +189,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            utils/querystring
+            ui/Scrollspy/
         
     
     </h2>
@@ -201,11 +201,6 @@
         
 
         
-            
-                <blockquote class="description lead">querystring 的解析与设置<br>
-合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
-                    
-                </blockquote>
             
 
             
@@ -230,7 +225,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-50915604270994662925056309904903" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6661207622382798987791182007641" data-toggle="tab">Source</a>
             </li>
 
         
@@ -251,8 +246,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-50915604270994662925056309904903">
-                <p><a href="utils_querystring.js.html#line10">utils/querystring.js:10</a></p>
+            <div class="tab-pane active" id="tab-meta-6661207622382798987791182007641">
+                <p><a href="ui_Scrollspy_index.js.html#line9">ui/Scrollspy/index.js:9</a></p>
             </div>
 
         
@@ -273,9 +268,21 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
+            <li><a href="module-core_dom_see.html">module:core/dom/see</a></li>
+        
+            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
+        
+            <li><a href="module-core_event_base.html">module:core/event/base</a></li>
+        
+            <li><a href="module-utils_controller.html">module:utils/controller</a></li>
+        
             <li><a href="module-utils_dato.html">module:utils/dato</a></li>
         
-            <li><a href="module-utils_typeis.html">module:utils/typeis</a></li>
+            <li><a href="module-utils_class.html">module:utils/class</a></li>
+        
+            <li><a href="module-libs_Emitter.html">module:libs/Emitter</a></li>
+        
+            <li>module:ui/base.js</li>
         </ul>
     
 
@@ -286,15 +293,18 @@
     
 
     
-        <section id="docs-methods">
-            <h3 class="subsection-title">Methods</h3>
 
-            <dl>
-                
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id=".parse">
-        <span class="type-signature">&lt;static> </span>parse<span class="signature">(querystring, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="~event:enterviewport">
+        enterviewport : event
     </h4>
 
     
@@ -303,7 +313,7 @@
 
         
         <div class="description lead">
-            <blockquote>解析
+            <blockquote>进入视口后触发
                 
             </blockquote>
         </div>
@@ -327,8 +337,6 @@
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
 		
 
@@ -341,13 +349,13 @@
 
         <tr>
             
-                <td class="name"><code>querystring</code></td>
+                <td class="name"><code>node</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
         
     
 
@@ -355,86 +363,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">字符串</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
+            <td class="description last">元素</td>
         </tr>
 
 	
@@ -444,30 +376,6 @@
         
 
         
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.parse("a=1&b=1&b=2&b=3");
-// => {a: "1",b: ["1","2","3"]}</code></pre>
 
         
 
@@ -491,7 +399,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-89962444198317838797569239977747" data-toggle="tab">Source</a>
+                <a href="#tab-meta-57891354593448342122819807846099" data-toggle="tab">Source</a>
             </li>
 
         
@@ -512,8 +420,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-89962444198317838797569239977747">
-                <p><a href="utils_querystring.js.html#line73">utils/querystring.js:73</a></p>
+            <div class="tab-pane active" id="tab-meta-57891354593448342122819807846099">
+                <p><a href="ui_Scrollspy_index.js.html#line74">ui/Scrollspy/index.js:74</a></p>
             </div>
 
         
@@ -534,12 +442,12 @@
     </dd>
 </section>
 
+        
             
-                
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id=".stringify">
-        <span class="type-signature">&lt;static> </span>stringify<span class="signature">(object, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id="~event:leaveviewport">
+        leaveviewport : event
     </h4>
 
     
@@ -548,7 +456,7 @@
 
         
         <div class="description lead">
-            <blockquote>字符化
+            <blockquote>离开视口后触发
                 
             </blockquote>
         </div>
@@ -572,8 +480,6 @@
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
 		
 
@@ -586,13 +492,13 @@
 
         <tr>
             
-                <td class="name"><code>object</code></td>
+                <td class="name"><code>node</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+&nbsp;&nbsp;<span class="param-type label label-info">HTMLElement</span>
         
     
 
@@ -600,86 +506,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">query 对象</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
+            <td class="description last">元素</td>
         </tr>
 
 	
@@ -689,30 +519,6 @@
         
 
         
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.stringify({a:1,b:[1,2,3]});
-// => "a=1&b=1&b=2&b=3"</code></pre>
 
         
 
@@ -736,7 +542,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-253593180095776942036330862902105" data-toggle="tab">Source</a>
+                <a href="#tab-meta-810365063371136804078601021319628" data-toggle="tab">Source</a>
             </li>
 
         
@@ -757,8 +563,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-253593180095776942036330862902105">
-                <p><a href="utils_querystring.js.html#line37">utils/querystring.js:37</a></p>
+            <div class="tab-pane active" id="tab-meta-810365063371136804078601021319628">
+                <p><a href="ui_Scrollspy_index.js.html#line67">ui/Scrollspy/index.js:67</a></p>
             </div>
 
         
@@ -779,12 +585,7 @@
     </dd>
 </section>
 
-            </dl>
-        </section>
-    
-
-    
-
+        </dl>
     
 </article>
 

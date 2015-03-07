@@ -69,6 +69,7 @@
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
 <li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
@@ -86,34 +87,41 @@
 <li><a href="module-utils_random.html">utils/random</a></li>
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Tab/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
 <li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
 </ul>
 </li>
 </ul>
@@ -141,7 +149,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 46</li>
+	                    <li class="sidebar-header">Events &times; 58</li>
 
 	                    
 	                        
@@ -149,6 +157,24 @@
 <li class="">
     
         <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -337,6 +363,33 @@
 
 <li class="">
     
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:enterviewport">enterviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#~event:error">error</a>
     
 </li>
@@ -410,6 +463,15 @@
 <li class="">
     
         <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:leaveviewport">leaveviewport</a>
     
 </li>
 
@@ -526,7 +588,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateallafter">validateallafter</a>
+        <a class="" href="#~event:start">start</a>
     
 </li>
 
@@ -535,7 +597,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+        <a class="" href="#~event:validateallend">validateallend</a>
     
 </li>
 
@@ -544,7 +606,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+        <a class="" href="#~event:validateallstart">validateallstart</a>
     
 </li>
 
@@ -553,7 +615,61 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
     
 </li>
 
@@ -590,176 +706,136 @@ define(function (require, exports, module) {
     var PI = Math.PI;
     var BACK_CONST = 1.70158;
 
-    module.exports = {
-        // css3 easing
-        css3: {
-            'in': 'ease-in',
-            'out': 'ease-out',
-            'in-out': 'ease-in-out',
-            'snap': 'cubic-bezier(0,1,.5,1)',
-            'linear': 'cubic-bezier(.25,.25,.75,.75)',
-            'ease-in-quad': 'cubic-bezier(.55,.085,.68,.53)',
-            'ease-in-cubic': 'cubic-bezier(.55,.055,.675,.19)',
-            'ease-in-quart': 'cubic-bezier(.895,.03,.685,.22)',
-            'ease-in-quint': 'cubic-bezier(.755,.05,.855,.06)',
-            'ease-in-sine': 'cubic-bezier(.470,0,.745,.715)',
-            'ease-in-expo': 'cubic-bezier(.950,.05,.795,.035)',
-            'ease-in-circ': 'cubic-bezier(.6,.04,.98,.335)',
-            'ease-in-back': 'cubic-bezier(.6,-.28,.735,.045)',
-            'ease-out-quad': 'cubic-bezier(.25,.46,.45,.94)',
-            'ease-out-cubic': 'cubic-bezier(.215,.61,.355,1)',
-            'ease-out-quart': 'cubic-bezier(.165,.84,.44,1)',
-            'ease-out-quint': 'cubic-bezier(.23, 1,.32,1)',
-            'ease-out-sine': 'cubic-bezier(.39,.575,.565,1)',
-            'ease-out-expo': 'cubic-bezier(.19,1,.22,1)',
-            'ease-out-circ': 'cubic-bezier(.075,.82,.165,1)',
-            'ease-out-back': 'cubic-bezier(.175,.885,.32,1.275)',
-            'ease-in-out-quart': 'cubic-bezier(.770,0,.175,1)',
-            'ease-in-out-quint': 'cubic-bezier(.860,0,.07,1)',
-            'ease-in-out-sine': 'cubic-bezier(.445,.05,.55,.95)',
-            'ease-in-out-expo': 'cubic-bezier(1,0,0,1)',
-            'ease-in-out-circ': 'cubic-bezier(.785,.135,.15,.86)',
-            'ease-in-out-back': 'cubic-bezier(.68,-.55,.265,1.55)'
+    // css3 easing
+    exports.css3 = {
+        'in': 'ease-in',
+        'out': 'ease-out',
+        'in-out': 'ease-in-out',
+        'snap': 'cubic-bezier(0,1,.5,1)',
+        'linear': 'cubic-bezier(.25,.25,.75,.75)',
+        'ease-in-quad': 'cubic-bezier(.55,.085,.68,.53)',
+        'ease-in-cubic': 'cubic-bezier(.55,.055,.675,.19)',
+        'ease-in-quart': 'cubic-bezier(.895,.03,.685,.22)',
+        'ease-in-quint': 'cubic-bezier(.755,.05,.855,.06)',
+        'ease-in-sine': 'cubic-bezier(.470,0,.745,.715)',
+        'ease-in-expo': 'cubic-bezier(.950,.05,.795,.035)',
+        'ease-in-circ': 'cubic-bezier(.6,.04,.98,.335)',
+        'ease-in-back': 'cubic-bezier(.6,-.28,.735,.045)',
+        'ease-out-quad': 'cubic-bezier(.25,.46,.45,.94)',
+        'ease-out-cubic': 'cubic-bezier(.215,.61,.355,1)',
+        'ease-out-quart': 'cubic-bezier(.165,.84,.44,1)',
+        'ease-out-quint': 'cubic-bezier(.23, 1,.32,1)',
+        'ease-out-sine': 'cubic-bezier(.39,.575,.565,1)',
+        'ease-out-expo': 'cubic-bezier(.19,1,.22,1)',
+        'ease-out-circ': 'cubic-bezier(.075,.82,.165,1)',
+        'ease-out-back': 'cubic-bezier(.175,.885,.32,1.275)',
+        'ease-in-out-quart': 'cubic-bezier(.770,0,.175,1)',
+        'ease-in-out-quint': 'cubic-bezier(.860,0,.07,1)',
+        'ease-in-out-sine': 'cubic-bezier(.445,.05,.55,.95)',
+        'ease-in-out-expo': 'cubic-bezier(1,0,0,1)',
+        'ease-in-out-circ': 'cubic-bezier(.785,.135,.15,.86)',
+        'ease-in-out-back': 'cubic-bezier(.68,-.55,.265,1.55)'
+    };
+
+
+    // 只需要传递一个参数即可
+    // t 为时间比 => 已耗时 / 总时间
+    // 值 = 开始值 + ( 结束值 - 开始值 ) * 时间比;
+    exports.js = {
+        // 匀速运动
+        linear: function (t) {
+            return t;
         },
-        // 只需要传递一个参数即可
-        // t 为时间比 => 已耗时 / 总时间
-        // 值 = 开始值 + ( 结束值 - 开始值 ) * 时间比;
-        js: {
-            // 匀速运动
-            linear: function (t) {
-                return t;
-            },
 
-            easeIn: function (t) {
-                return t * t;
-            },
+        easeIn: function (t) {
+            return t * t;
+        },
 
-            easeOut: function (t) {
-                return ( 2 - t) * t;
-            },
+        easeOut: function (t) {
+            return ( 2 - t) * t;
+        },
 
-            easeBoth: function (t) {
-                return (t *= 2) &lt; 1 ?
-                .5 * t * t :
-                .5 * (1 - (--t) * (t - 2));
-            },
+        easeBoth: function (t) {
+            return (t *= 2) &lt; 1 ?
+            .5 * t * t :
+            .5 * (1 - (--t) * (t - 2));
+        },
 
-            easeInStrong: function (t) {
-                return t * t * t * t;
-            },
+        easeInStrong: function (t) {
+            return t * t * t * t;
+        },
 
-            easeOutStrong: function (t) {
-                return 1 - (--t) * t * t * t;
-            },
+        easeOutStrong: function (t) {
+            return 1 - (--t) * t * t * t;
+        },
 
-            easeBothStrong: function (t) {
-                return (t *= 2) &lt; 1 ?
-                .5 * t * t * t * t :
-                .5 * (2 - (t -= 2) * t * t * t);
-            },
+        easeBothStrong: function (t) {
+            return (t *= 2) &lt; 1 ?
+            .5 * t * t * t * t :
+            .5 * (2 - (t -= 2) * t * t * t);
+        },
 
-            easeOutQuart: function (t) {
-                return -(pow((t - 1), 4) - 1)
-            },
+        easeOutQuart: function (t) {
+            return -(pow((t - 1), 4) - 1)
+        },
 
-            easeInOutExpo: function (t) {
-                if (t === 0) return 0;
-                if (t === 1) return 1;
-                if ((t /= 0.5) &lt; 1) return 0.5 * pow(2, 10 * (t - 1));
-                return 0.5 * (-pow(2, -10 * --t) + 2);
-            },
+        easeInOutExpo: function (t) {
+            if (t === 0) return 0;
+            if (t === 1) return 1;
+            if ((t /= 0.5) &lt; 1) return 0.5 * pow(2, 10 * (t - 1));
+            return 0.5 * (-pow(2, -10 * --t) + 2);
+        },
 
-            easeOutExpo: function (t) {
-                return (t === 1) ? 1 : -pow(2, -10 * t) + 1;
-            },
+        easeOutExpo: function (t) {
+            return (t === 1) ? 1 : -pow(2, -10 * t) + 1;
+        },
 
-            swing: function (t) {
-                return 0.5 - Math.cos(t * PI) / 2;
-            },
+        swing: function (t) {
+            return 0.5 - Math.cos(t * PI) / 2;
+        },
 
-            swingFrom: function (t) {
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
+        swingFrom: function (t) {
+            return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+        },
 
-            swingTo: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
+        swingTo: function (t) {
+            return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+        },
 
-            backIn: function (t) {
-                if (t === 1) t -= .001;
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
+        backIn: function (t) {
+            if (t === 1) t -= .001;
+            return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+        },
 
-            backOut: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
+        backOut: function (t) {
+            return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+        },
 
-            bounce: function (t) {
-                var s = 7.5625, r;
+        bounce: function (t) {
+            var s = 7.5625, r;
 
-                if (t &lt; (1 / 2.75)) {
-                    r = s * t * t;
-                }
-                else if (t &lt; (2 / 2.75)) {
-                    r = s * (t -= (1.5 / 2.75)) * t + .75;
-                }
-                else if (t &lt; (2.5 / 2.75)) {
-                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
-                }
-                else {
-                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
-                }
-
-                return r;
-            },
-
-            // windows8开始面板的滑动切换效果
-            doubleSqrt: function (t) {
-                return Math.sqrt(Math.sqrt(t));
+            if (t &lt; (1 / 2.75)) {
+                r = s * t * t;
             }
+            else if (t &lt; (2 / 2.75)) {
+                r = s * (t -= (1.5 / 2.75)) * t + .75;
+            }
+            else if (t &lt; (2.5 / 2.75)) {
+                r = s * (t -= (2.25 / 2.75)) * t + .9375;
+            }
+            else {
+                r = s * (t -= (2.625 / 2.75)) * t + .984375;
+            }
+
+            return r;
+        },
+
+        // windows8开始面板的滑动切换效果
+        doubleSqrt: function (t) {
+            return Math.sqrt(Math.sqrt(t));
         }
-    }
-    ;
+    };
 });
-
-
-function anonymous(alienTemplateData_1423132028795/**/) {
-    try {
-        var thead = alienTemplateData_1423132028795["thead"];
-        var tbody = alienTemplateData_1423132028795["tbody"];
-        var alien_libs_template_GYE6vAAhe5EQatYyU3FN = "";
-        alien_libs_template_GYE6vAAhe5EQatYyU3FN += "&lt;table class=\"alien-ui-datepicker-list\"> &lt;thead> &lt;tr> ";
-        this.each(thead, function (alien_libs_template_JDkSIEqmrNFJ55zVv4GI, alien_libs_template_iQGFJsUiqv8HPSCN1XEr) {
-            var alien_libs_template_JoUA1PO3lh9USssrrp3f = alien_libs_template_JDkSIEqmrNFJ55zVv4GI;
-            var th = alien_libs_template_iQGFJsUiqv8HPSCN1XEr;
-            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;th>";
-            alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(th) + "&lt;/th> ";
-        }, this);
-        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tr> &lt;/thead> &lt;tbody> ";
-        this.each(tbody, function (alien_libs_template_9yIUiLZ8OMMLpDQcKHYW, alien_libs_template_ULstP1jS2Ne97N31VAFb) {
-            var index = alien_libs_template_9yIUiLZ8OMMLpDQcKHYW;
-            var tr = alien_libs_template_ULstP1jS2Ne97N31VAFb;
-            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;tr> ";
-            this.each(tr[index], function (alien_libs_template_ZpeM5Y1ZId6eClxUfBkj, alien_libs_template_qz88hd9330CBdrAMgtiD) {
-                var alien_libs_template_AwymWFhy5qoriGF5zzUz = alien_libs_template_ZpeM5Y1ZId6eClxUfBkj;
-                var td = alien_libs_template_qz88hd9330CBdrAMgtiD;
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;td data-id=\"";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.id) + "\" data-year=\"";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.year) + "\" data-month=\"";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.month) + "\" data-date=\"";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "\" class=\"alien-ui-datepicker-";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.type) + " ";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.active ? 'alien-ui-datepicker-active' : '') + "\">";
-                alien_libs_template_GYE6vAAhe5EQatYyU3FN += this.escape(td.date) + "&lt;/td> ";
-            }, this);
-            alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tr> ";
-        }, this);
-        alien_libs_template_GYE6vAAhe5EQatYyU3FN += " &lt;/tbody> &lt;/table>";
-        return alien_libs_template_GYE6vAAhe5EQatYyU3FN
-    } catch (err) {
-        return err.message;
-    }
-}
 </code></pre>
 
 

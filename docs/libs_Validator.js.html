@@ -69,6 +69,7 @@
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
 <li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
 <li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
@@ -86,34 +87,41 @@
 <li><a href="module-utils_random.html">utils/random</a></li>
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Tab/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Mask_.html#~event:close">module:ui/Tooltip/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
 <li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
-<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Window/.hitbg</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
 <li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallafter">module:ui/Validator/.validateallafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateallbefore">module:ui/Validator/.validateallbefore</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateoneafter">module:ui/Validator/.validateoneafter</a></li>
-<li><a href="module-ui_Validator_.html#~event:validateonebefore">module:ui/Validator/.validateonebefore</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
 </ul>
 </li>
 </ul>
@@ -141,7 +149,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 46</li>
+	                    <li class="sidebar-header">Events &times; 58</li>
 
 	                    
 	                        
@@ -149,6 +157,24 @@
 <li class="">
     
         <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -337,6 +363,33 @@
 
 <li class="">
     
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:enterviewport">enterviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#~event:error">error</a>
     
 </li>
@@ -410,6 +463,15 @@
 <li class="">
     
         <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:leaveviewport">leaveviewport</a>
     
 </li>
 
@@ -526,7 +588,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateallafter">validateallafter</a>
+        <a class="" href="#~event:start">start</a>
     
 </li>
 
@@ -535,7 +597,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateallbefore">validateallbefore</a>
+        <a class="" href="#~event:validateallend">validateallend</a>
     
 </li>
 
@@ -544,7 +606,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateoneafter">validateoneafter</a>
+        <a class="" href="#~event:validateallstart">validateallstart</a>
     
 </li>
 
@@ -553,7 +615,61 @@
 
 <li class="">
     
-        <a class="" href="#~event:validateonebefore">validateonebefore</a>
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
     
 </li>
 
@@ -870,6 +986,11 @@ define(function (require, exports, module) {
         data = typeis(data) === 'object' ? data : {};
         callback = typeis(callback) === 'function' ? callback : noop;
 
+        /**
+         * 所有字段验证开始
+         * @event validateallstart
+         */
+        the.emit('validateallstart');
         howdo.each(the._ruleList, function (key, rule, next) {
             the._validateOne(rule, data, function (err) {
                 if (!isBreakOnInvalid) {
@@ -896,6 +1017,13 @@ define(function (require, exports, module) {
                 }
             });
 
+            /**
+             * 所有字段验证结束
+             * @event validateallend
+             * @param errs {Array} 错误消息数组
+             * @param data {Object} 验证过滤后的数据
+             */
+            the.emit('validateallend', errs, data);
             callback.call(the, errs, data);
         });
     };
@@ -915,6 +1043,12 @@ define(function (require, exports, module) {
         callback = typeis(callback) === 'function' ? callback : noop;
 
         if (name) {
+            /**
+             * 单个字段验证开始
+             * @event validateonestart
+             * @param name {String} 字段名称
+             */
+            the.emit('validateonestart', name);
             dato.each(the._ruleList, function (index, rule) {
                 if (rule.name === name) {
                     findIndex = index;
@@ -924,12 +1058,43 @@ define(function (require, exports, module) {
 
             if (findIndex > -1) {
                 the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                    /**
+                     * 单个字段验证结束
+                     * @event validateoneend
+                     * @param name {String} 字段名称
+                     * @param error {Error} 错误消息
+                     * @param value {*} 字段值
+                     */
+                    the.emit('validateoneend', name, err, data[name]);
                     callback.call(the, err, data[name]);
                 });
             } else {
+                /**
+                 * 单个字段验证结束
+                 * @event validateoneend
+                 * @param name {String} 字段名称
+                 * @param error {Error} 错误消息
+                 * @param value {*} 字段值
+                 */
+                the.emit('validateoneend', name, null, data[name]);
                 callback.call(the, null, data[name]);
             }
         } else {
+            /**
+             * 单个字段验证开始
+             * @event validateonestart
+             * @param name {String} 字段名称
+             */
+            the.emit('validateonestart', name);
+
+            /**
+             * 单个字段验证结束
+             * @event validateoneend
+             * @param name {String} 字段名称
+             * @param error {Error} 错误消息
+             * @param value {*} 字段值
+             */
+            the.emit('validateoneend', name, null, data[name]);
             callback.call(the, null, data[name]);
         }
     };
@@ -986,11 +1151,26 @@ define(function (require, exports, module) {
                 });
             }
 
+            /**
+             * 单个字段验证结束
+             * @event validateend
+             * @param name {String} 字段名称
+             * @param data {Object} 验证过滤后的数据
+             */
+            the.emit('validateend', rule.name, data);
+
             // callback
             if (typeis(callback) === 'function') {
                 callback.call(the, err, data);
             }
         };
+
+        /**
+         * 单个字段验证开始
+         * @event validateend
+         * @param name {String} 字段名称
+         */
+        the.emit('validatestart', rule.name);
 
         // onbefore
         rule.onbefores.forEach(function (fn) {
