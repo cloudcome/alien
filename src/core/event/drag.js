@@ -54,7 +54,9 @@ define(function (require, exports, module) {
     var top;
     var className = 'alien-core-event-drag';
     var style =
-        '.' + className + '{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;position:absolute;z-index:999;background:#eee;border:1px dotted #000}';
+        '.' + className + '{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;' +
+        'opacity:.5;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;' +
+        'position:absolute;background:#eee;border:1px dotted #000}';
     var preventDefault = false;
 
     modification.importStyle(style);
@@ -113,9 +115,8 @@ define(function (require, exports, module) {
                 preventDefault = false;
                 clone = modification.create('div', {
                     style: {
-                        position: 'absolute',
                         width: attribute.outerWidth(dragfor) - 2,
-                        height: attribute.height(dragfor) - 2,
+                        height: attribute.outerHeight(dragfor) - 2,
                         left: attribute.left(dragfor),
                         top: attribute.top(dragfor),
                         zIndex: Math.pow(2, 53)
