@@ -37,6 +37,7 @@
 |-- examples 简单示例
 |-- help 帮助
 |-- src 【源代码】
+|   |-- 3rd 第三方独立脚本
 |	|-- core 核心库
 |	|	|-- communication 通信
 |	|	|	|-- jsonp.js

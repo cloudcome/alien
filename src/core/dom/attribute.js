@@ -577,7 +577,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 返回当前文档上处于指定坐标位置最顶层的可见元素, 坐标是相对于包含该文档的浏览器窗口的左上角为原点来计算的, 通常 x 和 y 坐标都应为正数.
+     * 返回当前文档上处于指定坐标位置最顶层的可见元素,
+     * 坐标是相对于包含该文档的浏览器窗口的左上角为原点来计算的,
+     * 通常 x 和 y 坐标都应为正数.
      * @param clientX {Number} 元素位置x
      * @param clientY {Number} 元素位置y
      * @returns {HTMLElement}

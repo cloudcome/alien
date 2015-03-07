@@ -29,6 +29,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var dato = require('../../utils/dato.js');
     var event = require('./touch.js');
     var attribute = require('../dom/attribute.js');
     var modification = require('../dom/modification.js');
