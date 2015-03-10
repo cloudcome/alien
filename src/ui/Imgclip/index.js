@@ -228,7 +228,7 @@ define(function (require, exports, module) {
         // 3 移动选区
         // 4 缩放选区
         var state = 0;
-        var isReset = !1;
+        var isReset = false;
         var options = the._options;
 
         event.on(the._$wrap, 'dragstart', function (eve) {
@@ -472,7 +472,7 @@ define(function (require, exports, module) {
         event.on(the._$bg, 'click', function () {
             if (state === 2) {
                 if (isReset) {
-                    isReset = !1;
+                    isReset = false;
                 } else {
                     state = 0;
                     attribute.css(the._$bg, 'display', 'none');

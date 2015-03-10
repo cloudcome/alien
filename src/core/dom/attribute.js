@@ -86,7 +86,7 @@ define(function (require, exports, module) {
      */
     exports.hasAttr = function (ele, key) {
         if (!ele || ele.nodeType !== 1 || !key) {
-            return !1;
+            return false;
         }
 
         return ele.hasAttribute(key);
@@ -473,7 +473,7 @@ define(function (require, exports, module) {
      */
     exports.hasClass = function (ele, className) {
         if (!ele || ele.nodeType !== 1) {
-            return !1;
+            return false;
         }
 
         return _class(ele, 2, className);

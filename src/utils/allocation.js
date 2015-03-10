@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/getset
+     * @module utils/allocation
+     * @requires utils/typeis
+     * @requires utils/dato
      */
     'use strict';
 

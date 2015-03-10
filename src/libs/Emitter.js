@@ -75,7 +75,7 @@ define(function (require, exports, module) {
                 dato.each(this._eventsPool, function (index, _listener) {
                     if (listener === _listener) {
                         the._eventsPool.splice(index, 1);
-                        return !1;
+                        return false;
                     }
                 });
             } else {

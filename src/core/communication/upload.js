@@ -29,7 +29,7 @@ define(function (require, exports, module) {
 
     exports.defaults = defaults;
     module.exports = function (options) {
-        options = dato.extend(!0, {}, defaults, options);
+        options = dato.extend(true, {}, defaults, options);
 
         if (!options.file) {
             throw new Error('require param `file`');

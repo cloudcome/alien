@@ -86,7 +86,7 @@ define(function (require, exports, module) {
             width: attribute.innerWidth($ele),
             height: attribute.innerHeight($ele)
         };
-        the._disabled = !1;
+        the._disabled = false;
         the._on();
     };
 
@@ -116,7 +116,7 @@ define(function (require, exports, module) {
         var the = this;
         var x0;
         var y0;
-        var inDrag = !1;
+        var inDrag = false;
         var val0;
         var options = the._options;
         var min;
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
             eve.preventDefault();
 
             if (inDrag) {
-                inDrag = !1;
+                inDrag = false;
 
                 /**
                  * 尺寸改变后

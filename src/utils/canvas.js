@@ -110,7 +110,7 @@ define(function (require, exports) {
             $canvas = exports.imgToBase64($img, options, !0);
             return $canvas.toBlob(callback, options.type, options.quality);
         } else {
-            base64 = exports.imgToBase64($img, options, !1);
+            base64 = exports.imgToBase64($img, options, false);
             callback(exports.base64toBlob(base64));
         }
     };
@@ -157,7 +157,7 @@ define(function (require, exports) {
         });
         var eve = document.createEvent("HTMLEvents");
 
-        eve.initEvent('click', !1, !1);
+        eve.initEvent('click', false, false);
         link.dispatchEvent(eve);
     };
 });

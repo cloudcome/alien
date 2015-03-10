@@ -86,7 +86,7 @@ define(function (require, exports, module) {
 
         var ret = [];
         var parent = ele.parentNode;
-        var childrens = dato.toArray(parent.children, !0);
+        var childrens = dato.toArray(parent.children, true);
 
         dato.each(childrens, function (index, child) {
             if (child !== ele) {
@@ -115,12 +115,12 @@ define(function (require, exports, module) {
 
         var ret = -1;
         var parent = ele.parentNode;
-        var childrens = dato.toArray(parent.children, !0);
+        var childrens = dato.toArray(parent.children, true);
 
         dato.each(childrens, function (index, child) {
             if (child === ele) {
                 ret = index;
-                return !1;
+                return false;
             }
         });
 
@@ -142,7 +142,7 @@ define(function (require, exports, module) {
             return [];
         }
 
-        return dato.toArray(ele.previousElementSibling, !0);
+        return dato.toArray(ele.previousElementSibling, true);
     };
 
 
@@ -160,7 +160,7 @@ define(function (require, exports, module) {
             return [];
         }
 
-        return dato.toArray(ele.nextElementSibling, !0);
+        return dato.toArray(ele.nextElementSibling, true);
     };
 
 
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
 
         while (typeis(ele) !== 'document' && typeis(ele) === 'element') {
             if (the.isMatched(ele, selector)) {
-                return dato.toArray(ele, !0);
+                return dato.toArray(ele, true);
             }
 
             ele = this.parent(ele)[0];
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
             return [];
         }
 
-        return dato.toArray(ele.parentNode || ele.parentElement, !0);
+        return dato.toArray(ele.parentNode || ele.parentElement, true);
     };
 
 
@@ -233,7 +233,7 @@ define(function (require, exports, module) {
             return [];
         }
 
-        return dato.toArray(ele.children, !0);
+        return dato.toArray(ele.children, true);
     };
 
 
@@ -251,7 +251,7 @@ define(function (require, exports, module) {
             return [];
         }
 
-        return dato.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, !0);
+        return dato.toArray(ele.contentDocument ? ele.contentDocument : ele.childNodes, true);
     };
 
 
@@ -266,7 +266,7 @@ define(function (require, exports, module) {
      * // => true OR false
      */
     exports.isMatched = function (ele, selector) {
-        return typeis(ele) !== 'element' ? !1 : ele[matchesSelector](selector);
+        return typeis(ele) !== 'element' ? false : ele[matchesSelector](selector);
     };
 
 

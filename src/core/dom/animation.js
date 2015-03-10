@@ -363,7 +363,7 @@ define(function (require, exports, module) {
         to = to || {};
         to.x = to.x === udf ? from.x : to.x;
         to.y = to.y === udf ? from.y : to.y;
-        options = dato.extend(!0, {}, jsDefaults, options);
+        options = dato.extend(true, {}, jsDefaults, options);
 
         totalDistance = {
             x: to.x - from.x,

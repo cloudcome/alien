@@ -80,7 +80,7 @@ define(function (require, exports, module) {
             setter = key;
         }
 
-        dato.extend(!0, ret, setter);
+        dato.extend(true, ret, setter);
 
         location.search = qs.stringify(ret);
     };
