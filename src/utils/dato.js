@@ -317,23 +317,41 @@ define(function (require, exports, module) {
 
     /**
      * 按长度补0填充数字
-     * @param  {Number|String} number 数字
+     * @param  {Number|String} orginalString 原始字符串
      * @param  {Number} length 长度
      * @return {String} 修复后的数字
      *
      * @example
-     * fixedNumber(2, 4);
+     * dato.fillString('2', 4);
      * // => "0002"
      */
-    exports.fillNumber = function (number, length) {
+    exports.fillString = function (orginalString, length, fixString, isSuffix) {
         var len = length;
-        var start = '';
+        var fixedString = '';
+        var args = arguments;
+        var argL = args.length;
+        var hasFixString = false;
 
-        while (len--) {
-            start += '0';
+        // dato.fillString(originalString, length, isSuffix);
+        // dato.fillString(originalString, length, fixString, isSuffix);
+        if (typeis.boolean(args[argL - 1])) {
+            fixString = argL === 4 ? args[2] : '0';
+            isSuffix = args[argL - 1];
+        }
+        // dato.fillString(originalString, length);
+        // dato.fillString(originalString, length, fixString);
+        else {
+            fixString = argL === 3 ? args[2] : '0';
+            isSuffix = false;
         }
 
-        return (start + number).slice(-length);
+        while (len--) {
+            fixedString += fixString;
+        }
+
+        return isSuffix ?
+            (orginalString + fixedString).slice(0, length) :
+            (fixedString + orginalString).slice(-length);
     };
 
 

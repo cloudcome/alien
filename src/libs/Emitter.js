@@ -47,7 +47,7 @@ define(function (require, exports, module) {
                 throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
             }
 
-            if (typeis(listener) === 'function') {
+            if (typeis.function(listener)) {
                 the._eventsPool[et].push(listener);
             }
         });
