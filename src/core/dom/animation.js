@@ -290,14 +290,14 @@ define(function (require, exports, module) {
             animationIterationCount: options.count,
             animationDirection: options.direction
         };
-        
+
         event.on(ele, animationiterationEventType, onanimationiteration);
         event.once(ele, animationendEventType, function (eve) {
             if (options.name === eve.animationName) {
                 onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
                 onanimationend.apply(ele, arguments);
             }
-            
+
             event.un(ele, animationiterationEventType, onanimationiteration);
 
             attribute.css(ele, {
