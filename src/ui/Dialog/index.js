@@ -19,7 +19,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/drag
      * @requires libs/Template
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
@@ -33,11 +33,12 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/drag.js');
+    require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');
     var tpl = new Template(template);
-    var ui = require('../base.js');
+    var ui = require('../');
     var $body = document.body;
     var noop = function () {
         // ignore
@@ -49,7 +50,7 @@ define(function (require, exports, module) {
         top: 'center',
         title: '无标题对话框',
         addClass: '',
-        duration: 456,
+        duration: 234,
         easing: 'ease-in-out-back',
         canDrag: true,
         isModal: true,
@@ -105,6 +106,7 @@ define(function (require, exports, module) {
             the.setRemote(options.remote);
         }
 
+        the._isReady = false;
         return the;
     };
 
@@ -146,7 +148,7 @@ define(function (require, exports, module) {
                  * 按 ESC 之后
                  * @event esc
                  */
-                if (the.emit('esc') !== false) {
+                if (the.emit('esc') !== false && the._isReady) {
                     the.shake();
                 }
             });
@@ -157,7 +159,7 @@ define(function (require, exports, module) {
                  * 单击背景之后
                  * @event hitbg
                  */
-                if (the.emit('hitbg') !== false) {
+                if (the.emit('hitbg') !== false && the._isReady) {
                     the.shake();
                 }
             });
@@ -168,6 +170,10 @@ define(function (require, exports, module) {
             if (the._scrollbar) {
                 the._scrollbar.resize();
             }
+
+            the._isReady = true;
+        }).on('close', function () {
+            the._isReady = false;
         });
 
         // 点击关闭

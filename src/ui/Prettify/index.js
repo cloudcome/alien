@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var ui = require('../');
     var win = window;
     // Keyword lists for various languages.
     // We use things that coerce to strings to make them compact when minified

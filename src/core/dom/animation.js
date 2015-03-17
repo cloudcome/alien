@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var eeeing = require('../../utils/easing.js');
+    var controller = require('../../utils/controller.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
     var cssDefaults = {
@@ -59,6 +60,7 @@ define(function (require, exports, module) {
     };
     var alienKey = '-alien-core-dom-animation-';
     var index = 0;
+    var transitionMap = {};
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
 
@@ -107,12 +109,12 @@ define(function (require, exports, module) {
         var i = 0;
 
         // 如果正在动画，则停止当前动画
-        if (animationMap[id]) {
+        if (transitionMap[id]) {
             exports.stop(ele);
         }
 
         options = dato.extend({}, cssDefaults, options);
-        animationMap[id] = to;
+        transitionMap[id] = true;
         callback = args[argL - 1];
 
         if (argL === 3) {
@@ -143,7 +145,7 @@ define(function (require, exports, module) {
                 }
 
                 hasDispatch = true;
-                animationMap[id] = null;
+                transitionMap[id] = false;
                 event.un(ele, transitionendEventType, listener);
                 attribute.css(ele, {
                     transitionDuration: '',
@@ -198,13 +200,14 @@ define(function (require, exports, module) {
             easingVal.push(easing);
         }
 
-
         if (see.visibility(ele) === 'visible') {
-            attribute.css(ele, {
-                transitionDuration: durationVal.join(','),
-                transitionDelay: delayVal.join(','),
-                transitionTimingFunction: easingVal.join(','),
-                transitionProperty: keys.join(',')
+            controller.nextTick(function () {
+                attribute.css(ele, {
+                    transitionDuration: durationVal.join(','),
+                    transitionDelay: delayVal.join(','),
+                    transitionTimingFunction: easingVal.join(','),
+                    transitionProperty: keys.join(',')
+                });
             });
         } else {
             listener(true);
@@ -230,7 +233,7 @@ define(function (require, exports, module) {
         var id = ele[alienKey];
         var to;
 
-        if (!id || !(to = animationMap[id])) {
+        if (!id || !(to = transitionMap[id])) {
             return;
         }
 
@@ -276,6 +279,12 @@ define(function (require, exports, module) {
             return;
         }
 
+        if (!ele[alienKey]) {
+            ele[alienKey] = ++index;
+        }
+
+        var id = ele[alienKey];
+
         var easing = eeeing.css3[options.easing];
 
         if (!easing) {
@@ -291,15 +300,7 @@ define(function (require, exports, module) {
             animationDirection: options.direction
         };
 
-        event.on(ele, animationiterationEventType, onanimationiteration);
-        event.once(ele, animationendEventType, function (eve) {
-            if (options.name === eve.animationName) {
-                onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
-                onanimationend.apply(ele, arguments);
-            }
-
-            event.un(ele, animationiterationEventType, onanimationiteration);
-
+        var reset = function () {
             attribute.css(ele, {
                 animationName: '',
                 animationDuration: '',
@@ -308,8 +309,30 @@ define(function (require, exports, module) {
                 animationIterationCount: '',
                 animationDirection: ''
             });
+        };
+
+        var onend = function (eve) {
+            if (options.name === eve.animationName) {
+                if (animationMap[id] !== onanimationend) {
+                    animationMap[id] = typeis.function(animationMap[id]) ? animationMap[id] : noop;
+                    animationMap[id].apply(ele, arguments);
+                }
+
+                onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
+                onanimationend.apply(ele, arguments);
+
+                reset();
+                event.un(ele, animationiterationEventType, onanimationiteration);
+                event.un(ele, animationendEventType, onend);
+            }
+        };
+
+        event.on(ele, animationiterationEventType, onanimationiteration);
+        event.on(ele, animationendEventType, onend);
+        animationMap[id] = onanimationend;
+        controller.nextTick(function () {
+            attribute.css(ele, css);
         });
-        attribute.css(ele, css);
     };
 
 

@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires core/event/touch
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/controller
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
-    var ui = require('../base.js');
+    var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');

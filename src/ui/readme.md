@@ -7,7 +7,7 @@ var defaults = {
     height: 300
 };
 var dato = require('../../utils/dato.js');
-var ui = require('../base.js');
+var ui = require('../');
 var MyUI = ui.create({
     // 构造函数的静态属性、方法
     STATIC: {

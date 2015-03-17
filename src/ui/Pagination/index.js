@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pagination/
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires libs/Pagination
      * @requires libs/Template
@@ -19,7 +19,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../utils/dato.js');

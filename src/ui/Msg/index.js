@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 
     var Mask = require('../Mask/');
     var Window = require('../Window/');
-    var ui = require('../base.js');
+    var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
@@ -24,6 +24,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/drag.js');
+    require('../../core/event/touch.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');
     var tpl = new Template(template);
@@ -41,7 +42,7 @@ define(function (require, exports, module) {
         buttons: null,
         canDrag: true,
         isModal: true,
-        duration: 345,
+        duration: 234,
         timeout: 0,
         easing: 'ease-in-out-back',
         zIndex: null
@@ -58,9 +59,8 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._options.buttons = the._options.buttons || [];
         the.id = alienIndex++;
+        the._isReady = false;
         the._init();
-
-
     });
 
     Msg.fn._init = function () {
@@ -73,7 +73,9 @@ define(function (require, exports, module) {
             the._mask.open();
         }
 
-        the._window.open();
+        the._window.open(function () {
+            the._isReady = true;
+        });
 
         if (the._options.timeout) {
             setTimeout(the.destroy.bind(the), the._options.timeout);
@@ -81,7 +83,6 @@ define(function (require, exports, module) {
 
         return the;
     };
-
 
     Msg.fn._initNode = function () {
         var the = this;
@@ -138,46 +139,36 @@ define(function (require, exports, module) {
         var the = this;
 
         // 关闭 msg
-        event.on(the._$close, 'click', function () {
+        event.on(the._$close, 'click tap', function () {
+            if (!the._window.visible) {
+                return;
+            }
+
+            /**
+             * 消息框被关闭后
+             * @event close
+             * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
+             */
+            the.emit('close', -1);
             the.destroy();
         });
 
         // 点击按钮
-        event.on(the._$buttons, 'click', '.j-flag', function () {
+        event.on(the._$buttons, 'click tap', '.j-flag', function () {
+            if (!the._window.visible) {
+                return;
+            }
+
             var index = attribute.data(this, 'index');
 
             /**
              * 消息框被关闭后
              * @event close
-             * @param index {Number} 选择的按钮索引
+             * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
              */
             the.emit('close', index);
             the.destroy();
         });
-
-        if (the._mask) {
-            // esc
-            the._mask.on('esc', function () {
-                /**
-                 * 当前消息框被按 ESC 后
-                 * @event esc
-                 */
-                if (the.emit('esc') !== false) {
-                    the.shake();
-                }
-            });
-
-            // hitbg
-            the._mask.on('hit', function () {
-                /**
-                 * 当前消息框被触碰背景后
-                 * @event hitbg
-                 */
-                if (the.emit('hitbg') !== false) {
-                    the.shake();
-                }
-            });
-        }
     };
 
 
@@ -207,17 +198,6 @@ define(function (require, exports, module) {
         return the;
     };
 
-    /**
-     * 震晃窗口以示提醒
-     */
-    Msg.fn.shake = function () {
-        var the = this;
-
-        the._window.shake();
-
-        return the;
-    };
-
 
     /**
      * 销毁实例
@@ -226,9 +206,8 @@ define(function (require, exports, module) {
         var the = this;
 
         the._window.destroy(function () {
-            event.un(the._$close, 'click');
-            event.un(the._$buttons, 'click');
-            event.un(the._$mask, 'click');
+            event.un(the._$close, 'click tap');
+            event.un(the._$buttons, 'click tap');
 
             if (the._mask) {
                 the._mask.destroy();

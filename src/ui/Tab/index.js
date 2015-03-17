@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Tab/
-     * @requires ui/base
+     * @requires ui/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/event/touch
@@ -17,7 +17,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');

@@ -9,7 +9,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Autoheight/
-     * @requires ui/base
+     * @requires ui/
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');

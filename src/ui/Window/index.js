@@ -13,19 +13,20 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var keyframes = require('../../utils/keyframes.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/base.js');
     var animation = require('../../core/dom/animation.js');
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var ui = require('../');
     var alienIndex = 0;
     var alienBaseClass = 'alien-ui';
     var alienClass = alienBaseClass + '-window';
@@ -40,16 +41,26 @@ define(function (require, exports, module) {
         right: null,
         bottom: null,
         left: 'center',
-        duration: 456,
+        duration: 234,
         easing: 'ease-in-out-back',
         addClass: '',
         // 最小偏移量
         minOffset: 20,
         zIndex: null,
-        // 窗口打开动画
-        open: null,
-        // 窗口关闭动画
-        close: null
+        keyframes: {
+            0: {
+                opacity: 0,
+                scale: 0.6
+            },
+            0.8: {
+                opacity: 1,
+                scale: 1.1
+            },
+            1: {
+                opacity: 1,
+                scale: 1
+            }
+        }
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -67,6 +78,7 @@ define(function (require, exports, module) {
         var $pos = modification.create('div');
 
         the.id = alienIndex;
+        the._keyframes = keyframes(options.keyframes);
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -83,6 +95,10 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
         }
+
+        the.on('setoptions', function (options) {
+            the._keyframes = keyframes(options.keyframes);
+        });
 
         return the;
     };
@@ -109,6 +125,15 @@ define(function (require, exports, module) {
         });
         pos.width = attribute.outerWidth(the._$window);
         pos.height = attribute.outerHeight(the._$window);
+
+        if (options.width === 'height' && options.height === 'width') {
+            pos.width = pos.height = Math.max(pos.width, pos.height);
+        } else if (options.width === 'height') {
+            pos.width = pos.height;
+        } else if (options.height === 'width') {
+            pos.height = pos.width;
+        }
+
         attribute.css(the._$window, pre);
 
         if (options.left === 'center') {
@@ -145,10 +170,8 @@ define(function (require, exports, module) {
         var the = this;
 
         if (the.visible) {
-            animation.stop(the._$window);
             return the;
         }
-
 
         var options = the._options;
         var onopen = function () {
@@ -165,26 +188,13 @@ define(function (require, exports, module) {
 
         var to = the._getPos();
         the.visible = true;
-        to.opacity = '';
-        to.transform = '';
+        to.display = 'block';
+        to.zIndex = ui.getZindex();
 
-        if (typeis.function(options.open)) {
-            options.open.call(the, the._$window, to, onopen);
-            return the;
-        }
+        attribute.css(the._$window, to);
 
-        attribute.css(the._$window, {
-            display: 'block',
-            opacity: 0,
-            visibility: 'visible',
-            left: to.left,
-            top: to.top,
-            marginBottom: options.minOffset,
-            scale: 0,
-            zIndex: options.zIndex || ui.getZindex()
-        });
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
             duration: options.duration,
             easing: options.easing
         }, onopen);
@@ -265,17 +275,9 @@ define(function (require, exports, module) {
 
         the.visible = false;
 
-        if (typeis.function(options.close)) {
-            options.close.call(the, the._$window, onclose);
-            return the;
-        }
-
-        var to = {
-            opacity: 0,
-            scale: 0
-        };
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
+            direction: 'reverse',
             duration: options.duration,
             easing: options.easing
         }, onclose);
@@ -335,6 +337,7 @@ define(function (require, exports, module) {
 
         if (the.visible) {
             the.close(destroy);
+            the.visible = false;
         } else {
             destroy();
         }
@@ -344,8 +347,8 @@ define(function (require, exports, module) {
      * 创建一个窗口实例
      * @param $content {Object} 内容节点，为 null 时创建一个新的 window
      * @param [options] {Object} 配置
-     * @param [options.width="auto"] {Number|String} 窗口宽度
-     * @param [options.height="auto"] {Number|String} 窗口高度
+     * @param [options.width="auto"] {Number|String} 窗口宽度，当 width="height" 并且 height="width"时，取 width 和 height 的最大值，并保持相等
+     * @param [options.height="auto"] {Number|String} 窗口高度，当 width="height" 并且 height="width"时，取 width 和 height 的最大值，并保持相等
      * @param [options.left="center"] {Number|String} 窗口左位移
      * @param [options.top="center"] {Number|String} 窗口上位移
      * @param [options.duration=456] {Number} 窗口打开动画时间
