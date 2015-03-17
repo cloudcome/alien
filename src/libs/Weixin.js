@@ -7,13 +7,16 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/weixin
+     * @module libs/Weixin
+     * @requires utils/class.js
+     * @requires utils/dato.js
+     * @requires libs/Emitter
      */
     'use strict';
 
     var wx = require('../3rd/weixin.js');
-    var klass = require('../util/class.js');
-    var dato = require('../util/dato.js');
+    var klass = require('../utils/class.js');
+    var dato = require('../utils/dato.js');
     var Emitter = require('./Emitter.js');
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
     var Weixin = klass.create(function (config, shareData) {

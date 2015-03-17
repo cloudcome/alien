@@ -122,7 +122,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'MM',
-                val: dato.fillNumber(M, 2),
+                val: dato.fillString(M, 2),
                 is: 'M'
             },
             {
@@ -132,7 +132,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'DD',
-                val: dato.fillNumber(D, 2),
+                val: dato.fillString(D, 2),
                 is: 'D'
             },
             {
@@ -142,7 +142,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'HH',
-                val: dato.fillNumber(H, 2),
+                val: dato.fillString(H, 2),
                 is: 'H'
             },
             {
@@ -152,7 +152,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'hh',
-                val: dato.fillNumber(h, 2),
+                val: dato.fillString(h, 2),
                 is: 'h'
             },
             {
@@ -162,7 +162,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'mm',
-                val: dato.fillNumber(m, 2),
+                val: dato.fillString(m, 2),
                 is: 'm'
             },
             {
@@ -172,7 +172,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'ss',
-                val: dato.fillNumber(s, 2),
+                val: dato.fillString(s, 2),
                 is: 's'
             },
             {
@@ -182,12 +182,12 @@ define(function (require, exports, module) {
             },
             {
                 key: 'SSS',
-                val: dato.fillNumber(S, 3),
+                val: dato.fillString(S, 3),
                 is: 'S'
             },
             {
                 key: 'SS',
-                val: dato.fillNumber(S, 2),
+                val: dato.fillString(S, 2),
                 is: 'S'
             },
             {

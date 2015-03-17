@@ -247,7 +247,7 @@ define(function (require, exports, module) {
             if (domSelector.isMatched(source.parentNode, selector)) {
                 _removeParent(source);
             } else {
-                return !1;
+                return false;
             }
         });
 

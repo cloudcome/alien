@@ -47,15 +47,15 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_Dangke.html">libs/Dangke</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
-<li><a href="module-parent_getset.html">parent/getset</a></li>
+<li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
-<li><a href="module-parent_weixin.html">parent/weixin</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
 <li><a href="module-ui_base.html">ui/base</a></li>
@@ -75,6 +75,7 @@
 <li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
 <li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
 <li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
 <li><a href="module-utils_calendar.html">utils/calendar</a></li>
 <li><a href="module-utils_canvas.html">utils/canvas</a></li>
 <li><a href="module-utils_class.html">utils/class</a></li>
@@ -94,23 +95,24 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#~event:change">module:ui/Tab/.change</a></li>
+<li><a href="module-ui_Pager_.html#~event:change">module:libs/Animation.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
-<li><a href="module-ui_Window_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:open">module:ui/Window/.open</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
+<li><a href="module-libs_Dangke.html#~event:ready">module:libs/Dangke.ready</a></li>
+<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -149,7 +151,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 58</li>
+	                    <li class="sidebar-header">Events &times; 57</li>
 
 	                    
 	                        
@@ -426,15 +428,6 @@
 
 <li class="">
     
-        <a class="" href="#~event:esc">esc</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
         <a class="" href="#~event:getoptions">getoptions</a>
     
 </li>
@@ -445,15 +438,6 @@
 <li class="">
     
         <a class="" href="#~event:hit">hit</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:hitbg">hitbg</a>
     
 </li>
 
@@ -499,6 +483,15 @@
 <li class="">
     
         <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:ready">ready</a>
     
 </li>
 
@@ -734,7 +727,8 @@ define(function (require, exports, module) {
         formMsgSelector: '.form-msg',
         isBreakOnInvalid: false,
         validateEvent: 'focusout',
-        successMsg: null
+        successMsg: null,
+        canAddStatusClass: true
     };
     var Validator = ui.create(function ($form, options) {
         var the = this;
@@ -753,8 +747,7 @@ define(function (require, exports, module) {
         var the = this;
 
         the.id = alienIndex++;
-        the._nameRuleMap = {};
-        the._initRule();
+        the.updateRule();
         the._initCustomRules();
         the._initEvent();
 
@@ -777,10 +770,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 初始化验证规则
-     * @private
+     * 更新验证规则，当表单发生变化时可以手动触发
      */
-    Validator.fn._initRule = function () {
+    Validator.fn.updateRule = function () {
         var the = this;
         var options = the._options;
         var $inputs = selector.query(inputSelector, the._$form);
@@ -791,6 +783,7 @@ define(function (require, exports, module) {
         the._nameItemMap = {};
         the._nameMsgMap = {};
         the._nameInputMap = {};
+        the._nameRuleMap = {};
         dato.each($inputs, function (index, $input) {
             var name = $input.name;
 
@@ -802,7 +795,7 @@ define(function (require, exports, module) {
             var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
             var $formItem = selector.closest($input, options.formItemSelector)[0];
             var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
-            var rule = attribute.data($input, options.dataRuleAttr);
+            var rule = attribute.data($input, options.dataRuleAttr) || {};
             var msg = attribute.data($input, options.dataMessageAttr);
             var type = attribute.attr($input, 'type');
             var standar = {
@@ -816,7 +809,9 @@ define(function (require, exports, module) {
                 type: typeArray.indexOf(type) > -1 ? type : 'string'
             };
 
-            attribute.data($formMsg, 'original', $formMsg.innerHTML);
+            if ($formMsg) {
+                attribute.data($formMsg, 'original', $formMsg.innerHTML);
+            }
 
             // regexp
             if ($input.pattern) {
@@ -850,6 +845,8 @@ define(function (require, exports, module) {
             the._nameInputMap[name] = $input;
             the._nameRuleMap[name] = rule;
         });
+
+        return the;
     };
 
 
@@ -873,7 +870,11 @@ define(function (require, exports, module) {
             var $item = the._nameItemMap[name];
 
             attribute.removeClass($item, formItemStatusClass);
-            attribute.addClass($item, 'has-warning');
+
+            if (options.canAddStatusClass) {
+                attribute.addClass($item, 'has-warning');
+            }
+
             the.emit(this.alienEvent.type, the._nameInputMap[name]);
         });
 
@@ -1121,7 +1122,7 @@ define(function (require, exports, module) {
 
         attribute.removeClass($formItem, formItemStatusClass);
 
-        if (type) {
+        if (type &amp;&amp; the._options.canAddStatusClass) {
             attribute.addClass($formItem, 'has-' + type);
         }
 
@@ -1244,6 +1245,7 @@ define(function (require, exports, module) {
      * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
      * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
      * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
+     * @param [options.canAddStatusClass=null] {Boolean} 是否可以添加验证状态的 className
      */
     module.exports = Validator;
     modification.importStyle(style);

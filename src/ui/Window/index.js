@@ -40,7 +40,7 @@ define(function (require, exports, module) {
         right: null,
         bottom: null,
         left: 'center',
-        duration: 456,
+        duration: 234,
         easing: 'ease-in-out-back',
         addClass: '',
         // 最小偏移量
@@ -109,6 +109,15 @@ define(function (require, exports, module) {
         });
         pos.width = attribute.outerWidth(the._$window);
         pos.height = attribute.outerHeight(the._$window);
+
+        if (options.width === 'height' && options.height === 'width') {
+            pos.width = pos.height = Math.max(pos.width, pos.height);
+        } else if (options.width === 'height') {
+            pos.width = pos.height;
+        } else if (options.height === 'width') {
+            pos.height = pos.width;
+        }
+
         attribute.css(the._$window, pre);
 
         if (options.left === 'center') {
@@ -335,6 +344,7 @@ define(function (require, exports, module) {
 
         if (the.visible) {
             the.close(destroy);
+            the.visible = false;
         } else {
             destroy();
         }
@@ -344,8 +354,8 @@ define(function (require, exports, module) {
      * 创建一个窗口实例
      * @param $content {Object} 内容节点，为 null 时创建一个新的 window
      * @param [options] {Object} 配置
-     * @param [options.width="auto"] {Number|String} 窗口宽度
-     * @param [options.height="auto"] {Number|String} 窗口高度
+     * @param [options.width="auto"] {Number|String} 窗口宽度，当 width="height" 并且 height="width"时，取 width 和 height 的最大值，并保持相等
+     * @param [options.height="auto"] {Number|String} 窗口高度，当 width="height" 并且 height="width"时，取 width 和 height 的最大值，并保持相等
      * @param [options.left="center"] {Number|String} 窗口左位移
      * @param [options.top="center"] {Number|String} 窗口上位移
      * @param [options.duration=456] {Number} 窗口打开动画时间

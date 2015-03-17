@@ -117,15 +117,15 @@ define(function (require, exports, module) {
 //        for (i in mimeTypes) {
 //            if (mimeTypes[i][where] == value) {
 //                if (name !== undefined && nameReg.test(mimeTypes[i][name])) {
-//                    return !0;
+//                    return true;
 //                }
 //                else if (name === undefined) {
-//                    return !0;
+//                    return true;
 //                }
 //            }
 //        }
 //
-//        return !1;
+//        return false;
 //    }
 
 

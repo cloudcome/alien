@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var mousewheel = 'wheel mousewheel DOMMouseScroll MozMousePixelScroll';
     var timeout = 500;
     var timeid = 0;
-    var isStart = !1;
+    var isStart = false;
 
     event.on(document, mousewheel, function (eve) {
         var startEvent = event.create('wheelstart');
@@ -43,11 +43,11 @@ define(function (require, exports, module) {
 
         timeid = setTimeout(function () {
             event.dispatch(ele, endEvent);
-            isStart = !1;
+            isStart = false;
         }, timeout);
 
         if (!isStart) {
-            isStart = !0;
+            isStart = true;
 
             event.extend(startEvent, eve);
             dispatchStart = event.dispatch(ele, startEvent);

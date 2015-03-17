@@ -37,7 +37,7 @@ define(function (require, exports, module) {
      * typeis("1");
      * // => "string"
      *
-     * typeis(!1);
+     * typeis(false);
      * // => "boolean"
      *
      * typeis({});

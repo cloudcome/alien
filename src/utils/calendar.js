@@ -128,7 +128,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _buildDateid(item) {
-        return [item.year, dato.fillNumber(item.month, 2), dato.fillNumber(item.date, 2)].join('') * 1;
+        return [item.year, dato.fillString(item.month, 2), dato.fillString(item.date, 2)].join('') * 1;
     }
 
 });

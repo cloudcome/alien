@@ -154,12 +154,11 @@ define(function (require, exports, module) {
      * 下一步
      * @param callback {Function} 回调
      * @param [context=window] {Object} 上下文
-     * @param [args=[]] {Array} 参数
      */
-    exports.nextTick = function (callback, context, args) {
+    exports.nextTick = function (callback, context) {
         context = context || window;
-        args = args || [];
 
+        var args = [].slice.call(arguments, 2);
         var $doc = document;
         var $body = $doc.body;
         var fn = exports.once(function () {
@@ -168,13 +167,13 @@ define(function (require, exports, module) {
 
         // chrome18+, safari6+, firefox14+,ie11+,opera15
         if (MutationObserver) {
-            var $input = $doc.createElement('input');
-            var observer = new MutationObserver(fn);
+            var $link = $doc.createElement('a');
+            var observer = new window[MutationObserver](fn);
 
-            observer.observe($input, {
+            observer.observe($link, {
                 attributes: true
             });
-            $input.value = Math.random();
+            $link.setAttribute('a', Math.random());
 
             return;
         } else if (window.VBArray) {

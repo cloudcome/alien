@@ -47,7 +47,7 @@ define(function (require, exports, module) {
                 throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
             }
 
-            if (typeis(listener) === 'function') {
+            if (typeis.function(listener)) {
                 the._eventsPool[et].push(listener);
             }
         });
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
                 dato.each(this._eventsPool, function (index, _listener) {
                     if (listener === _listener) {
                         the._eventsPool.splice(index, 1);
-                        return !1;
+                        return false;
                     }
                 });
             } else {

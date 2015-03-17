@@ -43,7 +43,8 @@ define(function (require, exports, module) {
         formMsgSelector: '.form-msg',
         isBreakOnInvalid: false,
         validateEvent: 'focusout',
-        successMsg: null
+        successMsg: null,
+        canAddStatusClass: true
     };
     var Validator = ui.create(function ($form, options) {
         var the = this;
@@ -62,8 +63,7 @@ define(function (require, exports, module) {
         var the = this;
 
         the.id = alienIndex++;
-        the._nameRuleMap = {};
-        the._initRule();
+        the.updateRule();
         the._initCustomRules();
         the._initEvent();
 
@@ -86,10 +86,9 @@ define(function (require, exports, module) {
 
 
     /**
-     * 初始化验证规则
-     * @private
+     * 更新验证规则，当表单发生变化时可以手动触发
      */
-    Validator.fn._initRule = function () {
+    Validator.fn.updateRule = function () {
         var the = this;
         var options = the._options;
         var $inputs = selector.query(inputSelector, the._$form);
@@ -100,6 +99,7 @@ define(function (require, exports, module) {
         the._nameItemMap = {};
         the._nameMsgMap = {};
         the._nameInputMap = {};
+        the._nameRuleMap = {};
         dato.each($inputs, function (index, $input) {
             var name = $input.name;
 
@@ -111,7 +111,7 @@ define(function (require, exports, module) {
             var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
             var $formItem = selector.closest($input, options.formItemSelector)[0];
             var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
-            var rule = attribute.data($input, options.dataRuleAttr);
+            var rule = attribute.data($input, options.dataRuleAttr) || {};
             var msg = attribute.data($input, options.dataMessageAttr);
             var type = attribute.attr($input, 'type');
             var standar = {
@@ -125,7 +125,9 @@ define(function (require, exports, module) {
                 type: typeArray.indexOf(type) > -1 ? type : 'string'
             };
 
-            attribute.data($formMsg, 'original', $formMsg.innerHTML);
+            if ($formMsg) {
+                attribute.data($formMsg, 'original', $formMsg.innerHTML);
+            }
 
             // regexp
             if ($input.pattern) {
@@ -159,6 +161,8 @@ define(function (require, exports, module) {
             the._nameInputMap[name] = $input;
             the._nameRuleMap[name] = rule;
         });
+
+        return the;
     };
 
 
@@ -182,7 +186,11 @@ define(function (require, exports, module) {
             var $item = the._nameItemMap[name];
 
             attribute.removeClass($item, formItemStatusClass);
-            attribute.addClass($item, 'has-warning');
+
+            if (options.canAddStatusClass) {
+                attribute.addClass($item, 'has-warning');
+            }
+
             the.emit(this.alienEvent.type, the._nameInputMap[name]);
         });
 
@@ -430,7 +438,7 @@ define(function (require, exports, module) {
 
         attribute.removeClass($formItem, formItemStatusClass);
 
-        if (type) {
+        if (type && the._options.canAddStatusClass) {
             attribute.addClass($formItem, 'has-' + type);
         }
 
@@ -553,6 +561,7 @@ define(function (require, exports, module) {
      * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
      * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
      * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
+     * @param [options.canAddStatusClass=null] {Boolean} 是否可以添加验证状态的 className
      */
     module.exports = Validator;
     modification.importStyle(style);

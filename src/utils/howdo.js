@@ -47,7 +47,7 @@ define(function (require, exports, module) {
         // 任务队列
         this.tasks = [];
         // 是否已经开始执行任务了
-        this.hasStart = !1;
+        this.hasStart = false;
         // 标识任务序号
         this.index = 0;
     }
@@ -258,7 +258,7 @@ define(function (require, exports, module) {
             var tasks = this.tasks;
             var count = tasks.length;
             var taskData = [];
-            var hasCallback = !1;
+            var hasCallback = false;
             var i = 0;
 
             if (!count) {

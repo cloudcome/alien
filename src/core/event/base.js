@@ -87,7 +87,7 @@ define(function (require, exports, module) {
     // unload, change, reset, scroll, most of the DOM events (DOMFocusIn, DOMFocusOut, DOMNodeRemoved, etc),
     // mouseenter, mouseleave, etc
     // @link http://stackoverflow.com/questions/5574207/javascript-which-events-do-not-bubble
-    var canNotBubbleEvents = 'blur error focus load unload change scroll submit mouseenter mouseleave'.split(' ');
+    //var canNotBubbleEvents = 'blur error focus load unload change scroll submit mouseenter mouseleave'.split(' ');
 
 
     /**
@@ -263,10 +263,6 @@ define(function (require, exports, module) {
         // delegate
         // .on(body, 'click', 'p', fn)
         else if (typeis.function(listener)) {
-            if (canNotBubbleEvents.indexOf(eventType) > -1) {
-                console.warn(eventType, 'can not bubble in DOM tree');
-            }
-
             callback = function (eve) {
                 // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                 var closestElement = domSelector.closest(eve.target, selector);

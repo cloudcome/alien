@@ -38,7 +38,7 @@ define(function (require, exports, module) {
     var JSONP = klass.create(function (options) {
         var the = this;
 
-        options = dato.extend(!0, {}, defaults, options);
+        options = dato.extend(true, {}, defaults, options);
 
         options.url = String(options.url);
 
