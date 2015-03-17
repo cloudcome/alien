@@ -49,7 +49,9 @@ define(function (require, exports, module) {
         // 请求鉴权密码
         password: null,
         // 覆盖 MIME
-        mimeType: null
+        mimeType: null,
+        // 延时请求时间
+        delay: 0
     };
     var regProtocol = /^([\w-]+:)\/\//;
     var XHR = klass.create(function (options) {
@@ -77,15 +79,17 @@ define(function (require, exports, module) {
                 err.message = err.message || 'network error';
             }
 
-            the.emit('complete', err, ret);
+            setTimeout(function () {
+                the.emit('complete', err, ret);
 
-            if (err) {
-                the.emit('error', err);
-            } else {
-                the.emit('success', ret);
-            }
+                if (err) {
+                    the.emit('error', err);
+                } else {
+                    the.emit('success', ret);
+                }
 
-            the.emit('finish', err, ret);
+                the.emit('finish', err, ret);
+            }, options.delay);
         };
 
         xhr.onload = function () {
@@ -191,6 +195,8 @@ define(function (require, exports, module) {
      * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
      * @param {String} [options.username] 请求鉴权用户名
      * @param {String} [options.password] 请求鉴权密码
+     * @param {String|null} [options.mimeType=null] 覆盖 MIME
+     * @param {Number} [options.delay=0] 请求延迟时间
      *
      * @example
      * xhr.ajax().on('success', fn).on('error', fn);

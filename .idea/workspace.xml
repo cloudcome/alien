@@ -2,169 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f693d7fa-c856-4087-8dca-ec755b0e4a4f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/libs/Dangke.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/module-parent_getset.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/module-parent_weixin.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/libs/Emitter.js" afterPath="$PROJECT_DIR$/src/libs/Emitter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/libs/Template.js" afterPath="$PROJECT_DIR$/src/libs/Template.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/libs/Weixin.js" afterPath="$PROJECT_DIR$/src/libs/Weixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/allocation.js" afterPath="$PROJECT_DIR$/src/utils/allocation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/animation.js" afterPath="$PROJECT_DIR$/src/core/dom/animation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/attribute.js" afterPath="$PROJECT_DIR$/src/core/dom/attribute.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/event/base.js" afterPath="$PROJECT_DIR$/src/core/event/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/calendar.js" afterPath="$PROJECT_DIR$/src/utils/calendar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/canvas.js" afterPath="$PROJECT_DIR$/src/utils/canvas.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/class.js" afterPath="$PROJECT_DIR$/src/utils/class.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/navigator/compatible.js" afterPath="$PROJECT_DIR$/src/core/navigator/compatible.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/controller.js" afterPath="$PROJECT_DIR$/src/utils/controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_communication_jsonp.js.html" afterPath="$PROJECT_DIR$/docs/core_communication_jsonp.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_communication_upload.js.html" afterPath="$PROJECT_DIR$/docs/core_communication_upload.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_communication_xhr.js.html" afterPath="$PROJECT_DIR$/docs/core_communication_xhr.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_animation.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_animation.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_attribute.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_attribute.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_canvas.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_canvas.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_modification.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_modification.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_see.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_see.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_dom_selector.js.html" afterPath="$PROJECT_DIR$/docs/core_dom_selector.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_event_base.js.html" afterPath="$PROJECT_DIR$/docs/core_event_base.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_event_drag.js.html" afterPath="$PROJECT_DIR$/docs/core_event_drag.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_event_ready.js.html" afterPath="$PROJECT_DIR$/docs/core_event_ready.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_event_touch.js.html" afterPath="$PROJECT_DIR$/docs/core_event_touch.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_event_wheel.js.html" afterPath="$PROJECT_DIR$/docs/core_event_wheel.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_compatible.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_compatible.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_cookie.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_cookie.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_hashbang.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_hashbang.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_querystring.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_querystring.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_shell.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_shell.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_storage.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_storage.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/core_navigator_ua.js.html" afterPath="$PROJECT_DIR$/docs/core_navigator_ua.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/date.js" afterPath="$PROJECT_DIR$/src/utils/date.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/dato.js" afterPath="$PROJECT_DIR$/src/utils/dato.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/event/drag.js" afterPath="$PROJECT_DIR$/src/core/event/drag.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/howdo.js" afterPath="$PROJECT_DIR$/src/utils/howdo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Dialog/index.js" afterPath="$PROJECT_DIR$/src/ui/Dialog/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Imgclip/index.js" afterPath="$PROJECT_DIR$/src/ui/Imgclip/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Window.js" afterPath="$PROJECT_DIR$/examples/ui/Window.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/base.js" afterPath="$PROJECT_DIR$/src/ui/base.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Msg/index.js" afterPath="$PROJECT_DIR$/src/ui/Msg/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Resize/index.js" afterPath="$PROJECT_DIR$/src/ui/Resize/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Validator/index.js" afterPath="$PROJECT_DIR$/src/ui/Validator/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Window/index.js" afterPath="$PROJECT_DIR$/src/ui/Window/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/communication/jsonp.js" afterPath="$PROJECT_DIR$/src/core/communication/jsonp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Animation.js.html" afterPath="$PROJECT_DIR$/docs/libs_Animation.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Emitter.js.html" afterPath="$PROJECT_DIR$/docs/libs_Emitter.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Pagination.js.html" afterPath="$PROJECT_DIR$/docs/libs_Pagination.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Pjax.js.html" afterPath="$PROJECT_DIR$/docs/libs_Pjax.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Template.js.html" afterPath="$PROJECT_DIR$/docs/libs_Template.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Validator.js.html" afterPath="$PROJECT_DIR$/docs/libs_Validator.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/libs_Weixin.js.html" afterPath="$PROJECT_DIR$/docs/libs_Weixin.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/modification.js" afterPath="$PROJECT_DIR$/src/core/dom/modification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_communication_jsonp.html" afterPath="$PROJECT_DIR$/docs/module-core_communication_jsonp.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_communication_upload.html" afterPath="$PROJECT_DIR$/docs/module-core_communication_upload.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_communication_xhr.html" afterPath="$PROJECT_DIR$/docs/module-core_communication_xhr.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_animation.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_animation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_attribute.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_attribute.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_canvas.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_canvas.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_modification.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_modification.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_see.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_see.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_dom_selector.html" afterPath="$PROJECT_DIR$/docs/module-core_dom_selector.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_event_base.html" afterPath="$PROJECT_DIR$/docs/module-core_event_base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_event_drag.html" afterPath="$PROJECT_DIR$/docs/module-core_event_drag.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_event_ready.html" afterPath="$PROJECT_DIR$/docs/module-core_event_ready.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_event_touch.html" afterPath="$PROJECT_DIR$/docs/module-core_event_touch.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_event_wheel.html" afterPath="$PROJECT_DIR$/docs/module-core_event_wheel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_compatible.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_compatible.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_cookie.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_cookie.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_hashbang.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_hashbang.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_querystring.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_querystring.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_shell.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_shell.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_storage.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_storage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-core_navigator_ua.html" afterPath="$PROJECT_DIR$/docs/module-core_navigator_ua.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Animation.html" afterPath="$PROJECT_DIR$/docs/module-libs_Animation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Emitter.html" afterPath="$PROJECT_DIR$/docs/module-libs_Emitter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Pagination.html" afterPath="$PROJECT_DIR$/docs/module-libs_Pagination.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Pjax.html" afterPath="$PROJECT_DIR$/docs/module-libs_Pjax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Template.html" afterPath="$PROJECT_DIR$/docs/module-libs_Template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-libs_Validator.html" afterPath="$PROJECT_DIR$/docs/module-libs_Validator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-parent_index.html" afterPath="$PROJECT_DIR$/docs/module-parent_index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-parent_keyframes.html" afterPath="$PROJECT_DIR$/docs/module-parent_keyframes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Autoheight_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Autoheight_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Banner_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Banner_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Dialog_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Dialog_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Editor_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Editor_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Editor_editor.html" afterPath="$PROJECT_DIR$/docs/module-ui_Editor_editor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Imgclip_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Imgclip_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Mask_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Mask_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Pager_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Pager_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Pagination_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Pagination_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Prettify_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Prettify_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Resize_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Resize_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Scrollbar_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Scrollbar_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Scrollspy_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Scrollspy_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Tab_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Tab_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Tooltip_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Tooltip_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Validator_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Validator_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Viewer_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Viewer_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_Window_.html" afterPath="$PROJECT_DIR$/docs/module-ui_Window_.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-ui_base.html" afterPath="$PROJECT_DIR$/docs/module-ui_base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_calendar.html" afterPath="$PROJECT_DIR$/docs/module-utils_calendar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_canvas.html" afterPath="$PROJECT_DIR$/docs/module-utils_canvas.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_class.html" afterPath="$PROJECT_DIR$/docs/module-utils_class.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_controller.html" afterPath="$PROJECT_DIR$/docs/module-utils_controller.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_date.html" afterPath="$PROJECT_DIR$/docs/module-utils_date.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_dato.html" afterPath="$PROJECT_DIR$/docs/module-utils_dato.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_easing.html" afterPath="$PROJECT_DIR$/docs/module-utils_easing.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_hashbang.html" afterPath="$PROJECT_DIR$/docs/module-utils_hashbang.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_querystring.html" afterPath="$PROJECT_DIR$/docs/module-utils_querystring.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_random.html" afterPath="$PROJECT_DIR$/docs/module-utils_random.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_selection.html" afterPath="$PROJECT_DIR$/docs/module-utils_selection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_typeis.html" afterPath="$PROJECT_DIR$/docs/module-utils_typeis.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/module-utils_url.html" afterPath="$PROJECT_DIR$/docs/module-utils_url.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/navigator/querystring.js" afterPath="$PROJECT_DIR$/src/core/navigator/querystring.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/readme.md" afterPath="$PROJECT_DIR$/src/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/selector.js" afterPath="$PROJECT_DIR$/src/core/dom/selector.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/navigator/shell.js" afterPath="$PROJECT_DIR$/src/core/navigator/shell.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Msg/style.css" afterPath="$PROJECT_DIR$/src/ui/Msg/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/typeis.js" afterPath="$PROJECT_DIR$/src/utils/typeis.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Autoheight_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Autoheight_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Banner_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Banner_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Datepicker_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Datepicker_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Dialog_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Dialog_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Editor_editor.js.html" afterPath="$PROJECT_DIR$/docs/ui_Editor_editor.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Editor_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Editor_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Imgclip_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Imgclip_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Imgview_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Imgview_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Mask_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Mask_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Msg_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Msg_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Pager_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Pager_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Pagination_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Pagination_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Prettify_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Prettify_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Resize_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Resize_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Scrollbar_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Scrollbar_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Scrollspy_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Scrollspy_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Tab_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Tab_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Tooltip_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Tooltip_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Touchpull_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Touchpull_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Validator_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Validator_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_Window_index.js.html" afterPath="$PROJECT_DIR$/docs/ui_Window_index.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/ui_base.js.html" afterPath="$PROJECT_DIR$/docs/ui_base.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/communication/upload.js" afterPath="$PROJECT_DIR$/src/core/communication/upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_allocation.js.html" afterPath="$PROJECT_DIR$/docs/utils_allocation.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_calendar.js.html" afterPath="$PROJECT_DIR$/docs/utils_calendar.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_canvas.js.html" afterPath="$PROJECT_DIR$/docs/utils_canvas.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_class.js.html" afterPath="$PROJECT_DIR$/docs/utils_class.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_controller.js.html" afterPath="$PROJECT_DIR$/docs/utils_controller.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_date.js.html" afterPath="$PROJECT_DIR$/docs/utils_date.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_dato.js.html" afterPath="$PROJECT_DIR$/docs/utils_dato.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_easing.js.html" afterPath="$PROJECT_DIR$/docs/utils_easing.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_hashbang.js.html" afterPath="$PROJECT_DIR$/docs/utils_hashbang.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_howdo.js.html" afterPath="$PROJECT_DIR$/docs/utils_howdo.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_keyframes.js.html" afterPath="$PROJECT_DIR$/docs/utils_keyframes.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_querystring.js.html" afterPath="$PROJECT_DIR$/docs/utils_querystring.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_random.js.html" afterPath="$PROJECT_DIR$/docs/utils_random.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_selection.js.html" afterPath="$PROJECT_DIR$/docs/utils_selection.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_typeis.js.html" afterPath="$PROJECT_DIR$/docs/utils_typeis.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/utils_url.js.html" afterPath="$PROJECT_DIR$/docs/utils_url.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/event/wheel.js" afterPath="$PROJECT_DIR$/src/core/event/wheel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/communication/xhr.js" afterPath="$PROJECT_DIR$/src/core/communication/xhr.js" />
     </list>
@@ -194,11 +35,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ui/Window/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45945945" vertical-offset="0" max-vertical-offset="884">
-              <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3006" max-vertical-offset="6154">
+              <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ui/Msg/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
+              <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="xhr.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/core/communication/xhr.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22402598" vertical-offset="1052" max-vertical-offset="4284">
+              <caret line="70" column="9" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#2585#3510#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/ui/Window.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -233,6 +107,11 @@
         <option value="$PROJECT_DIR$/src/libs/Template.js" />
         <option value="$PROJECT_DIR$/src/core/event/base.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/examples/ui/Window.js" />
+        <option value="$PROJECT_DIR$/src/ui/base.js" />
+        <option value="$PROJECT_DIR$/src/ui/Window/index.js" />
+        <option value="$PROJECT_DIR$/src/ui/Msg/index.js" />
+        <option value="$PROJECT_DIR$/src/core/communication/xhr.js" />
       </list>
     </option>
   </component>
@@ -288,6 +167,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -320,9 +200,98 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="communication" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -417,6 +386,9 @@
       <recursive>true</recursive>
       <method />
     </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -443,9 +415,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -515,13 +484,8 @@
       <workItem from="1425384959688" duration="131000" />
       <workItem from="1425431854854" duration="71000" />
       <workItem from="1425700365209" duration="68000" />
-      <workItem from="1426557300164" duration="37000" />
-    </task>
-    <task id="LOCAL-00268" summary="ui/Window/">
-      <created>1420977539389</created>
-      <option name="number" value="00268" />
-      <option name="project" value="LOCAL" />
-      <updated>1420977539389</updated>
+      <workItem from="1426557300164" duration="57000" />
+      <workItem from="1426571701821" duration="2478000" />
     </task>
     <task id="LOCAL-00269" summary="core/dom/selector">
       <created>1420977986241</created>
@@ -811,11 +775,17 @@
       <option name="project" value="LOCAL" />
       <updated>1425700419805</updated>
     </task>
-    <option name="localTasksCounter" value="317" />
+    <task id="LOCAL-00317" summary="sync">
+      <created>1426557342027</created>
+      <option name="number" value="00317" />
+      <option name="project" value="LOCAL" />
+      <updated>1426557342028</updated>
+    </task>
+    <option name="localTasksCounter" value="318" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8102000" />
+    <option name="totallyTimeSpent" value="10600000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="736" extended-state="6" />
@@ -824,8 +794,9 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31578946" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3136646" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.55484897" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.50039715" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23828435" sideWeight="0.50080514" order="0" side_tool="true" content_ui="tabs" />
@@ -837,30 +808,29 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24717286" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4689984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.55484897" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.50039715" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.50039715" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.49960285" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24717286" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31987578" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
@@ -934,6 +904,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -965,13 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/base.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2016">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30341882" vertical-offset="291" max-vertical-offset="8316">
@@ -990,20 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.64044946" vertical-offset="0" max-vertical-offset="623">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ui/Window.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60367894" vertical-offset="114" max-vertical-offset="1197">
-          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ui/Window.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73194224" vertical-offset="0" max-vertical-offset="623">
-          <caret line="28" column="9" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1049,13 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/dom/animation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.051948052" vertical-offset="2153" max-vertical-offset="5966">
-          <caret line="115" column="22" selection-start-line="115" selection-start-column="22" selection-end-line="115" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.7681895" vertical-offset="454" max-vertical-offset="1976">
@@ -1067,13 +1017,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2893401" vertical-offset="1026" max-vertical-offset="2185">
           <caret line="63" column="37" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/Window/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19805194" vertical-offset="4305" max-vertical-offset="5054">
-          <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1130,13 +1073,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18506494" vertical-offset="0" max-vertical-offset="1026">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/Msg/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12337662" vertical-offset="703" max-vertical-offset="4237">
-          <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1205,9 +1141,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45945945" vertical-offset="0" max-vertical-offset="884">
-          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.14527027" vertical-offset="271" max-vertical-offset="884">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ui/Window.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20101352" vertical-offset="51" max-vertical-offset="1326">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/dom/animation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.425566" vertical-offset="4129" max-vertical-offset="7225">
+          <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68770224" vertical-offset="1054" max-vertical-offset="1683">
+          <caret line="91" column="36" selection-start-line="91" selection-start-column="26" selection-end-line="91" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ui/Window.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/Window/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3006" max-vertical-offset="6154">
+          <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/Msg/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
+          <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/communication/xhr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22402598" vertical-offset="1052" max-vertical-offset="4284">
+          <caret line="70" column="9" selection-start-line="70" selection-start-column="9" selection-end-line="70" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#2585#3510#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

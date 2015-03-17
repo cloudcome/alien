@@ -19,6 +19,7 @@ define(function (require, exports, module) {
 
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var keyframes = require('../../utils/keyframes.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -46,10 +47,20 @@ define(function (require, exports, module) {
         // 最小偏移量
         minOffset: 20,
         zIndex: null,
-        // 窗口打开动画
-        open: null,
-        // 窗口关闭动画
-        close: null
+        keyframes: {
+            0: {
+                opacity: 0,
+                scale: 0.6
+            },
+            0.8: {
+                opacity: 1,
+                scale: 1.1
+            },
+            1: {
+                opacity: 1,
+                scale: 1
+            }
+        }
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -67,6 +78,7 @@ define(function (require, exports, module) {
         var $pos = modification.create('div');
 
         the.id = alienIndex;
+        the._keyframes = keyframes(options.keyframes);
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -83,6 +95,10 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
         }
+
+        the.on('setoptions', function (options) {
+            the._keyframes = keyframes(options.keyframes);
+        });
 
         return the;
     };
@@ -154,10 +170,8 @@ define(function (require, exports, module) {
         var the = this;
 
         if (the.visible) {
-            animation.stop(the._$window);
             return the;
         }
-
 
         var options = the._options;
         var onopen = function () {
@@ -174,26 +188,13 @@ define(function (require, exports, module) {
 
         var to = the._getPos();
         the.visible = true;
-        to.opacity = '';
-        to.transform = '';
+        to.display = 'block';
+        to.zIndex = ui.getZindex();
 
-        if (typeis.function(options.open)) {
-            options.open.call(the, the._$window, to, onopen);
-            return the;
-        }
+        attribute.css(the._$window, to);
 
-        attribute.css(the._$window, {
-            display: 'block',
-            opacity: 0,
-            visibility: 'visible',
-            left: to.left,
-            top: to.top,
-            marginBottom: options.minOffset,
-            scale: 0,
-            zIndex: options.zIndex || ui.getZindex()
-        });
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
             duration: options.duration,
             easing: options.easing
         }, onopen);
@@ -274,17 +275,9 @@ define(function (require, exports, module) {
 
         the.visible = false;
 
-        if (typeis.function(options.close)) {
-            options.close.call(the, the._$window, onclose);
-            return the;
-        }
-
-        var to = {
-            opacity: 0,
-            scale: 0
-        };
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
+            direction: 'reverse',
             duration: options.duration,
             easing: options.easing
         }, onclose);

@@ -144,6 +144,12 @@ define(function (require, exports, module) {
                 return;
             }
 
+            /**
+             * 消息框被关闭后
+             * @event close
+             * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
+             */
+            the.emit('close', -1);
             the.destroy();
         });
 
@@ -158,7 +164,7 @@ define(function (require, exports, module) {
             /**
              * 消息框被关闭后
              * @event close
-             * @param index {Number} 选择的按钮索引
+             * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
              */
             the.emit('close', index);
             the.destroy();

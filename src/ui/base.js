@@ -42,8 +42,6 @@ define(function (require, exports, module) {
      * var Dialog = ui.create(fn);
      */
     exports.create = function (constructor, isInheritSuperStatic) {
-        var proto = {};
-
         if (typeis(constructor) !== 'function') {
             throw 'UI class constructor must be a function';
         }
