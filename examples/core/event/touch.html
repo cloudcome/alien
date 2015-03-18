@@ -24,6 +24,7 @@
             padding: 0;
             margin: 0;
         }
+
         #demo {
             position: absolute;
             width: 100%;
@@ -33,6 +34,7 @@
             top: 200px;
             left: 0;
         }
+
         #demo2{
             position: absolute;
             background: #f5e79e;
@@ -42,16 +44,23 @@
             left: 0;
             z-index: 1;
         }
+
+        #demo2 input{
+            padding: 90px;
+            display: block;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-<div id="ret1">tap event type</div>
-<div id="ret2">swipe event type</div>
-<div id="ret3">touch event type</div>
+<div id="ret1"></div>
+<div id="ret2"></div>
+<div id="ret3"></div>
+<div id="ret4"></div>
 
 <div id="demo">touch me</div>
-<div id="demo2"></div>
+<div id="demo2"><input type="text" name="" id=""/></div>
 
 
 
