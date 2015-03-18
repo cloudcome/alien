@@ -117,7 +117,7 @@ define(function (require, exports, module) {
             var standar = {
                 name: name,
                 msg: msg,
-                maxLength: $input.maxLength,
+                maxLength: $input.maxLength === -1 ? Math.pow(2, 53): $input.maxLength,
                 min: dato.parseInt($input.min, udf),
                 max: dato.parseInt($input.max, udf),
                 step: dato.parseInt($input.step, udf),
