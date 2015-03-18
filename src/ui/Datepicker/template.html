@@ -13,9 +13,9 @@
             {{list tr as td}}
             <td data-id="{{td.id}}"
                 data-year="{{td.year}}"
-                data-month="{{td.month}}"
+                data-month="{{td.month + 1}}"
                 data-date="{{td.date}}"
-                class="alien-ui-datepicker-{{td.type}} {{td.active ? 'alien-ui-datepicker-active' : ''}}">{{td.date}}</td>
+                class="alien-ui-datepicker-{{td.type}} {{td.active ? 'alien-ui-datepicker-active' : ''}} {{td.today ? 'alien-ui-datepicker-today' : ''}}">{{td.date}}</td>
             {{/list}}
         </tr>
         {{/list}}

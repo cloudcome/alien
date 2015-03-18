@@ -58,9 +58,9 @@ define(function (require, exports, module) {
         for (; i < deltaDays; i++) {
             list.push({
                 year: prevDate.getFullYear(),
-                month: prevDate.getMonth() + 1,
+                month: prevDate.getMonth(),
                 date: prevMonthDays - i,
-                type: i
+                type: 'prev'
             });
         }
 
@@ -70,7 +70,7 @@ define(function (require, exports, module) {
         for (i = 1; i <= thisMonthDays; i++) {
             list.push({
                 year: thisDate.getFullYear(),
-                month: thisDate.getMonth() + 1,
+                month: thisDate.getMonth(),
                 date: i,
                 type: 'this'
             });
@@ -85,7 +85,7 @@ define(function (require, exports, module) {
             for (i = 1; i <= 7 - deltaDays; i++) {
                 list.push({
                     year: nextDate.getFullYear(),
-                    month: nextDate.getMonth() + 1,
+                    month: nextDate.getMonth(),
                     date: i,
                     type: 'next'
                 });
@@ -99,16 +99,19 @@ define(function (require, exports, module) {
 
             var id = _buildDateid({
                 year: d.getFullYear(),
-                month: d.getMonth() + 1,
+                month: d.getMonth(),
                 date: d.getDate()
             });
 
             activeDateMap[id] = 1;
         });
 
+        var today = new Date();
+
         list.forEach(function (item) {
             item.id = _buildDateid(item);
             item.active = !!activeDateMap[item.id];
+            item.today = item.year === today.getFullYear() && item.month === today.getMonth() && item.date === today.getDate();
         });
 
         // 分组
@@ -128,7 +131,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _buildDateid(item) {
-        return [item.year, dato.fillString(item.month, 2), dato.fillString(item.date, 2)].join('') * 1;
+        return [item.year, dato.fillString(item.month + 1, 2), dato.fillString(item.date, 2)].join('') * 1;
     }
 
 });
