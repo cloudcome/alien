@@ -51,7 +51,7 @@ define(function (require, exports, module) {
     Scrollspy.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$parent, 'scroll', controller.debounce(the._onscroll.bind(the), the._options.wait));
+        event.on(the._$parent, 'scroll', controller.throttle(the._onscroll.bind(the), the._options.wait));
     };
 
     Scrollspy.fn._onscroll = function () {

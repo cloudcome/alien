@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         minSwipe: 40,
         isAutoPlay: true,
         isLoop: true,
-        $navParent: null,
+        navSelector: null,
         navGenerator: null,
         activeClass: 'active'
     };
@@ -149,7 +149,7 @@ define(function (require, exports, module) {
         the._$wrap = selector.parent(the._$list)[0];
         the._$wrap.id = alienClass + '-' + alienIndex++;
         attribute.addClass(the._$wrap, options.addClass);
-        the._$navParent = selector.query(options.$navParent)[0];
+        the._$navParent = selector.query(options.navSelector)[0];
         the._$item0Clone = $item0Clone;
         the._$item_Clone = $item_Clone;
 
@@ -252,10 +252,6 @@ define(function (require, exports, module) {
      */
     Banner.fn._autoPlay = function (boolean) {
         var the = this;
-
-        if (!the._options.isAutoPlay) {
-            return;
-        }
 
         if (boolean) {
             the.play();
@@ -440,6 +436,7 @@ define(function (require, exports, module) {
     Banner.fn.play = function () {
         var the = this;
 
+        the.pause();
         the._playTimeID = setTimeout(function () {
             the.next(the.play);
         }, the._options.interval);
@@ -481,7 +478,7 @@ define(function (require, exports, module) {
      * @param {Number} [options.minSwipe=40] banner 触摸过边界多少像素切换
      * @param {Boolean} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
      * @param {Boolean} [options.isLoop=true] banner 是否循环
-     * @param {null|String|HTMLElement|Node} [options.$navParent=null] banner 导航父级
+     * @param {null|String|HTMLElement|Node} [options.navSelector=null] banner 导航父级选择器
      * @param {null|Function} [options.navGenerator=null] banner 导航生成器
      * @param {String} [options.activeClass="active"] banner 高亮的样式类
      */
