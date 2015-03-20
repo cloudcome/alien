@@ -34,7 +34,7 @@ define(function (require, exports, module) {
         // 请求 querystring
         query: {},
         // 请求数据
-        data: null,
+        body: null,
         // 请求头
         headers: null,
         // 是否异步
@@ -155,15 +155,15 @@ define(function (require, exports, module) {
             xhr.overrideMimeType(options.mimeType);
         }
 
-        // 当 data 为 formdata 时，删除 content-type header
-        if (options.data && options.data.constructor === FormData) {
+        // 当 body 为 FormData 时，删除 content-type header
+        if (options.body && options.body.constructor === FormData) {
             delete options.headers['content-type'];
         }
 
         dato.each(options.headers, function (key, val) {
             xhr.setRequestHeader(key, val);
         });
-        xhr.send(_buildData(options));
+        xhr.send(_buildBody(options));
 
         the.xhr = xhr;
         return the;
@@ -190,7 +190,7 @@ define(function (require, exports, module) {
      * @param {Object} [options.headers] 请求头
      * @param {String} [options.type=json] 数据类型，默认 json
      * @param {String|Object} [options.query] URL querstring
-     * @param {*} [options.data] 请求数据
+     * @param {*} [options.body] 请求数据
      * @param {Boolean} [options.isAsync] 是否异步，默认 true
      * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
      * @param {String} [options.username] 请求鉴权用户名
@@ -224,14 +224,14 @@ define(function (require, exports, module) {
     /**
      * ajax POST 请求
      * @param url {String} 请求地址
-     * @param data {String|Object} 请求数据
+     * @param body {String|Object} 请求数据
      * @returns {*}
      */
-    exports.post = function (url, data) {
+    exports.post = function (url, body) {
         return this.ajax({
             method: 'POST',
             url: url,
-            data: data
+            body: body
         });
     };
 
@@ -265,11 +265,11 @@ define(function (require, exports, module) {
      * @returns {*}
      * @private
      */
-    function _buildData(options) {
+    function _buildBody(options) {
         if (options.method === 'GET') {
             return null;
         }
 
-        return options.data;
+        return options.body;
     }
 });
