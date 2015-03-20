@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var defaults = {
         index: 0,
-        eventType: 'click tap',
+        eventType: 'click',
         activeClass: 'active'
     };
     var Tab = ui.create(function ($ele, options) {

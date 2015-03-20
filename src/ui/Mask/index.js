@@ -97,7 +97,7 @@ define(function (require, exports, module) {
     Mask.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$mask, 'click tap', function (eve) {
+        event.on(the._$mask, 'click', function (eve) {
             var $window = selector.closest(eve.target, '.alien-ui-window')[0];
 
             if (!$window) {
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
         var the = this;
 
         the.close();
-        event.un(the._$mask, 'click tap');
+        event.un(the._$mask, 'click');
         modification.remove(the._$mask);
 
         if (typeis.function(callback)) {

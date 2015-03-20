@@ -75,7 +75,7 @@ define(function (require, exports, module) {
     Pager.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$ele, 'click tap', '.' + alienClass + '-page', the._onpage.bind(the));
+        event.on(the._$ele, 'click', '.' + alienClass + '-page', the._onpage.bind(the));
     };
 
 
@@ -127,7 +127,7 @@ define(function (require, exports, module) {
     Pager.fn.destroy = function () {
         var the = this;
 
-        event.un(the._$ele, 'click tap', the._onpage);
+        event.un(the._$ele, 'click', the._onpage);
         the._$ele.innerHTML = '';
     };
 
