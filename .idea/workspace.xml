@@ -2,37 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f693d7fa-c856-4087-8dca-ec755b0e4a4f" name="Default" comment="sync">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/animation.js" afterPath="$PROJECT_DIR$/src/core/dom/animation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/calendar.js" afterPath="$PROJECT_DIR$/src/utils/calendar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/date.js" afterPath="$PROJECT_DIR$/src/utils/date.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/dato.js" afterPath="$PROJECT_DIR$/src/utils/dato.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Autoheight/index.js" afterPath="$PROJECT_DIR$/src/ui/Autoheight/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Banner/index.js" afterPath="$PROJECT_DIR$/src/ui/Banner/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Datepicker/index.js" afterPath="$PROJECT_DIR$/src/ui/Datepicker/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Dialog/index.js" afterPath="$PROJECT_DIR$/src/ui/Dialog/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Editor/index.js" afterPath="$PROJECT_DIR$/src/ui/Editor/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Imgclip/index.js" afterPath="$PROJECT_DIR$/src/ui/Imgclip/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Imgview/index.js" afterPath="$PROJECT_DIR$/src/ui/Imgview/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Mask/index.js" afterPath="$PROJECT_DIR$/src/ui/Mask/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Msg/index.js" afterPath="$PROJECT_DIR$/src/ui/Msg/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Pager/index.js" afterPath="$PROJECT_DIR$/src/ui/Pager/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Pagination/index.js" afterPath="$PROJECT_DIR$/src/ui/Pagination/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Prettify/index.js" afterPath="$PROJECT_DIR$/src/ui/Prettify/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Resize/index.js" afterPath="$PROJECT_DIR$/src/ui/Resize/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Scrollbar/index.js" afterPath="$PROJECT_DIR$/src/ui/Scrollbar/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Scrollspy/index.js" afterPath="$PROJECT_DIR$/src/ui/Scrollspy/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Tab/index.js" afterPath="$PROJECT_DIR$/src/ui/Tab/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Tooltip/index.js" afterPath="$PROJECT_DIR$/src/ui/Tooltip/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Touchpull/index.js" afterPath="$PROJECT_DIR$/src/ui/Touchpull/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Validator/index.js" afterPath="$PROJECT_DIR$/src/ui/Validator/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Window/index.js" afterPath="$PROJECT_DIR$/src/ui/Window/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/readme.md" afterPath="$PROJECT_DIR$/src/ui/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/selector.js" afterPath="$PROJECT_DIR$/src/core/dom/selector.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/Datepicker/template.html" afterPath="$PROJECT_DIR$/src/ui/Datepicker/template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/event/touch.js" afterPath="$PROJECT_DIR$/src/core/event/touch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/communication/upload.js" afterPath="$PROJECT_DIR$/src/core/communication/upload.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/allocation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/allocation.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/calendar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/calendar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/canvas.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/canvas.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/class.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/class.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/control.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/control.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/date.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/date.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/dato.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/dato.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/hashbang.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/hashbang.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/keyframes.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/keyframes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/querystring.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/querystring.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/random.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/random.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/selection.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/typeis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/typeis.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/util/ydr.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/libs/Animation.js" afterPath="$PROJECT_DIR$/examples/libs/Animation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Banner.html" afterPath="$PROJECT_DIR$/examples/ui/Banner.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Banner.js" afterPath="$PROJECT_DIR$/examples/ui/Banner.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/libs/DDB.js" afterPath="$PROJECT_DIR$/examples/libs/DDB.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Editor.js" afterPath="$PROJECT_DIR$/examples/ui/Editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Prettify.html" afterPath="$PROJECT_DIR$/examples/ui/Prettify.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Scrollbar.html" afterPath="$PROJECT_DIR$/examples/ui/Scrollbar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Tab.html" afterPath="$PROJECT_DIR$/examples/ui/Tab.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Tab.js" afterPath="$PROJECT_DIR$/examples/ui/Tab.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Validator.html" afterPath="$PROJECT_DIR$/examples/ui/Validator.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/libs/Validator.js" afterPath="$PROJECT_DIR$/examples/libs/Validator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Validator.js" afterPath="$PROJECT_DIR$/examples/ui/Validator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/ui/Window.js" afterPath="$PROJECT_DIR$/examples/ui/Window.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/core/dom/attribute.html" afterPath="$PROJECT_DIR$/examples/core/dom/attribute.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/core/navigator/compatible.js" afterPath="$PROJECT_DIR$/examples/core/navigator/compatible.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/coolie.min.js" afterPath="$PROJECT_DIR$/examples/coolie.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/core/navigator/hashbang.js" afterPath="$PROJECT_DIR$/examples/core/navigator/hashbang.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/index.html" afterPath="$PROJECT_DIR$/examples/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/core/event/touch.html" afterPath="$PROJECT_DIR$/examples/core/event/touch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/core/event/touch.js" afterPath="$PROJECT_DIR$/examples/core/event/touch.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/communication/xhr.js" afterPath="$PROJECT_DIR$/src/core/communication/xhr.js" />
     </list>
     <list id="b8a2c0cd-1c82-4756-9478-872aacd67896" name="Failed commit: Default" comment="ui 全部导出为类，修复了几处 BUG，ui 增加了事件编程，增加了分页" />
     <list id="61540638-cbdf-4a08-b20d-b0e2ce60d5a5" name="Failed commit: Default (2)" comment="ui 全部导出为类，修复了几处 BUG，ui 增加了事件编程，增加了分页" />
@@ -75,7 +92,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
               <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
-              <folding />
+              <folding>
+                <marker date="1426862359000" expanded="true" signature="3845:4132" placeholder="{...}" />
+                <marker date="1426862359000" expanded="true" signature="4220:4566" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,11 +103,10 @@
       <file leaf-file-name="xhr.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/communication/xhr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25080907" vertical-offset="1052" max-vertical-offset="4284">
-              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.30582523" vertical-offset="1052" max-vertical-offset="4760">
+              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#2585#3510#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -192,7 +211,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -227,6 +245,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -321,6 +340,9 @@
       <recursive>true</recursive>
       <method />
     </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -347,9 +369,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -423,13 +442,8 @@
       <workItem from="1426571701821" duration="2492000" />
       <workItem from="1426574974503" duration="3000" />
       <workItem from="1427079599370" duration="252000" />
-      <workItem from="1427079891704" duration="5000" />
-    </task>
-    <task id="LOCAL-00271" summary="ui/Dialog/">
-      <created>1420979434372</created>
-      <option name="number" value="00271" />
-      <option name="project" value="LOCAL" />
-      <updated>1420979434372</updated>
+      <workItem from="1427079891704" duration="43000" />
+      <workItem from="1427080046650" duration="13000" />
     </task>
     <task id="LOCAL-00272" summary="core/dom/attribute">
       <created>1421468336998</created>
@@ -719,11 +733,17 @@
       <option name="project" value="LOCAL" />
       <updated>1427079611429</updated>
     </task>
-    <option name="localTasksCounter" value="320" />
+    <task id="LOCAL-00320" summary="sync">
+      <created>1427079900966</created>
+      <option name="number" value="00320" />
+      <option name="project" value="LOCAL" />
+      <updated>1427079900966</updated>
+    </task>
+    <option name="localTasksCounter" value="321" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10874000" />
+    <option name="totallyTimeSpent" value="10925000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="736" extended-state="6" />
@@ -744,7 +764,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24717286" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24717286" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -758,17 +778,17 @@
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.50039715" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.50039715" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.49960285" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24717286" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31987578" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
@@ -858,7 +878,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
           <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
-          <folding />
+          <folding>
+            <marker date="1426862359000" expanded="true" signature="3845:4132" placeholder="{...}" />
+            <marker date="1426862359000" expanded="true" signature="4220:4566" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -868,7 +891,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="e#2585#3510#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -893,7 +915,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
           <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
-          <folding />
+          <folding>
+            <marker date="1426862359000" expanded="true" signature="3845:4132" placeholder="{...}" />
+            <marker date="1426862359000" expanded="true" signature="4220:4566" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -903,7 +928,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="e#2585#3510#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1202,17 +1226,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2218" max-vertical-offset="4063">
           <caret line="153" column="11" selection-start-line="153" selection-start-column="11" selection-end-line="153" selection-end-column="11" />
-          <folding />
+          <folding>
+            <marker date="1426862359000" expanded="true" signature="3845:4132" placeholder="{...}" />
+            <marker date="1426862359000" expanded="true" signature="4220:4566" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/communication/xhr.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25080907" vertical-offset="1052" max-vertical-offset="4284">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.30582523" vertical-offset="1052" max-vertical-offset="4760">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="e#2585#3510#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -12,9 +12,28 @@ define(function (require, exports, module) {
     var random = require('/src/utils/random.js');
     var animation = require('/src/core/dom/animation.js');
     var see = require('/src/core/dom/see.js');
+    var attribute = require('/src/core/dom/attribute.js');
     var win1 = new Mask('#demo', {
-        addClass: 'hehhhhh'
+        addClass: 'hehhhhh',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: null,
+        width: '100%'
+    //    open: function ($window, to, onopen) {
+    //        to.bottom = -to.height;
+    //        attribute.css($window, to);
+    //        animation.animate($window, {
+    //            bottom: 0
+    //        }, {
+    //            duration: 456
+    //        }, onopen);
+    //    }
     });
+
+    window.win1 = win1;
+    window.animation = animation;
+    window.see = see;
 
     document.getElementById('btn1').onclick = function () {
         win1.open();

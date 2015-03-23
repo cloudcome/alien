@@ -8,7 +8,7 @@ define(function (require) {
     'use strict';
 
     var Banner = require('../../src/ui/Banner/index.js');
-    var control = require('../../src/util/controller.js');
+    var control = require('../../src/utils/controller.js');
     var event = require('../../src/core/event/base.js');
     var selector = require('../../src/core/dom/selector.js');
     var attribute = require('../../src/core/dom/attribute.js');
@@ -16,15 +16,16 @@ define(function (require) {
     var $banner = document.getElementById('banner');
     var $nav = document.getElementById('nav');
     var banner = new Banner('#banner', {
-        width: Math.min(window.innerWidth, 300),
+        width: window.innerWidth,
         height: 200,
-        axis: '-y',
+        axis: '+x',
         interval: 1000,
         isAutoPlay: false,
         navGenerator: function (index, length) {
             return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
         },
-        $navParent: $nav
+        $navParent: $nav,
+        index: 2
     });
 
     event.on($banner, 'click', '.prev', function () {
@@ -50,12 +51,7 @@ define(function (require) {
     });
 
     banner.on('change', function (index) {
-        var $navItem = this.$navItems[index];
-        var $siblings = selector.siblings($navItem);
-
         $index.innerHTML = index + 1;
-        attribute.removeClass($siblings, 'active')
-        attribute.addClass($navItem, 'active');
     });
 
     document.getElementById('prev').onclick = function () {

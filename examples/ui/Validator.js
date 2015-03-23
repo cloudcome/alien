@@ -9,24 +9,38 @@ define(function (require, exports, module) {
     'use strict';
 
     var Validator = require('/src/ui/Validator/');
-    var v1 = new Validator('#form', {
-        successMsg: null
-    });
+    var v1 = new Validator('#form');
     var $submit = document.getElementById('submit');
 
-    //Validator.registerRule({
-    //    name: 'upperFirst',
-    //    type: 'string',
-    //    fn: function () {
-    //
-    //    }
-    //});
+    v1.pushRule({
+        name: 'username',
+        function: function (val, next) {
+            v1.emitMsg('username', '正在第1/2次异步验证……', 'warning');
+            setTimeout(function () {
+                next();
+            }, 1000);
+        }
+    });
 
-    v1.on('validateallbefore', function ($ele) {
+    v1.pushRule({
+        name: 'username',
+        function: function (val, next) {
+            v1.emitMsg('username', '正在第2/2次异步验证……', 'warning');
+            setTimeout(function () {
+                next();
+            }, 1000);
+        }
+    });
+
+    v1.on('validateonestart', function ($item) {
+        console.log($item);
+    });
+
+    v1.on('validateallstart', function ($form) {
         $submit.disabled = true;
     });
 
-    v1.on('validateallafter', function ($ele) {
+    v1.on('validateallend', function ($form) {
         $submit.disabled = false;
     });
 });

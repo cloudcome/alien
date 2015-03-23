@@ -6,15 +6,6 @@ define(function (require) {
     var modification = require('/src/core/dom/modification.js');
     var v1 = new Validator();
 
-    Validator.registerRule({
-        name: 'suffix',
-        type: 'array'
-    }, function (suffix, val, next) {
-        var sf = (val.match(/\.[^.]*$/) || [''])[0];
-        var boolean = suffix.indexOf(sf) > -1;
-        next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-    });
-
     v1.pushRule({
         name: 'username',
         type: 'string',
@@ -22,10 +13,38 @@ define(function (require) {
         required: true,
         minLength: 4,
         maxLength: 12,
-        suffix: ['.abc'],
         regexp: /^[a-z]\w{3,11}$/
     });
 
+    v1.pushRule({
+        name: 'username',
+        'function': function (val, next) {
+            setTimeout(function () {
+                console.log('fn 1');
+                next();
+            }, 1000);
+        }
+    });
+
+    v1.pushRule({
+        name: 'username',
+        'function': function (val, next) {
+            setTimeout(function () {
+                console.log('fn 2');
+                next();
+            }, 1000);
+        }
+    });
+
+    v1.pushRule({
+        name: 'username',
+        'function': function (val, next) {
+            setTimeout(function () {
+                console.log('fn 3');
+                next();
+            }, 1000);
+        }
+    });
 
     var data = {
         username: 'cc11c'
