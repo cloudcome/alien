@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Editor/
-     * @requires ui/base
+     * @requires ui/
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -66,9 +66,7 @@ define(function (require, exports, module) {
         // arg1: 进度回调
         // arg2: list 上传成功JSON数组对象
         // [{url:'1.jpg',width:100,height:100}]
-        uploadCallback: null,
-        // 是否自动聚焦
-        autoFocus: true
+        uploadCallback: null
     };
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
     var Editor = ui.create(function (ele, options) {
@@ -135,10 +133,6 @@ define(function (require, exports, module) {
         var deltaTime = Date.now() - local.ver;
         var humanTime = date.from(local.ver);
         var done = function () {
-            if (the._options.autoFocus) {
-                editor.focusEnd(the._$ele);
-            }
-
             the._savePos();
         };
         var nowVal = the._$ele.value;

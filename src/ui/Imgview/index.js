@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Viewer/
-     * @requires ui/base/
+     * @requires ui//
      * @requires ui/Dialog/
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     'use strict';
 
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var Scrollbar = require('../Scrollbar/');
     var Mask = require('../Mask/');
     var Window = require('../Window/');

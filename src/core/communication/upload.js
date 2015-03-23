@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var xhr = require('./xhr.js');
     var defaults = {
         url: location.href,
-        data: null,
+        body: null,
         // 如：'file'
         blobName: null,
 //        如：'example.png'
@@ -68,12 +68,12 @@ define(function (require, exports, module) {
                 break;
         }
 
-        dato.each(options.data, function (key, val) {
+        dato.each(options.body, function (key, val) {
             fd.append(key, val);
         });
 
         options.method = 'POST';
-        options.data = fd;
+        options.body = fd;
 
         return xhr.ajax(options);
     };

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pager/
-     * @requires ui/base
+     * @requires ui/
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
     Pager.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$ele, 'click tap', '.' + alienClass + '-page', the._onpage.bind(the));
+        event.on(the._$ele, 'click', '.' + alienClass + '-page', the._onpage.bind(the));
     };
 
 
@@ -127,7 +127,7 @@ define(function (require, exports, module) {
     Pager.fn.destroy = function () {
         var the = this;
 
-        event.un(the._$ele, 'click tap', the._onpage);
+        event.un(the._$ele, 'click', the._onpage);
         the._$ele.innerHTML = '';
     };
 

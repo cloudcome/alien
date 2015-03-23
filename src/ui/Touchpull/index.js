@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');

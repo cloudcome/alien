@@ -30,6 +30,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var fastclick = require('../../3rd/fastclick.js');
     var event = require('./base.js');
     var attribute = require('../dom/attribute.js');
     var controller = require('../../utils/controller.js');
@@ -89,6 +90,19 @@ define(function (require, exports, module) {
     var touch = {};
     var lastTapDefaultPrevented = false;
 
+    fastclick.attach(document.body);
+    event.on(document, 'click', function (eve) {
+        var tapEvent = event.create('tap');
+
+        event.extend(tapEvent, eve);
+
+        var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
+
+        if (dispatchTap && dispatchTap.defaultPrevented === true) {
+            eve.preventDefault();
+            //lastTapDefaultPrevented = true;
+        }
+    });
 
     event.on(document, touchstart, function (eve) {
         if (!eve.touches || eve.touches.length !== 1) {
@@ -205,18 +219,18 @@ define(function (require, exports, module) {
             touch.startID === touch.endID &&
             touch.startTarget === touch.endTarget
         ) {
-            controller.nextTick(function () {
-                var tapEvent = event.create('tap');
-
-                event.extend(tapEvent, firstTouch, touch);
-
-                var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
-
-                if (dispatchTap && dispatchTap.defaultPrevented === true) {
-                    eve.preventDefault();
-                    lastTapDefaultPrevented = true;
-                }
-            });
+            //controller.nextTick(function () {
+            //    var tapEvent = event.create('tap');
+            //
+            //    event.extend(tapEvent, firstTouch, touch);
+            //
+            //    var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
+            //
+            //    if (dispatchTap && dispatchTap.defaultPrevented === true) {
+            //        eve.preventDefault();
+            //        lastTapDefaultPrevented = true;
+            //    }
+            //});
 
             // 触发 dbltap
             if (touch.endTime - touch.lastTime < options.dbltap.timeout && !touch.inDbltap) {
@@ -274,7 +288,7 @@ define(function (require, exports, module) {
     });
 
     event.on(document, touchcancel, _cancel);
-    event.on(window, 'scroll', _cancel);
+    //event.on(window, 'scroll', _cancel);
     /**
      * @see https://github.com/madrobby/zepto/pull/746
      * 修正 tap 点透的 BUG，监听 click 捕获阶段，并停止事件传递

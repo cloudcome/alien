@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pagination/
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires libs/Pagination
      * @requires libs/Template
@@ -19,7 +19,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../utils/dato.js');
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
     Pagination.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
+        event.on(the._$ele, 'click', '.' + normalClass, the._onpage.bind(the));
     };
 
 
@@ -129,7 +129,7 @@ define(function (require, exports, module) {
     Pagination.fn.destroy = function () {
         var the = this;
 
-        event.un(the._$ele, 'click tap', the._onpage);
+        event.un(the._$ele, 'click', the._onpage);
         the._$ele.innerHTML = '';
     };
 

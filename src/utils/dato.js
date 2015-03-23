@@ -115,7 +115,8 @@ define(function (require, exports, module) {
         var length = args.length;
         var i;
         var obj;
-        var type;
+        var sourceType;
+        var objType;
 
         isExtendDeep = firstArgIsBoolean && args[0] === true;
         source = args[current++];
@@ -124,12 +125,14 @@ define(function (require, exports, module) {
             obj = args[current];
             for (i in obj) {
                 if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
-                    type = typeis(obj[i]);
-                    if (type === 'object' && isExtendDeep) {
-                        source[i] = source[i] || {};
+                    sourceType = typeis(source[i]);
+                    objType = typeis(obj[i]);
+
+                    if (objType === 'object' && isExtendDeep) {
+                        source[i] = sourceType !== objType ? {} : source[i];
                         exports.extend.call(this, isExtendDeep, source[i], obj[i]);
-                    } else if (type === 'array' && isExtendDeep) {
-                        source[i] = source[i] || [];
+                    } else if (objType === 'array' && isExtendDeep) {
+                        source[i] = sourceType !== objType ? [] : source[i];
                         exports.extend.call(this, isExtendDeep, source[i], obj[i]);
                     } else {
                         source[i] = obj[i];

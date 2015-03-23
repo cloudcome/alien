@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
-    var ui = require('../base.js');
+    var ui = require('../');
     var html = require('html!./template.html');
     var style = require('css!./style.css');
     var tpl = new Template(html);

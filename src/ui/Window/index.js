@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var animation = require('../../core/dom/animation.js');
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var ui = require('../');
     var alienIndex = 0;
     var alienBaseClass = 'alien-ui';
     var alienClass = alienBaseClass + '-window';

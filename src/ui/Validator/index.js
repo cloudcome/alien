@@ -17,7 +17,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
             var standar = {
                 name: name,
                 msg: msg,
-                maxLength: $input.maxLength,
+                maxLength: $input.maxLength === -1 ? Math.pow(2, 53): $input.maxLength,
                 min: dato.parseInt($input.min, udf),
                 max: dato.parseInt($input.max, udf),
                 step: dato.parseInt($input.step, udf),
@@ -180,7 +180,7 @@ define(function (require, exports, module) {
             event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
         }
 
-        event.on(the._$form, 'tap click', 'input[type=submit],button', the._onsubmit.bind(the));
+        event.on(the._$form, 'click', 'input[type=submit],button', the._onsubmit.bind(the));
 
         the._validator.on('validatestart', function (name) {
             var $item = the._nameItemMap[name];
@@ -507,7 +507,7 @@ define(function (require, exports, module) {
         attribute.removeClass(the._nameItemMap, formItemStatusClass);
         event.un(the._$form, 'focusin', the._onfocusin);
         event.un(the._$form, the._options.validateEvent, the._onvalidate);
-        event.un(the._$form, 'tap click', the._onsubmit);
+        event.un(the._$form, 'click', the._onsubmit);
         attribute.removeClass(the._$form, alienClass);
     };
 

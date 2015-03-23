@@ -19,7 +19,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/drag
      * @requires libs/Template
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
@@ -38,7 +38,7 @@ define(function (require, exports, module) {
     var template = require('html!./template.html');
     var style = require('css!./style.css');
     var tpl = new Template(template);
-    var ui = require('../base.js');
+    var ui = require('../');
     var $body = document.body;
     var noop = function () {
         // ignore

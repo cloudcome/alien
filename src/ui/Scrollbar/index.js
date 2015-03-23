@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Scrollbar/
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires utils/controller
      * @requires libs/Template
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../utils/dato.js');
@@ -360,10 +360,10 @@ define(function (require, exports, module) {
             });
 
             event.on(document, 'wheelend', the._onwheelend.bind(the, $thumb));
-            event.on(the._$trackX, 'click tap', function () {
+            event.on(the._$trackX, 'click', function () {
                 return false;
             });
-            event.on(the._$trackY, 'click tap', function () {
+            event.on(the._$trackY, 'click', function () {
                 return false;
             });
 
@@ -638,7 +638,7 @@ define(function (require, exports, module) {
         event.un(the._$thumbY, eve1);
 
         // 清楚单击、tap
-        var eve2 = 'click tap';
+        var eve2 = 'click';
         event.un(the._$trackX, eve2);
         event.un(the._$trackY, eve2);
 

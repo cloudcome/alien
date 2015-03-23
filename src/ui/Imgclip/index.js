@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/
-     * @requires ui/base
+     * @requires ui/
      * @requires libs/Template
      * @requires utils/dato
      * @requires utils/controller
@@ -21,7 +21,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('text!./style.css');
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');

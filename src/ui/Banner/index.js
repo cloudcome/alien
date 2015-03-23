@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires core/event/touch
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/controller
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
-    var ui = require('../base.js');
+    var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         minSwipe: 40,
         isAutoPlay: true,
         isLoop: true,
-        $navParent: null,
+        navSelector: null,
         navGenerator: null,
         activeClass: 'active'
     };
@@ -56,11 +56,6 @@ define(function (require, exports, module) {
         the._$list = selector.query($list)[0];
         the._$items = selector.query(the._options.itemSelector, the._$list);
         the._itemLength = the._$items.length;
-
-        if (the._itemLength <= 1) {
-            return the;
-        }
-
         the._init();
     });
 
@@ -149,7 +144,7 @@ define(function (require, exports, module) {
         the._$wrap = selector.parent(the._$list)[0];
         the._$wrap.id = alienClass + '-' + alienIndex++;
         attribute.addClass(the._$wrap, options.addClass);
-        the._$navParent = selector.query(options.$navParent)[0];
+        the._$navParent = selector.query(options.navSelector)[0];
         the._$item0Clone = $item0Clone;
         the._$item_Clone = $item_Clone;
 
@@ -253,10 +248,6 @@ define(function (require, exports, module) {
     Banner.fn._autoPlay = function (boolean) {
         var the = this;
 
-        if (!the._options.isAutoPlay) {
-            return;
-        }
-
         if (boolean) {
             the.play();
         } else {
@@ -357,6 +348,11 @@ define(function (require, exports, module) {
      */
     Banner.fn.prev = function (callback) {
         var the = this;
+
+        if (the._itemLength < 2) {
+            return the;
+        }
+
         var willIndex = the._boundIndex(the._showIndex - the._increase);
 
         the._show(willIndex, 'prev', callback);
@@ -372,6 +368,11 @@ define(function (require, exports, module) {
      */
     Banner.fn.next = function (callback) {
         var the = this;
+
+        if (the._itemLength < 2) {
+            return the;
+        }
+
         var willIndex = the._boundIndex(the._showIndex + the._increase);
 
         the._show(willIndex, 'next', callback);
@@ -440,6 +441,7 @@ define(function (require, exports, module) {
     Banner.fn.play = function () {
         var the = this;
 
+        the.pause();
         the._playTimeID = setTimeout(function () {
             the.next(the.play);
         }, the._options.interval);
@@ -481,7 +483,7 @@ define(function (require, exports, module) {
      * @param {Number} [options.minSwipe=40] banner 触摸过边界多少像素切换
      * @param {Boolean} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
      * @param {Boolean} [options.isLoop=true] banner 是否循环
-     * @param {null|String|HTMLElement|Node} [options.$navParent=null] banner 导航父级
+     * @param {null|String|HTMLElement|Node} [options.navSelector=null] banner 导航父级选择器
      * @param {null|Function} [options.navGenerator=null] banner 导航生成器
      * @param {String} [options.activeClass="active"] banner 高亮的样式类
      */

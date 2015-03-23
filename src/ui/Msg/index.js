@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 
     var Mask = require('../Mask/');
     var Window = require('../Window/');
-    var ui = require('../base.js');
+    var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
@@ -139,7 +139,7 @@ define(function (require, exports, module) {
         var the = this;
 
         // 关闭 msg
-        event.on(the._$close, 'click tap', function () {
+        event.on(the._$close, 'click', function () {
             if (!the._window.visible) {
                 return;
             }
@@ -154,7 +154,7 @@ define(function (require, exports, module) {
         });
 
         // 点击按钮
-        event.on(the._$buttons, 'click tap', '.j-flag', function () {
+        event.on(the._$buttons, 'click', '.j-flag', function () {
             if (!the._window.visible) {
                 return;
             }
@@ -206,8 +206,8 @@ define(function (require, exports, module) {
         var the = this;
 
         the._window.destroy(function () {
-            event.un(the._$close, 'click tap');
-            event.un(the._$buttons, 'click tap');
+            event.un(the._$close, 'click');
+            event.un(the._$buttons, 'click');
 
             if (the._mask) {
                 the._mask.destroy();

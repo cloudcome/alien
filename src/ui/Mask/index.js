@@ -14,7 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var animation = require('../../core/dom/animation.js');
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('css!./style.css');
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
@@ -97,7 +97,7 @@ define(function (require, exports, module) {
     Mask.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$mask, 'click tap', function (eve) {
+        event.on(the._$mask, 'click', function (eve) {
             var $window = selector.closest(eve.target, '.alien-ui-window')[0];
 
             if (!$window) {
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
         var the = this;
 
         the.close();
-        event.un(the._$mask, 'click tap');
+        event.un(the._$mask, 'click');
         modification.remove(the._$mask);
 
         if (typeis.function(callback)) {

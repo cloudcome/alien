@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/class
      * @requires libs/Emitter
-     * @requires ui/base.js
+     * @requires ui/
      */
     'use strict';
 
@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
     var Emitter = require('../../libs/Emitter.js');
-    var ui = require('../base.js');
+    var ui = require('../');
     var alienKey = '-alien-ui-Scrollspy-in-viewport-';
     var defaults = {
         selector: 'img',
@@ -51,7 +51,7 @@ define(function (require, exports, module) {
     Scrollspy.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$parent, 'scroll', controller.debounce(the._onscroll.bind(the), the._options.wait));
+        event.on(the._$parent, 'scroll', controller.throttle(the._onscroll.bind(the), the._options.wait));
     };
 
     Scrollspy.fn._onscroll = function () {
