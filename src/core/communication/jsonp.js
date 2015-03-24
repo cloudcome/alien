@@ -33,7 +33,6 @@ define(function (require, exports, module) {
         isCache: false
     };
     var regQ = /\?$/;
-    var index = 0;
     var $container = document.body || document.documentElement;
     var JSONP = klass.create(function (options) {
         var the = this;
@@ -49,7 +48,7 @@ define(function (require, exports, module) {
         options.query = options.query || {};
 
         if (!options.isCache) {
-            options.query._ = ++index;
+            options.query._ = Date.now();
         }
 
         var name = 'alienJSONP' + random.string(9, 'aA0_');
@@ -91,7 +90,7 @@ define(function (require, exports, module) {
      * 跨域 JSONP
      * @param {Object} options 配置
      * @param {String} [options.type="function"] 方式，分别为 var 或者 function
-     * @param {String} options.url 请求地址，必须为`http://ydr.me/?callback=?`格式，与jquery 一致
+     * @param {String} options.url 请求地址，必须为`http://ydr.me/?callback=?`格式，与 jquery 一致
      * @param {Object|null} [options.query=null] 请求参数
      * @param {Boolean} [options.isCache=false] 是否保留缓存，默认 false
      *
