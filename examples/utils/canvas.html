@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2014-10-28 11:10
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>canvas.html</title>
+    <style>
+        canvas{
+            border: 4px solid #ddd;
+        }
+
+        textarea{
+            display: block;
+            width: 90%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<canvas width="200" height="200" id="canvas"></canvas>
+<p>
+    <button id="imgToBase64">图片 =》 base64</button>
+    <button id="base64ToBlob" disabled>base64 =》 blob</button>
+    <button id="imgToBlob">图片 =》 blob</button>
+    <button id="canvasToSave">画布 =》 保存</button>
+</p>
+<textarea id="textarea"></textarea>
+<hr/>
+<img src="./ydr.png" alt="ydr" id="img"/>
+
+<script src="../coolie.min.js" data-main="./utils/canvas.js"></script>
+<script src="../coolie-config.js"></script>
+
+</body>
+</html>
