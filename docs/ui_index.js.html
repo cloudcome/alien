@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: core/event/ready.js - Alien documents</title>
+    <title>Source: ui/index.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -673,7 +673,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: core/event/ready.js</h1>
+		            <h1 class="page-title">Source: ui/index.js</h1>
 
 		            
 
@@ -681,57 +681,102 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * ready.js
+ * UI 类基础
  * @author ydr.me
- * @create 2014-10-02 15:11
+ * @create 2014-11-11 20:07
  */
 
 
 define(function (require, exports, module) {
     /**
-     * 文档准备完毕后回调
-     *
-     * @module core/event/ready
-     * @requires core/event/base
+     * @module ui/
      * @requires utils/dato
      * @requires utils/typeis
+     * @requires utils/class
+     * @requires libs/Emitter
      */
-
     'use strict';
 
-    var event = require('./base.js');
-    var dato = require('../../utils/dato.js');
-    var typeis = require('../../utils/typeis.js');
-    var callbacks = [];
-    var isReady;
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var klass = require('../utils/class.js');
+    var Emitter = require('../libs/Emitter.js');
+    var udf;
+    var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
+    var zIndex = 999;
+
 
     /**
-     * 监听准备完毕后回调或文档已准备立即回调
-     * @param {Function} callback 回调
-     * @exports core/event/ready
-     *
-     * @example
-     * var ready = require('/src/event/ready.js');
-     * ready(fn);
+     * 获取 zIndex
+     * @returns {number}
      */
-    module.exports = function (callback) {
-        if(document.readyState === 'complete' || isReady){
-            callback();
-        }else if(typeis(callback) === 'function'){
-            callbacks.push(callback);
-        }
+    exports.getZindex = function () {
+        return zIndex++;
     };
 
 
-    event.on(document, 'DOMContentLoaded', function () {
-        isReady = 1;
+    /**
+     * 创建一个 UI 类
+     * @param constructor {Function} 构造函数
+     * @param [isInheritSuperStatic=false] {Boolean} 是否继承父类的静态方法
+     *
+     * @example
+     * var Dialog = ui.create(fn);
+     */
+    exports.create = function (constructor, isInheritSuperStatic) {
+        if (typeis(constructor) !== 'function') {
+            throw 'UI class constructor must be a function';
+        }
 
-        dato.each(callbacks, function(index, callback){
-            callback();
-        });
+        var UI = klass.create(constructor, Emitter, isInheritSuperStatic);
 
-        callbacks = [];
-    });
+        // 添加默认方法
+        if (UI.fn.getOptions === udf) {
+            UI.fn.getOptions = function (key) {
+                var the = this;
+                var keyType = typeis(key);
+                var ret = [];
+
+                /**
+                 * 获取 ui 配置
+                 * @event getoptions
+                 */
+                the.emit('getoptions');
+                if (keyType === 'string' || keyType === 'number') {
+                    return the._options &amp;&amp; the._options[key];
+                } else if (keyType === 'array') {
+                    dato.each(key, function (index, k) {
+                        ret.push(the._options &amp;&amp; the._options[k]);
+                    });
+
+                    return ret;
+                } else {
+                    return the._options;
+                }
+            };
+        }
+
+        if (UI.fn.setOptions === udf) {
+            UI.fn.setOptions = function (key, val) {
+                var the = this;
+                var keyType = typeis(key);
+
+                if (keyType === 'string' || keyType === 'number') {
+                    the._options ? the._options[key] = val : udf;
+                } else if (keyType === 'object') {
+                    dato.extend(the._options, key);
+                }
+
+                /**
+                 * 设置 ui 配置
+                 * @event setoptions
+                 */
+                the.emit('setoptions', the._options);
+            };
+        }
+
+        return UI;
+    };
 });</code></pre>
 
 

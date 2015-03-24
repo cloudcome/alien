@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: utils/querystring - Alien documents</title>
+    <title>Module: libs/Weixin - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -147,28 +147,6 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 2</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#.parse">parse</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#.stringify">stringify</a>
-    
-</li>
-
-	                    
-	                
 
 	                
 
@@ -178,7 +156,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: utils/querystring</h1>
+		            <h1 class="page-title">Module: libs/Weixin</h1>
 
 		            
 
@@ -189,7 +167,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            utils/querystring
+            libs/Weixin
         
     
     </h2>
@@ -201,11 +179,6 @@
         
 
         
-            
-                <blockquote class="description lead">querystring 的解析与设置<br>
-合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
-                    
-                </blockquote>
             
 
             
@@ -230,7 +203,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-452944533666595817016026354394853" data-toggle="tab">Source</a>
+                <a href="#tab-meta-064201761502772578292196083348244" data-toggle="tab">Source</a>
             </li>
 
         
@@ -251,8 +224,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-452944533666595817016026354394853">
-                <p><a href="utils_querystring.js.html#line10">utils/querystring.js:10</a></p>
+            <div class="tab-pane active" id="tab-meta-064201761502772578292196083348244">
+                <p><a href="libs_Weixin.js.html#line9">libs/Weixin.js:9</a></p>
             </div>
 
         
@@ -273,9 +246,11 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+            <li>module:utils/class.js</li>
         
-            <li><a href="module-utils_typeis.html">module:utils/typeis</a></li>
+            <li>module:utils/dato.js</li>
+        
+            <li><a href="module-libs_Emitter.html">module:libs/Emitter</a></li>
         </ul>
     
 
@@ -285,502 +260,6 @@
 
     
 
-    
-        <section id="docs-methods">
-            <h3 class="subsection-title">Methods</h3>
-
-            <dl>
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id=".parse">
-        <span class="type-signature">&lt;static> </span>parse<span class="signature">(querystring, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>解析
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>querystring</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">字符串</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.parse("a=1&b=1&b=2&b=3");
-// => {a: "1",b: ["1","2","3"]}</code></pre>
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-081960700452327734709716523066163" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-081960700452327734709716523066163">
-                <p><a href="utils_querystring.js.html#line73">utils/querystring.js:73</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id=".stringify">
-        <span class="type-signature">&lt;static> </span>stringify<span class="signature">(object, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>字符化
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>object</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">query 对象</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.stringify({a:1,b:[1,2,3]});
-// => "a=1&b=1&b=2&b=3"</code></pre>
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-25286569213494665743455563206226" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-25286569213494665743455563206226">
-                <p><a href="utils_querystring.js.html#line37">utils/querystring.js:37</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            </dl>
-        </section>
     
 
     

@@ -47,7 +47,6 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
-<li><a href="module-libs_Dangke.html">libs/Dangke</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
@@ -56,9 +55,9 @@
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
-<li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
@@ -95,29 +94,28 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Pager_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
-<li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
-<li><a href="module-libs_Dangke.html#~event:ready">module:libs/Dangke.ready</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
-<li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
 <li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
@@ -356,6 +354,15 @@
 
 <li class="">
     
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#~event:done">done</a>
     
 </li>
@@ -483,15 +490,6 @@
 <li class="">
     
         <a class="" href="#~event:open">open</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:ready">ready</a>
     
 </li>
 
@@ -710,6 +708,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var eeeing = require('../../utils/easing.js');
+    var controller = require('../../utils/controller.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
     var cssDefaults = {
@@ -743,6 +742,7 @@ define(function (require, exports, module) {
     };
     var alienKey = '-alien-core-dom-animation-';
     var index = 0;
+    var transitionMap = {};
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
 
@@ -791,12 +791,12 @@ define(function (require, exports, module) {
         var i = 0;
 
         // 如果正在动画，则停止当前动画
-        if (animationMap[id]) {
+        if (transitionMap[id]) {
             exports.stop(ele);
         }
 
         options = dato.extend({}, cssDefaults, options);
-        animationMap[id] = to;
+        transitionMap[id] = true;
         callback = args[argL - 1];
 
         if (argL === 3) {
@@ -827,7 +827,7 @@ define(function (require, exports, module) {
                 }
 
                 hasDispatch = true;
-                animationMap[id] = null;
+                transitionMap[id] = false;
                 event.un(ele, transitionendEventType, listener);
                 attribute.css(ele, {
                     transitionDuration: '',
@@ -882,13 +882,14 @@ define(function (require, exports, module) {
             easingVal.push(easing);
         }
 
-
         if (see.visibility(ele) === 'visible') {
-            attribute.css(ele, {
-                transitionDuration: durationVal.join(','),
-                transitionDelay: delayVal.join(','),
-                transitionTimingFunction: easingVal.join(','),
-                transitionProperty: keys.join(',')
+            controller.nextTick(function () {
+                attribute.css(ele, {
+                    transitionDuration: durationVal.join(','),
+                    transitionDelay: delayVal.join(','),
+                    transitionTimingFunction: easingVal.join(','),
+                    transitionProperty: keys.join(',')
+                });
             });
         } else {
             listener(true);
@@ -914,7 +915,7 @@ define(function (require, exports, module) {
         var id = ele[alienKey];
         var to;
 
-        if (!id || !(to = animationMap[id])) {
+        if (!id || !(to = transitionMap[id])) {
             return;
         }
 
@@ -960,6 +961,12 @@ define(function (require, exports, module) {
             return;
         }
 
+        if (!ele[alienKey]) {
+            ele[alienKey] = ++index;
+        }
+
+        var id = ele[alienKey];
+
         var easing = eeeing.css3[options.easing];
 
         if (!easing) {
@@ -975,15 +982,19 @@ define(function (require, exports, module) {
             animationDirection: options.direction
         };
 
-        event.on(ele, animationiterationEventType, onanimationiteration);
-        event.once(ele, animationendEventType, function (eve) {
-            if (options.name === eve.animationName) {
-                onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
-                onanimationend.apply(ele, arguments);
+        var oniteration = function () {
+            window[requestAnimationFrame](onanimationiteration.bind(ele, arguments));
+        };
+
+        var onend = function (eve) {
+            if (animationMap[id] &amp;&amp; animationMap[id] !== onanimationend) {
+                animationMap[id] = typeis.function(animationMap[id]) ? animationMap[id] : noop;
+                animationMap[id].apply(ele, arguments);
+                animationMap[id] = null;
             }
 
-            event.un(ele, animationiterationEventType, onanimationiteration);
-
+            onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
+            animationMap[id] = null;
             attribute.css(ele, {
                 animationName: '',
                 animationDuration: '',
@@ -992,8 +1003,17 @@ define(function (require, exports, module) {
                 animationIterationCount: '',
                 animationDirection: ''
             });
+            window[requestAnimationFrame](onanimationend.bind(ele, arguments));
+            event.un(ele, animationiterationEventType, oniteration);
+            event.un(ele, animationendEventType, onend);
+        };
+
+        event.on(ele, animationiterationEventType, oniteration);
+        event.on(ele, animationendEventType, onend);
+        animationMap[id] = onanimationend;
+        window[requestAnimationFrame](function () {
+            attribute.css(ele, css);
         });
-        attribute.css(ele, css);
     };
 
 

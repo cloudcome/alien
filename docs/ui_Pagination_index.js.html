@@ -47,7 +47,6 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
-<li><a href="module-libs_Dangke.html">libs/Dangke</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
@@ -56,9 +55,9 @@
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
-<li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
@@ -95,29 +94,28 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Pager_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
-<li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
-<li><a href="module-libs_Dangke.html#~event:ready">module:libs/Dangke.ready</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
-<li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
 <li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
@@ -356,6 +354,15 @@
 
 <li class="">
     
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#~event:done">done</a>
     
 </li>
@@ -483,15 +490,6 @@
 <li class="">
     
         <a class="" href="#~event:open">open</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:ready">ready</a>
     
 </li>
 
@@ -692,7 +690,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Pagination/
-     * @requires ui/base
+     * @requires ui/
      * @requires utils/dato
      * @requires libs/Pagination
      * @requires libs/Template
@@ -703,7 +701,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../base.js');
+    var ui = require('../');
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../utils/dato.js');
@@ -758,7 +756,7 @@ define(function (require, exports, module) {
     Pagination.fn._initEvent = function () {
         var the = this;
 
-        event.on(the._$ele, 'click tap', '.' + normalClass, the._onpage.bind(the));
+        event.on(the._$ele, 'click', '.' + normalClass, the._onpage.bind(the));
     };
 
 
@@ -813,7 +811,7 @@ define(function (require, exports, module) {
     Pagination.fn.destroy = function () {
         var the = this;
 
-        event.un(the._$ele, 'click tap', the._onpage);
+        event.un(the._$ele, 'click', the._onpage);
         the._$ele.innerHTML = '';
     };
 

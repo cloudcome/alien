@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Module: utils/querystring - Alien documents</title>
+    <title>Module: utils/allocation - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -147,23 +147,14 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 2</li>
+	                    <li class="sidebar-header">Methods &times; 1</li>
 
 	                    
 	                        
 
 <li class="">
     
-        <a class="" href="#.parse">parse</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#.stringify">stringify</a>
+        <a class="" href="#.getset">getset</a>
     
 </li>
 
@@ -178,7 +169,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Module: utils/querystring</h1>
+		            <h1 class="page-title">Module: utils/allocation</h1>
 
 		            
 
@@ -189,7 +180,7 @@
 <header class="page-header">
     <h2 class="page-subtitle">
         
-            utils/querystring
+            utils/allocation
         
     
     </h2>
@@ -201,11 +192,6 @@
         
 
         
-            
-                <blockquote class="description lead">querystring 的解析与设置<br>
-合法的 querstring 为<code>a=1&b=2&c=3&c=4&c=5</code>
-                    
-                </blockquote>
             
 
             
@@ -230,7 +216,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-452944533666595817016026354394853" data-toggle="tab">Source</a>
+                <a href="#tab-meta-27903164876624948907254813238978" data-toggle="tab">Source</a>
             </li>
 
         
@@ -251,8 +237,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-452944533666595817016026354394853">
-                <p><a href="utils_querystring.js.html#line10">utils/querystring.js:10</a></p>
+            <div class="tab-pane active" id="tab-meta-27903164876624948907254813238978">
+                <p><a href="utils_allocation.js.html#line9">utils/allocation.js:9</a></p>
             </div>
 
         
@@ -273,9 +259,9 @@
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
-        
             <li><a href="module-utils_typeis.html">module:utils/typeis</a></li>
+        
+            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
         </ul>
     
 
@@ -293,8 +279,8 @@
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id=".parse">
-        <span class="type-signature">&lt;static> </span>parse<span class="signature">(querystring, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
+    <h4 class="name alert alert-warning" id=".getset">
+        <span class="type-signature">&lt;static> </span>getset<span class="signature">(getset, args, <span class="optional">setLength</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -303,7 +289,7 @@
 
         
         <div class="description lead">
-            <blockquote>解析
+            <blockquote>getset 转换器
                 
             </blockquote>
         </div>
@@ -331,250 +317,7 @@
 		
 
 		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>querystring</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">字符串</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>sep</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">等于符，默认=</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-        <h5>Returns:</h5>
-        
-                
-
-<table class="returns-table">
-    <tbody>
-        <tr>
-            <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
-        
-    
-</td>
-            <td class="param-desc"></td>
-        </tr>
-    </tbody>
-</table>
-
-            
-
-        
-            <h5>Example</h5>
-            
-    <pre class="prettyprint"><code>querystring.parse("a=1&b=1&b=2&b=3");
-// => {a: "1",b: ["1","2","3"]}</code></pre>
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-081960700452327734709716523066163" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-081960700452327734709716523066163">
-                <p><a href="utils_querystring.js.html#line73">utils/querystring.js:73</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-            
-                
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id=".stringify">
-        <span class="type-signature">&lt;static> </span>stringify<span class="signature">(object, <span class="optional">sep</span>, <span class="optional">eq</span>)</span><span class="type-signature"> 
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>字符化
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-		<th class="th-arg">Argument</th>
-		
-
+		<th class="th-dft">Default</th>
 		
 
 		<th class="last">Description</th>
@@ -586,7 +329,7 @@
 
         <tr>
             
-                <td class="name"><code>object</code></td>
+                <td class="name"><code>getset</code></td>
             
 
             <td class="type">
@@ -610,24 +353,58 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">query 对象</td>
+            <td class="description last">获取与设置的 Map</td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>sep</code></td>
+                <td class="name"><code>args</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
         
     
 
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">参数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>setLength</code></td>
+            
+
+            <td class="type">
             
             </td>
 
@@ -644,42 +421,14 @@
             
 
             
-
-            <td class="description last">分隔符，默认&</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>eq</code></td>
-            
-
-            <td class="type">
-            
+                <td class="default">
                 
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
+                    2
                 
                 </td>
             
 
-            
-
-            <td class="description last">等于符，默认=</td>
+            <td class="description last">设置行为的参数个数</td>
         </tr>
 
 	
@@ -697,7 +446,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
         
     
 </td>
@@ -711,8 +460,31 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>querystring.stringify({a:1,b:[1,2,3]});
-// => "a=1&b=1&b=2&b=3"</code></pre>
+    <pre class="prettyprint"><code>var fn = function(key, val){
+    return allocation.getset({
+        get: function(key){
+            return 'get ' + key;
+        },
+        set: function(key, val){
+            console.log('set ' + key + ' = ' + val);
+        },
+        // 所有 set 结束之后
+        onset: function(){}
+    }, arguments);
+};
+
+fn('a');
+// => "get a"
+
+fn(['a', 'b']);
+// => {a: "get a", b: "get b"}
+
+fn('a', 1);
+// => set a = 1
+
+fn({a: 1, b: 2});
+// => set a = 1
+// => set b = 2</code></pre>
 
         
 
@@ -736,7 +508,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-25286569213494665743455563206226" data-toggle="tab">Source</a>
+                <a href="#tab-meta-90347515558823944039869944099337" data-toggle="tab">Source</a>
             </li>
 
         
@@ -757,8 +529,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-25286569213494665743455563206226">
-                <p><a href="utils_querystring.js.html#line37">utils/querystring.js:37</a></p>
+            <div class="tab-pane active" id="tab-meta-90347515558823944039869944099337">
+                <p><a href="utils_allocation.js.html#line57">utils/allocation.js:57</a></p>
             </div>
 
         

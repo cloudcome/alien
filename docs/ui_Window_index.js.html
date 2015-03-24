@@ -47,7 +47,6 @@
 <li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
 <li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
 <li><a href="module-libs_Animation.html">libs/Animation</a></li>
-<li><a href="module-libs_Dangke.html">libs/Dangke</a></li>
 <li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
 <li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
 <li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
@@ -56,9 +55,9 @@
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
-<li><a href="module-ui_base.html">ui/base</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Editor_editor.html">ui/Editor/editor</a></li>
@@ -95,29 +94,28 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Pager_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
-<li><a href="module-ui_base.html#~event:getoptions">module:ui/base.getoptions</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
-<li><a href="module-libs_Dangke.html#~event:ready">module:libs/Dangke.ready</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
-<li><a href="module-ui_base.html#~event:setoptions">module:ui/base.setoptions</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
 <li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
 <li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
@@ -356,6 +354,15 @@
 
 <li class="">
     
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
         <a class="" href="#~event:done">done</a>
     
 </li>
@@ -483,15 +490,6 @@
 <li class="">
     
         <a class="" href="#~event:open">open</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:ready">ready</a>
     
 </li>
 
@@ -697,19 +695,20 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
-     * @requires ui/base
+     * @requires ui/
      */
     'use strict';
 
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var keyframes = require('../../utils/keyframes.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/base.js');
     var animation = require('../../core/dom/animation.js');
     var style = require('css!./style.css');
-    var ui = require('../base.js');
+    var ui = require('../');
     var alienIndex = 0;
     var alienBaseClass = 'alien-ui';
     var alienClass = alienBaseClass + '-window';
@@ -730,10 +729,20 @@ define(function (require, exports, module) {
         // 最小偏移量
         minOffset: 20,
         zIndex: null,
-        // 窗口打开动画
-        open: null,
-        // 窗口关闭动画
-        close: null
+        keyframes: {
+            0: {
+                opacity: 0,
+                scale: 0.6
+            },
+            0.8: {
+                opacity: 1,
+                scale: 1.1
+            },
+            1: {
+                opacity: 1,
+                scale: 1
+            }
+        }
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -751,6 +760,7 @@ define(function (require, exports, module) {
         var $pos = modification.create('div');
 
         the.id = alienIndex;
+        the._keyframes = keyframes(options.keyframes);
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -767,6 +777,10 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
         }
+
+        the.on('setoptions', function (options) {
+            the._keyframes = keyframes(options.keyframes);
+        });
 
         return the;
     };
@@ -838,10 +852,8 @@ define(function (require, exports, module) {
         var the = this;
 
         if (the.visible) {
-            animation.stop(the._$window);
             return the;
         }
-
 
         var options = the._options;
         var onopen = function () {
@@ -858,26 +870,13 @@ define(function (require, exports, module) {
 
         var to = the._getPos();
         the.visible = true;
-        to.opacity = '';
-        to.transform = '';
+        to.display = 'block';
+        to.zIndex = ui.getZindex();
 
-        if (typeis.function(options.open)) {
-            options.open.call(the, the._$window, to, onopen);
-            return the;
-        }
+        attribute.css(the._$window, to);
 
-        attribute.css(the._$window, {
-            display: 'block',
-            opacity: 0,
-            visibility: 'visible',
-            left: to.left,
-            top: to.top,
-            marginBottom: options.minOffset,
-            scale: 0,
-            zIndex: options.zIndex || ui.getZindex()
-        });
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
             duration: options.duration,
             easing: options.easing
         }, onopen);
@@ -958,17 +957,9 @@ define(function (require, exports, module) {
 
         the.visible = false;
 
-        if (typeis.function(options.close)) {
-            options.close.call(the, the._$window, onclose);
-            return the;
-        }
-
-        var to = {
-            opacity: 0,
-            scale: 0
-        };
-
-        animation.animate(the._$window, to, {
+        animation.keyframes(the._$window, {
+            name: the._keyframes,
+            direction: 'reverse',
             duration: options.duration,
             easing: options.easing
         }, onclose);
