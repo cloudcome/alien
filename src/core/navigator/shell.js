@@ -49,25 +49,16 @@ define(function (require, exports, module) {
             return chromiumType === 'chrome';
         })(),
         /**
-         * 是否为360安全浏览器
+         * 是否为360浏览器
          *
          * @example
-         * shell.is360se;
+         * shell.is360;
          * // true or false
          */
-        is360se: (function () {
-            return chromiumType === '360se';
-        })(),
-        /**
-         * 是否为360极速浏览器
-         *
-         * @example
-         * shell.is360ee;
-         * // true or false
-         */
-        is360ee: (function () {
-            return chromiumType === '360ee';
-        })(),
+        if (_aliMimeType() || _UA()) {
+            // 360浏览器
+            return '360';
+        }
         /**
          * 是否为猎豹安全浏览器
          *
@@ -148,6 +139,38 @@ define(function (require, exports, module) {
         return false;
     }
 
+    function _aliMimeType() {
+        var _desc = '', _type = '';
+        var _aliServiceCount = 0;
+        var _AliSSOLogin = false;
+        for (var i = 0; i < window.clientInformation.mimeTypes.length; i++ ) {
+            _desc = window.clientInformation.mimeTypes[i].description;
+            _type = window.clientInformation.mimeTypes[i].type;
+            if (_desc.indexOf('AliSSOLogin') >= 0) {
+                _AliSSOLogin = true;
+            }
+
+            if (_desc.indexOf('ali')>=0 || _desc.indexOf('Ali')>=0) {
+                _aliServiceCount++;
+            }
+        }
+
+        if (_AliSSOLogin && _aliServiceCount >= 2 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function _UA() {
+        if (navigator.userAgent.indexOf('360Browser') > -1 ) {
+            return true;
+        } else if (navigator.userAgent.indexOf('360EE') > -1 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 获取 Chromium 内核浏览器类型
@@ -155,8 +178,7 @@ define(function (require, exports, module) {
      * @link https://ext.chrome.360.cn/webstore
      * @link https://ext.se.360.cn
      * @return {String}
-     *         360ee 360极速浏览器
-     *         360se 360安全浏览器
+     *         360 360浏览器
      *         sougou 搜狗浏览器
      *         liebao 猎豹浏览器
      *         chrome 谷歌浏览器
