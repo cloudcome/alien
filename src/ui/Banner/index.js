@@ -56,11 +56,6 @@ define(function (require, exports, module) {
         the._$list = selector.query($list)[0];
         the._$items = selector.query(the._options.itemSelector, the._$list);
         the._itemLength = the._$items.length;
-
-        if (the._itemLength <= 1) {
-            return the;
-        }
-
         the._init();
     });
 
@@ -353,6 +348,11 @@ define(function (require, exports, module) {
      */
     Banner.fn.prev = function (callback) {
         var the = this;
+
+        if (the._itemLength < 2) {
+            return the;
+        }
+
         var willIndex = the._boundIndex(the._showIndex - the._increase);
 
         the._show(willIndex, 'prev', callback);
@@ -368,6 +368,11 @@ define(function (require, exports, module) {
      */
     Banner.fn.next = function (callback) {
         var the = this;
+
+        if (the._itemLength < 2) {
+            return the;
+        }
+
         var willIndex = the._boundIndex(the._showIndex + the._increase);
 
         the._show(willIndex, 'next', callback);

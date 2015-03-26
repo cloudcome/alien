@@ -173,13 +173,13 @@ define(function (require, exports, module) {
 
 
     /**
-     * 获得元素的最近匹配祖先元素或子代元素集合
+     * 从元素本身开始获得最近匹配的祖先元素
      * @param {HTMLElement|Node} ele 元素
      * @param {String} selector 选择器
      * @returns {Array}
      *
      * @example
-     * selector.closest(ele);
+     * selector.closest(ele, 'div');
      * // => [div];
      */
     exports.closest = function (ele, selector) {
@@ -187,14 +187,12 @@ define(function (require, exports, module) {
             return [];
         }
 
-        var the = this;
-
         while (typeis(ele) !== 'document' && typeis(ele) === 'element') {
-            if (the.isMatched(ele, selector)) {
+            if (exports.isMatched(ele, selector)) {
                 return dato.toArray(ele, true);
             }
 
-            ele = this.parent(ele)[0];
+            ele = exports.parent(ele)[0];
         }
 
         return dato.toArray();

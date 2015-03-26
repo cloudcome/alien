@@ -26,7 +26,8 @@ define(function (require, exports, module) {
     var defaults = {
         index: 0,
         eventType: 'click',
-        activeClass: 'active'
+        activeClass: 'active',
+        tabSelector: 'a'
     };
     var Tab = ui.create(function ($ele, options) {
         var the = this;
@@ -73,12 +74,26 @@ define(function (require, exports, module) {
      */
     Tab.fn._initEvent = function () {
         var the = this;
+        var options = the._options;
 
         // 这里异步调用的原因是
         // 主线程执行完毕再执行这里
         // 此时，实例化已经完成，就能够读取实例上添加的属性了
         controller.nextTick(the._getActive, the);
-        event.on(the._$ele, the._options.eventType, 'a', the._ontrigger.bind(the));
+        event.on(the._$ele, options.eventType, options.tabSelector, the._ontrigger.bind(the));
+    };
+
+
+    /**
+     * 改变当前 tab
+     * @param index {Number} 切换的索引值
+     */
+    Tab.fn.change = function (index) {
+        var the = this
+        var options = the._options;
+        var $ele = selector.query(options.tabSelector, the._$ele)[index];
+
+        event.dispatch($ele, the._options.eventType);
     };
 
 

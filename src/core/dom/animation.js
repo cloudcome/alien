@@ -300,7 +300,20 @@ define(function (require, exports, module) {
             animationDirection: options.direction
         };
 
-        var reset = function () {
+        var oniteration = function () {
+            onanimationiteration = typeis.function(onanimationiteration) ? onanimationiteration : noop;
+            window[requestAnimationFrame](onanimationiteration.bind(ele, arguments));
+        };
+
+        var onend = function (eve) {
+            if (animationMap[id] && animationMap[id] !== onanimationend) {
+                animationMap[id] = typeis.function(animationMap[id]) ? animationMap[id] : noop;
+                animationMap[id].apply(ele, arguments);
+                animationMap[id] = null;
+            }
+
+            onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
+            animationMap[id] = null;
             attribute.css(ele, {
                 animationName: '',
                 animationDuration: '',
@@ -309,28 +322,15 @@ define(function (require, exports, module) {
                 animationIterationCount: '',
                 animationDirection: ''
             });
+            window[requestAnimationFrame](onanimationend.bind(ele, arguments));
+            event.un(ele, animationiterationEventType, oniteration);
+            event.un(ele, animationendEventType, onend);
         };
 
-        var onend = function (eve) {
-            if (options.name === eve.animationName) {
-                if (animationMap[id] !== onanimationend) {
-                    animationMap[id] = typeis.function(animationMap[id]) ? animationMap[id] : noop;
-                    animationMap[id].apply(ele, arguments);
-                }
-
-                onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
-                onanimationend.apply(ele, arguments);
-
-                reset();
-                event.un(ele, animationiterationEventType, onanimationiteration);
-                event.un(ele, animationendEventType, onend);
-            }
-        };
-
-        event.on(ele, animationiterationEventType, onanimationiteration);
+        event.on(ele, animationiterationEventType, oniteration);
         event.on(ele, animationendEventType, onend);
         animationMap[id] = onanimationend;
-        controller.nextTick(function () {
+        window[requestAnimationFrame](function () {
             attribute.css(ele, css);
         });
     };

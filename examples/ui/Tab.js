@@ -6,8 +6,12 @@ define(function (require) {
     var tab = new Tab('#tab');
 
     tab.on('change', function(index, $tab, $content){
-        $index.innerHTML = index;
+        $index.innerHTML = index + '==' + Date.now();
         console.log($tab);
         console.log($content);
     });
+
+    document.getElementById('btn').onclick = function () {
+        tab.change(1);
+    };
 });

@@ -81,10 +81,10 @@ define(function (require, exports, module) {
             callback = args[0];
         }
 
-        repeatTimes = repeatTimes || 1;
-        callback = typeis.function(callback) ? callback : noop;
         var repeatQueue = [];
-        repeatQueue.length = repeatTimes;
+
+        repeatQueue.length = dato.parseInt(repeatTimes, 1);
+        callback = typeis.function(callback) ? callback : noop;
 
         /**
          * 动画开始时
@@ -107,7 +107,6 @@ define(function (require, exports, module) {
                             howdo.each(queue.$eles, function (k, $ele, done) {
                                 animation.keyframes($ele, to, done);
                             }).together(function () {
-                                next();
                                 /**
                                  * 动画发生变化时
                                  * @event change
@@ -115,12 +114,12 @@ define(function (require, exports, module) {
                                  * @prarm times {Number} 动画重复次数
                                  */
                                 the.emit('change', j, i + 1);
+                                next();
                             });
                         } else {
                             howdo.each(queue.$eles, function (k, $ele, done) {
                                 animation.animate($ele, queue.to, queue.options, done);
                             }).together(function () {
-                                next();
                                 /**
                                  * 动画发生变化时
                                  * @event change
@@ -128,6 +127,7 @@ define(function (require, exports, module) {
                                  * @prarm times {Number} 动画重复次数
                                  */
                                 the.emit('change', j, i + 1);
+                                next();
                             });
                         }
                     })

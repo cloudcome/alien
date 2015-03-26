@@ -380,7 +380,7 @@ define(function (require, exports, module) {
     /**
      * 人性化比较时间时间
      * @param {String|Number|Date} date 比较时间
-     * @param {String|Number|Date} [date] 被比较时间，默认为当前时间
+     * @param {String|Number|Date} [compareDate] 被比较时间，默认为当前时间
      * @returns {string}
      *
      * @example
