@@ -301,6 +301,7 @@ define(function (require, exports, module) {
         };
 
         var oniteration = function () {
+            onanimationiteration = typeis.function(onanimationiteration) ? onanimationiteration : noop;
             window[requestAnimationFrame](onanimationiteration.bind(ele, arguments));
         };
 

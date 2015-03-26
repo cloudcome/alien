@@ -2,43 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f693d7fa-c856-4087-8dca-ec755b0e4a4f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/ydr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Scrollspy.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Scrollspy.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Stickly.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Stickly.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Touchpull.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/ui/Touchpull.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/test/absolute-center.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/allocation.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/allocation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/calendar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/calendar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/canvas.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/canvas.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/class.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/class.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/controller.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/date.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/date.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/dato.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/dato.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/hashbang.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/hashbang.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/jquery-2.1.3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/keyframes.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/keyframes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/querystring.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/querystring.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/random.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/random.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/selection.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/selection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/typeis.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/typeis.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/url.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/utils/url.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/libs/Animation.html" afterPath="$PROJECT_DIR$/examples/libs/Animation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/core/dom/animation.js" afterPath="$PROJECT_DIR$/src/core/dom/animation.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="b8a2c0cd-1c82-4756-9478-872aacd67896" name="Failed commit: Default" comment="ui 全部导出为类，修复了几处 BUG，ui 增加了事件编程，增加了分页" />
@@ -160,6 +125,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -178,10 +145,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alien" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -382,13 +379,9 @@
       <workItem from="1427080166632" duration="55000" />
       <workItem from="1427102562578" duration="2115000" />
       <workItem from="1427198271321" duration="2796000" />
-      <workItem from="1427212327216" duration="66000" />
-    </task>
-    <task id="LOCAL-00276" summary="ui/Mask/">
-      <created>1421580809322</created>
-      <option name="number" value="00276" />
-      <option name="project" value="LOCAL" />
-      <updated>1421580809322</updated>
+      <workItem from="1427212327216" duration="94000" />
+      <workItem from="1427353125817" duration="19000" />
+      <workItem from="1427353290553" duration="5000" />
     </task>
     <task id="LOCAL-00277" summary="ui/Mask/">
       <created>1421581034724</created>
@@ -678,11 +671,17 @@
       <option name="project" value="LOCAL" />
       <updated>1427212369776</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <task id="LOCAL-00325" summary="sync">
+      <created>1427212396137</created>
+      <option name="number" value="00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1427212396137</updated>
+    </task>
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15986000" />
+    <option name="totallyTimeSpent" value="16038000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
@@ -698,7 +697,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23828435" sideWeight="0.50080514" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32298136" sideWeight="0.49960285" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -712,6 +710,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4689984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.55484897" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1123,7 +1122,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71573603" vertical-offset="818" max-vertical-offset="1564">
           <caret line="73" column="17" selection-start-line="73" selection-start-column="17" selection-end-line="73" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1144,18 +1142,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/libs/Animation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20097245" vertical-offset="471" max-vertical-offset="1139">
-          <caret line="35" column="7" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6040609" vertical-offset="0" max-vertical-offset="884">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/libs/Animation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22778675" vertical-offset="352" max-vertical-offset="1139">
+          <caret line="29" column="6" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
           <folding />
         </state>
       </provider>
