@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     var defaults = {
         containerSelector: window,
         className: 'stickly',
-        wait: 123
+        wait: 30
     };
     var Stickly = ui.create(function ($ele, options) {
         var the = this;
@@ -55,15 +55,25 @@ define(function (require, exports, module) {
         var the = this;
         var options = the._options;
 
-        attribute.removeClass(the._$ele, options.className)
+        attribute.removeClass(the._$ele, options.className);
 
         var top = attribute.top(the._$ele);
         var scrollTop = attribute.scrollTop(the._$container);
 
         if (scrollTop >= top) {
-            attribute.addClass(the._$ele, options.className)
+            attribute.addClass(the._$ele, options.className);
+            /**
+             * 固定住了
+             * @param isStick {Boolean} 是否固定住了
+             */
+            the.emit('stick', true);
         } else {
-            attribute.removeClass(the._$ele, options.className)
+            attribute.removeClass(the._$ele, options.className);
+            /**
+             * 取消固定住了
+             * @param isStick {Boolean} 是否固定住了
+             */
+            the.emit('stick', false);
         }
     };
 

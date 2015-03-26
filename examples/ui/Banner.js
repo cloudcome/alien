@@ -19,7 +19,6 @@ define(function (require) {
         width: window.innerWidth,
         height: 200,
         axis: '+x',
-        interval: 1000,
         isAutoPlay: false,
         navGenerator: function (index, length) {
             return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
