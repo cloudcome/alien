@@ -215,8 +215,13 @@ define(function (require, exports, module) {
 
         temp = hashbangString.split('#');
         temp.shift();
-        hashbangString = '#' + temp.join('');
-        hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+
+        if(temp.length){
+            hashbangString = '#' + temp.join('');
+            hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+        }else{
+            hashbangString = '/';
+        }
 
         if (options.isIgnoreEndSlash) {
             route += regEndSlash.test(route) ? '?' : '/?';

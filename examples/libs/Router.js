@@ -13,17 +13,20 @@ define(function (require) {
     var router = new Router();
 
     router
-        .when('/', function () {
+        .if('/', function () {
             console.log('主页');
         })
-        .when('/list/', function () {
+        .if('/list/', function () {
             console.log('列表第1页');
         })
-        .when('/list/page/:page/', function (params) {
+        .if('/list/page/:page/', function (params) {
             console.log('列表第' + params.page + '页');
         })
-        .when('/detail/:id', function (params) {
+        .if('/detail/:id', function (params) {
             console.log('详情' + params.id + '页');
+        })
+        .else(function () {
+            router.redirect('/');
         })
         .on('enter', function (route) {
             console.log('进入：' + route);
@@ -31,4 +34,8 @@ define(function (require) {
         .on('leave', function (route) {
             console.log('离开：' + route);
         });
+
+    document.getElementById('red').onclick = function () {
+        router.redirect('/' + Math.random());
+    };
 });

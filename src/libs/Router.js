@@ -30,7 +30,11 @@ define(function (require, exports, module) {
         the._options = dato.extend({}, defaults, options);
         the._routerList = [];
         the._routerMap = {};
+        the._unMatchedCallbackList = [];
         the._lastMatchedRouter = null;
+        the._isIgnoreHashChange = false;
+        //the._hashchangeTimes = 0;
+        //the._ignoreHashchangeTimes = -1;
         the._initEvent();
     }, Emitter);
 
@@ -44,7 +48,7 @@ define(function (require, exports, module) {
             var matchKey = '';
 
             dato.each(the._routerList, function (index, routerConfig) {
-                matchKey = Object.keys(routerConfig);
+                matchKey = Object.keys(routerConfig)[0];
                 matched = hashbang.matches(eve.newURL, matchKey, the._options);
                 matchIndex = index;
 
@@ -61,10 +65,13 @@ define(function (require, exports, module) {
                 the._lastMatchedRouter = matchKey;
                 the.emit('enter', the._lastMatchedRouter);
                 the._routerList[matchIndex][matchKey].forEach(function (callback) {
-                    callback(matched);
+                    callback.call(the, matched);
                 });
             } else {
                 the._lastMatchedRouter = null;
+                the._unMatchedCallbackList.forEach(function (callback) {
+                    callback.call(the);
+                });
             }
         };
 
@@ -76,7 +83,13 @@ define(function (require, exports, module) {
         });
     };
 
-    Router.fn.when = function (route, callback) {
+
+    /**
+     * 添加路由
+     * @param route {String} 路由表达式
+     * @param callback {Function} 进入路由回调
+     */
+    Router.fn.if = function (route, callback) {
         var the = this;
         var map = {};
         var index = the._routerList.length;
@@ -98,6 +111,34 @@ define(function (require, exports, module) {
             index = the._routerMap[route];
             the._routerList[index][route].push(callback);
         }
+
+        return the;
+    };
+
+
+    /**
+     * 未匹配路由
+     * @param callback {Function} 回调
+     */
+    Router.fn.else = function (callback) {
+        var the = this;
+
+        if (typeis.function(callback)) {
+            the._unMatchedCallbackList.push(callback);
+        }
+
+        return the;
+    };
+
+
+    /**
+     * 路由跳转
+     * @param url {String} 跳转的地址
+     */
+    Router.fn.redirect = function (url) {
+        var the = this;
+
+        location.hash = '#!' + url;
 
         return the;
     };
