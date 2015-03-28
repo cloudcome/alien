@@ -14,7 +14,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
-    var event = require('../../core/event/base.js');
+    var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');
     var defaults = {
@@ -32,6 +32,7 @@ define(function (require, exports, module) {
         return the._init();
     });
 
+
     Stickly.fn._init = function () {
         var the = this;
 
@@ -47,7 +48,7 @@ define(function (require, exports, module) {
         var options = the._options;
 
         the._onscroll = controller.throttle(the._stickly.bind(the), options.wait);
-        event.on(the._$container, 'scroll', the._onscroll.bind(the));
+        event.on(the._$container, 'scroll touch1move', the._onscroll.bind(the));
     };
 
 
@@ -75,6 +76,16 @@ define(function (require, exports, module) {
              */
             the.emit('stick', false);
         }
+    };
+
+
+    /**
+     * 销毁实例
+     */
+    Stickly.fn.destroy = function () {
+        var the = this;
+
+        event.un(the._$container, 'scroll touch1move', the._onscroll);
     };
 
 

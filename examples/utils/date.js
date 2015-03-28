@@ -9,6 +9,11 @@ define(function (require) {
     window.date = date;
 
     document.getElementById('ret1').innerHTML = date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+
+    setInterval(function () {
+        document.getElementById('ret1').innerHTML = date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+    }, 1000);
+
     document.getElementById('ret2').innerHTML = date.from('2014-4-11 08:00:00');
     document.getElementById('ret3').innerHTML = date.from('2015-4-11 08:00:00');
     document.getElementById('ret4').innerHTML = date.getWeeksInYear(YYYY, M, D);

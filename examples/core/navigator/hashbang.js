@@ -4,36 +4,27 @@ define(function (require) {
     var hashbang = require('/src/core/navigator/hashbang.js');
     var dato = require('/src/utils/dato.js');
     var random = require('../../../src/utils/random.js');
-    var $routers = document.getElementById('routers');
     var $ret = document.getElementById('ret');
     var routes = [{
-        router: '/index/',
-        callback: function (matched) {
+        '/index/': function (matched) {
             $ret.innerHTML = 'matched /index/';
         }
     }, {
-        router: '/user/:userId/',
-        callback: function (matched) {
+        '/user/:userId/': [function (matched) {
             $ret.innerHTML = 'matched /user/:userId/, userId = ' + matched.userId;
-        }
+        }, function (matched) {
+            console.log(matched);
+        }]
     }, {
-        router: '/admin/:adminId/page/:pageNo/',
-        callback: function (matched) {
+        '/admin/:adminId/page/:pageNo/': function (matched) {
             $ret.innerHTML = 'matched /user/:userId/, adminId = ' + matched.adminId + '; pageNo = ' + matched.pageNo;
         }
     }, {
-        router: '*',
-        callback: function () {
+        '*': function () {
             $ret.innerHTML = 'matched null, return to /index/';
             hashbang.set('path', ['index']);
         }
     }];
-
-    var lis = '';
-    dato.each(routes, function (index, config) {
-        lis += '<li>路由' + (index + 1) + '：' + config.router + '</li>';
-    });
-    $routers.innerHTML = lis;
 
     document.getElementById('btn1').onclick = function () {
         hashbang.set('path', ['index']);
