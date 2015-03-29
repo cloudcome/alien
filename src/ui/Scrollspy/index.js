@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
+    var typeis = require('../../utils/typeis.js');
     var Emitter = require('../../libs/Emitter.js');
     var ui = require('../');
     var alienKey = '-alien-ui-Scrollspy-in-viewport-';
@@ -35,6 +36,12 @@ define(function (require, exports, module) {
     };
     var Scrollspy = ui.create(function ($parent, options) {
         var the = this;
+        var args = arguments;
+
+        if (typeis.object(args[0])) {
+            options = args[0];
+            $parent = document;
+        }
 
         the._$parent = selector.query($parent)[0];
         the._options = dato.extend({}, defaults, options);

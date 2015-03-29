@@ -118,8 +118,10 @@ define(function (require, exports, module) {
             });
         });
 
-        the._translate = -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height);
-        attribute.css(the._$list, the._calTranslate(the._showIndex + 1));
+        the._translate = the._itemLength > 1
+            ? -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height)
+            : 0;
+        attribute.css(the._$list, the._calTranslate(the._itemLength > 1 ? the._showIndex + 1 : 0));
 
         return the;
     };
@@ -138,8 +140,11 @@ define(function (require, exports, module) {
         var $item0Clone = $item0.cloneNode(true);
         var $item_Clone = $item_.cloneNode(true);
 
-        modification.insert($item0Clone, $item_, 'afterend');
-        modification.insert($item_Clone, $item0, 'beforebegin');
+        if (the._itemLength > 1) {
+            modification.insert($item0Clone, $item_, 'afterend');
+            modification.insert($item_Clone, $item0, 'beforebegin');
+        }
+
         modification.wrap(the._$list, '<div/>');
         the._$wrap = selector.parent(the._$list)[0];
         the._$wrap.id = alienClass + '-' + alienIndex++;
@@ -222,7 +227,7 @@ define(function (require, exports, module) {
                     the._offset = changedY;
                 }
 
-                toIndex = the._boundIndex(toIndex);
+                toIndex = the._itemLength > 1 ? the._boundIndex(toIndex) : 0;
                 the._show(toIndex, direction, the._autoPlay.bind(the, true));
             } else {
                 the._autoPlay(true);
@@ -264,12 +269,20 @@ define(function (require, exports, module) {
      */
     Banner.fn._calTranslate = function (realIndex) {
         var the = this;
+        var sett = {};
+
+        if (the._itemLength < 2) {
+            sett['translate' + the._direction] = 0;
+
+            return sett;
+        }
+
         var options = the._options;
         var val = the._direction === 'X' ?
+
         options.width * realIndex :
         options.height * realIndex;
 
-        var sett = {};
 
         sett['translate' + the._direction] = (-val + the._offset) + 'px';
 
@@ -302,7 +315,9 @@ define(function (require, exports, module) {
         }
 
         the._offset = 0;
-        the._translate = -(the._direction === 'X' ? options.width : options.height) * (index + 1);
+        the._translate = the._itemLength > 2
+            ? -(the._direction === 'X' ? options.width : options.height) * (index + 1)
+            : 0;
         animation.animate(the._$list, the._calTranslate(index + 1), {
             duration: options.duration,
             easing: options.easing

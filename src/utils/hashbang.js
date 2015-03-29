@@ -25,11 +25,12 @@ define(function (require, exports, module) {
     var event = require('../core/event/base.js');
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
-    var regColon = /:([^\/]+)/g;
+    var regColon = /:(\w+\b)/g;
     var regStar = /\*/g;
+    var regAsk = /\?/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    var regOther = /[.+^=!${}()|[\]\\]/g;
+    //var regOther = /[.+^=!${}()|[\]\\]/g;
     var pathListenerMap = {};
     var pathAllListener = [];
     var queryListenerMap = {};
@@ -88,12 +89,12 @@ define(function (require, exports, module) {
      * hashbang.parse('#!/a/b/c?a=1&b=2');
      * // =>
      * // {
-         * //    path: ["a", "b", "c"],
-         * //    query: {
-         * //        a: "1",
-         * //        b: "2"
-         * //    }
-         * // }
+     * //    path: ["a", "b", "c"],
+     * //    query: {
+     * //        a: "1",
+     * //        b: "2"
+     * //    }
+     * // }
      */
     exports.parse = function (hashbangString, sep, eq) {
         var dftRet = {path: [], query: {}};
@@ -138,13 +139,13 @@ define(function (require, exports, module) {
      *
      * @example
      * hashbang.stringify({
-         *    path: ["a", "b", "c"],
-         *    query: {
-         *       a: 1,
-         *       b: 2,
-         *       c: 3
-         *    }
-         * });
+     *    path: ["a", "b", "c"],
+     *    query: {
+     *       a: 1,
+     *       b: 2,
+     *       c: 3
+     *    }
+     * });
      * // => "#!/a/b/c/?a=1&b=2&c=3"
      */
     exports.stringify = function (hashbangObject, sep, eq) {
@@ -179,11 +180,19 @@ define(function (require, exports, module) {
      * @returns {*}
      *
      * @example
+     * 语法：
+     * `/name/:name/page/:page?/`
+     * 匹配：
+     * /name/cloudcome/page/123/
+     * /name/cloudcome/page/123
+     * /name/cloudcome/page/
+     * /name/cloudcome/page
+     *
      * hashbang.matches('#!/id/abc123/', '/id/:id/');
      * // =>
      * // {
-         * //   id: "abc123"
-         * // }
+     * //   id: "abc123"
+     * // }
      *
      * hashbang.matches('#!/name/abc123/', '/id/:id/');
      * // => null
@@ -206,15 +215,22 @@ define(function (require, exports, module) {
 
         temp = hashbangString.split('#');
         temp.shift();
-        hashbangString = '#' + temp.join('');
-        hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+
+        if(temp.length){
+            hashbangString = '#' + temp.join('');
+            hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+        }else{
+            hashbangString = '/';
+        }
 
         if (options.isIgnoreEndSlash) {
             route += regEndSlash.test(route) ? '?' : '/?';
         }
 
-        route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/').replace(regStar, '.*');
-        route.replace(regOther, '\\$&');
+        route = route
+            .replace(regColon, (options.isIgnoreEndSlash ? '?' : '') + '([^/]+)')
+            .replace(regSep, '\\/')
+            .replace(regStar, '.*');
 
         try {
             reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');

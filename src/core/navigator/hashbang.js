@@ -196,11 +196,13 @@ define(function (require, exports) {
      */
     exports.routers = function (routerConfig, options) {
         hashbang.on('path', function (eve) {
-            var matched;
+            var matched = null;
             var matchIndex = -1;
+            var matchKey = '';
 
-            dato.each(routerConfig, function (index, config) {
-                matched = hashbang.matches(eve.newURL, config.router, options);
+            dato.each(routerConfig, function (index, routerConfig) {
+                matchKey = Object.keys(routerConfig);
+                matched = hashbang.matches(eve.newURL, matchKey, options);
                 matchIndex = index;
 
                 if (matched) {
@@ -209,7 +211,13 @@ define(function (require, exports) {
             });
 
             if (matched && matchIndex > -1) {
-                routerConfig[matchIndex].callback.call(window, matched);
+                var callbacks = typeis.array(routerConfig[matchIndex][matchKey])
+                    ? routerConfig[matchIndex][matchKey]
+                    : [routerConfig[matchIndex][matchKey]];
+
+                callbacks.forEach(function (callback) {
+                    callback(matched);
+                });
             }
         });
 
