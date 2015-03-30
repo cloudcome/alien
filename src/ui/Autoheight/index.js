@@ -29,7 +29,9 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var style = require('css!./style.css');
     var alienClass = 'alien-ui-autoheight';
-    var defaults = {};
+    var defaults = {
+        offsetTop: 0
+    };
     var typographyStyles = [
         'font',
         'letterSpacing',
@@ -111,13 +113,17 @@ define(function (require, exports, module) {
         attribute.css($ele, {
             overflow: 'hidden'
         });
-        the._pos = selection.getPos($ele);
+
+        //the._pos = selection.getPos($ele);
+
         // 先插入字符，重新排版后还原
         $ele.value = ' ';
         the._$ele.style.height = 'auto';
         the._innerHeight = attribute.innerHeight(the._$ele);
         $ele.value = value;
-        selection.setPos($ele, the._pos);
+
+        // 避免手机 safari 在滚动的时候聚焦输入框
+        // selection.setPos($ele, the._pos);
     };
 
 
@@ -128,8 +134,9 @@ define(function (require, exports, module) {
     Autoheight.fn._initEvent = function () {
         var the = this;
 
+
         adjust.call(the);
-        event.on(the._$ele, 'input', adjust.bind(the));
+        event.on(the._$ele, 'input', the._adjust = controller.debounce(adjust.bind(the)));
     };
 
 
@@ -160,7 +167,7 @@ define(function (require, exports, module) {
     Autoheight.fn.destroy = function () {
         var the = this;
 
-        event.un(the._$ele, 'input', adjust);
+        event.un(the._$ele, 'input', the._adjust);
     };
 
     modification.importStyle(style);
