@@ -25,6 +25,7 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="libs_Router.module_js.html">js</a></li>
 <li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
 <li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
 <li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
@@ -94,11 +95,11 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
@@ -110,7 +111,7 @@
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
 <li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -696,13 +697,13 @@ define(function (require, exports, module) {
     var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
-    var event = require('../../core/event/base.js');
+    var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');
     var defaults = {
         containerSelector: window,
         className: 'stickly',
-        wait: 123
+        wait: 30
     };
     var Stickly = ui.create(function ($ele, options) {
         var the = this;
@@ -713,6 +714,7 @@ define(function (require, exports, module) {
 
         return the._init();
     });
+
 
     Stickly.fn._init = function () {
         var the = this;
@@ -729,7 +731,7 @@ define(function (require, exports, module) {
         var options = the._options;
 
         the._onscroll = controller.throttle(the._stickly.bind(the), options.wait);
-        event.on(the._$container, 'scroll', the._onscroll.bind(the));
+        event.on(the._$container, 'scroll touch1move', the._onscroll.bind(the));
     };
 
 
@@ -737,16 +739,36 @@ define(function (require, exports, module) {
         var the = this;
         var options = the._options;
 
-        attribute.removeClass(the._$ele, options.className)
+        attribute.removeClass(the._$ele, options.className);
 
         var top = attribute.top(the._$ele);
         var scrollTop = attribute.scrollTop(the._$container);
 
         if (scrollTop >= top) {
-            attribute.addClass(the._$ele, options.className)
+            attribute.addClass(the._$ele, options.className);
+            /**
+             * 固定住了
+             * @param isStick {Boolean} 是否固定住了
+             */
+            the.emit('stick', true);
         } else {
-            attribute.removeClass(the._$ele, options.className)
+            attribute.removeClass(the._$ele, options.className);
+            /**
+             * 取消固定住了
+             * @param isStick {Boolean} 是否固定住了
+             */
+            the.emit('stick', false);
         }
+    };
+
+
+    /**
+     * 销毁实例
+     */
+    Stickly.fn.destroy = function () {
+        var the = this;
+
+        event.un(the._$container, 'scroll touch1move', the._onscroll);
     };
 
 

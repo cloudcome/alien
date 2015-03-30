@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Source: ui/Autoheight/index.js - Alien documents</title>
+    <title>Source: libs/Router.js - Alien documents</title>
 
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
@@ -674,7 +674,7 @@
 
 	        <section id="docs-content">
 	            <div class="content">
-		            <h1 class="page-title">Source: ui/Autoheight/index.js</h1>
+		            <h1 class="page-title">Source: libs/Router.js</h1>
 
 		            
 
@@ -682,183 +682,151 @@
     
 
 <pre class="prettyprint source"><code>/*!
- * textarea 自增高
+ * 前端路由模块
  * @author ydr.me
- * @create 2014-12-16 11:07
- * @ref http://www.jacklmoore.com/autosize
+ * @create 2015-03-28 17:50
  */
 
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Autoheight/
-     * @requires ui/
-     * @requires core/dom/selector
-     * @requires core/dom/modification
-     * @requires core/dom/attribute
-     * @requires core/event/base
-     * @requires utils/dato
+     * @module libs/Router.js
      */
     'use strict';
 
-    var ui = require('../');
-    var selector = require('../../core/dom/selector.js');
-    var modification = require('../../core/dom/modification.js');
-    var attribute = require('../../core/dom/attribute.js');
-    var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/base.js');
-    var dato = require('../../utils/dato.js');
-    var selection = require('../../utils/selection.js');
-    var controller = require('../../utils/controller.js');
-    var style = require('css!./style.css');
-    var alienClass = 'alien-ui-autoheight';
+    var Emitter = require('./Emitter.js');
+    var event = require('../core/event/base.js');
+    var klass = require('../utils/class.js');
+    var typeis = require('../utils/typeis.js');
+    var hashbang = require('../utils/hashbang.js');
+    var dato = require('../utils/dato.js');
+    var controller = require('../utils/controller.js');
     var defaults = {
-        offsetTop: 0
+        // 是否忽略大小写
+        isIgnoreCase: false,
+        // 是否忽略结尾斜杠
+        isIgnoreEndSlash: true
     };
-    var typographyStyles = [
-        'font',
-        'letterSpacing',
-        'textTransform',
-        'wordSpacing',
-        'textIndent',
-        'whiteSpace',
-        'lineHeight',
-        'padding'
-    ];
-    // 创建镜像 textarea
-    var $mirror = modification.create('textarea', {
-        tabindex: -1,
-        style: {
-            position: 'absolute',
-            top: '-9999em',
-            left: '-9999em',
-            border: 0,
-            boxSizing: 'content-box',
-            wordWrap: 'break-word',
-            height: '0 !important',
-            minHeight: '0 !important',
-            overflow: 'hidden',
-            transition: 'none'
-        }
-    });
-    var adjust = function () {
-        var the = this;
-        var $ref = the._$ele;
-        var value = $ref.value || attribute.attr($ref, 'placeholder') || '';
-        var style = attribute.css($ref, typographyStyles);
-        var width = attribute.width($ref);
-
-        attribute.css($mirror, style);
-        $mirror.value = value;
-        attribute.width($mirror, width);
-
-        var scrollHeight = $mirror.scrollHeight;
-
-        attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
-    };
-    var Autoheight = ui.create(function ($ele, options) {
+    var Router = klass.create(function (options) {
         var the = this;
 
-        the._$ele = selector.query($ele);
-
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
-
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-
-    /**
-     * 初始化
-     * @private
-     */
-    Autoheight.fn._init = function () {
-        var the = this;
-
-        attribute.addClass(the._$ele, alienClass);
-        the._initSize();
+        the._options = dato.extend({}, defaults, options);
+        the._routerList = [];
+        the._routerMap = {};
+        the._unMatchedCallbackList = [];
+        the._lastMatchedRouter = null;
+        the._isIgnoreHashChange = false;
+        //the._hashchangeTimes = 0;
+        //the._ignoreHashchangeTimes = -1;
         the._initEvent();
-    };
+    }, Emitter);
 
 
-    /**
-     * 初始化尺寸
-     * @private
-     */
-    Autoheight.fn._initSize = function () {
-        var the = this;
-        var $ele = the._$ele;
-        var value = $ele.value;
-
-        attribute.css($ele, {
-            overflow: 'hidden'
-        });
-
-        //the._pos = selection.getPos($ele);
-
-        // 先插入字符，重新排版后还原
-        $ele.value = ' ';
-        the._$ele.style.height = 'auto';
-        the._innerHeight = attribute.innerHeight(the._$ele);
-        $ele.value = value;
-
-        // 避免手机 safari 在滚动的时候聚焦输入框
-        // selection.setPos($ele, the._pos);
-    };
-
-
-    /**
-     * 初始化事件
-     * @private
-     */
-    Autoheight.fn._initEvent = function () {
+    Router.fn._initEvent = function () {
         var the = this;
 
+        the._onhashchange = function (eve) {
+            var matched = null;
+            var matchIndex = -1;
+            var matchKey = '';
 
-        adjust.call(the);
-        event.on(the._$ele, 'input', the._adjust = controller.debounce(adjust.bind(the)));
-    };
+            dato.each(the._routerList, function (index, routerConfig) {
+                matchKey = Object.keys(routerConfig)[0];
+                matched = hashbang.matches(eve.newURL, matchKey, the._options);
+                matchIndex = index;
 
+                if (matched) {
+                    return false;
+                }
+            });
 
-    /**
-     * 重新定位尺寸
-     * @public
-     */
-    Autoheight.fn.resize = function () {
-        var the = this;
+            if (the._lastMatchedRouter !== null) {
+                the.emit('leave', the._lastMatchedRouter);
+            }
 
-        the._initSize();
-        adjust.call(the);
+            if (matched &amp;&amp; matchIndex > -1) {
+                the._lastMatchedRouter = matchKey;
+                the.emit('enter', the._lastMatchedRouter);
+                the._routerList[matchIndex][matchKey].forEach(function (callback) {
+                    callback.call(the, matched);
+                });
+            } else {
+                the._lastMatchedRouter = null;
+                the._unMatchedCallbackList.forEach(function (callback) {
+                    callback.call(the);
+                });
+            }
+        };
 
-        var offsetY = selection.getOffset(the._$ele)[1];
-
-        animation.scrollTo(window, {
-            y: attribute.top(the._$ele) + offsetY
-        }, {
-            duration: 1
+        event.on(window, 'hashchange', the._onhashchange);
+        controller.nextTick(function () {
+            the._onhashchange({
+                newURL: location.href
+            });
         });
     };
 
 
     /**
-     * 销毁实例
-     * @public
+     * 添加路由
+     * @param route {String} 路由表达式
+     * @param callback {Function} 进入路由回调
      */
-    Autoheight.fn.destroy = function () {
+    Router.fn.if = function (route, callback) {
         var the = this;
+        var map = {};
+        var index = the._routerList.length;
 
-        event.un(the._$ele, 'input', the._adjust);
+        if (!typeis.function(callback)) {
+            return the;
+        }
+
+        route = String(route);
+        map[route] = [callback];
+
+        // 存在路由
+        if (typeis.undefined(the._routerMap[route])) {
+            the._routerMap[route] = index;
+            the._routerList.push(map);
+        }
+        // 不存在路由
+        else {
+            index = the._routerMap[route];
+            the._routerList[index][route].push(callback);
+        }
+
+        return the;
     };
 
-    modification.importStyle(style);
-    document.body.appendChild($mirror);
+
     /**
-     * 实例化一个 Autoheight
+     * 未匹配路由
+     * @param callback {Function} 回调
      */
-    module.exports = Autoheight;
+    Router.fn.else = function (callback) {
+        var the = this;
+
+        if (typeis.function(callback)) {
+            the._unMatchedCallbackList.push(callback);
+        }
+
+        return the;
+    };
+
+
+    /**
+     * 路由跳转
+     * @param url {String} 跳转的地址
+     */
+    Router.fn.redirect = function (url) {
+        var the = this;
+
+        location.hash = '#!' + url;
+
+        return the;
+    };
+
+    module.exports = Router;
 });</code></pre>
 
 

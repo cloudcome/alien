@@ -25,6 +25,7 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="libs_Router.module_js.html">js</a></li>
 <li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
 <li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
 <li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
@@ -94,11 +95,11 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
@@ -110,7 +111,7 @@
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
 <li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -707,11 +708,12 @@ define(function (require, exports, module) {
     var event = require('../core/event/base.js');
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
-    var regColon = /:([^\/]+)/g;
+    var regColon = /:(\w+\b)/g;
     var regStar = /\*/g;
+    var regAsk = /\?/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    var regOther = /[.+^=!${}()|[\]\\]/g;
+    //var regOther = /[.+^=!${}()|[\]\\]/g;
     var pathListenerMap = {};
     var pathAllListener = [];
     var queryListenerMap = {};
@@ -770,12 +772,12 @@ define(function (require, exports, module) {
      * hashbang.parse('#!/a/b/c?a=1&amp;b=2');
      * // =>
      * // {
-         * //    path: ["a", "b", "c"],
-         * //    query: {
-         * //        a: "1",
-         * //        b: "2"
-         * //    }
-         * // }
+     * //    path: ["a", "b", "c"],
+     * //    query: {
+     * //        a: "1",
+     * //        b: "2"
+     * //    }
+     * // }
      */
     exports.parse = function (hashbangString, sep, eq) {
         var dftRet = {path: [], query: {}};
@@ -820,13 +822,13 @@ define(function (require, exports, module) {
      *
      * @example
      * hashbang.stringify({
-         *    path: ["a", "b", "c"],
-         *    query: {
-         *       a: 1,
-         *       b: 2,
-         *       c: 3
-         *    }
-         * });
+     *    path: ["a", "b", "c"],
+     *    query: {
+     *       a: 1,
+     *       b: 2,
+     *       c: 3
+     *    }
+     * });
      * // => "#!/a/b/c/?a=1&amp;b=2&amp;c=3"
      */
     exports.stringify = function (hashbangObject, sep, eq) {
@@ -861,11 +863,19 @@ define(function (require, exports, module) {
      * @returns {*}
      *
      * @example
+     * 语法：
+     * `/name/:name/page/:page?/`
+     * 匹配：
+     * /name/cloudcome/page/123/
+     * /name/cloudcome/page/123
+     * /name/cloudcome/page/
+     * /name/cloudcome/page
+     *
      * hashbang.matches('#!/id/abc123/', '/id/:id/');
      * // =>
      * // {
-         * //   id: "abc123"
-         * // }
+     * //   id: "abc123"
+     * // }
      *
      * hashbang.matches('#!/name/abc123/', '/id/:id/');
      * // => null
@@ -888,15 +898,22 @@ define(function (require, exports, module) {
 
         temp = hashbangString.split('#');
         temp.shift();
-        hashbangString = '#' + temp.join('');
-        hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+
+        if(temp.length){
+            hashbangString = '#' + temp.join('');
+            hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
+        }else{
+            hashbangString = '/';
+        }
 
         if (options.isIgnoreEndSlash) {
             route += regEndSlash.test(route) ? '?' : '/?';
         }
 
-        route = route.replace(regColon, '([^/]+)').replace(regSep, '\\/').replace(regStar, '.*');
-        route.replace(regOther, '\\$&amp;');
+        route = route
+            .replace(regColon, (options.isIgnoreEndSlash ? '?' : '') + '([^/]+)')
+            .replace(regSep, '\\/')
+            .replace(regStar, '.*');
 
         try {
             reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');

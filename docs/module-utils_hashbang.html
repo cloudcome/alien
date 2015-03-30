@@ -25,6 +25,7 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 <ul class="dropdown-menu">
+<li><a href="libs_Router.module_js.html">js</a></li>
 <li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
 <li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
 <li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
@@ -94,11 +95,11 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
+<li><a href="module-ui_Mask_.html#~event:close">module:ui/Window/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
@@ -110,7 +111,7 @@
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
 <li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -267,7 +268,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-93613405269570659637800802011043" data-toggle="tab">Source</a>
+                <a href="#tab-meta-704384089214727328521372098475695" data-toggle="tab">Source</a>
             </li>
 
         
@@ -288,7 +289,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-93613405269570659637800802011043">
+            <div class="tab-pane active" id="tab-meta-704384089214727328521372098475695">
                 <p><a href="utils_hashbang.js.html#line9">utils/hashbang.js:9</a></p>
             </div>
 
@@ -383,7 +384,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-1649582874961197414545155176892877" data-toggle="tab">Source</a>
+                <a href="#tab-meta-81572579732164749282689040992409" data-toggle="tab">Source</a>
             </li>
 
         
@@ -404,8 +405,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-1649582874961197414545155176892877">
-                <p><a href="utils_hashbang.js.html#line304">utils/hashbang.js:304</a></p>
+            <div class="tab-pane active" id="tab-meta-81572579732164749282689040992409">
+                <p><a href="utils_hashbang.js.html#line320">utils/hashbang.js:320</a></p>
             </div>
 
         
@@ -697,7 +698,15 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>hashbang.matches('#!/id/abc123/', '/id/:id/');
+    <pre class="prettyprint"><code>语法：
+`/name/:name/page/:page?/`
+匹配：
+/name/cloudcome/page/123/
+/name/cloudcome/page/123
+/name/cloudcome/page/
+/name/cloudcome/page
+
+hashbang.matches('#!/id/abc123/', '/id/:id/');
 // =>
 // {
 //   id: "abc123"
@@ -728,7 +737,7 @@ hashbang.matches('#!/name/abc123/', '/id/:id/');
 
             
             <li class="active">
-                <a href="#tab-meta-79501155996695164556838816497475" data-toggle="tab">Source</a>
+                <a href="#tab-meta-308281980687752375992108318023384" data-toggle="tab">Source</a>
             </li>
 
         
@@ -749,8 +758,8 @@ hashbang.matches('#!/name/abc123/', '/id/:id/');
         
         
 
-            <div class="tab-pane active" id="tab-meta-79501155996695164556838816497475">
-                <p><a href="utils_hashbang.js.html#line191">utils/hashbang.js:191</a></p>
+            <div class="tab-pane active" id="tab-meta-308281980687752375992108318023384">
+                <p><a href="utils_hashbang.js.html#line200">utils/hashbang.js:200</a></p>
             </div>
 
         
@@ -967,7 +976,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-373110788874328147717490314971656" data-toggle="tab">Source</a>
+                <a href="#tab-meta-162204101681709329785456554964185" data-toggle="tab">Source</a>
             </li>
 
         
@@ -988,8 +997,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-373110788874328147717490314971656">
-                <p><a href="utils_hashbang.js.html#line261">utils/hashbang.js:261</a></p>
+            <div class="tab-pane active" id="tab-meta-162204101681709329785456554964185">
+                <p><a href="utils_hashbang.js.html#line277">utils/hashbang.js:277</a></p>
             </div>
 
         
@@ -1219,7 +1228,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-59157897019758826703905388712883" data-toggle="tab">Source</a>
+                <a href="#tab-meta-36714627360925089864683030173182" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1240,8 +1249,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-59157897019758826703905388712883">
-                <p><a href="utils_hashbang.js.html#line98">utils/hashbang.js:98</a></p>
+            <div class="tab-pane active" id="tab-meta-36714627360925089864683030173182">
+                <p><a href="utils_hashbang.js.html#line99">utils/hashbang.js:99</a></p>
             </div>
 
         
@@ -1471,7 +1480,7 @@ hashbang.on('query', 'abc', fn);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-67561207781545827524137457367033" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9203227597754449018967686221003532" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1492,8 +1501,8 @@ hashbang.on('query', 'abc', fn);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-67561207781545827524137457367033">
-                <p><a href="utils_hashbang.js.html#line150">utils/hashbang.js:150</a></p>
+            <div class="tab-pane active" id="tab-meta-9203227597754449018967686221003532">
+                <p><a href="utils_hashbang.js.html#line151">utils/hashbang.js:151</a></p>
             </div>
 
         
@@ -1724,7 +1733,7 @@ hashbang.un('query');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-68494206015020615789983726572245" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9981935652904212005572820547968149" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1745,8 +1754,8 @@ hashbang.un('query');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-68494206015020615789983726572245">
-                <p><a href="utils_hashbang.js.html#line339">utils/hashbang.js:339</a></p>
+            <div class="tab-pane active" id="tab-meta-9981935652904212005572820547968149">
+                <p><a href="utils_hashbang.js.html#line355">utils/hashbang.js:355</a></p>
             </div>
 
         
