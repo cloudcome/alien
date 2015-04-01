@@ -34,7 +34,9 @@ define(function (require, exports, module) {
      * @param key {String|Number|Array} 键或者键数组
      */
     exports.get = function (key/*arguments*/) {
-        key = arguments.length > 1 ? dato.toArray(arguments) : key;
+        var args = allocation.args(arguments);
+
+        key = args.length > 1 ? dato.toArray(args) : key;
 
         return gs(key);
     };

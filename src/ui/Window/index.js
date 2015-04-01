@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Window/
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires core/dom/selector
      * @requires core/dom/attribute
@@ -17,6 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var keyframes = require('../../utils/keyframes.js');
@@ -33,6 +35,20 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
+    var windowKeyframes = keyframes({
+        0: {
+            opacity: 0,
+            scale: 0.6
+        },
+        0.8: {
+            opacity: 1,
+            scale: 1.1
+        },
+        1: {
+            opacity: 1,
+            scale: 1
+        }
+    });
     var defaults = {
         parentNode: document.body,
         width: 500,
@@ -47,20 +63,7 @@ define(function (require, exports, module) {
         // 最小偏移量
         minOffset: 20,
         zIndex: null,
-        keyframes: {
-            0: {
-                opacity: 0,
-                scale: 0.6
-            },
-            0.8: {
-                opacity: 1,
-                scale: 1.1
-            },
-            1: {
-                opacity: 1,
-                scale: 1
-            }
-        }
+        keyframes: null
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -78,7 +81,7 @@ define(function (require, exports, module) {
         var $pos = modification.create('div');
 
         the.id = alienIndex;
-        the._keyframes = keyframes(options.keyframes);
+        the._keyframes = options.keyframes ? keyframes(options.keyframes) : windowKeyframes;
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -218,7 +221,7 @@ define(function (require, exports, module) {
             return the;
         }
 
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         if (typeis.function(args[0])) {
             callback = args[0];

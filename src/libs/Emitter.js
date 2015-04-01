@@ -8,12 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Emitter
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/class
      */
     'use strict';
 
+    var allocation = require('../utils/allocation.js');
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
@@ -108,7 +110,7 @@ define(function (require, exports, module) {
      */
     Emitter.fn.emit = function (context, eventType/*arguments*/) {
         var the = this;
-        var args = arguments;
+        var args = allocation.args(arguments);
         var arg0 = args[0];
         var arg0IsObject = typeis(arg0) !== 'string';
         var arg1 = args[1];

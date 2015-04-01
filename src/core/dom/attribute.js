@@ -680,52 +680,6 @@ define(function (require, exports, module) {
             },
             onset: getSet.onset
         }, [].slice.call(args, 1), argumentsSetLength);
-
-        //argumentsSetLength = argumentsSetLength || 2;
-        //
-        //var arg1Type = typeis(args[1]);
-        //var ret = {};
-        //var argsLength = args.length;
-        //var eles = typeis.array(args[0]) ? args[0] : [args[0]];
-        //var ele0 = eles[0];
-        //var arg1 = args[1];
-        //var arg2 = args[2];
-        //
-        //// .fn(ele);
-        //if (argsLength === 1) {
-        //    return getSet.get(ele0);
-        //}
-        //// .fn(ele, 'name', '1');
-        //else if (argsLength === 3 && argumentsSetLength === 2) {
-        //    dato.each(eles, function (i, ele) {
-        //        getSet.set(ele, arg1, arg2);
-        //    });
-        //}
-        //// .fn(ele, {name: 1, id: 2});
-        //else if (argsLength === 2 && arg1Type === 'object' && argumentsSetLength === 2) {
-        //    dato.each(eles, function (i, ele) {
-        //        dato.each(arg1, function (key, val) {
-        //            getSet.set(ele, key, val);
-        //        });
-        //    });
-        //}
-        //// .fn(ele, ['name', 'id']);
-        //else if (argsLength === 2 && arg1Type === 'array' && argumentsSetLength === 2) {
-        //    dato.each(arg1, function (index, key) {
-        //        ret[key] = getSet.get(ele0, key);
-        //    });
-        //    return ret;
-        //}
-        //// .fn(ele, 'name');
-        //else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 1) {
-        //    dato.each(eles, function (i, ele) {
-        //        getSet.set(ele, arg1);
-        //    });
-        //}
-        //// .fn(ele, 'name');
-        //else if (argsLength === 2 && arg1Type === 'string' && argumentsSetLength === 2) {
-        //    return getSet.get(ele0, arg1);
-        //}
     }
 
 

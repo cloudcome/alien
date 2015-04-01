@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      *
      * @module core/dom/animation
      * @requires core/dom/attribute
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/easing
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
     var udf;
     var attribute = require('./attribute.js');
     var see = require('./see.js');
+    var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var eeeing = require('../../utils/easing.js');
@@ -97,7 +99,7 @@ define(function (require, exports, module) {
         }
 
         var id = ele[alienKey];
-        var args = arguments;
+        var args = allocation.args(arguments);
         var argL = args.length;
         var keys = [];
         var hasDispatch = false;
@@ -366,7 +368,7 @@ define(function (require, exports, module) {
      * });
      */
     exports.scrollTo = function (ele, to, options, callback) {
-        var args = arguments;
+        var args = allocation.args(arguments);
         var from = {
             x: attribute.scrollLeft(ele),
             y: attribute.scrollTop(ele)

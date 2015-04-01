@@ -163,7 +163,7 @@ define(function (require, exports, module) {
      * @returns {Boolean}
      *
      * @example
-     * type.isPlainObject({a:1});
+     * typeis.plainObject({a:1});
      * // => true
      */
     typeis.plainObject = function (obj) {
@@ -174,6 +174,11 @@ define(function (require, exports, module) {
     /**
      * 判断是否为空对象
      * @param obj {*}
+     * @returns {Boolean}
+     *
+     * @example
+     * typeis.plainObject({});
+     * // => true
      */
     typeis.emptyObject = function (obj) {
         return typeis.plainObject(obj) && Object.keys(obj).length === 0;
@@ -190,7 +195,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.url = function (string) {
-        return typeis(string) === 'string' && REG_URL.test(string);
+        return typeis.string(string) && REG_URL.test(string);
     };
 
 
@@ -204,7 +209,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.email = function (string) {
-        return typeis(string) === 'string' && REG_EMAIL.test(string);
+        return typeis.string(string) && REG_EMAIL.test(string);
     };
 
 

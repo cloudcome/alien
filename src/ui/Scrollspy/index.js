@@ -11,6 +11,7 @@ define(function (require, exports, module) {
      * @requires core/dom/see
      * @requires core/dom/selector
      * @requires core/event/base
+     * @requires utils/allocation
      * @requires utils/controller
      * @requires utils/dato
      * @requires utils/class
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
+    var allocation = require('../../utils/allocation.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
@@ -36,7 +38,7 @@ define(function (require, exports, module) {
     };
     var Scrollspy = ui.create(function ($parent, options) {
         var the = this;
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         if (typeis.object(args[0])) {
             options = args[0];
