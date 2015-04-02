@@ -425,7 +425,7 @@ span.CodeMirror-selectedtext {
 }
 
 .cm-s-monokai .CodeMirror-selected {
-    background: #0554FF !important;
+    background: #4BB9F2 !important;
 }
 
 .cm-s-monokai .CodeMirror-gutters {
@@ -522,7 +522,7 @@ span.CodeMirror-selectedtext {
 
 .cm-s-monokai .cm-comment {
     color: #298438;
-    font-family: monospace;
+    font-family: Consolas, Monaco, courier, monospace;;
     font-style: italic;
 }
 
