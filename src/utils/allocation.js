@@ -103,4 +103,20 @@ define(function (require, exports, module) {
             getset.onset();
         }
     };
+
+
+    /**
+     * 修正参数传参，参数最后一位为 undefined 将被舍去
+     * @param args {Araguments} 参数
+     * @returns {Array}
+     */
+    exports.args = function (args) {
+        var argL = args.length;
+
+        while (typeis.undefined(args[argL - 1])) {
+            argL -= 1;
+        }
+
+        return dato.toArray(args).splice(0, argL)
+    };
 });

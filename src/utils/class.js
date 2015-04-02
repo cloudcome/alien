@@ -40,7 +40,7 @@ define(function (require, exports, module) {
      * klass.inherit(Child, Father);
      *
      * // 这里开始写子类的原型方法
-     * Child.prototype = {};
+     * Child.prototype.fn = fn;
      */
     exports.inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
@@ -80,9 +80,7 @@ define(function (require, exports, module) {
      *     this.name = name;
      * });
      *
-     * var pro = Father.prototype;
-     *
-     * pro.sayName = function(){
+     * Father.fn.sayName = function(){
      *     console.log(this.name);
      * };
      *
@@ -96,6 +94,12 @@ define(function (require, exports, module) {
      *
      * var f1 = new Father('Fimme');
      * var c1 = new Child('Cmoo', 20);
+     *
+     * c1.sayName();
+     * // => "Cmoo"
+     *
+     * c1.speak();
+     * // => "My name is Cmoo, I'm 20 years old."
      */
     exports.create = function (constructor, superConstructor, isInheritStatic) {
         var isConstructorFn = typeis.function(constructor);

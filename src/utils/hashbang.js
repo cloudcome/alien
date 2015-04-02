@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
      *
      * @module utils/hashbang
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/querystring
@@ -19,6 +20,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var allocation = require('./allocation.js');
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
     var qs = require('./querystring.js');
@@ -279,7 +281,7 @@ define(function (require, exports, module) {
             throw new Error('hashbang `part` must be `path` or `query`');
         }
 
-        var args = arguments;
+        var args = allocation.args(arguments);
         var argL = args.length;
         var listenerMap;
 
@@ -357,7 +359,7 @@ define(function (require, exports, module) {
             throw new Error('hashbang `part` must be `path` or `query`');
         }
 
-        var args = arguments;
+        var args = allocation.args(arguments);
         var argL = args.length;
         var findIndex;
         var arg1Type = typeis(args[1]);

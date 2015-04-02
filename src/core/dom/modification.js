@@ -264,31 +264,31 @@ define(function (require, exports, module) {
     /**
      * 添加样式
      * @param {String} styleText 样式内容
+     * @param {String|HTMLElement|Node} [selector=null] 选择器
      *
      * @example
      * modification.importStyle('body{padding: 10px;}');
      */
-    exports.importStyle = function (styleText) {
-        var style = this.create('style');
+    exports.importStyle = function (styleText, selector) {
+        var $style = domSelector.query(selector)[0] || exports.create('style');
 
         styleText = String(styleText);
 
-        this.insert(style, head, 'beforeend');
+        this.insert($style, head, 'beforeend');
 
         // IE
-        if (style.styleSheet !== undefined) {
-
+        if ($style.styleSheet) {
             // 此 BUG 仅影响 IE8（含） 以下浏览器
             // http://support.microsoft.com/kb/262161
             // if (document.getElementsByTagName('style').length > 31) {
             //     throw new Error('Exceed the maximal count of style tags in IE')
             // }
 
-            style.styleSheet.cssText += styleText;
+            $style.styleSheet.cssText = styleText;
         }
         // W3C
         else {
-            style.appendChild(this.create('#text', styleText));
+            $style.innerHTML = styleText;
         }
     };
 

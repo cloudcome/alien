@@ -8,9 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module parent/keyframes
+     * @requires utils/allocation
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
      */
     'use strict';
 
+    var allocation = require('../utils/allocation.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
     var random = require('./random.js');
@@ -20,8 +24,10 @@ define(function (require, exports, module) {
     var VENDOR_PREFIX = ['-webkit-', '-moz-', '-ms-', ''];
 
     module.exports = function (name, keyframes) {
+        var args = allocation.args(arguments);
+
         if (!typeis.string(name)) {
-            keyframes = arguments[0];
+            keyframes = args[0];
             name = 'alien-keyframes-' + random.string(9, 'aA0-_');
         }
 

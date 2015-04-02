@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Animation
+     * @requires utils/allocation
      * @requires utils/class
      * @requires utils/howdo
      * @requires utils/typeis
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var Emitter = require('./Emitter.js');
+    var allocation = require('../utils/allocation.js');
     var klass = require('../utils/class.js');
     var howdo = require('../utils/howdo.js');
     var typeis = require('../utils/typeis.js');
@@ -74,7 +76,7 @@ define(function (require, exports, module) {
      */
     Animation.fn.start = function (repeatTimes, callback) {
         var the = this;
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         if (typeis.function(args[0])) {
             repeatTimes = 1;

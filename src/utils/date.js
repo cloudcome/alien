@@ -8,12 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module utils/date
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      */
 
     'use strict';
 
+    var allocation = require('./allocation.js');
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
     var weeks = '日一二三四五六';
@@ -90,8 +92,10 @@ define(function (require, exports, module) {
             throw new Error('date format must be a string');
         }
 
+        var args = allocation.args(arguments);
+
         if (typeis(arguments[1]) === 'object') {
-            config = arguments[1];
+            config = args[1];
             date = new Date();
         }
 

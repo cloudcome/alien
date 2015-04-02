@@ -31,12 +31,14 @@ define(function (require, exports, module) {
         the._routerList = [];
         the._routerMap = {};
         the._unMatchedCallbackList = [];
-        the._lastMatchedRouter = null;
-        the._isIgnoreHashChange = false;
+        the._lastMatchedRoute = null;
+        the._msgMap = {};
+        //the._isIgnoreHashChange = false;
         //the._hashchangeTimes = 0;
         //the._ignoreHashchangeTimes = -1;
         the._initEvent();
     }, Emitter);
+    var alienIndex = 0;
 
 
     Router.fn._initEvent = function () {
@@ -46,6 +48,7 @@ define(function (require, exports, module) {
             var matched = null;
             var matchIndex = -1;
             var matchKey = '';
+            var msgs;
 
             dato.each(the._routerList, function (index, routerConfig) {
                 matchKey = Object.keys(routerConfig)[0];
@@ -57,20 +60,28 @@ define(function (require, exports, module) {
                 }
             });
 
-            if (the._lastMatchedRouter !== null) {
-                the.emit('leave', the._lastMatchedRouter);
+            if (the._lastMatchedRoute !== null) {
+                the.emit('leave', the._lastMatchedRoute, matchKey);
             }
 
             if (matched && matchIndex > -1) {
-                the._lastMatchedRouter = matchKey;
-                the.emit('enter', the._lastMatchedRouter);
+                the.emit('enter', matchKey, the._lastMatchedRoute);
+                msgs = the._msgMap[matchKey] || {};
+                dato.each(msgs, function (key, val) {
+                    if (msgs[key]._receive) {
+                        delete(msgs[key]);
+                    } else {
+                        msgs[key]._receive = true;
+                    }
+                });
+                the._lastMatchedRoute = matchKey;
                 the._routerList[matchIndex][matchKey].forEach(function (callback) {
-                    callback.call(the, matched);
+                    callback.call(the, matched, msgs);
                 });
             } else {
-                the._lastMatchedRouter = null;
+                the._lastMatchedRoute = null;
                 the._unMatchedCallbackList.forEach(function (callback) {
-                    callback.call(the);
+                    callback.call(the, {});
                 });
             }
         };
@@ -139,6 +150,38 @@ define(function (require, exports, module) {
         var the = this;
 
         location.hash = '#!' + url;
+
+        return the;
+    };
+
+
+    /**
+     * 向指定路由发送消息
+     * @param route {String} 接收路由
+     * @param name {String} 消息名称
+     * @param body {*} 消息实体
+     */
+    Router.fn.send = function (route, name, body) {
+        var the = this;
+        var msg = {
+            name: name,
+            src: the._lastMatchedRoute,
+            target: route,
+            timeStamp: Date.now(),
+            id: alienIndex++,
+            body: body,
+            _receive: false
+        };
+
+        if (!the._msgMap[route]) {
+            the._msgMap[route] = {};
+        }
+
+        if (!the._msgMap[route][name]) {
+            the._msgMap[route][name] = [];
+        }
+
+        the._msgMap[route][name] = msg;
 
         return the;
     };

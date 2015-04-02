@@ -12,12 +12,14 @@ define(function (require, exports) {
      * 必须以<code>#!</code>开头，后续的 querystring 必须符合标准
      *
      * @module core/navigator/hashbang
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/hashbang
      */
     'use strict';
 
+    var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var hashbang = require('../../utils/hashbang.js');
@@ -154,7 +156,8 @@ define(function (require, exports) {
      */
     exports.get = function (part, key) {
         var keyType = typeis(key);
-        var argL = arguments.length;
+        var args = allocation.args(arguments);
+        var argL = args.length;
         var parse = hashbang.parse(location.hash);
 
         if (argL === 0) {

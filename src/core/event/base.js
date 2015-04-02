@@ -8,12 +8,14 @@
 define(function (require, exports, module) {
     /**
      * @module core/event/base
+     * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
      * @requires core/dom/selector
      */
     'use strict';
 
+    var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var domSelector = require('../dom/selector.js');
@@ -245,7 +247,7 @@ define(function (require, exports, module) {
         }
 
         var callback;
-        var args = arguments;
+        var args = allocation.args(arguments);
         var argL = args.length;
         var eventTypes = String(eventType).trim().split(regSpace);
         isCapture = args[argL - 1];
@@ -334,7 +336,7 @@ define(function (require, exports, module) {
      * event.once(ele, 'click', 'li', fn, true):
      */
     exports.once = function (element, eventType, selector, listener, isCapture) {
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         selector = typeis.string(args[2]) ? args[2] : null;
         listener = typeis.function(args[2]) ? args[2] : args[3];
@@ -517,7 +519,7 @@ define(function (require, exports, module) {
     function _un(element, eventType, originalListener, isCapture) {
         var domId = element[key];
         var findIndex;
-        var args = arguments;
+        var args = allocation.args(arguments);
         var argL = args.length;
 
         if (argL === 3) {
