@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -694,6 +694,7 @@ define(function (require, exports, module) {
      * @requires core/dom/see
      * @requires core/dom/selector
      * @requires core/event/base
+     * @requires utils/allocation
      * @requires utils/controller
      * @requires utils/dato
      * @requires utils/class
@@ -706,6 +707,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
+    var allocation = require('../../utils/allocation.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
@@ -719,7 +721,7 @@ define(function (require, exports, module) {
     };
     var Scrollspy = ui.create(function ($parent, options) {
         var the = this;
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         if (typeis.object(args[0])) {
             options = args[0];

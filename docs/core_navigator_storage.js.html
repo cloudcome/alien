@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -717,7 +717,9 @@ define(function (require, exports, module) {
      * @param key {String|Number|Array} 键或者键数组
      */
     exports.get = function (key/*arguments*/) {
-        key = arguments.length > 1 ? dato.toArray(arguments) : key;
+        var args = allocation.args(arguments);
+
+        key = args.length > 1 ? dato.toArray(args) : key;
 
         return gs(key);
     };

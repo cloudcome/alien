@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -846,7 +846,7 @@ define(function (require, exports, module) {
      * @returns {Boolean}
      *
      * @example
-     * type.isPlainObject({a:1});
+     * typeis.plainObject({a:1});
      * // => true
      */
     typeis.plainObject = function (obj) {
@@ -857,6 +857,11 @@ define(function (require, exports, module) {
     /**
      * 判断是否为空对象
      * @param obj {*}
+     * @returns {Boolean}
+     *
+     * @example
+     * typeis.plainObject({});
+     * // => true
      */
     typeis.emptyObject = function (obj) {
         return typeis.plainObject(obj) &amp;&amp; Object.keys(obj).length === 0;
@@ -873,7 +878,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.url = function (string) {
-        return typeis(string) === 'string' &amp;&amp; REG_URL.test(string);
+        return typeis.string(string) &amp;&amp; REG_URL.test(string);
     };
 
 
@@ -887,7 +892,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.email = function (string) {
-        return typeis(string) === 'string' &amp;&amp; REG_EMAIL.test(string);
+        return typeis.string(string) &amp;&amp; REG_EMAIL.test(string);
     };
 
 

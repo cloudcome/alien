@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -691,6 +691,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/Animation
+     * @requires utils/allocation
      * @requires utils/class
      * @requires utils/howdo
      * @requires utils/typeis
@@ -701,6 +702,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var Emitter = require('./Emitter.js');
+    var allocation = require('../utils/allocation.js');
     var klass = require('../utils/class.js');
     var howdo = require('../utils/howdo.js');
     var typeis = require('../utils/typeis.js');
@@ -757,7 +759,7 @@ define(function (require, exports, module) {
      */
     Animation.fn.start = function (repeatTimes, callback) {
         var the = this;
-        var args = arguments;
+        var args = allocation.args(arguments);
 
         if (typeis.function(args[0])) {
             repeatTimes = 1;

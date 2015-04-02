@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -785,6 +785,22 @@ define(function (require, exports, module) {
             getset.set(args[0], args[1]);
             getset.onset();
         }
+    };
+
+
+    /**
+     * 修正参数传参，参数最后一位为 undefined 将被舍去
+     * @param args {Araguments} 参数
+     * @returns {Array}
+     */
+    exports.args = function (args) {
+        var argL = args.length;
+
+        while (typeis.undefined(args[argL - 1])) {
+            argL -= 1;
+        }
+
+        return dato.toArray(args).splice(0, argL)
     };
 });</code></pre>
 

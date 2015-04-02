@@ -95,7 +95,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:ui/Pagination/.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
@@ -230,7 +230,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-7239788463339215975710190832615" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4569072357844561343698120955377817" data-toggle="tab">Source</a>
             </li>
 
         
@@ -251,7 +251,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-7239788463339215975710190832615">
+            <div class="tab-pane active" id="tab-meta-4569072357844561343698120955377817">
                 <p><a href="utils_class.js.html#line9">utils/class.js:9</a></p>
             </div>
 
@@ -470,9 +470,7 @@
     this.name = name;
 });
 
-var pro = Father.prototype;
-
-pro.sayName = function(){
+Father.fn.sayName = function(){
     console.log(this.name);
 };
 
@@ -485,7 +483,13 @@ Child.fn.speak = function(){
 };
 
 var f1 = new Father('Fimme');
-var c1 = new Child('Cmoo', 20);</code></pre>
+var c1 = new Child('Cmoo', 20);
+
+c1.sayName();
+// => "Cmoo"
+
+c1.speak();
+// => "My name is Cmoo, I'm 20 years old."</code></pre>
 
         
 
@@ -509,7 +513,7 @@ var c1 = new Child('Cmoo', 20);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-7227689279243352978230912704021" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85903576458804316909516139421612" data-toggle="tab">Source</a>
             </li>
 
         
@@ -530,8 +534,8 @@ var c1 = new Child('Cmoo', 20);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-7227689279243352978230912704021">
-                <p><a href="utils_class.js.html#line100">utils/class.js:100</a></p>
+            <div class="tab-pane active" id="tab-meta-85903576458804316909516139421612">
+                <p><a href="utils_class.js.html#line104">utils/class.js:104</a></p>
             </div>
 
         
@@ -740,7 +744,7 @@ var Child = function(){
 klass.inherit(Child, Father);
 
 // 这里开始写子类的原型方法
-Child.prototype = {};</code></pre>
+Child.prototype.fn = fn;</code></pre>
 
         
 
@@ -764,7 +768,7 @@ Child.prototype = {};</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-477865003515034906261633429676294" data-toggle="tab">Source</a>
+                <a href="#tab-meta-32590511534363039928147699683905" data-toggle="tab">Source</a>
             </li>
 
         
@@ -785,7 +789,7 @@ Child.prototype = {};</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-477865003515034906261633429676294">
+            <div class="tab-pane active" id="tab-meta-32590511534363039928147699683905">
                 <p><a href="utils_class.js.html#line45">utils/class.js:45</a></p>
             </div>
 
