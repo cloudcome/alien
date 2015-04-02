@@ -40,7 +40,7 @@ define(function (require, exports, module) {
      * klass.inherit(Child, Father);
      *
      * // 这里开始写子类的原型方法
-     * Child.prototype = {};
+     * Child.prototype.fn = fn;
      */
     exports.inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
