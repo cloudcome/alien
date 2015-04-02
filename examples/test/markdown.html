@@ -1,0 +1,24 @@
+<!doctype html>
+
+<title>CodeMirror: Markdown mode</title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="./codemirror.css"/>
+<script src="./codemirror.js"></script>
+<script src="./meta.js"></script>
+<script src="./xml.js"></script>
+<script src="./markdown.js"></script>
+<script src="markdown.js"></script>
+
+<h2>Markdown mode</h2>
+<textarea id="code" name="code">
+Markdown: Basics
+================
+</textarea>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: 'markdown',
+        lineNumbers: true,
+        theme: "default"
+    });
+</script>

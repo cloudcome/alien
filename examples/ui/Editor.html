@@ -56,27 +56,32 @@
 </head>
 <body ontouchstart="">
 <textarea name="editor" id="editor" rows="10">
-    # markdown 编辑器
+# markdown 编辑器
 
-    > 这是一个`textarea`文本域。
+> 这是一个`textarea`文本域。
 
-    - `ctrl + tab` 设置 tab
-    - `shift + tab` 取消 tab
-    - `ctrl/meta + z` 撤销操作
-    - `ctrl + r / meta + shift + r` 恢复操作
-    - 可以拖拽、复制图片到编辑器里以上传图片
+- `ctrl + tab` 设置 tab
+- `shift + tab` 取消 tab
+- `ctrl/meta + z` 撤销操作
+- 可以拖拽、复制图片到编辑器里以上传图片
 
-    ```
-    // 代码格式
-    var abc = 123;
+```
+// 代码格式
+var abc = 123;
 
-    alert(abc);
-    ```
+alert(abc);
+```
 
-    此处为了演示，将上传等待时间延长了2s，并且伪造了上传图片地址
+此处为了**演示**，将上传等待时间*延长了2s*，并且伪造了上传图片地址
 
-    nginx静态服务器禁止了post提交，此处已用get演示，因此没有进度提示，实际项目必须用post
+nginx静态服务器禁止了post提交，此处已用get演示，因此没有进度提示，实际项目必须用post
+
+![.](http://img)
+
+[link](http://link)
 </textarea>
+
+<button id="btn">当前编辑器内容</button>
 
 <pre>
 var editor = new Editor('#editor');

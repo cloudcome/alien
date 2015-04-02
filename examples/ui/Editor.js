@@ -26,11 +26,7 @@ define(function (require, exports, module) {
     });
     
 
-    //btn1.onclick = function () {
-    //    editor.toggleFullscreen();
-    //};
-    //
-    //btn2.onclick = function () {
-    //    editor.toggleFullscreen();
-    //};
+    document.getElementById('btn').onclick = function () {
+        alert(editor.getValue());
+    };
 });
