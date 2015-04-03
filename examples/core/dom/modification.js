@@ -52,6 +52,8 @@ define(function (require) {
     domModification.insert(' <h1>HTML 标签 字符串</h1>', document.body);
 
 
+    domModification.importStyle('body{background:#eee}');
+    domModification.importStyle('body{color:#D03333}', '#style');
     function _create() {
         var id = 'id-' + Date.now();
         var div = domModification.create('div', {

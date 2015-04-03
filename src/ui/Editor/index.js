@@ -1,46 +1,27 @@
 /*!
- * 编辑器
+ * 新版 markdown 编辑器
  * @author ydr.me
- * @create 2014-11-06 11:07
+ * @create 2015-04-03 02:32:10
  */
 
 
 define(function (require, exports, module) {
-    /**
-     * @module ui/Editor/
-     * @requires ui/
-     * @requires core/dom/selector
-     * @requires core/dom/modification
-     * @requires core/dom/attribute
-     * @requires core/event/base
-     * @requires ui/Editor/editor
-     * @requires utils/dato
-     * @requires utils/typeis
-     * @requires utils/date
-     * @requires utils/random
-     * @requires utils/controller
-     * @requires ui/Scrollbar/index
-     * @requires ui/Dialog/index
-     * @requires ui/Msg/index
-     * @requires libs/Template
-     */
     'use strict';
 
+    var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
+    require('../../3rd/codemirror/addon/display/fullscreen.js');
+    require('../../3rd/codemirror/addon/selection/active-line.js');
     var ui = require('../');
+    var Msg = require('../Msg/');
+    var Dialog = require('../Dialog/');
     var selector = require('../../core/dom/selector.js');
-    var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/base.js');
-    var compatible = require('../../core/navigator/compatible.js');
-    var editor = require('./editor.js');
+    var controller = require('../../utils/controller.js');
+    var date = require('../../utils/date.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
-    var date = require('../../utils/date.js');
-    var random = require('../../utils/random.js');
-    var controller = require('../../utils/controller.js');
-    var Autoheight = require('../Autoheight/');
-    var Dialog = require('../Dialog/');
-    var Msg = require('../Msg/index.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var tpl = new Template(template);
@@ -56,10 +37,11 @@ define(function (require, exports, module) {
         addClass: '',
         // tab 长度
         tabSize: 4,
-        // 历史长度
-        historyLength: 20,
+        // 是否允许备份
+        canBackup: true,
         // 最小检查同步本地的内容的相差长度
         checkLength: 3,
+        autoFocus: true,
         // 上传操作
         // uploadCallback 约定：
         // arg0: err 对象
@@ -68,73 +50,61 @@ define(function (require, exports, module) {
         // [{url:'1.jpg',width:100,height:100}]
         uploadCallback: null
     };
-    var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
-    var Editor = ui.create(function (ele, options) {
+    var Editor = ui.create(function ($ele, options) {
         var the = this;
 
-        the._$ele = selector.query(ele);
+        the._$ele = selector.query($ele)[0];
+        the._options = dato.extend({}, defaults, options);
+        the._calStoreId();
+        the._editor = CodeMirror.fromTextArea(the._$ele, {
+            mode: 'gfm',
+            lineNumbers: true,
+            theme: "monokai",
+            autoCloseBrackets: true,
+            autoCloseTags: true,
+            autofocus: the._options.autoFocus,
+            dragDrop: false,
+            foldGutter: false,
+            indentWithTabs: true,
+            lineWrapping: true,
+            matchBrackets: true,
+            readOnly: false,
+            showTrailingSpace: true,
+            styleActiveLine: true,
+            styleSelectedText: true,
+            tabSize: the._options.tabSize,
+            extraKeys: {
+                'F11': function (cm) {
+                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                },
+                'Esc': function (cm) {
+                    if (cm.getOption("fullScreen")) {
+                        cm.setOption("fullScreen", false);
+                    }
+                }
+            }
+        });
 
+        the._$wrapper = the._editor.getWrapperElement();
+        attribute.addClass(the._$wrapper, the._options.addClass);
+        the._initEvent();
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
+        if (the._options.canBackup) {
+            controller.nextTick(the._initValue, the);
         }
-
-        the._id = alienIndex++;
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
     });
 
 
     /**
-     * 初始化
+     * 初始化内容
      * @private
      */
-    Editor.fn._init = function () {
-        var the = this;
-        var options = the._options;
-
-        the._calStoreId();
-        attribute.css(the._$ele, {
-            display: 'block',
-            width: '100%',
-            margin: 0
-        });
-        attribute.addClass(the._$ele, alienClass + '-textarea');
-        modification.wrap(the._$ele, '<div class="' + alienClass +
-        '"><div class="' + alienClass + '-inner"></div></div>');
-        the._$wrap = selector.closest(the._$ele, '.' + alienClass)[0];
-        the._autoheight = new Autoheight(the._$ele);
-        the._uploadList = [];
-        the._history = [the._$ele.value];
-        the._historyIndex = -1;
-        the._initEvent();
-        the._isFullscreen = false;
-        attribute.addClass(the._$wrap, options.addClass);
-        the.on('setoptions', function (options) {
-            if (the._storeId !== options.id) {
-                the._storeId = options.id;
-            }
-        });
-        controller.nextTick(the._initVal, the);
-
-        return the;
-    };
-
-
-    /**
-     * 初始化编辑框内容
-     * @private
-     */
-    Editor.fn._initVal = function () {
+    Editor.fn._initValue = function () {
         var the = this;
         var local = the._getLocal();
         var minTime = 24 * 60 * 60 * 1000;
         var deltaTime = Date.now() - local.ver;
         var humanTime = date.from(local.ver);
-        var done = function () {
-            the._savePos();
-        };
         var nowVal = the._$ele.value;
         var nowLen = nowVal.length;
         var storeVal = local.val;
@@ -152,115 +122,31 @@ define(function (require, exports, module) {
             })
                 .on('close', function (index) {
                     if (index === 0) {
+                        the._editor.setValue(storeVal);
                         the._$ele.value = storeVal;
+
+                        controller.nextTick(function () {
+                            try {
+                                the._editor.setCursor(local.cur);
+                            } catch (err) {
+                                // ignore
+                            }
+
+                            if (the._options.autoFocus) {
+                                the._editor.focus();
+                            }
+                        });
                         /**
                          * 编辑器内容变化之后
                          * @event change
                          * @param value {String} 变化之后的内容
                          */
                         the.emit('change', storeVal);
-                        the._autoheight.resize();
+                    } else {
+                        the._saveLocal();
                     }
-
-                    the._saveLocal();
-                    done();
                 });
-        } else {
-            done();
         }
-    };
-
-
-    /**
-     * 上传对话框
-     * @private
-     */
-    Editor.fn._uploadDialog = function () {
-        var the = this;
-        var dt = {
-            id: the._id,
-            uploads: the._uploadList
-        };
-        var $dialog;
-        var options = the._options;
-
-        if (typeis(options.uploadCallback) !== 'function') {
-            return new Msg({
-                content: '尚未配置上传回调'
-            });
-        }
-
-        if (the._dialog) {
-            the._dialog.destroy();
-            modification.remove(the._$dialog);
-            the._dialog = null;
-        }
-
-        the._savePos();
-        $dialog = modification.parse(tpl.render(dt))[0];
-        modification.insert($dialog, document.body, 'beforeend');
-        the._$dialog = $dialog;
-        the._dialog = new Dialog($dialog, {
-            title: '上传' + the._uploadList.length + '张图片（0%）',
-            hideClose: true
-        }).open();
-        the._doUpload();
-    };
-
-
-    /**
-     * 销毁上传实例
-     * @private
-     */
-    Editor.fn.uploadDestroy = function () {
-        var the = this;
-
-        the._dialog.destroy(function () {
-            modification.remove(the._$dialog);
-            the._restorePos();
-        });
-    };
-
-
-    /**
-     * 上传
-     * @private
-     */
-    Editor.fn._doUpload = function () {
-        var the = this;
-        var dialog = the._dialog;
-        var list = the._uploadList;
-        var onprogress = function (percent) {
-            dialog.setTitle('上传' + list.length + '张图片（' + percent + '）');
-        };
-        var ondone = function (err, list) {
-            var html = [];
-            var msg;
-
-            if (err) {
-                msg = new Msg({
-                    content: err.message
-                });
-                msg.on('close', function () {
-                    the.uploadDestroy();
-                });
-                return;
-            }
-
-            dato.each(list, function (index, img) {
-                // 预加载
-                var _img = new Image();
-
-                _img.src = img.url;
-                html.push('![' + img.name + '](' + img.url + ')');
-            });
-
-            the.insert(html = html.join(' '));
-            the._selection[1] += html.length;
-            the.uploadDestroy();
-        };
-
-        the._options.uploadCallback.call(the, list, onprogress, ondone);
     };
 
 
@@ -316,7 +202,6 @@ define(function (require, exports, module) {
         return ret || {ver: 0, val: ''};
     };
 
-
     /**
      * 写入本地备份
      * @private
@@ -327,7 +212,8 @@ define(function (require, exports, module) {
         try {
             localStorage.setItem(the._storeId, JSON.stringify({
                 val: the._$ele.value,
-                ver: Date.now()
+                ver: Date.now(),
+                cur: the._editor.getCursor()
             }));
         } catch (err) {
             // ignore
@@ -336,98 +222,116 @@ define(function (require, exports, module) {
 
 
     /**
-     * 事件监听
+     * 清除本地备份记录
+     */
+    Editor.fn.clearStore = function () {
+        var the = this;
+
+        window.localStorage.setItem(the._storeId, '');
+
+        return the;
+    };
+
+
+    /**
+     * 替换当前选中的文本，如果没有选中，则插入
+     * @param value {String} 替换文本
+     */
+    Editor.fn.replace = function (value) {
+        var the = this;
+
+        the._editor.focus();
+        the._editor.replaceSelection(value);
+    };
+
+
+    /**
+     * 包裹当前选中的文本
+     * @param value {String} 包裹文本
+     */
+    Editor.fn.wrap = function (value) {
+        var the = this;
+
+        the._editor.focus();
+
+        var raw = the._editor.getSelection();
+
+        if (raw) {
+            the._editor.replaceSelection(value + raw + value);
+        }
+    };
+
+
+    /**
+     * 事件初始化
      * @private
      */
     Editor.fn._initEvent = function () {
         var the = this;
-        var $ele = the._$ele;
 
-        event.on(window, 'resize', the._onresize.bind(the));
-        event.on($ele, 'keydown', the._onkeydown.bind(the));
-        event.on($ele, 'input', the._oninput.bind(the));
-        event.on($ele, 'drop', the._ondrop.bind(the));
-        event.on($ele, 'paste', the._onpaste.bind(the));
+        // `code`
+        the._addKeyMap('`', function () {
+            the.wrap('`');
+        }, false);
+
+
+        // **blod**
+        the._addKeyMap('B', function () {
+            the.wrap('__');
+        });
+
+
+        // *italic*
+        the._addKeyMap('I', function () {
+            the.wrap('_');
+        });
+
+
+        // change
+        the._editor.on('change', function () {
+            the._$ele.value = the._editor.getValue();
+            /**
+             * 编辑器内容变化之后
+             * @event change
+             * @param value {String} 变化之后的内容
+             */
+            the.emit('change', the._$ele.value);
+            the._saveLocal();
+        });
+
+
+        // cursor
+        the._editor.on('cursorActivity', the._saveLocal.bind(the));
+
+
+        // 修改设置时
+        the.on('setoptions', function (options) {
+            if (the._storeId !== options.id) {
+                the._storeId = options.id;
+            }
+        });
+
+        event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
+        event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
     };
 
 
     /**
-     * window.onresize 时回调
+     * 拖拽回调
      * @private
      */
-    Editor.fn._onresize = function () {
-        var the = this;
-
-        if (the._timerId) {
-            clearTimeout(the._timerId);
-        }
-
-        the._timerId = setTimeout(function () {
-            the._autoheight.resize.call(the._autoheight);
-        }, 60);
+    Editor.fn._ondrop = function (eve) {
+        this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
     };
 
 
     /**
-     * 按键回调
+     * 粘贴回调
      * @param eve
      * @private
      */
-    Editor.fn._onkeydown = function (eve) {
-        var the = this;
-        var options = the._options;
-        var $ele = the._$ele;
-        var keyCode = eve.keyCode;
-        var isShift = eve.shiftKey;
-        var isCtrl = eve.ctrlKey;
-        var isMetaKey = eve.metaKey;
-
-        // shift + tab
-        if (isShift && keyCode === 9) {
-            editor.shiftTab($ele, options.tabSize);
-            the._pushHistory();
-            eve.preventDefault();
-        }
-        // tab
-        else if (keyCode === 9) {
-            the.insert(editor.repeatString(' ', options.tabSize));
-            the._pushHistory();
-            eve.preventDefault();
-        }
-        // ctrl/meta + z
-        else if ((isCtrl || isMetaKey) && keyCode === 90) {
-            the._savePos();
-            the._historyIndex = the._historyIndex === -1 ?
-                (the._history.length >= 2 ? the._history.length - 2 : 0) :
-                (the._historyIndex >= 1 ? the._historyIndex - 1 : 0);
-            $ele.value = the._history.length > 1 ? the._history[the._historyIndex] : '';
-            the._restorePos();
-            eve.preventDefault();
-        }
-        // ctrl + r / meta + shift + z
-        else if (isCtrl && keyCode === 82 || isMetaKey && isShift && keyCode === 90) {
-            if (the._history.length > the._historyIndex + 1) {
-                the._savePos();
-                the._historyIndex += 1;
-                $ele.value = the._history[the._historyIndex];
-                the._restorePos();
-            }
-
-            eve.preventDefault();
-        }
-    };
-
-
-    /**
-     * 输入回调
-     * @private
-     */
-    Editor.fn._oninput = function () {
-        var the = this;
-
-        the._pushHistory();
-        // 历史记录点复位
-        the._historyIndex = -1;
+    Editor.fn._onpaste = function (eve) {
+        this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
     };
 
 
@@ -457,7 +361,6 @@ define(function (require, exports, module) {
 
         if (the._uploadList.length) {
             eve.preventDefault();
-            the._$ele.blur();
             the._uploadDialog();
         } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length ||
             eve.clipboardData && eve.clipboardData.files && eve.clipboardData.files.length) {
@@ -471,191 +374,128 @@ define(function (require, exports, module) {
 
 
     /**
-     * 拖拽回调
+     * 上传对话框
      * @private
      */
-    Editor.fn._ondrop = function (eve) {
-        this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
-    };
-
-
-    /**
-     * 粘贴回调
-     * @param eve
-     * @private
-     */
-    Editor.fn._onpaste = function (eve) {
-        this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
-    };
-
-
-    /**
-     * 手动设置编辑器内容
-     * @param value {String} 待覆盖的字符串
-     */
-    Editor.fn.setContent = function (value) {
+    Editor.fn._uploadDialog = function () {
         var the = this;
-        the._$ele.value = value;
-        the._pushHistory();
-        the._autoheight.resize();
-
-        return the;
-    };
-
-
-    /**
-     * 当前位置插入字符串
-     * @param string {String} 待插入字符串
-     *
-     * @example
-     * editor.insert('hehe');
-     */
-    Editor.fn.insert = function (string) {
-        var the = this;
-
-        editor.insert(this._$ele, string);
-        the._pushHistory();
-
-        return the;
-    };
-
-
-    /**
-     * 聚焦
-     */
-    Editor.fn.focus = function () {
-        this._$ele.focus();
-    };
-
-
-    /**
-     * 失焦
-     */
-    Editor.fn.blur = function () {
-        this._$ele.blur();
-    };
-
-
-    /**
-     * 获得当前编辑器内容
-     * @returns {*} {String} 当前编辑器内容
-     */
-    Editor.fn.getContent = function () {
-        return this._$ele.value;
-    };
-
-
-    /**
-     * 历史入栈
-     * @private
-     */
-    Editor.fn._pushHistory = function () {
-        var the = this;
+        var dt = {
+            id: the._id,
+            uploads: the._uploadList
+        };
+        var $dialog;
         var options = the._options;
-        var history = the._history;
-        var now = the._$ele.value;
 
-        // 如果与最后一次相同，则取消入栈历史记录
-        if (history.length && history[history.length - 1] === now) {
-            return;
+        if (typeis(options.uploadCallback) !== 'function') {
+            return new Msg({
+                content: '尚未配置上传回调'
+            });
         }
 
-        if (history.length >= options.historyLength) {
-            the._shiftHistory();
+        if (the._dialog) {
+            the._dialog.destroy();
+            modification.remove(the._$dialog);
+            the._dialog = null;
         }
 
-        history.push(now);
-        the._saveLocal();
-
-        /**
-         * 编辑器内容变化之后
-         * @event change
-         * @param value {String} 变化之后的内容
-         */
-        the.emit('change', now);
+        $dialog = modification.parse(tpl.render(dt))[0];
+        modification.insert($dialog, document.body, 'beforeend');
+        the._$dialog = $dialog;
+        the._dialog = new Dialog($dialog, {
+            title: '上传' + the._uploadList.length + '张图片（0%）',
+            hideClose: true
+        }).open();
+        the._doUpload();
     };
 
 
     /**
-     * 历史出栈
+     * 上传
      * @private
      */
-    Editor.fn._shiftHistory = function () {
-        this._history.shift();
+    Editor.fn._doUpload = function () {
+        var the = this;
+        var dialog = the._dialog;
+        var list = the._uploadList;
+        var onprogress = function (percent) {
+            dialog.setTitle('上传' + list.length + '张图片（' + percent + '）');
+        };
+        var ondone = function (err, list) {
+            var html = [];
+            var msg;
+
+            if (err) {
+                msg = new Msg({
+                    content: err.message
+                });
+                msg.on('close', function () {
+                    the.uploadDestroy();
+                });
+                return;
+            }
+
+            dato.each(list, function (index, img) {
+                // 预加载
+                var _img = new Image();
+
+                _img.src = img.url;
+                html.push('![' + img.name + '](' + img.url + ')');
+            });
+
+            the.replace(html.join('\n') + ' ');
+            the.uploadDestroy();
+        };
+
+        the._options.uploadCallback.call(the, list, onprogress, ondone);
     };
 
 
     /**
-     * 保存光标记录
+     * 销毁上传实例
      * @private
      */
-    Editor.fn._savePos = function () {
+    Editor.fn.uploadDestroy = function () {
         var the = this;
-        var $ele = the._$ele;
-        the._selection = editor.getPos($ele);
+
+        the._dialog.destroy(function () {
+            modification.remove(the._$dialog);
+            the._editor.focus();
+        });
     };
 
 
     /**
-     * 恢复光标记录
+     * 添加事件回调
+     * @param key
+     * @param callback
+     * @param [isCtrl=true]
      * @private
      */
-    Editor.fn._restorePos = function () {
+    Editor.fn._addKeyMap = function (key, callback, isCtrl) {
         var the = this;
-        var $ele = the._$ele;
+        var isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
+        var ctrl = isMac ? 'Cmd-' : 'Ctrl-';
+        var map = {};
 
-        editor.setPos($ele, [the._selection]);
+        if (isCtrl === false) {
+            map[key] = callback;
+        } else {
+            map[ctrl + key] = callback;
+        }
+
+        the._editor.addKeyMap(map);
     };
 
 
     /**
-     * 清除本地备份记录
+     * 获取内容
+     * @returns {*}
      */
-    Editor.fn.clearStore = function () {
-        var the = this;
-
-        window.localStorage.setItem(the._storeId, '');
-
-        return the;
-    };
-
-
-    /**
-     * 重置尺寸
-     */
-    Editor.fn.resize = function () {
-        var the = this;
-
-        controller.nextTick(the._autoheight.resize, the._autoheight);
-    };
-
-    /**
-     * 销毁实例
-     */
-    Editor.fn.destroy = function () {
-        var the = this;
-
-        event.un(the._$ele, 'keydown', the._onkeydown);
-        event.un(the._$ele, 'input', the._oninput);
-        event.un(the._$ele, 'drop', the._ondrop);
-        event.un(the._$ele, 'paste', the._onpaste);
-        the._autoheight.destroy();
-        modification.unwrap(the._$ele, 'div>div');
+    Editor.fn.getValue = function () {
+        return this._editor.getValue();
     };
 
 
     modification.importStyle(style);
-
-    /**
-     * 实例化一个 markdown 文本编辑器
-     * @param $ele {HTMLTextAreaElement} 文本域输入框
-     * @param [options] {Object} 配置
-     * @param [options.tabSize=4] {Number} tab长度，默认为4个空格
-     * @param [options.historyLength=20] {Number} 历史长度，默认为20
-     *
-     * @example
-     * // 推荐使用ID来标识文本域输入框，因为会根据id来保存文本内容到本地的，当多个编辑器在同一个页面时尤为重要
-     * var editor = new Editor('#id');
-     */
     module.exports = Editor;
 });
