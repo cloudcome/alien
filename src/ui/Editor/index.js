@@ -270,10 +270,13 @@ define(function (require, exports, module) {
 
         the._editor.focus();
 
+        var cursor = the._editor.getCursor();
         var raw = the._editor.getSelection();
 
-        if (raw) {
-            the._editor.replaceSelection(value + raw + value);
+        the._editor.replaceSelection(value + raw + value);
+
+        if (!raw) {
+            the._editor.setCursor(cursor.line, cursor.ch + value.length);
         }
 
         return the;
@@ -289,7 +292,13 @@ define(function (require, exports, module) {
 
         // `code`
         the._addKeyMap('`', function () {
-            the.wrap('`');
+            var raw = the._editor.getSelection();
+
+            if (raw) {
+                the.wrap('`');
+            } else {
+                the.replace('`');
+            }
         }, false);
 
 
@@ -331,6 +340,7 @@ define(function (require, exports, module) {
 
         event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
         event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
+        event.on(the._$wrapper, 'click', the._onclick.bind(the));
     };
 
 
@@ -352,6 +362,18 @@ define(function (require, exports, module) {
         this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
     };
 
+
+    /**
+     * 单击编辑器
+     * @private
+     */
+    Editor.fn._onclick = function () {
+        var the = this;
+
+        if (!the._editor.hasFocus()) {
+            the._editor.focus();
+        }
+    };
 
     /**
      * 解析拖拽、粘贴里的图片信息
