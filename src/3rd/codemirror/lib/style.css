@@ -9,7 +9,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -moz-font-feature-settings: "liga", "kern";
-    line-height: 20px;
+    line-height: 18px;
+    font-size: 14px;
 }
 
 /* PADDING */
@@ -38,7 +39,7 @@
 }
 
 .CodeMirror-linenumber {
-    padding: 0 3px 0 5px;
+    padding: 0 5px;
     min-width: 20px;
     text-align: right;
     color: #999;
@@ -424,10 +425,6 @@ span.CodeMirror-selectedtext {
     color: #f8f8f2;
 }
 
-.cm-s-monokai .CodeMirror-selected {
-    background: #4BB9F2 !important;
-}
-
 .cm-s-monokai .CodeMirror-gutters {
     background: #272822;
     border-right: 0;
@@ -442,17 +439,18 @@ span.CodeMirror-selectedtext {
 }
 
 .cm-s-monokai .CodeMirror-linenumber {
-    color: #777;
+    color: #444;
 }
 
 .cm-s-monokai .CodeMirror-cursor {
     border-left: 1px solid #f8f8f0 !important;
+    border-right: 1px solid #f8f8f0 !important;
 }
 
 .cm-s-monokai .CodeMirror-code pre{
     color: #BDBDBD;
     border-left: 1px solid #3D3939;
-    padding-left: 8px;
+    padding-left: 10px;
 }
 
 .cm-s-monokai .cm-strong,
@@ -526,6 +524,9 @@ span.CodeMirror-selectedtext {
     font-style: italic;
 }
 
+.cm-s-monokai .CodeMirror-selected{
+    background: #1D379B !important;
+}
 .cm-s-monokai .CodeMirror-activeline-background {
     background: #373831 !important;
 }

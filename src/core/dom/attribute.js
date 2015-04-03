@@ -766,15 +766,16 @@ define(function (require, exports, module) {
             return _swap(ele, function () {
                 // get
                 if (argsLength === 1) {
+                    var key2 = /w/.test(key) ? 'Width' : 'Height';
                     switch (eleType) {
                         case 'element':
                             return ele.getBoundingClientRect()[key] - extraVal;
 
                         case 'window':
-                            return window['inner' + (key === 'width' ? 'Width' : 'Height')];
+                            return window['inner' + key2];
 
                         case 'document':
-                            return document.documentElement.getBoundingClientRect()[key];
+                            return document.documentElement['scroll' + key2];
                     }
                 }
                 // set

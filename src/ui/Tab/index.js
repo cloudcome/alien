@@ -89,11 +89,13 @@ define(function (require, exports, module) {
      * @param index {Number} 切换的索引值
      */
     Tab.fn.change = function (index) {
-        var the = this
+        var the = this;
         var options = the._options;
         var $ele = selector.query(options.tabSelector, the._$ele)[index];
 
-        event.dispatch($ele, the._options.eventType);
+        the._ontrigger({
+            target: $ele
+        });
     };
 
 
@@ -131,7 +133,11 @@ define(function (require, exports, module) {
         var $li = selector.closest(eve.target, 'li');
         var triggerIndex = selector.index($li[0]);
 
-        eve.preventDefault();
+        try {
+            eve.preventDefault();
+        } catch (err) {
+            // ignore
+        }
 
         if (triggerIndex !== the._index) {
             the._index = triggerIndex;
