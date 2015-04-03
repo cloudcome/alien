@@ -42,6 +42,7 @@ define(function (require, exports, module) {
         // 最小检查同步本地的内容的相差长度
         checkLength: 3,
         autoFocus: true,
+        minHeight: 200,
         // 上传操作
         // uploadCallback 约定：
         // arg0: err 对象
@@ -62,7 +63,6 @@ define(function (require, exports, module) {
             theme: "monokai",
             autoCloseBrackets: true,
             autoCloseTags: true,
-            autofocus: the._options.autoFocus,
             dragDrop: false,
             foldGutter: false,
             indentWithTabs: true,
@@ -72,6 +72,7 @@ define(function (require, exports, module) {
             showTrailingSpace: true,
             styleActiveLine: true,
             styleSelectedText: true,
+            autofocus: the._options.autoFocus,
             tabSize: the._options.tabSize,
             extraKeys: {
                 'F11': function (cm) {
@@ -87,12 +88,25 @@ define(function (require, exports, module) {
 
         the._$wrapper = the._editor.getWrapperElement();
         attribute.addClass(the._$wrapper, the._options.addClass);
+        attribute.css(the._$wrapper, 'min-height', the._options.minHeight);
         the._initEvent();
 
         if (the._options.canBackup) {
             controller.nextTick(the._initValue, the);
         }
     });
+
+
+    /**
+     * 设置编辑器内容
+     * @param value {String} 设置内容
+     * @returns {Editor}
+     */
+    Editor.fn.setValue = function (value) {
+        this._editor.setValue(value);
+
+        return this;
+    };
 
 
     /**
@@ -122,7 +136,7 @@ define(function (require, exports, module) {
             })
                 .on('close', function (index) {
                     if (index === 0) {
-                        the._editor.setValue(storeVal);
+                        the.setValue(storeVal);
                         the._$ele.value = storeVal;
 
                         controller.nextTick(function () {
@@ -242,6 +256,8 @@ define(function (require, exports, module) {
 
         the._editor.focus();
         the._editor.replaceSelection(value);
+
+        return the;
     };
 
 
@@ -259,6 +275,8 @@ define(function (require, exports, module) {
         if (raw) {
             the._editor.replaceSelection(value + raw + value);
         }
+
+        return the;
     };
 
 
@@ -493,6 +511,19 @@ define(function (require, exports, module) {
      */
     Editor.fn.getValue = function () {
         return this._editor.getValue();
+    };
+
+
+    /**
+     * 销毁实例
+     */
+    Editor.fn.destroy = function () {
+        var the = this;
+
+        event.un(the._$wrapper, 'input', the._oninput);
+        event.un(the._$wrapper, 'drop', the._ondrop);
+        event.un(the._$wrapper, 'paste', the._onpaste);
+        this._editor.toTextArea();
     };
 
 
