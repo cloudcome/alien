@@ -42,6 +42,7 @@ define(function (require, exports, module) {
         // 最小检查同步本地的内容的相差长度
         checkLength: 3,
         autoFocus: true,
+        minHeight: 200,
         // 上传操作
         // uploadCallback 约定：
         // arg0: err 对象
@@ -62,7 +63,6 @@ define(function (require, exports, module) {
             theme: "monokai",
             autoCloseBrackets: true,
             autoCloseTags: true,
-            autofocus: the._options.autoFocus,
             dragDrop: false,
             foldGutter: false,
             indentWithTabs: true,
@@ -72,6 +72,7 @@ define(function (require, exports, module) {
             showTrailingSpace: true,
             styleActiveLine: true,
             styleSelectedText: true,
+            autofocus: the._options.autoFocus,
             tabSize: the._options.tabSize,
             extraKeys: {
                 'F11': function (cm) {
@@ -87,12 +88,25 @@ define(function (require, exports, module) {
 
         the._$wrapper = the._editor.getWrapperElement();
         attribute.addClass(the._$wrapper, the._options.addClass);
+        attribute.css(the._$wrapper, 'min-height', the._options.minHeight);
         the._initEvent();
 
         if (the._options.canBackup) {
             controller.nextTick(the._initValue, the);
         }
     });
+
+
+    /**
+     * 设置编辑器内容
+     * @param value {String} 设置内容
+     * @returns {Editor}
+     */
+    Editor.fn.setValue = function (value) {
+        this._editor.setValue(value);
+
+        return this;
+    };
 
 
     /**
@@ -122,7 +136,7 @@ define(function (require, exports, module) {
             })
                 .on('close', function (index) {
                     if (index === 0) {
-                        the._editor.setValue(storeVal);
+                        the.setValue(storeVal);
                         the._$ele.value = storeVal;
 
                         controller.nextTick(function () {
@@ -242,6 +256,8 @@ define(function (require, exports, module) {
 
         the._editor.focus();
         the._editor.replaceSelection(value);
+
+        return the;
     };
 
 
@@ -254,11 +270,16 @@ define(function (require, exports, module) {
 
         the._editor.focus();
 
+        var cursor = the._editor.getCursor();
         var raw = the._editor.getSelection();
 
-        if (raw) {
-            the._editor.replaceSelection(value + raw + value);
+        the._editor.replaceSelection(value + raw + value);
+
+        if (!raw) {
+            the._editor.setCursor(cursor.line, cursor.ch + value.length);
         }
+
+        return the;
     };
 
 
@@ -271,7 +292,13 @@ define(function (require, exports, module) {
 
         // `code`
         the._addKeyMap('`', function () {
-            the.wrap('`');
+            var raw = the._editor.getSelection();
+
+            if (raw) {
+                the.wrap('`');
+            } else {
+                the.replace('`');
+            }
         }, false);
 
 
@@ -313,6 +340,7 @@ define(function (require, exports, module) {
 
         event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
         event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
+        event.on(the._$wrapper, 'click', the._onclick.bind(the));
     };
 
 
@@ -334,6 +362,18 @@ define(function (require, exports, module) {
         this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
     };
 
+
+    /**
+     * 单击编辑器
+     * @private
+     */
+    Editor.fn._onclick = function () {
+        var the = this;
+
+        if (!the._editor.hasFocus()) {
+            the._editor.focus();
+        }
+    };
 
     /**
      * 解析拖拽、粘贴里的图片信息
@@ -493,6 +533,19 @@ define(function (require, exports, module) {
      */
     Editor.fn.getValue = function () {
         return this._editor.getValue();
+    };
+
+
+    /**
+     * 销毁实例
+     */
+    Editor.fn.destroy = function () {
+        var the = this;
+
+        event.un(the._$wrapper, 'input', the._oninput);
+        event.un(the._$wrapper, 'drop', the._ondrop);
+        event.un(the._$wrapper, 'paste', the._onpaste);
+        this._editor.toTextArea();
     };
 
 

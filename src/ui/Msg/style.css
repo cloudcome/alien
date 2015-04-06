@@ -1,8 +1,8 @@
 .alien-ui-msg {
-    box-shadow: 0 0 20px #666;
+    box-shadow: 0 0 30px #666;
     border-radius: 6px;
     overflow: hidden;
-    background: #E4E4E4;
+    background: #fff;
 }
 
 .alien-ui-msg-header {
@@ -52,7 +52,7 @@
 }
 
 .alien-ui-msg-buttons {
-    border-top: 1px solid #b7b7b7;
+    border-top: 1px solid #ccc;
     overflow: hidden;
 }
 
@@ -68,20 +68,20 @@
 }
 
 .alien-ui-msg-button:hover {
-    background: #d9d9d9;
+    background: #F4F4F4;
 }
 
 .alien-ui-msg-button:active {
-    background: #d9d9d9;
+    box-shadow: inset 0 0 5px #ddd;
 }
 
 .alien-ui-msg-buttons-horizontal .alien-ui-msg-button {
-    border-left: 1px solid #b7b7b7;
+    border-left: 1px solid #ccc;
     margin-left: -1px;
 }
 
 .alien-ui-msg-buttons-vertical .alien-ui-msg-button {
-    border-top: 1px solid #b7b7b7;
+    border-top: 1px solid #ccc;
 }
 
 .alien-ui-msg-buttons-2 .alien-ui-msg-button {

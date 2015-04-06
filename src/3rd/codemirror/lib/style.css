@@ -21,6 +21,7 @@
 
 .CodeMirror pre {
     padding: 0 4px; /* Horizontal padding of content */
+    text-align: left;
 }
 
 .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
@@ -450,7 +451,6 @@ span.CodeMirror-selectedtext {
 .cm-s-monokai .CodeMirror-code pre{
     color: #BDBDBD;
     border-left: 1px solid #3D3939;
-    padding-left: 10px;
 }
 
 .cm-s-monokai .cm-strong,

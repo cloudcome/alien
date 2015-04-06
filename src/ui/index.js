@@ -82,7 +82,7 @@ define(function (require, exports, module) {
                 if (keyType === 'string' || keyType === 'number') {
                     the._options ? the._options[key] = val : udf;
                 } else if (keyType === 'object') {
-                    dato.extend(the._options, key);
+                    dato.extend(true, the._options, key);
                 }
 
                 /**

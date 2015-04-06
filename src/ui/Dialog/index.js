@@ -50,8 +50,12 @@ define(function (require, exports, module) {
         top: 'center',
         title: '无标题对话框',
         addClass: '',
-        duration: 234,
-        easing: 'ease-in-out-back',
+        duration: 345,
+        easing: {
+            open: 'ease-out-back',
+            resize: 'ease-out-back',
+            close: 'ease-in-back'
+        },
         canDrag: true,
         isModal: true,
         hideClose: false,

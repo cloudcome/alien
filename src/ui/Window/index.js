@@ -21,7 +21,6 @@ define(function (require, exports, module) {
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
-    var keyframes = require('../../utils/keyframes.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -35,20 +34,6 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var windowKeyframes = keyframes({
-        0: {
-            opacity: 0,
-            scale: 0.6
-        },
-        0.8: {
-            opacity: 1,
-            scale: 1.1
-        },
-        1: {
-            opacity: 1,
-            scale: 1
-        }
-    });
     var defaults = {
         parentNode: document.body,
         width: 500,
@@ -57,13 +42,16 @@ define(function (require, exports, module) {
         right: null,
         bottom: null,
         left: 'center',
-        duration: 234,
-        easing: 'ease-in-out-back',
+        duration: 345,
+        easing: {
+            open: 'ease-out-back',
+            close: 'ease-in-back',
+            resize: 'ease-out-back'
+        },
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        zIndex: null,
-        keyframes: null
+        zIndex: null
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -79,9 +67,16 @@ define(function (require, exports, module) {
         var the = this;
         var options = the._options;
         var $pos = modification.create('div');
+        var setEasing = function (options) {
+            if (typeis.string(options.easing)) {
+                var e = {};
+
+                e.open = e.close = e.resize = options.easing;
+                options.easing = e;
+            }
+        };
 
         the.id = alienIndex;
-        the._keyframes = options.keyframes ? keyframes(options.keyframes) : windowKeyframes;
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -99,9 +94,8 @@ define(function (require, exports, module) {
             modification.insert(the._$content, the._$window);
         }
 
-        the.on('setoptions', function (options) {
-            the._keyframes = keyframes(options.keyframes);
-        });
+        setEasing(the._options);
+        the.on('setoptions', setEasing);
 
         return the;
     };
@@ -176,6 +170,10 @@ define(function (require, exports, module) {
             return the;
         }
 
+        if (the._$content) {
+            attribute.css(the._$content, 'display', 'block');
+        }
+
         var options = the._options;
         var onopen = function () {
             /**
@@ -188,18 +186,18 @@ define(function (require, exports, module) {
                 callback.call(the);
             }
         };
-
         var to = the._getPos();
+
         the.visible = true;
         to.display = 'block';
         to.zIndex = ui.getZindex();
-
+        to.scale = 0;
         attribute.css(the._$window, to);
-
-        animation.keyframes(the._$window, {
-            name: the._keyframes,
+        animation.animate(the._$window, {
+            scale: 1
+        }, {
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.open
         }, onopen);
 
         return the;
@@ -236,7 +234,7 @@ define(function (require, exports, module) {
 
         animation.animate(the._$window, to, {
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.resize
         }, function () {
             callback.call(the);
         });
@@ -278,11 +276,12 @@ define(function (require, exports, module) {
 
         the.visible = false;
 
-        animation.keyframes(the._$window, {
-            name: the._keyframes,
+        animation.animate(the._$window, {
+            scale: 0
+        }, {
             direction: 'reverse',
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.close
         }, onclose);
 
         return the;
@@ -355,7 +354,9 @@ define(function (require, exports, module) {
      * @param [options.left="center"] {Number|String} 窗口左位移
      * @param [options.top="center"] {Number|String} 窗口上位移
      * @param [options.duration=456] {Number} 窗口打开动画时间
-     * @param [options.easing="ease-in-out-back"] {Number} 窗口打开动画缓冲
+     * @param [options.easing] {Object} 窗口动画缓冲
+     * @param [options.easing.open="ease-out-back"] {String} 窗口打开动画缓冲
+     * @param [options.easing.close="ease-in-back"] {String} 窗口关闭动画缓冲
      * @param [options.addClass=""] {String} 窗口添加的 className
      * @param [options.zIndex=null] {null|Number} 窗口层级，默认自动分配
      */

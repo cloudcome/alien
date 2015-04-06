@@ -8,18 +8,15 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Mask = require('/src/ui/Window/');
+    var Window = require('/src/ui/Window/');
     var random = require('/src/utils/random.js');
     var animation = require('/src/core/dom/animation.js');
     var see = require('/src/core/dom/see.js');
     var attribute = require('/src/core/dom/attribute.js');
-    var win1 = new Mask('#demo', {
+    var win1 = new Window('#demo', {
         addClass: 'hehhhhh',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top: null,
-        width: '100%'
+        width: 300,
+        height: 200
     //    open: function ($window, to, onopen) {
     //        to.bottom = -to.height;
     //        attribute.css($window, to);
@@ -31,10 +28,6 @@ define(function (require, exports, module) {
     //    }
     });
 
-    window.win1 = win1;
-    window.animation = animation;
-    window.see = see;
-
     document.getElementById('btn1').onclick = function () {
         win1.open();
     };
@@ -45,8 +38,8 @@ define(function (require, exports, module) {
 
     document.getElementById('btn3').onclick = function () {
         win1.resize({
-            width: random.number(100, 700),
-            height: random.number(100, 700)
+            width: random.number(50, 300),
+            height: random.number(50, 300)
         });
     };
 });
