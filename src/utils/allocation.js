@@ -107,7 +107,7 @@ define(function (require, exports, module) {
 
     /**
      * 修正参数传参，参数最后一位为 undefined 将被舍去
-     * @param args {Araguments} 参数
+     * @param args {Arguments} 参数
      * @returns {Array}
      */
     exports.args = function (args) {
