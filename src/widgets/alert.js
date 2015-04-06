@@ -31,8 +31,8 @@ define(function (require, exports, module) {
 
         var the = this;
 
-        the.confirm = new Msg(options).on('close', function (index) {
-            the.emit('sure');
+        the.alert = new Msg(options).on('close', function (index) {
+            the.emit(index === 0 ? 'sure' : 'cancel');
         });
     });
 

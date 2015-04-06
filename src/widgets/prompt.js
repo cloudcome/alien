@@ -58,7 +58,7 @@ define(function (require, exports, module) {
         var the = this;
 
         the._id = alienIndex++;
-        the.confirm = new Msg(options).on('open', function () {
+        the.prompt = new Msg(options).on('open', function () {
             the._$input = selector.query('#' + alienClass + the._id)[0];
             the._$input.select();
             the._$input.focus();
