@@ -43,7 +43,10 @@ define(function (require, exports, module) {
         bottom: null,
         left: 'center',
         duration: 345,
-        easing: 'ease-in-out',
+        easing: {
+            open: 'ease-out-back',
+            close: 'ease-in-back'
+        },
         addClass: '',
         // 最小偏移量
         minOffset: 20,
@@ -63,6 +66,14 @@ define(function (require, exports, module) {
         var the = this;
         var options = the._options;
         var $pos = modification.create('div');
+        var setEasing = function (options) {
+            if (typeis.string(options.easing)) {
+                var e = {};
+
+                e.open = e.close = options.easing;
+                options.easing = e;
+            }
+        };
 
         the.id = alienIndex;
         the._$window = modification.create('div', {
@@ -81,6 +92,9 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
         }
+
+        setEasing(the._options);
+        the.on('setoptions', setEasing);
 
         return the;
     };
@@ -182,7 +196,7 @@ define(function (require, exports, module) {
             scale: 1
         }, {
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.open
         }, onopen);
 
         return the;
@@ -266,7 +280,7 @@ define(function (require, exports, module) {
         }, {
             direction: 'reverse',
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.close
         }, onclose);
 
         return the;
@@ -339,7 +353,9 @@ define(function (require, exports, module) {
      * @param [options.left="center"] {Number|String} 窗口左位移
      * @param [options.top="center"] {Number|String} 窗口上位移
      * @param [options.duration=456] {Number} 窗口打开动画时间
-     * @param [options.easing="ease-in-out-back"] {Number} 窗口打开动画缓冲
+     * @param [options.easing] {Object} 窗口动画缓冲
+     * @param [options.easing.open="ease-out-back"] {String} 窗口打开动画缓冲
+     * @param [options.easing.close="ease-in-back"] {String} 窗口关闭动画缓冲
      * @param [options.addClass=""] {String} 窗口添加的 className
      * @param [options.zIndex=null] {null|Number} 窗口层级，默认自动分配
      */
