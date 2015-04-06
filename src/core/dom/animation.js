@@ -212,6 +212,9 @@ define(function (require, exports, module) {
                 });
             });
         } else {
+            window[requestAnimationFrame](function () {
+                attribute.css(ele, fixTo);
+            });
             listener(true);
         }
 

@@ -21,7 +21,6 @@ define(function (require, exports, module) {
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
-    var keyframes = require('../../utils/keyframes.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -35,20 +34,6 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var windowKeyframes = keyframes({
-        0: {
-            opacity: 0,
-            scale: 0.6
-        },
-        0.8: {
-            opacity: 1,
-            scale: 1.1
-        },
-        1: {
-            opacity: 1,
-            scale: 1
-        }
-    });
     var defaults = {
         parentNode: document.body,
         width: 500,
@@ -57,13 +42,12 @@ define(function (require, exports, module) {
         right: null,
         bottom: null,
         left: 'center',
-        duration: 234,
-        easing: 'ease-in-out-back',
+        duration: 345,
+        easing: 'ease-in-out',
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        zIndex: null,
-        keyframes: null
+        zIndex: null
     };
     var Window = ui.create(function ($content, options) {
         var the = this;
@@ -81,7 +65,6 @@ define(function (require, exports, module) {
         var $pos = modification.create('div');
 
         the.id = alienIndex;
-        the._keyframes = options.keyframes ? keyframes(options.keyframes) : windowKeyframes;
         the._$window = modification.create('div', {
             id: alienClass + '-' + alienIndex++,
             class: alienClass,
@@ -98,10 +81,6 @@ define(function (require, exports, module) {
             the._$contentPos = $pos;
             modification.insert(the._$content, the._$window);
         }
-
-        the.on('setoptions', function (options) {
-            the._keyframes = keyframes(options.keyframes);
-        });
 
         return the;
     };
@@ -176,6 +155,10 @@ define(function (require, exports, module) {
             return the;
         }
 
+        if (the._$content) {
+            attribute.css(the._$content, 'display', 'block');
+        }
+
         var options = the._options;
         var onopen = function () {
             /**
@@ -188,16 +171,16 @@ define(function (require, exports, module) {
                 callback.call(the);
             }
         };
-
         var to = the._getPos();
+
         the.visible = true;
         to.display = 'block';
         to.zIndex = ui.getZindex();
-
+        to.scale = 0;
         attribute.css(the._$window, to);
-
-        animation.keyframes(the._$window, {
-            name: the._keyframes,
+        animation.animate(the._$window, {
+            scale: 1
+        }, {
             duration: options.duration,
             easing: options.easing
         }, onopen);
@@ -278,8 +261,9 @@ define(function (require, exports, module) {
 
         the.visible = false;
 
-        animation.keyframes(the._$window, {
-            name: the._keyframes,
+        animation.animate(the._$window, {
+            scale: 0
+        }, {
             direction: 'reverse',
             duration: options.duration,
             easing: options.easing
