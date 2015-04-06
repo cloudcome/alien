@@ -53,6 +53,7 @@ define(function (require, exports, module) {
         duration: 345,
         easing: {
             open: 'ease-out-back',
+            resize: 'ease-out-back',
             close: 'ease-in-back'
         },
         canDrag: true,

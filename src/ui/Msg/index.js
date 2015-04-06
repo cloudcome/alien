@@ -43,8 +43,12 @@ define(function (require, exports, module) {
         canDrag: true,
         isModal: true,
         duration: 234,
+        easing: {
+            open: 'ease-out-back',
+            resize: 'ease-out-back',
+            close: 'ease-in-back'
+        },
         timeout: 0,
-        easing: 'ease-in-out-back',
         zIndex: null
     };
     var Msg = ui.create(function (options) {
