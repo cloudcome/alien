@@ -45,7 +45,8 @@ define(function (require, exports, module) {
         duration: 345,
         easing: {
             open: 'ease-out-back',
-            close: 'ease-in-back'
+            close: 'ease-in-back',
+            resize: 'ease-out-back'
         },
         addClass: '',
         // 最小偏移量
@@ -70,7 +71,7 @@ define(function (require, exports, module) {
             if (typeis.string(options.easing)) {
                 var e = {};
 
-                e.open = e.close = options.easing;
+                e.open = e.close = e.resize = options.easing;
                 options.easing = e;
             }
         };
@@ -233,7 +234,7 @@ define(function (require, exports, module) {
 
         animation.animate(the._$window, to, {
             duration: options.duration,
-            easing: options.easing
+            easing: options.easing.resize
         }, function () {
             callback.call(the);
         });
