@@ -7,6 +7,8 @@ define(function (require) {
     var div3 = divs[3];
     var div3Siblings = domSelector.siblings(div3);
 
+    window.domSelector = domSelector;
+
     console.log('==========================');
     console.log('div3 index');
     console.log(domSelector.index(div3));
