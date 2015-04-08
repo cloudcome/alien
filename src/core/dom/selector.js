@@ -21,6 +21,11 @@ define(function (require, exports, module) {
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
 
+    // fallback
+    HTMLElement.prototype.contains = HTMLElement.prototype.contains || function ($ele) {
+        return this.compareDocumentPosition($ele) - 19 > 0;
+    };
+
     /**
      * 在上下文中查找DOM元素，永远返回一个数组
      * @param {String}  selector  选择器

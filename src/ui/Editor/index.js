@@ -8,9 +8,29 @@
 define(function (require, exports, module) {
     'use strict';
 
+    /**
+     * @module ui/Editor/
+     * @requires 3rd/codemirror/mode/gfm
+     * @requires 3rd/codemirror/addon/display/fullscreen
+     * @requires 3rd/codemirror/addon/display/placeholder
+     * @requires ui/
+     * @requires ui/Msg/
+     * @requires ui/Dialog/
+     * @requires code/dom/selector
+     * @requires code/dom/attribute
+     * @requires code/dom/modification
+     * @requires code/event/base
+     * @requires utils/controller
+     * @requires utils/date
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires libs/Template
+     */
+
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
     require('../../3rd/codemirror/addon/display/fullscreen.js');
-    require('../../3rd/codemirror/addon/selection/active-line.js');
+    require('../../3rd/codemirror/addon/display/placeholder.js');
+    //require('../../3rd/codemirror/addon/selection/active-line.js');
     var ui = require('../');
     var Msg = require('../Msg/');
     var Dialog = require('../Dialog/');
@@ -26,9 +46,9 @@ define(function (require, exports, module) {
     var template = require('html!./template.html');
     var tpl = new Template(template);
     var style = require('css!./style.css');
-    var alienClass = 'alien-ui-editor';
+    //var alienClass = 'alien-ui-editor';
     var RE_IMG_TYPE = /^image\//;
-    var alienIndex = 0;
+    //var alienIndex = 0;
     var localStorage = window.localStorage;
     var pathname = location.pathname;
     var defaults = {
@@ -59,8 +79,8 @@ define(function (require, exports, module) {
         the._calStoreId();
         the._editor = CodeMirror.fromTextArea(the._$ele, {
             mode: 'gfm',
-            lineNumbers: true,
-            theme: "monokai",
+            lineNumbers: false,
+            theme: "fed",
             autoCloseBrackets: true,
             autoCloseTags: true,
             dragDrop: false,

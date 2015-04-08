@@ -67,7 +67,7 @@ define(function (require, exports, module) {
         });
     });
 
-    module.exports = function (content, options) {
-        return new Confirm(content, options);
+    module.exports = function (tips, defaultValue, options) {
+        return new Confirm(tips, defaultValue, options);
     };
 });
