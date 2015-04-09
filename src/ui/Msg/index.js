@@ -79,6 +79,11 @@ define(function (require, exports, module) {
 
         the._window.open(function () {
             the._isReady = true;
+            /**
+             * 消息框打开之后
+             * @event open
+             */
+            the.emit('open');
         });
 
         if (the._options.timeout) {

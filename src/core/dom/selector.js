@@ -20,10 +20,13 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
+    var win = window;
+    var doc = win.document;
+
 
     /**
      * 在上下文中查找DOM元素，永远返回一个数组
-     * @param {String}  selector  选择器
+     * @param {String|HTMLElement|NodeList}  selector  选择器
      * @param {HTMLElement|Node} [context] 上下文
      * @return {Array}
      *
@@ -34,7 +37,7 @@ define(function (require, exports, module) {
      * // => [div, div, ...]
      */
     exports.query = function (selector, context) {
-        context = context || document;
+        context = context || doc;
 
         var selectorType = typeis(selector);
         var ret = [];
@@ -51,12 +54,11 @@ define(function (require, exports, module) {
                     break;
 
                 case 'element':
-                case 'document':
-                    ret = context.contains(selector) ? [selector] : [];
-                    break;
-
-                case 'window':
-                    ret = window;
+                    if (context === doc) {
+                        ret = selector;
+                    } else {
+                        ret = context.contains(selector) ? selector : [];
+                    }
                     break;
 
                 default :

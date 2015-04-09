@@ -190,11 +190,13 @@ define(function (require, exports, module) {
 
         the.visible = true;
         to.display = 'block';
+        to.opacity = 0;
         to.zIndex = ui.getZindex();
         to.scale = 0;
         attribute.css(the._$window, to);
         animation.animate(the._$window, {
-            scale: 1
+            scale: 1,
+            opacity: 1
         }, {
             duration: options.duration,
             easing: options.easing.open
@@ -277,7 +279,8 @@ define(function (require, exports, module) {
         the.visible = false;
 
         animation.animate(the._$window, {
-            scale: 0
+            scale: 0,
+            opacity: 0
         }, {
             direction: 'reverse',
             duration: options.duration,
