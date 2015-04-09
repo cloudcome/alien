@@ -499,10 +499,10 @@ define(function (require, exports, module) {
                 var _img = new Image();
 
                 _img.src = img.url;
-                html.push('![' + img.name + '](' + img.url + ')');
+                html.push('\n![' + img.name + '](' + img.url + ')\n');
             });
 
-            the.replace(html.join('\n') + ' ');
+            the.replace(html.join(''));
             the.uploadDestroy();
         };
 

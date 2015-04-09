@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     };
     var Confirm = ui.create(function (content, options) {
         options = dato.extend({}, defaults, options, {
-            content: content && content.message ? content.message : String(content)
+            content: String(content)
         });
 
         var the = this;

@@ -1,6 +1,6 @@
 {
   "name": "alien",
-  "version": "0.0.3",
+  "version": "1.1.6",
   "private": true,
   "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
   "scripts": {
@@ -19,6 +19,7 @@
     "html5",
     "css3",
     "alien",
+    "coolie",
     "alienjs"
   ],
   "author": {
