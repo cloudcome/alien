@@ -89,17 +89,19 @@
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
 <li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#event:change">null.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Mask/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
@@ -110,8 +112,8 @@
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -150,7 +152,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 8</li>
+	                    <li class="sidebar-header">Events &times; 10</li>
 
 	                    
 	                        
@@ -193,7 +195,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:close">close</a>
+        <a class="" href="#~event:open">open</a>
     
 </li>
 
@@ -212,6 +214,24 @@
 <li class="">
     
         <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
     
 </li>
 
@@ -280,7 +300,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0540074070449918518171619740314782" data-toggle="tab">Source</a>
+                <a href="#tab-meta-611948608420789221399434679187834" data-toggle="tab">Source</a>
             </li>
 
         
@@ -301,8 +321,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0540074070449918518171619740314782">
-                <p><a href="ui_Window_index.js.html#line9">ui/Window/index.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-611948608420789221399434679187834">
+                <p><a href="ui_Msg_index.js.html#line9">ui/Msg/index.js:9</a></p>
             </div>
 
         
@@ -319,24 +339,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li><a href="module-utils_allocation.html">module:utils/allocation</a></li>
-        
-            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
-        
-            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
-        
-            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
-        
-            <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
-        
-            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
-        
-            <li><a href="module-ui_.html">module:ui/</a></li>
-        </ul>
     
 
     
@@ -353,292 +355,6 @@
         <h3 class="subsection-title">Events</h3>
 
         <dl>
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>消息框被关闭后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-90098923700861633853343001101166" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-90098923700861633853343001101166">
-                <p><a href="ui_Msg_index.js.html#line168">ui/Msg/index.js:168</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>消息框被关闭后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-79145502136088919748360521625727" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-79145502136088919748360521625727">
-                <p><a href="ui_Msg_index.js.html#line151">ui/Msg/index.js:151</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
             
 <section class="docs-method ">
     <dt>
@@ -688,7 +404,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-50517719471827158172005007509142" data-toggle="tab">Source</a>
+                <a href="#tab-meta-281066219322383404797094548121095" data-toggle="tab">Source</a>
             </li>
 
         
@@ -709,8 +425,387 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-50517719471827158172005007509142">
-                <p><a href="ui_Window_index.js.html#line263">ui/Window/index.js:263</a></p>
+            <div class="tab-pane active" id="tab-meta-281066219322383404797094548121095">
+                <p><a href="ui_Window_index.js.html#line265">ui/Window/index.js:265</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框被关闭后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-282369839726015949260574160143733" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-282369839726015949260574160143733">
+                <p><a href="ui_Msg_index.js.html#line156">ui/Msg/index.js:156</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框被关闭后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-750633598072454329033866059035063" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-750633598072454329033866059035063">
+                <p><a href="ui_Msg_index.js.html#line173">ui/Msg/index.js:173</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:open">
+        open : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框打开之后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-3740199678577482724593135551549494" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-3740199678577482724593135551549494">
+                <p><a href="ui_Msg_index.js.html#line82">ui/Msg/index.js:82</a></p>
             </div>
 
         
@@ -781,7 +876,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-87199094169773167972306846641004" data-toggle="tab">Source</a>
+                <a href="#tab-meta-69921684847213336957544123288244" data-toggle="tab">Source</a>
             </li>
 
         
@@ -802,7 +897,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-87199094169773167972306846641004">
+            <div class="tab-pane active" id="tab-meta-69921684847213336957544123288244">
                 <p><a href="ui_Window_index.js.html#line179">ui/Window/index.js:179</a></p>
             </div>
 
@@ -876,7 +971,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-50594877731055026392133522313088" data-toggle="tab">Source</a>
+                <a href="#tab-meta-52911486383527526322528442833573" data-toggle="tab">Source</a>
             </li>
 
         
@@ -897,8 +992,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-50594877731055026392133522313088">
-                <p><a href="ui_Msg_index.js.html#line9">ui/Msg/index.js:9</a></p>
+            <div class="tab-pane active" id="tab-meta-52911486383527526322528442833573">
+                <p><a href="ui_Window_index.js.html#line9">ui/Window/index.js:9</a></p>
             </div>
 
         
@@ -915,6 +1010,24 @@
 
     
 
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-utils_allocation.html">module:utils/allocation</a></li>
+        
+            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+        
+            <li><a href="module-core_dom_selector.html">module:core/dom/selector</a></li>
+        
+            <li><a href="module-core_dom_attribute.html">module:core/dom/attribute</a></li>
+        
+            <li><a href="module-core_dom_modification.html">module:core/dom/modification</a></li>
+        
+            <li><a href="module-core_dom_animation.html">module:core/dom/animation</a></li>
+        
+            <li><a href="module-ui_.html">module:ui/</a></li>
+        </ul>
     
 
     
@@ -931,292 +1044,6 @@
         <h3 class="subsection-title">Events</h3>
 
         <dl>
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>消息框被关闭后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-0146061482373625045944231352768838" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-0146061482373625045944231352768838">
-                <p><a href="ui_Msg_index.js.html#line168">ui/Msg/index.js:168</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:close">
-        close : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>消息框被关闭后
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-087250308832153682017029921989888" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-087250308832153682017029921989888">
-                <p><a href="ui_Msg_index.js.html#line151">ui/Msg/index.js:151</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
             
 <section class="docs-method ">
     <dt>
@@ -1266,7 +1093,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-65742883528582755425454180222005" data-toggle="tab">Source</a>
+                <a href="#tab-meta-57448940002359452790628504008055" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1287,8 +1114,387 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-65742883528582755425454180222005">
-                <p><a href="ui_Window_index.js.html#line263">ui/Window/index.js:263</a></p>
+            <div class="tab-pane active" id="tab-meta-57448940002359452790628504008055">
+                <p><a href="ui_Window_index.js.html#line265">ui/Window/index.js:265</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框被关闭后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-62256614794023333121668850071728" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-62256614794023333121668850071728">
+                <p><a href="ui_Msg_index.js.html#line156">ui/Msg/index.js:156</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:close">
+        close : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框被关闭后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">选择的按钮索引，-1 为点击关闭按钮</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-892856684979051408743607415817678" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-892856684979051408743607415817678">
+                <p><a href="ui_Msg_index.js.html#line173">ui/Msg/index.js:173</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:open">
+        open : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>消息框打开之后
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-35200790595263243345218333415687" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-35200790595263243345218333415687">
+                <p><a href="ui_Msg_index.js.html#line82">ui/Msg/index.js:82</a></p>
             </div>
 
         
@@ -1359,7 +1565,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-84719922137446714393257535994053" data-toggle="tab">Source</a>
+                <a href="#tab-meta-59733237628825015953563312068582" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1380,7 +1586,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-84719922137446714393257535994053">
+            <div class="tab-pane active" id="tab-meta-59733237628825015953563312068582">
                 <p><a href="ui_Window_index.js.html#line179">ui/Window/index.js:179</a></p>
             </div>
 

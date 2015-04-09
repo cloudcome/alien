@@ -89,17 +89,19 @@
 <li><a href="module-utils_selection.html">utils/selection</a></li>
 <li><a href="module-utils_typeis.html">utils/typeis</a></li>
 <li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
 </ul>
 </li>
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-libs_Animation.html#event:change">null.change</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:ui/Editor/.change</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Mask/.close</a></li>
 <li><a href="module-ui_Prettify_.html#~event:done">module:ui/Prettify/.done</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
@@ -110,8 +112,8 @@
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Mask/.open</a></li>
-<li><a href="module-ui_Resize_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -150,7 +152,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 59</li>
+	                    <li class="sidebar-header">Events &times; 60</li>
 
 	                    
 	                        
@@ -166,7 +168,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -175,7 +177,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -184,7 +186,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -193,7 +195,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -202,7 +204,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -211,7 +213,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -220,7 +222,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -229,7 +231,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -238,7 +240,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -247,7 +249,7 @@
 
 <li class="">
     
-        <a class="" href="#event:change">change</a>
+        <a class="" href="#~event:change">change</a>
     
 </li>
 
@@ -482,6 +484,15 @@
 <li class="">
     
         <a class="" href="#~event:leaveviewport">leaveviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
     
 </li>
 
@@ -808,7 +819,7 @@ define(function (require, exports, module) {
 
     /**
      * 修正参数传参，参数最后一位为 undefined 将被舍去
-     * @param args {Araguments} 参数
+     * @param args {Arguments} 参数
      * @returns {Array}
      */
     exports.args = function (args) {
