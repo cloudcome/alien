@@ -7,7 +7,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/Stickly/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/event/touch
+     * @requires utils/dato
+     * @requires utils/controller
      */
     'use strict';
 
@@ -20,7 +25,8 @@ define(function (require, exports, module) {
     var defaults = {
         containerSelector: window,
         className: 'stickly',
-        wait: 30
+        wait: 30,
+        offset: 10
     };
     var Stickly = ui.create(function ($ele, options) {
         var the = this;
@@ -58,7 +64,7 @@ define(function (require, exports, module) {
 
         attribute.removeClass(the._$ele, options.className);
 
-        var top = attribute.top(the._$ele);
+        var top = attribute.top(the._$ele) + options.offset;
         var scrollTop = attribute.scrollTop(the._$container);
 
         if (scrollTop >= top) {

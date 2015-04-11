@@ -24,6 +24,8 @@ define(function (require, exports, module) {
         'float': 'cssFloat'
     };
     var regOn = /^on/;
+    var timeid = 0;
+    var lastTime = 0;
 
     /**
      * 获取有浏览器前缀的方法名称
@@ -55,7 +57,18 @@ define(function (require, exports, module) {
             }
         });
 
-        return find ? html5Key : undefined;
+        html5Key = find ? html5Key : undefined;
+
+        if (!html5Key && standard === 'requestAnimationFrame') {
+            html5Key = standard;
+            parent[standard] = function (callback) {
+                timeid = setTimeout(function () {
+                    callback();
+                }, 1000 / 60);
+            };
+        }
+
+        return html5Key;
     };
 
     /**
