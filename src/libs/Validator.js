@@ -45,7 +45,6 @@ define(function (require, exports, module) {
         // 选项
         the._options = dato.extend(true, {}, defaults, options);
     }, Emitter);
-    var pro = Validator.prototype;
 
 
     /**
@@ -77,15 +76,16 @@ define(function (require, exports, module) {
     };
 
 
-    /**
-     * 注册自定义的实例验证规则
-     * @param options {Object} 规则配置
-     * @param fn {Function} 规则方法
-     * @param [isOverride=false] 是否覆盖已有规则
-     *
-     * @example
-     * // 添加一个检查后缀的自定义规则
-     * validator.registerRule({
+    Validator.implement({
+        /**
+         * 注册自定义的实例验证规则
+         * @param options {Object} 规则配置
+         * @param fn {Function} 规则方法
+         * @param [isOverride=false] 是否覆盖已有规则
+         *
+         * @example
+         * // 添加一个检查后缀的自定义规则
+         * validator.registerRule({
      *     name: 'suffix',
      *     type: 'array'
      * }, function(suffix, val, next){
@@ -94,48 +94,48 @@ define(function (require, exports, module) {
      *
      *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
      * });
-     */
-    pro.registerRule = function (options, fn, isOverride) {
-        var the = this;
+         */
+        registerRule: function (options, fn, isOverride) {
+            var the = this;
 
-        if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
-            the._customRules[options.name] = {
-                name: options.name,
-                type: options.type,
-                fn: fn
-            };
-        }
-    };
+            if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
+                the._customRules[options.name] = {
+                    name: options.name,
+                    type: options.type,
+                    fn: fn
+                };
+            }
+        },
 
 
-    /**
-     * 添加单个验证规则
-     * @param {Object}     rule 验证规则对象
-     * @param {String}     rule.name                数据字段名称【必须】
-     * @param {String}     rule.type                数据类型【必须】
-     * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
-     * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
-     * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
-     * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
-     * @param {Boolean}    [rule.required]          验证规则：是否必填
-     * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
-     * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
-     * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
-     * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
-     * @param {*}          [rule.equal]             验证规则：全等于指定值
-     * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
-     * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
-     * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
-     * @param {Object}     [rule.msg]               验证出错的消息
-     * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
-     *
-     * @example
-     * validator.pushRule({
+        /**
+         * 添加单个验证规则
+         * @param {Object}     rule 验证规则对象
+         * @param {String}     rule.name                数据字段名称【必须】
+         * @param {String}     rule.type                数据类型【必须】
+         * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
+         * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
+         * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
+         * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
+         * @param {Boolean}    [rule.required]          验证规则：是否必填
+         * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
+         * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
+         * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
+         * @param {*}          [rule.equal]             验证规则：全等于指定值
+         * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
+         * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
+         * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
+         * @param {Object}     [rule.msg]               验证出错的消息
+         * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
+         *
+         * @example
+         * validator.pushRule({
      *    // 字段名称，必须，唯一性
      *    name: 'username',
      *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
@@ -201,174 +201,185 @@ define(function (require, exports, module) {
      *        return val + 'abc';
      *    }
      * });
-     */
-    pro.pushRule = function (rule, isOverride) {
-        var the = this;
-        var pushFn = function (father) {
-            if (typeis.function(rule.onbefore)) {
-                father.onbefores.push(rule.onbefore);
-                rule.onbefore = udf;
+         */
+        pushRule: function (rule, isOverride) {
+            var the = this;
+            var pushFn = function (father) {
+                if (typeis.function(rule.onbefore)) {
+                    father.onbefores.push(rule.onbefore);
+                    rule.onbefore = udf;
+                }
+
+                if (typeis.function(rule.onafter)) {
+                    father.onafters.push(rule.onafter);
+                    rule.onafter = udf;
+                }
+
+                if (typeis.function(rule.function)) {
+                    father.functions.push(rule.function);
+                    rule.function = udf;
+                }
+            };
+            // 是否存在
+            var isExist = !!the._ruleNames[rule.name];
+
+            if (!isExist || isOverride) {
+                if (!rule.type || types.indexOf(rule.type) === -1) {
+                    throw '`rule.type` must be one of [' + types.join('/') + ']';
+                }
+
+                if (!rule.msg) {
+                    rule.msg = {};
+                }
+
+                if (!rule.alias) {
+                    rule.alias = rule.name;
+                }
+
+                rule.required = !!rule.required;
+
+                if (rule.exist === udf) {
+                    rule.exist = false;
+                }
+
+                rule.exist = !!rule.exist;
+
+                if (rule.trim === udf) {
+                    rule.trim = true;
+                }
+
+                rule.trim = !!rule.trim;
+
+                // 存在并且覆盖
+                if (isExist && isOverride) {
+                    the._ruleList.forEach(function (existRule) {
+                        if (rule.name === existRule.name) {
+                            existRule.onbefores = existRule.onbefores || [];
+                            dato.extend(true, existRule, rule);
+                            the.rules[rule.name] = existRule;
+                        }
+                    });
+                }
+                // 不存在
+                else if (!isExist) {
+                    the._ruleList.push(rule);
+                    the._ruleNames[rule.name] = true;
+                    the.rules[rule.name] = rule;
+
+                    // 函数数组
+                    rule.onbefores = [];
+                    rule.onafters = [];
+                    rule.functions = [];
+
+                    pushFn(rule);
+                }
+            }
+            // 存在不覆盖
+            else if (isExist && !isOverride) {
+                pushFn(the.rules[rule.name]);
             }
 
-            if (typeis.function(rule.onafter)) {
-                father.onafters.push(rule.onafter);
-                rule.onafter = udf;
-            }
+            return the;
+        },
 
-            if (typeis.function(rule.function)) {
-                father.functions.push(rule.function);
-                rule.function = udf;
-            }
-        };
-        // 是否存在
-        var isExist = !!the._ruleNames[rule.name];
-
-        if (!isExist || isOverride) {
-            if (!rule.type || types.indexOf(rule.type) === -1) {
-                throw '`rule.type` must be one of [' + types.join('/') + ']';
-            }
-
-            if (!rule.msg) {
-                rule.msg = {};
-            }
-
-            if (!rule.alias) {
-                rule.alias = rule.name;
-            }
-
-            rule.required = !!rule.required;
-
-            if (rule.exist === udf) {
-                rule.exist = false;
-            }
-
-            rule.exist = !!rule.exist;
-
-            if (rule.trim === udf) {
-                rule.trim = true;
-            }
-
-            rule.trim = !!rule.trim;
-
-            // 存在并且覆盖
-            if (isExist && isOverride) {
-                the._ruleList.forEach(function (existRule) {
-                    if (rule.name === existRule.name) {
-                        existRule.onbefores = existRule.onbefores || [];
-                        dato.extend(true, existRule, rule);
-                        the.rules[rule.name] = existRule;
-                    }
-                });
-            }
-            // 不存在
-            else if (!isExist) {
-                the._ruleList.push(rule);
-                the._ruleNames[rule.name] = true;
-                the.rules[rule.name] = rule;
-
-                // 函数数组
-                rule.onbefores = [];
-                rule.onafters = [];
-                rule.functions = [];
-
-                pushFn(rule);
-            }
-        }
-        // 存在不覆盖
-        else if (isExist && !isOverride) {
-            pushFn(the.rules[rule.name]);
-        }
-
-        return the;
-    };
-
-
-    /**
-     * 执行所有数据验证
-     * @param {Object} data 数据
-     * @param {Function} callback 回调
-     * @arguments  err 对象
-     */
-    pro.validateAll = function (data, callback) {
-        var the = this;
-        var isBreakOnInvalid = the._options.isBreakOnInvalid;
-        var errList = [];
-
-        data = typeis(data) === 'object' ? data : {};
-        callback = typeis(callback) === 'function' ? callback : noop;
 
         /**
-         * 所有字段验证开始
-         * @event validateallstart
+         * 执行所有数据验证
+         * @param {Object} data 数据
+         * @param {Function} callback 回调
+         * @arguments  err 对象
          */
-        the.emit('validateallstart');
-        howdo.each(the._ruleList, function (key, rule, next) {
-            the._validateOne(rule, data, function (err) {
-                if (!isBreakOnInvalid) {
-                    errList.push(err);
-                }
+        validateAll: function (data, callback) {
+            var the = this;
+            var isBreakOnInvalid = the._options.isBreakOnInvalid;
+            var errList = [];
 
-                if (!err || !isBreakOnInvalid) {
-                    return next();
-                }
-
-                next(err);
-            });
-        }).follow(function (err) {
-            var errs = null;
-
-            if (isBreakOnInvalid) {
-                return callback.call(the, err, data);
-            }
-
-            dato.each(the._ruleList, function (index, rule) {
-                if (errList[index]) {
-                    errs = errs || {};
-                    errs[rule.name] = errList[index];
-                }
-            });
+            data = typeis(data) === 'object' ? data : {};
+            callback = typeis(callback) === 'function' ? callback : noop;
 
             /**
-             * 所有字段验证结束
-             * @event validateallend
-             * @param errs {Array} 错误消息数组
-             * @param data {Object} 验证过滤后的数据
+             * 所有字段验证开始
+             * @event validateallstart
              */
-            the.emit('validateallend', errs, data);
-            callback.call(the, errs, data);
-        });
-    };
+            the.emit('validateallstart');
+            howdo.each(the._ruleList, function (key, rule, next) {
+                the._validateOne(rule, data, function (err) {
+                    if (!isBreakOnInvalid) {
+                        errList.push(err);
+                    }
 
+                    if (!err || !isBreakOnInvalid) {
+                        return next();
+                    }
 
-    /**
-     * 只对当前一个数据验证
-     * @param {Object} data 数据
-     * @param {Function} callback 回调
-     * @arguments  err 对象
-     */
-    pro.validateOne = function (data, callback) {
-        var the = this;
-        var findIndex = -1;
-        var name = Object.keys(data)[0];
+                    next(err);
+                });
+            }).follow(function (err) {
+                var errs = null;
 
-        callback = typeis(callback) === 'function' ? callback : noop;
-
-        if (name) {
-            /**
-             * 单个字段验证开始
-             * @event validateonestart
-             * @param name {String} 字段名称
-             */
-            the.emit('validateonestart', name);
-            dato.each(the._ruleList, function (index, rule) {
-                if (rule.name === name) {
-                    findIndex = index;
-                    return false;
+                if (isBreakOnInvalid) {
+                    return callback.call(the, err, data);
                 }
-            });
 
-            if (findIndex > -1) {
-                the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                dato.each(the._ruleList, function (index, rule) {
+                    if (errList[index]) {
+                        errs = errs || {};
+                        errs[rule.name] = errList[index];
+                    }
+                });
+
+                /**
+                 * 所有字段验证结束
+                 * @event validateallend
+                 * @param errs {Array} 错误消息数组
+                 * @param data {Object} 验证过滤后的数据
+                 */
+                the.emit('validateallend', errs, data);
+                callback.call(the, errs, data);
+            });
+        },
+
+
+        /**
+         * 只对当前一个数据验证
+         * @param {Object} data 数据
+         * @param {Function} callback 回调
+         * @arguments  err 对象
+         */
+        validateOne: function (data, callback) {
+            var the = this;
+            var findIndex = -1;
+            var name = Object.keys(data)[0];
+
+            callback = typeis(callback) === 'function' ? callback : noop;
+
+            if (name) {
+                /**
+                 * 单个字段验证开始
+                 * @event validateonestart
+                 * @param name {String} 字段名称
+                 */
+                the.emit('validateonestart', name);
+                dato.each(the._ruleList, function (index, rule) {
+                    if (rule.name === name) {
+                        findIndex = index;
+                        return false;
+                    }
+                });
+
+                if (findIndex > -1) {
+                    the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                        /**
+                         * 单个字段验证结束
+                         * @event validateoneend
+                         * @param name {String} 字段名称
+                         * @param error {Error} 错误消息
+                         * @param value {*} 字段值
+                         */
+                        the.emit('validateoneend', name, err, data[name]);
+                        callback.call(the, err, data[name]);
+                    });
+                } else {
                     /**
                      * 单个字段验证结束
                      * @event validateoneend
@@ -376,10 +387,17 @@ define(function (require, exports, module) {
                      * @param error {Error} 错误消息
                      * @param value {*} 字段值
                      */
-                    the.emit('validateoneend', name, err, data[name]);
-                    callback.call(the, err, data[name]);
-                });
+                    the.emit('validateoneend', name, null, data[name]);
+                    callback.call(the, null, data[name]);
+                }
             } else {
+                /**
+                 * 单个字段验证开始
+                 * @event validateonestart
+                 * @param name {String} 字段名称
+                 */
+                the.emit('validateonestart', name);
+
                 /**
                  * 单个字段验证结束
                  * @event validateoneend
@@ -390,294 +408,276 @@ define(function (require, exports, module) {
                 the.emit('validateoneend', name, null, data[name]);
                 callback.call(the, null, data[name]);
             }
-        } else {
-            /**
-             * 单个字段验证开始
-             * @event validateonestart
-             * @param name {String} 字段名称
-             */
-            the.emit('validateonestart', name);
-
-            /**
-             * 单个字段验证结束
-             * @event validateoneend
-             * @param name {String} 字段名称
-             * @param error {Error} 错误消息
-             * @param value {*} 字段值
-             */
-            the.emit('validateoneend', name, null, data[name]);
-            callback.call(the, null, data[name]);
-        }
-    };
+        },
 
 
-    /**
-     * 单个数据验证
-     * @param rule
-     * @param data
-     * @param callback
-     * @returns {*}
-     * @private
-     */
-    pro._validateOne = function (rule, data, callback) {
-        var the = this;
-        var val = data[rule.name];
-        var err;
-        var type;
-        var runCustom = function (next) {
-            var runCustomRules = function (customRules) {
-                return function (callback) {
-                    howdo.each(customRules, function (ruleName, ruleInfo, next) {
-                        var _rule = rule[ruleName];
+        /**
+         * 单个数据验证
+         * @param rule
+         * @param data
+         * @param callback
+         * @returns {*}
+         * @private
+         */
+        _validateOne: function (rule, data, callback) {
+            var the = this;
+            var val = data[rule.name];
+            var err;
+            var type;
+            var runCustom = function (next) {
+                var runCustomRules = function (customRules) {
+                    return function (callback) {
+                        howdo.each(customRules, function (ruleName, ruleInfo, next) {
+                            var _rule = rule[ruleName];
 
-                        if (typeis(_rule) !== ruleInfo.type) {
-                            return next();
-                        }
-
-                        ruleInfo.prototype.call(rule, _rule, val, function (err) {
-                            if (!err) {
+                            if (typeis(_rule) !== ruleInfo.type) {
                                 return next();
                             }
 
-                            err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
-                            next(err);
-                        });
-                    }).follow(callback);
+                            ruleInfo.prototype.call(rule, _rule, val, function (err) {
+                                if (!err) {
+                                    return next();
+                                }
+
+                                err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
+                                next(err);
+                            });
+                        }).follow(callback);
+                    };
                 };
+
+                howdo
+                    // 静态自定义验证规则
+                    .task(runCustomRules(customRules))
+                    // 实例自定义验证规则
+                    .task(runCustomRules(the._customRules))
+                    // 异步串行
+                    .follow(next);
+            };
+            var onover = function (err) {
+                // onafter
+                if (!err) {
+                    rule.onafters.forEach(function (fn) {
+                        data[rule.name] = fn.call(rule, val, data);
+                    });
+                }
+
+                /**
+                 * 单个字段验证结束
+                 * @event validateend
+                 * @param name {String} 字段名称
+                 * @param data {Object} 验证过滤后的数据
+                 */
+                the.emit('validateend', rule.name, data);
+
+                // callback
+                if (typeis(callback) === 'function') {
+                    callback.call(the, err, data);
+                }
             };
 
-            howdo
-                // 静态自定义验证规则
-                .task(runCustomRules(customRules))
-                // 实例自定义验证规则
-                .task(runCustomRules(the._customRules))
-                // 异步串行
-                .follow(next);
-        };
-        var onover = function (err) {
-            // onafter
-            if (!err) {
-                rule.onafters.forEach(function (fn) {
-                    data[rule.name] = fn.call(rule, val, data);
-                });
-            }
-
             /**
-             * 单个字段验证结束
+             * 单个字段验证开始
              * @event validateend
              * @param name {String} 字段名称
-             * @param data {Object} 验证过滤后的数据
              */
-            the.emit('validateend', rule.name, data);
+            the.emit('validatestart', rule.name);
 
-            // callback
-            if (typeis(callback) === 'function') {
-                callback.call(the, err, data);
-            }
-        };
+            // onbefore
+            rule.onbefores.forEach(function (fn) {
+                data[rule.name] = val = fn.call(rule, val, data);
+            });
 
-        /**
-         * 单个字段验证开始
-         * @event validateend
-         * @param name {String} 字段名称
-         */
-        the.emit('validatestart', rule.name);
+            type = typeis(val);
 
-        // onbefore
-        rule.onbefores.forEach(function (fn) {
-            data[rule.name] = val = fn.call(rule, val, data);
-        });
-
-        type = typeis(val);
-
-        // trim
-        if (type === 'string' && rule.trim) {
-            data[rule.name] = val = String(val).trim();
-        }
-
-        // exist
-        var info = _getDataInfo(val);
-
-        // 是否存在
-        var isExist = !!info.stringLength || !!info.number || !!info.booleanLength;
-
-        // 需要验证 = 存在就验证 && 存在 || 一直验证
-        var require2Exist2Validate = rule.exist && isExist || !rule.exist;
-
-        if (require2Exist2Validate) {
-            // required
-            if (rule.required && type === 'string') {
-                err = new Error(rule.msg.required || rule.alias + '不能为空');
-
-                if (!info.stringLength) {
-                    return onover(err);
-                }
+            // trim
+            if (type === 'string' && rule.trim) {
+                data[rule.name] = val = String(val).trim();
             }
 
-            // type
-            err = new Error(rule.msg.type || rule.alias + '数据类型必须为' + rule.type);
+            // exist
+            var info = _getDataInfo(val);
 
-            switch (rule.type) {
-                case 'string':
-                case 'email':
-                case 'url':
-                    if (type !== 'string') {
+            // 是否存在
+            var isExist = !!info.stringLength || !!info.number || !!info.booleanLength;
+
+            // 需要验证 = 存在就验证 && 存在 || 一直验证
+            var require2Exist2Validate = rule.exist && isExist || !rule.exist;
+
+            if (require2Exist2Validate) {
+                // required
+                if (rule.required && type === 'string') {
+                    err = new Error(rule.msg.required || rule.alias + '不能为空');
+
+                    if (!info.stringLength) {
                         return onover(err);
                     }
-
-                    if (rule.type === 'email' && !typeis.email(val)) {
-                        return onover(err);
-                    }
-
-                    if (rule.type === 'url' && !typeis.url(val)) {
-                        return onover(err);
-                    }
-                    break;
-
-                default:
-                    if (rule.type && type !== rule.type) {
-                        return onover(err);
-                    }
-            }
-
-            // length
-            if (typeis.number(rule.length) && type === 'string') {
-                err = new Error(rule.msg.length || rule.alias + '长度必须为' + rule.length + '字符');
-
-                if (info.stringLength !== rule.length) {
-                    return onover(err);
                 }
-            }
 
-            // bytes
-            if (typeis.number(rule.bytes) && type === 'string') {
-                err = new Error(rule.msg.bytes || rule.alias + '长度必须为' + rule.bytes + '字节');
+                // type
+                err = new Error(rule.msg.type || rule.alias + '数据类型必须为' + rule.type);
 
-                if (info.stringBytes !== rule.bytes) {
-                    return onover(err);
-                }
-            }
-
-            // minLength
-            if (typeis.number(rule.minLength) && type === 'string') {
-                err = new Error(rule.msg.minLength || rule.alias + '长度不能少于' + rule.minLength + '字符');
-
-                if (info.stringLength < rule.minLength) {
-                    return onover(err);
-                }
-            }
-
-            // minBytes
-            if (typeis.number(rule.minBytes) && type === 'string') {
-                err = new Error(rule.msg.minBytes || rule.alias + '长度不能少于' + rule.minBytes + '字节');
-
-                if (info.stringBytes < rule.minBytes) {
-                    return onover(err);
-                }
-            }
-
-            // maxLength
-            if (typeis.number(rule.maxLength) && type === 'string') {
-                err = new Error(rule.msg.maxLength || rule.alias + '长度不能超过' + rule.maxLength + '字符');
-
-                if (info.stringLength > rule.maxLength) {
-                    return onover(err);
-                }
-            }
-
-            // maxBytes
-            if (typeis.number(rule.maxBytes) && type === 'string') {
-                err = new Error(rule.msg.maxBytes || rule.alias + '长度不能超过' + rule.maxBytes + '字节');
-
-                if (info.stringBytes > rule.maxBytes) {
-                    return onover(err);
-                }
-            }
-
-            // inArray
-            if (typeis.array(rule.inArray)) {
-                err = new Error(rule.msg.inArray || rule.alias + '必须是“' + rule.inArray.join('、') + '”其一');
-                if (rule.inArray.indexOf(val) === -1) {
-                    return onover(err);
-                }
-            }
-
-            // min
-            if (typeis.number(rule.min) && type === 'number') {
-                err = new Error(rule.msg.min || rule.alias + '不能小于' + rule.min);
-                if (val < rule.min) {
-                    return onover(err);
-                }
-            }
-
-            // max
-            if (typeis.number(rule.max) && type === 'number') {
-                err = new Error(rule.msg.max || rule.alias + '不能大于' + rule.max);
-
-                if (val > rule.max) {
-                    return onover(err);
-                }
-            }
-
-            // regexp
-            if (typeis.regexp(rule.regexp) && type === 'string') {
-                err = new Error(rule.msg.regexp || rule.alias + '不符合规则');
-
-                if (!rule.regexp.test(val)) {
-                    return onover(err);
-                }
-            }
-
-            // equal
-            if (rule.equal !== undefined) {
-                var msg = '';
-
-                switch (typeis(rule.equal)) {
+                switch (rule.type) {
                     case 'string':
                     case 'email':
                     case 'url':
-                        msg = rule.equal + '';
+                        if (type !== 'string') {
+                            return onover(err);
+                        }
+
+                        if (rule.type === 'email' && !typeis.email(val)) {
+                            return onover(err);
+                        }
+
+                        if (rule.type === 'url' && !typeis.url(val)) {
+                            return onover(err);
+                        }
                         break;
 
-                    case 'boolean':
-                        msg = rule.equal ? '真' : '假';
-                        break;
-
-                    case 'number':
-                        msg = '数值' + rule.equal;
-                        break;
+                    default:
+                        if (rule.type && type !== rule.type) {
+                            return onover(err);
+                        }
                 }
 
-                err = new Error(rule.msg.equal || rule.alias + '必须是' + rule.equal);
+                // length
+                if (typeis.number(rule.length) && type === 'string') {
+                    err = new Error(rule.msg.length || rule.alias + '长度必须为' + rule.length + '字符');
 
-                if (!_isEqual(val, rule.equal)) {
-                    return onover(err);
-                }
-            }
-
-            runCustom(function (err) {
-                if (err) {
-                    return onover(err);
-                }
-
-                // function
-                howdo.each(rule.functions, function (index, fn, next) {
-                    var fnLen = fn.length;
-
-                    if (fnLen === 3) {
-                        fn.call(window, val, data, next);
-                    } else if (fnLen === 2) {
-                        fn.call(window, val, next);
-                    } else {
-                        next();
+                    if (info.stringLength !== rule.length) {
+                        return onover(err);
                     }
-                }).follow(onover);
-            });
-        } else {
-            onover();
-        }
-    };
+                }
 
+                // bytes
+                if (typeis.number(rule.bytes) && type === 'string') {
+                    err = new Error(rule.msg.bytes || rule.alias + '长度必须为' + rule.bytes + '字节');
+
+                    if (info.stringBytes !== rule.bytes) {
+                        return onover(err);
+                    }
+                }
+
+                // minLength
+                if (typeis.number(rule.minLength) && type === 'string') {
+                    err = new Error(rule.msg.minLength || rule.alias + '长度不能少于' + rule.minLength + '字符');
+
+                    if (info.stringLength < rule.minLength) {
+                        return onover(err);
+                    }
+                }
+
+                // minBytes
+                if (typeis.number(rule.minBytes) && type === 'string') {
+                    err = new Error(rule.msg.minBytes || rule.alias + '长度不能少于' + rule.minBytes + '字节');
+
+                    if (info.stringBytes < rule.minBytes) {
+                        return onover(err);
+                    }
+                }
+
+                // maxLength
+                if (typeis.number(rule.maxLength) && type === 'string') {
+                    err = new Error(rule.msg.maxLength || rule.alias + '长度不能超过' + rule.maxLength + '字符');
+
+                    if (info.stringLength > rule.maxLength) {
+                        return onover(err);
+                    }
+                }
+
+                // maxBytes
+                if (typeis.number(rule.maxBytes) && type === 'string') {
+                    err = new Error(rule.msg.maxBytes || rule.alias + '长度不能超过' + rule.maxBytes + '字节');
+
+                    if (info.stringBytes > rule.maxBytes) {
+                        return onover(err);
+                    }
+                }
+
+                // inArray
+                if (typeis.array(rule.inArray)) {
+                    err = new Error(rule.msg.inArray || rule.alias + '必须是“' + rule.inArray.join('、') + '”其一');
+                    if (rule.inArray.indexOf(val) === -1) {
+                        return onover(err);
+                    }
+                }
+
+                // min
+                if (typeis.number(rule.min) && type === 'number') {
+                    err = new Error(rule.msg.min || rule.alias + '不能小于' + rule.min);
+                    if (val < rule.min) {
+                        return onover(err);
+                    }
+                }
+
+                // max
+                if (typeis.number(rule.max) && type === 'number') {
+                    err = new Error(rule.msg.max || rule.alias + '不能大于' + rule.max);
+
+                    if (val > rule.max) {
+                        return onover(err);
+                    }
+                }
+
+                // regexp
+                if (typeis.regexp(rule.regexp) && type === 'string') {
+                    err = new Error(rule.msg.regexp || rule.alias + '不符合规则');
+
+                    if (!rule.regexp.test(val)) {
+                        return onover(err);
+                    }
+                }
+
+                // equal
+                if (rule.equal !== undefined) {
+                    var msg = '';
+
+                    switch (typeis(rule.equal)) {
+                        case 'string':
+                        case 'email':
+                        case 'url':
+                            msg = rule.equal + '';
+                            break;
+
+                        case 'boolean':
+                            msg = rule.equal ? '真' : '假';
+                            break;
+
+                        case 'number':
+                            msg = '数值' + rule.equal;
+                            break;
+                    }
+
+                    err = new Error(rule.msg.equal || rule.alias + '必须是' + rule.equal);
+
+                    if (!_isEqual(val, rule.equal)) {
+                        return onover(err);
+                    }
+                }
+
+                runCustom(function (err) {
+                    if (err) {
+                        return onover(err);
+                    }
+
+                    // function
+                    howdo.each(rule.functions, function (index, fn, next) {
+                        var fnLen = fn.length;
+
+                        if (fnLen === 3) {
+                            fn.call(window, val, data, next);
+                        } else if (fnLen === 2) {
+                            fn.call(window, val, next);
+                        } else {
+                            next();
+                        }
+                    }).follow(onover);
+                });
+            } else {
+                onover();
+            }
+        }
+    });
 
     module.exports = Validator;
 

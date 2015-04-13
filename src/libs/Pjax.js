@@ -57,160 +57,161 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     }, Emeitter);
-    var pro = Pjax.prototype;
 
 
-    /**
-     * 初始化
-     * @private
-     */
-    pro._init = function () {
-        var the = this;
+    Pjax.implement({
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
 
-        the._initEvent();
-    };
-
-
-    /**
-     * 初始化事件
-     * @private
-     */
-    pro._initEvent = function () {
-        var the = this;
-        var options = the._options;
-
-        event.on(document, 'click', options.selector, function (eve) {
-            var url = the._getURL(this);
-
-            if (url !== the.url) {
-                the.url = url;
-                the.state = attribute.data(this, options.stateData);
-                history.pushState(the.state, null, the.url);
-                the._render();
-            }
-
-            eve.preventDefault();
-        });
-
-        event.on(window, 'popstate', function () {
-            the.url = the._getURL(location);
-            the.state = history.state;
-            the._render();
-        });
-    };
+            the._initEvent();
+        },
 
 
-    /**
-     * 设置缓存
-     * @param data
-     * @private
-     */
-    pro._setCache = function (data) {
-        var the = this;
-        var key = the._options.cacheKey + the.url;
-        var val = JSON.stringify({
-            timeStamp: Date.now(),
-            data: data
-        });
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
 
-        localStorage.setItem(key, val);
-    };
+            event.on(document, 'click', options.selector, function (eve) {
+                var url = the._getURL(this);
 
-
-    /**
-     * 获取缓存
-     * @returns {Object}
-     * @private
-     */
-    pro._getCache = function () {
-        var the = this;
-        var key = the._options.cacheKey + the.url;
-
-        try {
-            return JSON.parse(localStorage.getItem(key));
-        } catch (err) {
-            return {};
-        }
-    };
-
-
-    /**
-     * 获取本域的 URL
-     * @returns {string}
-     * @private
-     */
-    pro._getURL = function (parent) {
-        return parent.pathname + parent.search;
-    };
-
-
-    pro._ajax = function (callback) {
-        var the = this;
-        var options = the._options;
-
-        if (the._xhr) {
-            the._xhr.abort();
-        }
-
-        the._xhr = xhr.ajax(dato.extend(true, {}, options.ajax, {
-            url: the.url
-        })).on('success', function (html) {
-            callback(true, html);
-        }).on('error', function (err) {
-            callback(false, err.message);
-        });
-    };
-
-
-    /**
-     * 渲染
-     * @private
-     */
-    pro._render = function () {
-        var the = this;
-        var expires = the._options.cacheExpires;
-        var cache = expires ? the._getCache() : null;
-        var _render = function (isSuccess, html) {
-            the._xhr = null;
-            the.emit('afterchange');
-
-            if (the.emit(isSuccess ? 'success' : 'error', html) !== false) {
-                the.$container.innerHTML = html;
-            }
-        };
-
-        the.inCache = cache && Date.now() - cache.timeStamp < expires;
-        the.emit('beforechange');
-
-        // 有效期内
-        if (the.inCache) {
-            _render(true, cache.data);
-        } else {
-            the._ajax(function (isSuccess, html) {
-                _render(isSuccess, html);
-
-                // 设置缓存
-                if (expires && isSuccess) {
-                    the._setCache(html);
+                if (url !== the.url) {
+                    the.url = url;
+                    the.state = attribute.data(this, options.stateData);
+                    history.pushState(the.state, null, the.url);
+                    the._render();
                 }
+
+                eve.preventDefault();
             });
+
+            event.on(window, 'popstate', function () {
+                the.url = the._getURL(location);
+                the.state = history.state;
+                the._render();
+            });
+        },
+
+
+        /**
+         * 设置缓存
+         * @param data
+         * @private
+         */
+        _setCache: function (data) {
+            var the = this;
+            var key = the._options.cacheKey + the.url;
+            var val = JSON.stringify({
+                timeStamp: Date.now(),
+                data: data
+            });
+
+            localStorage.setItem(key, val);
+        },
+
+
+        /**
+         * 获取缓存
+         * @returns {Object}
+         * @private
+         */
+        _getCache: function () {
+            var the = this;
+            var key = the._options.cacheKey + the.url;
+
+            try {
+                return JSON.parse(localStorage.getItem(key));
+            } catch (err) {
+                return {};
+            }
+        },
+
+
+        /**
+         * 获取本域的 URL
+         * @returns {string}
+         * @private
+         */
+        _getURL: function (parent) {
+            return parent.pathname + parent.search;
+        },
+
+
+        _ajax: function (callback) {
+            var the = this;
+            var options = the._options;
+
+            if (the._xhr) {
+                the._xhr.abort();
+            }
+
+            the._xhr = xhr.ajax(dato.extend(true, {}, options.ajax, {
+                url: the.url
+            })).on('success', function (html) {
+                callback(true, html);
+            }).on('error', function (err) {
+                callback(false, err.message);
+            });
+        },
+
+
+        /**
+         * 渲染
+         * @private
+         */
+        _render: function () {
+            var the = this;
+            var expires = the._options.cacheExpires;
+            var cache = expires ? the._getCache() : null;
+            var _render = function (isSuccess, html) {
+                the._xhr = null;
+                the.emit('afterchange');
+
+                if (the.emit(isSuccess ? 'success' : 'error', html) !== false) {
+                    the.$container.innerHTML = html;
+                }
+            };
+
+            the.inCache = cache && Date.now() - cache.timeStamp < expires;
+            the.emit('beforechange');
+
+            // 有效期内
+            if (the.inCache) {
+                _render(true, cache.data);
+            } else {
+                the._ajax(function (isSuccess, html) {
+                    _render(isSuccess, html);
+
+                    // 设置缓存
+                    if (expires && isSuccess) {
+                        the._setCache(html);
+                    }
+                });
+            }
+        },
+
+
+        /**
+         * 主动跳转
+         * @param url {String} 跳转地址
+         * @param state {Object} 传递参数
+         */
+        redirect: function (url, state) {
+            var the = this;
+
+            the.url = url;
+            the.state = state;
+            history.pushState(state, null, url);
+            the._render();
         }
-    };
-
-
-    /**
-     * 主动跳转
-     * @param url {String} 跳转地址
-     * @param state {Object} 传递参数
-     */
-    pro.redirect = function (url, state) {
-        var the = this;
-
-        the.url = url;
-        the.state = state;
-        history.pushState(state, null, url);
-        the._render();
-    };
+    });
 
     module.exports = Pjax;
 });
