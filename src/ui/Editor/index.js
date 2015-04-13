@@ -411,8 +411,9 @@ define(function (require, exports, module) {
         });
 
 
+        // 同步滚动
         event.on(the._$scroller, 'scroll', the._onscroll = function () {
-            the._$preview.scrollTop = the._$preview.scrollHeight * the._$scroller.scrollTop / the._$scroller.scrollHeight;
+            the._$preview.scrollTop = (the._$preview.scrollHeight - the._$preview.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
         });
 
 
