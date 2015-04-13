@@ -34,8 +34,9 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
+    var $body = document.body;
     var defaults = {
-        parentNode: document.body,
+        parentNode: $body,
         width: 500,
         height: 'auto',
         top: 'center',

@@ -119,524 +119,526 @@ define(function (require, exports, module) {
             controller.nextTick(the._initValue, the);
         }
     });
-    var pro = Editor.prototype;
 
+    Editor.implement({
 
-    /**
-     * 设置编辑器内容
-     * @param value {String} 设置内容
-     * @returns {Editor}
-     */
-    pro.setValue = function (value) {
-        var the = this;
+        /**
+         * 设置编辑器内容
+         * @param value {String} 设置内容
+         * @returns {Editor}
+         */
+        setValue: function (value) {
+            var the = this;
 
-        the._editor.setValue(value);
-        the._editor.refresh();
-
-        return the;
-    };
-
-
-    /**
-     * 初始化内容
-     * @private
-     */
-    pro._initValue = function () {
-        var the = this;
-        var local = the._getLocal();
-        var minTime = 24 * 60 * 60 * 1000;
-        var deltaTime = Date.now() - local.ver;
-        var humanTime = date.from(local.ver);
-        var nowVal = the._$ele.value;
-        var nowLen = nowVal.length;
-        var storeVal = local.val;
-        var storeLen = storeVal.length;
-
-        // 1天之内的本地记录 && 内容部分不一致
-        if (deltaTime < minTime && Math.abs(nowLen - storeLen) >= the._options.checkLength) {
-            confirm('本地缓存内容与当前不一致。' +
-            '<br>缓存时间为：<b>' + humanTime + '</b>。' +
-            '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
-            '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
-            '<br>是否恢复？')
-                .on('sure', function () {
-                    the.setValue(storeVal);
-                    the._$ele.value = storeVal;
-
-                    controller.nextTick(function () {
-                        try {
-                            the._editor.setCursor(local.cur);
-                        } catch (err) {
-                            // ignore
-                        }
-
-                        if (the._options.autoFocus) {
-                            the._editor.focus();
-                        }
-                    });
-                    /**
-                     * 编辑器内容变化之后
-                     * @event change
-                     * @param value {String} 变化之后的内容
-                     */
-                    the.emit('change', storeVal);
-
-                }).on('cancel', function () {
-                    the._saveLocal();
-                });
-        }
-    };
-
-
-    /**
-     * 计算备份ID
-     * @private
-     */
-    pro._calStoreId = function () {
-        var the = this;
-
-        if (the._options.id) {
-            the._storeId = the._options.id;
-            return;
-        }
-
-        var $ele = the._$ele;
-        var atts = $ele.attributes;
-        var attrList = [];
-        var id = $ele.id;
-
-        the._storeId = alienClass;
-
-        if (id) {
-            the._storeId += pathname + '#' + id;
-        } else {
-            dato.each(atts, function (i, attr) {
-                attrList.push(attr.name + '=' + attr.value);
-            });
-
-            the._storeId += pathname +
-            '<' + the._$ele.tagName + '>.' +
-            the._$ele.className +
-            '[' + attrList.join(';') + ']';
-        }
-    };
-
-
-    /**
-     * 读取本地备份
-     * @private
-     */
-    pro._getLocal = function () {
-        var the = this;
-        var local = localStorage.getItem(the._storeId);
-        var ret;
-
-        try {
-            ret = JSON.parse(local);
-        } catch (err) {
-            // ignore
-        }
-
-        return ret || {ver: 0, val: ''};
-    };
-
-    /**
-     * 写入本地备份
-     * @private
-     */
-    pro._saveLocal = function () {
-        var the = this;
-
-        try {
-            localStorage.setItem(the._storeId, JSON.stringify({
-                val: the._$ele.value,
-                ver: Date.now(),
-                cur: the._editor.getCursor()
-            }));
-        } catch (err) {
-            // ignore
-        }
-    };
-
-
-    /**
-     * 清除本地备份记录
-     */
-    pro.clearStore = function () {
-        var the = this;
-
-        window.localStorage.setItem(the._storeId, '');
-
-        return the;
-    };
-
-
-    /**
-     * 替换当前选中的文本，如果没有选中，则插入
-     * @param value {String} 替换文本
-     */
-    pro.replace = function (value) {
-        var the = this;
-
-        the._editor.focus();
-        the._editor.replaceSelection(value);
-        the._editor.refresh();
-
-        return the;
-    };
-
-
-    /**
-     * 包裹当前选中的文本
-     * @param value {String} 包裹文本
-     */
-    pro.wrap = function (value) {
-        var the = this;
-
-        the._editor.focus();
-
-        var cursor = the._editor.getCursor();
-        var raw = the._editor.getSelection();
-
-        the._editor.replaceSelection(value + raw + value);
-
-        if (!raw) {
-            the._editor.setCursor(cursor.line, cursor.ch + value.length);
-        }
-
-        the._editor.refresh();
-        return the;
-    };
-
-
-    /**
-     * 事件初始化
-     * @private
-     */
-    pro._initEvent = function () {
-        var the = this;
-        var toggleFullScreen = function () {
-            the._isFullScreen = !the._isFullScreen;
-            the.emit('fullscreen', the._isFullScreen);
-            attribute[(the._isFullScreen ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-fullscreen');
-            attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
-            attribute.css($html, 'overflow', the._isFullScreen ? 'hidden' : '');
-
-            if (the._isFullScreen) {
-                the._lastStyle = the._$wrapper.style;
-                attribute.css(the._$wrapper, {
-                    width: '',
-                    height: 'auto'
-                });
-
-                if (the._noPreview) {
-                    togglePreview();
-                }
-            } else {
-                the._noPreview = true;
-                the._$wrapper.style.width = the._lastStyle.width;
-                the._$wrapper.style.height = the._lastStyle.height;
-            }
-
+            the._editor.setValue(value);
             the._editor.refresh();
-        };
-        var togglePreview = function () {
-            if (!the._isFullScreen) {
+
+            return the;
+        },
+
+
+        /**
+         * 初始化内容
+         * @private
+         */
+        _initValue: function () {
+            var the = this;
+            var local = the._getLocal();
+            var minTime = 24 * 60 * 60 * 1000;
+            var deltaTime = Date.now() - local.ver;
+            var humanTime = date.from(local.ver);
+            var nowVal = the._$ele.value;
+            var nowLen = nowVal.length;
+            var storeVal = local.val;
+            var storeLen = storeVal.length;
+
+            // 1天之内的本地记录 && 内容部分不一致
+            if (deltaTime < minTime && Math.abs(nowLen - storeLen) >= the._options.checkLength) {
+                confirm('本地缓存内容与当前不一致。' +
+                '<br>缓存时间为：<b>' + humanTime + '</b>。' +
+                '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
+                '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
+                '<br>是否恢复？')
+                    .on('sure', function () {
+                        the.setValue(storeVal);
+                        the._$ele.value = storeVal;
+
+                        controller.nextTick(function () {
+                            try {
+                                the._editor.setCursor(local.cur);
+                            } catch (err) {
+                                // ignore
+                            }
+
+                            if (the._options.autoFocus) {
+                                the._editor.focus();
+                            }
+                        });
+                        /**
+                         * 编辑器内容变化之后
+                         * @event change
+                         * @param value {String} 变化之后的内容
+                         */
+                        the.emit('change', storeVal);
+
+                    }).on('cancel', function () {
+                        the._saveLocal();
+                    });
+            }
+        },
+
+
+        /**
+         * 计算备份ID
+         * @private
+         */
+        _calStoreId: function () {
+            var the = this;
+
+            if (the._options.id) {
+                the._storeId = the._options.id;
                 return;
             }
 
-            the._noPreview = !the._noPreview;
-            attribute[(the._noPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-nopreview');
+            var $ele = the._$ele;
+            var atts = $ele.attributes;
+            var attrList = [];
+            var id = $ele.id;
 
-            if (!the._noPreview) {
-                syncMarked();
+            the._storeId = alienClass;
+
+            if (id) {
+                the._storeId += pathname + '#' + id;
+            } else {
+                dato.each(atts, function (i, attr) {
+                    attrList.push(attr.name + '=' + attr.value);
+                });
+
+                the._storeId += pathname +
+                '<' + the._$ele.tagName + '>.' +
+                the._$ele.className +
+                '[' + attrList.join(';') + ']';
+            }
+        },
+
+
+        /**
+         * 读取本地备份
+         * @private
+         */
+        _getLocal: function () {
+            var the = this;
+            var local = localStorage.getItem(the._storeId);
+            var ret;
+
+            try {
+                ret = JSON.parse(local);
+            } catch (err) {
+                // ignore
+            }
+
+            return ret || {ver: 0, val: ''};
+        },
+
+        /**
+         * 写入本地备份
+         * @private
+         */
+        _saveLocal: function () {
+            var the = this;
+
+            try {
+                localStorage.setItem(the._storeId, JSON.stringify({
+                    val: the._$ele.value,
+                    ver: Date.now(),
+                    cur: the._editor.getCursor()
+                }));
+            } catch (err) {
+                // ignore
+            }
+        },
+
+
+        /**
+         * 清除本地备份记录
+         */
+        clearStore: function () {
+            var the = this;
+
+            window.localStorage.setItem(the._storeId, '');
+
+            return the;
+        },
+
+
+        /**
+         * 替换当前选中的文本，如果没有选中，则插入
+         * @param value {String} 替换文本
+         */
+        replace: function (value) {
+            var the = this;
+
+            the._editor.focus();
+            the._editor.replaceSelection(value);
+            the._editor.refresh();
+
+            return the;
+        },
+
+
+        /**
+         * 包裹当前选中的文本
+         * @param value {String} 包裹文本
+         */
+        wrap: function (value) {
+            var the = this;
+
+            the._editor.focus();
+
+            var cursor = the._editor.getCursor();
+            var raw = the._editor.getSelection();
+
+            the._editor.replaceSelection(value + raw + value);
+
+            if (!raw) {
+                the._editor.setCursor(cursor.line, cursor.ch + value.length);
             }
 
             the._editor.refresh();
-        };
-        var syncMarked = function () {
-            the._$preview.innerHTML = marked(the._$ele.value);
-        };
+            return the;
+        },
 
 
-        // `code`
-        the._addKeyMap('`', function () {
-            var raw = the._editor.getSelection();
+        /**
+         * 事件初始化
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var toggleFullScreen = function () {
+                the._isFullScreen = !the._isFullScreen;
+                the.emit('fullscreen', the._isFullScreen);
+                attribute[(the._isFullScreen ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-fullscreen');
+                attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
+                attribute.css($html, 'overflow', the._isFullScreen ? 'hidden' : '');
 
-            if (raw) {
-                the.wrap('`');
-            } else {
-                the.replace('`');
-            }
-        }, false);
+                if (the._isFullScreen) {
+                    the._lastStyle = the._$wrapper.style;
+                    attribute.css(the._$wrapper, {
+                        width: '',
+                        height: 'auto'
+                    });
 
+                    if (the._noPreview) {
+                        togglePreview();
+                    }
+                } else {
+                    the._noPreview = true;
+                    the._$wrapper.style.width = the._lastStyle.width;
+                    the._$wrapper.style.height = the._lastStyle.height;
+                }
 
-        // __blod__
-        the._addKeyMap('B', function () {
-            the.wrap('__');
-        });
+                the._editor.refresh();
+            };
+            var togglePreview = function () {
+                if (!the._isFullScreen) {
+                    return;
+                }
 
+                the._noPreview = !the._noPreview;
+                attribute[(the._noPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-nopreview');
 
-        // _italic_
-        the._addKeyMap('I', function () {
-            the.wrap('_');
-        });
-
-
-        // fullScreen
-        the._addKeyMap('F11', toggleFullScreen);
-
-
-        // preview
-        the._addKeyMap('P', togglePreview);
-
-
-        // change
-        the._editor.on('change', function () {
-            var syncMarkedOnChange = controller.debounce(function () {
                 if (!the._noPreview) {
                     syncMarked();
                 }
-            });
 
-            the._$ele.value = the._editor.getValue();
-            /**
-             * 编辑器内容变化之后
-             * @event change
-             * @param value {String} 变化之后的内容
-             */
-            the.emit('change', the._$ele.value);
-            the._saveLocal();
-            syncMarkedOnChange();
-        });
+                the._editor.refresh();
+            };
+            var syncMarked = function () {
+                the._$preview.innerHTML = marked(the._$ele.value);
+            };
 
 
-        // 同步滚动
-        event.on(the._$scroller, 'scroll', the._onscroll = function () {
-            the._$preview.scrollTop = (the._$preview.scrollHeight - the._$preview.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
-        });
+            // `code`
+            the._addKeyMap('`', function () {
+                var raw = the._editor.getSelection();
 
-
-        // cursor
-        the._editor.on('cursorActivity', the._saveLocal.bind(the));
-
-
-        // 修改设置时
-        the.on('setoptions', function (options) {
-            if (the._storeId !== options.id) {
-                the._storeId = options.id;
-            }
-        });
-
-        event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
-        event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
-        event.on(the._$wrapper, 'click', the._onclick.bind(the));
-    };
-
-
-    /**
-     * 拖拽回调
-     * @private
-     */
-    pro._ondrop = function (eve) {
-        this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
-    };
-
-
-    /**
-     * 粘贴回调
-     * @param eve
-     * @private
-     */
-    pro._onpaste = function (eve) {
-        this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
-    };
-
-
-    /**
-     * 单击编辑器
-     * @private
-     */
-    pro._onclick = function () {
-        var the = this;
-
-        if (!the._editor.hasFocus()) {
-            the._editor.focus();
-        }
-    };
-
-    /**
-     * 解析拖拽、粘贴里的图片信息
-     * @param items
-     * @private
-     */
-    pro._parseImgList = function (eve, items) {
-        var the = this;
-
-        the._uploadList = [];
-        dato.each(items, function (index, item) {
-            var file;
-
-            if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
-                file = item.getAsFile();
-
-                if (file && file.size > 0) {
-                    the._uploadList.push({
-                        url: window.URL.createObjectURL(item.getAsFile()),
-                        file: item.getAsFile()
-                    });
+                if (raw) {
+                    the.wrap('`');
+                } else {
+                    the.replace('`');
                 }
-            }
-        });
+            }, false);
 
-        if (the._uploadList.length) {
-            eve.preventDefault();
-            the._uploadDialog();
-        } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length ||
-            eve.clipboardData && eve.clipboardData.files && eve.clipboardData.files.length) {
-            eve.preventDefault();
-            return new Msg({
-                content: '请拖拽或粘贴图片文件',
-                buttons: ['确定']
+
+            // __blod__
+            the._addKeyMap('B', function () {
+                the.wrap('__');
             });
-        }
-    };
 
 
-    /**
-     * 上传对话框
-     * @private
-     */
-    pro._uploadDialog = function () {
-        var the = this;
-        var dt = {
-            id: the._id,
-            uploads: the._uploadList
-        };
-        var $dialog;
-        var options = the._options;
-
-        if (typeis(options.uploadCallback) !== 'function') {
-            return new Msg({
-                content: '尚未配置上传回调'
+            // _italic_
+            the._addKeyMap('I', function () {
+                the.wrap('_');
             });
-        }
-
-        if (the._dialog) {
-            the._dialog.destroy();
-            modification.remove(the._$dialog);
-            the._dialog = null;
-        }
-
-        $dialog = modification.parse(tpl.render(dt))[0];
-        modification.insert($dialog, document.body, 'beforeend');
-        the._$dialog = $dialog;
-        the._dialog = new Dialog($dialog, {
-            title: '上传' + the._uploadList.length + '张图片（0%）',
-            hideClose: true
-        }).open();
-        the._doUpload();
-    };
 
 
-    /**
-     * 上传
-     * @private
-     */
-    pro._doUpload = function () {
-        var the = this;
-        var dialog = the._dialog;
-        var list = the._uploadList;
-        var onprogress = function (percent) {
-            dialog.setTitle('上传' + list.length + '张图片（' + percent + '）');
-        };
-        var ondone = function (err, list) {
-            var html = [];
-            var msg;
+            // fullScreen
+            the._addKeyMap('F11', toggleFullScreen);
 
-            if (err) {
-                msg = new Msg({
-                    content: err.message
+
+            // preview
+            the._addKeyMap('P', togglePreview);
+
+
+            // change
+            the._editor.on('change', function () {
+                var syncMarkedOnChange = controller.debounce(function () {
+                    if (!the._noPreview) {
+                        syncMarked();
+                    }
                 });
-                msg.on('close', function () {
-                    the.uploadDestroy();
-                });
-                return;
-            }
 
-            dato.each(list, function (index, img) {
-                // 预加载
-                var _img = new Image();
-
-                _img.src = img.url;
-                html.push('\n![' + img.name + '](' + img.url + ')\n');
+                the._$ele.value = the._editor.getValue();
+                /**
+                 * 编辑器内容变化之后
+                 * @event change
+                 * @param value {String} 变化之后的内容
+                 */
+                the.emit('change', the._$ele.value);
+                the._saveLocal();
+                syncMarkedOnChange();
             });
 
-            the.replace(html.join(''));
-            the.uploadDestroy();
-        };
 
-        the._options.uploadCallback.call(the, list, onprogress, ondone);
-    };
-
-
-    /**
-     * 销毁上传实例
-     * @private
-     */
-    pro.uploadDestroy = function () {
-        var the = this;
-
-        the._dialog.destroy(function () {
-            modification.remove(the._$dialog);
-            the._editor.focus();
-        });
-    };
+            // 同步滚动
+            event.on(the._$scroller, 'scroll', the._onscroll = function () {
+                the._$preview.scrollTop = (the._$preview.scrollHeight - the._$preview.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
+            });
 
 
-    /**
-     * 添加事件回调
-     * @param key
-     * @param callback
-     * @param [isCtrl=true]
-     * @private
-     */
-    pro._addKeyMap = function (key, callback, isCtrl) {
-        var the = this;
-        var ctrl = the._isMac ? 'Cmd-' : 'Ctrl-';
-        var map = {};
+            // cursor
+            the._editor.on('cursorActivity', the._saveLocal.bind(the));
 
-        if (isCtrl === false) {
-            map[key] = callback;
-        } else {
-            map[ctrl + key] = callback;
+
+            // 修改设置时
+            the.on('setoptions', function (options) {
+                if (the._storeId !== options.id) {
+                    the._storeId = options.id;
+                }
+            });
+
+            event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
+            event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
+            event.on(the._$wrapper, 'click', the._onclick.bind(the));
+        },
+
+
+        /**
+         * 拖拽回调
+         * @private
+         */
+        _ondrop: function (eve) {
+            this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
+        },
+
+
+        /**
+         * 粘贴回调
+         * @param eve
+         * @private
+         */
+        _onpaste: function (eve) {
+            this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
+        },
+
+
+        /**
+         * 单击编辑器
+         * @private
+         */
+        _onclick: function () {
+            var the = this;
+
+            if (!the._editor.hasFocus()) {
+                the._editor.focus();
+            }
+        },
+
+
+        /**
+         * 解析拖拽、粘贴里的图片信息
+         * @param items
+         * @private
+         */
+        _parseImgList: function (eve, items) {
+            var the = this;
+
+            the._uploadList = [];
+            dato.each(items, function (index, item) {
+                var file;
+
+                if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
+                    file = item.getAsFile();
+
+                    if (file && file.size > 0) {
+                        the._uploadList.push({
+                            url: window.URL.createObjectURL(item.getAsFile()),
+                            file: item.getAsFile()
+                        });
+                    }
+                }
+            });
+
+            if (the._uploadList.length) {
+                eve.preventDefault();
+                the._uploadDialog();
+            } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length ||
+                eve.clipboardData && eve.clipboardData.files && eve.clipboardData.files.length) {
+                eve.preventDefault();
+                return new Msg({
+                    content: '请拖拽或粘贴图片文件',
+                    buttons: ['确定']
+                });
+            }
+        },
+
+
+        /**
+         * 上传对话框
+         * @private
+         */
+        _uploadDialog: function () {
+            var the = this;
+            var dt = {
+                id: the._id,
+                uploads: the._uploadList
+            };
+            var $dialog;
+            var options = the._options;
+
+            if (typeis(options.uploadCallback) !== 'function') {
+                return new Msg({
+                    content: '尚未配置上传回调'
+                });
+            }
+
+            if (the._dialog) {
+                the._dialog.destroy();
+                modification.remove(the._$dialog);
+                the._dialog = null;
+            }
+
+            $dialog = modification.parse(tpl.render(dt))[0];
+            modification.insert($dialog, document.body, 'beforeend');
+            the._$dialog = $dialog;
+            the._dialog = new Dialog($dialog, {
+                title: '上传' + the._uploadList.length + '张图片（0%）',
+                hideClose: true
+            }).open();
+            the._doUpload();
+        },
+
+
+        /**
+         * 上传
+         * @private
+         */
+        _doUpload: function () {
+            var the = this;
+            var dialog = the._dialog;
+            var list = the._uploadList;
+            var onprogress = function (percent) {
+                dialog.setTitle('上传' + list.length + '张图片（' + percent + '）');
+            };
+            var ondone = function (err, list) {
+                var html = [];
+                var msg;
+
+                if (err) {
+                    msg = new Msg({
+                        content: err.message
+                    });
+                    msg.on('close', function () {
+                        the.uploadDestroy();
+                    });
+                    return;
+                }
+
+                dato.each(list, function (index, img) {
+                    // 预加载
+                    var _img = new Image();
+
+                    _img.src = img.url;
+                    html.push('\n![' + img.name + '](' + img.url + ')\n');
+                });
+
+                the.replace(html.join(''));
+                the.uploadDestroy();
+            };
+
+            the._options.uploadCallback.call(the, list, onprogress, ondone);
+        },
+
+
+        /**
+         * 销毁上传实例
+         * @private
+         */
+        uploadDestroy: function () {
+            var the = this;
+
+            the._dialog.destroy(function () {
+                modification.remove(the._$dialog);
+                the._editor.focus();
+            });
+        },
+
+
+        /**
+         * 添加事件回调
+         * @param key
+         * @param callback
+         * @param [isCtrl=true]
+         * @private
+         */
+        _addKeyMap: function (key, callback, isCtrl) {
+            var the = this;
+            var ctrl = the._isMac ? 'Cmd-' : 'Ctrl-';
+            var map = {};
+
+            if (isCtrl === false) {
+                map[key] = callback;
+            } else {
+                map[ctrl + key] = callback;
+            }
+
+            the._editor.addKeyMap(map);
+        },
+
+
+        /**
+         * 获取内容
+         * @returns {*}
+         */
+        getValue: function () {
+            return this._editor.getValue();
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the._$scroller, 'scroll', the._onscroll);
+            event.un(the._$wrapper, 'input', the._oninput);
+            event.un(the._$wrapper, 'drop', the._ondrop);
+            event.un(the._$wrapper, 'paste', the._onpaste);
+            this._editor.toTextArea();
         }
-
-        the._editor.addKeyMap(map);
-    };
-
-
-    /**
-     * 获取内容
-     * @returns {*}
-     */
-    pro.getValue = function () {
-        return this._editor.getValue();
-    };
-
-
-    /**
-     * 销毁实例
-     */
-    pro.destroy = function () {
-        var the = this;
-
-        event.un(the._$scroller, 'scroll', the._onscroll);
-        event.un(the._$wrapper, 'input', the._oninput);
-        event.un(the._$wrapper, 'drop', the._ondrop);
-        event.un(the._$wrapper, 'paste', the._onpaste);
-        this._editor.toTextArea();
-    };
+    });
 
 
     modification.importStyle(style);

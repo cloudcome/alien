@@ -248,7 +248,7 @@
 
   What kind of symbol is this?
 
-- `@lends`
+- `@`lends``
 
   Document properties on an object literal as if they belonged to a symbol with a given name.
 

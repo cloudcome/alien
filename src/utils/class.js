@@ -119,10 +119,10 @@ define(function (require, exports, module) {
             exports.inherit(c, superConstructor, isInheritStatic);
         }
 
-        //c.fn = c.prototype;
-        c.prototype.constructor = c;
-        c.prototype.extend = function(properties){
-            dato.extend(true, c.prototype, properties);
+        c.fn = c.prototype;
+        c.fn.constructor = c;
+        c.implement = c.fn.extend = function (properties) {
+            dato.extend(true, c.fn, properties);
         };
         c.extend = function (properties) {
             dato.extend(true, c, properties);

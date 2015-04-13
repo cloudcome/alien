@@ -86,90 +86,90 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
-    var pro = Autoheight.prototype;
+
+    Autoheight.implement({
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+
+            attribute.addClass(the._$ele, alienClass);
+            the._initSize();
+            the._initEvent();
+        },
 
 
-    /**
-     * 初始化
-     * @private
-     */
-    pro._init = function () {
-        var the = this;
+        /**
+         * 初始化尺寸
+         * @private
+         */
+        _initSize: function () {
+            var the = this;
+            var $ele = the._$ele;
+            var value = $ele.value;
 
-        attribute.addClass(the._$ele, alienClass);
-        the._initSize();
-        the._initEvent();
-    };
+            attribute.css($ele, {
+                overflow: 'hidden'
+            });
 
+            //the._pos = selection.getPos($ele);
 
-    /**
-     * 初始化尺寸
-     * @private
-     */
-    pro._initSize = function () {
-        var the = this;
-        var $ele = the._$ele;
-        var value = $ele.value;
+            // 先插入字符，重新排版后还原
+            $ele.value = ' ';
+            the._$ele.style.height = 'auto';
+            the._innerHeight = attribute.innerHeight(the._$ele);
+            $ele.value = value;
 
-        attribute.css($ele, {
-            overflow: 'hidden'
-        });
-
-        //the._pos = selection.getPos($ele);
-
-        // 先插入字符，重新排版后还原
-        $ele.value = ' ';
-        the._$ele.style.height = 'auto';
-        the._innerHeight = attribute.innerHeight(the._$ele);
-        $ele.value = value;
-
-        // 避免手机 safari 在滚动的时候聚焦输入框
-        // selection.setPos($ele, the._pos);
-    };
+            // 避免手机 safari 在滚动的时候聚焦输入框
+            // selection.setPos($ele, the._pos);
+        },
 
 
-    /**
-     * 初始化事件
-     * @private
-     */
-    pro._initEvent = function () {
-        var the = this;
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
 
 
-        adjust.call(the);
-        event.on(the._$ele, 'input', the._adjust = controller.debounce(adjust.bind(the)));
-    };
+            adjust.call(the);
+            event.on(the._$ele, 'input', the._adjust = controller.debounce(adjust.bind(the)));
+        },
 
 
-    /**
-     * 重新定位尺寸
-     * @public
-     */
-    pro.resize = function () {
-        var the = this;
+        /**
+         * 重新定位尺寸
+         * @public
+         */
+        resize: function () {
+            var the = this;
 
-        the._initSize();
-        adjust.call(the);
+            the._initSize();
+            adjust.call(the);
 
-        var offsetY = selection.getOffset(the._$ele)[1];
+            var offsetY = selection.getOffset(the._$ele)[1];
 
-        animation.scrollTo(window, {
-            y: attribute.top(the._$ele) + offsetY
-        }, {
-            duration: 1
-        });
-    };
+            animation.scrollTo(window, {
+                y: attribute.top(the._$ele) + offsetY
+            }, {
+                duration: 1
+            });
+        },
 
 
-    /**
-     * 销毁实例
-     * @public
-     */
-    pro.destroy = function () {
-        var the = this;
+        /**
+         * 销毁实例
+         * @public
+         */
+        destroy: function () {
+            var the = this;
 
-        event.un(the._$ele, 'input', the._adjust);
-    };
+            event.un(the._$ele, 'input', the._adjust);
+        }
+    });
 
     modification.importStyle(style);
     document.body.appendChild($mirror);
