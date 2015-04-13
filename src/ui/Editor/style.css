@@ -1,6 +1,43 @@
-.alien-ui-editor {
-    position: relative;
+.alien-ui-editor-fullscreen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: #fff;
+}
+
+.alien-ui-editor-fullscreen .CodeMirror,
+.alien-ui-editor-preview {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border: 0;
+}
+
+.alien-ui-editor-fullscreen .CodeMirror {
+    left: 0;
+    width: 50%;
+}
+
+.alien-ui-editor-preview {
+    display: none;
+    right: 0;
+    left: 50%;
+    margin-left: 30px;
+    overflow: hidden;
+}
+
+.alien-ui-editor-fullscreen .alien-ui-editor-preview {
+    display: block;
+}
+
+.alien-ui-editor-nopreview .CodeMirror {
+    width: 100%;
+}
+
+.alien-ui-editor-nopreview .alien-ui-editor-preview {
+    display: none;
 }
 
 .alien-ui-editor-upload * {

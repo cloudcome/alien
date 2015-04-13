@@ -200,7 +200,7 @@ define(function (require, exports, module) {
             return null;
         }
 
-        var target = this.parse(htmlstring);
+        var target = exports.parse(htmlstring);
         var wrap;
 
         if (target.length && target[0].nodeType === 1) {

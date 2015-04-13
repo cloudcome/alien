@@ -5,13 +5,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var style = require('css!./style.css');
-  var modification = require('../../../../core/dom/modification.js');
-
-  modification.importStyle(style);
-
   var CodeMirror = require('./../../lib/codemirror.js');
-
 
   CodeMirror.defineOption("fullScreen", false, function(cm, val, old) {
     if (old == CodeMirror.Init) old = false;

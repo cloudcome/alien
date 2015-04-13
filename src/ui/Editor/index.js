@@ -28,11 +28,12 @@ define(function (require, exports, module) {
      */
 
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
-    require('../../3rd/codemirror/addon/display/fullscreen.js');
+    //require('../../3rd/codemirror/addon/display/fullscreen.js');
     require('../../3rd/codemirror/addon/display/placeholder.js');
     //require('../../3rd/codemirror/addon/selection/active-line.js');
+    var marked = require('../../3rd/marked.js');
     var ui = require('../');
-    var Msg = require('../Msg/');
+    var confirm = require('../../widgets/confirm.js');
     var Dialog = require('../Dialog/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -46,11 +47,13 @@ define(function (require, exports, module) {
     var template = require('html!./template.html');
     var tpl = new Template(template);
     var style = require('css!./style.css');
-    //var alienClass = 'alien-ui-editor';
+    var alienClass = 'alien-ui-editor';
+    var alienIndex = 0;
     var RE_IMG_TYPE = /^image\//;
     //var alienIndex = 0;
     var localStorage = window.localStorage;
     var pathname = location.pathname;
+    var $html = document.documentElement;
     var defaults = {
         // 手动设置 ID
         id: '',
@@ -73,7 +76,9 @@ define(function (require, exports, module) {
     };
     var Editor = ui.create(function ($ele, options) {
         var the = this;
+        the._isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
 
+        the._id = alienIndex++;
         the._$ele = selector.query($ele)[0];
         the._options = dato.extend({}, defaults, options);
         the._calStoreId();
@@ -93,21 +98,20 @@ define(function (require, exports, module) {
             styleActiveLine: true,
             styleSelectedText: true,
             autofocus: the._options.autoFocus,
-            tabSize: the._options.tabSize,
-            extraKeys: {
-                'F11': function (cm) {
-                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-                },
-                'Esc': function (cm) {
-                    if (cm.getOption("fullScreen")) {
-                        cm.setOption("fullScreen", false);
-                    }
-                }
-            }
+            tabSize: the._options.tabSize
         });
 
         the._$wrapper = the._editor.getWrapperElement();
-        attribute.addClass(the._$wrapper, the._options.addClass);
+        the._$scroller = the._editor.getScrollerElement();
+        the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
+        the._$editor.id = alienClass + '-' + the._id;
+        the._$preview = modification.create('div', {
+            class: alienClass + '-preview'
+        });
+        the._isFullScreen = false;
+        the._noPreview = true;
+        modification.insert(the._$preview, the._$editor);
+        attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
         attribute.css(the._$wrapper, 'min-height', the._options.minHeight);
         the._initEvent();
 
@@ -124,9 +128,12 @@ define(function (require, exports, module) {
      * @returns {Editor}
      */
     pro.setValue = function (value) {
-        this._editor.setValue(value);
+        var the = this;
 
-        return this;
+        the._editor.setValue(value);
+        the._editor.refresh();
+
+        return the;
     };
 
 
@@ -147,39 +154,35 @@ define(function (require, exports, module) {
 
         // 1天之内的本地记录 && 内容部分不一致
         if (deltaTime < minTime && Math.abs(nowLen - storeLen) >= the._options.checkLength) {
-            new Msg({
-                content: '本地缓存内容与当前不一致。' +
-                '<br>缓存时间为：<b>' + humanTime + '</b>。' +
-                '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
-                '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
-                '<br>是否恢复？',
-                buttons: ['确定', '取消']
-            })
-                .on('close', function (index) {
-                    if (index === 0) {
-                        the.setValue(storeVal);
-                        the._$ele.value = storeVal;
+            confirm('本地缓存内容与当前不一致。' +
+            '<br>缓存时间为：<b>' + humanTime + '</b>。' +
+            '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
+            '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
+            '<br>是否恢复？')
+                .on('sure', function () {
+                    the.setValue(storeVal);
+                    the._$ele.value = storeVal;
 
-                        controller.nextTick(function () {
-                            try {
-                                the._editor.setCursor(local.cur);
-                            } catch (err) {
-                                // ignore
-                            }
+                    controller.nextTick(function () {
+                        try {
+                            the._editor.setCursor(local.cur);
+                        } catch (err) {
+                            // ignore
+                        }
 
-                            if (the._options.autoFocus) {
-                                the._editor.focus();
-                            }
-                        });
-                        /**
-                         * 编辑器内容变化之后
-                         * @event change
-                         * @param value {String} 变化之后的内容
-                         */
-                        the.emit('change', storeVal);
-                    } else {
-                        the._saveLocal();
-                    }
+                        if (the._options.autoFocus) {
+                            the._editor.focus();
+                        }
+                    });
+                    /**
+                     * 编辑器内容变化之后
+                     * @event change
+                     * @param value {String} 变化之后的内容
+                     */
+                    the.emit('change', storeVal);
+
+                }).on('cancel', function () {
+                    the._saveLocal();
                 });
         }
     };
@@ -202,7 +205,7 @@ define(function (require, exports, module) {
         var attrList = [];
         var id = $ele.id;
 
-        the._storeId = 'alien-ui-editor';
+        the._storeId = alienClass;
 
         if (id) {
             the._storeId += pathname + '#' + id;
@@ -277,6 +280,7 @@ define(function (require, exports, module) {
 
         the._editor.focus();
         the._editor.replaceSelection(value);
+        the._editor.refresh();
 
         return the;
     };
@@ -300,6 +304,7 @@ define(function (require, exports, module) {
             the._editor.setCursor(cursor.line, cursor.ch + value.length);
         }
 
+        the._editor.refresh();
         return the;
     };
 
@@ -310,6 +315,49 @@ define(function (require, exports, module) {
      */
     pro._initEvent = function () {
         var the = this;
+        var toggleFullScreen = function () {
+            the._isFullScreen = !the._isFullScreen;
+            the.emit('fullscreen', the._isFullScreen);
+            attribute[(the._isFullScreen ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-fullscreen');
+            attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
+            attribute.css($html, 'overflow', the._isFullScreen ? 'hidden' : '');
+
+            if (the._isFullScreen) {
+                the._lastStyle = the._$wrapper.style;
+                attribute.css(the._$wrapper, {
+                    width: '',
+                    height: 'auto'
+                });
+
+                if (the._noPreview) {
+                    togglePreview();
+                }
+            } else {
+                the._noPreview = true;
+                the._$wrapper.style.width = the._lastStyle.width;
+                the._$wrapper.style.height = the._lastStyle.height;
+            }
+
+            the._editor.refresh();
+        };
+        var togglePreview = function () {
+            if (!the._isFullScreen) {
+                return;
+            }
+
+            the._noPreview = !the._noPreview;
+            attribute[(the._noPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-nopreview');
+
+            if (!the._noPreview) {
+                syncMarked();
+            }
+
+            the._editor.refresh();
+        };
+        var syncMarked = function () {
+            the._$preview.innerHTML = marked(the._$ele.value);
+        };
+
 
         // `code`
         the._addKeyMap('`', function () {
@@ -323,20 +371,34 @@ define(function (require, exports, module) {
         }, false);
 
 
-        // **blod**
+        // __blod__
         the._addKeyMap('B', function () {
             the.wrap('__');
         });
 
 
-        // *italic*
+        // _italic_
         the._addKeyMap('I', function () {
             the.wrap('_');
         });
 
 
+        // fullScreen
+        the._addKeyMap('F11', toggleFullScreen);
+
+
+        // preview
+        the._addKeyMap('P', togglePreview);
+
+
         // change
         the._editor.on('change', function () {
+            var syncMarkedOnChange = controller.debounce(function () {
+                if (!the._noPreview) {
+                    syncMarked();
+                }
+            });
+
             the._$ele.value = the._editor.getValue();
             /**
              * 编辑器内容变化之后
@@ -345,6 +407,12 @@ define(function (require, exports, module) {
              */
             the.emit('change', the._$ele.value);
             the._saveLocal();
+            syncMarkedOnChange();
+        });
+
+
+        event.on(the._$scroller, 'scroll', the._onscroll = function () {
+            the._$preview.scrollTop = the._$preview.scrollHeight * the._$scroller.scrollTop / the._$scroller.scrollHeight;
         });
 
 
@@ -534,8 +602,7 @@ define(function (require, exports, module) {
      */
     pro._addKeyMap = function (key, callback, isCtrl) {
         var the = this;
-        var isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
-        var ctrl = isMac ? 'Cmd-' : 'Ctrl-';
+        var ctrl = the._isMac ? 'Cmd-' : 'Ctrl-';
         var map = {};
 
         if (isCtrl === false) {
@@ -563,6 +630,7 @@ define(function (require, exports, module) {
     pro.destroy = function () {
         var the = this;
 
+        event.un(the._$scroller, 'scroll', the._onscroll);
         event.un(the._$wrapper, 'input', the._oninput);
         event.un(the._$wrapper, 'drop', the._ondrop);
         event.un(the._$wrapper, 'paste', the._onpaste);
