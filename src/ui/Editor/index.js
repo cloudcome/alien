@@ -115,6 +115,7 @@ define(function (require, exports, module) {
             controller.nextTick(the._initValue, the);
         }
     });
+    var pro = Editor.prototype;
 
 
     /**
@@ -122,7 +123,7 @@ define(function (require, exports, module) {
      * @param value {String} 设置内容
      * @returns {Editor}
      */
-    Editor.fn.setValue = function (value) {
+    pro.setValue = function (value) {
         this._editor.setValue(value);
 
         return this;
@@ -133,7 +134,7 @@ define(function (require, exports, module) {
      * 初始化内容
      * @private
      */
-    Editor.fn._initValue = function () {
+    pro._initValue = function () {
         var the = this;
         var local = the._getLocal();
         var minTime = 24 * 60 * 60 * 1000;
@@ -188,7 +189,7 @@ define(function (require, exports, module) {
      * 计算备份ID
      * @private
      */
-    Editor.fn._calStoreId = function () {
+    pro._calStoreId = function () {
         var the = this;
 
         if (the._options.id) {
@@ -222,7 +223,7 @@ define(function (require, exports, module) {
      * 读取本地备份
      * @private
      */
-    Editor.fn._getLocal = function () {
+    pro._getLocal = function () {
         var the = this;
         var local = localStorage.getItem(the._storeId);
         var ret;
@@ -240,7 +241,7 @@ define(function (require, exports, module) {
      * 写入本地备份
      * @private
      */
-    Editor.fn._saveLocal = function () {
+    pro._saveLocal = function () {
         var the = this;
 
         try {
@@ -258,7 +259,7 @@ define(function (require, exports, module) {
     /**
      * 清除本地备份记录
      */
-    Editor.fn.clearStore = function () {
+    pro.clearStore = function () {
         var the = this;
 
         window.localStorage.setItem(the._storeId, '');
@@ -271,7 +272,7 @@ define(function (require, exports, module) {
      * 替换当前选中的文本，如果没有选中，则插入
      * @param value {String} 替换文本
      */
-    Editor.fn.replace = function (value) {
+    pro.replace = function (value) {
         var the = this;
 
         the._editor.focus();
@@ -285,7 +286,7 @@ define(function (require, exports, module) {
      * 包裹当前选中的文本
      * @param value {String} 包裹文本
      */
-    Editor.fn.wrap = function (value) {
+    pro.wrap = function (value) {
         var the = this;
 
         the._editor.focus();
@@ -307,7 +308,7 @@ define(function (require, exports, module) {
      * 事件初始化
      * @private
      */
-    Editor.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         // `code`
@@ -368,7 +369,7 @@ define(function (require, exports, module) {
      * 拖拽回调
      * @private
      */
-    Editor.fn._ondrop = function (eve) {
+    pro._ondrop = function (eve) {
         this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
     };
 
@@ -378,7 +379,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Editor.fn._onpaste = function (eve) {
+    pro._onpaste = function (eve) {
         this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
     };
 
@@ -387,7 +388,7 @@ define(function (require, exports, module) {
      * 单击编辑器
      * @private
      */
-    Editor.fn._onclick = function () {
+    pro._onclick = function () {
         var the = this;
 
         if (!the._editor.hasFocus()) {
@@ -400,7 +401,7 @@ define(function (require, exports, module) {
      * @param items
      * @private
      */
-    Editor.fn._parseImgList = function (eve, items) {
+    pro._parseImgList = function (eve, items) {
         var the = this;
 
         the._uploadList = [];
@@ -437,7 +438,7 @@ define(function (require, exports, module) {
      * 上传对话框
      * @private
      */
-    Editor.fn._uploadDialog = function () {
+    pro._uploadDialog = function () {
         var the = this;
         var dt = {
             id: the._id,
@@ -473,7 +474,7 @@ define(function (require, exports, module) {
      * 上传
      * @private
      */
-    Editor.fn._doUpload = function () {
+    pro._doUpload = function () {
         var the = this;
         var dialog = the._dialog;
         var list = the._uploadList;
@@ -514,7 +515,7 @@ define(function (require, exports, module) {
      * 销毁上传实例
      * @private
      */
-    Editor.fn.uploadDestroy = function () {
+    pro.uploadDestroy = function () {
         var the = this;
 
         the._dialog.destroy(function () {
@@ -531,7 +532,7 @@ define(function (require, exports, module) {
      * @param [isCtrl=true]
      * @private
      */
-    Editor.fn._addKeyMap = function (key, callback, isCtrl) {
+    pro._addKeyMap = function (key, callback, isCtrl) {
         var the = this;
         var isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
         var ctrl = isMac ? 'Cmd-' : 'Ctrl-';
@@ -551,7 +552,7 @@ define(function (require, exports, module) {
      * 获取内容
      * @returns {*}
      */
-    Editor.fn.getValue = function () {
+    pro.getValue = function () {
         return this._editor.getValue();
     };
 
@@ -559,7 +560,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Editor.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$wrapper, 'input', the._oninput);
