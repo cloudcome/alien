@@ -26,20 +26,20 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
-    var pro = Touchpull.prototype;
-    
 
-    pro._init = function () {
-        var the = this;
+    Touchpull.implement({
+        _init: function () {
+            var the = this;
 
-        the._initEvent();
-    };
+            the._initEvent();
+        },
 
-    pro._initEvent = function () {
-        var the = this;
+        _initEvent: function () {
+            var the = this;
 
-        event.on(the._$parent, 'touch1start', function (eve) {
+            event.on(the._$parent, 'touch1start', function (eve) {
 
-        });
-    };
+            });
+        }
+    });
 });

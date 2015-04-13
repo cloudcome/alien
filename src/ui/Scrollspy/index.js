@@ -48,49 +48,50 @@ define(function (require, exports, module) {
         the._options = dato.extend({}, defaults, options);
         the._init();
     });
-    var pro = Scrollspy.fn;
 
-    pro._init = function () {
-        var the = this;
+    Scrollspy.implement({
+        _init: function () {
+            var the = this;
 
-        the._initEvent();
-        controller.nextTick(the._onscroll.bind(the));
-    };
+            the._initEvent();
+            controller.nextTick(the._onscroll.bind(the));
+        },
 
-    pro._initEvent = function () {
-        var the = this;
+        _initEvent: function () {
+            var the = this;
 
-        event.on(the._$parent, 'scroll', controller.throttle(the._onscroll.bind(the), the._options.wait));
-    };
+            event.on(the._$parent, 'scroll', controller.throttle(the._onscroll.bind(the), the._options.wait));
+        },
 
-    pro._onscroll = function () {
-        var the = this;
-        var options = the._options;
-        var $res = selector.query(options.selector);
+        _onscroll: function () {
+            var the = this;
+            var options = the._options;
+            var $res = selector.query(options.selector);
 
-        dato.each($res, function (index, $re) {
-            var isInViewport = see.isInViewport($re);
-            var udf;
+            dato.each($res, function (index, $re) {
+                var isInViewport = see.isInViewport($re);
+                var udf;
 
-            if (($re[alienKey] === true || $re[alienKey] === udf) && !isInViewport) {
-                /**
-                 * 离开视口后触发
-                 * @event leaveviewport
-                 * @param node {HTMLElement} 元素
-                 */
-                the.emit('leaveviewport', $re);
-            } else if (($re[alienKey] === false || $re[alienKey] === udf) && isInViewport) {
-                /**
-                 * 进入视口后触发
-                 * @event enterviewport
-                 * @param node {HTMLElement} 元素
-                 */
-                the.emit('enterviewport', $re);
-            }
+                if (($re[alienKey] === true || $re[alienKey] === udf) && !isInViewport) {
+                    /**
+                     * 离开视口后触发
+                     * @event leaveviewport
+                     * @param node {HTMLElement} 元素
+                     */
+                    the.emit('leaveviewport', $re);
+                } else if (($re[alienKey] === false || $re[alienKey] === udf) && isInViewport) {
+                    /**
+                     * 进入视口后触发
+                     * @event enterviewport
+                     * @param node {HTMLElement} 元素
+                     */
+                    the.emit('enterviewport', $re);
+                }
 
-            $re[alienKey] = isInViewport;
-        });
-    };
+                $re[alienKey] = isInViewport;
+            });
+        }
+    });
 
 
     /**

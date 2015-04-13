@@ -55,154 +55,155 @@ define(function (require, exports, module) {
         the._id = alienIndex++;
         the._init();
     });
-    var pro = Tooltip.prototype;
 
 
-    pro._init = function () {
-        var the = this;
-        var tooltip = tpl.render({
-            id: the._id
-        });
-        var $tooltip = modification.parse(tooltip)[0];
-        var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
+    Tooltip.implement({
+        _init: function () {
+            var the = this;
+            var tooltip = tpl.render({
+                id: the._id
+            });
+            var $tooltip = modification.parse(tooltip)[0];
+            var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
 
-        $body.innerHTML = the._options.body;
-        modification.insert($tooltip, document.body, 'beforeend');
-        the._$tooltip = $tooltip;
-        the._position(1);
-        the._position(2);
-    };
+            $body.innerHTML = the._options.body;
+            modification.insert($tooltip, document.body, 'beforeend');
+            the._$tooltip = $tooltip;
+            the._position(1);
+            the._position(2);
+        },
 
-    pro._position = function (times) {
-        var the = this;
-        var $ele = the._$ele;
-        var $tip = the._$tooltip;
-        var options = the._options;
-        var scrL = attribute.scrollLeft(window);
-        var scrT = attribute.scrollTop(window);
-        var eleW = attribute.outerWidth($ele);
-        var eleH = attribute.outerHeight($ele);
-        var eleL = attribute.left($ele) - scrL;
-        var eleT = attribute.top($ele) - scrT;
-        var tipW = attribute.outerWidth($tip);
-        var tipH = attribute.outerHeight($tip);
-        var winW = attribute.width(window);
-        var winH = attribute.height(window);
-        var vieW = scrL + winW;
-        var vieH = scrT + winH;
-        var at = 'top';
-        var left;
-        var top;
+        _position: function (times) {
+            var the = this;
+            var $ele = the._$ele;
+            var $tip = the._$tooltip;
+            var options = the._options;
+            var scrL = attribute.scrollLeft(window);
+            var scrT = attribute.scrollTop(window);
+            var eleW = attribute.outerWidth($ele);
+            var eleH = attribute.outerHeight($ele);
+            var eleL = attribute.left($ele) - scrL;
+            var eleT = attribute.top($ele) - scrT;
+            var tipW = attribute.outerWidth($tip);
+            var tipH = attribute.outerHeight($tip);
+            var winW = attribute.width(window);
+            var winH = attribute.height(window);
+            var vieW = scrL + winW;
+            var vieH = scrT + winH;
+            var at = 'top';
+            var left;
+            var top;
 
-        switch (options.placement) {
-            case 'auto':
-                // 上下右左
-                if (eleL + eleW / 2 - tipW / 2 > scrL && eleT - tipH > scrT && eleL + eleW / 2 + tipW / 2 < vieW) {
-                    at = 'top';
-                } else if (eleL + eleW / 2 + tipW / 2 < vieW && eleT + eleH + tipH < vieH && eleL + eleW / 2 - tipW / 2 > scrL) {
-                    at = 'bottom';
-                } else if (eleT + eleH / 2 - tipH / 2 > scrT && eleL + eleW + tipW < vieW && eleT + eleH / 2 + tipH / 2 < vieH) {
-                    at = 'right';
-                } else if (eleT + eleH / 2 + tipH / 2 < vieH && eleL - tipW > scrL && eleT + eleH / 2 - tipH / 2 > scrT) {
-                    at = 'left';
-                } else {
-                    at = 'top';
-                }
-                break;
-            default:
-                at = options.placement;
-        }
+            switch (options.placement) {
+                case 'auto':
+                    // 上下右左
+                    if (eleL + eleW / 2 - tipW / 2 > scrL && eleT - tipH > scrT && eleL + eleW / 2 + tipW / 2 < vieW) {
+                        at = 'top';
+                    } else if (eleL + eleW / 2 + tipW / 2 < vieW && eleT + eleH + tipH < vieH && eleL + eleW / 2 - tipW / 2 > scrL) {
+                        at = 'bottom';
+                    } else if (eleT + eleH / 2 - tipH / 2 > scrT && eleL + eleW + tipW < vieW && eleT + eleH / 2 + tipH / 2 < vieH) {
+                        at = 'right';
+                    } else if (eleT + eleH / 2 + tipH / 2 < vieH && eleL - tipW > scrL && eleT + eleH / 2 - tipH / 2 > scrT) {
+                        at = 'left';
+                    } else {
+                        at = 'top';
+                    }
+                    break;
+                default:
+                    at = options.placement;
+            }
 
-        switch (at) {
-            case 'top':
-                left = eleL + eleW / 2 - tipW / 2;
-                top = eleT - tipH;
-                break;
-            case 'right':
-                left = eleL + eleW;
-                top = eleT + eleH / 2 - tipH / 2;
-                break;
-            case 'bottom':
-                left = eleL + eleW / 2 - tipW / 2;
-                top = eleT + eleH;
-                break;
-            case 'left':
-                left = eleL - tipW;
-                top = eleT + eleH / 2 - tipH / 2;
-                break;
-        }
+            switch (at) {
+                case 'top':
+                    left = eleL + eleW / 2 - tipW / 2;
+                    top = eleT - tipH;
+                    break;
+                case 'right':
+                    left = eleL + eleW;
+                    top = eleT + eleH / 2 - tipH / 2;
+                    break;
+                case 'bottom':
+                    left = eleL + eleW / 2 - tipW / 2;
+                    top = eleT + eleH;
+                    break;
+                case 'left':
+                    left = eleL - tipW;
+                    top = eleT + eleH / 2 - tipH / 2;
+                    break;
+            }
 
-        the._at = at;
+            the._at = at;
 
-        if (times === 2) {
-            attribute.css($tip, 'visibility', 'visible');
-            attribute.addClass($tip, tooltipClass + '-' + at);
-            the._animate(true, function () {
+            if (times === 2) {
+                attribute.css($tip, 'visibility', 'visible');
+                attribute.addClass($tip, tooltipClass + '-' + at);
+                the._animate(true, function () {
+                    /**
+                     * 提示框打开之后
+                     * @event open
+                     */
+                    the.emit('open');
+                });
+            }
+
+            attribute.css($tip, {
+                left: left + scrL,
+                top: top + scrT
+            });
+        },
+
+
+        /**
+         * 动画
+         * @param isShow
+         * @param callback
+         * @private
+         */
+        _animate: function (isShow, callback) {
+            var the = this;
+            var options = the._options;
+            var at = the._at;
+            var from = {
+                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+                '(' +
+                (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
+                ')',
+                opacity: isShow ? 0 : 1
+            };
+            var to = {
+                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
+                '(' +
+                (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
+                ')',
+                opacity: isShow ? 1 : 0
+            };
+            var $tip = the._$tooltip;
+
+            attribute.css($tip, from);
+            animation.animate($tip, to, {
+                duration: options.duration,
+                easing: options.easing
+            }, callback);
+        },
+
+
+        /**
+         * 销毁实例
+         * @public
+         */
+        destroy: function () {
+            var the = this;
+
+            the._animate(false, function () {
                 /**
-                 * 提示框打开之后
-                 * @event open
+                 * 提示框关闭之后
+                 * @event close
                  */
-                the.emit('open');
+                the.emit('close');
+                modification.remove(the._$tooltip);
             });
         }
-
-        attribute.css($tip, {
-            left: left + scrL,
-            top: top + scrT
-        });
-    };
-
-
-    /**
-     * 动画
-     * @param isShow
-     * @param callback
-     * @private
-     */
-    pro._animate = function (isShow, callback) {
-        var the = this;
-        var options = the._options;
-        var at = the._at;
-        var from = {
-            transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-            '(' +
-            (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
-            ')',
-            opacity: isShow ? 0 : 1
-        };
-        var to = {
-            transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-            '(' +
-            (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
-            ')',
-            opacity: isShow ? 1 : 0
-        };
-        var $tip = the._$tooltip;
-
-        attribute.css($tip, from);
-        animation.animate($tip, to, {
-            duration: options.duration,
-            easing: options.easing
-        }, callback);
-    };
-
-
-    /**
-     * 销毁实例
-     * @public
-     */
-    pro.destroy = function () {
-        var the = this;
-
-        the._animate(false, function () {
-            /**
-             * 提示框关闭之后
-             * @event close
-             */
-            the.emit('close');
-            modification.remove(the._$tooltip);
-        });
-    };
+    });
 
 
     /**

@@ -37,63 +37,64 @@ define(function (require, exports, module) {
 
         return the._init();
     });
-    var pro = Stickly.prototype;
 
 
-    pro._init = function () {
-        var the = this;
+    Stickly.implement({
+        _init: function () {
+            var the = this;
 
-        the._initEvent();
-        the._stickly();
+            the._initEvent();
+            the._stickly();
 
-        return the;
-    };
-
-
-    pro._initEvent = function () {
-        var the = this;
-        var options = the._options;
-
-        the._onscroll = controller.throttle(the._stickly.bind(the), options.wait);
-        event.on(the._$container, 'scroll touch1move', the._onscroll.bind(the));
-    };
+            return the;
+        },
 
 
-    pro._stickly = function () {
-        var the = this;
-        var options = the._options;
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
 
-        attribute.removeClass(the._$ele, options.className);
+            the._onscroll = controller.throttle(the._stickly.bind(the), options.wait);
+            event.on(the._$container, 'scroll touch1move', the._onscroll.bind(the));
+        },
 
-        var top = attribute.top(the._$ele) + options.offset;
-        var scrollTop = attribute.scrollTop(the._$container);
 
-        if (scrollTop >= top) {
-            attribute.addClass(the._$ele, options.className);
-            /**
-             * 固定住了
-             * @param isStick {Boolean} 是否固定住了
-             */
-            the.emit('stick', true);
-        } else {
+        _stickly: function () {
+            var the = this;
+            var options = the._options;
+
             attribute.removeClass(the._$ele, options.className);
-            /**
-             * 取消固定住了
-             * @param isStick {Boolean} 是否固定住了
-             */
-            the.emit('stick', false);
+
+            var top = attribute.top(the._$ele) + options.offset;
+            var scrollTop = attribute.scrollTop(the._$container);
+
+            if (scrollTop >= top) {
+                attribute.addClass(the._$ele, options.className);
+                /**
+                 * 固定住了
+                 * @param isStick {Boolean} 是否固定住了
+                 */
+                the.emit('stick', true);
+            } else {
+                attribute.removeClass(the._$ele, options.className);
+                /**
+                 * 取消固定住了
+                 * @param isStick {Boolean} 是否固定住了
+                 */
+                the.emit('stick', false);
+            }
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the._$container, 'scroll touch1move', the._onscroll);
         }
-    };
-
-
-    /**
-     * 销毁实例
-     */
-    pro.destroy = function () {
-        var the = this;
-
-        event.un(the._$container, 'scroll touch1move', the._onscroll);
-    };
+    });
 
 
     /**

@@ -53,84 +53,84 @@ define(function (require, exports, module) {
     });
 
     Pager.defaults = defaults;
-    var pro = Pager.prototype;
+
+    Pager.implement({
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+
+            attribute.addClass(the._$ele, the._options.addClass);
+            the._initEvent();
+            the.render();
+        },
 
 
-    /**
-     * 初始化
-     * @private
-     */
-    pro._init = function () {
-        var the = this;
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
 
-        attribute.addClass(the._$ele, the._options.addClass);
-        the._initEvent();
-        the.render();
-    };
+            event.on(the._$ele, 'click', '.' + alienClass + '-page', the._onpage.bind(the));
+        },
 
 
-    /**
-     * 初始化事件
-     * @private
-     */
-    pro._initEvent = function () {
-        var the = this;
+        /**
+         * 翻页回调
+         * @param eve
+         * @private
+         */
+        _onpage: function (eve) {
+            var the = this;
+            var $ele = eve.target;
+            var page = attribute.data($ele, 'page');
 
-        event.on(the._$ele, 'click', '.' + alienClass + '-page', the._onpage.bind(the));
-    };
+            if (!attribute.hasClass($ele, alienClass + '-disabled')) {
+                page = dato.parseInt(page, 1);
 
+                if (page !== the._options.page) {
+                    the._options.page = page;
 
-    /**
-     * 翻页回调
-     * @param eve
-     * @private
-     */
-    pro._onpage = function (eve) {
-        var the = this;
-        var $ele = eve.target;
-        var page = attribute.data($ele, 'page');
-
-        if (!attribute.hasClass($ele, alienClass + '-disabled')) {
-            page = dato.parseInt(page, 1);
-
-            if (page !== the._options.page) {
-                the._options.page = page;
-
-                /**
-                 * 页码变化后
-                 * @event change
-                 * @param page {Number} 变化后的页码
-                 */
-                the.emit('change', the._options.page);
+                    /**
+                     * 页码变化后
+                     * @event change
+                     * @param page {Number} 变化后的页码
+                     */
+                    the.emit('change', the._options.page);
+                }
             }
+        },
+
+
+        /**
+         * 渲染分页
+         * @param [data] {Object} 分页数据
+         * @param [data.page] {Number} 页码
+         * @param [data.max] {Number} 最大页码
+         */
+        render: function (data) {
+            var the = this;
+            var html = tpl.render(dato.extend(the._options, data));
+
+            the._$ele.innerHTML = html;
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the._$ele, 'click', the._onpage);
+            the._$ele.innerHTML = '';
         }
-    };
-
-
-    /**
-     * 渲染分页
-     * @param [data] {Object} 分页数据
-     * @param [data.page] {Number} 页码
-     * @param [data.max] {Number} 最大页码
-     */
-    pro.render = function (data) {
-        var the = this;
-        var html = tpl.render(dato.extend(the._options, data));
-
-        the._$ele.innerHTML = html;
-        return the;
-    };
-
-
-    /**
-     * 销毁实例
-     */
-    pro.destroy = function () {
-        var the = this;
-
-        event.un(the._$ele, 'click', the._onpage);
-        the._$ele.innerHTML = '';
-    };
+    });
 
     modification.importStyle(style);
     module.exports = Pager;
