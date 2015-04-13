@@ -47,6 +47,7 @@ define(function (require, exports, module) {
          */
         the._queueIndex = 0;
     }, Emitter);
+    var pro = Animation.prototype;
 
 
     /**
@@ -55,7 +56,7 @@ define(function (require, exports, module) {
      * @param to
      * @param options
      */
-    Animation.fn.push = function ($ele, to, options) {
+    pro.push = function ($ele, to, options) {
         this._queueList.push({
             $eles: selector.query($ele),
             to: to,
@@ -64,7 +65,7 @@ define(function (require, exports, module) {
     };
 
 
-    //Animation.fn.index = function (index) {
+    //pro.index = function (index) {
     //
     //};
 
@@ -74,7 +75,7 @@ define(function (require, exports, module) {
      * @param [repeatTimes=1] {Number} 重复次数
      * @param [callback] {Function} 执行完毕回调
      */
-    Animation.fn.start = function (repeatTimes, callback) {
+    pro.start = function (repeatTimes, callback) {
         var the = this;
         var args = allocation.args(arguments);
 
@@ -145,12 +146,12 @@ define(function (require, exports, module) {
             });
     };
 
-    //Animation.fn.pause = function () {
+    //pro.pause = function () {
     //
     //};
     //
     //
-    //Animation.fn.stop = function () {
+    //pro.stop = function () {
     //
     //};
 

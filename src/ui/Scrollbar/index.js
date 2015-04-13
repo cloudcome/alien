@@ -78,6 +78,7 @@ define(function (require, exports, module) {
         the._id = alienIndex++;
         the._init();
     });
+    var pro = Scrollbar.prototype;
 
 
     Scrollbar.defaults = defaults;
@@ -86,7 +87,7 @@ define(function (require, exports, module) {
     /**
      * 初始化
      */
-    Scrollbar.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
         var scrollbarData = {
@@ -154,7 +155,7 @@ define(function (require, exports, module) {
     /**
      * 更新当前框架尺寸
      */
-    Scrollbar.fn.resize = function () {
+    pro.resize = function () {
         var the = this;
 
         the._trigger = true;
@@ -174,7 +175,7 @@ define(function (require, exports, module) {
      * 计算滚动条尺寸
      * @private
      */
-    Scrollbar.fn._calScrollSize = function () {
+    pro._calScrollSize = function () {
         var the = this;
         var $scroll = the._$scroll;
         var $parent = the._$parent;
@@ -205,7 +206,7 @@ define(function (require, exports, module) {
      * 计算滚动轨道尺寸
      * @private
      */
-    Scrollbar.fn._calTrackSize = function () {
+    pro._calTrackSize = function () {
         var the = this;
 
         if (!isPlaceholderScroll) {
@@ -283,7 +284,7 @@ define(function (require, exports, module) {
      * 设置滚动距离
      * @private
      */
-    Scrollbar.fn._setScroll = function () {
+    pro._setScroll = function () {
         var the = this;
         var $scroll = the._$scroll;
 
@@ -312,7 +313,7 @@ define(function (require, exports, module) {
      * 事件监听
      * @private
      */
-    Scrollbar.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
         var $scroll = the._$scroll;
@@ -464,7 +465,7 @@ define(function (require, exports, module) {
      * 输入回调
      * @private
      */
-    Scrollbar.fn._oninput = function () {
+    pro._oninput = function () {
         var the = this;
 
         the._isInput = true;
@@ -488,7 +489,7 @@ define(function (require, exports, module) {
      * @param $thumb
      * @private
      */
-    Scrollbar.fn._onwheelend = function ($thumb) {
+    pro._onwheelend = function ($thumb) {
         this._isWeel = false;
         attribute.removeClass($thumb, thumbActiveClass);
     };
@@ -498,7 +499,7 @@ define(function (require, exports, module) {
      * 滚动时回调
      * @private
      */
-    Scrollbar.fn._onscroll = function () {
+    pro._onscroll = function () {
         var the = this;
         var $scroll = the._$scroll;
 
@@ -513,7 +514,7 @@ define(function (require, exports, module) {
     /**
      * x 轴滚动
      */
-    Scrollbar.fn._scrollX = function () {
+    pro._scrollX = function () {
         var the = this;
 
         if (the._scrollLeftMax <= 0) {
@@ -541,7 +542,7 @@ define(function (require, exports, module) {
     /**
      * 滚动左边缘
      */
-    Scrollbar.fn.scrollLeft = function () {
+    pro.scrollLeft = function () {
         var the = this;
 
         the._trigger = true;
@@ -556,7 +557,7 @@ define(function (require, exports, module) {
     /**
      * 滚动到右边缘
      */
-    Scrollbar.fn.scrollRight = function () {
+    pro.scrollRight = function () {
         var the = this;
 
         the._trigger = true;
@@ -571,7 +572,7 @@ define(function (require, exports, module) {
     /**
      * y 轴滚动
      */
-    Scrollbar.fn._scrollY = function () {
+    pro._scrollY = function () {
         var the = this;
 
         if (the._scrollTopMax <= 0) {
@@ -599,7 +600,7 @@ define(function (require, exports, module) {
     /**
      * 滚动到顶部
      */
-    Scrollbar.fn.scrollTop = function () {
+    pro.scrollTop = function () {
         var the = this;
 
         the._trigger = true;
@@ -614,7 +615,7 @@ define(function (require, exports, module) {
     /**
      * 滚动都底部
      */
-    Scrollbar.fn.scrollBottom = function () {
+    pro.scrollBottom = function () {
         var the = this;
 
         the._trigger = true;
@@ -629,7 +630,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Scrollbar.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         // 清除拖拽

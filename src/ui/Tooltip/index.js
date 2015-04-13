@@ -55,9 +55,10 @@ define(function (require, exports, module) {
         the._id = alienIndex++;
         the._init();
     });
+    var pro = Tooltip.prototype;
 
 
-    Tooltip.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var tooltip = tpl.render({
             id: the._id
@@ -72,7 +73,7 @@ define(function (require, exports, module) {
         the._position(2);
     };
 
-    Tooltip.fn._position = function (times) {
+    pro._position = function (times) {
         var the = this;
         var $ele = the._$ele;
         var $tip = the._$tooltip;
@@ -158,7 +159,7 @@ define(function (require, exports, module) {
      * @param callback
      * @private
      */
-    Tooltip.fn._animate = function (isShow, callback) {
+    pro._animate = function (isShow, callback) {
         var the = this;
         var options = the._options;
         var at = the._at;
@@ -190,7 +191,7 @@ define(function (require, exports, module) {
      * 销毁实例
      * @public
      */
-    Tooltip.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         the._animate(false, function () {

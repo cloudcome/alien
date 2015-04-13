@@ -61,9 +61,10 @@ define(function (require, exports, module) {
         the.visible = false;
         the._init();
     });
+    var pro = Window.prototype;
 
 
-    Window.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
         var $pos = modification.create('div');
@@ -106,7 +107,7 @@ define(function (require, exports, module) {
      * @returns {{}}
      * @private
      */
-    Window.fn._getPos = function () {
+    pro._getPos = function () {
         var the = this;
         var options = the._options;
         var winW = attribute.width(window);
@@ -163,7 +164,7 @@ define(function (require, exports, module) {
      * 打开窗口
      * @param [callback] {Function} 打开之后回调
      */
-    Window.fn.open = function (callback) {
+    pro.open = function (callback) {
         var the = this;
 
         if (the.visible) {
@@ -211,7 +212,7 @@ define(function (require, exports, module) {
      * @param [size] {Object} 尺寸
      * @param [callback] {Function} 回调
      */
-    Window.fn.resize = function (size, callback) {
+    pro.resize = function (size, callback) {
         var the = this;
 
         callback = typeis.function(callback) ? callback : noop;
@@ -249,7 +250,7 @@ define(function (require, exports, module) {
      * 关闭窗口
      * @param [callback] {Function} 打开之后回调
      */
-    Window.fn.close = function (callback) {
+    pro.close = function (callback) {
         var the = this;
 
         callback = typeis.function(callback) ? callback : noop;
@@ -294,7 +295,7 @@ define(function (require, exports, module) {
     /**
      * 获取当前 window 节点
      */
-    Window.fn.getNode = function () {
+    pro.getNode = function () {
         return this._$window;
     };
 
@@ -302,7 +303,7 @@ define(function (require, exports, module) {
     /**
      * 震晃窗口以示提醒
      */
-    Window.fn.shake = function () {
+    pro.shake = function () {
         var the = this;
         var className = alienClass + '-shake';
 
@@ -324,7 +325,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Window.fn.destroy = function (callback) {
+    pro.destroy = function (callback) {
         var the = this;
         var destroy = function () {
             if (the._$content) {

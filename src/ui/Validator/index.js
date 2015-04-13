@@ -53,13 +53,14 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
+    var pro = Validator.prototype;
 
 
     /**
      * 初始化
      * @private
      */
-    Validator.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the.id = alienIndex++;
@@ -76,7 +77,7 @@ define(function (require, exports, module) {
      * 添加到实例上，避免污染
      * @private
      */
-    Validator.fn._initCustomRules = function () {
+    pro._initCustomRules = function () {
         var the = this;
 
         dato.each(customRulesList, function (index, args) {
@@ -88,7 +89,7 @@ define(function (require, exports, module) {
     /**
      * 更新验证规则，当表单发生变化时可以手动触发
      */
-    Validator.fn.updateRule = function () {
+    pro.updateRule = function () {
         var the = this;
         var options = the._options;
         var $inputs = selector.query(inputSelector, the._$form);
@@ -170,7 +171,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Validator.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
 
@@ -225,7 +226,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Validator.fn._onfocusin = function (eve) {
+    pro._onfocusin = function (eve) {
         var the = this;
         var $input = eve.target;
 
@@ -239,7 +240,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Validator.fn._onvalidate = function (eve) {
+    pro._onvalidate = function (eve) {
         var the = this;
         var $input = eve.target;
         var name = $input.name;
@@ -253,7 +254,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Validator.fn._onsubmit = function (eve) {
+    pro._onsubmit = function (eve) {
         var $ele = eve.target;
         var $btn = selector.closest($ele, 'button')[0] || $ele;
 
@@ -271,7 +272,7 @@ define(function (require, exports, module) {
      * @param name
      * @private
      */
-    Validator.fn._getVal = function (name) {
+    pro._getVal = function (name) {
         var $input = this._nameInputMap[name];
 
         if (!$input) {
@@ -412,7 +413,7 @@ define(function (require, exports, module) {
          *    }
          * });
      */
-    Validator.fn.pushRule = function (rule, isOverride) {
+    pro.pushRule = function (rule, isOverride) {
         var the = this;
 
         the._validator.pushRule(rule, isOverride);
@@ -427,7 +428,7 @@ define(function (require, exports, module) {
      * @param message {String|undefined|false} 消息
      * @param type {String} 消息类型
      */
-    Validator.fn.emitMsg = function (name, message, type) {
+    pro.emitMsg = function (name, message, type) {
         var the = this;
         var $formItem = the._nameItemMap[name];
         var $formMsg = the._nameMsgMap[name];
@@ -451,7 +452,7 @@ define(function (require, exports, module) {
      * @param name {String} 需要验证的表单 name
      * @param [callback] {Function} 回调
      */
-    Validator.fn.validateOne = function (name, callback) {
+    pro.validateOne = function (name, callback) {
         var the = this;
         var data = {};
         var $input = the._nameInputMap[name];
@@ -471,7 +472,7 @@ define(function (require, exports, module) {
      * 全部验证
      * @param [callback] {Function} 回调
      */
-    Validator.fn.validateAll = function (callback) {
+    pro.validateAll = function (callback) {
         var the = this;
         var data = {};
 
@@ -501,7 +502,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Validator.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         attribute.removeClass(the._nameItemMap, formItemStatusClass);

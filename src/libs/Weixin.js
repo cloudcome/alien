@@ -29,8 +29,10 @@ define(function (require, exports, module) {
         the._shareData = shareData;
         the._init();
     }, Emitter);
+    var pro = Weixin.prototype;
 
-    Weixin.fn._init = function () {
+
+    pro._init = function () {
         var the = this;
 
         the._initEvent();
@@ -38,7 +40,7 @@ define(function (require, exports, module) {
         return the;
     };
 
-    Weixin.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         // success：接口调用成功时执行的回调函数。
@@ -146,7 +148,7 @@ define(function (require, exports, module) {
      * 设置分享给朋友的数据
      * @param shareData
      */
-    Weixin.fn.setShareAppMessage = function (shareData) {
+    pro.setShareAppMessage = function (shareData) {
         var the = this;
 
         the._shareAppMessageData = shareData;
@@ -158,7 +160,7 @@ define(function (require, exports, module) {
      * 设置分享到朋友圈的数据
      * @param shareData
      */
-    Weixin.fn.setShareTimeLineData = function (shareData) {
+    pro.setShareTimeLineData = function (shareData) {
         var the = this;
 
         the._shareTimeLineData = shareData;
@@ -169,7 +171,7 @@ define(function (require, exports, module) {
      * 设置分享到 QQ 的数据
      * @param shareData
      */
-    Weixin.fn.setShareQQData = function (shareData) {
+    pro.setShareQQData = function (shareData) {
         var the = this;
 
         the._shareQQData = shareData;
@@ -181,7 +183,7 @@ define(function (require, exports, module) {
      * 设置分享到微博的数据
      * @param shareData
      */
-    Weixin.fn.setShareWeiboAppData = function (shareData) {
+    pro.setShareWeiboAppData = function (shareData) {
         var the = this;
 
         the._shareWeiboAppData = shareData;
@@ -193,7 +195,7 @@ define(function (require, exports, module) {
      * 设置收藏的数据
      * @param shareData
      */
-    Weixin.fn.setFavoriteData = function (shareData) {
+    pro.setFavoriteData = function (shareData) {
         var the = this;
 
         the._favoriteData = shareData;
@@ -205,7 +207,7 @@ define(function (require, exports, module) {
      * 设置分享到 facebook 的数据
      * @param shareData
      */
-    Weixin.fn.setFacebookData = function (shareData) {
+    pro.setFacebookData = function (shareData) {
         var the = this;
 
         the._shareFacebookData = shareData;
@@ -213,7 +215,7 @@ define(function (require, exports, module) {
     };
 
 
-    Weixin.fn.wx = wx;
+    pro.wx = wx;
 
 
     /**

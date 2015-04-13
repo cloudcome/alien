@@ -45,6 +45,8 @@ define(function (require, exports, module) {
         // 选项
         the._options = dato.extend(true, {}, defaults, options);
     }, Emitter);
+    var pro = Validator.prototype;
+
 
     /**
      * 注册自定义的静态验证规则
@@ -84,16 +86,16 @@ define(function (require, exports, module) {
      * @example
      * // 添加一个检查后缀的自定义规则
      * validator.registerRule({
-         *     name: 'suffix',
-         *     type: 'array'
-         * }, function(suffix, val, next){
-         *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
-         *     var boolean = suffix.indexOf(sf) > -1;
-         *
-         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-         * });
+     *     name: 'suffix',
+     *     type: 'array'
+     * }, function(suffix, val, next){
+     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+     *     var boolean = suffix.indexOf(sf) > -1;
+     *
+     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+     * });
      */
-    Validator.fn.registerRule = function (options, fn, isOverride) {
+    pro.registerRule = function (options, fn, isOverride) {
         var the = this;
 
         if (!the._customRules[options.name] || the._customRules[options.name] && isOverride) {
@@ -134,73 +136,73 @@ define(function (require, exports, module) {
      *
      * @example
      * validator.pushRule({
-         *    // 字段名称，必须，唯一性
-         *    name: 'username',
-         *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
-         *    type: 'string',
-         *    // 别称，当没有填写自定义错误消息时
-         *    // 提示为 username不能为空
-         *    // 当前设置别名之后
-         *    // 提示为 用户名不能为空
-         *    alias: '用户名',
-         *
-         *    // 验证前置
-         *    // val 当前字段值
-         *    // data 所有数据
-         *    onbefore: function(val, data){
-         *        return val + 'abc';
-         *    },
-         *    exist: false,
-         *    trim: true,
-         *
-         *    // 验证规则
-         *    required: true,
-         *    length: 10,
-         *    minLength: 4,
-         *    maxLength: 12,
-         *    bytes: 10,
-         *    minBytes: 4,
-         *    maxBytes: 12,
-         *    min: 4,
-         *    max: 4,
-         *    regexp: /^[a-z]\w{3,11}$/,
-         *    equal: 'cloudcome',
-         *    inArray: ['cloudcome', 'yundanran'],
-         *    // val 当前字段值
-         *    // [data 所有数据] 可选
-         *    // next 执行下一步
-         *    function: function(val, next){
-         *        // 这里可以是异步的
-         *        // 比如远程校验可以写在这里
-         *        ajax.post('./validate.json', {
-         *            username: val
-         *        }).on('success', function(json){
-         *            if(json.code>0){
-         *                next();
-         *            }else{
-         *                next(new Error(json.msg));
-         *            }
-         *        }).on('error', function(){
-         *            next(new Error('网络连接错误，验证失败'));
-         *        });
-         *    },
-         *
-         *    // 验证消息
-         *    msg: {
-         *        required: '用户名不能为空',
-         *        length: '用户名长度必须为10'
-         *        // 未自定义的消息，以默认输出
-         *        // 每个验证规则都必须配备一个消息体，
-         *        // 除了自定义的`function`
-         *    },
-         *
-         *    // 验证后置
-         *    onafter: function(val){
-         *        return val + 'abc';
-         *    }
-         * });
+     *    // 字段名称，必须，唯一性
+     *    name: 'username',
+     *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+     *    type: 'string',
+     *    // 别称，当没有填写自定义错误消息时
+     *    // 提示为 username不能为空
+     *    // 当前设置别名之后
+     *    // 提示为 用户名不能为空
+     *    alias: '用户名',
+     *
+     *    // 验证前置
+     *    // val 当前字段值
+     *    // data 所有数据
+     *    onbefore: function(val, data){
+     *        return val + 'abc';
+     *    },
+     *    exist: false,
+     *    trim: true,
+     *
+     *    // 验证规则
+     *    required: true,
+     *    length: 10,
+     *    minLength: 4,
+     *    maxLength: 12,
+     *    bytes: 10,
+     *    minBytes: 4,
+     *    maxBytes: 12,
+     *    min: 4,
+     *    max: 4,
+     *    regexp: /^[a-z]\w{3,11}$/,
+     *    equal: 'cloudcome',
+     *    inArray: ['cloudcome', 'yundanran'],
+     *    // val 当前字段值
+     *    // [data 所有数据] 可选
+     *    // next 执行下一步
+     *    function: function(val, next){
+     *        // 这里可以是异步的
+     *        // 比如远程校验可以写在这里
+     *        ajax.post('./validate.json', {
+     *            username: val
+     *        }).on('success', function(json){
+     *            if(json.code>0){
+     *                next();
+     *            }else{
+     *                next(new Error(json.msg));
+     *            }
+     *        }).on('error', function(){
+     *            next(new Error('网络连接错误，验证失败'));
+     *        });
+     *    },
+     *
+     *    // 验证消息
+     *    msg: {
+     *        required: '用户名不能为空',
+     *        length: '用户名长度必须为10'
+     *        // 未自定义的消息，以默认输出
+     *        // 每个验证规则都必须配备一个消息体，
+     *        // 除了自定义的`function`
+     *    },
+     *
+     *    // 验证后置
+     *    onafter: function(val){
+     *        return val + 'abc';
+     *    }
+     * });
      */
-    Validator.fn.pushRule = function (rule, isOverride) {
+    pro.pushRule = function (rule, isOverride) {
         var the = this;
         var pushFn = function (father) {
             if (typeis.function(rule.onbefore)) {
@@ -287,7 +289,7 @@ define(function (require, exports, module) {
      * @param {Function} callback 回调
      * @arguments  err 对象
      */
-    Validator.fn.validateAll = function (data, callback) {
+    pro.validateAll = function (data, callback) {
         var the = this;
         var isBreakOnInvalid = the._options.isBreakOnInvalid;
         var errList = [];
@@ -344,7 +346,7 @@ define(function (require, exports, module) {
      * @param {Function} callback 回调
      * @arguments  err 对象
      */
-    Validator.fn.validateOne = function (data, callback) {
+    pro.validateOne = function (data, callback) {
         var the = this;
         var findIndex = -1;
         var name = Object.keys(data)[0];
@@ -417,7 +419,7 @@ define(function (require, exports, module) {
      * @returns {*}
      * @private
      */
-    Validator.fn._validateOne = function (rule, data, callback) {
+    pro._validateOne = function (rule, data, callback) {
         var the = this;
         var val = data[rule.name];
         var err;

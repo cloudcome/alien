@@ -74,8 +74,9 @@ define(function (require, exports, module) {
     });
 
     Dialog.defaults = defaults;
+    var pro = Dialog.prototype;
 
-    Dialog.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
 
@@ -115,7 +116,7 @@ define(function (require, exports, module) {
     };
 
 
-    Dialog.fn._initNode = function () {
+    pro._initNode = function () {
         var the = this;
         var options = the._options;
         var html = tpl.render({
@@ -142,7 +143,7 @@ define(function (require, exports, module) {
     };
 
 
-    Dialog.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         if (the._mask) {
@@ -191,7 +192,7 @@ define(function (require, exports, module) {
      * 设置对话框标题
      * @param title {String} 对话框标题
      */
-    Dialog.fn.setTitle = function (title) {
+    pro.setTitle = function (title) {
         var the = this;
 
         the._$title.innerHTML = title;
@@ -204,7 +205,7 @@ define(function (require, exports, module) {
      * 设置对话框内容
      * @param html {String} 对话框内容
      */
-    Dialog.fn.setContent = function (html) {
+    pro.setContent = function (html) {
         var the = this;
 
         the._$body.innerHTML = html;
@@ -219,7 +220,7 @@ define(function (require, exports, module) {
      * @param url {String} 远程地址
      * @returns {Dialog}
      */
-    Dialog.fn.setRemote = function (url) {
+    pro.setRemote = function (url) {
         var the = this;
         var options = the._options;
         var $iframe = modification.create('iframe', {
@@ -249,7 +250,7 @@ define(function (require, exports, module) {
     /**
      * 晃动对话框以示提醒
      */
-    Dialog.fn.shake = function () {
+    pro.shake = function () {
         var the = this;
 
         the._window.shake();
@@ -262,7 +263,7 @@ define(function (require, exports, module) {
      * 打开 dialog
      * @param [callback] {Function} 回调
      */
-    Dialog.fn.open = function (callback) {
+    pro.open = function (callback) {
         var the = this;
 
         if (the._mask) {
@@ -280,7 +281,7 @@ define(function (require, exports, module) {
      * @param [size] {Object} 尺寸
      * @param [callback] {Function} 回调
      */
-    Dialog.fn.resize = function (size, callback) {
+    pro.resize = function (size, callback) {
         this._window.resize(size, callback);
     };
 
@@ -289,7 +290,7 @@ define(function (require, exports, module) {
      * 关闭 dialog
      * @param [callback] {Function} 回调
      */
-    Dialog.fn.close = function (callback) {
+    pro.close = function (callback) {
         var the = this;
 
         the._window.close(function () {
@@ -309,7 +310,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Dialog.fn.destroy = function (callback) {
+    pro.destroy = function (callback) {
         var the = this;
 
         the._window.destroy(function () {

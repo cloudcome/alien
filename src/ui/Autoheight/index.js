@@ -86,13 +86,14 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
+    var pro = Autoheight.prototype;
 
 
     /**
      * 初始化
      * @private
      */
-    Autoheight.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         attribute.addClass(the._$ele, alienClass);
@@ -105,7 +106,7 @@ define(function (require, exports, module) {
      * 初始化尺寸
      * @private
      */
-    Autoheight.fn._initSize = function () {
+    pro._initSize = function () {
         var the = this;
         var $ele = the._$ele;
         var value = $ele.value;
@@ -131,7 +132,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Autoheight.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
 
@@ -144,7 +145,7 @@ define(function (require, exports, module) {
      * 重新定位尺寸
      * @public
      */
-    Autoheight.fn.resize = function () {
+    pro.resize = function () {
         var the = this;
 
         the._initSize();
@@ -164,7 +165,7 @@ define(function (require, exports, module) {
      * 销毁实例
      * @public
      */
-    Autoheight.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$ele, 'input', the._adjust);

@@ -51,12 +51,14 @@ define(function (require, exports, module) {
         the._options = dato.extend(!0, {}, defaults, options);
         the._init();
     });
+    var pro = Pagination.prototype;
+    
 
     /**
      * 初始化
      * @private
      */
-    Pagination.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         attribute.addClass(the._$ele, the._options.addClass);
@@ -71,7 +73,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Pagination.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         event.on(the._$ele, 'click', '.' + normalClass, the._onpage.bind(the));
@@ -83,7 +85,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Pagination.fn._onpage = function (eve) {
+    pro._onpage = function (eve) {
         var the = this;
         var page = attribute.data(eve.target, 'page');
 
@@ -110,7 +112,7 @@ define(function (require, exports, module) {
      * @param {Number} [data.size] 重新配置可视范围，默认为上一次配置的值
      * @returns {Pagination}
      */
-    Pagination.fn.render = function (data) {
+    pro.render = function (data) {
         var the = this;
         var options = dato.extend(the._options, data);
         var list = new libsPagination(options);
@@ -126,7 +128,7 @@ define(function (require, exports, module) {
     /**
      * 销毁
      */
-    Pagination.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$ele, 'click', the._onpage);

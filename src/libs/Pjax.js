@@ -57,13 +57,14 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     }, Emeitter);
+    var pro = Pjax.prototype;
 
 
     /**
      * 初始化
      * @private
      */
-    Pjax.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initEvent();
@@ -74,7 +75,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Pjax.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
 
@@ -104,7 +105,7 @@ define(function (require, exports, module) {
      * @param data
      * @private
      */
-    Pjax.fn._setCache = function (data) {
+    pro._setCache = function (data) {
         var the = this;
         var key = the._options.cacheKey + the.url;
         var val = JSON.stringify({
@@ -121,7 +122,7 @@ define(function (require, exports, module) {
      * @returns {Object}
      * @private
      */
-    Pjax.fn._getCache = function () {
+    pro._getCache = function () {
         var the = this;
         var key = the._options.cacheKey + the.url;
 
@@ -138,12 +139,12 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Pjax.fn._getURL = function (parent) {
+    pro._getURL = function (parent) {
         return parent.pathname + parent.search;
     };
 
 
-    Pjax.fn._ajax = function (callback) {
+    pro._ajax = function (callback) {
         var the = this;
         var options = the._options;
 
@@ -165,7 +166,7 @@ define(function (require, exports, module) {
      * 渲染
      * @private
      */
-    Pjax.fn._render = function () {
+    pro._render = function () {
         var the = this;
         var expires = the._options.cacheExpires;
         var cache = expires ? the._getCache() : null;
@@ -202,7 +203,7 @@ define(function (require, exports, module) {
      * @param url {String} 跳转地址
      * @param state {Object} 传递参数
      */
-    Pjax.fn.redirect = function (url, state) {
+    pro.redirect = function (url, state) {
         var the = this;
 
         the.url = url;

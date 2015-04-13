@@ -61,12 +61,14 @@ define(function (require, exports, module) {
         return maskWindowList[maskWindowLength - 1];
     };
 
+    var pro = Mask.prototype;
+
 
     /**
      * 初始化
      * @private
      */
-    Mask.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initNode();
@@ -76,7 +78,7 @@ define(function (require, exports, module) {
     };
 
 
-    Mask.fn._initNode = function () {
+    pro._initNode = function () {
         var the = this;
         var options = the._options;
         var style = {
@@ -94,7 +96,7 @@ define(function (require, exports, module) {
     };
 
 
-    Mask.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         event.on(the._$mask, 'click', function (eve) {
@@ -116,7 +118,7 @@ define(function (require, exports, module) {
      * @returns {*}
      * @private
      */
-    Mask.fn._getSize = function () {
+    pro._getSize = function () {
         var the = this;
         var $cover = the._$cover;
 
@@ -144,7 +146,7 @@ define(function (require, exports, module) {
     /**
      * 打开 mask
      */
-    Mask.fn.open = function () {
+    pro.open = function () {
         var the = this;
 
         if (the.visible) {
@@ -179,7 +181,7 @@ define(function (require, exports, module) {
      * 重置尺寸
      * @param pos
      */
-    Mask.fn.resize = function (pos) {
+    pro.resize = function (pos) {
         var the = this;
 
         if (!the.visible) {
@@ -207,7 +209,7 @@ define(function (require, exports, module) {
     /**
      * 关闭 mask
      */
-    Mask.fn.close = function () {
+    pro.close = function () {
         var the = this;
 
         if (!the.visible) {
@@ -250,7 +252,7 @@ define(function (require, exports, module) {
      * 获取当前 mask 节点
      * @returns {HTMLElementNode}
      */
-    Mask.fn.getNode = function () {
+    pro.getNode = function () {
         return this._$mask;
     };
 
@@ -258,7 +260,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Mask.fn.destroy = function (callback) {
+    pro.destroy = function (callback) {
         var the = this;
 
         the.close();

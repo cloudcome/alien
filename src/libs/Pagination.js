@@ -24,10 +24,12 @@ define(function (require, exports, module) {
         this._options = dato.extend(!0, {}, defaults, options);
         return this._init();
     });
+    var pro = Pagination.prototype;
+    
 
     Pagination.defaults = defaults;
 
-    Pagination.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
         var list = [];

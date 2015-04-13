@@ -42,6 +42,8 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
+    var pro = Tab.prototype;
+    
 
     Tab.defaults = defaults;
 
@@ -49,7 +51,7 @@ define(function (require, exports, module) {
      * 初始化
      * @private
      */
-    Tab.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initData();
@@ -61,7 +63,7 @@ define(function (require, exports, module) {
      * 初始化数据
      * @private
      */
-    Tab.fn._initData = function () {
+    pro._initData = function () {
         var the = this;
 
         the._index = the._options.index;
@@ -72,7 +74,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Tab.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
 
@@ -88,7 +90,7 @@ define(function (require, exports, module) {
      * 改变当前 tab
      * @param index {Number} 切换的索引值
      */
-    Tab.fn.change = function (index) {
+    pro.change = function (index) {
         var the = this;
         var options = the._options;
         var $ele = selector.query(options.tabSelector, the._$ele)[index];
@@ -103,7 +105,7 @@ define(function (require, exports, module) {
      * 获取当前激活的 tab 和 未激活的 tab
      * @private
      */
-    Tab.fn._getActive = function () {
+    pro._getActive = function () {
         var the = this;
         var $activeTab = selector.children(the._$ele)[the._index];
         var $active = selector.query('a', $activeTab)[0];
@@ -128,7 +130,7 @@ define(function (require, exports, module) {
      * 事件出发回调
      * @private
      */
-    Tab.fn._ontrigger = function (eve) {
+    pro._ontrigger = function (eve) {
         var the = this;
         var $li = selector.closest(eve.target, 'li');
         var triggerIndex = selector.index($li[0]);
@@ -151,7 +153,7 @@ define(function (require, exports, module) {
      * @param $active
      * @private
      */
-    Tab.fn._toggleClass = function ($active) {
+    pro._toggleClass = function ($active) {
         var $siblings = selector.siblings($active);
         var className = this._options.activeClass;
 
@@ -163,7 +165,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Tab.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         // 卸载事件绑定

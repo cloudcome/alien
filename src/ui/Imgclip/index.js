@@ -62,13 +62,14 @@ define(function (require, exports, module) {
             event.on(the._$ele, 'load', the._init.bind(the));
         }
     });
+    var pro = Imgclip.prototype;
 
 
     /**
      * 调整裁剪尺寸
      * @private
      */
-    Imgclip.fn._ratioClip = function () {
+    pro._ratioClip = function () {
         var the = this;
         var options = the._options;
 
@@ -83,7 +84,7 @@ define(function (require, exports, module) {
      * 初始化
      * @private
      */
-    Imgclip.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var $ele = the._$ele;
         var options = the._options;
@@ -122,7 +123,7 @@ define(function (require, exports, module) {
     };
 
 
-    Imgclip.fn._initSize = function () {
+    pro._initSize = function () {
         var the = this;
         var tpl = new Template(template);
         var wrap;
@@ -178,7 +179,7 @@ define(function (require, exports, module) {
      * 更新选区的范围
      * @private
      */
-    Imgclip.fn._updateClipRange = function () {
+    pro._updateClipRange = function () {
         var the = this;
         var options = the._options;
         var maxWidth = the._wrapWidth - the._selection.left;
@@ -200,7 +201,7 @@ define(function (require, exports, module) {
      * 重置选区
      * @private
      */
-    Imgclip.fn._reset = function () {
+    pro._reset = function () {
         var the = this;
 
         the._selection = {
@@ -216,7 +217,7 @@ define(function (require, exports, module) {
      * 事件监听
      * @private
      */
-    Imgclip.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var x0;
         var y0;
@@ -495,7 +496,7 @@ define(function (require, exports, module) {
      * 调整原始选区尺寸
      * @private
      */
-    Imgclip.fn._ratioSelection = function () {
+    pro._ratioSelection = function () {
         var the = this;
 
         the._selection.srcLeft = the._selection.left / the._ratioWidth;
@@ -508,7 +509,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Imgclip.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$wrap, 'dragstart');

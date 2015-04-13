@@ -66,8 +66,9 @@ define(function (require, exports, module) {
         the._isReady = false;
         the._init();
     });
+    var pro = Msg.prototype;
 
-    Msg.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initNode();
@@ -93,7 +94,7 @@ define(function (require, exports, module) {
         return the;
     };
 
-    Msg.fn._initNode = function () {
+    pro._initNode = function () {
         var the = this;
         var options = the._options;
 
@@ -144,7 +145,7 @@ define(function (require, exports, module) {
     };
 
 
-    Msg.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         // 关闭 msg
@@ -185,7 +186,7 @@ define(function (require, exports, module) {
      * 设置 Msg 标题
      * @param title {String} 对话框标题
      */
-    Msg.fn.setTitle = function (title) {
+    pro.setTitle = function (title) {
         var the = this;
 
         the._$title.innerHTML = title;
@@ -198,7 +199,7 @@ define(function (require, exports, module) {
      * 设置 Msg 内容
      * @param html {String} 对话框内容
      */
-    Msg.fn.setContent = function (html) {
+    pro.setContent = function (html) {
         var the = this;
 
         the._$body.innerHTML = html;
@@ -211,7 +212,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Msg.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         the._window.destroy(function () {

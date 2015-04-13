@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     var hashbang = require('../utils/hashbang.js');
     var dato = require('../utils/dato.js');
     var controller = require('../utils/controller.js');
+    var alienIndex = 0;
     var defaults = {
         // 是否忽略大小写
         isIgnoreCase: false,
@@ -38,10 +39,10 @@ define(function (require, exports, module) {
         //the._ignoreHashchangeTimes = -1;
         the._initEvent();
     }, Emitter);
-    var alienIndex = 0;
+    var pro = Router.prototype;
 
 
-    Router.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         the._onhashchange = function (eve) {
@@ -100,7 +101,7 @@ define(function (require, exports, module) {
      * @param route {String} 路由表达式
      * @param callback {Function} 进入路由回调
      */
-    Router.fn.if = function (route, callback) {
+    pro.if = function (route, callback) {
         var the = this;
         var map = {};
         var index = the._routerList.length;
@@ -131,7 +132,7 @@ define(function (require, exports, module) {
      * 未匹配路由
      * @param callback {Function} 回调
      */
-    Router.fn.else = function (callback) {
+    pro.else = function (callback) {
         var the = this;
 
         if (typeis.function(callback)) {
@@ -146,7 +147,7 @@ define(function (require, exports, module) {
      * 路由跳转
      * @param url {String} 跳转的地址
      */
-    Router.fn.redirect = function (url) {
+    pro.redirect = function (url) {
         var the = this;
 
         location.hash = '#!' + url;
@@ -161,7 +162,7 @@ define(function (require, exports, module) {
      * @param name {String} 消息名称
      * @param body {*} 消息实体
      */
-    Router.fn.send = function (route, name, body) {
+    pro.send = function (route, name, body) {
         var the = this;
         var msg = {
             name: name,

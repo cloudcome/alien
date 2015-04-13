@@ -70,13 +70,15 @@ define(function (require, exports, module) {
         this._options = dato.extend(true, {}, defaults, options);
         this._init(tmplate);
     });
+    var pro = Template.prototype;
+
 
     /**
      * 默认配置
      * @type {Object}
      * @static
      */
-    Template.defaults = defaults,
+    Template.defaults = defaults;
 
 
     /**
@@ -84,15 +86,15 @@ define(function (require, exports, module) {
      * @type {Object}
      * @static
      */
-        Template.filters = filters,
+    Template.filters = filters;
 
     /**
      * 设置默认配置
      * @param options
      */
-        Template.setDefaults = function (options) {
-            dato.extend(defaults, options);
-        };
+    Template.setDefaults = function (options) {
+        dato.extend(defaults, options);
+    };
 
 
     /**
@@ -142,7 +144,7 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Template.fn._generatorVar = function () {
+    pro._generatorVar = function () {
         return 'alien_libs_template_' + random.string(20, '0aA');
     };
 
@@ -153,7 +155,7 @@ define(function (require, exports, module) {
      * @returns {Template}
      * @private
      */
-    Template.fn._init = function (template) {
+    pro._init = function (template) {
         var the = this;
         var _var = the._generatorVar();
         var fnStr = 'var ' + _var + '="";';
@@ -311,7 +313,7 @@ define(function (require, exports, module) {
      * @returns {boolean}
      * @private
      */
-    Template.fn._hasPrefix = function (str, pre) {
+    pro._hasPrefix = function (str, pre) {
         return str.indexOf(pre + ' ') === 0;
     };
 
@@ -324,7 +326,7 @@ define(function (require, exports, module) {
      * @example
      * tp.render(data);
      */
-    Template.fn.render = function (data) {
+    pro.render = function (data) {
         var the = this;
         var options = the._options;
         var _var = 'alienTemplateData_' + Date.now();
@@ -382,7 +384,7 @@ define(function (require, exports, module) {
          *     // 后续参数自定义个数
          * });
      */
-    Template.fn.addFilter = function (name, callback, isOverride) {
+    pro.addFilter = function (name, callback, isOverride) {
         var instanceFilters = this._template.filters;
 
         if (typeis(name) !== 'string') {
@@ -413,7 +415,7 @@ define(function (require, exports, module) {
      * tp.getFilter('test');
      * // => return test filter function
      */
-    Template.fn.getFilter = function (name) {
+    pro.getFilter = function (name) {
         return typeis(name) === 'string' ?
             this._template.filters[name] :
             this._template.filters;
@@ -426,7 +428,7 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Template.fn._parseVar = function (str) {
+    pro._parseVar = function (str) {
         return this._parseExp(str, 'var') + ';';
     };
 
@@ -438,7 +440,7 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Template.fn._parseExp = function (str, pre) {
+    pro._parseExp = function (str, pre) {
         var the = this;
         var matches = str.trim().match(REG_VAR);
         var filters;
@@ -490,7 +492,7 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Template.fn._parseIfAndElseIf = function (str) {
+    pro._parseIfAndElseIf = function (str) {
         var matches = str.trim().match(REG_IF);
 
         if (!matches) {
@@ -507,7 +509,7 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    Template.fn._parseList = function (str) {
+    pro._parseList = function (str) {
         var matches = str.trim().match(REH_LIST);
         var parse;
         var randomKey1 = this._generatorVar();

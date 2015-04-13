@@ -37,9 +37,10 @@ define(function (require, exports, module) {
 
         return the._init();
     });
+    var pro = Stickly.prototype;
 
 
-    Stickly.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initEvent();
@@ -49,7 +50,7 @@ define(function (require, exports, module) {
     };
 
 
-    Stickly.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
 
@@ -58,7 +59,7 @@ define(function (require, exports, module) {
     };
 
 
-    Stickly.fn._stickly = function () {
+    pro._stickly = function () {
         var the = this;
         var options = the._options;
 
@@ -88,7 +89,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Stickly.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$container, 'scroll touch1move', the._onscroll);

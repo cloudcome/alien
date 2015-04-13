@@ -53,13 +53,14 @@ define(function (require, exports, module) {
     });
 
     Pager.defaults = defaults;
+    var pro = Pager.prototype;
 
 
     /**
      * 初始化
      * @private
      */
-    Pager.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         attribute.addClass(the._$ele, the._options.addClass);
@@ -72,7 +73,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Pager.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         event.on(the._$ele, 'click', '.' + alienClass + '-page', the._onpage.bind(the));
@@ -84,7 +85,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Pager.fn._onpage = function (eve) {
+    pro._onpage = function (eve) {
         var the = this;
         var $ele = eve.target;
         var page = attribute.data($ele, 'page');
@@ -112,7 +113,7 @@ define(function (require, exports, module) {
      * @param [data.page] {Number} 页码
      * @param [data.max] {Number} 最大页码
      */
-    Pager.fn.render = function (data) {
+    pro.render = function (data) {
         var the = this;
         var html = tpl.render(dato.extend(the._options, data));
 
@@ -124,7 +125,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Pager.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$ele, 'click', the._onpage);

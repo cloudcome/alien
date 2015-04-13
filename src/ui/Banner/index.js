@@ -66,7 +66,7 @@ define(function (require, exports, module) {
      * 初始化
      * @private
      */
-    Banner.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
 
@@ -85,6 +85,7 @@ define(function (require, exports, module) {
 
         return the;
     };
+    var pro = Banner.prototype;
 
 
     /**
@@ -92,7 +93,7 @@ define(function (require, exports, module) {
      * @method resize
      * @param [size] {{width:Number,height:Number}} 尺寸
      */
-    Banner.fn.resize = function (size) {
+    pro.resize = function (size) {
         var the = this;
         var optons = the._options;
 
@@ -131,7 +132,7 @@ define(function (require, exports, module) {
      * 初始化节点
      * @private
      */
-    Banner.fn._initNode = function () {
+    pro._initNode = function () {
         var the = this;
         var $item0 = the._$items[0];
         var $item_ = the._$items[the._itemLength - 1];
@@ -167,7 +168,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Banner.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var options = the._options;
         var hasScroll = false;
@@ -250,7 +251,7 @@ define(function (require, exports, module) {
      * @param boolean
      * @private
      */
-    Banner.fn._autoPlay = function (boolean) {
+    pro._autoPlay = function (boolean) {
         var the = this;
 
         if (boolean) {
@@ -267,7 +268,7 @@ define(function (require, exports, module) {
      * @returns {{}}
      * @private
      */
-    Banner.fn._calTranslate = function (realIndex) {
+    pro._calTranslate = function (realIndex) {
         var the = this;
         var sett = {};
 
@@ -297,7 +298,7 @@ define(function (require, exports, module) {
      * @param [callback] {Function} 回调
      * @private
      */
-    Banner.fn._show = function (index, direction, callback) {
+    pro._show = function (index, direction, callback) {
         var the = this;
         var lastIndex = the._itemLength - 1;
         var options = the._options;
@@ -343,7 +344,7 @@ define(function (require, exports, module) {
      * @returns {*}
      * @private
      */
-    Banner.fn._boundIndex = function (index) {
+    pro._boundIndex = function (index) {
         var the = this;
 
         if (index < 0) {
@@ -361,7 +362,7 @@ define(function (require, exports, module) {
      * @method prev
      * @param [callback] {Function} 回调
      */
-    Banner.fn.prev = function (callback) {
+    pro.prev = function (callback) {
         var the = this;
 
         if (the._itemLength < 2) {
@@ -381,7 +382,7 @@ define(function (require, exports, module) {
      * @method next
      * @param [callback] {Function} 回调
      */
-    Banner.fn.next = function (callback) {
+    pro.next = function (callback) {
         var the = this;
 
         if (the._itemLength < 2) {
@@ -402,7 +403,7 @@ define(function (require, exports, module) {
      * @param index {Number} 索引值
      * @param callback {Function} 回调
      */
-    Banner.fn.index = function (index, callback) {
+    pro.index = function (index, callback) {
         var the = this;
         var direction = '';
         var lastIndex = the._itemLength - 1;
@@ -438,7 +439,7 @@ define(function (require, exports, module) {
      * 暂停播放
      * @method pause
      */
-    Banner.fn.pause = function () {
+    pro.pause = function () {
         var the = this;
 
         if (the._playTimeID) {
@@ -453,7 +454,7 @@ define(function (require, exports, module) {
      * 开始播放
      * @method play
      */
-    Banner.fn.play = function () {
+    pro.play = function () {
         var the = this;
 
         the.pause();
@@ -469,7 +470,7 @@ define(function (require, exports, module) {
      * 销毁实例
      * @method destroy
      */
-    Banner.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         the.pause();

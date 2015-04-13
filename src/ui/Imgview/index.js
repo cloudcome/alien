@@ -68,12 +68,13 @@ define(function (require, exports, module) {
     });
 
     Imgview.defaults = defaults;
+    var pro = Imgview.prototype;
 
     /**
      * 初始化
      * @private
      */
-    Imgview.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initData();
@@ -88,7 +89,7 @@ define(function (require, exports, module) {
      * 初始化数据
      * @private
      */
-    Imgview.fn._initData = function () {
+    pro._initData = function () {
         var the = this;
 
         the._list = [];
@@ -100,7 +101,7 @@ define(function (require, exports, module) {
      * 初始化节点
      * @private
      */
-    Imgview.fn._initNode = function () {
+    pro._initNode = function () {
         var the = this;
         var options = the._options;
         var htmlWrap = tplWrap.render(options);
@@ -143,7 +144,7 @@ define(function (require, exports, module) {
      * 初始化事件
      * @private
      */
-    Imgview.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var onclose = function () {
             the._window.close(function () {
@@ -192,7 +193,7 @@ define(function (require, exports, module) {
      * @param [callback] {Function} 加载之后
      * @private
      */
-    Imgview.fn._load = function (src, callback) {
+    pro._load = function (src, callback) {
         var img = new Image();
         var index = this._index;
 
@@ -224,7 +225,7 @@ define(function (require, exports, module) {
      * 控制
      * @private
      */
-    Imgview.fn._ctrl = function () {
+    pro._ctrl = function () {
         var the = this;
         var disabledClass = alienClass + '-ctrl-disabled';
 
@@ -246,7 +247,7 @@ define(function (require, exports, module) {
      * 展示
      * @private
      */
-    Imgview.fn._show = function () {
+    pro._show = function () {
         var the = this;
 
         attribute.addClass(the._$ele, alienClass + '-isloading');
@@ -288,7 +289,7 @@ define(function (require, exports, module) {
      * @param list {Array} 图片列表
      * @param [index=0] {Number} 打开时显示的图片索引
      */
-    Imgview.fn.open = function (list, index) {
+    pro.open = function (list, index) {
         var the = this;
         var options = the._options;
 
@@ -323,7 +324,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Imgview.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         the._window.destroy(function () {

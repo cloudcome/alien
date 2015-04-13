@@ -25,6 +25,7 @@ define(function (require, exports, module) {
         this._eventsPool = {};
         this._eventsLimit = 999;
     });
+    var pro = Emitter.prototype;
 
 
     /**
@@ -37,7 +38,7 @@ define(function (require, exports, module) {
      * var emitter = new Emitter();
      * emitter.on('hi', fn);
      */
-    Emitter.fn.on = function (eventType, listener) {
+    pro.on = function (eventType, listener) {
         var the = this;
 
         _middleware(eventType, function (et) {
@@ -69,7 +70,7 @@ define(function (require, exports, module) {
      * emitter.un('hi', fn);
      * emitter.un('hi');
      */
-    Emitter.fn.un = function (eventType, listener) {
+    pro.un = function (eventType, listener) {
         var the = this;
 
         _middleware(eventType, function (et) {
@@ -108,7 +109,7 @@ define(function (require, exports, module) {
      * emitter.emit(window, 'hi', 1, 2);
      * emitter.emit(window, 'hi', 1, 2, 3);
      */
-    Emitter.fn.emit = function (context, eventType/*arguments*/) {
+    pro.emit = function (context, eventType/*arguments*/) {
         var the = this;
         var args = allocation.args(arguments);
         var arg0 = args[0];
