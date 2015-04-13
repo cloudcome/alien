@@ -434,7 +434,7 @@ define(function (require, exports, module) {
                             return next();
                         }
 
-                        ruleInfo.fn.call(rule, _rule, val, function (err) {
+                        ruleInfo.prototype.call(rule, _rule, val, function (err) {
                             if (!err) {
                                 return next();
                             }

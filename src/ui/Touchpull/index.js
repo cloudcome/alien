@@ -26,14 +26,16 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
+    var pro = Touchpull.prototype;
+    
 
-    Touchpull.fn._init = function () {
+    pro._init = function () {
         var the = this;
 
         the._initEvent();
     };
 
-    Touchpull.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
 
         event.on(the._$parent, 'touch1start', function (eve) {

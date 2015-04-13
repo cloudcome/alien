@@ -84,13 +84,14 @@ define(function (require, exports, module) {
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     });
+    var pro = Editor.prototype;
 
 
     /**
      * 初始化
      * @private
      */
-    Editor.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var options = the._options;
 
@@ -126,7 +127,7 @@ define(function (require, exports, module) {
      * 初始化编辑框内容
      * @private
      */
-    Editor.fn._initVal = function () {
+    pro._initVal = function () {
         var the = this;
         var local = the._getLocal();
         var minTime = 24 * 60 * 60 * 1000;
@@ -175,7 +176,7 @@ define(function (require, exports, module) {
      * 上传对话框
      * @private
      */
-    Editor.fn._uploadDialog = function () {
+    pro._uploadDialog = function () {
         var the = this;
         var dt = {
             id: the._id,
@@ -212,7 +213,7 @@ define(function (require, exports, module) {
      * 销毁上传实例
      * @private
      */
-    Editor.fn.uploadDestroy = function () {
+    pro.uploadDestroy = function () {
         var the = this;
 
         the._dialog.destroy(function () {
@@ -226,7 +227,7 @@ define(function (require, exports, module) {
      * 上传
      * @private
      */
-    Editor.fn._doUpload = function () {
+    pro._doUpload = function () {
         var the = this;
         var dialog = the._dialog;
         var list = the._uploadList;
@@ -268,7 +269,7 @@ define(function (require, exports, module) {
      * 计算备份ID
      * @private
      */
-    Editor.fn._calStoreId = function () {
+    pro._calStoreId = function () {
         var the = this;
 
         if (the._options.id) {
@@ -302,7 +303,7 @@ define(function (require, exports, module) {
      * 读取本地备份
      * @private
      */
-    Editor.fn._getLocal = function () {
+    pro._getLocal = function () {
         var the = this;
         var local = localStorage.getItem(the._storeId);
         var ret;
@@ -321,7 +322,7 @@ define(function (require, exports, module) {
      * 写入本地备份
      * @private
      */
-    Editor.fn._saveLocal = function () {
+    pro._saveLocal = function () {
         var the = this;
 
         try {
@@ -339,7 +340,7 @@ define(function (require, exports, module) {
      * 事件监听
      * @private
      */
-    Editor.fn._initEvent = function () {
+    pro._initEvent = function () {
         var the = this;
         var $ele = the._$ele;
 
@@ -355,7 +356,7 @@ define(function (require, exports, module) {
      * window.onresize 时回调
      * @private
      */
-    Editor.fn._onresize = function () {
+    pro._onresize = function () {
         var the = this;
 
         if (the._timerId) {
@@ -373,7 +374,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Editor.fn._onkeydown = function (eve) {
+    pro._onkeydown = function (eve) {
         var the = this;
         var options = the._options;
         var $ele = the._$ele;
@@ -422,7 +423,7 @@ define(function (require, exports, module) {
      * 输入回调
      * @private
      */
-    Editor.fn._oninput = function () {
+    pro._oninput = function () {
         var the = this;
 
         the._pushHistory();
@@ -436,7 +437,7 @@ define(function (require, exports, module) {
      * @param items
      * @private
      */
-    Editor.fn._parseImgList = function (eve, items) {
+    pro._parseImgList = function (eve, items) {
         var the = this;
 
         the._uploadList = [];
@@ -474,7 +475,7 @@ define(function (require, exports, module) {
      * 拖拽回调
      * @private
      */
-    Editor.fn._ondrop = function (eve) {
+    pro._ondrop = function (eve) {
         this._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
     };
 
@@ -484,7 +485,7 @@ define(function (require, exports, module) {
      * @param eve
      * @private
      */
-    Editor.fn._onpaste = function (eve) {
+    pro._onpaste = function (eve) {
         this._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
     };
 
@@ -493,7 +494,7 @@ define(function (require, exports, module) {
      * 手动设置编辑器内容
      * @param value {String} 待覆盖的字符串
      */
-    Editor.fn.setContent = function (value) {
+    pro.setContent = function (value) {
         var the = this;
         the._$ele.value = value;
         the._pushHistory();
@@ -510,7 +511,7 @@ define(function (require, exports, module) {
      * @example
      * editor.insert('hehe');
      */
-    Editor.fn.insert = function (string) {
+    pro.insert = function (string) {
         var the = this;
 
         editor.insert(this._$ele, string);
@@ -523,7 +524,7 @@ define(function (require, exports, module) {
     /**
      * 聚焦
      */
-    Editor.fn.focus = function () {
+    pro.focus = function () {
         this._$ele.focus();
     };
 
@@ -531,7 +532,7 @@ define(function (require, exports, module) {
     /**
      * 失焦
      */
-    Editor.fn.blur = function () {
+    pro.blur = function () {
         this._$ele.blur();
     };
 
@@ -540,7 +541,7 @@ define(function (require, exports, module) {
      * 获得当前编辑器内容
      * @returns {*} {String} 当前编辑器内容
      */
-    Editor.fn.getContent = function () {
+    pro.getContent = function () {
         return this._$ele.value;
     };
 
@@ -549,7 +550,7 @@ define(function (require, exports, module) {
      * 历史入栈
      * @private
      */
-    Editor.fn._pushHistory = function () {
+    pro._pushHistory = function () {
         var the = this;
         var options = the._options;
         var history = the._history;
@@ -580,7 +581,7 @@ define(function (require, exports, module) {
      * 历史出栈
      * @private
      */
-    Editor.fn._shiftHistory = function () {
+    pro._shiftHistory = function () {
         this._history.shift();
     };
 
@@ -589,7 +590,7 @@ define(function (require, exports, module) {
      * 保存光标记录
      * @private
      */
-    Editor.fn._savePos = function () {
+    pro._savePos = function () {
         var the = this;
         var $ele = the._$ele;
         the._selection = editor.getPos($ele);
@@ -600,7 +601,7 @@ define(function (require, exports, module) {
      * 恢复光标记录
      * @private
      */
-    Editor.fn._restorePos = function () {
+    pro._restorePos = function () {
         var the = this;
         var $ele = the._$ele;
 
@@ -611,7 +612,7 @@ define(function (require, exports, module) {
     /**
      * 清除本地备份记录
      */
-    Editor.fn.clearStore = function () {
+    pro.clearStore = function () {
         var the = this;
 
         window.localStorage.setItem(the._storeId, '');
@@ -623,7 +624,7 @@ define(function (require, exports, module) {
     /**
      * 重置尺寸
      */
-    Editor.fn.resize = function () {
+    pro.resize = function () {
         var the = this;
 
         controller.nextTick(the._autoheight.resize, the._autoheight);
@@ -632,7 +633,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Editor.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         event.un(the._$ele, 'keydown', the._onkeydown);

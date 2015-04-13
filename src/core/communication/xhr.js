@@ -168,12 +168,13 @@ define(function (require, exports, module) {
         the.xhr = xhr;
         return the;
     }, Emitter);
+    var pro = XHR.prototype;
 
 
     /**
      * 中止当前请求
      */
-    XHR.fn.abort = function () {
+    pro.abort = function () {
         var the = this;
 
         the.xhr.abort();

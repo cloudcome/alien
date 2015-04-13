@@ -60,10 +60,12 @@ define(function (require, exports, module) {
         the._options = dato.extend(!0, {}, defaults, options);
         the._init();
     });
+    var pro = Resize.prototype;
+    
 
     Resize.defaults = defaults;
 
-    Resize.fn._init = function () {
+    pro._init = function () {
         var the = this;
         var $ele = the._$ele;
         var pos = attribute.css($ele, 'position');
@@ -91,7 +93,7 @@ define(function (require, exports, module) {
     };
 
 
-    Resize.fn._on = function () {
+    pro._on = function () {
         var the = this;
 
         // 2向: 东、南
@@ -100,7 +102,7 @@ define(function (require, exports, module) {
     };
 
 
-    Resize.fn._un = function () {
+    pro._un = function () {
         var the = this;
 
         event.un('dragstart', the._$e);
@@ -112,7 +114,7 @@ define(function (require, exports, module) {
     };
 
 
-    Resize.fn._onresize = function ($drag, axis, prop, axis2, prop2) {
+    pro._onresize = function ($drag, axis, prop, axis2, prop2) {
         var the = this;
         var x0;
         var y0;
@@ -207,7 +209,7 @@ define(function (require, exports, module) {
     /**
      * 启动拖动尺寸
      */
-    Resize.fn.enable = function () {
+    pro.enable = function () {
         var the = this;
 
         the._disabled = false;
@@ -219,7 +221,7 @@ define(function (require, exports, module) {
     /**
      * 禁止拖动尺寸
      */
-    Resize.fn.disable = function () {
+    pro.disable = function () {
         var the = this;
 
         the._disabled = true;
@@ -231,7 +233,7 @@ define(function (require, exports, module) {
     /**
      * 销毁实例
      */
-    Resize.fn.destroy = function () {
+    pro.destroy = function () {
         var the = this;
 
         the._un();

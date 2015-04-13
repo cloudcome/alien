@@ -81,7 +81,7 @@ define(function (require, exports, module) {
      *     this.name = name;
      * });
      *
-     * Father.fn.sayName = function(){
+     * Father.prototype.sayName = function(){
      *     console.log(this.name);
      * };
      *
@@ -89,7 +89,7 @@ define(function (require, exports, module) {
      *    this.age = age;
      * }, Father, true);
      *
-     * Child.fn.speak = function(){
+     * Child.prototype.speak = function(){
      *     console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
      * };
      *
