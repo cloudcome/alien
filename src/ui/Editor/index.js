@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @requires 3rd/codemirror/mode/gfm
      * @requires 3rd/codemirror/addon/display/fullscreen
      * @requires 3rd/codemirror/addon/display/placeholder
+     * @requires 3rd/codemirror/marked
      * @requires ui/
      * @requires ui/Msg/
      * @requires ui/Dialog/
@@ -54,6 +55,7 @@ define(function (require, exports, module) {
     var localStorage = window.localStorage;
     var pathname = location.pathname;
     var $html = document.documentElement;
+    var markedRender = new marked.Renderer();
     var defaults = {
         // 手动设置 ID
         id: '',
@@ -112,7 +114,7 @@ define(function (require, exports, module) {
         the._noPreview = true;
         modification.insert(the._$preview, the._$editor);
         attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
-        attribute.css(the._$wrapper, 'min-height', the._options.minHeight);
+        attribute.css(the._$scroller, 'min-height', the._options.minHeight);
         the._initEvent();
 
         if (the._options.canBackup) {
@@ -355,7 +357,7 @@ define(function (require, exports, module) {
                 the._editor.refresh();
             };
             var syncMarked = function () {
-                the._$preview.innerHTML = marked(the._$ele.value);
+                the._$preview.innerHTML = marked(the._$ele.value, {renderer: markedRender});
             };
 
 
@@ -570,10 +572,11 @@ define(function (require, exports, module) {
                     var _img = new Image();
 
                     _img.src = img.url;
-                    html.push('\n![' + img.name + '](' + img.url + ')\n');
+                    html.push('![' + img.name + '](' + img.url +
+                    (typeis.undefined(img.width) ? '' : ' =' + img.width + 'x' + img.height) + ')');
                 });
 
-                the.replace(html.join(''));
+                the.replace(html.join(' '));
                 the.uploadDestroy();
             };
 
@@ -640,7 +643,7 @@ define(function (require, exports, module) {
         }
     });
 
-
+    markedRender.image = require('./marked-render-image.js');
     modification.importStyle(style);
     module.exports = Editor;
 });

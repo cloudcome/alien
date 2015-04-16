@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2015-04-16 15:16
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>hotkey.html</title>
+</head>
+<body ontouchstart="">
+
+
+<style>
+    * {
+        font-family: Helvetica, Verdana, Arial;
+        font-size: 0.95em
+    }
+
+    .eventNotifier {
+        width: 100px;
+        float: left;
+        color: navy;
+        border: dotted 1px navy;
+        padding: 4px;
+        background-color: white;
+        margin: 3px
+    }
+
+    .dirty {
+        border: solid 1px #0ca2ff;
+        color: white;
+        background-color: #0ca2ff
+    }
+
+</style>
+
+<div id="report-area">
+
+    <h2>Special Keys</h2>
+
+    <div id="_esc" class="eventNotifier">esc</div>
+    <div id="_tab" class="eventNotifier">tab</div>
+    <div id="_space" class="eventNotifier">space</div>
+    <div id="_return" class="eventNotifier">return</div>
+    <div id="_backspace" class="eventNotifier">backspace</div>
+    <div id="_scroll" class="eventNotifier">scroll</div>
+    <div id="_capslock" class="eventNotifier">capslock</div>
+    <div id="_numlock" class="eventNotifier">numlock</div>
+    <div id="_pause" class="eventNotifier">pause</div>
+    <div id="_insert" class="eventNotifier">insert</div>
+    <div id="_home" class="eventNotifier">home</div>
+    <div id="_del" class="eventNotifier">del</div>
+    <div id="_end" class="eventNotifier">end</div>
+    <div id="_pageup" class="eventNotifier">pageup</div>
+    <div id="_pagedown" class="eventNotifier">pagedown</div>
+    <div id="_left" class="eventNotifier">left</div>
+    <div id="_up" class="eventNotifier">up</div>
+    <div id="_right" class="eventNotifier">right</div>
+    <div id="_down" class="eventNotifier">down</div>
+    <div id="_f1" class="eventNotifier">f1</div>
+    <div id="_f2" class="eventNotifier">f2</div>
+    <div id="_f3" class="eventNotifier">f3</div>
+    <div id="_f4" class="eventNotifier">f4</div>
+    <div id="_f5" class="eventNotifier">f5</div>
+    <div id="_f6" class="eventNotifier">f6</div>
+    <div id="_f7" class="eventNotifier">f7</div>
+    <div id="_f8" class="eventNotifier">f8</div>
+    <div id="_f9" class="eventNotifier">f9</div>
+    <div id="_f10" class="eventNotifier">f10</div>
+    <div id="_f11" class="eventNotifier">f11</div>
+    <div id="_f12" class="eventNotifier">f12</div>
+    <div style="clear: both;"/>
+
+    <h2>0-9 Digits</h2>
+
+    <div id="_1" class="eventNotifier">1</div>
+    <div id="_2" class="eventNotifier">2</div>
+    <div id="_3" class="eventNotifier">3</div>
+    <div id="_4" class="eventNotifier">4</div>
+    <div id="_5" class="eventNotifier">5</div>
+    <div id="_6" class="eventNotifier">6</div>
+    <div id="_7" class="eventNotifier">7</div>
+    <div id="_8" class="eventNotifier">8</div>
+    <div id="_9" class="eventNotifier">9</div>
+    <div id="_0" class="eventNotifier">0</div>
+    <div style="clear: both;"/>
+    <h2>A-Z Letters</h2>
+
+    <div id="_a" class="eventNotifier">a</div>
+    <div id="_b" class="eventNotifier">b</div>
+    <div id="_c" class="eventNotifier">c</div>
+    <div id="_d" class="eventNotifier">d</div>
+    <div id="_e" class="eventNotifier">e</div>
+    <div id="_f" class="eventNotifier">f</div>
+    <div id="_g" class="eventNotifier">g</div>
+    <div id="_h" class="eventNotifier">h</div>
+    <div id="_i" class="eventNotifier">i</div>
+    <div id="_j" class="eventNotifier">j</div>
+    <div id="_k" class="eventNotifier">k</div>
+    <div id="_l" class="eventNotifier">l</div>
+    <div id="_m" class="eventNotifier">m</div>
+    <div id="_n" class="eventNotifier">n</div>
+    <div id="_o" class="eventNotifier">o</div>
+    <div id="_p" class="eventNotifier">p</div>
+    <div id="_q" class="eventNotifier">q</div>
+    <div id="_r" class="eventNotifier">r</div>
+    <div id="_s" class="eventNotifier">s</div>
+    <div id="_t" class="eventNotifier">t</div>
+    <div id="_u" class="eventNotifier">u</div>
+    <div id="_v" class="eventNotifier">v</div>
+    <div id="_w" class="eventNotifier">w</div>
+    <div id="_x" class="eventNotifier">x</div>
+    <div id="_y" class="eventNotifier">y</div>
+    <div id="_z" class="eventNotifier">z</div>
+    <div style="clear: both;"/>
+    <h2>Special Modifiers</h2>
+
+    <div style="clear: both;"/>
+    <p><strong>ctrl</strong></p>
+
+    <div id="_ctrl_a" class="eventNotifier">ctrl+a</div>
+    <div id="_ctrl_b" class="eventNotifier">ctrl+b</div>
+    <div id="_ctrl_c" class="eventNotifier">ctrl+c</div>
+    <div id="_ctrl_d" class="eventNotifier">ctrl+d</div>
+    <div id="_ctrl_e" class="eventNotifier">ctrl+e</div>
+    <div id="_ctrl_f" class="eventNotifier">ctrl+f</div>
+    <div id="_ctrl_g" class="eventNotifier">ctrl+g</div>
+    <div id="_ctrl_h" class="eventNotifier">ctrl+h</div>
+    <div id="_ctrl_i" class="eventNotifier">ctrl+i</div>
+    <div id="_ctrl_j" class="eventNotifier">ctrl+j</div>
+    <div id="_ctrl_k" class="eventNotifier">ctrl+k</div>
+    <div id="_ctrl_l" class="eventNotifier">ctrl+l</div>
+    <div id="_ctrl_m" class="eventNotifier">ctrl+m</div>
+    <div id="_ctrl_n" class="eventNotifier">ctrl+n</div>
+    <div id="_ctrl_o" class="eventNotifier">ctrl+o</div>
+    <div id="_ctrl_p" class="eventNotifier">ctrl+p</div>
+    <div id="_ctrl_q" class="eventNotifier">ctrl+q</div>
+    <div id="_ctrl_r" class="eventNotifier">ctrl+r</div>
+    <div id="_ctrl_s" class="eventNotifier">ctrl+s</div>
+    <div id="_ctrl_t" class="eventNotifier">ctrl+t</div>
+    <div id="_ctrl_u" class="eventNotifier">ctrl+u</div>
+    <div id="_ctrl_v" class="eventNotifier">ctrl+v</div>
+    <div id="_ctrl_w" class="eventNotifier">ctrl+w</div>
+    <div id="_ctrl_x" class="eventNotifier">ctrl+x</div>
+    <div id="_ctrl_y" class="eventNotifier">ctrl+y</div>
+    <div id="_ctrl_z" class="eventNotifier">ctrl+z</div>
+    <div style="clear: both;"/>
+    <div style="clear: both;"/>
+    <p><strong>cmd</strong></p>
+
+    <div id="_cmd_a" class="eventNotifier">cmd+a</div>
+    <div id="_cmd_b" class="eventNotifier">cmd+b</div>
+    <div id="_cmd_c" class="eventNotifier">cmd+c</div>
+    <div id="_cmd_d" class="eventNotifier">cmd+d</div>
+    <div id="_cmd_e" class="eventNotifier">cmd+e</div>
+    <div id="_cmd_f" class="eventNotifier">cmd+f</div>
+    <div id="_cmd_g" class="eventNotifier">cmd+g</div>
+    <div id="_cmd_h" class="eventNotifier">cmd+h</div>
+    <div id="_cmd_i" class="eventNotifier">cmd+i</div>
+    <div id="_cmd_j" class="eventNotifier">cmd+j</div>
+    <div id="_cmd_k" class="eventNotifier">cmd+k</div>
+    <div id="_cmd_l" class="eventNotifier">cmd+l</div>
+    <div id="_cmd_m" class="eventNotifier">cmd+m</div>
+    <div id="_cmd_n" class="eventNotifier">cmd+n</div>
+    <div id="_cmd_o" class="eventNotifier">cmd+o</div>
+    <div id="_cmd_p" class="eventNotifier">cmd+p</div>
+    <div id="_cmd_q" class="eventNotifier">cmd+q</div>
+    <div id="_cmd_r" class="eventNotifier">cmd+r</div>
+    <div id="_cmd_s" class="eventNotifier">cmd+s</div>
+    <div id="_cmd_t" class="eventNotifier">cmd+t</div>
+    <div id="_cmd_u" class="eventNotifier">cmd+u</div>
+    <div id="_cmd_v" class="eventNotifier">cmd+v</div>
+    <div id="_cmd_w" class="eventNotifier">cmd+w</div>
+    <div id="_cmd_x" class="eventNotifier">cmd+x</div>
+    <div id="_cmd_y" class="eventNotifier">cmd+y</div>
+    <div id="_cmd_z" class="eventNotifier">cmd+z</div>
+    <div style="clear: both;"/>
+    <p><strong>shift</strong></p>
+
+    <div id="_shift_a" class="eventNotifier">shift+a</div>
+    <div id="_shift_b" class="eventNotifier">shift+b</div>
+    <div id="_shift_c" class="eventNotifier">shift+c</div>
+    <div id="_shift_d" class="eventNotifier">shift+d</div>
+    <div id="_shift_e" class="eventNotifier">shift+e</div>
+    <div id="_shift_f" class="eventNotifier">shift+f</div>
+    <div id="_shift_g" class="eventNotifier">shift+g</div>
+    <div id="_shift_h" class="eventNotifier">shift+h</div>
+    <div id="_shift_i" class="eventNotifier">shift+i</div>
+    <div id="_shift_j" class="eventNotifier">shift+j</div>
+    <div id="_shift_k" class="eventNotifier">shift+k</div>
+    <div id="_shift_l" class="eventNotifier">shift+l</div>
+    <div id="_shift_m" class="eventNotifier">shift+m</div>
+    <div id="_shift_n" class="eventNotifier">shift+n</div>
+    <div id="_shift_o" class="eventNotifier">shift+o</div>
+    <div id="_shift_p" class="eventNotifier">shift+p</div>
+    <div id="_shift_q" class="eventNotifier">shift+q</div>
+    <div id="_shift_r" class="eventNotifier">shift+r</div>
+    <div id="_shift_s" class="eventNotifier">shift+s</div>
+    <div id="_shift_t" class="eventNotifier">shift+t</div>
+    <div id="_shift_u" class="eventNotifier">shift+u</div>
+    <div id="_shift_v" class="eventNotifier">shift+v</div>
+    <div id="_shift_w" class="eventNotifier">shift+w</div>
+    <div id="_shift_x" class="eventNotifier">shift+x</div>
+    <div id="_shift_y" class="eventNotifier">shift+y</div>
+    <div id="_shift_z" class="eventNotifier">shift+z</div>
+    <div style="clear: both;"/>
+    <p><strong>alt</strong></p>
+
+    <div id="_alt_a" class="eventNotifier">alt+a</div>
+    <div id="_alt_b" class="eventNotifier">alt+b</div>
+    <div id="_alt_c" class="eventNotifier">alt+c</div>
+    <div id="_alt_d" class="eventNotifier">alt+d</div>
+    <div id="_alt_e" class="eventNotifier">alt+e</div>
+    <div id="_alt_f" class="eventNotifier">alt+f</div>
+    <div id="_alt_g" class="eventNotifier">alt+g</div>
+    <div id="_alt_h" class="eventNotifier">alt+h</div>
+    <div id="_alt_i" class="eventNotifier">alt+i</div>
+    <div id="_alt_j" class="eventNotifier">alt+j</div>
+    <div id="_alt_k" class="eventNotifier">alt+k</div>
+    <div id="_alt_l" class="eventNotifier">alt+l</div>
+    <div id="_alt_m" class="eventNotifier">alt+m</div>
+    <div id="_alt_n" class="eventNotifier">alt+n</div>
+    <div id="_alt_o" class="eventNotifier">alt+o</div>
+    <div id="_alt_p" class="eventNotifier">alt+p</div>
+    <div id="_alt_q" class="eventNotifier">alt+q</div>
+    <div id="_alt_r" class="eventNotifier">alt+r</div>
+    <div id="_alt_s" class="eventNotifier">alt+s</div>
+    <div id="_alt_t" class="eventNotifier">alt+t</div>
+    <div id="_alt_u" class="eventNotifier">alt+u</div>
+    <div id="_alt_v" class="eventNotifier">alt+v</div>
+    <div id="_alt_w" class="eventNotifier">alt+w</div>
+    <div id="_alt_x" class="eventNotifier">alt+x</div>
+    <div id="_alt_y" class="eventNotifier">alt+y</div>
+    <div id="_alt_z" class="eventNotifier">alt+z</div>
+    <div style="clear: both;"/>
+    <h2>Special Modifiers + Special Keys</h2>
+
+    <div style="clear: both;"/>
+    <p><strong>ctrl</strong></p>
+
+    <div id="_ctrl_esc" class="eventNotifier">ctrl+esc</div>
+    <div id="_ctrl_tab" class="eventNotifier">ctrl+tab</div>
+    <div id="_ctrl_space" class="eventNotifier">ctrl+space</div>
+    <div id="_ctrl_return" class="eventNotifier">ctrl+return</div>
+    <div id="_ctrl_backspace" class="eventNotifier">ctrl+backspace</div>
+    <div id="_ctrl_scroll" class="eventNotifier">ctrl+scroll</div>
+    <div id="_ctrl_capslock" class="eventNotifier">ctrl+capslock</div>
+    <div id="_ctrl_numlock" class="eventNotifier">ctrl+numlock</div>
+    <div id="_ctrl_pause" class="eventNotifier">ctrl+pause</div>
+    <div id="_ctrl_insert" class="eventNotifier">ctrl+insert</div>
+    <div id="_ctrl_home" class="eventNotifier">ctrl+home</div>
+    <div id="_ctrl_del" class="eventNotifier">ctrl+del</div>
+    <div id="_ctrl_end" class="eventNotifier">ctrl+end</div>
+    <div id="_ctrl_pageup" class="eventNotifier">ctrl+pageup</div>
+    <div id="_ctrl_pagedown" class="eventNotifier">ctrl+pagedown</div>
+    <div id="_ctrl_left" class="eventNotifier">ctrl+left</div>
+    <div id="_ctrl_up" class="eventNotifier">ctrl+up</div>
+    <div id="_ctrl_right" class="eventNotifier">ctrl+right</div>
+    <div id="_ctrl_down" class="eventNotifier">ctrl+down</div>
+    <div id="_ctrl_f1" class="eventNotifier">ctrl+f1</div>
+    <div id="_ctrl_f2" class="eventNotifier">ctrl+f2</div>
+    <div id="_ctrl_f3" class="eventNotifier">ctrl+f3</div>
+    <div id="_ctrl_f4" class="eventNotifier">ctrl+f4</div>
+    <div id="_ctrl_f5" class="eventNotifier">ctrl+f5</div>
+    <div id="_ctrl_f6" class="eventNotifier">ctrl+f6</div>
+    <div id="_ctrl_f7" class="eventNotifier">ctrl+f7</div>
+    <div id="_ctrl_f8" class="eventNotifier">ctrl+f8</div>
+    <div id="_ctrl_f9" class="eventNotifier">ctrl+f9</div>
+    <div id="_ctrl_f10" class="eventNotifier">ctrl+f10</div>
+    <div id="_ctrl_f11" class="eventNotifier">ctrl+f11</div>
+    <div id="_ctrl_f12" class="eventNotifier">ctrl+f12</div>
+    <div style="clear: both;"/>
+
+
+    <p><strong>cmd</strong></p>
+
+    <div id="_cmd_esc" class="eventNotifier">cmd+esc</div>
+    <div id="_cmd_tab" class="eventNotifier">cmd+tab</div>
+    <div id="_cmd_space" class="eventNotifier">cmd+space</div>
+    <div id="_cmd_return" class="eventNotifier">cmd+return</div>
+    <div id="_cmd_backspace" class="eventNotifier">cmd+backspace</div>
+    <div id="_cmd_scroll" class="eventNotifier">cmd+scroll</div>
+    <div id="_cmd_capslock" class="eventNotifier">cmd+capslock</div>
+    <div id="_cmd_numlock" class="eventNotifier">cmd+numlock</div>
+    <div id="_cmd_pause" class="eventNotifier">cmd+pause</div>
+    <div id="_cmd_insert" class="eventNotifier">cmd+insert</div>
+    <div id="_cmd_home" class="eventNotifier">cmd+home</div>
+    <div id="_cmd_del" class="eventNotifier">cmd+del</div>
+    <div id="_cmd_end" class="eventNotifier">cmd+end</div>
+    <div id="_cmd_pageup" class="eventNotifier">cmd+pageup</div>
+    <div id="_cmd_pagedown" class="eventNotifier">cmd+pagedown</div>
+    <div id="_cmd_left" class="eventNotifier">cmd+left</div>
+    <div id="_cmd_up" class="eventNotifier">cmd+up</div>
+    <div id="_cmd_right" class="eventNotifier">cmd+right</div>
+    <div id="_cmd_down" class="eventNotifier">cmd+down</div>
+    <div id="_cmd_f1" class="eventNotifier">cmd+f1</div>
+    <div id="_cmd_f2" class="eventNotifier">cmd+f2</div>
+    <div id="_cmd_f3" class="eventNotifier">cmd+f3</div>
+    <div id="_cmd_f4" class="eventNotifier">cmd+f4</div>
+    <div id="_cmd_f5" class="eventNotifier">cmd+f5</div>
+    <div id="_cmd_f6" class="eventNotifier">cmd+f6</div>
+    <div id="_cmd_f7" class="eventNotifier">cmd+f7</div>
+    <div id="_cmd_f8" class="eventNotifier">cmd+f8</div>
+    <div id="_cmd_f9" class="eventNotifier">cmd+f9</div>
+    <div id="_cmd_f10" class="eventNotifier">cmd+f10</div>
+    <div id="_cmd_f11" class="eventNotifier">cmd+f11</div>
+    <div id="_cmd_f12" class="eventNotifier">cmd+f12</div>
+    <div style="clear: both;"/>
+    <p><strong>shift</strong></p>
+
+    <div id="_shift_esc" class="eventNotifier">shift+esc</div>
+    <div id="_shift_tab" class="eventNotifier">shift+tab</div>
+    <div id="_shift_space" class="eventNotifier">shift+space</div>
+    <div id="_shift_return" class="eventNotifier">shift+return</div>
+    <div id="_shift_backspace" class="eventNotifier">shift+backspace</div>
+    <div id="_shift_scroll" class="eventNotifier">shift+scroll</div>
+    <div id="_shift_capslock" class="eventNotifier">shift+capslock</div>
+    <div id="_shift_numlock" class="eventNotifier">shift+numlock</div>
+    <div id="_shift_pause" class="eventNotifier">shift+pause</div>
+    <div id="_shift_insert" class="eventNotifier">shift+insert</div>
+    <div id="_shift_home" class="eventNotifier">shift+home</div>
+    <div id="_shift_del" class="eventNotifier">shift+del</div>
+    <div id="_shift_end" class="eventNotifier">shift+end</div>
+    <div id="_shift_pageup" class="eventNotifier">shift+pageup</div>
+    <div id="_shift_pagedown" class="eventNotifier">shift+pagedown</div>
+    <div id="_shift_left" class="eventNotifier">shift+left</div>
+    <div id="_shift_up" class="eventNotifier">shift+up</div>
+    <div id="_shift_right" class="eventNotifier">shift+right</div>
+    <div id="_shift_down" class="eventNotifier">shift+down</div>
+    <div id="_shift_f1" class="eventNotifier">shift+f1</div>
+    <div id="_shift_f2" class="eventNotifier">shift+f2</div>
+    <div id="_shift_f3" class="eventNotifier">shift+f3</div>
+    <div id="_shift_f4" class="eventNotifier">shift+f4</div>
+    <div id="_shift_f5" class="eventNotifier">shift+f5</div>
+    <div id="_shift_f6" class="eventNotifier">shift+f6</div>
+    <div id="_shift_f7" class="eventNotifier">shift+f7</div>
+    <div id="_shift_f8" class="eventNotifier">shift+f8</div>
+    <div id="_shift_f9" class="eventNotifier">shift+f9</div>
+    <div id="_shift_f10" class="eventNotifier">shift+f10</div>
+    <div id="_shift_f11" class="eventNotifier">shift+f11</div>
+    <div id="_shift_f12" class="eventNotifier">shift+f12</div>
+    <div style="clear:both;"/>
+    <p><strong>alt</strong></p>
+
+    <div id="_alt_esc" class="eventNotifier">alt+esc</div>
+    <div id="_alt_tab" class="eventNotifier">alt+tab</div>
+    <div id="_alt_space" class="eventNotifier">alt+space</div>
+    <div id="_alt_return" class="eventNotifier">alt+return</div>
+    <div id="_alt_backspace" class="eventNotifier">alt+backspace</div>
+    <div id="_alt_scroll" class="eventNotifier">alt+scroll</div>
+    <div id="_alt_capslock" class="eventNotifier">alt+capslock</div>
+    <div id="_alt_numlock" class="eventNotifier">alt+numlock</div>
+    <div id="_alt_pause" class="eventNotifier">alt+pause</div>
+    <div id="_alt_insert" class="eventNotifier">alt+insert</div>
+    <div id="_alt_home" class="eventNotifier">alt+home</div>
+    <div id="_alt_del" class="eventNotifier">alt+del</div>
+    <div id="_alt_end" class="eventNotifier">alt+end</div>
+    <div id="_alt_pageup" class="eventNotifier">alt+pageup</div>
+    <div id="_alt_pagedown" class="eventNotifier">alt+pagedown</div>
+    <div id="_alt_left" class="eventNotifier">alt+left</div>
+    <div id="_alt_up" class="eventNotifier">alt+up</div>
+    <div id="_alt_right" class="eventNotifier">alt+right</div>
+    <div id="_alt_down" class="eventNotifier">alt+down</div>
+    <div id="_alt_f1" class="eventNotifier">alt+f1</div>
+    <div id="_alt_f2" class="eventNotifier">alt+f2</div>
+    <div id="_alt_f3" class="eventNotifier">alt+f3</div>
+    <div id="_alt_f4" class="eventNotifier">alt+f4</div>
+    <div id="_alt_f5" class="eventNotifier">alt+f5</div>
+    <div id="_alt_f6" class="eventNotifier">alt+f6</div>
+    <div id="_alt_f7" class="eventNotifier">alt+f7</div>
+    <div id="_alt_f8" class="eventNotifier">alt+f8</div>
+    <div id="_alt_f9" class="eventNotifier">alt+f9</div>
+    <div id="_alt_f10" class="eventNotifier">alt+f10</div>
+    <div id="_alt_f11" class="eventNotifier">alt+f11</div>
+    <div id="_alt_f12" class="eventNotifier">alt+f12</div>
+</div>
+
+
+<script src="/examples/coolie.min.js" data-config="./coolie-config.js" data-main="./core/event/hotkey.js"></script>
+
+</body>
+</html>

@@ -21,79 +21,39 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>DDB.html</title>
     <style>
-        .center {
-            font-size: 40px;
-            font-weight: 900;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .abc {
-            background: #dd626a;
-            color: #fff;
-            padding: 4px;
-        }
-
-        .def {
-            background: #17dd77;
-            color: #fff;
-            padding: 4px;
-        }
-
-        button {
-            padding: 10px 20px;
-        }
-
-        #data,
-        #temp,
         #demo {
+            background: #ffff94;
+            border: 4px solid #afaf66;
+            width: 200px;
+            margin: 40px;
             padding: 10px;
+            font-size: 20px;
+            transition: all 1s;
         }
 
-        #data {
-            background: #ecc6ae;
-        }
-
-        #temp {
-            white-space: pre-wrap;
-            background: #b3ecba;
-        }
-
-        #demo {
-            background: #F9F7FF;
+        .class1 {
+            color: #b12917;
+            font-size: 40px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-<h1>目前还是只支持一级repeat，加油！</h1>
-
-
-<button id="btn2" disabled>随机改变love[0]</button>
-<button id="btn3" disabled>随机位置插入love元素</button>
-<button id="btn4" disabled>随机位置删除love元素</button>
-<hr/>
-<p><b>BINDING:</b></p>
 
 <div id="demo">
-    <p>输入：<input type="text" al-model="name"/></p>
+    <!--<p>a: <b d-html="a"></b></p>-->
+    <!--<p>b: <b d-html="b"></b></p>-->
+    <!--<p>c: <b d-html="c"></b></p>-->
+    <!--<p>d: <b d-html="d"></b></p>-->
 
-    <p>输出：<strong al-html="name"></strong></p>
+    <ul>
+        <li d-repeat="index,user: users">
+            <!--<span d-html="'#' + (index + 1)"></span>-->
+            <!--<span d-html="user.nickname + '('+user.id+')'"></span>-->
+        </li>
+    </ul>
 </div>
-<p class="center">
-    <button id="btn">=</button>
-</p>
-
-
-<p><b>DOM:</b></p>
-
-<div id="temp"></div>
-<p class="center">+</p>
-
-<p><b>DATA:</b></p>
-
-<pre id="data"></pre>
 
 
 <script src="../coolie.min.js" data-main="./libs/DDB.js"></script>

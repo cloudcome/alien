@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
     var typeis = require('./typeis.js');
     var udf;
-    var canListTypeArr = 'array object nodelist htmlcollection arguments'.split(' ');
+    var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap'.split(' ');
     var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
     var REG_STRING_FIX = /[.*+?^=!:${}()|[\]\/\\]/g;
     var REG_BEGIN_0 = /^0+/;

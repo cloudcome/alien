@@ -88,11 +88,11 @@ define(function (require, exports, module) {
 
         switch (nodeName) {
             case '#text':
-                node = document.createTextNode(attributes);
+                node = document.createTextNode(typeis.undefined(attributes) ? '' : String(attributes));
                 break;
 
             case '#comment':
-                node = document.createComment(attributes);
+                node = document.createComment(typeis.undefined(attributes) ? '' : String(attributes));
                 break;
 
             default:

@@ -10,5 +10,5 @@ define(function (require) {
 
     var typeis = require('../../src/utils/typeis.js');
 
-    debugger;
+    window.typeis = typeis;
 });
