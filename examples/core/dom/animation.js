@@ -22,16 +22,16 @@ define(function (require) {
 
     document.getElementById('stop1').onclick = function () {
         animation.stop(demo, false);
-    }
+    };
 
     document.getElementById('stop2').onclick = function () {
         animation.stop(demo, true);
-    }
+    };
 
     document.getElementById('scrollTo').onclick = function () {
         animation.scrollTo(document, {
             x: 200,
             y: 200
         });
-    }
+    };
 });

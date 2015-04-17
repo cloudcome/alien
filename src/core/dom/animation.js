@@ -116,7 +116,6 @@ define(function (require, exports, module) {
         }
 
         options = dato.extend({}, cssDefaults, options);
-        transitionMap[id] = true;
         callback = args[argL - 1];
 
         if (argL === 3) {
@@ -147,7 +146,7 @@ define(function (require, exports, module) {
                 }
 
                 hasDispatch = true;
-                transitionMap[id] = false;
+                transitionMap[id] = null;
                 event.un(ele, transitionendEventType, listener);
                 attribute.css(ele, {
                     transitionDuration: '',
@@ -181,6 +180,8 @@ define(function (require, exports, module) {
             dato.extend(fixTo, temp);
             keys.push(obj.key);
         });
+
+        transitionMap[id] = fixTo;
 
         // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
         // 因此，此时需要计算出 left、top 值
