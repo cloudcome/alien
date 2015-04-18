@@ -7,7 +7,7 @@
  *      d-html="html"></div>
  *
  * @author ydr.me
- * @create 2015-04-14 14:14
+ * @create 2015-04-14 14:114
  */
 
 
@@ -45,21 +45,25 @@ define(function (require, exports, module) {
     var REG_SINGLE_STRING = /'[^'"]*?'/;
     var REG_DOUBLE_STRING = /"[^'"]*?"/;
     var REG_LIST_ATTR = /^(?:(.*?)\s*?,\s*?)?(.*?):\s*?(.*)$/;
-    var SINGLE_ATTRS = ['html', 'text'];
+    var REG_LIST_KEY = /^([^.[]*)[.[]?/;
+    var REG_SCOPE_SPLIT = /[[\].]/g;
+    var SINGLE_ATTRS = ['html', 'text', 'model'];
     var LIST_ATTRS = ['repeat'];
     var defaults = {
         prefix: 'd',
         openTag: '{{',
-        closeTag: '}}'
+        closeTag: '}}',
+        debug: false
     };
-    var DDB = klass.create(function ($container, data, options) {
+    var DDB = klass.create(function ($rootScope, data, options) {
         var the = this;
 
-        the._$container = selector.query($container)[0];
+        the._$rootScope = selector.query($rootScope)[0];
         the.data = data;
         the._options = dato.extend(true, {}, defaults, options);
         the._init();
     }, Emitter);
+
     DDB.defaults = defaults;
 
     DDB.implement({
@@ -72,25 +76,35 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._REG_ATTR_NAME = new RegExp('^' + dato.fixRegExp(options.prefix) + '-(.*)$', 'i');
+            the._prefix = the._generateKey();
             the._attrMap = {};
             the._views = [];
-            the._parseAttr(the._$container);
-            the._renderAttr();
+            the._id = 0;
+            the._scan(the._$rootScope);
+            the._render();
         },
 
 
         /**
-         * 解析属性
+         * 扫描节点
+         * @param $ele
          * @private
          */
-        _parseAttr: function (node) {
+        _scan: function ($ele) {
             var the = this;
-            var attrs = dato.toArray(node.attributes);
+            var attrs = dato.toArray($ele.attributes);
+            var $parentEle = selector.parent($ele)[0];
+            var parentScope = $ele === the._$rootScope ? '' : the._getProp($parentEle, 'scope');
+            var $parentScope = parentScope ? the._getProp($parentEle, '$scope') : the._$rootScope;
+            var hasRepeat = false;
+            var deepList = [];
 
             attrs.forEach(function (attr) {
-                var attrInfo = the._getAttrInfo(node, attr);
+                var attrInfo = the._getAttrInfo($ele, attr);
 
                 if (!attrInfo) {
+                    the._setProp($ele, 'scope', parentScope);
+                    the._setProp($ele, '$scope', $parentScope);
                     return;
                 }
 
@@ -98,25 +112,85 @@ define(function (require, exports, module) {
                 var attrVal = attrInfo[1];
                 var expInfo = the._parseExpInfo(attrVal, attrType);
 
-                //the._attrMap[attrType] = the._attrMap[attrType] || [];
-                //the._attrMap[attrType].push({
-                //    node: node,
-                //    raw: attrVal,
-                //    type: attrType,
-                //    slices: expInfo
-                //});
+                // repeat
+                if (attrType === 'repeat') {
+                    hasRepeat = true;
 
-                the._views.push({
-                    node: node,
-                    raw: attrVal,
-                    type: attrType,
-                    slices: expInfo
+                    var keys = expInfo[0].keys;
+                    var repeatVarOfIndex = keys[0];
+                    var repeatVarOfValue = keys[1];
+                    var repeatVarOfKey = keys[2];
+                    var repeatVarOfScope = keys[3];
+                    var scope = the._joinScope(parentScope, repeatVarOfScope);
+                    var list = the._getScopeData(the.data, scope);
+                    var $pos = modification.create('#comment', the._id++);
+
+                    modification.insert($pos, $ele, 'afterend');
+                    modification.remove($ele);
+
+                    dato.each(list, function (index) {
+                        var $clone = $ele.cloneNode(true);
+                        var view = {
+                            index: index,
+                            $ele: $ele,
+                            parentScope: parentScope,
+                            scope: scope,
+                            $scope: $clone,
+                            repeat: {
+                                index: repeatVarOfIndex,
+                                value: repeatVarOfValue,
+                                key: repeatVarOfKey,
+                                scope: repeatVarOfScope
+                            }
+                        };
+
+                        the._setProp($clone, 'index', index);
+                        the._setProp($clone, 'scope', scope + '[' + index + ']');
+                        the._setProp($clone, '$scope', $clone);
+                        the._setProp($clone, 'view', view);
+                        modification.insert($clone, $pos, 'beforebegin');
+                        deepList.push($clone);
+                        the._views.push(view);
+                    });
+                } else {
+                    var view = {
+                        $ele: $ele,
+                        parentScope: parentScope,
+                        scope: parentScope,
+                        $scope: $parentScope,
+                        raw: attrVal,
+                        type: attrType,
+                        slices: expInfo
+                    };
+
+                    the._views.push(view);
+                    the._setProp($ele, 'scope', parentScope);
+                    the._setProp($ele, '$scope', $parentScope);
+                    the._setProp($ele, 'view', view);
+                }
+            });
+
+            if (!attrs.length) {
+                the._setProp($ele, 'scope', parentScope);
+                the._setProp($ele, '$scope', $parentScope);
+            }
+
+            if (hasRepeat) {
+                deepList.forEach(function ($ele) {
+                    var index = the._getProp($ele, 'index');
+                    var scope = the._getProp($ele, 'scope');
+
+                    selector.children($ele).forEach(function ($ele) {
+                        the._setProp($ele, 'scope', scope);
+                        the._setProp($ele, 'index', index);
+                        the._scan($ele);
+                    });
                 });
-            });
-
-            selector.children(node).forEach(function (node) {
-                the._parseAttr(node);
-            });
+            } else {
+                selector.children($ele).forEach(function ($ele) {
+                    the._scan($ele);
+                });
+            }
         },
 
 
@@ -124,150 +198,144 @@ define(function (require, exports, module) {
          * 渲染属性
          * @private
          */
-        _renderAttr: function () {
+        _render: function () {
             var the = this;
-            var inRepeat = 0;
-            var repeats = [];
 
             dato.each(the._views, function (index, view) {
                 var slices = view.slices;
-                var slice0 = slices[0];
-                var node = view.node;
 
-                if (view.type === 'repeat') {
-                    repeats.push(slice0.keys[2]);
-                    inRepeat++;
-                    view.$temp = node.cloneNode(true);
-                    view.repeats = repeats;
-                    view.$pos = modification.create('#comment', 'repeat');
-                    modification.insert(view.$pos, node, 'afterend');
-                    modification.remove(node);
-
-                    view.render = function () {
-                        var data = the._getRepeatData(view.repeats);
-                        dato.each(data || [], function (index, value) {
-                            modification.insert(view.$temp.cloneNode(true), view.$pos, 'beforebegin');
-                        });
-                    };
-
-                    view.render();
-
-                    watch()
+                if (!slices) {
+                    return;
                 }
+
+
+                var $ele = view.$ele;
+                var scopeData = the._scopeChain(view);
+
+                switch (view.type) {
+                    case 'html':
+                    case 'text':
+                    case 'model':
+                        view.render = function () {
+                            var map = {
+                                html: 'innerHTML',
+                                text: 'textContent',
+                                model: 'value'
+                            };
+                            var slice0 = slices[0];
+
+                            $ele[map[view.type]] = the._execScope(the._buildScope(slice0.exp, scopeData), scopeData);
+                        };
+                        break;
+
+                    case 'class':
+                        view.render = function () {
+                            dato.each(slices, function (index, slice) {
+                                var boolean = !!the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
+
+                                attribute[(boolean ? 'add' : 'remove') + 'Class']($ele, slice.key);
+                            });
+                        };
+                        break;
+
+                    case 'style':
+                    case 'attr':
+                    case 'prop':
+                    case 'data':
+                        view.render = function () {
+                            var map = {};
+
+                            dato.each(slices, function (index, slice) {
+                                map[slice.key] = the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
+                            });
+
+                            attribute[view.type]($ele, map);
+                        };
+                        break;
+                }
+
+                view.render();
             });
-
-
-            //var htmlList = the._attrMap.html;
-            //var styleList = the._attrMap.style;
-            //var classList = the._attrMap.class;
-            //
-            //// d-html
-            //dato.each(htmlList, function (index, item) {
-            //    var slices = item.slices;
-            //    var node = item.node;
-            //    var keys = [];
-            //
-            //    slices.forEach(function (slice) {
-            //        slice.parser = the._buildScope(slice.exp);
-            //        keys = keys.concat(slice.keys);
-            //    });
-            //
-            //    item.render = function () {
-            //        node.innerHTML = item.slices[0].parser.call(the, the.data);
-            //    };
-            //
-            //    item.render();
-            //
-            //    watch(the.data, keys, item.watcher = function (key, action, neo, old) {
-            //        item.render();
-            //    });
-            //});
-            //
-            //// d-style
-            //dato.each(styleList, function (index, item) {
-            //    var slices = item.slices;
-            //    var node = item.node;
-            //    var keys = [];
-            //
-            //    slices.forEach(function (slice) {
-            //        slice.parser = the._buildScope(slice.exp);
-            //        keys = keys.concat(slice.keys);
-            //    });
-            //
-            //    item.render = function () {
-            //        var styleSet = {};
-            //
-            //        item.slices.forEach(function (slice) {
-            //            styleSet[slice.key] = slice.parser.call(the, the.data);
-            //        });
-            //
-            //        attribute.css(node, styleSet);
-            //    };
-            //
-            //    item.render();
-            //
-            //    watch(the.data, keys, item.watcher = function (key, action, neo, old) {
-            //        item.render();
-            //    });
-            //});
-            //
-            //// d-class
-            //dato.each(classList, function (index, item) {
-            //    var slices = item.slices;
-            //    var node = item.node;
-            //    var keys = [];
-            //
-            //    slices.forEach(function (slice) {
-            //        slice.parser = the._buildScope(slice.exp);
-            //        keys = keys.concat(slice.keys);
-            //    });
-            //
-            //    item.render = function () {
-            //        var classSet = {};
-            //
-            //        item.slices.forEach(function (slice) {
-            //            classSet[slice.key] = slice.parser.call(the, the.data);
-            //        });
-            //
-            //        dato.each(classSet, function (className, boolean) {
-            //            attribute[(!!boolean ? 'add' : 'remove') + 'Class'](node, className);
-            //        });
-            //    };
-            //
-            //    item.render();
-            //
-            //    watch(the.data, keys, item.watcher = function (key, action, neo, old) {
-            //        item.render();
-            //    });
-            //});
         },
 
 
         /**
-         * 获取 repeat 层级数据
-         * @param repeats
+         * 作用域链
+         * @param view
+         * @private
+         */
+        _scopeChain: function (view) {
+            var the = this;
+            var scopeDatas = [];
+            /**
+             * 向上冒泡作用域
+             * @param view
+             */
+            var bubbleScope = function (view) {
+                var $scope = view.$scope;
+                var scopeView = the._getProp($scope, 'view');
+                var scopeData = {};
+
+                if (!scopeView || !scopeView.repeat) {
+                    return;
+                }
+
+                // 作用域在 repeat 内
+                if (scopeView && scopeView.repeat) {
+                    scopeData[scopeView.repeat.index] = scopeView.index;
+
+                    if (scopeView.repeat.key) {
+                        scopeData[scopeView.repeat.key] = the._getScopeData(the.data, scopeView.parentScope);
+                    }
+
+                    scopeData[scopeView.repeat.value] = the._getScopeData(the.data, scopeView.scope)[scopeView.index];
+                }
+
+                scopeDatas.unshift(scopeData);
+
+                var $parentEle = selector.parent(scopeView.$scope)[0];
+                var $parentScope = the._getProp($parentEle, '$scope');
+                var parentView = the._getProp($parentScope, 'view');
+
+                if (parentView) {
+                    bubbleScope(parentView);
+                }
+            };
+
+            bubbleScope(view);
+
+            return dato.extend.apply(dato, [{}].concat(scopeDatas));
+        },
+
+
+        /**
+         * 获取作用域数据
+         * @param parent
+         * @param scope
          * @returns {*}
          * @private
          */
-        _getRepeatData: function (repeats) {
-            var data = this.data;
+        _getScopeData: function (parent, scope) {
+            var scopeList = scope.split(REG_SCOPE_SPLIT);
 
-            repeats.forEach(function (repeat) {
-                data = data[repeat];
+            dato.each(scopeList, function (index, scope) {
+                if (scope) {
+                    parent = parent[scope];
+                }
             });
 
-            return data;
+            return parent;
         },
 
 
         /**
          * 获取属性绑定信息
-         * @param node
+         * @param $ele
          * @param attr
          * @returns {Array|null}
          * @private
          */
-        _getAttrInfo: function (node, attr) {
+        _getAttrInfo: function ($ele, attr) {
             var the = this;
             var nodeName = attr.nodeName;
 
@@ -276,11 +344,11 @@ define(function (require, exports, module) {
             }
 
             var type = nodeName.match(the._REG_ATTR_NAME)[1].toLowerCase();
-            var val = attribute.attr(node, nodeName);
+            var val = attribute.attr($ele, nodeName);
 
-            attribute.removeAttr(node, nodeName);
+            attribute.removeAttr($ele, nodeName);
 
-            return [type, val];
+            return [type, val, nodeName];
         },
 
 
@@ -318,9 +386,17 @@ define(function (require, exports, module) {
 
             if (isList) {
                 var matches = str.match(REG_LIST_ATTR);
+                var matche3 = matches[3].trim();
+                var key = matche3.match(REG_LIST_KEY)[1];
+                var scope = matche3.replace(REG_LIST_KEY, '');
+
+                if (!scope) {
+                    scope = key;
+                    key = '';
+                }
 
                 return [{
-                    keys: [(matches[1] || the._generateKey()).trim(), matches[2].trim(), matches[3].trim()],
+                    keys: [(matches[1] || the._generateKey()).trim(), matches[2].trim(), key, scope],
                     exp: str,
                     key: ''
                 }];
@@ -376,10 +452,11 @@ define(function (require, exports, module) {
         /**
          * 构建域函数
          * @param exp
+         * @param [scopeData]
          * @returns {function}
          * @private
          */
-        _buildScope: function (exp) {
+        _buildScope: function (exp, scopeData) {
             var the = this;
             var body = '';
             var _var = the._generateKey();
@@ -388,9 +465,44 @@ define(function (require, exports, module) {
                 body += 'var ' + key + '=' + _var + '["' + key + '"];';
             });
 
-            body += 'return ' + exp;
+            dato.each(scopeData || {}, function (key) {
+                body += 'var ' + key + '=' + _var + '["' + key + '"];';
+            });
 
-            return new Function(_var, body);
+            body += 'return ' + exp + ';';
+
+            var ret;
+
+            try {
+                /* jshint evil: true */
+                ret = new Function(_var, body);
+            } catch (err) {
+                ret = function () {
+                    return the._options.debug ? err.message : '';
+                };
+            }
+
+            return ret;
+        },
+
+
+        /**
+         * 执行域函数
+         * @param fn
+         * @param [scopeData]
+         * @private
+         */
+        _execScope: function (fn, scopeData) {
+            var the = this;
+            var ret = '';
+
+            try {
+                ret = fn.call(the, dato.extend({}, the.data, scopeData));
+            } catch (err) {
+                ret = the._options.debug ? err.message : '';
+            }
+
+            return ret;
         },
 
 
@@ -401,6 +513,48 @@ define(function (require, exports, module) {
          */
         _generateKey: function () {
             return PREFIX + Date.now() + random.string(10, 'aA0');
+        },
+
+
+        /**
+         * 合并表达式
+         * @param parentScope
+         * @param scope
+         * @returns {string}
+         * @private
+         */
+        _joinScope: function (parentScope, scope) {
+            var split = parentScope ? '.' : '';
+
+            return parentScope + split + scope;
+        },
+
+
+        /**
+         * 设置 DOM 属性
+         * @param $ele
+         * @param key
+         * @param val
+         * @private
+         */
+        _setProp: function ($ele, key, val) {
+            var the = this;
+
+            attribute.prop($ele, the._prefix + key, val);
+        },
+
+
+        /**
+         * 获取 DOM 属性
+         * @param $ele
+         * @param key
+         * @returns {*}
+         * @private
+         */
+        _getProp: function ($ele, key) {
+            var the = this;
+
+            return attribute.prop($ele, the._prefix + key);
         }
     });
 

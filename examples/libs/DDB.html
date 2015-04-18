@@ -24,7 +24,7 @@
         #demo {
             background: #ffff94;
             border: 4px solid #afaf66;
-            width: 200px;
+            width: 400px;
             margin: 40px;
             padding: 10px;
             font-size: 20px;
@@ -42,15 +42,50 @@
 
 
 <div id="demo">
-    <!--<p>a: <b d-html="a"></b></p>-->
-    <!--<p>b: <b d-html="b"></b></p>-->
-    <!--<p>c: <b d-html="c"></b></p>-->
-    <!--<p>d: <b d-html="d"></b></p>-->
+    <p d-class="class1: true, def: false" d-style="width: b/3, height: c/4">a: <b d-html="a"></b></p>
+
+    <div>
+        <p>b: <b d-html="b"></b></p>
+
+        <div>
+            <p>c: <b d-html="c"></b></p>
+
+            <p>d.e.f.g: <b d-html="d.e.f.g"></b></p>
+
+            <p>d.x.y.z（不存在）: <b d-html="d.x.y.z"></b></p>
+        </div>
+    </div>
 
     <ul>
         <li d-repeat="index,user: users">
-            <!--<span d-html="'#' + (index + 1)"></span>-->
-            <!--<span d-html="user.nickname + '('+user.id+')'"></span>-->
+            <p><span d-html="'#' + (index + 1)"></span></p>
+
+            <p><strong d-html="user.nickname + '('+user.id+')'"></strong></p>
+
+            <ul>
+                <li d-repeat="tag: user.tags">
+                    <div d-html="tag"></div>
+                </li>
+                <li d-repeat="child: user.love.children">
+                    child: <strong d-html="child.nickname"></strong>
+                </li>
+            </ul>
+
+            <ul>
+                <li d-repeat="child: user.love.children">
+                    <ul>
+                        <li d-repeat="tag: child.tags">
+                            <em d-html="'父级' + index + ' ' + user.nickname + '的：'"></em>
+                            <input type="text"
+                                   d-prop="disabled: true"
+                                   d-data="abc: 'def', index: index"
+                                   d-attr="hh: true, ee: 'ddd', index: index"
+                                   d-model="child.nickname"/>
+                            <span d-html="tag"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>
