@@ -195,6 +195,32 @@ define(function (require, exports, module) {
 
 
         /**
+         * 监听数据变化
+         * @param keys
+         * @param view
+         * @private
+         */
+        _watch: function (keys, view) {
+            var the = this;
+
+            watch(the.data, keys, function () {
+                view.render();
+            });
+        },
+
+
+        /**
+         * DOM 数据监听
+         * @param $ele
+         * @param eventType
+         * @private
+         */
+        _listen: function ($ele, eventType) {
+
+        },
+
+
+        /**
          * 渲染属性
          * @private
          */
@@ -208,9 +234,8 @@ define(function (require, exports, module) {
                     return;
                 }
 
-
                 var $ele = view.$ele;
-                var scopeData = the._scopeChain(view);
+                var slice0 = slices[0];
 
                 switch (view.type) {
                     case 'html':
@@ -222,14 +247,17 @@ define(function (require, exports, module) {
                                 text: 'textContent',
                                 model: 'value'
                             };
-                            var slice0 = slices[0];
+                            var scopeData = the._scopeChain(view);
 
                             $ele[map[view.type]] = the._execScope(the._buildScope(slice0.exp, scopeData), scopeData);
                         };
+                        the._watch(slice0.keys, view);
                         break;
 
                     case 'class':
                         view.render = function () {
+                            var scopeData = the._scopeChain(view);
+
                             dato.each(slices, function (index, slice) {
                                 var boolean = !!the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
 
@@ -244,6 +272,7 @@ define(function (require, exports, module) {
                     case 'data':
                         view.render = function () {
                             var map = {};
+                            var scopeData = the._scopeChain(view);
 
                             dato.each(slices, function (index, slice) {
                                 map[slice.key] = the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
@@ -427,6 +456,14 @@ define(function (require, exports, module) {
          * @param exp
          * @returns {Array}
          * @private
+         *
+         * @example
+         * "abc" + a.b.c["d"]
+         * =>
+         * {
+         *    key: "['a']['b']['c']['d']",
+         *    lv: "3"
+         * }
          */
         _pickKeys: function (exp) {
             while (REG_QUOTE.test(exp)) {

@@ -48,6 +48,7 @@ define(function (require, exports, module) {
     var template = require('html!./template.html');
     var tpl = new Template(template);
     var style = require('css!./style.css');
+    var alert = require('../../widgets/alert.js');
     var alienClass = 'alien-ui-editor';
     var alienIndex = 0;
     var RE_IMG_TYPE = /^image\//;
@@ -430,6 +431,7 @@ define(function (require, exports, module) {
                 }
             });
 
+            event.on(the._$wrapper, 'dragenter dragover', the._ondrag.bind(the));
             event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
             event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
             event.on(the._$wrapper, 'click', the._onclick.bind(the));
@@ -438,6 +440,15 @@ define(function (require, exports, module) {
 
         /**
          * 拖拽回调
+         * @private
+         */
+        _ondrag: function (eve) {
+            return false;
+        },
+
+
+        /**
+         * 释放回调
          * @private
          */
         _ondrop: function (eve) {
@@ -486,7 +497,7 @@ define(function (require, exports, module) {
                     if (file && file.size > 0) {
                         the._uploadList.push({
                             url: window.URL.createObjectURL(item.getAsFile()),
-                            file: item.getAsFile()
+                            file: file
                         });
                     }
                 }
@@ -498,10 +509,8 @@ define(function (require, exports, module) {
             } else if (eve.dataTransfer && eve.dataTransfer.files && eve.dataTransfer.files.length ||
                 eve.clipboardData && eve.clipboardData.files && eve.clipboardData.files.length) {
                 eve.preventDefault();
-                return new Msg({
-                    content: '请拖拽或粘贴图片文件',
-                    buttons: ['确定']
-                });
+
+                return alert('请拖拽或粘贴图片文件');
             }
         },
 
@@ -520,9 +529,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (typeis(options.uploadCallback) !== 'function') {
-                return new Msg({
-                    content: '尚未配置上传回调'
-                });
+                return alert('尚未配置上传回调');
             }
 
             if (the._dialog) {
@@ -555,13 +562,9 @@ define(function (require, exports, module) {
             };
             var ondone = function (err, list) {
                 var html = [];
-                var msg;
 
                 if (err) {
-                    msg = new Msg({
-                        content: err.message
-                    });
-                    msg.on('close', function () {
+                    alert(err.message).on('close', function () {
                         the.uploadDestroy();
                     });
                     return;
@@ -637,6 +640,7 @@ define(function (require, exports, module) {
 
             event.un(the._$scroller, 'scroll', the._onscroll);
             event.un(the._$wrapper, 'input', the._oninput);
+            event.un(the._$wrapper, 'dragenter dragover', the._ondrag);
             event.un(the._$wrapper, 'drop', the._ondrop);
             event.un(the._$wrapper, 'paste', the._onpaste);
             this._editor.toTextArea();
@@ -644,6 +648,7 @@ define(function (require, exports, module) {
     });
 
     markedRender.image = require('./marked-render-image.js');
+    markedRender.table = require('./marked-render-table.js');
     modification.importStyle(style);
     module.exports = Editor;
 });

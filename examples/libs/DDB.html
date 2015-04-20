@@ -31,6 +31,11 @@
             transition: all 1s;
         }
 
+        #demo::after {
+            content: "";
+            border: 1px solid #ddd;
+        }
+
         .class1 {
             color: #b12917;
             font-size: 40px;
@@ -42,52 +47,55 @@
 
 
 <div id="demo">
-    <p d-class="class1: true, def: false" d-style="width: b/3, height: c/4">a: <b d-html="a"></b></p>
+    <input type="text" d-model="d.e.f['g']"/>
+    <span d-html="d.e.f.g"></span>
+    <!--<p d-class="class1: true, def: false"-->
+    <!--d-style="width: b/3, height: c/4">a: <b d-html="a"></b></p>-->
 
-    <div>
-        <p>b: <b d-html="b"></b></p>
+    <!--<div>-->
+    <!--<p>b: <b d-html="b"></b></p>-->
 
-        <div>
-            <p>c: <b d-html="c"></b></p>
+    <!--<div>-->
+    <!--<p>c: <b d-html="c"></b></p>-->
 
-            <p>d.e.f.g: <b d-html="d.e.f.g"></b></p>
+    <!--<p>d.e.f.g: <b d-html="d.e.f.g"></b></p>-->
 
-            <p>d.x.y.z（不存在）: <b d-html="d.x.y.z"></b></p>
-        </div>
-    </div>
+    <!--<p>d.x.y.z（不存在）: <b d-html="d.x.y.z"></b></p>-->
+    <!--</div>-->
+    <!--</div>-->
 
-    <ul>
-        <li d-repeat="index,user: users">
-            <p><span d-html="'#' + (index + 1)"></span></p>
+    <!--<ul>-->
+    <!--<li d-repeat="index,user: users">-->
+    <!--<p><span d-html="'#' + (index + 1)"></span></p>-->
 
-            <p><strong d-html="user.nickname + '('+user.id+')'"></strong></p>
+    <!--<p><strong d-html="user.nickname + '('+user.id+')'"></strong></p>-->
 
-            <ul>
-                <li d-repeat="tag: user.tags">
-                    <div d-html="tag"></div>
-                </li>
-                <li d-repeat="child: user.love.children">
-                    child: <strong d-html="child.nickname"></strong>
-                </li>
-            </ul>
+    <!--<ul>-->
+    <!--<li d-repeat="tag: user.tags">-->
+    <!--<div d-html="tag"></div>-->
+    <!--</li>-->
+    <!--<li d-repeat="child: user.love.children">-->
+    <!--child: <strong d-html="child.nickname"></strong>-->
+    <!--</li>-->
+    <!--</ul>-->
 
-            <ul>
-                <li d-repeat="child: user.love.children">
-                    <ul>
-                        <li d-repeat="tag: child.tags">
-                            <em d-html="'父级' + index + ' ' + user.nickname + '的：'"></em>
-                            <input type="text"
-                                   d-prop="disabled: true"
-                                   d-data="abc: 'def', index: index"
-                                   d-attr="hh: true, ee: 'ddd', index: index"
-                                   d-model="child.nickname"/>
-                            <span d-html="tag"></span>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
+    <!--<ul>-->
+    <!--<li d-repeat="child: user.love.children">-->
+    <!--<ul>-->
+    <!--<li d-repeat="tag: child.tags">-->
+    <!--<em d-html="'父级' + index + ' ' + user.nickname + '的：'"></em>-->
+    <!--<input type="text"-->
+    <!--d-prop="disabled: true"-->
+    <!--d-data="abc: 'def', index: index"-->
+    <!--d-attr="hh: true, ee: 'ddd', index: index"-->
+    <!--d-model="child.nickname"/>-->
+    <!--<span d-html="tag"></span>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--</ul>-->
 </div>
 
 
