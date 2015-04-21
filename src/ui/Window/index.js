@@ -195,7 +195,7 @@ define(function (require, exports, module) {
             to.zIndex = ui.getZindex();
             to.scale = 0;
             attribute.css(the._$window, to);
-            animation.animate(the._$window, {
+            animation.transition(the._$window, {
                 scale: 1,
                 opacity: 1
             }, {
@@ -235,7 +235,7 @@ define(function (require, exports, module) {
 
             var to = the._getPos();
 
-            animation.animate(the._$window, to, {
+            animation.transition(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing.resize
             }, function () {
@@ -278,8 +278,7 @@ define(function (require, exports, module) {
             };
 
             the.visible = false;
-
-            animation.animate(the._$window, {
+            animation.transition(the._$window, {
                 scale: 0,
                 opacity: 0
             }, {

@@ -316,7 +316,7 @@ define(function (require, exports, module) {
             the._translate = the._itemLength > 2
                 ? -(the._direction === 'X' ? options.width : options.height) * (index + 1)
                 : 0;
-            animation.animate(the._$list, the._calTranslate(index + 1), {
+            animation.transition(the._$list, the._calTranslate(index + 1), {
                 duration: options.duration,
                 easing: options.easing
             }, function () {

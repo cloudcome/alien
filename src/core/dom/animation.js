@@ -81,6 +81,8 @@ define(function (require, exports, module) {
     var getProp = function ($ele, propKey) {
         return attribute.prop($ele, alienKey + propKey);
     };
+
+
     /**
      * 设置 prop
      * @param $ele
@@ -97,9 +99,8 @@ define(function (require, exports, module) {
      * @param $ele
      * @param to
      * @param options
-     * @param callback
      */
-    var transition = function ($ele, to, options, callback) {
+    var transition = function ($ele, to, options) {
         return function (next) {
             var easing = eeeing.css3[options.easing];
 
@@ -144,8 +145,23 @@ define(function (require, exports, module) {
                 easingVal.push(easing);
             });
 
+            var listener = function () {
+                clearTimeout(timeid);
+                attribute.css($ele, {
+                    transitionDuration: '',
+                    transitionDelay: '',
+                    transitionTimingFunction: '',
+                    transitionProperty: ''
+                });
+                event.un($ele, transitionendEventType, listener);
+                win[requestAnimationFrame](next);
+            };
+
+            event.on($ele, transitionendEventType, listener);
+            var timeid = setTimeout(listener, options.duration + options.delay + 100);
+
             if (see.visibility($ele) === 'visible') {
-                controller.nextTick(function () {
+                win[requestAnimationFrame](function () {
                     attribute.css($ele, {
                         transitionDuration: durationVal.join(','),
                         transitionDelay: delayVal.join(','),
@@ -156,11 +172,20 @@ define(function (require, exports, module) {
             } else {
                 win[requestAnimationFrame](function () {
                     attribute.css($ele, fixTo);
+                    next();
                 });
             }
 
-            callback();
-            next();
+            attribute.css($ele, {
+                transitionDuration: '',
+                transitionDelay: '',
+                transitionTimingFunction: '',
+                transitionProperty: ''
+            });
+
+            win[requestAnimationFrame](function () {
+                attribute.css($ele, fixTo);
+            });
         };
     };
 
@@ -201,8 +226,12 @@ define(function (require, exports, module) {
         }
 
         options = dato.extend({}, transitionDefaults, options);
-        queue.clear();
-        queue.push(transition($ele, to, options, callback));
+
+        /**
+         * 之前的任务出栈，永远保证只有一个任务在运行
+         */
+        queue.shift();
+        queue.push(transition($ele, to, options), callback);
         queue.begin();
     };
 

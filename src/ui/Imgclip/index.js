@@ -337,9 +337,9 @@ define(function (require, exports, module) {
                     }
 
                     animation.stop(the._$sele);
-                    animation.animate(the._$sele, selectionProp, animationOptions);
+                    animation.transition(the._$sele, selectionProp, animationOptions);
                     animation.stop(the._$img);
-                    animation.animate(the._$img, imgProp, animationOptions);
+                    animation.transition(the._$img, imgProp, animationOptions);
                     the._ratioSelection();
 
                     /**

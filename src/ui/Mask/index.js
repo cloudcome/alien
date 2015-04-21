@@ -190,7 +190,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             pos = dato.extend({}, the._getSize(), pos);
-            animation.animate(the._$mask, pos, {
+            animation.transition(the._$mask, pos, {
                 duation: options.duration,
                 easing: options.easing
             }, function () {

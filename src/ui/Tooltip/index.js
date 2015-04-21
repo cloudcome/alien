@@ -180,7 +180,7 @@ define(function (require, exports, module) {
             var $tip = the._$tooltip;
 
             attribute.css($tip, from);
-            animation.animate($tip, to, {
+            animation.transition($tip, to, {
                 duration: options.duration,
                 easing: options.easing
             }, callback);
