@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/Queue
+     * @requires utils/class
+     * @requires libs/Emitter
+     * @module libs/Queue
      */
     'use strict';
 

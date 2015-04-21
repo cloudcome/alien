@@ -31,6 +31,7 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
+    var Queue = require('../../libs/Queue.js');
     var cssDefaults = {
         easing: 'in-out',
         duration: 567,
@@ -65,6 +66,54 @@ define(function (require, exports, module) {
     var transitionMap = {};
     var animationMap = {};
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
+    /**
+     * 获取 prop
+     * @param $ele
+     * @param propKey
+     * @returns {*}
+     */
+    var getProp = function ($ele, propKey) {
+        return attribute.prop($ele, alienKey + propKey);
+    };
+    /**
+     * 设置 prop
+     * @param $ele
+     * @param propKey
+     * @param propVal
+     * @returns {*}
+     */
+    var setProp = function ($ele, propKey, propVal) {
+        return attribute.prop($ele, alienKey + propKey, propVal);
+    };
+
+
+    exports.transition = function ($ele, to, options, callback) {
+        var args = allocation.args(arguments);
+        var argL = args.length;
+
+        callback = args[argL - 1];
+
+        if (argL === 3) {
+            // .animate(element, to, callback);
+            if (typeis.function(args[2])) {
+                options = {};
+            }
+            // .animate(element, to, property);
+            else {
+                callback = noop;
+            }
+        }
+        // .animate(element, to);
+        else if (argL === 2) {
+            options = {};
+            callback = noop;
+        } else {
+            return;
+        }
+
+
+    };
+
 
     /**
      * 动画，不会判断当前动画终点与当前是否一致
@@ -90,6 +139,8 @@ define(function (require, exports, module) {
      * animation.animate(ele, to, property, callback);
      */
     exports.animate = function (ele, to, options, callback) {
+        console.warn('`animation.animate` is deprecated, please use `animation.transition`.');
+
         if (attribute.css(ele, 'display') === 'none') {
             return;
         }
