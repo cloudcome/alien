@@ -8,7 +8,7 @@ define(function (require) {
     window.animation = animation;
 
     demo.onclick = function () {
-        animation.animate(demo, {
+        animation.transition(demo, {
             width: 500,
             height: 500,
             transform: 'scale(1)'

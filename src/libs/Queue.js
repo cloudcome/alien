@@ -13,6 +13,10 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var noop = function () {
+        //
+    };
+    var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
     var Emitter = require('./Emitter.js');
     var STATES = {
@@ -48,7 +52,8 @@ define(function (require, exports, module) {
 
         /**
          * 任务入队列
-         * @param did {Function}
+         * @param task {Function}
+         * @param [callback] {Function}
          * @returns {Queue}
          *
          * @example
@@ -57,10 +62,15 @@ define(function (require, exports, module) {
          *     next();
          * });
          */
-        push: function (did) {
+        push: function (task, callback) {
             var the = this;
 
-            the._queueList.push(did);
+            callback = typeis.function(callback) ? callback : noop;
+            the._queueList.push({
+                t: task,
+                c: callback
+            });
+
             /**
              * @event push
              */
@@ -77,7 +87,15 @@ define(function (require, exports, module) {
         shift: function () {
             var the = this;
 
-            the._queueList.shift();
+            var item = the._queueList.shift();
+
+            if (item) {
+                /**
+                 * 任务虽然没有完成，但还是要执行回调
+                 */
+                item.c();
+            }
+
             /**
              * @event shift
              */
@@ -132,9 +150,9 @@ define(function (require, exports, module) {
                     return the;
                 }
 
-                var task = the._queueList.shift();
+                var item = the._queueList.shift();
 
-                if (!task) {
+                if (!item) {
                     the.state = STATES.ready;
                     /**
                      * @event done
@@ -143,11 +161,12 @@ define(function (require, exports, module) {
                     return the;
                 }
 
-                task.call(the, function () {
+                item.t.call(the, function () {
                     /**
                      * @event step
                      */
                     the.emit('step');
+                    item.c();
                     next();
                 });
             };
@@ -199,6 +218,13 @@ define(function (require, exports, module) {
          */
         stop: function () {
             var the = this;
+
+            /**
+             * 停止任务之前，需要依次执行之前注册的回调
+             */
+            the._queueList.forEach(function (item) {
+                item.c();
+            });
 
             the._queueList = [];
 

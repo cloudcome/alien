@@ -42,6 +42,11 @@ define(function (require, exports, module) {
         duration: 567,
         delay: 0
     };
+    var transitionDefaults = {
+        easing: 'in-out',
+        duration: 567,
+        delay: 0
+    };
     var animationDefaults = {
         name: '',
         easing: 'in-out',
@@ -65,7 +70,8 @@ define(function (require, exports, module) {
     var index = 0;
     var transitionMap = {};
     var animationMap = {};
-    var requestAnimationFrame = compatible.html5('requestAnimationFrame', window);
+    var win = window;
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     /**
      * 获取 prop
      * @param $ele
@@ -86,7 +92,86 @@ define(function (require, exports, module) {
         return attribute.prop($ele, alienKey + propKey, propVal);
     };
 
+    /**
+     * 过渡动画
+     * @param $ele
+     * @param to
+     * @param options
+     * @param callback
+     */
+    var transition = function ($ele, to, options, callback) {
+        return function (next) {
+            var easing = eeeing.css3[options.easing];
 
+            if (!easing) {
+                easing = options.easing;
+            }
+
+            var fixTo = {};
+            var keys = [];
+
+            dato.each(to, function (key, val) {
+                var obj = attribute.fixCss(key, val);
+                var temp = {};
+
+                temp[obj.key] = obj.val;
+
+                dato.extend(fixTo, temp);
+                keys.push(obj.key);
+            });
+
+            // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
+            // 因此，此时需要计算出 left、top 值
+            if (keys.indexOf('left') > -1) {
+                // 先定位好
+                attribute.left($ele, attribute.left($ele));
+                attribute.css($ele, 'left', dato.parseFloat(attribute.css($ele, 'left'), 0));
+            }
+
+            if (keys.indexOf('top') > -1) {
+                // 先定位好
+                attribute.top($ele, attribute.top($ele));
+                attribute.css($ele, 'top', dato.parseFloat(attribute.css($ele, 'top'), 0));
+            }
+
+            var durationVal = [];
+            var delayVal = [];
+            var easingVal = [];
+
+            dato.each(keys, function () {
+                durationVal.push(options.duration + 'ms');
+                delayVal.push(options.delay + 'ms');
+                easingVal.push(easing);
+            });
+
+            if (see.visibility($ele) === 'visible') {
+                controller.nextTick(function () {
+                    attribute.css($ele, {
+                        transitionDuration: durationVal.join(','),
+                        transitionDelay: delayVal.join(','),
+                        transitionTimingFunction: easingVal.join(','),
+                        transitionProperty: keys.join(',')
+                    });
+                });
+            } else {
+                win[requestAnimationFrame](function () {
+                    attribute.css($ele, fixTo);
+                });
+            }
+
+            callback();
+            next();
+        };
+    };
+
+
+    /**
+     * css3 transition 动画
+     * @param $ele
+     * @param to
+     * @param options
+     * @param callback
+     */
     exports.transition = function ($ele, to, options, callback) {
         var args = allocation.args(arguments);
         var argL = args.length;
@@ -107,11 +192,18 @@ define(function (require, exports, module) {
         else if (argL === 2) {
             options = {};
             callback = noop;
-        } else {
-            return;
         }
 
+        var queue = getProp($ele, 'queue');
 
+        if (!queue) {
+            setProp($ele, 'queue', queue = new Queue());
+        }
+
+        options = dato.extend({}, transitionDefaults, options);
+        queue.clear();
+        queue.push(transition($ele, to, options, callback));
+        queue.begin();
     };
 
 
