@@ -20,6 +20,7 @@ define(function (require, exports, module) {
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
+    var event = require('../core/event/touch.js');
     var klass = require('../utils/class.js');
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
@@ -47,7 +48,8 @@ define(function (require, exports, module) {
     var REG_LIST_ATTR = /^(?:(.*?)\s*?,\s*?)?(.*?):\s*?(.*)$/;
     var REG_LIST_KEY = /^([^.[]*)[.[]?/;
     var REG_SCOPE_SPLIT = /[[\].]/g;
-    var SINGLE_ATTRS = ['html', 'text', 'model'];
+    var REG_FIRST_POINT = /^([^.]*)\./;
+    var SINGLE_ATTRS = ['html', 'text', 'model', 'value'];
     var LIST_ATTRS = ['repeat'];
     var defaults = {
         prefix: 'd',
@@ -80,8 +82,10 @@ define(function (require, exports, module) {
             the._attrMap = {};
             the._views = [];
             the._id = 0;
+            the._hasReady = false;
             the._scan(the._$rootScope);
             the._render();
+            the._watch();
         },
 
 
@@ -110,17 +114,17 @@ define(function (require, exports, module) {
 
                 var attrType = attrInfo[0];
                 var attrVal = attrInfo[1];
-                var expInfo = the._parseExpInfo(attrVal, attrType);
+                var expInfo = the._parseSlices(attrVal, attrType);
 
                 // repeat
                 if (attrType === 'repeat') {
                     hasRepeat = true;
 
-                    var keys = expInfo[0].keys;
-                    var repeatVarOfIndex = keys[0];
-                    var repeatVarOfValue = keys[1];
-                    var repeatVarOfKey = keys[2];
-                    var repeatVarOfScope = keys[3];
+                    var repeatKeys = expInfo[0][attrType];
+                    var repeatVarOfIndex = repeatKeys[0];
+                    var repeatVarOfValue = repeatKeys[1];
+                    var repeatVarOfKey = repeatKeys[2];
+                    var repeatVarOfScope = repeatKeys[3];
                     var scope = the._joinScope(parentScope, repeatVarOfScope);
                     var list = the._getScopeData(the.data, scope);
                     var $pos = modification.create('#comment', the._id++);
@@ -195,32 +199,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 监听数据变化
-         * @param keys
-         * @param view
-         * @private
-         */
-        _watch: function (keys, view) {
-            var the = this;
-
-            watch(the.data, keys, function () {
-                view.render();
-            });
-        },
-
-
-        /**
-         * DOM 数据监听
-         * @param $ele
-         * @param eventType
-         * @private
-         */
-        _listen: function ($ele, eventType) {
-
-        },
-
-
-        /**
          * 渲染属性
          * @private
          */
@@ -241,17 +219,29 @@ define(function (require, exports, module) {
                     case 'html':
                     case 'text':
                     case 'model':
+                    case 'value':
                         view.render = function () {
                             var map = {
                                 html: 'innerHTML',
                                 text: 'textContent',
-                                model: 'value'
+                                model: 'value',
+                                value: 'value'
                             };
                             var scopeData = the._scopeChain(view);
+                            var ret = the._execScope(the._buildScope(false, slice0.exp, scopeData), scopeData);
 
-                            $ele[map[view.type]] = the._execScope(the._buildScope(slice0.exp, scopeData), scopeData);
+                            if ($ele[map[view.type]] === ret) {
+                                return;
+                            }
+
+                            if (view.type === 'model' && !the._hasReady) {
+                                the._oninput(view);
+                            }
+
+                            if (!(view.type === 'model' && the._hasReady)) {
+                                $ele[map[view.type]] = ret;
+                            }
                         };
-                        the._watch(slice0.keys, view);
                         break;
 
                     case 'class':
@@ -259,7 +249,7 @@ define(function (require, exports, module) {
                             var scopeData = the._scopeChain(view);
 
                             dato.each(slices, function (index, slice) {
-                                var boolean = !!the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
+                                var boolean = !!the._execScope(the._buildScope(false, slice.exp, scopeData), scopeData);
 
                                 attribute[(boolean ? 'add' : 'remove') + 'Class']($ele, slice.key);
                             });
@@ -275,7 +265,7 @@ define(function (require, exports, module) {
                             var scopeData = the._scopeChain(view);
 
                             dato.each(slices, function (index, slice) {
-                                map[slice.key] = the._execScope(the._buildScope(slice.exp, scopeData), scopeData);
+                                map[slice.key] = the._execScope(the._buildScope(false, slice.exp, scopeData), scopeData);
                             });
 
                             attribute[view.type]($ele, map);
@@ -284,6 +274,39 @@ define(function (require, exports, module) {
                 }
 
                 view.render();
+            });
+
+            the._hasReady = true;
+        },
+
+
+        /**
+         * 监听数据变化
+         * @private
+         */
+        _watch: function () {
+            var the = this;
+
+            watch(the.data, function () {
+                the._render();
+            });
+        },
+
+
+        /**
+         * oninput 监听
+         * @param view
+         * @private
+         */
+        _oninput: function (view) {
+            var the = this;
+            var $ele = view.$ele;
+            var slice = view.slices[0];
+            var scope = view.scope;
+
+            slice._s = the._buildScope(true, the._joinScope(scope, slice.exp.replace(REG_FIRST_POINT, '')));
+            event.on($ele, 'input', function () {
+                slice._s.call(the, this.value);
             });
         },
 
@@ -398,7 +421,7 @@ define(function (require, exports, module) {
          *
          * // index,item: list
          */
-        _parseExpInfo: function (str, attrType) {
+        _parseSlices: function (str, attrType) {
             str = str.trim();
 
             var the = this;
@@ -407,9 +430,7 @@ define(function (require, exports, module) {
 
             if (isSingle) {
                 return [{
-                    keys: the._pickKeys(str),
-                    exp: str,
-                    key: ''
+                    exp: str
                 }];
             }
 
@@ -425,9 +446,8 @@ define(function (require, exports, module) {
                 }
 
                 return [{
-                    keys: [(matches[1] || the._generateKey()).trim(), matches[2].trim(), key, scope],
-                    exp: str,
-                    key: ''
+                    repeat: [(matches[1] || the._generateKey()).trim(), matches[2].trim(), key, scope],
+                    exp: str
                 }];
             }
 
@@ -439,7 +459,6 @@ define(function (require, exports, module) {
                 var temp0 = temp[0].trim();
                 var temp1 = temp[1].trim();
                 var obj = {
-                    keys: the._pickKeys(temp1),
                     exp: temp1,
                     key: temp0
                 };
@@ -452,61 +471,31 @@ define(function (require, exports, module) {
 
 
         /**
-         * 提取键
-         * @param exp
-         * @returns {Array}
-         * @private
-         *
-         * @example
-         * "abc" + a.b.c["d"]
-         * =>
-         * {
-         *    key: "['a']['b']['c']['d']",
-         *    lv: "3"
-         * }
-         */
-        _pickKeys: function (exp) {
-            while (REG_QUOTE.test(exp)) {
-                exp = exp
-                    .replace(REG_SINGLE_STRING, '')
-                    .replace(REG_DOUBLE_STRING, '');
-            }
-
-            var ret = [];
-
-            exp.split(REG_OPERATORS).forEach(function (item) {
-                item = item.trim();
-
-                if (item) {
-                    ret.push(item);
-                }
-            });
-
-            return ret;
-        },
-
-
-        /**
          * 构建域函数
+         * @param isSet
          * @param exp
          * @param [scopeData]
          * @returns {function}
          * @private
          */
-        _buildScope: function (exp, scopeData) {
+        _buildScope: function (isSet, exp, scopeData) {
             var the = this;
-            var body = '';
             var _var = the._generateKey();
+            var body = '';
 
-            dato.each(the.data, function (key) {
-                body += 'var ' + key + '=' + _var + '["' + key + '"];';
-            });
+            if (isSet) {
+                body = 'this.data.' + exp + '=' + _var + ';';
+            } else {
+                dato.each(the.data, function (key) {
+                    body += 'var ' + key + '=' + _var + '["' + key + '"];';
+                });
 
-            dato.each(scopeData || {}, function (key) {
-                body += 'var ' + key + '=' + _var + '["' + key + '"];';
-            });
+                dato.each(scopeData || {}, function (key) {
+                    body += 'var ' + key + '=' + _var + '["' + key + '"];';
+                });
 
-            body += 'return ' + exp + ';';
+                body += 'return ' + exp + ';';
+            }
 
             var ret;
 

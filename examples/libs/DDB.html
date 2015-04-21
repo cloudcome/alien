@@ -47,8 +47,8 @@
 
 
 <div id="demo">
-    <input type="text" d-model="d.e.f['g']"/>
-    <span d-html="d.e.f.g"></span>
+    <!--<input type="text" d-model="d.e.f['g']"/>-->
+    <!--<span d-html="d.e.f.g"></span>-->
     <!--<p d-class="class1: true, def: false"-->
     <!--d-style="width: b/3, height: c/4">a: <b d-html="a"></b></p>-->
 
@@ -64,11 +64,15 @@
     <!--</div>-->
     <!--</div>-->
 
-    <!--<ul>-->
-    <!--<li d-repeat="index,user: users">-->
+    <ul>
+        <li d-repeat="index,user: users">
     <!--<p><span d-html="'#' + (index + 1)"></span></p>-->
 
-    <!--<p><strong d-html="user.nickname + '('+user.id+')'"></strong></p>-->
+            <p>model: <input type="text" d-model="user.nickname"/></p>
+
+            <p>value: <input type="text" d-value="user.nickname"/></p>
+
+            <p><strong d-html="user.nickname + '('+user.id+')'"></strong></p>
 
     <!--<ul>-->
     <!--<li d-repeat="tag: user.tags">-->
@@ -77,7 +81,7 @@
     <!--<li d-repeat="child: user.love.children">-->
     <!--child: <strong d-html="child.nickname"></strong>-->
     <!--</li>-->
-    <!--</ul>-->
+    </ul>
 
     <!--<ul>-->
     <!--<li d-repeat="child: user.love.children">-->
