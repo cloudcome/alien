@@ -256,7 +256,6 @@ define(function (require, exports, module) {
             callback = typeis.function(callback) ? callback : noop;
 
             if (!the.visible) {
-                animation.stop(the._$window);
                 callback.call(the);
                 return the;
             }

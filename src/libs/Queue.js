@@ -25,9 +25,11 @@ define(function (require, exports, module) {
         pause: 3,
         stop: 4
     };
+    var index = 0;
     var Queue = klass.create(function () {
         var the = this;
 
+        the.id = index++;
         the._queueList = [];
         the.state = STATES.ready;
         the._initEvent();

@@ -121,7 +121,7 @@ define(function (require, exports, module) {
                                 });
                             } else {
                                 howdo.each(queue.$eles, function (k, $ele, done) {
-                                    animation.animate($ele, queue.to, queue.options, done);
+                                    animation.transition($ele, queue.to, queue.options, done);
                                 }).together(function () {
                                     /**
                                      * 动画发生变化时
