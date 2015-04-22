@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      *
      * @module core/dom/animation
      * @requires core/dom/attribute
+     * @requires core/dom/selector
      * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
 
     var udf;
     var attribute = require('./attribute.js');
+    var selector = require('./selector.js');
     var see = require('./see.js');
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
@@ -32,22 +34,12 @@ define(function (require, exports, module) {
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
     var Queue = require('../../libs/Queue.js');
-    var cssDefaults = {
-        easing: 'in-out',
-        duration: 567,
-        delay: 0
-    };
-    var jsDefaults = {
-        easing: 'swing',
-        duration: 567,
-        delay: 0
-    };
     var transitionDefaults = {
         easing: 'in-out',
         duration: 567,
         delay: 0
     };
-    var animationDefaults = {
+    var keyframesDefaults = {
         name: '',
         easing: 'in-out',
         duration: 567,
@@ -55,21 +47,21 @@ define(function (require, exports, module) {
         count: 1,
         direction: 'normal'
     };
-    var css = 'transition-property';
+    //var css = 'transition-property';
     //var transitionendEventPrefix = compatible.css3(css).replace(css, '').replace(/-/g, '');
     //var transitionendEventType = transitionendEventPrefix ? transitionendEventPrefix + 'TransitionEnd' : 'transitionend';
     //var animationendEventType = compatible.html5('onanimationend', window, true);
     //var animationiterationEventType = compatible.html5('onanimationiteration', window, true);
     var animationendEventType = 'webkitAnimationEnd oanimationend msAnimationEnd mozAnimationEnd animationend';
-    var animationiterationEventType = 'webkitAnimationIteration oAnimationIteration msAnimationIteration mozAnimationIteration animationiteration';
+    //var animationiterationEventType = 'webkitAnimationIteration oAnimationIteration msAnimationIteration mozAnimationIteration animationiteration';
     var transitionendEventType = 'webkitTransitionEnd oTransitionEnd msTransitionEnd mozTransitionEnd transitionend';
     var noop = function () {
         // ignore
     };
     var alienKey = '-alien-core-dom-animation-';
-    var index = 0;
-    var transitionMap = {};
-    var animationMap = {};
+    var propTransitionKey = 'transition-queue';
+    var propKeyframesKey = 'keyframes-queue';
+    var propScrollToKey = 'scrollto-queue';
     var win = window;
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     /**
@@ -94,21 +86,11 @@ define(function (require, exports, module) {
         return attribute.prop($ele, alienKey + propKey, propVal);
     };
 
-    /**
-     * 过渡动画
-     * @param $ele
-     * @param to
-     * @param options
-     */
+
+    // 过渡动画
     var transition = function ($ele, to, options) {
         return function (next) {
-            var the = this;
-            var easing = eeeing.css3[options.easing];
-
-            if (!easing) {
-                easing = options.easing;
-            }
-
+            var easing = eeeing.get(options.easing).toCSS();
             var fixTo = {};
             var keys = [];
 
@@ -121,8 +103,6 @@ define(function (require, exports, module) {
                 dato.extend(fixTo, temp);
                 keys.push(obj.key);
             });
-
-            transitionMap[the.id] = fixTo;
 
             // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
             // 因此，此时需要计算出 left、top 值
@@ -148,7 +128,7 @@ define(function (require, exports, module) {
                 easingVal.push(easing);
             });
 
-            var listener = function () {
+            var onend = function () {
                 clearTimeout(timeid);
                 attribute.css($ele, {
                     transitionDuration: '',
@@ -156,14 +136,13 @@ define(function (require, exports, module) {
                     transitionTimingFunction: '',
                     transitionProperty: ''
                 });
-                transitionMap[the.id] = null;
-                event.un($ele, transitionendEventType, listener);
+                event.un($ele, transitionendEventType, onend);
                 win[requestAnimationFrame](next);
             };
 
-            event.on($ele, transitionendEventType, listener);
+            event.on($ele, transitionendEventType, onend);
 
-            var timeid = setTimeout(listener, options.duration + options.delay + 100);
+            var timeid = setTimeout(onend, options.duration + options.delay + 100);
 
             if (see.visibility($ele) === 'visible') {
                 win[requestAnimationFrame](function () {
@@ -206,14 +185,15 @@ define(function (require, exports, module) {
         var args = allocation.args(arguments);
         var argL = args.length;
 
-        callback = args[argL - 1];
+        $ele = selector.query($ele)[0];
 
         if (argL === 3) {
             // .animate(element, to, callback);
             if (typeis.function(args[2])) {
+                callback = args[2];
                 options = {};
             }
-            // .animate(element, to, property);
+            // .animate(element, to, options);
             else {
                 callback = noop;
             }
@@ -224,13 +204,13 @@ define(function (require, exports, module) {
             callback = noop;
         }
 
-        var queue = getProp($ele, 'queue');
+        options = dato.extend({}, transitionDefaults, options);
+
+        var queue = getProp($ele, propTransitionKey);
 
         if (!queue) {
-            setProp($ele, 'queue', queue = new Queue());
+            setProp($ele, propTransitionKey, queue = new Queue());
         }
-
-        options = dato.extend({}, transitionDefaults, options);
 
         /**
          * 之前的任务出栈，永远保证只有一个任务在运行
@@ -241,204 +221,40 @@ define(function (require, exports, module) {
     };
 
 
-    ///**
-    // * 动画，不会判断当前动画终点与当前是否一致
-    // *
-    // * @param {HTMLElement|Node} ele 元素
-    // * @param {Object} to 终点
-    // * @param {Object} [options] 配置
-    // * @param {String} [options.easing] 缓冲类型，默认为`in-out`，内置的有
-    // * in、out、in-out、snap、linear、ease-in-quad、ease-in-cubic、ease-in-quart、
-    // * ease-in-sine、ease-in-expo、ease-in-circ、ease-in-back、ease-out-quad、
-    // * ease-out-cubic、ease-out-quart、ease-out-sine、ease-out-expo、ease-out-circ、
-    // * ease-out-back、ease-in-out-quad、ease-in-out-cubic、ease-in-out-quart、ease-in-out-sine、
-    // * ease-in-out-expo、ease-in-out-circ、ease-in-out-back，也可以提供自定义的缓冲类型，格式为 css3的
-    // * `ransition-timing-function`的值，为`cubic-bezier(...)`
-    // * @param {Number} [options.duration=567] 动画时间，默认789，单位ms
-    // * @param {Number} [options.delay=0] 延迟时间，默认0，单位ms
-    // * @param {Function} [callback] 回调
-    // *
-    // * @example
-    // * animation.animate(ele, to);
-    // * animation.animate(ele, to, property);
-    // * animation.animate(ele, to, callback);
-    // * animation.animate(ele, to, property, callback);
-    // */
-    //exports.animate = function (ele, to, options, callback) {
-    //    console.warn('`animation.animate` is deprecated, please use `animation.transition`.');
-    //
-    //    if (attribute.css(ele, 'display') === 'none') {
-    //        return;
-    //    }
-    //
-    //    if (!ele[alienKey]) {
-    //        ele[alienKey] = ++index;
-    //    }
-    //
-    //    var id = ele[alienKey];
-    //    var args = allocation.args(arguments);
-    //    var argL = args.length;
-    //    var keys = [];
-    //    var hasDispatch = false;
-    //    // 修正 CSS 终点
-    //    var fixTo = {};
-    //    var durationVal = [];
-    //    var delayVal = [];
-    //    var easingVal = [];
-    //    var i = 0;
-    //
-    //    // 如果正在动画，则停止当前动画
-    //    if (transitionMap[id]) {
-    //        exports.stop(ele);
-    //    }
-    //
-    //    options = dato.extend({}, cssDefaults, options);
-    //    callback = args[argL - 1];
-    //
-    //    if (argL === 3) {
-    //        // .animate(element, to, callback);
-    //        if (typeis(args[2]) === 'function') {
-    //            options = {};
-    //        }
-    //        // .animate(element, to, property);
-    //        else {
-    //            callback = noop;
-    //        }
-    //    }
-    //    // .animate(element, to);
-    //    else if (argL === 2) {
-    //        options = {};
-    //        callback = noop;
-    //    }
-    //
-    //    var listener = function (eve) {
-    //        if (timeid) {
-    //            clearTimeout(timeid);
-    //            timeid = 0;
-    //        }
-    //
-    //        if (eve === true || eve && eve.target === ele) {
-    //            if (hasDispatch) {
-    //                return;
-    //            }
-    //
-    //            hasDispatch = true;
-    //            transitionMap[id] = null;
-    //            event.un(ele, transitionendEventType, listener);
-    //            attribute.css(ele, {
-    //                transitionDuration: '',
-    //                transitionDelay: '',
-    //                transitionTimingFunction: '',
-    //                transitionProperty: ''
-    //            });
-    //
-    //            window[requestAnimationFrame](callback.bind(ele));
-    //        }
-    //    };
-    //
-    //
-    //    event.on(ele, transitionendEventType, listener);
-    //    var timeid = setTimeout(function () {
-    //        listener(true);
-    //    }, options.duration + options.delay + 100);
-    //    options = dato.extend({}, cssDefaults, options);
-    //
-    //    var easing = eeeing.css3[options.easing];
-    //
-    //    if (!easing) {
-    //        easing = options.easing;
-    //    }
-    //
-    //    dato.each(to, function (key, val) {
-    //        var obj = attribute.fixCss(key, val);
-    //        var temp = {};
-    //        temp[obj.key] = obj.val;
-    //
-    //        dato.extend(fixTo, temp);
-    //        keys.push(obj.key);
-    //    });
-    //
-    //    transitionMap[id] = fixTo;
-    //
-    //    // 如果动画中包含 left、top 要格外注意，当初始值为 auto 时会发生动画瞬间完成，
-    //    // 因此，此时需要计算出 left、top 值
-    //    if (keys.indexOf('left') > -1) {
-    //        // 先定位好
-    //        attribute.left(ele, attribute.left(ele));
-    //        attribute.css(ele, 'left', dato.parseFloat(attribute.css(ele, 'left'), 0));
-    //    }
-    //
-    //    if (keys.indexOf('top') > -1) {
-    //        // 先定位好
-    //        attribute.top(ele, attribute.top(ele));
-    //        attribute.css(ele, 'top', dato.parseFloat(attribute.css(ele, 'top'), 0));
-    //    }
-    //
-    //    for (; i < keys.length; i++) {
-    //        durationVal.push(options.duration + 'ms');
-    //        delayVal.push(options.delay + 'ms');
-    //        easingVal.push(easing);
-    //    }
-    //
-    //    if (see.visibility(ele) === 'visible') {
-    //        controller.nextTick(function () {
-    //            attribute.css(ele, {
-    //                transitionDuration: durationVal.join(','),
-    //                transitionDelay: delayVal.join(','),
-    //                transitionTimingFunction: easingVal.join(','),
-    //                transitionProperty: keys.join(',')
-    //            });
-    //        });
-    //    } else {
-    //        window[requestAnimationFrame](function () {
-    //            attribute.css(ele, fixTo);
-    //        });
-    //        listener(true);
-    //    }
-    //
-    //    window[requestAnimationFrame](function () {
-    //        attribute.css(ele, fixTo);
-    //    });
-    //};
+    // 帧动画
+    var keyframes = function ($ele, name, options) {
+        return function (next) {
+            var easing = eeeing.get(options.easing).toCSS();
+            var css = {
+                animationName: name,
+                animationDuration: options.duration + 'ms',
+                animationTimingFunction: easing,
+                animationDelay: options.delay + 'ms',
+                animationIterationCount: options.count,
+                animationDirection: options.direction
+            };
 
+            var onend = function () {
+                clearTimeout(timeid);
+                event.un($ele, animationendEventType, onend);
+                attribute.css($ele, {
+                    animationName: '',
+                    animationDuration: '',
+                    animationTimingFunction: '',
+                    animationDelay: '',
+                    animationIterationCount: '',
+                    animationDirection: ''
+                });
+                win[requestAnimationFrame](next);
+            };
 
-    ///**
-    // * 停止当前动画
-    // * @param $ele {HTMLElement|Node} 元素
-    // * @param [toEnd=false] {Boolean} 是否立即停止到动画终点，默认 false
-    // * @returns {undefined}
-    // *
-    // * @example
-    // * animation.top($ele, true);
-    // * animation.top($ele, false);
-    // */
-    //exports.stop = function ($ele, toEnd) {
-    //    var queue = getProp($ele, 'queue');
-    //
-    //    if (!queue) {
-    //        return;
-    //    }
-    //
-    //    var to = transitionMap[queue.id];
-    //
-    //    if (!to) {
-    //        return;
-    //    }
-    //
-    //    queue.stop();
-    //    attribute.css($ele, {
-    //        transitionDuration: '',
-    //        transitionDelay: '',
-    //        transitionTimingFunction: '',
-    //        transitionProperty: ''
-    //    });
-    //
-    //    if (!toEnd) {
-    //        var now = attribute.css($ele, Object.keys(to));
-    //
-    //        attribute.css($ele, now);
-    //    }
-    //};
+            var timeid = setTimeout(onend, options.duration + options.delay + 100);
+            event.on($ele, animationendEventType, onend);
+            win[requestAnimationFrame](function () {
+                attribute.css($ele, css);
+            });
+        };
+    };
 
 
     // animation-name	规定需要绑定到选择器的 keyframe 名称。。
@@ -448,85 +264,127 @@ define(function (require, exports, module) {
     // animation-iteration-count	规定动画应该播放的次数。
     // animation-direction	规定是否应该轮流反向播放动画。
     /**
-     * 运行一段帧动画，并监听动画回调
-     * @param ele {HTMLElement|Node} 元素
-     * @param options {Object} 配置
-     * @param options.name {String} 关键帧名称
+     * 运行一段帧动画，并监听帧动画回调
+     * @param $ele {HTMLElement|String} 元素
+     * @param name {String|Object} 帧动画名称
+     * @param [options] {Object} 配置
      * @param [options.duration=567] {Number} 动画时间
      * @param [options.delay=0] {Number} 开始动画延迟时间
      * @param [options.easing="in-out"] {String} 动画缓冲类型
      * @param [options.count=1] {Number} 动画次数
      * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate
-     * @param [onanimationend] {Function} 动画结束回调
-     * @param [onanimationiteration] {Function} 动画迭代回调
+     * @param [callback] {Function} 帧动画动画运行完毕回调
      */
-    exports.keyframes = function (ele, options, onanimationend, onanimationiteration) {
-        options = dato.extend({}, animationDefaults, options);
+    exports.keyframes = function ($ele, name, options, callback) {
+        var args = allocation.args(arguments);
+        var argL = args.length;
 
-        if (!options.name) {
-            return;
+        $ele = selector.query($ele)[0];
+
+        if (argL === 3) {
+            // .animate(element, name, callback);
+            if (typeis.function(args[2])) {
+                callback = args[2];
+                options = {};
+            }
+            // .animate(element, name, options);
+            else {
+                callback = noop;
+            }
+        }
+        // .animate(element, name);
+        else if (argL === 2) {
+            options = {};
+            callback = noop;
         }
 
-        if (!ele[alienKey]) {
-            ele[alienKey] = ++index;
+        options = dato.extend({}, keyframesDefaults, options);
+
+        var queue = getProp($ele, propKeyframesKey);
+
+        if (!queue) {
+            setProp($ele, propKeyframesKey, queue = new Queue());
         }
 
-        var id = ele[alienKey];
+        /**
+         * 之前的任务出栈，永远保证只有一个任务在运行
+         */
+        queue.shift();
+        queue.push(keyframes($ele, name, options), callback);
+        queue.begin();
+    };
 
-        var easing = eeeing.css3[options.easing];
 
-        if (!easing) {
-            easing = options.easing;
-        }
+    // 平滑滚动
+    var scrollTop = function ($ele, to, options) {
+        return function (next) {
+            var from = {
+                x: attribute.scrollLeft($ele),
+                y: attribute.scrollTop($ele)
+            };
 
-        var css = {
-            animationName: options.name,
-            animationDuration: options.duration + 'ms',
-            animationTimingFunction: easing,
-            animationDelay: options.delay + 'ms',
-            animationIterationCount: options.count,
-            animationDirection: options.direction
-        };
+            to.x = dato.parseFloat(to.x, from.x);
+            to.y = dato.parseFloat(to.y, from.y);
 
-        var oniteration = function () {
-            onanimationiteration = typeis.function(onanimationiteration) ? onanimationiteration : noop;
-            window[requestAnimationFrame](onanimationiteration.bind(ele, arguments));
-        };
+            var totalDistance = {
+                x: to.x - from.x,
+                y: to.y - from.y
+            };
 
-        var onend = function (eve) {
-            if (animationMap[id] && animationMap[id] !== onanimationend) {
-                animationMap[id] = typeis.function(animationMap[id]) ? animationMap[id] : noop;
-                animationMap[id].apply(ele, arguments);
-                animationMap[id] = null;
+            if (!totalDistance.x && !totalDistance.y) {
+                return next();
             }
 
-            onanimationend = typeis.function(onanimationend) ? onanimationend : noop;
-            animationMap[id] = null;
-            attribute.css(ele, {
-                animationName: '',
-                animationDuration: '',
-                animationTimingFunction: '',
-                animationDelay: '',
-                animationIterationCount: '',
-                animationDirection: ''
-            });
-            window[requestAnimationFrame](onanimationend.bind(ele, arguments));
-            event.un(ele, animationiterationEventType, oniteration);
-            event.un(ele, animationendEventType, onend);
-        };
+            var pastTime = 0;
+            var beginTimestamp;
+            var progress = function () {
+                if (!beginTimestamp) {
+                    beginTimestamp = Date.now();
+                }
 
-        event.on(ele, animationiterationEventType, oniteration);
-        event.on(ele, animationendEventType, onend);
-        animationMap[id] = onanimationend;
-        window[requestAnimationFrame](function () {
-            attribute.css(ele, css);
-        });
+                // 时间超过 || 距离超过
+                if (pastTime >= options.duration) {
+                    if (totalDistance.x) {
+                        attribute.scrollLeft($ele, to.x);
+                    }
+
+                    if (totalDistance.y) {
+                        attribute.scrollTop($ele, to.y);
+                    }
+
+                    return next();
+                }
+
+                win[requestAnimationFrame](function () {
+                    pastTime = Date.now() - beginTimestamp;
+
+                    var easing = eeeing.get(options.easing);
+                    // 时间比 = 已耗时 / 总时间
+                    var t = pastTime / options.duration;
+                    // 当前值 = 开始值 + ( 结束值 - 开始值 ) * 时间比
+                    var x = from.x + (to.x - from.x) * easing(t);
+                    var y = from.y + (to.y - from.y) * easing(t);
+
+                    if (totalDistance.x) {
+                        attribute.scrollLeft($ele, x);
+                    }
+
+                    if (totalDistance.y) {
+                        attribute.scrollTop($ele, y);
+                    }
+
+                    progress();
+                });
+            };
+
+            setTimeout(progress, options.delay);
+        };
     };
 
 
     /**
      * 平滑滚动
-     * @param {HTMLElement|Node|window|document} ele 要滚动的元素
+     * @param {HTMLElement|Node|window|document|String} $ele 要滚动的元素
      * @param {Object} to 终点
      * @param {Object} [to.x] x轴终点
      * @param {Object} [to.y] y轴终点
@@ -553,83 +411,41 @@ define(function (require, exports, module) {
      *    alert('OK');
      * });
      */
-    exports.scrollTo = function (ele, to, options, callback) {
+    exports.scrollTo = function ($ele, to, options, callback) {
         var args = allocation.args(arguments);
-        var from = {
-            x: attribute.scrollLeft(ele),
-            y: attribute.scrollTop(ele)
-        };
-        var totalDistance;
-        var pastTime = 0;
-        var beginTimestamp;
+        var argL = args.length;
 
-        if (typeis(args[2]) === 'function') {
-            callback = args[2];
-        }
+        $ele = selector.query($ele)[0];
 
-        if (typeis(callback) !== 'function') {
+        if (argL === 3) {
+            // .scrollTop($ele, to, callback);
+            if (typeis.function(args[2])) {
+                options = {};
+                callback = args[2];
+            }
+            // .scrollTop($ele, to, options);
+            else {
+                callback = noop;
+            }
+        } else if (argL === 2) {
+            options = {};
             callback = noop;
         }
 
-        to = to || {};
-        to.x = to.x === udf ? from.x : to.x;
-        to.y = to.y === udf ? from.y : to.y;
-        options = dato.extend(true, {}, jsDefaults, options);
+        options = dato.extend({}, transitionDefaults, options);
 
-        totalDistance = {
-            x: to.x - from.x,
-            y: to.y - from.y
-        };
+        var queue = getProp($ele, propScrollToKey);
 
-        if (!totalDistance.x && !totalDistance.y) {
-            return callback.call(ele);
+        if (!queue) {
+            setProp($ele, propScrollToKey, queue = new Queue());
         }
 
-        setTimeout(_progress, options.delay);
-
-        function _progress() {
-            if (!beginTimestamp) {
-                beginTimestamp = Date.now();
-            }
-
-            // 时间超过 || 距离超过
-            if (pastTime >= options.duration) {
-                if (totalDistance.x) {
-                    attribute.scrollLeft(ele, to.x);
-                }
-
-                if (totalDistance.y) {
-                    attribute.scrollTop(ele, to.y);
-                }
-
-                callback.call(ele);
-            } else {
-                window[requestAnimationFrame](function () {
-                    if (!eeeing.js[options.easing]) {
-                        throw new Error('can not find easing name of ' + options.easing);
-                    }
-
-                    pastTime = Date.now() - beginTimestamp;
-
-                    var easing = eeeing.js[options.easing];
-                    // 时间比 = 已耗时 / 总时间
-                    var t = pastTime / options.duration;
-                    // 当前值 = 开始值 + ( 结束值 - 开始值 ) * 时间比
-                    var x = from.x + (to.x - from.x) * easing(t);
-                    var y = from.y + (to.y - from.y) * easing(t);
-
-                    if (totalDistance.x) {
-                        attribute.scrollLeft(ele, x);
-                    }
-
-                    if (totalDistance.y) {
-                        attribute.scrollTop(ele, y);
-                    }
-
-                    _progress();
-                });
-            }
-        }
+        /**
+         * 之前的任务出栈，永远保证只有一个任务在运行
+         */
+        queue.shift();
+        queue.push(scrollTop($ele, to, options), callback);
+        queue.begin();
     };
 });
 

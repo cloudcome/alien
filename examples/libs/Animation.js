@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var Animation = require('../../src/libs/Animation.js');
-    var keyframes = require('../../src/utils/keyframes.js');
+    var keyframes = require('../../src/core/dom/keyframes.js');
     var $start = document.getElementById('start');
     var $ret1 = document.getElementById('ret1');
     var $ret2 = document.getElementById('ret2');
@@ -12,7 +12,7 @@ define(function (require) {
     var $demo4 = document.getElementById('demo4');
     var $demo5 = document.getElementById('demo5');
 
-    var zhuan1 = keyframes({
+    var zhuan1 = keyframes.create({
         0: {
             scale: 1,
             rotate: 0,

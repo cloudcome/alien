@@ -14,21 +14,33 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var allocation = require('../utils/allocation.js');
-    var attribute = require('../core/dom/attribute.js');
-    var modification = require('../core/dom/modification.js');
-    var random = require('./random.js');
-    var typeis = require('./typeis.js');
-    var dato = require('./dato.js');
+    var allocation = require('../../utils/allocation.js');
+    var attribute = require('./attribute.js');
+    var modification = require('./modification.js');
+    var typeis = require('./../../utils/typeis.js');
+    var dato = require('./../../utils/dato.js');
     var REG_NUM = /^(\d+?\.)?\d+$/;
     var VENDOR_PREFIX = ['-webkit-', '-moz-', '-ms-', ''];
+    var alienIndex = 0;
+    /**
+     * 帧动画 MAP，用于管理
+     * @type {{}}
+     */
+    var keyframesMap = {};
 
-    module.exports = function (name, keyframes) {
+
+    /**
+     * 在 DOM 中创建一个帧动画样式
+     * @param [name] {String} 帧动画名称
+     * @param keyframes {Object} 帧动画帧描述
+     * @returns {Object}
+     */
+    exports.create = function (name, keyframes) {
         var args = allocation.args(arguments);
 
         if (!typeis.string(name)) {
             keyframes = args[0];
-            name = 'alien-keyframes-' + random.string(9, 'aA0-_');
+            name = 'alien-keyframes-' + alienIndex++;
         }
 
         var mainStyle = '';
@@ -60,8 +72,20 @@ define(function (require, exports, module) {
             style += '@' + prefix + 'keyframes ' + name + '{' + mainStyle + '}';
         });
 
-        modification.importStyle(style);
+        keyframesMap[name] = modification.importStyle(style);
 
         return name;
+    };
+
+
+    /**
+     * 从 DOM 中移除某个帧动画样式
+     * @param name
+     */
+    exports.remove = function (name) {
+        var $style = keyframesMap[name];
+
+        modification.remove($style);
+        keyframesMap[name] = null;
     };
 });

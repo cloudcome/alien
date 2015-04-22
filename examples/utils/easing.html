@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
- - animation.html
+ - 文件描述
  - @author ydr.me
- - 2014-09-23 14:11
+ - @create 2015-04-22 14:28
  -->
 <html>
 <head lang="zh-cn">
@@ -19,38 +19,12 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <title>animation.html</title>
-    <style>
-
-        button {
-            padding: 10px;
-        }
-
-        #demo {
-            width: 100px;
-            height: 100px;
-            background: #eee;
-            border: 2px solid #ccc;
-            -webkit-transform: scale(0.4);
-        }
-
-    </style>
+    <title>easing.html</title>
 </head>
-<body style="height: 4000px;">
+<body ontouchstart="">
 
-<p id="ret">结果：</p>
-<button id="transition">#demo 过渡动画</button>
-<button id="keyframes">#demo 帧动画</button>
-<button id="scrollTo">scrollTo(window, {x: 200, y: 2000})</button>
-<hr/>
-<div id="demo">#demo</div>
-
-
-
-
-<script src="../../coolie.min.js" data-main="./core/dom/animation.js"></script>
-<script src="../../coolie-config.js"></script>
-
+<script src="/examples/coolie.js" data-main="./utils/easing.js"></script>
+<script src="/examples/coolie-config.js"></script>
 
 </body>
 </html>

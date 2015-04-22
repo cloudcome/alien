@@ -135,7 +135,7 @@ define(function (require, exports, module) {
 
     /**
      * 将源插入到指定的目标位置，并返回指定的元素
-     * @param {HTMLElement|Node|String} source 源
+     * @param {Object|String} source 源
      * @param {Object} target 目标
      * @param {String} [position="beforeend"] 插入位置，分别为：beforebegin、afterbegin、beforeend、afterend
      * @returns {Object|null}
@@ -265,6 +265,7 @@ define(function (require, exports, module) {
      * 添加样式
      * @param {String} styleText 样式内容
      * @param {String|HTMLElement|Node} [selector=null] 选择器
+     * @returns {HTMLStyleElement}
      *
      * @example
      * modification.importStyle('body{padding: 10px;}');
@@ -290,6 +291,8 @@ define(function (require, exports, module) {
         else {
             $style.innerHTML = styleText;
         }
+
+        return $style;
     };
 
 
