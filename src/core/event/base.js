@@ -226,7 +226,7 @@ define(function (require, exports, module) {
 
     /**
      * 事件监听
-     * @param {Object|HTMLElement|Node} element 元素
+     * @param {Object|Window|HTMLElement|Node} element 元素
      * @param {String} eventType 事件类型，多个事件使用空格分开
      * @param {String} [selector] 事件委托时的选择器，默认空
      * @param {Function} listener 事件回调
@@ -287,7 +287,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除事件监听
-     * @param {window|HTMLElement|Node} element 元素
+     * @param {Object|window|HTMLElement|Node} element 元素
      * @param {String} eventType 事件类型
      * @param {Function} [listener=null] 回调，回调为空表示删除所有已经在 alien 中注册的事件
      * @param {Boolean} [isCapture=false] 是否事件捕获，默认false
