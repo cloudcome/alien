@@ -48,45 +48,47 @@ define(function (require, exports, module) {
 
     Datepicker.defaults = defaults;
 
-    Datepicker.fn._init = function () {
-        var the = this;
-        var options = the._options;
+    Datepicker.implement({
+        _init: function () {
+            var the = this;
+            var options = the._options;
 
-        the._initNode();
-        the.render(options.year, options.month, options);
-    };
+            the._initNode();
+            the.render(options.year, options.month, options);
+        },
 
-    Datepicker.fn._initNode = function () {
-        var the = this;
-        var options = the._options;
-        var $wrap = modification.create('div', {
-            class: alienClass + ' ' + options.addClass,
-            id: alienIndex++
-        });
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var $wrap = modification.create('div', {
+                class: alienClass + ' ' + options.addClass,
+                id: alienIndex++
+            });
 
-        modification.insert($wrap, $body);
-        the._$wrap = $wrap;
-    };
+            modification.insert($wrap, $body);
+            the._$wrap = $wrap;
+        },
 
-    Datepicker.fn.render = function (year, month) {
-        var the = this;
-        var options = the._options;
-        var list = calendar.month(year, month, options);
-        var data = {
-            thead: [],
-            tbody: list
-        };
-        var i = options.firstDayInWeek;
-        var j = i + 7;
-        var k;
+        render: function (year, month) {
+            var the = this;
+            var options = the._options;
+            var list = calendar.month(year, month, options);
+            var data = {
+                thead: [],
+                tbody: list
+            };
+            var i = options.firstDayInWeek;
+            var j = i + 7;
+            var k;
 
-        for (; i < j; i++) {
-            k = i % 7;
-            data.thead.push(options.lang.weekPrefix + options.lang.weeks[k]);
+            for (; i < j; i++) {
+                k = i % 7;
+                data.thead.push(options.lang.weekPrefix + options.lang.weeks[k]);
+            }
+
+            the._$wrap.innerHTML = tpl.render(data);
         }
-
-        the._$wrap.innerHTML = tpl.render(data);
-    };
+    });
 
     module.exports = Datepicker;
     modification.importStyle(style);

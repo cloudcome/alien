@@ -34,8 +34,9 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
+    var $body = document.body;
     var defaults = {
-        parentNode: document.body,
+        parentNode: $body,
         width: 500,
         height: 'auto',
         top: 'center',
@@ -62,291 +63,292 @@ define(function (require, exports, module) {
         the._init();
     });
 
+    Window.implement({
+        _init: function () {
+            var the = this;
+            var options = the._options;
+            var $pos = modification.create('div');
+            var setEasing = function (options) {
+                if (typeis.string(options.easing)) {
+                    var e = {};
 
-    Window.fn._init = function () {
-        var the = this;
-        var options = the._options;
-        var $pos = modification.create('div');
-        var setEasing = function (options) {
-            if (typeis.string(options.easing)) {
-                var e = {};
+                    e.open = e.close = e.resize = options.easing;
+                    options.easing = e;
+                }
+            };
 
-                e.open = e.close = e.resize = options.easing;
-                options.easing = e;
+            the.id = alienIndex;
+            the._$window = modification.create('div', {
+                id: alienClass + '-' + alienIndex++,
+                class: alienClass,
+                style: {
+                    display: 'none',
+                    position: 'absolute'
+                }
+            });
+            attribute.addClass(the._$window, options.addClass);
+            modification.insert(the._$window, options.parentNode);
+
+            if (the._$content) {
+                modification.insert($pos, the._$content, 'afterend');
+                the._$contentPos = $pos;
+                modification.insert(the._$content, the._$window);
             }
-        };
 
-        the.id = alienIndex;
-        the._$window = modification.create('div', {
-            id: alienClass + '-' + alienIndex++,
-            class: alienClass,
-            style: {
-                display: 'none',
-                position: 'absolute'
-            }
-        });
-        attribute.addClass(the._$window, options.addClass);
-        modification.insert(the._$window, options.parentNode);
+            setEasing(the._options);
+            the.on('setoptions', setEasing);
 
-        if (the._$content) {
-            modification.insert($pos, the._$content, 'afterend');
-            the._$contentPos = $pos;
-            modification.insert(the._$content, the._$window);
-        }
-
-        setEasing(the._options);
-        the.on('setoptions', setEasing);
-
-        return the;
-    };
-
-
-    /**
-     * 获取对话框要显示的位置
-     * @returns {{}}
-     * @private
-     */
-    Window.fn._getPos = function () {
-        var the = this;
-        var options = the._options;
-        var winW = attribute.width(window);
-        var winH = attribute.height(window);
-        var pos = {};
-        var pre = attribute.css(the._$window, ['width', 'height']);
-        var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
-
-        attribute.css(the._$window, {
-            width: options.width,
-            height: options.height,
-            position: hasMask ? 'absolute' : 'fixed'
-        });
-        pos.width = attribute.outerWidth(the._$window);
-        pos.height = attribute.outerHeight(the._$window);
-
-        if (options.width === 'height' && options.height === 'width') {
-            pos.width = pos.height = Math.max(pos.width, pos.height);
-        } else if (options.width === 'height') {
-            pos.width = pos.height;
-        } else if (options.height === 'width') {
-            pos.height = pos.width;
-        }
-
-        attribute.css(the._$window, pre);
-
-        if (options.left === 'center') {
-            pos.left = (winW - pos.width) / 2;
-            pos.left = pos.left < 0 ? 0 : pos.left;
-        } else if (options.left !== null) {
-            pos.left = options.left;
-        }
-
-        if (options.top === 'center') {
-            pos.top = (winH - pos.height) * 2 / 5;
-            pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
-        } else if (options.top !== null) {
-            pos.top = options.top;
-        }
-
-        if (options.right !== null) {
-            pos.right = options.right;
-        }
-
-        if (options.bottom !== null) {
-            pos.bottom = options.bottom;
-        }
-
-        return pos;
-    };
-
-
-    /**
-     * 打开窗口
-     * @param [callback] {Function} 打开之后回调
-     */
-    Window.fn.open = function (callback) {
-        var the = this;
-
-        if (the.visible) {
             return the;
-        }
-
-        if (the._$content) {
-            attribute.css(the._$content, 'display', 'block');
-        }
-
-        var options = the._options;
-        var onopen = function () {
-            /**
-             * 窗口打开之后
-             * @event open
-             */
-            the.emit('open');
-
-            if (typeis.function(callback)) {
-                callback.call(the);
-            }
-        };
-        var to = the._getPos();
-
-        the.visible = true;
-        to.display = 'block';
-        to.opacity = 0;
-        to.zIndex = ui.getZindex();
-        to.scale = 0;
-        attribute.css(the._$window, to);
-        animation.animate(the._$window, {
-            scale: 1,
-            opacity: 1
-        }, {
-            duration: options.duration,
-            easing: options.easing.open
-        }, onopen);
-
-        return the;
-    };
+        },
 
 
-    /**
-     * 改变 window 尺寸
-     * @param [size] {Object} 尺寸
-     * @param [callback] {Function} 回调
-     */
-    Window.fn.resize = function (size, callback) {
-        var the = this;
-
-        callback = typeis.function(callback) ? callback : noop;
-
-        if (!the.visible) {
-            callback.call(the);
-            return the;
-        }
-
-        var args = allocation.args(arguments);
-
-        if (typeis.function(args[0])) {
-            callback = args[0];
-            size = null;
-        }
-
-        var options = the._options;
-
-        dato.extend(true, options, size);
-
-        var to = the._getPos();
-
-        animation.animate(the._$window, to, {
-            duration: options.duration,
-            easing: options.easing.resize
-        }, function () {
-            callback.call(the);
-        });
-
-        return the;
-    };
-
-
-    /**
-     * 关闭窗口
-     * @param [callback] {Function} 打开之后回调
-     */
-    Window.fn.close = function (callback) {
-        var the = this;
-
-        callback = typeis.function(callback) ? callback : noop;
-
-        if (!the.visible) {
-            animation.stop(the._$window);
-            callback.call(the);
-            return the;
-        }
-
-        var options = the._options;
-        var onclose = function () {
-            /**
-             * 窗口关闭之后
-             * @event close
-             */
-            the.emit('close');
+        /**
+         * 获取对话框要显示的位置
+         * @returns {{}}
+         * @private
+         */
+        _getPos: function () {
+            var the = this;
+            var options = the._options;
+            var winW = attribute.width(window);
+            var winH = attribute.height(window);
+            var pos = {};
+            var pre = attribute.css(the._$window, ['width', 'height']);
+            var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
             attribute.css(the._$window, {
-                transform: '',
-                display: 'none'
+                width: options.width,
+                height: options.height,
+                position: hasMask ? 'absolute' : 'fixed'
+            });
+            pos.width = attribute.outerWidth(the._$window);
+            pos.height = attribute.outerHeight(the._$window);
+
+            if (options.width === 'height' && options.height === 'width') {
+                pos.width = pos.height = Math.max(pos.width, pos.height);
+            } else if (options.width === 'height') {
+                pos.width = pos.height;
+            } else if (options.height === 'width') {
+                pos.height = pos.width;
+            }
+
+            attribute.css(the._$window, pre);
+
+            if (options.left === 'center') {
+                pos.left = (winW - pos.width) / 2;
+                pos.left = pos.left < 0 ? 0 : pos.left;
+            } else if (options.left !== null) {
+                pos.left = options.left;
+            }
+
+            if (options.top === 'center') {
+                pos.top = (winH - pos.height) * 2 / 5;
+                pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
+            } else if (options.top !== null) {
+                pos.top = options.top;
+            }
+
+            if (options.right !== null) {
+                pos.right = options.right;
+            }
+
+            if (options.bottom !== null) {
+                pos.bottom = options.bottom;
+            }
+
+            return pos;
+        },
+
+
+        /**
+         * 打开窗口
+         * @param [callback] {Function} 打开之后回调
+         */
+        open: function (callback) {
+            var the = this;
+
+            if (the.visible) {
+                return the;
+            }
+
+            if (the._$content) {
+                attribute.css(the._$content, 'display', 'block');
+            }
+
+            var options = the._options;
+            var onopen = function () {
+                /**
+                 * 窗口打开之后
+                 * @event open
+                 */
+                the.emit('open');
+
+                if (typeis.function(callback)) {
+                    callback.call(the);
+                }
+            };
+            var to = the._getPos();
+
+            the.visible = true;
+            to.display = 'block';
+            to.opacity = 0;
+            to.zIndex = ui.getZindex();
+            to.scale = 0;
+            attribute.css(the._$window, to);
+            animation.transition(the._$window, {
+                scale: 1,
+                opacity: 1
+            }, {
+                duration: options.duration,
+                easing: options.easing.open
+            }, onopen);
+
+            return the;
+        },
+
+
+        /**
+         * 改变 window 尺寸
+         * @param [size] {Object} 尺寸
+         * @param [callback] {Function} 回调
+         */
+        resize: function (size, callback) {
+            var the = this;
+
+            callback = typeis.function(callback) ? callback : noop;
+
+            if (!the.visible) {
+                callback.call(the);
+                return the;
+            }
+
+            var args = allocation.args(arguments);
+
+            if (typeis.function(args[0])) {
+                callback = args[0];
+                size = null;
+            }
+
+            var options = the._options;
+
+            dato.extend(true, options, size);
+
+            var to = the._getPos();
+
+            animation.transition(the._$window, to, {
+                duration: options.duration,
+                easing: options.easing.resize
+            }, function () {
+                callback.call(the);
             });
 
-            callback.call(the);
-        };
-
-        the.visible = false;
-
-        animation.animate(the._$window, {
-            scale: 0,
-            opacity: 0
-        }, {
-            direction: 'reverse',
-            duration: options.duration,
-            easing: options.easing.close
-        }, onclose);
-
-        return the;
-    };
+            return the;
+        },
 
 
-    /**
-     * 获取当前 window 节点
-     */
-    Window.fn.getNode = function () {
-        return this._$window;
-    };
+        /**
+         * 关闭窗口
+         * @param [callback] {Function} 打开之后回调
+         */
+        close: function (callback) {
+            var the = this;
 
+            callback = typeis.function(callback) ? callback : noop;
 
-    /**
-     * 震晃窗口以示提醒
-     */
-    Window.fn.shake = function () {
-        var the = this;
-        var className = alienClass + '-shake';
-
-        if (the._shakeTimeid) {
-            clearTimeout(the._shakeTimeid);
-            attribute.removeClass(the._$window, className);
-        }
-
-        attribute.addClass(the._$window, className);
-        the._shakeTimeid = setTimeout(function () {
-            the._shakeTimeid = 0;
-            attribute.removeClass(the._$window, className);
-        }, 500);
-
-        return the;
-    };
-
-
-    /**
-     * 销毁实例
-     */
-    Window.fn.destroy = function (callback) {
-        var the = this;
-        var destroy = function () {
-            if (the._$content) {
-                modification.insert(the._$content, the._$contentPos, 'afterend');
-                modification.remove(the._$contentPos);
+            if (!the.visible) {
+                callback.call(the);
+                return the;
             }
 
-            modification.remove(the._$window);
-            event.un(the._$window, 'click');
+            var options = the._options;
+            var onclose = function () {
+                /**
+                 * 窗口关闭之后
+                 * @event close
+                 */
+                the.emit('close');
 
-            if (typeis.function(callback)) {
-                callback();
-            }
-        };
+                attribute.css(the._$window, {
+                    transform: '',
+                    display: 'none'
+                });
 
-        if (the.visible) {
-            the.close(destroy);
+                callback.call(the);
+            };
+
             the.visible = false;
-        } else {
-            destroy();
+            animation.transition(the._$window, {
+                scale: 0,
+                opacity: 0
+            }, {
+                direction: 'reverse',
+                duration: options.duration,
+                easing: options.easing.close
+            }, onclose);
+
+            return the;
+        },
+
+
+        /**
+         * 获取当前 window 节点
+         */
+        getNode: function () {
+            return this._$window;
+        },
+
+
+        /**
+         * 震晃窗口以示提醒
+         */
+        shake: function () {
+            var the = this;
+            var className = alienClass + '-shake';
+
+            if (the._shakeTimeid) {
+                clearTimeout(the._shakeTimeid);
+                attribute.removeClass(the._$window, className);
+            }
+
+            attribute.addClass(the._$window, className);
+            the._shakeTimeid = setTimeout(function () {
+                the._shakeTimeid = 0;
+                attribute.removeClass(the._$window, className);
+            }, 500);
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function (callback) {
+            var the = this;
+            var destroy = function () {
+                if (the._$content) {
+                    modification.insert(the._$content, the._$contentPos, 'afterend');
+                    modification.remove(the._$contentPos);
+                }
+
+                modification.remove(the._$window);
+                event.un(the._$window, 'click');
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            };
+
+            if (the.visible) {
+                the.close(destroy);
+                the.visible = false;
+            } else {
+                destroy();
+            }
         }
-    };
+    });
+
+
 
     /**
      * 创建一个窗口实例

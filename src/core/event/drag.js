@@ -173,8 +173,7 @@ define(function (require, exports, module) {
                 };
 
                 attribute.css(dragfor, from);
-                animation.stop(dragfor);
-                animation.animate(dragfor, to, {
+                animation.transition(dragfor, to, {
                     duration: 300
                 });
             }

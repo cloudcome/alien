@@ -21,7 +21,10 @@ define(function (require, exports, module) {
     var weeks = '日一二三四五六';
     var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var REG_RANGE = /^(this|in)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
-
+    var dateFormDefaults = {
+        // 是否在小时内显示分钟，默认true，即：6小时20分钟前，若为false，即：6小时前
+        minutesInHour: true
+    };
 
     /**
      * 格式化日期<br>
@@ -384,7 +387,9 @@ define(function (require, exports, module) {
     /**
      * 人性化比较时间时间
      * @param {String|Number|Date} date 比较时间
-     * @param {String|Number|Date} [compareDate] 被比较时间，默认为当前时间
+     * @param {String|Number|Date|Object} [compareDate] 被比较时间，默认为当前时间
+     * @param {Object} [options] 配置
+     * @param {Object} [options.minutesInHour=true] 是否在小时内显示分钟，默认true，即：6小时20分钟前，若为false，即：6小时前
      * @returns {string}
      *
      * @example
@@ -430,7 +435,17 @@ define(function (require, exports, module) {
      * date.from(Date.now() + 200*12*30*24*60*60*1000);
      * // => "很久之后"
      */
-    exports.from = function (date, compareDate) {
+    exports.from = function (date, compareDate, options) {
+        var args = arguments;
+        var argL = args.length;
+
+        // date.from(date, options)
+        if (argL === 2 && typeis.object(args[1])) {
+            options = args[1];
+            compareDate = null;
+        }
+
+        options = dato.extend({}, dateFormDefaults, options);
         compareDate = compareDate || new Date();
         compareDate = exports.parse(compareDate);
 
@@ -471,6 +486,7 @@ define(function (require, exports, module) {
         years * 12 + compareDate.getMonth() - old.getMonth();
         years -= (isInFeature ? 1 : 0);
 
+        var suffix = isInFeature ? '后' : '前';
 
         // < 10s
         if (seconds < 10) {
@@ -478,36 +494,37 @@ define(function (require, exports, module) {
         }
         // < 60s
         else if (minutes < 1) {
-            return seconds + '秒' + (isInFeature ? '后' : '前');
+            return seconds + '秒' + suffix;
         }
         // < 1h
         else if (hours < 1) {
-            return minutes + '分钟' + (isInFeature ? '后' : '前');
+            return minutes + '分钟' + suffix;
         }
         // < 1d
         else if (days < 1) {
-            return hours + '小时' + (minutes % 60 ? minutes % 60 + '分钟' : '') + (isInFeature ? '后' : '前');
+            var pastMinutes = options.minutesInHour ? minutes % 60 : '';
+            return hours + '小时' + (pastMinutes ? pastMinutes + '分钟' : '') + suffix;
         }
         // < 1M
         else if (months < 1) {
-            return days + '天' + (isInFeature ? '后' : '前');
+            return days + '天' + suffix;
         }
         // < 1Y
         else if (years < 1) {
-            return months + '个月' + (isInFeature ? '后' : '前');
+            return months + '个月' + suffix;
         }
         // < 100Y
         else if (years < 100) {
-            return years + '年' + (isInFeature ? '后' : '前');
+            return years + '年' + suffix;
         }
 
-        return '很久之' + (isInFeature ? '后' : '前');
+        return '很久之' + suffix;
     };
 
 
     /**
      * 计算日期范围
-     * @param type {String} 可选
+     * @param range {String} 范围，可选
      * `this N days`/`this N weeks`/`this N months`/`this N years` 当日/周/月/年
      * `in Ndays`/`in N weeks`/`in N months`/`in N years` 几日/周/月/年内
      * @param [ref] {Date} 起点时间，默认为当前时间

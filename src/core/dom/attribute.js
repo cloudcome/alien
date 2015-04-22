@@ -210,7 +210,7 @@ define(function (require, exports, module) {
      * attribute.css(ele, 'width::after');
      * attribute.css(ele, ['width','height']);
      */
-    exports.css = function (ele, key, val) {
+    exports.css = exports.style = function (ele, key, val) {
         var transformKey = '';
         var transformVal = [];
         var important = '';

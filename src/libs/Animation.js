@@ -49,110 +49,103 @@ define(function (require, exports, module) {
     }, Emitter);
 
 
-    /**
-     * 追加动画
-     * @param $ele
-     * @param to
-     * @param options
-     */
-    Animation.fn.push = function ($ele, to, options) {
-        this._queueList.push({
-            $eles: selector.query($ele),
-            to: to,
-            options: options
-        });
-    };
+    Animation.implement({
+        /**
+         * 追加动画
+         * @param $ele
+         * @param to
+         * @param options
+         */
+        push: function ($ele, to, options) {
+            this._queueList.push({
+                $eles: selector.query($ele),
+                to: to,
+                options: options
+            });
+        },
 
 
-    //Animation.fn.index = function (index) {
-    //
-    //};
+        //index: function (index) {
+        //
+        //};
 
-
-    /**
-     * 执行动画
-     * @param [repeatTimes=1] {Number} 重复次数
-     * @param [callback] {Function} 执行完毕回调
-     */
-    Animation.fn.start = function (repeatTimes, callback) {
-        var the = this;
-        var args = allocation.args(arguments);
-
-        if (typeis.function(args[0])) {
-            repeatTimes = 1;
-            callback = args[0];
-        }
-
-        var repeatQueue = [];
-
-        repeatQueue.length = dato.parseInt(repeatTimes, 1);
-        callback = typeis.function(callback) ? callback : noop;
 
         /**
-         * 动画开始时
-         * @event start
+         * 执行动画
+         * @param [repeatTimes=1] {Number} 重复次数
+         * @param [callback] {Function} 执行完毕回调
          */
-        the.emit('start');
+        start: function (repeatTimes, callback) {
+            var the = this;
+            var args = allocation.args(arguments);
 
-        howdo
-            .each(repeatQueue, function (i, u, next) {
-                howdo
-                    .each(the._queueList, function (j, queue, next) {
-                        var toType = typeis(queue.to);
-                        var to;
+            if (typeis.function(args[0])) {
+                repeatTimes = 1;
+                callback = args[0];
+            }
 
-                        if (toType === 'string') {
-                            to = dato.extend({}, queue.options, {
-                                name: queue.to
-                            });
+            var repeatQueue = [];
 
-                            howdo.each(queue.$eles, function (k, $ele, done) {
-                                animation.keyframes($ele, to, done);
-                            }).together(function () {
-                                /**
-                                 * 动画发生变化时
-                                 * @event change
-                                 * @prarm index {Number} 动画索引
-                                 * @prarm times {Number} 动画重复次数
-                                 */
-                                the.emit('change', j, i + 1);
-                                next();
-                            });
-                        } else {
-                            howdo.each(queue.$eles, function (k, $ele, done) {
-                                animation.animate($ele, queue.to, queue.options, done);
-                            }).together(function () {
-                                /**
-                                 * 动画发生变化时
-                                 * @event change
-                                 * @prarm index {Number} 动画索引
-                                 * @prarm times {Number} 动画重复次数
-                                 */
-                                the.emit('change', j, i + 1);
-                                next();
-                            });
-                        }
-                    })
-                    .follow(next);
-            })
-            .follow(function () {
-                /**
-                 * 动画结束时
-                 * @event end
-                 */
-                the.emit('end');
-                callback.call(the);
-            });
-    };
+            repeatQueue.length = dato.parseInt(repeatTimes, 1);
+            callback = typeis.function(callback) ? callback : noop;
 
-    //Animation.fn.pause = function () {
-    //
-    //};
-    //
-    //
-    //Animation.fn.stop = function () {
-    //
-    //};
+            /**
+             * 动画开始时
+             * @event start
+             */
+            the.emit('start');
+
+            howdo
+                .each(repeatQueue, function (i, u, next) {
+                    howdo
+                        .each(the._queueList, function (j, queue, next) {
+                            var toType = typeis(queue.to);
+                            var to;
+
+                            if (toType === 'string') {
+                                to = dato.extend({}, queue.options, {
+                                    name: queue.to
+                                });
+
+                                howdo.each(queue.$eles, function (k, $ele, done) {
+                                    animation.keyframes($ele, to, done);
+                                }).together(function () {
+                                    /**
+                                     * 动画发生变化时
+                                     * @event change
+                                     * @prarm index {Number} 动画索引
+                                     * @prarm times {Number} 动画重复次数
+                                     */
+                                    the.emit('change', j, i + 1);
+                                    next();
+                                });
+                            } else {
+                                howdo.each(queue.$eles, function (k, $ele, done) {
+                                    animation.transition($ele, queue.to, queue.options, done);
+                                }).together(function () {
+                                    /**
+                                     * 动画发生变化时
+                                     * @event change
+                                     * @prarm index {Number} 动画索引
+                                     * @prarm times {Number} 动画重复次数
+                                     */
+                                    the.emit('change', j, i + 1);
+                                    next();
+                                });
+                            }
+                        })
+                        .follow(next);
+                })
+                .follow(function () {
+                    /**
+                     * 动画结束时
+                     * @event end
+                     */
+                    the.emit('end');
+                    callback.call(the);
+                });
+        }
+    });
 
 
     /**

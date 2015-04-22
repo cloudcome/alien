@@ -73,6 +73,21 @@ define(function (require, exports, module) {
 
 
     /**
+     * 判断元素是否包含关系
+     * @param $child {HTMLElement|Node} 子元素
+     * @param $parent {HTMLElement|Node} 父元素
+     * @returns {Boolean}
+     */
+    exports.contains = function ($child, $parent) {
+        if ($parent === doc) {
+            return true;
+        }
+
+        return $parent.contains($child);
+    };
+
+
+    /**
      * 获取当前元素的其他兄弟元素
      * @param {HTMLElement|Node} ele 元素
      * @returns {Array}

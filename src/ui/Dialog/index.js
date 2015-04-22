@@ -75,256 +75,256 @@ define(function (require, exports, module) {
 
     Dialog.defaults = defaults;
 
-    Dialog.fn._init = function () {
-        var the = this;
-        var options = the._options;
+    Dialog.implement({
+        _init: function () {
+            var the = this;
+            var options = the._options;
 
-        if (options.isModal) {
-            the._mask = new Mask(window, {
-                addClass: alienClass + '-bg ' + options.addClass,
+            if (options.isModal) {
+                the._mask = new Mask(window, {
+                    addClass: alienClass + '-bg ' + options.addClass,
+                    zIndex: options.zIndex
+                });
+                the._$mask = the._mask.getNode();
+            }
+
+            the._window = new Window(null, {
+                parentNode: options.isModal ? the._$mask : $body,
+                width: options.width,
+                height: options.height,
+                left: options.left,
+                top: options.top,
+                duration: options.duration,
+                easing: options.easing,
                 zIndex: options.zIndex
             });
-            the._$mask = the._mask.getNode();
-        }
+            the._$window = the._window.getNode();
+            the._initNode();
 
-        the._window = new Window(null, {
-            parentNode: options.isModal ? the._$mask : $body,
-            width: options.width,
-            height: options.height,
-            left: options.left,
-            top: options.top,
-            duration: options.duration,
-            easing: options.easing,
-            zIndex: options.zIndex
-        });
-        the._$window = the._window.getNode();
-        the._initNode();
-
-        if (options.isModal) {
-            the._scrollbar = new Scrollbar(the._$window);
-        }
-
-        the._initEvent();
-
-        if (options.remote) {
-            the.setRemote(options.remote);
-        }
-
-        the._isReady = false;
-        return the;
-    };
-
-
-    Dialog.fn._initNode = function () {
-        var the = this;
-        var options = the._options;
-        var html = tpl.render({
-            id: alienIndex++,
-            windowId: the._$window.id,
-            title: options.title,
-            canDrag: options.canDrag,
-            hideClose: options.hideClose
-        });
-        var node = modification.parse(html)[0];
-        var nodes = selector.query('.j-flag', node);
-        var $pos = modification.create('div');
-
-        the._$dialog = node;
-        the._$header = nodes[0];
-        the._$title = nodes[1];
-        the._$close = nodes[2];
-        the._$body = nodes[3];
-
-        modification.insert(the._$dialog, the._$window);
-        modification.insert($pos, the._$content, 'afterend');
-        the._$pos = $pos;
-        modification.insert(the._$content, the._$body);
-    };
-
-
-    Dialog.fn._initEvent = function () {
-        var the = this;
-
-        if (the._mask) {
-            // esc
-            the._mask.on('esc', function () {
-                /**
-                 * 按 ESC 之后
-                 * @event esc
-                 */
-                if (the.emit('esc') !== false && the._isReady) {
-                    the.shake();
-                }
-            });
-
-            // 单击背景
-            the._mask.on('hit', function () {
-                /**
-                 * 单击背景之后
-                 * @event hitbg
-                 */
-                if (the.emit('hitbg') !== false && the._isReady) {
-                    the.shake();
-                }
-            });
-        }
-
-        // 对话框打开
-        the._window.on('open', function () {
-            if (the._scrollbar) {
-                the._scrollbar.resize();
+            if (options.isModal) {
+                the._scrollbar = new Scrollbar(the._$window);
             }
 
-            the._isReady = true;
-        }).on('close', function () {
+            the._initEvent();
+
+            if (options.remote) {
+                the.setRemote(options.remote);
+            }
+
             the._isReady = false;
-        });
+            return the;
+        },
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var html = tpl.render({
+                id: alienIndex++,
+                windowId: the._$window.id,
+                title: options.title,
+                canDrag: options.canDrag,
+                hideClose: options.hideClose
+            });
+            var node = modification.parse(html)[0];
+            var nodes = selector.query('.j-flag', node);
+            var $pos = modification.create('div');
 
-        // 点击关闭
-        event.on(the._$close, 'click', function () {
-            the.close();
-        });
-    };
+            the._$dialog = node;
+            the._$header = nodes[0];
+            the._$title = nodes[1];
+            the._$close = nodes[2];
+            the._$body = nodes[3];
 
-
-    /**
-     * 设置对话框标题
-     * @param title {String} 对话框标题
-     */
-    Dialog.fn.setTitle = function (title) {
-        var the = this;
-
-        the._$title.innerHTML = title;
-
-        return the;
-    };
-
-
-    /**
-     * 设置对话框内容
-     * @param html {String} 对话框内容
-     */
-    Dialog.fn.setContent = function (html) {
-        var the = this;
-
-        the._$body.innerHTML = html;
-        the.resize();
-
-        return the;
-    };
+            modification.insert(the._$dialog, the._$window);
+            modification.insert($pos, the._$content, 'afterend');
+            the._$pos = $pos;
+            modification.insert(the._$content, the._$body);
+        },
 
 
-    /**
-     * 对话框添加远程地址，并重新定位
-     * @param url {String} 远程地址
-     * @returns {Dialog}
-     */
-    Dialog.fn.setRemote = function (url) {
-        var the = this;
-        var options = the._options;
-        var $iframe = modification.create('iframe', {
-            src: url,
-            class: alienClass + '-iframe',
-            style: {
-                height: options.remoteHeight
-            }
-        });
+        _initEvent: function () {
+            var the = this;
 
-        the._$body.innerHTML = '';
-        $iframe.onload = function () {
-            $iframe.onload = null;
-            options.remote = null;
-            the.resize();
-        };
-        $iframe.onerror = function () {
-            $iframe.onerror = null;
-            the.resize();
-        };
-        modification.insert($iframe, the._$body, 'beforeend');
-
-        return the;
-    };
-
-
-    /**
-     * 晃动对话框以示提醒
-     */
-    Dialog.fn.shake = function () {
-        var the = this;
-
-        the._window.shake();
-
-        return the;
-    };
-
-
-    /**
-     * 打开 dialog
-     * @param [callback] {Function} 回调
-     */
-    Dialog.fn.open = function (callback) {
-        var the = this;
-
-        if (the._mask) {
-            the._mask.open();
-        }
-
-        the._window.open(callback);
-
-        return the;
-    };
-
-
-    /**
-     * 改变 dialog 尺寸
-     * @param [size] {Object} 尺寸
-     * @param [callback] {Function} 回调
-     */
-    Dialog.fn.resize = function (size, callback) {
-        this._window.resize(size, callback);
-    };
-
-
-    /**
-     * 关闭 dialog
-     * @param [callback] {Function} 回调
-     */
-    Dialog.fn.close = function (callback) {
-        var the = this;
-
-        the._window.close(function () {
             if (the._mask) {
-                the._mask.close();
+                // esc
+                the._mask.on('esc', function () {
+                    /**
+                     * 按 ESC 之后
+                     * @event esc
+                     */
+                    if (the.emit('esc') !== false && the._isReady) {
+                        the.shake();
+                    }
+                });
+
+                // 单击背景
+                the._mask.on('hit', function () {
+                    /**
+                     * 单击背景之后
+                     * @event hitbg
+                     */
+                    if (the.emit('hitbg') !== false && the._isReady) {
+                        the.shake();
+                    }
+                });
             }
 
-            if (typeis.function(callback)) {
-                callback();
+            // 对话框打开
+            the._window.on('open', function () {
+                if (the._scrollbar) {
+                    the._scrollbar.resize();
+                }
+
+                the._isReady = true;
+            }).on('close', function () {
+                the._isReady = false;
+            });
+
+            // 点击关闭
+            event.on(the._$close, 'click', function () {
+                the.close();
+            });
+        },
+
+
+        /**
+         * 设置对话框标题
+         * @param title {String} 对话框标题
+         */
+        setTitle: function (title) {
+            var the = this;
+
+            the._$title.innerHTML = title;
+
+            return the;
+        },
+
+
+        /**
+         * 设置对话框内容
+         * @param html {String} 对话框内容
+         */
+        setContent: function (html) {
+            var the = this;
+
+            the._$body.innerHTML = html;
+            the.resize();
+
+            return the;
+        },
+
+
+        /**
+         * 对话框添加远程地址，并重新定位
+         * @param url {String} 远程地址
+         * @returns {Dialog}
+         */
+        setRemote: function (url) {
+            var the = this;
+            var options = the._options;
+            var $iframe = modification.create('iframe', {
+                src: url,
+                class: alienClass + '-iframe',
+                style: {
+                    height: options.remoteHeight
+                }
+            });
+
+            the._$body.innerHTML = '';
+            $iframe.onload = function () {
+                $iframe.onload = null;
+                options.remote = null;
+                the.resize();
+            };
+            $iframe.onerror = function () {
+                $iframe.onerror = null;
+                the.resize();
+            };
+            modification.insert($iframe, the._$body, 'beforeend');
+
+            return the;
+        },
+
+
+        /**
+         * 晃动对话框以示提醒
+         */
+        shake: function () {
+            var the = this;
+
+            the._window.shake();
+
+            return the;
+        },
+
+
+        /**
+         * 打开 dialog
+         * @param [callback] {Function} 回调
+         */
+        open: function (callback) {
+            var the = this;
+
+            if (the._mask) {
+                the._mask.open();
             }
-        });
 
-        return the;
-    };
+            the._window.open(callback);
+
+            return the;
+        },
 
 
-    /**
-     * 销毁实例
-     */
-    Dialog.fn.destroy = function (callback) {
-        var the = this;
+        /**
+         * 改变 dialog 尺寸
+         * @param [size] {Object} 尺寸
+         * @param [callback] {Function} 回调
+         */
+        resize: function (size, callback) {
+            this._window.resize(size, callback);
+        },
 
-        the._window.destroy(function () {
-            modification.insert(the._$content, the._$pos, 'afterend');
-            modification.remove(the._$pos);
-            event.un(the._$close, 'click');
-            event.un(the._$mask, 'click');
-            modification.remove(the._$dialog);
-            the._mask.destroy();
 
-            if (typeis.function(callback)) {
-                callback();
-            }
-        });
-    };
+        /**
+         * 关闭 dialog
+         * @param [callback] {Function} 回调
+         */
+        close: function (callback) {
+            var the = this;
+
+            the._window.close(function () {
+                if (the._mask) {
+                    the._mask.close();
+                }
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function (callback) {
+            var the = this;
+
+            the._window.destroy(function () {
+                modification.insert(the._$content, the._$pos, 'afterend');
+                modification.remove(the._$pos);
+                event.un(the._$close, 'click');
+                event.un(the._$mask, 'click');
+                modification.remove(the._$dialog);
+                the._mask.destroy();
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
+        }
+    });
 
 
     /**

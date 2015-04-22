@@ -27,17 +27,19 @@ define(function (require, exports, module) {
         the._init();
     });
 
-    Touchpull.fn._init = function () {
-        var the = this;
+    Touchpull.implement({
+        _init: function () {
+            var the = this;
 
-        the._initEvent();
-    };
+            the._initEvent();
+        },
 
-    Touchpull.fn._initEvent = function () {
-        var the = this;
+        _initEvent: function () {
+            var the = this;
 
-        event.on(the._$parent, 'touch1start', function (eve) {
+            event.on(the._$parent, 'touch1start', function (eve) {
 
-        });
-    };
+            });
+        }
+    });
 });

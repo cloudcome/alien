@@ -95,4 +95,17 @@ define(function (require, exports) {
 
         return ret;
     };
+    //
+    //
+    ///**
+    // * 随机16进制颜色值
+    // * @returns {string}
+    // *
+    // * @example
+    // * random.color()
+    // * => '#ff00ff'
+    // */
+    //exports.color = function () {
+    //    return '#'+Math.random().toString(16).substr(-6);
+    //};
 });

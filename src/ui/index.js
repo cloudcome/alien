@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     var klass = require('../utils/class.js');
     var Emitter = require('../libs/Emitter.js');
     var udf;
-    var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
+    //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;
 
 
@@ -37,20 +37,22 @@ define(function (require, exports, module) {
      * 创建一个 UI 类
      * @param constructor {Function} 构造函数
      * @param [isInheritSuperStatic=false] {Boolean} 是否继承父类的静态方法
+     * @returns {Constructor}
      *
      * @example
      * var Dialog = ui.create(fn);
      */
     exports.create = function (constructor, isInheritSuperStatic) {
-        if (typeis(constructor) !== 'function') {
+        if (!typeis.function(constructor)) {
             throw 'UI class constructor must be a function';
         }
 
         var UI = klass.create(constructor, Emitter, isInheritSuperStatic);
+        var pro = UI.prototype;
 
         // 添加默认方法
-        if (UI.fn.getOptions === udf) {
-            UI.fn.getOptions = function (key) {
+        if (pro.getOptions === udf) {
+            pro.getOptions = function (key) {
                 var the = this;
                 var keyType = typeis(key);
                 var ret = [];
@@ -60,6 +62,7 @@ define(function (require, exports, module) {
                  * @event getoptions
                  */
                 the.emit('getoptions');
+
                 if (keyType === 'string' || keyType === 'number') {
                     return the._options && the._options[key];
                 } else if (keyType === 'array') {
@@ -74,8 +77,8 @@ define(function (require, exports, module) {
             };
         }
 
-        if (UI.fn.setOptions === udf) {
-            UI.fn.setOptions = function (key, val) {
+        if (pro.setOptions === udf) {
+            pro.setOptions = function (key, val) {
                 var the = this;
                 var keyType = typeis(key);
 
@@ -88,6 +91,7 @@ define(function (require, exports, module) {
                 /**
                  * 设置 ui 配置
                  * @event setoptions
+                 * @params options {Object} 参数
                  */
                 the.emit('setoptions', the._options);
             };

@@ -71,12 +71,13 @@ define(function (require, exports, module) {
         this._init(tmplate);
     });
 
+
     /**
      * 默认配置
      * @type {Object}
      * @static
      */
-    Template.defaults = defaults,
+    Template.defaults = defaults;
 
 
     /**
@@ -84,15 +85,15 @@ define(function (require, exports, module) {
      * @type {Object}
      * @static
      */
-        Template.filters = filters,
+    Template.filters = filters;
 
     /**
      * 设置默认配置
      * @param options
      */
-        Template.setDefaults = function (options) {
-            dato.extend(defaults, options);
-        };
+    Template.setDefaults = function (options) {
+        dato.extend(defaults, options);
+    };
 
 
     /**
@@ -136,398 +137,400 @@ define(function (require, exports, module) {
         }
     };
 
+    Template.implement({
 
-    /**
-     * 生成一个变量
-     * @returns {string}
-     * @private
-     */
-    Template.fn._generatorVar = function () {
-        return 'alien_libs_template_' + random.string(20, '0aA');
-    };
+        /**
+         * 生成一个变量
+         * @returns {string}
+         * @private
+         */
+        _generatorVar: function () {
+            return 'alien_libs_template_' + random.string(20, '0aA');
+        },
 
 
-    /**
-     * 初始化一个模板引擎
-     * @param {String} template 模板字符串
-     * @returns {Template}
-     * @private
-     */
-    Template.fn._init = function (template) {
-        var the = this;
-        var _var = the._generatorVar();
-        var fnStr = 'var ' + _var + '="";';
-        var output = [];
-        var parseTimes = 0;
-        // 是否进入忽略状态，true=进入，false=退出
-        var inIgnore = false;
-        // 是否进入表达式
-        var inExp = false;
+        /**
+         * 初始化一个模板引擎
+         * @param {String} template 模板字符串
+         * @returns {Template}
+         * @private
+         */
+        _init: function (template) {
+            var the = this;
+            var _var = the._generatorVar();
+            var fnStr = 'var ' + _var + '="";';
+            var output = [];
+            var parseTimes = 0;
+            // 是否进入忽略状态，true=进入，false=退出
+            var inIgnore = false;
+            // 是否进入表达式
+            var inExp = false;
 
-        the._template = {
-            escape: _escape,
-            filters: {}
-        };
-        the._useFilters = {};
+            the._template = {
+                escape: _escape,
+                filters: {}
+            };
+            the._useFilters = {};
 
-        template.split(openTag).forEach(function (value, times) {
-            var array = value.split(closeTag);
-            var $0 = array[0];
-            var $1 = array[1];
-            var parseVar;
-            var isEndIgnore;
+            template.split(openTag).forEach(function (value, times) {
+                var array = value.split(closeTag);
+                var $0 = array[0];
+                var $1 = array[1];
+                var parseVar;
+                var isEndIgnore;
 
-            parseTimes++;
+                parseTimes++;
 
-            // 1个开始符
-            if (array.length === 1) {
-                // 多个连续开始符号
-                if (!$0 || $0 === '{') {
+                // 1个开始符
+                if (array.length === 1) {
+                    // 多个连续开始符号
+                    if (!$0 || $0 === '{') {
+                        if (inIgnore) {
+                            output.push(_var + '+=' + _cleanPice(openTag) + ';');
+                        }
+                    }
+                    // 忽略开始
+                    else if ($0.slice(-1) === '\\') {
+                        output.push(_var + '+=' + _cleanPice($0.slice(0, -1) + openTag) + ';');
+                        inIgnore = true;
+                        parseTimes--;
+                    }
+                    else {
+                        if ((parseTimes % 2) === 0) {
+                            throw new Error('find unclose tag ' + openTag);
+                        }
+
+                        inIgnore = false;
+                        inExp = true;
+                        output.push(_var + '+=' + _cleanPice($0) + ';');
+                    }
+                }
+                // 1个结束符
+                else if (array.length === 2) {
+                    $0 = $0.trim();
+                    inExp = false;
+                    isEndIgnore = $1.slice(-1) === '\\';
+
+                    // 忽略结束
                     if (inIgnore) {
-                        output.push(_var + '+=' + _cleanPice(openTag) + ';');
-                    }
-                }
-                // 忽略开始
-                else if ($0.slice(-1) === '\\') {
-                    output.push(_var + '+=' + _cleanPice($0.slice(0, -1) + openTag) + ';');
-                    inIgnore = true;
-                    parseTimes--;
-                }
-                else {
-                    if ((parseTimes % 2) === 0) {
-                        throw new Error('find unclose tag ' + openTag);
-                    }
+                        output.push(
+                            _var +
+                            '+=' + _cleanPice((times > 1 ? openTag : '') +
+                                $0 + closeTag +
+                                (isEndIgnore ? $1.slice(0, -1) : $1)
+                            ) +
+                            ';');
+                        inIgnore = false;
 
-                    inIgnore = false;
-                    inExp = true;
-                    output.push(_var + '+=' + _cleanPice($0) + ';');
-                }
-            }
-            // 1个结束符
-            else if (array.length === 2) {
-                $0 = $0.trim();
-                inExp = false;
-                isEndIgnore = $1.slice(-1) === '\\';
+                        // 下一次忽略
+                        if (isEndIgnore) {
+                            inIgnore = true;
+                            parseTimes--;
+                        }
 
-                // 忽略结束
-                if (inIgnore) {
-                    output.push(
-                        _var +
-                        '+=' + _cleanPice((times > 1 ? openTag : '') +
-                            $0 + closeTag +
-                            (isEndIgnore ? $1.slice(0, -1) : $1)
-                        ) +
-                        ';');
-                    inIgnore = false;
+                        return;
+                    }
 
                     // 下一次忽略
                     if (isEndIgnore) {
                         inIgnore = true;
                         parseTimes--;
+                        $1 = $1.slice(0, -1);
                     }
 
-                    return;
-                }
+                    $1 = _cleanPice($1);
 
-                // 下一次忽略
-                if (isEndIgnore) {
-                    inIgnore = true;
-                    parseTimes--;
-                    $1 = $1.slice(0, -1);
-                }
-
-                $1 = _cleanPice($1);
-
-                // if abc
-                if (the._hasPrefix($0, 'if')) {
-                    output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
-                }
-                // else if abc
-                else if (REG_ELSE_IF.test($0)) {
-                    output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
-                }
-                // else
-                else if ($0 === 'else') {
-                    output.push('}else{' + _var + '+=' + $1 + ';');
-                }
-                // /if
-                else if ($0 === '/if') {
-                    output.push('}' + _var + '+=' + $1 + ';');
-                }
-                // list list as key,val
-                // list list as val
-                else if (the._hasPrefix($0, 'list')) {
-                    output.push(the._parseList($0) + _var + '+=' + $1 + ';');
-                }
-                // /list
-                else if ($0 === '/list') {
-                    output.push('}, this);' + _var + '+=' + $1 + ';');
-                }
-                // var
-                else if (the._hasPrefix($0, 'var')) {
-                    parseVar = the._parseVar($0);
-
-                    if (parseVar) {
-                        output.push(parseVar);
+                    // if abc
+                    if (the._hasPrefix($0, 'if')) {
+                        output.push(the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
-                }
-                // #
-                else if (REG_HASH.test($0)) {
-                    parseVar = the._parseVar($0.replace(REG_HASH, ''));
-
-                    if (parseVar) {
-                        output.push(parseVar);
+                    // else if abc
+                    else if (REG_ELSE_IF.test($0)) {
+                        output.push('}' + the._parseIfAndElseIf($0) + _var + '+=' + $1 + ';');
                     }
+                    // else
+                    else if ($0 === 'else') {
+                        output.push('}else{' + _var + '+=' + $1 + ';');
+                    }
+                    // /if
+                    else if ($0 === '/if') {
+                        output.push('}' + _var + '+=' + $1 + ';');
+                    }
+                    // list list as key,val
+                    // list list as val
+                    else if (the._hasPrefix($0, 'list')) {
+                        output.push(the._parseList($0) + _var + '+=' + $1 + ';');
+                    }
+                    // /list
+                    else if ($0 === '/list') {
+                        output.push('}, this);' + _var + '+=' + $1 + ';');
+                    }
+                    // var
+                    else if (the._hasPrefix($0, 'var')) {
+                        parseVar = the._parseVar($0);
+
+                        if (parseVar) {
+                            output.push(parseVar);
+                        }
+                    }
+                    // #
+                    else if (REG_HASH.test($0)) {
+                        parseVar = the._parseVar($0.replace(REG_HASH, ''));
+
+                        if (parseVar) {
+                            output.push(parseVar);
+                        }
+                    }
+                    // exp
+                    else {
+                        parseVar = the._parseExp($0);
+
+                        if (parseVar) {
+                            output.push(_var + '+=' + the._parseExp($0) + '+' + $1 + ';');
+                        }
+                    }
+
                 }
-                // exp
+                // 多个结束符
                 else {
-                    parseVar = the._parseExp($0);
-
-                    if (parseVar) {
-                        output.push(_var + '+=' + the._parseExp($0) + '+' + $1 + ';');
-                    }
+                    output.push(_var + '+=' + _cleanPice(value) + ';');
+                    inExp = false;
+                    inIgnore = false;
                 }
+            });
 
+            fnStr += output.join('') + 'return ' + _var;
+            the._fn = fnStr;
+
+            return the;
+        },
+
+
+        /**
+         * 判断是否包含该前缀
+         * @param str
+         * @param pre
+         * @returns {boolean}
+         * @private
+         */
+        _hasPrefix: function (str, pre) {
+            return str.indexOf(pre + ' ') === 0;
+        },
+
+
+        /**
+         * 渲染数据
+         * @param {Object} data 数据
+         * @returns {String} 返回渲染后的数据
+         *
+         * @example
+         * tp.render(data);
+         */
+        render: function (data) {
+            var the = this;
+            var options = the._options;
+            var _var = 'alienTemplateData_' + Date.now();
+            var vars = [];
+            var fn;
+            var existFilters = dato.extend(true, {}, filters, the._template.filters);
+            var self = dato.extend(true, {}, {
+                each: dato.each,
+                escape: _escape,
+                filters: existFilters
+            });
+            var ret;
+
+            dato.each(data, function (key) {
+                vars.push('var ' + key + '=' + _var + '["' + key + '"];');
+            });
+
+            dato.each(the._useFilters, function (filter) {
+                if (!existFilters[filter]) {
+                    throw new Error('can not found filter ' + filter);
+                }
+            });
+
+            try {
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return err.message;}');
+            } catch (err) {
+                fn = function () {
+                    return err;
+                };
             }
-            // 多个结束符
-            else {
-                output.push(_var + '+=' + _cleanPice(value) + ';');
-                inExp = false;
-                inIgnore = false;
+
+            try {
+                ret = fn.call(self, data);
+            } catch (err) {
+                ret = err.message;
             }
-        });
-
-        fnStr += output.join('') + 'return ' + _var;
-        the._fn = fnStr;
-
-        return the;
-    };
 
 
-    /**
-     * 判断是否包含该前缀
-     * @param str
-     * @param pre
-     * @returns {boolean}
-     * @private
-     */
-    Template.fn._hasPrefix = function (str, pre) {
-        return str.indexOf(pre + ' ') === 0;
-    };
+            ret = String(ret);
+
+            return options.compress ? _cleanHTML(ret) : ret;
+        },
 
 
-    /**
-     * 渲染数据
-     * @param {Object} data 数据
-     * @returns {String} 返回渲染后的数据
-     *
-     * @example
-     * tp.render(data);
-     */
-    Template.fn.render = function (data) {
-        var the = this;
-        var options = the._options;
-        var _var = 'alienTemplateData_' + Date.now();
-        var vars = [];
-        var fn;
-        var existFilters = dato.extend(true, {}, filters, the._template.filters);
-        var self = dato.extend(true, {}, {
-            each: dato.each,
-            escape: _escape,
-            filters: existFilters
-        });
-        var ret;
-
-        dato.each(data, function (key) {
-            vars.push('var ' + key + '=' + _var + '["' + key + '"];');
-        });
-
-        dato.each(the._useFilters, function (filter) {
-            if (!existFilters[filter]) {
-                throw new Error('can not found filter ' + filter);
-            }
-        });
-
-        try {
-            fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return err.message;}');
-        } catch (err) {
-            fn = function () {
-                return err;
-            };
-        }
-
-        try {
-            ret = fn.call(self, data);
-        } catch (err) {
-            ret = err.message;
-        }
-
-
-        ret = String(ret);
-
-        return options.compress ? _cleanHTML(ret) : ret;
-    };
-
-
-    /**
-     * 添加过滤函数，默认无任何过滤函数
-     * @param {String} name 过滤函数名称
-     * @param {Function} callback 过滤方法
-     * @param {Boolean} [isOverride=false] 覆盖实例的过滤方法，默认为false
-     *
-     * @example
-     * tp.addFilter('test', function(val, arg1, arg2){
+        /**
+         * 添加过滤函数，默认无任何过滤函数
+         * @param {String} name 过滤函数名称
+         * @param {Function} callback 过滤方法
+         * @param {Boolean} [isOverride=false] 覆盖实例的过滤方法，默认为false
+         *
+         * @example
+         * tp.addFilter('test', function(val, arg1, arg2){
          *     // code
          *     // 规范定义，第1个参数为上一步的值
          *     // 后续参数自定义个数
          * });
-     */
-    Template.fn.addFilter = function (name, callback, isOverride) {
-        var instanceFilters = this._template.filters;
+         */
+        addFilter: function (name, callback, isOverride) {
+            var instanceFilters = this._template.filters;
 
-        if (typeis(name) !== 'string') {
-            throw new Error('filter name must be a string');
+            if (typeis(name) !== 'string') {
+                throw new Error('filter name must be a string');
+            }
+
+            // 未设置覆盖 && 已经覆盖
+            if (!isOverride && instanceFilters[name]) {
+                throw new Error('override a exist instance filter');
+            }
+
+            if (typeis(callback) !== 'function') {
+                throw new Error('filter callback must be a function');
+            }
+
+            instanceFilters[name] = callback;
+        },
+
+        /**
+         * 获取过滤函数
+         * @param {String} [name] 过滤函数名称，name为空时返回所有过滤方法
+         * @returns {Function|Object}
+         *
+         * @example
+         * tp.getFilter();
+         * // => return all filters Object
+         *
+         * tp.getFilter('test');
+         * // => return test filter function
+         */
+        getFilter: function (name) {
+            return typeis(name) === 'string' ?
+                this._template.filters[name] :
+                this._template.filters;
+        },
+
+
+        /**
+         * 解析变量赋值
+         * @param str
+         * @returns {string}
+         * @private
+         */
+        _parseVar: function (str) {
+            return this._parseExp(str, 'var') + ';';
+        },
+
+
+        /**
+         * 解析表达式
+         * @param str
+         * @param [pre]
+         * @returns {string}
+         * @private
+         */
+        _parseExp: function (str, pre) {
+            var the = this;
+            var matches = str.trim().match(REG_VAR);
+            var filters;
+
+            if (!matches) {
+                return '';
+            }
+
+            var exp = matches[2];
+
+            // name || "123"
+            if (matches[3] && matches[3].slice(0, 2) === '||') {
+                //return ret + '?' + matches[2] + ':' + matches[3].slice(2) + ')';
+                exp = '(typeof(' + exp + ')!=="undefined"&&!!' + exp + ')?' + exp + ':' + matches[3].slice(2);
+            } else if (matches[3] && matches[3].slice(0, 1) === '|') {
+                filters = matches[3].split('|');
+                filters.shift();
+                filters.forEach(function (filter) {
+                    var matches = filter.match(REG_FILTER);
+                    var args;
+                    var name;
+
+                    if (!matches) {
+                        throw new Error('parse error ' + filter);
+                    }
+
+                    name = matches[1];
+
+                    the._useFilters[name] = false;
+
+                    args = exp + (matches[3] ? ',' + matches[3] : '');
+                    exp = 'this.filters.' + name + '(' + args + ')';
+                });
+            }
+
+            var isEscape = matches[1] !== '=';
+
+            if (pre) {
+                return exp;
+            }
+
+            return (isEscape ? 'this.escape(' : '(') + exp + ')';
+        },
+
+
+        /**
+         * 解析条件判断
+         * @param str
+         * @returns {string}
+         * @private
+         */
+        _parseIfAndElseIf: function (str) {
+            var matches = str.trim().match(REG_IF);
+
+            if (!matches) {
+                throw new Error('parse error ' + str);
+            }
+
+            return matches[1] + '(' + matches[3] + '){';
+        },
+
+
+        /**
+         * 解析列表
+         * @param str
+         * @returns {string}
+         * @private
+         */
+        _parseList: function (str) {
+            var matches = str.trim().match(REH_LIST);
+            var parse;
+            var randomKey1 = this._generatorVar();
+            var randomKey2 = this._generatorVar();
+            var randomVal = this._generatorVar();
+
+            if (!matches) {
+                throw new Error('parse error ' + str);
+            }
+
+            parse = {
+                list: matches[1] || '',
+                key: matches[4] ? matches[2] : randomKey2,
+                val: matches[4] ? matches[4] : matches[2]
+            };
+
+            return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
+                'var ' + parse.key + ' = ' + randomKey1 + ';' +
+                'var ' + parse.val + '=' + randomVal + ';';
         }
-
-        // 未设置覆盖 && 已经覆盖
-        if (!isOverride && instanceFilters[name]) {
-            throw new Error('override a exist instance filter');
-        }
-
-        if (typeis(callback) !== 'function') {
-            throw new Error('filter callback must be a function');
-        }
-
-        instanceFilters[name] = callback;
-    };
-
-    /**
-     * 获取过滤函数
-     * @param {String} [name] 过滤函数名称，name为空时返回所有过滤方法
-     * @returns {Function|Object}
-     *
-     * @example
-     * tp.getFilter();
-     * // => return all filters Object
-     *
-     * tp.getFilter('test');
-     * // => return test filter function
-     */
-    Template.fn.getFilter = function (name) {
-        return typeis(name) === 'string' ?
-            this._template.filters[name] :
-            this._template.filters;
-    };
-
-
-    /**
-     * 解析变量赋值
-     * @param str
-     * @returns {string}
-     * @private
-     */
-    Template.fn._parseVar = function (str) {
-        return this._parseExp(str, 'var') + ';';
-    };
-
-
-    /**
-     * 解析表达式
-     * @param str
-     * @param [pre]
-     * @returns {string}
-     * @private
-     */
-    Template.fn._parseExp = function (str, pre) {
-        var the = this;
-        var matches = str.trim().match(REG_VAR);
-        var filters;
-
-        if (!matches) {
-            return '';
-        }
-
-        var exp = matches[2];
-
-        // name || "123"
-        if (matches[3] && matches[3].slice(0, 2) === '||') {
-            //return ret + '?' + matches[2] + ':' + matches[3].slice(2) + ')';
-            exp = '(typeof(' + exp + ')!=="undefined"&&!!' + exp + ')?' + exp + ':' + matches[3].slice(2);
-        } else if (matches[3] && matches[3].slice(0, 1) === '|') {
-            filters = matches[3].split('|');
-            filters.shift();
-            filters.forEach(function (filter) {
-                var matches = filter.match(REG_FILTER);
-                var args;
-                var name;
-
-                if (!matches) {
-                    throw new Error('parse error ' + filter);
-                }
-
-                name = matches[1];
-
-                the._useFilters[name] = false;
-
-                args = exp + (matches[3] ? ',' + matches[3] : '');
-                exp = 'this.filters.' + name + '(' + args + ')';
-            });
-        }
-
-        var isEscape = matches[1] !== '=';
-
-        if (pre) {
-            return exp;
-        }
-
-        return (isEscape ? 'this.escape(' : '(') + exp + ')';
-    };
-
-
-    /**
-     * 解析条件判断
-     * @param str
-     * @returns {string}
-     * @private
-     */
-    Template.fn._parseIfAndElseIf = function (str) {
-        var matches = str.trim().match(REG_IF);
-
-        if (!matches) {
-            throw new Error('parse error ' + str);
-        }
-
-        return matches[1] + '(' + matches[3] + '){';
-    };
-
-
-    /**
-     * 解析列表
-     * @param str
-     * @returns {string}
-     * @private
-     */
-    Template.fn._parseList = function (str) {
-        var matches = str.trim().match(REH_LIST);
-        var parse;
-        var randomKey1 = this._generatorVar();
-        var randomKey2 = this._generatorVar();
-        var randomVal = this._generatorVar();
-
-        if (!matches) {
-            throw new Error('parse error ' + str);
-        }
-
-        parse = {
-            list: matches[1] || '',
-            key: matches[4] ? matches[2] : randomKey2,
-            val: matches[4] ? matches[4] : matches[2]
-        };
-
-        return 'this.each(' + parse.list + ', function(' + randomKey1 + ', ' + randomVal + '){' +
-            'var ' + parse.key + ' = ' + randomKey1 + ';' +
-            'var ' + parse.val + '=' + randomVal + ';';
-    };
+    });
 
     /**
      * 模板引擎

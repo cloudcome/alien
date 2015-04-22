@@ -269,7 +269,7 @@ define(function (require, exports, module) {
                 // 符合当前事件 && 最近的DOM符合选择器 && 触发dom在当前监听dom里
                 var closestElement = domSelector.closest(eve.target, selector);
 
-                if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && element.contains(closestElement[0])) {
+                if (eventTypes.indexOf(eve.type) > -1 && closestElement.length && domSelector.contains(closestElement[0], element)) {
                     return listener.call(closestElement[0], eve);
                 }
             };
