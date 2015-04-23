@@ -55,10 +55,9 @@ define(function (require, exports, module) {
          * shell.is360;
          * // true or false
          */
-        if (_aliMimeType() || _UA()) {
-            // 360浏览器
-            return '360';
-        }
+        is360: (function () {
+            return chromiumType === '360';
+        })(),
         /**
          * 是否为猎豹安全浏览器
          *
@@ -139,28 +138,28 @@ define(function (require, exports, module) {
         return false;
     }
 
-    function _aliMimeType() {
-        var _desc = '', _type = '';
-        var _aliServiceCount = 0;
-        var _AliSSOLogin = false;
-        for (var i = 0; i < window.clientInformation.mimeTypes.length; i++ ) {
-            _desc = window.clientInformation.mimeTypes[i].description;
-            _type = window.clientInformation.mimeTypes[i].type;
-            if (_desc.indexOf('AliSSOLogin') >= 0) {
-                _AliSSOLogin = true;
-            }
+    // function _aliMimeType() {
+    //     var _desc = '', _type = '';
+    //     var _aliServiceCount = 0;
+    //     var _AliSSOLogin = false;
+    //     for (var i = 0; i < window.clientInformation.mimeTypes.length; i++ ) {
+    //         _desc = window.clientInformation.mimeTypes[i].description;
+    //         _type = window.clientInformation.mimeTypes[i].type;
+    //         if (_desc.indexOf('AliSSOLogin') >= 0) {
+    //             _AliSSOLogin = true;
+    //         }
 
-            if (_desc.indexOf('ali')>=0 || _desc.indexOf('Ali')>=0) {
-                _aliServiceCount++;
-            }
-        }
+    //         if (_desc.indexOf('ali')>=0 || _desc.indexOf('Ali')>=0) {
+    //             _aliServiceCount++;
+    //         }
+    //     }
 
-        if (_AliSSOLogin && _aliServiceCount >= 2 ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if (_AliSSOLogin && _aliServiceCount >= 2 ) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     function _UA() {
         if (navigator.userAgent.indexOf('360Browser') > -1 ) {
@@ -170,6 +169,24 @@ define(function (require, exports, module) {
         } else {
             return false;
         }
+    }
+
+    function _findingPlugin() {
+        var _name ='', _fileName='', _desc='';
+        var _findPluginCount= 0;
+        for (var i=0; i < window.clientInformation.plugins.length; i++) {
+            _desc = window.clientInformation.plugins[i].description;
+            _fileName = window.clientInformation.plugins[i].filename;
+            _name = window.clientInformation.plugins[i].name;
+            
+                if ( _name.toLowerCase().indexOf('flash')>=0 ) {
+                    if ( _fileName.toLowerCase().indexOf('npswf') >= 0 ) {
+                        return true;
+                    }
+                    _findPluginCount++;
+                }
+        }
+        return false;
     }
 
     /**
@@ -205,16 +222,14 @@ define(function (require, exports, module) {
             return 'liebao';
         }
 
+        if (_findingPlugin() || _UA()) {
+            // 360浏览器
+            return '360';
+        }
+
         // chrome
         if (window.clientInformation && window.clientInformation.languages && window.clientInformation.languages.length > 2) {
             return 'chrome';
-        }
-
-
-        if (_track) {
-            // 360极速浏览器
-            // 360安全浏览器
-            return webstoreKeysLength > 1 ? '360ee' : '360se';
         }
 
         return '';
