@@ -17,7 +17,7 @@ define(function (require) {
         this.age = age;
     }, Father);
 
-    Child.fn.speak = function(){
+    Child.prototype.speak = function () {
         console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
     };
 
