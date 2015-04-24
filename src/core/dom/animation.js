@@ -384,7 +384,7 @@ define(function (require, exports, module) {
 
     /**
      * 平滑滚动
-     * @param {HTMLElement|Node|window|document|String} $ele 要滚动的元素
+     * @param {Object|HTMLElement|Node|Window|Document|String} $ele 要滚动的元素
      * @param {Object} to 终点
      * @param {Object} [to.x] x轴终点
      * @param {Object} [to.y] y轴终点
