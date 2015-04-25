@@ -46,8 +46,8 @@ define(function (require, exports, module) {
     var hashchangeCallback = function (eve) {
         var newObject = exports.parse(eve.newURL);
         var oldObject = exports.parse(eve.oldURL);
-        var pathDifferentKeys = dato.compare(newObject.path || [], oldObject.path || []).different;
-        var queryDifferentKeys = dato.compare(newObject.query || {}, oldObject.query || {}).different;
+        var pathDifferentKeys = dato.compare(newObject.path || [], oldObject.path || []).diff;
+        var queryDifferentKeys = dato.compare(newObject.query || {}, oldObject.query || {}).diff;
         var args = [eve, newObject, oldObject];
 
         if (pathDifferentKeys.length) {

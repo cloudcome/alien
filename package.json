@@ -40,6 +40,8 @@
     "jsdoc": "^3.3.0-beta1"
   },
   "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-karma": "0.0.4",
     "jsdoc": "^3.3.0-alpha10",
     "karma": "^0.12.31",
     "karma-coverage": "^0.3.1",

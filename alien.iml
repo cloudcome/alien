@@ -9,5 +9,6 @@
     <orderEntry type="library" name="coolie.js" level="application" />
     <orderEntry type="library" name="jasmine-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="coolie" level="application" />
+    <orderEntry type="library" name="Node.js v0.10.32 Core Modules" level="application" />
   </component>
 </module>
