@@ -23,7 +23,7 @@ define(function (require, exports, module) {
 
     /**
      * 格式化数字，如果是非数字则返回默认值
-     * @param {*} obj 待格式化对象
+     * @param {*} [obj] 待格式化对象
      * @param {*} [dft] 非数字时的默认值
      * @returns {*}
      */
@@ -159,8 +159,8 @@ define(function (require, exports, module) {
         data = data || {};
 
         filter = filter || function (val) {
-            return val !== udf;
-        };
+                return val !== udf;
+            };
 
         keys.forEach(function (key) {
             if (filter(data[key])) {
@@ -215,7 +215,7 @@ define(function (require, exports, module) {
      * @returns {number}
      *
      * @example
-     * data.bytes('我123');
+     * dato.bytes('我123');
      * // => 5
      */
     exports.bytes = function (string, doubleLength) {
@@ -270,7 +270,7 @@ define(function (require, exports, module) {
      * //       ["b", "c"],
      * //       ["d"]
      * //    ],
-     * //    different: ["b", "c", "d"]
+     * //    diff: ["b", "c", "d"]
      * // }
      */
     exports.compare = function (obj1, obj2) {
@@ -278,6 +278,7 @@ define(function (require, exports, module) {
         var obj2Type = typeis(obj2);
         var obj1Only = [];
         var obj2Only = [];
+        var diff = [];
         var same = [];
 
         // 类型不同
@@ -289,14 +290,22 @@ define(function (require, exports, module) {
         if (obj1Type === 'object' || obj1Type === 'array') {
             exports.each(obj1, function (key, val) {
                 if (obj2[key] !== val) {
-                    obj1Only.push(key);
+                    diff.push(key);
                 } else {
                     same.push(key);
+                }
+
+                if (typeis.undefined(obj2[key])) {
+                    obj1Only.push(key);
                 }
             });
 
             exports.each(obj2, function (key, val) {
-                if (obj1[key] !== val) {
+                if (obj1[key] !== val && diff.indexOf(key) === -1) {
+                    diff.push(key);
+                }
+
+                if (typeis.undefined(obj1[key])) {
                     obj2Only.push(key);
                 }
             });
@@ -307,7 +316,7 @@ define(function (require, exports, module) {
                     obj1Only,
                     obj2Only
                 ],
-                different: obj1Only.concat(obj2Only)
+                diff: diff
             };
         } else {
             return null;
@@ -336,8 +345,8 @@ define(function (require, exports, module) {
 
     /**
      * 比较两个长整型数值
-     * @param long1 {String} 长整型数值字符串1
-     * @param long2 {String} 长整型数值字符串2
+     * @param long1 {String|Number} 长整型数值字符串1
+     * @param long2 {String|Number} 长整型数值字符串2
      * @param [operator=">"] {String} 比较操作符，默认比较 long1 > long2
      * @returns {*}
      */
@@ -364,14 +373,14 @@ define(function (require, exports, module) {
         // '234567890123457'
         // ]
 
-        // 2. 比较数组长度
-        if (long1List.length > long2List.length) {
-            return operator === '>';
-        } else if (long1List.length < long2List.length) {
-            return operator === '<';
-        }
+        //// 2. 比较数组长度
+        //if (long1List.length > long2List.length) {
+        //    return operator === '>';
+        //} else if (long1List.length < long2List.length) {
+        //    return operator === '<';
+        //}
 
-        // 3. 遍历比较
+        // 2. 遍历比较
         var ret = false;
 
         exports.each(long1List, function (index, number1) {
@@ -453,27 +462,23 @@ define(function (require, exports, module) {
 
 
     /**
-     * ascii to base64
+     * base64 编码
      * @param ascii {String} ascii 字符串
      * @returns {String} base64 字符串
      */
-    exports.atob = function (ascii) {
-        try {
-            return window.atob(encodeURIComponent(String(ascii)));
-        } catch (err) {
-            return '';
-        }
+    exports.btoa = function (ascii) {
+        return window.btoa(encodeURIComponent(String(ascii)));
     };
 
 
     /**
-     * base64 to ascii
+     * base64 解码
      * @param base64 {String} base64 字符串
      * @returns {String} ascii 字符串
      */
-    exports.btoa = function (base64) {
+    exports.atob = function (base64) {
         try {
-            return decodeURIComponent(window.btoa(String(base64)));
+            return decodeURIComponent(window.atob(String(base64)));
         } catch (err) {
             return '';
         }

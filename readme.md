@@ -1,4 +1,4 @@
-# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.1.0
+# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.2.1
 一个为现代浏览器而生的前端解决方案。
 
 
@@ -37,6 +37,7 @@
 |-- examples 简单示例
 |-- help 帮助
 |-- src 【源代码】
+|   |-- 3rd 第三方独立脚本
 |	|-- core 核心库
 |	|	|-- communication 通信
 |	|	|	|-- jsonp.js
@@ -61,28 +62,32 @@
 |	|		|-- hashbang.js
 |	|		|-- querystring.js
 |	|		|-- shell.js
+|	|		|-- storage.js
 |	|		`-- ua.js
 |	|-- libs 基础库
-|	|	|-- DDB.js 数据、模板双向绑定【未完成】
+|	|	|-- Animation.js
 |	|	|-- Emitter.js
 |	|	|-- Pagination.js
 |	|	|-- Pjax.js
 |	|	|-- Template.js
 |	|	|-- Template.md
 |	|	`-- Validator.js
+|	|	`-- Weixin.js
 |	|-- ui UI
 |	|	|-- Autoheight textarea 自动增高
 |	|	|-- Banner
 |	|	|-- Dialog
-|	|	|-- Editor
+|	|	|-- Editor markdown 编辑器
 |	|	|-- Imgclip
 |	|	|-- Imgview
 |	|	|-- Mask
 |	|	|-- Msg
 |	|	|-- Pager
 |	|	|-- Pagination
+|	|	|-- Prettify
 |	|	|-- Resize
 |	|	|-- Scrollbar
+|	|	|-- Scrollspy 视口滚动
 |	|	|-- Tab
 |	|	|-- Tooltip
 |	|	|-- Validator
@@ -90,19 +95,22 @@
 |	|	|-- base.js
 |	|	`-- readme.md
 |	|-- util 小工具
+|	|	|-- allocation.js
 |	|	|-- calendar.js
 |	|	|-- canvas.js
 |	|	|-- class.js
-|	|	|-- control.js
+|	|	|-- controller.js
 |	|	|-- date.js
 |	|	|-- dato.js
 |	|	|-- easing.js
 |	|	|-- hashbang.js
 |	|	|-- howdo.js
+|	|	|-- keyframes.js
 |	|	|-- querystring.js
 |	|	|-- random.js
 |	|	|-- selection.js
 |	|	`-- typeis.js
+|	|	`-- url.js
 |	`-- readme.md
 |-- static 文档所需要的静态文件
 |-- templates 文档的模板

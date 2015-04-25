@@ -739,7 +739,7 @@ define(function (require, exports, module) {
             case 'array':
             case 'object':
                 compare = dato.compare(data, equal);
-                return compare ? !compare.different.length : false;
+                return compare ? !compare.diff.length : false;
 
             case 'boolean':
                 return data === equal;

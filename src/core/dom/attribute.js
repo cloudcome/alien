@@ -253,7 +253,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的滚动条高度
-     * @param ele {HTMLElement|Node|Window|Document} 元素
+     * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [top] {Number} 高度
      * @returns {number|*}
      *
@@ -265,6 +265,8 @@ define(function (require, exports, module) {
      * attribute.scrollTop(ele, 100);
      */
     exports.scrollTop = function (ele, top) {
+        ele = selector.query(ele)[0];
+
         if (top === undefined) {
             return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
         }
@@ -280,7 +282,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的滚动条左距离
-     * @param ele {HTMLElement|Node|Window|Document} 元素
+     * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [left] {Number} 高度
      * @returns {number|*}
      *
@@ -292,6 +294,8 @@ define(function (require, exports, module) {
      * attribute.scrollLeft(ele, 100);
      */
     exports.scrollLeft = function (ele, left) {
+        ele = selector.query(ele)[0];
+
         if (left === undefined) {
             return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
         }

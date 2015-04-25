@@ -67,7 +67,6 @@ define(function (require, exports, module) {
         canBackup: true,
         // 最小检查同步本地的内容的相差长度
         checkLength: 3,
-        autoFocus: true,
         minHeight: 200,
         // 上传操作
         // uploadCallback 约定：
@@ -100,7 +99,6 @@ define(function (require, exports, module) {
             showTrailingSpace: true,
             styleActiveLine: true,
             styleSelectedText: true,
-            autofocus: the._options.autoFocus,
             tabSize: the._options.tabSize
         });
 
@@ -171,10 +169,6 @@ define(function (require, exports, module) {
                                 the._editor.setCursor(local.cur);
                             } catch (err) {
                                 // ignore
-                            }
-
-                            if (the._options.autoFocus) {
-                                the._editor.focus();
                             }
                         });
                         /**
