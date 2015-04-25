@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Scroll = require('/src/ui/Scroll/');
+    var Scroll = require('../../src/ui/Scroll/');
     var sc = new Scroll('body');
     var sc2 = new Scroll('#demo');
     var console = window.console;
@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     });
 
     sc.on('y', function (ret) {
-        console.log(ret);
+        //console.log(ret);
     });
 
     sc2.on('left', function () {
@@ -47,5 +47,13 @@ define(function (require, exports, module) {
 
     sc2.on('bottom', function () {
         console.log(2, 'bottom');
+    });
+
+    sc.on('up', function () {
+        console.log('up');
+    });
+
+    sc.on('down', function () {
+        console.log('down');
     });
 });

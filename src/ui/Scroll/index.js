@@ -20,12 +20,15 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
-    var event = require('../../core/event/base.js');
+    var event = require('../../core/event/touch.js');
     var win = window;
     var doc = win.document;
     var $html = doc.documentElement;
     var $body = doc.body;
     var UI = require('../');
+    var alienKey = 'alien-ui-scroll';
+    var compatible = require('../../core/navigator/compatible.js');
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     var defaults = {};
     var Scroll = UI.create(function ($container, options) {
         var the = this;
@@ -48,51 +51,56 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-            event.on(the._$container, 'scroll', the._onscroll = function () {
+            event.on(the._$container, 'scroll touchmove', the._onscroll = function () {
                 var scrollTop = attribute.scrollTop(the._$container);
                 var scrollLeft = attribute.scrollLeft(the._$container);
-                var height = attribute.height(the._$parent);
-                var width = attribute.width(the._$parent);
+                var innerHeight = attribute.innerHeight(the._$parent);
+                var innerWidth = attribute.innerWidth(the._$parent);
                 var scrollHeight = the._$offset.scrollHeight;
                 var scrollWidth = the._$offset.scrollWidth;
-                var ret;
+                var ret = {
+                    scrollTop: scrollTop,
+                    scrollLeft: scrollLeft,
+                    innerWidth: innerWidth,
+                    innerHeight: innerHeight,
+                    scrollWidth: scrollWidth,
+                    scrollHeight: scrollHeight,
+                    ratioX: scrollWidth < innerWidth ? 1 : scrollLeft / (scrollWidth - innerWidth),
+                    ratioY: scrollHeight < innerHeight ? 1 : scrollTop / (scrollHeight - innerHeight)
+                };
 
-                if (height < scrollHeight) {
-                    if (scrollTop + height >= scrollHeight) {
-                        the.emit('bottom');
+
+                if (scrollHeight > innerHeight) {
+                    if (scrollTop + innerHeight >= scrollHeight) {
+                        the.emit('bottom', ret);
                     } else if (!scrollTop) {
-                        the.emit('top');
+                        the.emit('top', ret);
                     }
-
-                    ret = {
-                        scrollTop: scrollTop,
-                        height: height,
-                        scrollHeight: scrollHeight,
-                        ratio: scrollTop / (scrollHeight - height)
-                    };
 
                     the.emit('y', ret);
                 }
 
-                if (width < scrollWidth) {
-                    if (scrollLeft + width >= scrollWidth) {
-                        the.emit('right');
+                if (scrollWidth > innerWidth) {
+                    if (scrollLeft + innerWidth >= scrollWidth) {
+                        the.emit('right', ret);
                     } else if (!scrollLeft) {
-                        the.emit('left');
+                        the.emit('left', ret);
                     }
-
-                    ret = {
-                        scrollTop: scrollTop,
-                        height: height,
-                        scrollHeight: scrollHeight,
-                        ratio: scrollTop / (scrollHeight - height)
-                    };
 
                     the.emit('x', ret);
                 }
+
+                var lastScroll = the._$container[alienKey];
+
+                if (lastScroll) {
+                    the.emit(lastScroll.t > scrollTop ? 'up' : 'down', ret);
+                    the.emit(lastScroll.l > scrollLeft ? 'pull' : 'push', ret);
+                }
+
+                the._$container[alienKey] = {t: scrollTop, l: scrollLeft};
             });
 
-            controller.nextTick(the._onscroll, the);
+            win[requestAnimationFrame](the._onscroll, the);
         },
 
 
@@ -102,7 +110,8 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            event.un(the._$container, 'scroll', the._onscroll);
+            event.un(the._$container, 'scroll touchmove', the._onscroll);
+            the._$container[alienKey] = null;
         }
     });
 
