@@ -321,12 +321,6 @@
       <workItem from="1427680980876" duration="221000" />
       <workItem from="1427699879849" duration="2000" />
     </task>
-    <task id="LOCAL-00293" summary="ui/Dailog/">
-      <created>1421590128084</created>
-      <option name="number" value="00293" />
-      <option name="project" value="LOCAL" />
-      <updated>1421590128084</updated>
-    </task>
     <task id="LOCAL-00294" summary="ui/Msg/">
       <created>1421590286316</created>
       <option name="number" value="00294" />
@@ -615,7 +609,13 @@
       <option name="project" value="LOCAL" />
       <updated>1429941519267</updated>
     </task>
-    <option name="localTasksCounter" value="342" />
+    <task id="LOCAL-00342" summary="Merge branch 'master' of http://gitlab.lvduoduo.com/zhangyunlai/alien&#10;&#10;# Conflicts:&#10;#&#9;.gitignore&#10;#&#9;docs/core_communication_jsonp.js.html&#10;#&#9;docs/core_communication_upload.js.html&#10;#&#9;docs/core_communication_xhr.js.html&#10;#&#9;docs/core_dom_animation.js.html&#10;#&#9;docs/core_dom_attribute.js.html&#10;#&#9;docs/core_dom_canvas.js.html&#10;#&#9;docs/core_dom_modification.js.html&#10;#&#9;docs/core_dom_see.js.html&#10;#&#9;docs/core_dom_selector.js.html&#10;#&#9;docs/core_event_base.js.html&#10;#&#9;docs/core_event_drag.js.html&#10;#&#9;docs/core_event_ready.js.html&#10;#&#9;docs/core_event_touch.js.html&#10;#&#9;docs/core_event_wheel.js.html&#10;#&#9;docs/core_navigator_compatible.js.html&#10;#&#9;docs/core_navigator_cookie.js.html&#10;#&#9;docs/core_navigator_hashbang.js.html&#10;#&#9;docs/core_navigator_querystring.js.html&#10;#&#9;docs/core_navigator_shell.js.html&#10;#&#9;docs/core_navigator_storage.js.html&#10;#&#9;docs/core_navigator_ua.js.html&#10;#&#9;docs/index.html&#10;#&#9;docs/libs_Animation.js.html&#10;#&#9;docs/libs_Emitter.js.html&#10;#&#9;docs/libs_Pagination.js.html&#10;#&#9;docs/libs_Pjax.js.html&#10;#&#9;docs/libs_Template.js.html&#10;#&#9;docs/libs_Validator.js.html&#10;#&#9;docs/libs_Weixin.js.html&#10;#&#9;docs/module-core_communication_jsonp.html&#10;#&#9;docs/module-core_communication_upload.html&#10;#&#9;docs/module-core_communication_xhr.html&#10;#&#9;docs/module-core_dom_animation.html&#10;#&#9;docs/module-core_dom_attribute.html&#10;#&#9;docs/module-core_dom_canvas.html&#10;#&#9;docs/module-core_dom_modification.html&#10;#&#9;docs/module-core_dom_see.html&#10;#&#9;docs/module-core_dom_selector.html&#10;#&#9;docs/module-core_event_base.html&#10;#&#9;docs/module-core_event_drag.html&#10;#&#9;docs/module-core_event_ready.html&#10;#&#9;docs/module-core_event_touch.html&#10;#&#9;docs/module-core_event_wheel.html&#10;#&#9;docs/module-core_navigator_compatible.html&#10;#&#9;docs/module-core_navigator_cookie.html&#10;#&#9;docs/module-core_navigator_hashbang.html&#10;#&#9;docs/module-core_navigator_querystring.html&#10;#&#9;docs/module-core_navigator_shell.html&#10;#&#9;docs/module-core_navigator_storage.html&#10;#&#9;docs/module-core_navigator_ua.html&#10;#&#9;docs/module-libs_Animation.html&#10;#&#9;docs/module-libs_Emitter.html&#10;#&#9;docs/module-libs_Pagination.html&#10;#&#9;docs/module-libs_Pjax.html&#10;#&#9;docs/module-libs_Template.html&#10;#&#9;docs/module-libs_Validator.html&#10;#&#9;docs/module-parent_index.html&#10;#&#9;docs/module-parent_keyframes.html&#10;#&#9;docs/module-ui_Autoheight_.html&#10;#&#9;docs/module-ui_Banner_.html&#10;#&#9;docs/module-ui_Dialog_.html&#10;#&#9;docs/module-ui_Editor_.html&#10;#&#9;docs/module-ui_Imgclip_.html&#10;#&#9;docs/module-ui_Mask_.html&#10;#&#9;docs/module-ui_Pager_.html&#10;#&#9;docs/module-ui_Pagination_.html&#10;#&#9;docs/module-ui_Prettify_.html&#10;#&#9;docs/module-ui_Resize_.html&#10;#&#9;docs/module-ui_Scrollbar_.html&#10;#&#9;docs/module-ui_Tab_.html&#10;#&#9;docs/module-ui_Tooltip_.html&#10;#&#9;docs/module-ui_Validator_.html&#10;#&#9;docs/module-ui_Viewer_.html&#10;#&#9;docs/module-ui_Window_.html&#10;#&#9;docs/module-utils_calendar.html&#10;#&#9;docs/module-utils_canvas.html&#10;#&#9;docs/module-utils_class.html&#10;#&#9;docs/module-utils_controller.html&#10;#&#9;docs/module-utils_date.html&#10;#&#9;docs/module-utils_dato.html&#10;#&#9;docs/module-utils_easing.html&#10;#&#9;docs/module-utils_hashbang.html&#10;#&#9;docs/module-utils_querystring.html&#10;#&#9;docs/module-utils_random.html&#10;#&#9;docs/module-utils_selection.html&#10;#&#9;docs/module-utils_typeis.html&#10;#&#9;docs/ui_Autoheight_index.js.html&#10;#&#9;docs/ui_Banner_index.js.html&#10;#&#9;docs/ui_Datepicker_index.js.html&#10;#&#9;docs/ui_Dialog_index.js.html&#10;#&#9;docs/ui_Editor_index.js.html&#10;#&#9;docs/ui_Imgclip_index.js.html&#10;#&#9;docs/ui_Imgview_index.js.html&#10;#&#9;docs/ui_Mask_index.js.html&#10;#&#9;docs/ui_Msg_index.js.html&#10;#&#9;docs/ui_Pager_index.js.html&#10;#&#9;docs/ui_Pagination_index.js.html&#10;#&#9;docs/ui_Prettify_index.js.html&#10;#&#9;docs/ui_Resize_index.js.html&#10;#&#9;docs/ui_Scrollbar_index.js.html&#10;#&#9;docs/ui_Tab_index.js.html&#10;#&#9;docs/ui_Tooltip_index.js.html&#10;#&#9;docs/ui_Validator_index.js.html&#10;#&#9;docs/ui_Window_index.js.html&#10;#&#9;docs/utils_allocation.js.html&#10;#&#9;docs/utils_calendar.js.html&#10;#&#9;docs/utils_canvas.js.html&#10;#&#9;docs/utils_class.js.html&#10;#&#9;docs/utils_controller.js.html&#10;#&#9;docs/utils_date.js.html&#10;#&#9;docs/utils_dato.js.html&#10;#&#9;docs/utils_easing.js.html&#10;#&#9;docs/utils_hashbang.js.html&#10;#&#9;docs/utils_howdo.js.html&#10;#&#9;docs/utils_keyframes.js.html&#10;#&#9;docs/utils_querystring.js.html&#10;#&#9;docs/utils_random.js.html&#10;#&#9;docs/utils_selection.js.html&#10;#&#9;docs/utils_typeis.js.html&#10;">
+      <created>1429941641171</created>
+      <option name="number" value="00342" />
+      <option name="project" value="LOCAL" />
+      <updated>1429941641171</updated>
+    </task>
+    <option name="localTasksCounter" value="343" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -626,11 +626,11 @@
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32713178" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48062015" sideWeight="0.5647339" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48062015" sideWeight="0.5647339" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24702145" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24702145" sideWeight="0.49919486" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23828435" sideWeight="0.50080514" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6775194" sideWeight="0.43526608" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32248062" sideWeight="0.49960285" order="4" side_tool="false" content_ui="tabs" />
@@ -744,6 +744,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3306321">
           <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24199288">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
           <folding />
         </state>
       </provider>

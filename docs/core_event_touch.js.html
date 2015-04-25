@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: core/event/touch.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_Router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_DDB.html">libs/DDB</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Queue.html">libs/Queue</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
+<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
+<li><a href="module-ui_Stickly_.html">ui/Stickly/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Imgclip_.html#~event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-libs_Animation.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
+<li><a href="module-ui_Window_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_Queue.html#~event:shift">module:libs/Queue.shift</a></li>
+<li><a href="module-libs_Queue.html#~event:size">module:libs/Queue.size</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Queue.html#~event:step">module:libs/Queue.step</a></li>
+<li><a href="module-libs_Queue.html#~event:stop">module:libs/Queue.stop</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 69</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:enterviewport">enterviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:leaveviewport">leaveviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: core/event/touch.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * touch.js
+ * @author ydr.me
+ * @create 2014-09-27 16:07
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * 扩展触摸事件支持
+     *
+     * @module core/event/touch
+     * @requires core/event/base
+     * @requires core/dom/attribute
+     * @requires utils/controller
+     *
+     * @example
+     * event.on(ele, 'touch1start', fn);
+     * event.on(ele, 'touch1move', fn);
+     * event.on(ele, 'touch1end', fn);
+     * event.on(ele, 'touch1cancel', fn);
+     * event.on(ele, 'tap', fn);
+     * event.on(ele, 'dbltap', fn);
+     * event.on(ele, 'taphold', fn);
+     * event.on(ele, 'swipe', fn);
+     * event.on(ele, 'swipeup', fn);
+     * event.on(ele, 'swiperight', fn);
+     * event.on(ele, 'swipebottom', fn);
+     * event.on(ele, 'swipeleft', fn);
+     */
+    'use strict';
+
+    var fastclick = require('../../3rd/fastclick.js');
+    var event = require('./base.js');
+    var attribute = require('../dom/attribute.js');
+    var controller = require('../../utils/controller.js');
+    var touchstart = 'touchstart MSPointerDown pointerdown';
+    var touchmove = 'touchmove MSPointerMove pointermove';
+    var touchend = 'touchend MSPointerUp pointerup';
+    var touchcancel = 'touchcancel MSPointerCancel pointercancel';
+    var udf;
+    var options = {
+        tap: {
+            x: 30,
+            y: 30,
+            timeout: 150
+        },
+        dbltap: {
+            timeout: 300
+        },
+        taphold: {
+            x: 50,
+            y: 50,
+            timeout: 500
+        },
+        swipe: {
+            x: 50,
+            y: 50,
+            timeout: 250
+        }
+    };
+    var cssTouch;
+    /**
+     * @type {Object}
+     * @property startX {Number} 开始触摸时的 x 坐标
+     * @property startY {Number} 开始触摸时的 y 坐标
+     * @property startTime {Number} 开始触摸时的时间戳
+     * @property startID {Number} 开始触摸时的 ID
+     * @property startTarget {Object} 开始触摸时的 element
+     * @property moveX {Number} 触摸过程中的 x 坐标
+     * @property moveY {Number} 触摸过程中的 y 坐标
+     * @property moveTime {Number} 触摸过程中的时间戳
+     * @property moveID {Number} 触摸过程中的 ID
+     * @property moveTarget {Object} 触摸过程中的 element
+     * @property moveDirection {String} 触摸过程中的矢量主方向
+     * @property endX {Number} 触摸结束时的 x 坐标
+     * @property endY {Number} 触摸结束时的 y 坐标
+     * @property endID {Number} 触摸结束时的 ID
+     * @property endTarget {Object} 触摸结束时的 element
+     * @property endTime {Number} 触摸结束时的时间戳
+     * @property changedX {Number} 触摸改变的 x 位移
+     * @property changedY {Number} 触摸改变的 y 位移
+     * @property changedDirection {String} 触摸改变的矢量主方向
+     * @property deltaX {Number} 触摸改变的 x 距离
+     * @property deltaY {Number} 触摸改变的 y 距离
+     * @property dbltapTimeid {Number} 双触定时器
+     * @property tapholdTimeid {Number} 长触定时器
+     * @property inDbltap {Boolean} 是否在双触期间
+     */
+    var touch = {};
+    var lastTapDefaultPrevented = false;
+
+    fastclick.attach(document.body);
+    event.on(document, 'click', function (eve) {
+        var tapEvent = event.create('tap');
+
+        event.extend(tapEvent, eve);
+
+        var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
+
+        if (dispatchTap &amp;&amp; dispatchTap.defaultPrevented === true) {
+            eve.preventDefault();
+            //lastTapDefaultPrevented = true;
+        }
+    });
+
+    event.on(document, touchstart, function (eve) {
+        if (!eve.touches || eve.touches.length !== 1) {
+            return;
+        }
+
+        cssTouch = attribute.css(document.body, ['touch-callout', 'user-select']);
+        attribute.css(document.body, {
+            'touch-callout': 'none',
+            'user-select': 'none'
+        });
+
+        var firstTouch = eve.touches[0];
+
+        _reset('taphold');
+        touch = {
+            lastTime: touch.lastTime
+        };
+        touch.startX = firstTouch.pageX;
+        touch.startY = firstTouch.pageY;
+        touch.startTime = eve.timeStamp || Date.now();
+        touch.startID = firstTouch.identifier;
+        touch.startTarget = firstTouch.target;
+
+        var touch1startEvent = event.create('touch1start');
+
+        event.extend(touch1startEvent, firstTouch, touch);
+
+        var dispatchTouch1start = event.dispatch(touch.startTarget, touch1startEvent);
+
+        if (dispatchTouch1start &amp;&amp; dispatchTouch1start.defaultPrevented === true) {
+            eve.preventDefault();
+        }
+
+        touch.tapholdTimeid = setTimeout(function () {
+            var tapholdEvent = event.create('taphold');
+
+            touch.tapholdTimeid = 0;
+            event.extend(tapholdEvent, firstTouch, touch);
+
+            var dispatchTaphold = event.dispatch(touch.startTarget, tapholdEvent);
+
+            if (dispatchTaphold &amp;&amp; dispatchTaphold.defaultPrevented === true) {
+                eve.preventDefault();
+            }
+        }, options.taphold.timeout);
+    });
+
+    event.on(document, touchmove, function (eve) {
+        if (!eve.touches || eve.touches.length !== 1) {
+            return;
+        }
+
+        var firstTouch = eve.touches[0];
+
+        touch.moveX = firstTouch.pageX;
+        touch.moveY = firstTouch.pageY;
+        touch.moveTime = eve.timeStamp || Date.now();
+        touch.moveID = firstTouch.identifier;
+        touch.moveTarget = firstTouch.target;
+        touch.changedX = touch.moveX - touch.startX;
+        touch.changedY = touch.moveY - touch.startY;
+        touch.deltaX = Math.abs(touch.changedX);
+        touch.deltaY = Math.abs(touch.changedY);
+        touch.moveDirection = _calDirection();
+
+        // 移动距离大于 taphold
+        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y) {
+            _reset('taphold');
+        }
+
+        var touch1moveEvent = event.create('touch1move');
+
+        event.extend(touch1moveEvent, firstTouch, touch);
+
+        var dispatchTouch1move = event.dispatch(touch.startTarget, touch1moveEvent);
+
+        if (dispatchTouch1move &amp;&amp; dispatchTouch1move.defaultPrevented === true) {
+            eve.preventDefault();
+        }
+    });
+
+    event.on(document, touchend, function (eve) {
+        if (!eve.changedTouches || eve.changedTouches.length !== 1) {
+            return;
+        }
+
+        var firstTouch = eve.changedTouches[0];
+
+        touch.moveTime = touch.moveTime === udf ? touch.startTime : touch.moveTime;
+        touch.moveX = touch.moveX === udf ? touch.startX : touch.moveX;
+        touch.moveY = touch.moveY === udf ? touch.startY : touch.moveY;
+        touch.moveID = touch.moveID === udf ? touch.startID : touch.moveID;
+        touch.moveTarget = touch.moveTarget === udf ? touch.startTarget : touch.moveTarget;
+        touch.moveAngle = touch.moveAngle === udf ? 0 : touch.moveAngle;
+        touch.moveDirection = touch.moveDirection === udf ? 'none' : touch.moveDirection;
+        touch.endX = firstTouch.pageX;
+        touch.endY = firstTouch.pageY;
+        touch.endTime = eve.timeStamp || Date.now();
+        touch.endID = firstTouch.identifier;
+        touch.endTarget = firstTouch.target;
+        touch.changedX = touch.endX - touch.startX;
+        touch.changedY = touch.endY - touch.startY;
+        touch.deltaX = Math.abs(touch.changedX);
+        touch.deltaY = Math.abs(touch.changedY);
+        touch.changedDirection = _calDirection();
+        touch.deltaTime = touch.endTime - touch.startTime;
+
+        // 触发 tap
+        if (
+            touch.deltaTime &lt; options.tap.timeout &amp;&amp;
+            touch.deltaX &lt; options.tap.x &amp;&amp;
+            touch.deltaY &lt; options.tap.y &amp;&amp;
+            touch.startID === touch.endID &amp;&amp;
+            touch.startTarget === touch.endTarget
+        ) {
+            //controller.nextTick(function () {
+            //    var tapEvent = event.create('tap');
+            //
+            //    event.extend(tapEvent, firstTouch, touch);
+            //
+            //    var dispatchTap = event.dispatch(touch.startTarget, tapEvent);
+            //
+            //    if (dispatchTap &amp;&amp; dispatchTap.defaultPrevented === true) {
+            //        eve.preventDefault();
+            //        lastTapDefaultPrevented = true;
+            //    }
+            //});
+
+            // 触发 dbltap
+            if (touch.endTime - touch.lastTime &lt; options.dbltap.timeout &amp;&amp; !touch.inDbltap) {
+                setTimeout(function () {
+                    touch.inDbltap = false;
+                }, options.dbltap.timeout);
+
+                controller.nextTick(function () {
+                    var dbltapEvent = event.create('dbltap');
+
+                    event.extend(dbltapEvent, firstTouch, touch);
+
+                    var dispatchDbltap = event.dispatch(touch.startTarget, dbltapEvent);
+
+                    if (dispatchDbltap &amp;&amp; dispatchDbltap.defaultPrevented === true) {
+                        eve.preventDefault();
+                        lastTapDefaultPrevented = true;
+                    }
+                });
+            }
+        }
+
+        // 移动距离大于 taphold || 时间不够
+        if (touch.deltaX > options.taphold.x || touch.deltaY > options.taphold.y || touch.deltaTime &lt; options.taphold.timeout) {
+            _reset('taphold');
+        }
+
+        // 触发 swipe
+        if (touch.changedDirection !== 'none' &amp;&amp;
+            touch.deltaX > options.swipe.x || touch.deltaY > options.swipe.y
+        ) {
+            var swipeEvent = event.create('swipe');
+
+            event.extend(swipeEvent, firstTouch, touch);
+
+            var dispatchSwipe = event.dispatch(touch.startTarget, swipeEvent);
+
+            if (dispatchSwipe &amp;&amp; dispatchSwipe.defaultPrevented === true) {
+                eve.preventDefault();
+            }
+
+            var swipedirectionEvent = event.create('swipe' + touch.changedDirection);
+
+            event.extend(swipedirectionEvent, firstTouch, touch);
+
+            var dispatchSwipedirection = event.dispatch(touch.startTarget, swipedirectionEvent);
+
+            if (dispatchSwipedirection &amp;&amp; dispatchSwipedirection.defaultPrevented === true) {
+                eve.preventDefault();
+            }
+        }
+
+        touch.lastTime = touch.endTime;
+        _cancel(eve);
+    });
+
+    event.on(document, touchcancel, _cancel);
+    //event.on(window, 'scroll', _cancel);
+    /**
+     * @see https://github.com/madrobby/zepto/pull/746
+     * 修正 tap 点透的 BUG，监听 click 捕获阶段，并停止事件传递
+     */
+    event.on(document, 'click', function (eve) {
+        if (lastTapDefaultPrevented) {
+            lastTapDefaultPrevented = false;
+            eve.stopPropagation();
+        }
+    }, true);
+
+
+    /**
+     * 取消 touch 事件检测
+     * @param {Event} [eve] 事件对象
+     * @private
+     */
+    function _cancel(eve) {
+        attribute.css(document.body, cssTouch);
+
+        if (!touch.startTarget) {
+            return;
+        }
+
+        var firstTouch = eve &amp;&amp; eve.touches &amp;&amp; eve.touches[0] ||
+            eve &amp;&amp; eve.changedTouches &amp;&amp; eve.changedTouches[0];
+        var touch1endEvent = event.create('touch1end');
+
+        event.extend(touch1endEvent, firstTouch, touch);
+
+        var dispatchTouch1end = event.dispatch(touch.startTarget, touch1endEvent);
+
+        if (dispatchTouch1end &amp;&amp; dispatchTouch1end.defaultPrevented === true) {
+            eve.preventDefault();
+        }
+    }
+
+
+    /**
+     * 重置定时器
+     * @param {String} key
+     * @private
+     */
+    function _reset(key) {
+        key += 'Timeid';
+        if (touch[key]) {
+            clearTimeout(touch[key])
+            touch[key] = 0;
+        }
+    }
+
+
+    /**
+     * 计算触摸方向
+     * @returns {string}
+     * @private
+     */
+    function _calDirection() {
+        if (touch.deltaX === 0 &amp;&amp; touch.deltaY === 0) {
+            return 'none';
+        }
+
+        return touch.deltaX > touch.deltaY ?
+            (touch.changedX > 0 ? 'right' : 'left') :
+            (touch.changedY > 0 ? 'down' : 'up');
+    }
+
+
+    /**
+     * 出口
+     * @type {*|exports}
+     */
+    module.exports = event;
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>
