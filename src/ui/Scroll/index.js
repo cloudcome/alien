@@ -72,20 +72,100 @@ define(function (require, exports, module) {
 
                 if (scrollHeight > innerHeight) {
                     if (scrollTop + innerHeight >= scrollHeight) {
+                        /**
+                         * 滚动条滚动到底部
+                         * @event bottom
+                         * @param ret {Object} 滚动条信息
+                         * @param ret.scrollTop {Number} 滚动条上位移
+                         * @param ret.scrollLeft {Number} 滚动条左位移
+                         * @param ret.innerWidth {Number} 视窗宽度
+                         * @param ret.innerHeight {Number} 视窗高度
+                         * @param ret.scrollWidth {Number} 滚动宽度
+                         * @param ret.scrollHeight {Number} 滚动高度
+                         * @param ret.ratioX {Number} 水平滚动比例
+                         * @param ret.ratioY {Number} 垂直滚动比例
+                         */
                         the.emit('bottom', ret);
                     } else if (!scrollTop) {
+                        /**
+                         * 滚动条滚动到顶部
+                         * @event top
+                         * @param ret {Object} 滚动条信息
+                         * @param ret.scrollTop {Number} 滚动条上位移
+                         * @param ret.scrollLeft {Number} 滚动条左位移
+                         * @param ret.innerWidth {Number} 视窗宽度
+                         * @param ret.innerHeight {Number} 视窗高度
+                         * @param ret.scrollWidth {Number} 滚动宽度
+                         * @param ret.scrollHeight {Number} 滚动高度
+                         * @param ret.ratioX {Number} 水平滚动比例
+                         * @param ret.ratioY {Number} 垂直滚动比例
+                         */
                         the.emit('top', ret);
                     }
+
+                    /**
+                     * 滚动条垂直滚动
+                     * @event y
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
 
                     the.emit('y', ret);
                 }
 
                 if (scrollWidth > innerWidth) {
                     if (scrollLeft + innerWidth >= scrollWidth) {
+                        /**
+                         * 滚动条滚动到右边
+                         * @event bottom
+                         * @param ret {Object} 滚动条信息
+                         * @param ret.scrollTop {Number} 滚动条上位移
+                         * @param ret.scrollLeft {Number} 滚动条左位移
+                         * @param ret.innerWidth {Number} 视窗宽度
+                         * @param ret.innerHeight {Number} 视窗高度
+                         * @param ret.scrollWidth {Number} 滚动宽度
+                         * @param ret.scrollHeight {Number} 滚动高度
+                         * @param ret.ratioX {Number} 水平滚动比例
+                         * @param ret.ratioY {Number} 垂直滚动比例
+                         */
                         the.emit('right', ret);
                     } else if (!scrollLeft) {
+                        /**
+                         * 滚动条滚动到左边
+                         * @event bottom
+                         * @param ret {Object} 滚动条信息
+                         * @param ret.scrollTop {Number} 滚动条上位移
+                         * @param ret.scrollLeft {Number} 滚动条左位移
+                         * @param ret.innerWidth {Number} 视窗宽度
+                         * @param ret.innerHeight {Number} 视窗高度
+                         * @param ret.scrollWidth {Number} 滚动宽度
+                         * @param ret.scrollHeight {Number} 滚动高度
+                         * @param ret.ratioX {Number} 水平滚动比例
+                         * @param ret.ratioY {Number} 垂直滚动比例
+                         */
                         the.emit('left', ret);
                     }
+
+                    /**
+                     * 滚动条水平滚动
+                     * @event x
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
 
                     the.emit('x', ret);
                 }
@@ -93,7 +173,60 @@ define(function (require, exports, module) {
                 var lastScroll = the._$container[alienKey];
 
                 if (lastScroll) {
+                    /**
+                     * 滚动条向上滚动
+                     * @event up
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
+                    /**
+                     * 滚动条向下滚动
+                     * @event down
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
                     the.emit(lastScroll.t > scrollTop ? 'up' : 'down', ret);
+
+                    /**
+                     * 滚动条向左滚动
+                     * @event pull
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
+                    /**
+                     * 滚动条向右滚动
+                     * @event push
+                     * @param ret {Object} 滚动条信息
+                     * @param ret.scrollTop {Number} 滚动条上位移
+                     * @param ret.scrollLeft {Number} 滚动条左位移
+                     * @param ret.innerWidth {Number} 视窗宽度
+                     * @param ret.innerHeight {Number} 视窗高度
+                     * @param ret.scrollWidth {Number} 滚动宽度
+                     * @param ret.scrollHeight {Number} 滚动高度
+                     * @param ret.ratioX {Number} 水平滚动比例
+                     * @param ret.ratioY {Number} 垂直滚动比例
+                     */
                     the.emit(lastScroll.l > scrollLeft ? 'pull' : 'push', ret);
                 }
 
