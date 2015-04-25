@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{alien node_modules}" />
-    <file url="PROJECT" libraries="{coolie, should}" />
+    <file url="PROJECT" libraries="{Node.js v0.10.32 Core Modules, alien node_modules, coolie, jasmine-DefinitelyTyped}" />
+    <includedPredefinedLibrary name="Node.js Globals" />
   </component>
 </project>
