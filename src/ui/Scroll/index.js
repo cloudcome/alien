@@ -65,8 +65,8 @@ define(function (require, exports, module) {
                     innerHeight: innerHeight,
                     scrollWidth: scrollWidth,
                     scrollHeight: scrollHeight,
-                    ratioX: scrollWidth < innerWidth ? 1 : scrollLeft / (scrollWidth - innerWidth),
-                    ratioY: scrollHeight < innerHeight ? 1 : scrollTop / (scrollHeight - innerHeight)
+                    ratioX: scrollWidth <= innerWidth ? 1 : scrollLeft / (scrollWidth - innerWidth),
+                    ratioY: scrollHeight <= innerHeight ? 1 : scrollTop / (scrollHeight - innerHeight)
                 };
 
 
