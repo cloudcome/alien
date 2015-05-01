@@ -6,7 +6,8 @@
   "scripts": {
     "docs": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "docsw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
-    "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS --reporters progress"
+    "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS --reporters progress",
+    "release": "cp -r ./src ./release/alien && cd ./release/alien && zip -rm ../alien.zip * && alioss upload ../ && rm -rf ../alien"
   },
   "preferGlobal": false,
   "bin": {},
