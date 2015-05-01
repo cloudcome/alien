@@ -37,13 +37,11 @@
     "url": "https://github.com/cloudcome/alien/issues"
   },
   "licenses": "MIT",
-  "dependencies": {
-    "jsdoc": "^3.3.0-beta1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-karma": "0.0.4",
-    "jsdoc": "^3.3.0-alpha10",
+    "jsdoc": "^3.3.0-beta3",
     "karma": "^0.12.31",
     "karma-coverage": "^0.3.1",
     "karma-coveralls": "^0.1.5",
