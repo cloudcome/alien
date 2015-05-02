@@ -371,7 +371,7 @@ define(function (require, exports, module) {
 
             try {
                 /* jshint evil: true */
-                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.debug?err.message:"";}');
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.configs.debug?err.message:"";}');
             } catch (err) {
                 fn = function () {
                     return configs.debug ? err.message : '';
