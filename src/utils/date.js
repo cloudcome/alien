@@ -22,8 +22,8 @@ define(function (require, exports, module) {
     var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var REG_RANGE = /^(this|in)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
     var dateFormDefaults = {
-        // 是否在小时内显示分钟，默认true，即：6小时20分钟前，若为false，即：6小时前
-        minutesInHour: true
+        // 是否在小时内显示分钟，默认false，即：6小时前；若未true，即：6小时20分钟前
+        minutesInHour: false
     };
 
     /**
@@ -500,17 +500,17 @@ define(function (require, exports, module) {
         else if (hours < 1) {
             return minutes + '分钟' + suffix;
         }
-        // < 1d
+        // < 1D
         else if (days < 1) {
             var pastMinutes = options.minutesInHour ? minutes % 60 : '';
             return hours + '小时' + (pastMinutes ? pastMinutes + '分钟' : '') + suffix;
         }
-        // < 1M
-        else if (months < 1) {
+        // < 30D
+        else if (days < 30) {
             return days + '天' + suffix;
         }
-        // < 1Y
-        else if (years < 1) {
+        // < 12M
+        else if (months < 12) {
             return months + '个月' + suffix;
         }
         // < 100Y

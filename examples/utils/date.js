@@ -20,4 +20,10 @@ define(function (require) {
     document.getElementById('ret5').innerHTML = date.getWeeksInMonth(YYYY, M, D);
     document.getElementById('ret6').innerHTML = date.getDaysInMonth(YYYY, M);
     document.getElementById('ret7').innerHTML = date.getDaysInYear(YYYY, M, D);
+
+    var d1 = new Date(201, 0, 1, 0, 12, 12, 12);
+    var d2 = new Date(2015, 4, 1, 0, 0, 0, 0);
+    var d3 = date.from(d1, d2);
+
+    console.log(d3);
 });
