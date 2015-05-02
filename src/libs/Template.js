@@ -2,6 +2,7 @@
  * Template.js
  * @author ydr.me
  * @create 2014-10-09 18:35
+ * @2015年05月03日00:07:41 增加 {{ignore}}...{{/ignore}} 忽略 parse 区间
  */
 
 
@@ -30,6 +31,7 @@ define(function (require, exports, module) {
     var REH_LIST = /^list\s+([^,]*)\s+as\s+([^,]*)(\s*,\s*([^,]*))?$/;
     var REG_ELSE_IF = /^else\s+if\s/;
     var REG_HASH = /^#/;
+    var REG_IGNORE = /\{\{ignore}}([\s\S]*?)\{\{\/ignore}}/ig;
     var regLines = [{
         'n': /\n/g,
         'r': /\r/g,
@@ -59,15 +61,21 @@ define(function (require, exports, module) {
     ];
     var openTag = '{{';
     var closeTag = '}}';
-    var defaults = {
+    var configs = {
         /**
+         * 是否压缩输出内容
          * @type Boolean
          */
-        compress: true
+        compress: true,
+        /**
+         * 是否 debug 模式
+         * @type Boolean
+         */
+        debug: false
     };
     var filters = {};
     var Template = klass.create(function (tmplate, options) {
-        this._options = dato.extend(true, {}, defaults, options);
+        this._options = dato.extend(true, {}, configs, options);
         this._init(tmplate);
     });
 
@@ -77,7 +85,7 @@ define(function (require, exports, module) {
      * @type {Object}
      * @static
      */
-    Template.defaults = defaults;
+    Template.configs = configs;
 
 
     /**
@@ -91,8 +99,8 @@ define(function (require, exports, module) {
      * 设置默认配置
      * @param options
      */
-    Template.setDefaults = function (options) {
-        dato.extend(defaults, options);
+    Template.config = function (options) {
+        dato.extend(configs, options);
     };
 
 
@@ -137,6 +145,8 @@ define(function (require, exports, module) {
         }
     };
 
+
+
     Template.implement({
 
         /**
@@ -172,7 +182,15 @@ define(function (require, exports, module) {
             };
             the._useFilters = {};
 
-            template.split(openTag).forEach(function (value, times) {
+            the._placeholders = {};
+
+            template.replace(REG_IGNORE, function ($0, $1) {
+                var key = _generateKey();
+
+                the._placeholders[key] = $1;
+
+                return key;
+            }).split(openTag).forEach(function (value, times) {
                 var array = value.split(closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
@@ -336,7 +354,8 @@ define(function (require, exports, module) {
             var self = dato.extend(true, {}, {
                 each: dato.each,
                 escape: _escape,
-                filters: existFilters
+                filters: existFilters,
+                configs: configs
             });
             var ret;
 
@@ -351,23 +370,29 @@ define(function (require, exports, module) {
             });
 
             try {
-                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return err.message;}');
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.debug?err.message:"";}');
             } catch (err) {
                 fn = function () {
-                    return err;
+                    return configs.debug ? err.message : '';
                 };
             }
 
             try {
                 ret = fn.call(self, data);
             } catch (err) {
-                ret = err.message;
+                ret = configs.debug ? err.message : '';
             }
 
 
             ret = String(ret);
+            ret = options.compress ? _cleanHTML(ret) : ret;
 
-            return options.compress ? _cleanHTML(ret) : ret;
+            // 恢复占位
+            dato.each(the._placeholders, function (key, val) {
+                ret = ret.replace(key, val);
+            });
+
+            return ret;
         },
 
 
@@ -588,7 +613,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _generateKey() {
-        return ':' + random.string(40, 'aA0') + ':';
+        return 'œ' + random.string(40, 'aA0') + 'œ';
     }
 
 
