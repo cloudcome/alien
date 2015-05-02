@@ -342,6 +342,7 @@ define(function (require, exports, module) {
                     return JSON.parse(ret);
                 } catch (err1) {
                     try {
+                        /* jshint evil: true */
                         var fn = new Function('', 'return ' + ret);
                         ret = fn();
                     } catch (err2) {

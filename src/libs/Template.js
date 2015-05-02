@@ -370,6 +370,7 @@ define(function (require, exports, module) {
             });
 
             try {
+                /* jshint evil: true */
                 fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.debug?err.message:"";}');
             } catch (err) {
                 fn = function () {
@@ -427,6 +428,7 @@ define(function (require, exports, module) {
 
             instanceFilters[name] = callback;
         },
+
 
         /**
          * 获取过滤函数
