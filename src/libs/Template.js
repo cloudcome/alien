@@ -559,16 +559,6 @@ define(function (require, exports, module) {
         }
     });
 
-    /**
-     * 模板引擎
-     * @constructor
-     *
-     * @example
-     * var tpl = new Template('{{name}}');
-     * tpl.render({name: 'yundanran'});
-     * // => 'yundanran'
-     */
-    module.exports = Template;
 
 
     /**
@@ -649,4 +639,21 @@ define(function (require, exports, module) {
         return code;
     }
 
+
+
+    /**
+     * 模板引擎
+     *
+     * @param {Object} [options] 配置
+     * @param {Boolean} [options.cache=true] 是否缓存上次结果
+     * @param {Boolean} [options.compress=true] 是否输出压缩内容
+     * @param {Boolean} [options.debug=false] 是否输出调试新
+     * @constructor
+     *
+     * @example
+     * var tpl = new Template('{{name}}');
+     * tpl.render({name: 'yundanran'});
+     * // => 'yundanran'
+     */
+    module.exports = Template;
 });
