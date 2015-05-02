@@ -316,7 +316,7 @@ define(function (require, exports, module) {
 
 
     // 平滑滚动
-    var scrollTop = function ($ele, to, options) {
+    var scrollTo = function ($ele, to, options) {
         return function (next) {
             var from = {
                 x: attribute.scrollLeft($ele),
@@ -444,7 +444,7 @@ define(function (require, exports, module) {
          * 之前的任务出栈，永远保证只有一个任务在运行
          */
         queue.shift();
-        queue.push(scrollTop($ele, to, options), callback);
+        queue.push(scrollTo($ele, to, options), callback);
         queue.begin();
     };
 });
