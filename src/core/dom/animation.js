@@ -323,8 +323,8 @@ define(function (require, exports, module) {
                 y: attribute.scrollTop($ele)
             };
 
-            to.x = dato.parseFloat(to.x, from.x);
-            to.y = dato.parseFloat(to.y, from.y);
+            to.x = typeis.element(to.x) ? attribute.top(to.x) : dato.parseFloat(to.x, from.x);
+            to.y = typeis.element(to.y) ? attribute.top(to.y) : dato.parseFloat(to.y, from.y);
 
             var totalDistance = {
                 x: to.x - from.x,
