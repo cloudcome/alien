@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var alienKey = '-alien-ui-Scrollspy-in-viewport-';
     var defaults = {
         selector: 'img',
-        wait: 123
+        wait: 300
     };
     var Scrollspy = ui.create(function ($parent, options) {
         var the = this;
@@ -70,16 +70,15 @@ define(function (require, exports, module) {
 
             dato.each($res, function (index, $re) {
                 var isInViewport = see.isInViewport($re);
-                var udf;
 
-                if (($re[alienKey] === true || $re[alienKey] === udf) && !isInViewport) {
+                if (($re[alienKey] === true || typeis.undefined($re[alienKey])) && !isInViewport) {
                     /**
                      * 离开视口后触发
                      * @event leaveviewport
                      * @param node {HTMLElement} 元素
                      */
                     the.emit('leaveviewport', $re);
-                } else if (($re[alienKey] === false || $re[alienKey] === udf) && isInViewport) {
+                } else if (($re[alienKey] === false || typeis.undefined($re[alienKey])) && isInViewport) {
                     /**
                      * 进入视口后触发
                      * @event enterviewport
