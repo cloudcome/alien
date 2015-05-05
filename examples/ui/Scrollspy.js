@@ -6,8 +6,12 @@ define(function(require){
     var spy = new Scrollspy(document);
 
     spy.on('enterviewport', function ($img) {
-        console.log(this);
+        if($img._done){
+            return;
+        }
+
         $img.src = attribute.data($img, 'original');
+        $img._done = true;
         attribute.removeData($img, 'original');
     });
 });
