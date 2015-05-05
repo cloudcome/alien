@@ -155,11 +155,20 @@ define(function (require, exports, module) {
      * @returns {{key: String, val: *}}
      *
      * @example
-     * attribute.fixCss('marginTop', 10);
-     * // => {
+     * attribute.fixCss('translateX', 10);
+     * // =>
+     * // {
+     * //    key: 'transform',
+     * //    val: 'translateX(10px)',
+     * //    imp: false
+     * // }
+     *
+     * attribute.fixCss('marginTop', '10px !important');
+     * // =>
+     * // {
      * //    key: 'margin-top',
      * //    val: '10px',
-     * //    imp: false
+     * //    imp: true
      * // }
      */
     exports.fixCss = function (key, val) {
