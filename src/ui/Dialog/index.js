@@ -175,8 +175,18 @@ define(function (require, exports, module) {
                 }
 
                 the._isReady = true;
+                /**
+                 * 打开对话框之后
+                 * @event open
+                 */
+                the.emit('open');
             }).on('close', function () {
                 the._isReady = false;
+                /**
+                 * 关闭对话框之后
+                 * @event open
+                 */
+                the.emit('close');
             });
 
             // 点击关闭
