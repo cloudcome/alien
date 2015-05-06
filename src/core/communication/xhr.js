@@ -142,7 +142,8 @@ define(function (require, exports, module) {
 
                 var percent = eve.alienDetail.complete;
 
-                percent = percent >= 1 ? 0.99 : percent;
+                // 最多小数点2位
+                percent = String(percent >= 1 ? 0.99 : percent).slice(0, 4);
                 eve.alienDetail.percent = percent * 100 + '%';
             }
 
