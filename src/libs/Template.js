@@ -338,7 +338,7 @@ define(function (require, exports, module) {
 
         /**
          * 渲染数据
-         * @param {Object} data 数据
+         * @param {Object} [data] 数据
          * @returns {String} 返回渲染后的数据
          *
          * @example
@@ -359,6 +359,7 @@ define(function (require, exports, module) {
             });
             var ret;
 
+            data = data || {};
             dato.each(data, function (key) {
                 vars.push('var ' + key + '=' + _var + '["' + key + '"];');
             });

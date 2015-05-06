@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var Scrollbar = require('../Scrollbar/');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -40,9 +41,6 @@ define(function (require, exports, module) {
     var tpl = new Template(template);
     var ui = require('../');
     var $body = document.body;
-    var noop = function () {
-        // ignore
-    };
     var defaults = {
         width: 600,
         height: 'auto',
@@ -63,6 +61,7 @@ define(function (require, exports, module) {
         remoteHeight: 400,
         zIndex: null
     };
+    var win = window;
     var alienIndex = 0;
     var alienClass = 'alien-ui-dialog';
     var Dialog = ui.create(function ($content, options) {
@@ -81,7 +80,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (options.isModal) {
-                the._mask = new Mask(window, {
+                the._mask = new Mask(win, {
                     addClass: alienClass + '-bg ' + options.addClass,
                     zIndex: options.zIndex
                 });
@@ -114,6 +113,8 @@ define(function (require, exports, module) {
             the._isReady = false;
             return the;
         },
+
+
         _initNode: function () {
             var the = this;
             var options = the._options;
@@ -193,6 +194,10 @@ define(function (require, exports, module) {
             event.on(the._$close, 'click', function () {
                 the.close();
             });
+
+            event.on(win, 'resize', the._onresize = controller.debounce(function (eve) {
+                the.resize();
+            }));
         },
 
 
@@ -326,6 +331,7 @@ define(function (require, exports, module) {
                 modification.remove(the._$pos);
                 event.un(the._$close, 'click');
                 event.un(the._$mask, 'click');
+                event.un(win, 'resize', the._onresize);
                 modification.remove(the._$dialog);
                 the._mask.destroy();
 

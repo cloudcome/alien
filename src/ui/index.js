@@ -94,6 +94,8 @@ define(function (require, exports, module) {
                  * @params options {Object} 参数
                  */
                 the.emit('setoptions', the._options);
+
+                return the;
             };
         }
 

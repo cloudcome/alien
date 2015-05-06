@@ -139,7 +139,11 @@ define(function (require, exports, module) {
 
             if (eve.lengthComputable) {
                 eve.alienDetail.complete = eve.loaded / eve.total;
-                eve.alienDetail.percent = (eve.alienDetail.complete * 100) + '%';
+
+                var percent = eve.alienDetail.complete;
+
+                percent = percent >= 1 ? 0.99 : percent;
+                eve.alienDetail.percent = percent * 100 + '%';
             }
 
             the.emit(xhr, 'progress', eve);

@@ -1,0 +1,426 @@
+/*!
+ * Upload
+ * @author ydr.me
+ * @create 2014-12-23 13:56
+ */
+
+
+define(function (require, exports, module) {
+    'use strict';
+
+    var ui = require('../');
+    var compatible = require('../../core/navigator/compatible.js');
+    var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var event = require('../../core/event/base.js');
+    var dato = require('../../utils/dato.js');
+    var canvas = require('../../utils/canvas.js');
+    var xhr = require('../../core/communication/xhr.js');
+    var alert = require('../../widgets/alert.js');
+    var Dialog = require('../../ui/Dialog/');
+    var Imgclip = require('../../ui/Imgclip/');
+    var Template = require('../../libs/Template.js');
+    var template = require('html!./template.html');
+    var style = require('css!./style.css');
+    var tpl = new Template(template);
+    var URL = window[compatible.html5('URL', window)];
+    var alienKey = 'alien-ui-upload';
+    var defaults = {
+        isClip: true,
+        minWidth: 200,
+        minHeight: 200,
+        accept: 'image/png,image/jpg,image/jpeg,image/gif,image/bmp',
+        ratio: 1,
+        ajax: {
+            // xhr options 都可以传进来
+            url: '',
+            method: 'put',
+            headers: {},
+            body: {},
+            fileKey: 'file'
+        }
+    };
+    var Upload = ui.create(function (options) {
+        var the = this;
+
+        the._options = dato.extend(true, {}, defaults, options);
+        the._init();
+    });
+
+
+    Upload.implement({
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+
+            the._isChoosed = false;
+            the._isReady = false;
+            the._initNode();
+            the._applyOptions();
+            the._initEvent();
+        },
+
+
+        /**
+         * 初始化节点
+         * @private
+         */
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var dialogHTML = tpl.render(options);
+            var $dialog = modification.parse(dialogHTML)[0];
+
+            modification.insert($dialog, document.body, 'beforeend');
+            the._$dialog = $dialog;
+            the._dialog = new Dialog(the._$dialog, {
+                width: 'auto'
+            });
+
+            var nodes = selector.query('.j-flag', $dialog);
+
+            the._$file = nodes[0];
+            the._$imageWrap = nodes[1];
+            the._$submit = nodes[2];
+        },
+
+
+        /**
+         * 应用配置
+         * @private
+         */
+        _applyOptions: function () {
+            var the = this;
+            var options = the._options;
+
+            the._dialog.setTitle((options.isClip ? '裁剪并' : '') + '上传图片');
+            the._$submit.innerHTML = the._submitHTML = (options.isClip ? '裁剪并' : '确认') + '上传图片';
+            the._setChoosed(false);
+            the._resetFile();
+
+            if (the._imgclip) {
+                the._imgclip.destroy();
+                the._imgclip = null;
+            }
+        },
+
+
+        /**
+         * 重置 input:file
+         * @private
+         */
+        _resetFile: function () {
+            var the = this;
+
+            if (!the._$file.files) {
+                return;
+            }
+
+            var options = the._options;
+            var $newFile = modification.create('input', {
+                type: 'file',
+                accept: options.accept,
+                class: alienKey + '-file'
+            });
+
+            modification.insert($newFile, the._$file, 'afterend');
+            modification.remove(the._$file);
+            the._$file = $newFile;
+        },
+
+
+        /**
+         * 设置是否选择了图片
+         * @param boolean
+         * @private
+         */
+        _setChoosed: function (boolean) {
+            var the = this;
+
+            if (the._isChoosed === boolean) {
+                return;
+            }
+
+            the._isChoosed = boolean;
+            attribute[(boolean ? 'add' : 'remove') + 'Class'](the._$dialog, alienKey + '-choosed');
+
+            if (!boolean) {
+                the._setReady(boolean);
+            }
+        },
+
+
+        /**
+         * 设置是否可以准备上传了
+         * @param boolean
+         * @private
+         */
+        _setReady: function (boolean) {
+            var the = this;
+
+            if (the._isReady === boolean) {
+                return;
+            }
+
+            the._isReady = boolean;
+            attribute[(boolean ? 'add' : 'remove') + 'Class'](the._$dialog, alienKey + '-ready');
+            the._dialog.resize();
+        },
+
+
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
+
+            the.on('setoptions', the._applyOptions.bind(the));
+            the._dialog.on('close', the._applyOptions.bind(the));
+
+            /**
+             * 选择图片
+             */
+            event.on(the._$dialog, 'change', '.' + alienKey + '-file', function () {
+                var file;
+
+                if (this.files && this.files.length) {
+                    file = this.files[0];
+
+                    if (this.accept.indexOf(file.type) > -1) {
+                        the._setChoosed(true);
+                        the._renderImg(file);
+                    } else {
+                        alert('只能选择图片文件！');
+                    }
+                }
+            });
+
+            /**
+             * 上传
+             */
+            event.on(the._$submit, 'click', function () {
+                if (the._isUpload) {
+                    return;
+                }
+
+                if (options.isClip) {
+                    the._toBlob(function (blob) {
+                        the._toUpload(blob);
+                    });
+                } else {
+                    the._toUpload(the._file);
+                }
+            });
+
+            event.on(document, 'dragenter dragover', the._ondrag.bind(the));
+            event.on(document, 'drop', the._ondrop.bind(the));
+            event.on(document, 'paste', the._onpaste.bind(the));
+        },
+
+
+        /**
+         * 拖拽回调
+         * @returns {boolean}
+         * @private
+         */
+        _ondrag: function () {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                return false;
+            }
+        },
+
+
+        /**
+         * 释放回调
+         * @private
+         */
+        _ondrop: function (eve) {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                the._parseImgList(eve, eve.dataTransfer && eve.dataTransfer.items);
+                return false;
+            }
+        },
+
+
+        /**
+         * 粘贴回调
+         * @private
+         */
+        _onpaste: function (eve) {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                the._parseImgList(eve, eve.clipboardData && eve.clipboardData.items);
+                return false;
+            }
+        },
+
+
+        /**
+         * 解析图片列表
+         * @param eve
+         * @param items
+         * @private
+         */
+        _parseImgList: function (eve, items) {
+            var the = this;
+            var options = the._options;
+            var fileAFile = null;
+
+            dato.each(items, function (index, item) {
+                var file;
+
+                if (options.accept.indexOf(item.type) > -1 && item.kind === 'file') {
+                    file = item.getAsFile();
+
+                    if (file && file.size > 0) {
+                        fileAFile = file;
+
+                        return false;
+                    }
+                }
+            });
+
+
+            if (fileAFile) {
+                the._setChoosed(true);
+                the._renderImg(fileAFile);
+            }
+        },
+
+
+        /**
+         * 渲染图片
+         * @param file
+         * @private
+         */
+        _renderImg: function (file) {
+            var the = this;
+            var src = URL.createObjectURL(file);
+            var $img = modification.create('img', {
+                src: src
+            });
+            var options = the._options;
+
+            $img.onload = function () {
+                the._dialog.resize();
+            };
+            the._$imageWrap.innerHTML = '';
+            modification.insert($img, the._$imageWrap, 'beforeend');
+
+            if (the._imgclip) {
+                the._imgclip.destroy();
+            }
+
+            if (options.isClip) {
+                the._imgclip = new Imgclip($img, the._options)
+                    .on('clipend', function (seletion) {
+                        the._selection = seletion;
+                        the._setReady(true);
+                    })
+                    .on('error', function (err) {
+                        the.emit('error', err);
+                    });
+            } else {
+                the._setReady(true);
+            }
+
+            the._file = file;
+            the._$img = $img;
+        },
+
+
+        /**
+         * 转换为二进制
+         * @param callback
+         * @private
+         */
+        _toBlob: function (callback) {
+            var the = this;
+            var selection = the._selection;
+            var options = the._options;
+
+            canvas.imgToBlob(the._$img, {
+                srcX: selection.srcLeft,
+                srcY: selection.srcTop,
+                srcWidth: selection.srcWidth,
+                srcHeight: selection.srcHeight,
+                drawWidth: options.minWidth,
+                drawHeight: options.minHeight
+            }, callback);
+        },
+
+
+        /**
+         * 上传
+         * @param blob
+         * @private
+         */
+        _toUpload: function (blob) {
+            var the = this;
+            var options = the._options;
+            var fd = new FormData();
+            var ajaxOptions = dato.extend({}, options.ajax);
+
+            the._isUpload = true;
+
+            // key, val, name
+            fd.append(ajaxOptions.fileKey, blob);
+
+            dato.each(ajaxOptions.body, function (key, val) {
+                fd.append(key, val);
+            });
+
+            ajaxOptions.body = fd;
+
+            xhr.ajax(ajaxOptions)
+                .on('progress', function (eve) {
+                    the._$submit.innerHTML = '正在上传 ' + eve.alienDetail.percent + '%';
+                })
+                .on('success', function (json) {
+                    the.emit('success', json);
+                })
+                .on('error', function (err) {
+                    the.emit('error', err);
+                })
+                .on('finish', function () {
+                    the._isUpload = false;
+                    the._$submit.innerHTML = the._submitHTML;
+                });
+        },
+
+
+        /**
+         * 打开上传对话框
+         */
+        open: function () {
+            this._dialog.open();
+            return this;
+        },
+
+
+        /**
+         * 关闭上传的对话框
+         */
+        close: function () {
+            var the = this;
+
+            the._dialog.close();
+
+            return the;
+        }
+    });
+
+    modification.importStyle(style);
+    module.exports = Upload;
+});
