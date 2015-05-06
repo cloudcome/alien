@@ -418,6 +418,23 @@ define(function (require, exports, module) {
             the._dialog.close();
 
             return the;
+        },
+
+
+        /**
+         * 销毁实例
+         * @param callback
+         */
+        destroy: function (callback) {
+            var the = this;
+
+            event.un(the._$dialog, 'change');
+            event.un(the._$submit, 'click');
+            event.un(document, 'dragenter dragover', the._ondrag);
+            event.un(document, 'drop', the._ondrop);
+            event.un(document, 'paste', the._onpaste);
+            the._applyOptions();
+            the._dialog.destroy(callback);
         }
     });
 
