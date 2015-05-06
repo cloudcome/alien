@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
     var typeis = require('./typeis.js');
     var dato = require('./dato.js');
-    var noop = function(){
+    var noop = function () {
         // ignore
     };
 
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
      * @param args {Object} 参数
      * @param [setLength=2] 设置行为的参数个数
      * @returns {*}
-     * 
+     *
      * @example
      * var fn = function(key, val){
      *     return allocation.getset({
@@ -40,7 +40,7 @@ define(function (require, exports, module) {
      *         onset: function(){}
      *     }, arguments);
      * };
-     * 
+     *
      * fn('a');
      * // => "get a"
      *
@@ -61,8 +61,8 @@ define(function (require, exports, module) {
         var ret = {};
         var i = argl;
 
-        while(i--){
-            if(args[i] === undefined){
+        while (i--) {
+            if (args[i] === undefined) {
                 argl--;
             }
         }
@@ -113,7 +113,7 @@ define(function (require, exports, module) {
     exports.args = function (args) {
         var argL = args.length;
 
-        while (typeis.undefined(args[argL - 1])) {
+        while (argL >= 0 && typeis.undefined(args[argL - 1])) {
             argL -= 1;
         }
 
