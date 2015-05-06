@@ -140,11 +140,11 @@ define(function (require, exports, module) {
             if (eve.lengthComputable) {
                 eve.alienDetail.complete = eve.loaded / eve.total;
 
-                var percent = eve.alienDetail.complete;
+                var percent = eve.alienDetail.complete * 100;
 
                 // 最多小数点2位
-                percent = String(percent >= 1 ? 0.99 : percent).slice(0, 4);
-                eve.alienDetail.percent = percent * 100 + '%';
+                percent = dato.parseFloat((percent >= 100 ? 99 : percent).toFixed(2));
+                eve.alienDetail.percent = percent + '%';
             }
 
             the.emit(xhr, 'progress', eve);
@@ -182,7 +182,11 @@ define(function (require, exports, module) {
     pro.abort = function () {
         var the = this;
 
-        the.xhr.abort();
+        try {
+            the.xhr.abort();
+        } catch (err) {
+            // ignore
+        }
 
         return the;
     };

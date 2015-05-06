@@ -182,7 +182,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the.on('setoptions', the._applyOptions.bind(the));
-            the._dialog.on('close', the._applyOptions.bind(the));
+            the._dialog.on('close', function(){
+                the._applyOptions();
+                the._xhr.abort();
+            });
 
 
             // 选择图片
@@ -395,7 +398,7 @@ define(function (require, exports, module) {
 
             ajaxOptions.body = fd;
 
-            xhr.ajax(ajaxOptions)
+            the._xhr = xhr.ajax(ajaxOptions)
                 .on('progress', function (eve) {
                     the._$submit.innerHTML = '正在上传 <b>' + eve.alienDetail.percent + '</b>';
                 })
