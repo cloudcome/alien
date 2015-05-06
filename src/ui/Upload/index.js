@@ -85,7 +85,8 @@ define(function (require, exports, module) {
 
             the._$file = nodes[0];
             the._$imageWrap = nodes[1];
-            the._$submit = nodes[2];
+            the._$cancel = nodes[2];
+            the._$submit = nodes[3];
         },
 
 
@@ -183,9 +184,8 @@ define(function (require, exports, module) {
             the.on('setoptions', the._applyOptions.bind(the));
             the._dialog.on('close', the._applyOptions.bind(the));
 
-            /**
-             * 选择图片
-             */
+
+            // 选择图片
             event.on(the._$dialog, 'change', '.' + alienKey + '-file', function () {
                 var file;
 
@@ -201,9 +201,19 @@ define(function (require, exports, module) {
                 }
             });
 
-            /**
-             * 上传
-             */
+
+            // 取消选择
+            event.on(the._$cancel, 'click', function () {
+                if (the._isUpload) {
+                    return;
+                }
+
+                the._applyOptions();
+                the._dialog.resize();
+            });
+
+
+            // 点击上传
             event.on(the._$submit, 'click', function () {
                 if (the._isUpload) {
                     return;
@@ -218,6 +228,8 @@ define(function (require, exports, module) {
                 }
             });
 
+
+            // 拖拽、粘贴
             event.on(document, 'dragenter dragover', the._ondrag.bind(the));
             event.on(document, 'drop', the._ondrop.bind(the));
             event.on(document, 'paste', the._onpaste.bind(the));
@@ -385,7 +397,7 @@ define(function (require, exports, module) {
 
             xhr.ajax(ajaxOptions)
                 .on('progress', function (eve) {
-                    the._$submit.innerHTML = '正在上传 ' + eve.alienDetail.percent + '%';
+                    the._$submit.innerHTML = '正在上传 <b>' + eve.alienDetail.percent + '</b>';
                 })
                 .on('success', function (json) {
                     the.emit('success', json);
@@ -429,6 +441,7 @@ define(function (require, exports, module) {
             var the = this;
 
             event.un(the._$dialog, 'change');
+            event.un(the._$cancel, 'click');
             event.un(the._$submit, 'click');
             event.un(document, 'dragenter dragover', the._ondrag);
             event.un(document, 'drop', the._ondrop);

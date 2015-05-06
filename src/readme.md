@@ -76,6 +76,7 @@
 |	|-- ui UI
 |	|	|-- Autoheight textarea 自动增高
 |	|	|-- Banner
+|	|	|-- Datepicker
 |	|	|-- Dialog
 |	|	|-- Editor markdown 编辑器
 |	|	|-- Imgclip
@@ -86,13 +87,17 @@
 |	|	|-- Pagination
 |	|	|-- Prettify
 |	|	|-- Resize
-|	|	|-- Scrollbar
+|	|	|-- Scroll 滚动元素的 scroll 监听
+|	|	|-- Scrollbar 自定义滚动条
 |	|	|-- Scrollspy 视口滚动
+|	|	|-- Stickly
 |	|	|-- Tab
 |	|	|-- Tooltip
+|	|	|-- Touchpull
+|	|	|-- Upload
 |	|	|-- Validator
 |	|	|-- Window
-|	|	|-- base.js
+|	|	|-- index.js ui 构造器
 |	|	`-- readme.md
 |	|-- util 小工具
 |	|	|-- allocation.js
@@ -111,6 +116,10 @@
 |	|	|-- selection.js
 |	|	`-- typeis.js
 |	|	`-- url.js
+|	|-- widgets 组件
+|	|	|-- alert.js
+|	|	|-- confirm.js
+|	|	`-- prompt.js
 |	`-- readme.md
 |-- static 文档所需要的静态文件
 |-- templates 文档的模板
@@ -132,6 +141,7 @@
 - https://github.com/AlloyTeam/JM/tree/master/src
 - https://github.com/visionmedia/page.js
 - https://github.com/jashkenas/underscore/blob/master/underscore.js
+- https://github.com/gre/bezier-easing/blob/master/index.js
 
 
 # 文档注释变量

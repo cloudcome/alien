@@ -8,6 +8,7 @@
     color: #bbb;
     border: 2px dashed #CCC;
     background: #F5F5F5;
+    overflow: hidden;
 }
 
 .alien-ui-upload-choose input {
@@ -25,14 +26,6 @@
     width: 500px;
     max-height: 500px;
     text-align: center;
-}
-
-.alien-ui-upload-choosed .alien-ui-upload-choose {
-    display: none;
-}
-
-.alien-ui-upload-choosed .alien-ui-upload-image {
-    display: block;
 }
 
 .alien-ui-upload-image img {
@@ -53,18 +46,39 @@
     text-align: center;
 }
 
-.alien-ui-upload-ready .alien-ui-upload-action {
-    display: block;
-}
-
 .alien-ui-upload-btn {
     display: inline-block;
     position: relative;
-    background: #F9F9F9;
-    border: 1px solid #DDD;
+    border: 1px solid;
     border-radius: 4px;
     padding: 6px 14px;
     font-size: 14px;
     line-height: 20px;
     cursor: pointer;
+}
+
+.alien-ui-upload-cancel{
+    background: #F9F9F9;
+    border-color: #ddd;
+    color: #666;
+}
+
+.alien-ui-upload-submit{
+    display: none;
+    background: #458AC6;
+    color: #FFF;
+    border-color: #3D83C0;
+}
+
+.alien-ui-upload-choosed .alien-ui-upload-choose {
+    display: none;
+}
+
+.alien-ui-upload-choosed .alien-ui-upload-image,
+.alien-ui-upload-choosed .alien-ui-upload-action {
+    display: block;
+}
+
+.alien-ui-upload-ready .alien-ui-upload-submit {
+    display: inline-block;
 }

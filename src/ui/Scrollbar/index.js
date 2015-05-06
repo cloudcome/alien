@@ -1,5 +1,5 @@
 /*!
- * Scrollbar.js
+ * 自定义滚动条
  * @author ydr.me
  * @create 2014-10-10 22:37
  */
