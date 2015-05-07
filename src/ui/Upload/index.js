@@ -444,6 +444,7 @@ define(function (require, exports, module) {
                 .on('finish', function () {
                     the._isUpload = false;
                     the._$submit.innerHTML = the._submitHTML;
+                    the.close();
                 });
         },
 
