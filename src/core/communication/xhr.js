@@ -51,7 +51,9 @@ define(function (require, exports, module) {
         // 覆盖 MIME
         mimeType: null,
         // 延时请求时间
-        delay: 0
+        delay: 0,
+        // 请求超时时间，15秒
+        timeout: 150000
     };
     var regProtocol = /^([\w-]+:)\/\//;
     var XHR = klass.create(function (options) {
@@ -123,11 +125,17 @@ define(function (require, exports, module) {
         };
 
         xhr.onabort = function () {
-            oncallback(new Error('transmission has aborted'));
+            var err = new Error('transmission has aborted');
+
+            err.type = 'abort';
+            oncallback(err);
         };
 
         xhr.ontimeout = function () {
-            oncallback(new Error('transmission has timeout'));
+            var err = new Error('transmission has timeout');
+
+            err.type = 'timeout';
+            oncallback(err);
         };
 
         xhr.onerror = oncallback;
@@ -169,6 +177,12 @@ define(function (require, exports, module) {
             xhr.setRequestHeader(key, val);
         });
         xhr.send(_buildBody(options));
+
+        if (options.timeout) {
+            the._timer = setTimeout(function () {
+                the.abort();
+            }, options.timeout);
+        }
 
         the.xhr = xhr;
         return the;
