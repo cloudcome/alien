@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
+    var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var canvas = require('../../utils/canvas.js');
     var xhr = require('../../core/communication/xhr.js');
@@ -182,20 +183,26 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the.on('setoptions', the._applyOptions.bind(the));
-            the._dialog.on('close', function(){
+            the._dialog.on('close', function () {
                 the._applyOptions();
                 the._xhr.abort();
             });
 
 
             // 选择图片
-            event.on(the._$dialog, 'change', '.' + alienKey + '-file', function () {
+            event.on(the._$dialog, 'change', '.' + alienKey + '-file', function (eve) {
                 var file;
 
                 if (this.files && this.files.length) {
                     file = this.files[0];
 
                     if (this.accept.indexOf(file.type) > -1) {
+                        /**
+                         * 选择图片
+                         * @event choose
+                         * @param eve
+                         */
+                        the.emit('choose', eve);
                         the._setChoosed(true);
                         the._renderImg(file);
                     } else {
@@ -213,22 +220,27 @@ define(function (require, exports, module) {
 
                 the._applyOptions();
                 the._dialog.resize();
+                /**
+                 * 取消选择图片
+                 * @event cancel
+                 */
+                the.emit('cancel');
             });
 
 
             // 点击上传
             event.on(the._$submit, 'click', function () {
-                if (the._isUpload) {
+                /**
+                 * 上传图片
+                 * @event upload
+                 */
+                var ret = the.emit('upload');
+
+                if (ret === false) {
                     return;
                 }
 
-                if (options.isClip) {
-                    the._toBlob(function (blob) {
-                        the._toUpload(blob);
-                    });
-                } else {
-                    the._toUpload(the._file);
-                }
+                the.upload();
             });
 
 
@@ -236,6 +248,27 @@ define(function (require, exports, module) {
             event.on(document, 'dragenter dragover', the._ondrag.bind(the));
             event.on(document, 'drop', the._ondrop.bind(the));
             event.on(document, 'paste', the._onpaste.bind(the));
+        },
+
+
+        /**
+         * 上传文件
+         */
+        upload: function () {
+            var the = this;
+            var options = the._options;
+
+            if (the._isUpload) {
+                return;
+            }
+
+            if (options.isClip) {
+                the._toBlob(function (blob) {
+                    the._toUpload(blob);
+                });
+            } else {
+                the._toUpload(the._file);
+            }
         },
 
 
