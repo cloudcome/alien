@@ -41,6 +41,9 @@ define(function (require, exports, module) {
     var tpl = new Template(template);
     var ui = require('../');
     var $body = document.body;
+    var win = window;
+    var alienIndex = 0;
+    var alienClass = 'alien-ui-dialog';
     var defaults = {
         width: 600,
         height: 'auto',
@@ -61,9 +64,6 @@ define(function (require, exports, module) {
         remoteHeight: 400,
         zIndex: null
     };
-    var win = window;
-    var alienIndex = 0;
-    var alienClass = 'alien-ui-dialog';
     var Dialog = ui.create(function ($content, options) {
         var the = this;
 
@@ -115,6 +115,10 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化节点
+         * @private
+         */
         _initNode: function () {
             var the = this;
             var options = the._options;
@@ -142,6 +146,19 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 获得对话框节点
+         * @returns {*|node}
+         */
+        getNode: function () {
+            return this._$dialog;
+        },
+
+
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
 
