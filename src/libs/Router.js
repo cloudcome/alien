@@ -50,6 +50,12 @@ define(function (require, exports, module) {
                 var matchKey = '';
                 var msgs;
 
+                // ignore last redirect
+                if (the._redirectURL) {
+                    the._redirectURL = null;
+                    return;
+                }
+
                 dato.each(the._routerList, function (index, routerConfig) {
                     matchKey = Object.keys(routerConfig)[0];
                     matched = hashbang.matches(eve.newURL, matchKey, the._options);
@@ -149,7 +155,7 @@ define(function (require, exports, module) {
         redirect: function (url) {
             var the = this;
 
-            location.hash = '#!' + url;
+            the._redirectURL = location.hash = '#!' + url;
 
             return the;
         },
