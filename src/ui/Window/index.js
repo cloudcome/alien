@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var style = require('css!./style.css');
     var ui = require('../');
+    var REG_AUTO_OR_100_PERCENT = /auto|100%/i;
     var alienIndex = 0;
     var alienBaseClass = 'alien-ui';
     var alienClass = alienBaseClass + '-window';
@@ -132,7 +133,13 @@ define(function (require, exports, module) {
                 pos.height = pos.width;
             }
 
-            attribute.css(the._$window, pre);
+            if (!REG_AUTO_OR_100_PERCENT.test(options.width)) {
+                attribute.css(the._$window, 'width', pre.width);
+            }
+
+            if (!REG_AUTO_OR_100_PERCENT.test(options.height)) {
+                attribute.css(the._$window, 'height', pre.height);
+            }
 
             if (options.left === 'center') {
                 pos.left = (winW - pos.width) / 2;
@@ -347,7 +354,6 @@ define(function (require, exports, module) {
             }
         }
     });
-
 
 
     /**
