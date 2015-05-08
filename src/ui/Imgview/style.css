@@ -18,13 +18,36 @@
     left: 50%;
     -webkit-background-size: cover;
     background-size: cover;
-    background-position: center; }
+    background-position: center;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%); }
   .alien-ui-imgview-loading {
     display: none; }
   .alien-ui-imgview-body {
-    background-color: #FFF;
-    min-width: 100px;
-    min-height: 100px; }
+    background-color: #FFF; }
+  .alien-ui-imgview-prev,
+  .alien-ui-imgview-next {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-background-size: cover;
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+    opacity: .3;
+    cursor: pointer; }
+    .alien-ui-imgview-prev:hover,
+    .alien-ui-imgview-next:hover {
+      opacity: .5; }
+  .alien-ui-imgview-disabled,
+  .alien-ui-imgview-disabled:hover {
+    opacity: .1;
+    cursor: not-allowed; }
+  .alien-ui-imgview-prev {
+    left: 0; }
+  .alien-ui-imgview-next {
+    right: 0; }
   .alien-ui-imgview-nav {
     position: absolute;
     right: 0;
@@ -44,8 +67,9 @@
       opacity: .2; }
       .alien-ui-imgview-nav-item:hover {
         opacity: .5; }
-      .alien-ui-imgview-nav-item-active {
-        cursor: default;
+      .alien-ui-imgview-nav-item-active,
+      .alien-ui-imgview-nav-item-active:hover {
+        cursor: not-allowed;
         opacity: 1; }
   .alien-ui-imgview-close {
     position: absolute;

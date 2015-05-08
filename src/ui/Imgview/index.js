@@ -31,16 +31,18 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
-    var templateWrap = require('html!./wrap.html');
-    var templateLoading = require('html!./loading.html');
+    //var templateWrap = require('html!./wrap.html');
+    //var templateLoading = require('html!./loading.html');
     var template = require('./template.html', 'html');
     var style = require('css!./style.css');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
-    var tplWrap = new Template(templateWrap);
-    var tplLoading = new Template(templateLoading);
+    //var tplWrap = new Template(templateWrap);
+    //var tplLoading = new Template(templateLoading);
+    var arrowLeft = require('./arrow-left.png', 'image');
+    var arrowRight = require('./arrow-right.png', 'image');
     var tpl = new Template(template);
     var win = window;
     var alienClass = 'alien-ui-imgview';
@@ -48,8 +50,6 @@ define(function (require, exports, module) {
         // ignore
     };
     var defaults = {
-        minWidth: 100,
-        minHeight: 100,
         duration: 400,
         easing: 'in-out',
         loading: {
@@ -58,9 +58,8 @@ define(function (require, exports, module) {
             height: 64
         },
         thumbnailSize: {
-            width: 100,
-            height: 100,
-            lineHeight: 100
+            width: 60,
+            height: 60
         }
     };
     var Imgview = ui.create(function (options) {
@@ -135,6 +134,8 @@ define(function (require, exports, module) {
             the._$next = nodes[4];
             the._$navList = nodes[5];
             the._$close = nodes[6];
+            attribute.css(the._$prev, 'backgroundImage', 'url(' + arrowLeft + ')');
+            attribute.css(the._$next, 'backgroundImage', 'url(' + arrowRight + ')');
         },
 
 
@@ -144,19 +145,6 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            var onclose = function () {
-                the._window.close(function () {
-                    the._mask.close();
-                });
-
-                return false;
-            };
-
-            //// 单击背景
-            //the._mask.on('hit', onclose);
-            //
-            //// 按 esc
-            //the._mask.on('esc', onclose);
 
             // 打开
             the._window.on('open', function () {
@@ -174,12 +162,14 @@ define(function (require, exports, module) {
                 the._window.resize();
             }));
 
+
             // 上一张
             event.on(the._$prev, 'click', function () {
                 var length = the._list.length;
 
                 if (length > 1 && the._index > 0) {
                     the._index--;
+                    the._ctrl();
                     the._show();
                 }
             });
@@ -190,6 +180,7 @@ define(function (require, exports, module) {
 
                 if (length > 1 && the._index < length - 1) {
                     the._index++;
+                    the._ctrl();
                     the._show();
                 }
             });
@@ -197,7 +188,39 @@ define(function (require, exports, module) {
             // 单击序列
             event.on(the._$navList, 'click', '*', function () {
                 var index = attribute.data(this, 'index');
+
+                if (index === the._index) {
+                    return;
+                }
+
+                the._index = index;
+                the._ctrl();
+                the._show();
             });
+
+            // 点击关闭
+            event.on(the._$close, 'click', function () {
+                the._window.close(function () {
+                    the._mask.close();
+                    attribute.addClass(the._$content, alienClass + '-content-loading');
+                    the._$navList.innerHTML = '';
+                    the._renderContent();
+                });
+            });
+        },
+
+
+        /**
+         * 切换前后按钮状态
+         * @private
+         */
+        _ctrl: function () {
+            var the = this;
+            var disabledClass = alienClass + '-disabled';
+            var length = the._list.length;
+
+            attribute[(the._index === 0 ? 'add' : 'remove') + 'Class'](the._$prev, disabledClass);
+            attribute[(the._index === length - 1 ? 'add' : 'remove') + 'Class'](the._$next, disabledClass);
         },
 
 
@@ -244,10 +267,6 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$content, 'bottom', dato.parseFloat(options.thumbnailSize.height));
-            attribute.css(the._$body, {
-                translateX: '-50%',
-                translateY: '-50%'
-            });
             attribute.css(the._$loading, {
                 width: options.loading.width,
                 height: options.loading.height,
@@ -293,6 +312,7 @@ define(function (require, exports, module) {
             };
             var onnext = function () {
                 attribute.addClass(the._$content, loadingClass);
+                attribute.removeClass(the._$itemlist, activeClass);
                 attribute.addClass(the._$itemlist[the._index], activeClass);
                 the._load(the._list[the._index].original, function (err, meta) {
                     if (err) {
@@ -310,15 +330,17 @@ define(function (require, exports, module) {
 
                         var maxWidth = Math.min(attribute.width(the._$content) - 20, meta.width);
                         var maxHeight = Math.min(attribute.height(the._$content) - 20, meta.height);
+                        var maxRatio = maxWidth / maxHeight;
                         var ratio = meta.width / meta.height;
-                        var realWidth = ratio > 1 ? maxWidth : maxHeight * ratio;
-                        var realHeight = ratio > 1 ? maxWidth / ratio : maxHeight;
+                        var realWidth = maxRatio < ratio ? maxWidth : maxHeight * ratio;
+                        var realHeight = maxRatio < ratio ? maxWidth / ratio : maxHeight;
 
+                        attribute.css(the._$body, 'backgroundImage', 'url(' + meta.src + ')');
                         animation.transition(the._$body, {
                             width: realWidth,
                             height: realHeight
                         }, transitionOptions, function () {
-                            attribute.css(the._$body, 'backgroundImage', 'url(' + meta.src + ')');
+                            //attribute.css(the._$body, 'backgroundImage', 'url(' + meta.src + ')');
                         });
                     }
                 });
@@ -326,11 +348,12 @@ define(function (require, exports, module) {
 
             // 已经有 body 打开
             if (the._opened) {
-                attribute.css(the._$body, 'backgroundImage', 'none');
-                attribute.transition(the._$body, {
+                //attribute.css(the._$body, 'backgroundImage', 'none');
+                animation.transition(the._$body, {
                     width: options.loading.width,
                     height: options.loading.height
                 }, transitionOptions, onnext);
+                //onnext();
             } else {
                 attribute.css(the._$body, {
                     width: options.loading.width,
@@ -372,6 +395,7 @@ define(function (require, exports, module) {
 
             the._list = list;
             the._index = index || 0;
+            the._ctrl();
             the._mask.open();
             the._window.open();
 
