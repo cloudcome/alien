@@ -35,6 +35,7 @@ define(function (require, exports, module) {
         addClass: '',
         zIndex: null,
         duration: 234,
+        style: {},
         easing: 'ease-in-out-circ'
     };
     var Mask = ui.create(function ($cover, options) {
@@ -80,9 +81,9 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
             var options = the._options;
-            var style = {
+            var style = dato.extend({
                 display: 'none'
-            };
+            }, options.style);
 
             the.id = alienIndex;
             the._$mask = modification.create('div', {
