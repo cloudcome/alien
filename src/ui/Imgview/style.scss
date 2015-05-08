@@ -1,28 +1,39 @@
-.alien-ui-imgview {
+.alien-ui-imgview{
   width: 100%;
-  height: 100%; }
-  .alien-ui-imgview-nav {
+  height: 100%;
+
+  &-nav{
     position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
     overflow: auto;
-    text-align: center; }
-    .alien-ui-imgview-nav-list {
+    text-align: center;
+
+    &-list{
       display: inline-block;
-      text-align: center; }
-    .alien-ui-imgview-nav-item {
+      text-align: center;
+    }
+
+    &-item{
       float: left;
       -webkit-background-size: cover;
       background-size: cover;
-      background-position: center 0; }
-  .alien-ui-imgview-close {
+      background-position: center 0;
+    }
+  }
+
+  &-close{
     position: absolute;
     font-size: 40px;
     color: #666;
     right: 10px;
     top: 10px;
     font-family: sans-serif;
-    cursor: pointer; }
-    .alien-ui-imgview-close:hover {
-      color: #888; }
+    cursor: pointer;
+
+    &:hover{
+      color: #888;
+    }
+  }
+}

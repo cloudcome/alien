@@ -35,6 +35,8 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var style = require('css!./style.css');
     var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
     var tplWrap = new Template(templateWrap);
     var tplLoading = new Template(templateLoading);
@@ -52,9 +54,13 @@ define(function (require, exports, module) {
             width: 64,
             height: 64
         },
-        nav: {
-            prev: '&laquo;',
-            next: '&raquo;'
+        maskStyle: {
+            background: 'rgba(0,0,0,.8)'
+        },
+        thumbnailSize: {
+            width: 100,
+            height: 100,
+            lineHeight: 100
         }
     };
     var Imgview = ui.create(function (options) {
@@ -103,12 +109,28 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._mask = new Mask(win);
-            the._window = new Window(null);
+            the._mask = new Mask(window, {
+                style: options.maskStyle
+            });
+            the._window = new Window(null, {
+                width: '100%',
+                height: '100%',
+                top: 0
+            });
             the._$window = the._window.getNode();
             the._$window.innerHTML = tpl.render({
                 list: the._list
             });
+
+            var nodes = selector.query('.j-flag', the._$window);
+
+            the._$body = nodes[0];
+            the._$prevOne = nodes[1];
+            the._$nextOne = nodes[2];
+            the._$navList = nodes[3];
+            the._$prevNav = nodes[4];
+            the._$nextNav = nodes[5];
+            the._$close = nodes[6];
         },
 
 
@@ -126,16 +148,20 @@ define(function (require, exports, module) {
                 return false;
             };
 
-            // 单击背景
-            the._mask.on('hit', onclose);
-
-            // 按 esc
-            the._mask.on('esc', onclose);
+            //// 单击背景
+            //the._mask.on('hit', onclose);
+            //
+            //// 按 esc
+            //the._mask.on('esc', onclose);
 
             // 打开
             the._window.on('open', function () {
                 the._show();
             });
+
+            event.on(window, 'resize', the._onresize = controller.debounce(function () {
+                the._window.resize();
+            }));
 
             //// 上一张
             //event.on(the._$prev, 'click', function () {
@@ -194,11 +220,38 @@ define(function (require, exports, module) {
 
 
         /**
+         * 渲染导航
+         * @private
+         */
+        _renderNav: function () {
+            var the = this;
+            var html = '';
+            var className = alienClass + '-nav-item';
+
+            the._list.forEach(function (item, index) {
+                html += '<div class="' + className + '" data-index="' + index + '" style="background-image:url(' + item.thumbnail + ')"></div>';
+            });
+
+            the._$navList.innerHTML = html;
+
+            var $itemlist = selector.query('.' + className, the._$navList);
+
+            $itemlist.forEach(function ($item) {
+                attribute.style($item, the._options.thumbnailSize);
+            });
+
+            attribute.width(the._$navList, dato.parseFloat(the._options.thumbnailSize.width) * the._list.length);
+        },
+
+
+        /**
          * 展示
          * @private
          */
         _show: function () {
             var the = this;
+
+            the._renderNav();
 
             //attribute.addClass(the._$ele, alienClass + '-isloading');
             //the._ctrl();
@@ -238,10 +291,29 @@ define(function (require, exports, module) {
          * 打开图片查看器
          * @param list {Array} 图片列表
          * @param [index=0] {Number} 打开时显示的图片索引
+         *
+         * @example
+         * 数组： ['原始图']
+         *
+         * 也可以使用 [{
+         *    thumbnail: '缩略图',
+         *    original: '原始图'
+         * }]
          */
         open: function (list, index) {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
+
+            list = list.map(function (item) {
+                if (typeis.string(item)) {
+                    return {
+                        thumbnail: item,
+                        original: item
+                    };
+                }
+
+                return item;
+            });
 
             the._list = list;
             the._index = index || 0;
