@@ -1,0 +1,18 @@
+<div class="alien-ui-imgview">
+    <div class="alien-ui-imgview-content">
+        <div class="alien-ui-imgview-body">
+            正图
+        </div>
+        <div class="j-flag alien-ui-imgview-prev" title="前一张"></div>
+        <div class="j-flag alien-ui-imgview-next" title="后一张"></div>
+    </div>
+    <div class="alien-ui-imgview-nav">
+        <div class="alien-ui-imgview-nav-list">
+            {{list list as index, src}}
+            <img src="{{src}}" alt="{{index}}" data-index="{{index}}"/>
+            {{/list}}
+        </div>
+        <div class="j-flag alien-ui-imgview-prev" title="前一组"></div>
+        <div class="j-flag alien-ui-imgview-next" title="后一组"></div>
+    </div>
+</div>
