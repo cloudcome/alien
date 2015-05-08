@@ -320,7 +320,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的数据集
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @param {String/Object/Array} key 数据集键、键值对、键数组
      * @param {String} [val] 数据集值
      * @returns {*}
@@ -571,7 +571,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位宽度
      * content
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
@@ -590,7 +590,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位高度
      * content + padding + border
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 高度值
      * @returns {Number|undefined|*}
      *
@@ -609,7 +609,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位高度
      * content + padding
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 高度值
      * @returns {Number|undefined|*}
      *
@@ -628,7 +628,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位高度
      * content
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 高度值
      * @returns {Number|undefined|*}
      *

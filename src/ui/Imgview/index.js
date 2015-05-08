@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
     var templateWrap = require('html!./wrap.html');
@@ -49,13 +50,12 @@ define(function (require, exports, module) {
     var defaults = {
         minWidth: 100,
         minHeight: 100,
+        duration: 400,
+        easing: 'in-out',
         loading: {
-            src: 'http://s.ydr.me/p/i/loading-128.gif',
+            url: 'http://s.ydr.me/p/i/loading-128.gif',
             width: 64,
             height: 64
-        },
-        maskStyle: {
-            background: 'rgba(0,0,0,.8)'
         },
         thumbnailSize: {
             width: 100,
@@ -98,6 +98,8 @@ define(function (require, exports, module) {
 
             the._list = [];
             the._index = 0;
+            the._$itemlist = [];
+            the._opened = false;
         },
 
 
@@ -110,7 +112,9 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._mask = new Mask(window, {
-                style: options.maskStyle
+                style: {
+                    background: '#000'
+                }
             });
             the._window = new Window(null, {
                 width: '100%',
@@ -124,12 +128,12 @@ define(function (require, exports, module) {
 
             var nodes = selector.query('.j-flag', the._$window);
 
-            the._$body = nodes[0];
-            the._$prevOne = nodes[1];
-            the._$nextOne = nodes[2];
-            the._$navList = nodes[3];
-            the._$prevNav = nodes[4];
-            the._$nextNav = nodes[5];
+            the._$content = nodes[0];
+            the._$loading = nodes[1];
+            the._$body = nodes[2];
+            the._$prev = nodes[3];
+            the._$next = nodes[4];
+            the._$navList = nodes[5];
             the._$close = nodes[6];
         },
 
@@ -156,32 +160,44 @@ define(function (require, exports, module) {
 
             // 打开
             the._window.on('open', function () {
+                the._renderContent();
+                the._renderNav();
                 the._show();
+                the.emit('open');
+            }).on('close', function () {
+                the._opened = false;
+                the.emit('close');
             });
 
             event.on(window, 'resize', the._onresize = controller.debounce(function () {
+                the.emit('resize');
                 the._window.resize();
             }));
 
-            //// 上一张
-            //event.on(the._$prev, 'click', function () {
-            //    var length = the._list.length;
-            //
-            //    if (length > 1 && the._index > 0) {
-            //        the._index--;
-            //        the._show();
-            //    }
-            //});
-            //
-            //// 下一张
-            //event.on(the._$next, 'click', function () {
-            //    var length = the._list.length;
-            //
-            //    if (length > 1 && the._index < length - 1) {
-            //        the._index++;
-            //        the._show();
-            //    }
-            //});s
+            // 上一张
+            event.on(the._$prev, 'click', function () {
+                var length = the._list.length;
+
+                if (length > 1 && the._index > 0) {
+                    the._index--;
+                    the._show();
+                }
+            });
+
+            // 下一张
+            event.on(the._$next, 'click', function () {
+                var length = the._list.length;
+
+                if (length > 1 && the._index < length - 1) {
+                    the._index++;
+                    the._show();
+                }
+            });
+
+            // 单击序列
+            event.on(the._$navList, 'click', '*', function () {
+                var index = attribute.data(this, 'index');
+            });
         },
 
 
@@ -220,6 +236,27 @@ define(function (require, exports, module) {
 
 
         /**
+         * 渲染内容
+         * @private
+         */
+        _renderContent: function () {
+            var the = this;
+            var options = the._options;
+
+            attribute.css(the._$content, 'bottom', dato.parseFloat(options.thumbnailSize.height));
+            attribute.css(the._$body, {
+                translateX: '-50%',
+                translateY: '-50%'
+            });
+            attribute.css(the._$loading, {
+                width: options.loading.width,
+                height: options.loading.height,
+                backgroundImage: 'url(' + options.loading.url + ')'
+            });
+        },
+
+
+        /**
          * 渲染导航
          * @private
          */
@@ -233,13 +270,10 @@ define(function (require, exports, module) {
             });
 
             the._$navList.innerHTML = html;
-
-            var $itemlist = selector.query('.' + className, the._$navList);
-
-            $itemlist.forEach(function ($item) {
+            the._$itemlist = selector.query('.' + className, the._$navList);
+            the._$itemlist.forEach(function ($item) {
                 attribute.style($item, the._options.thumbnailSize);
             });
-
             attribute.width(the._$navList, dato.parseFloat(the._options.thumbnailSize.width) * the._list.length);
         },
 
@@ -250,40 +284,61 @@ define(function (require, exports, module) {
          */
         _show: function () {
             var the = this;
+            var options = the._options;
+            var loadingClass = alienClass + '-content-loading';
+            var activeClass = alienClass + '-nav-item-active';
+            var transitionOptions = {
+                duration: options.duration,
+                easing: options.easing
+            };
+            var onnext = function () {
+                attribute.addClass(the._$content, loadingClass);
+                attribute.addClass(the._$itemlist[the._index], activeClass);
+                the._load(the._list[the._index].original, function (err, meta) {
+                    if (err) {
+                        /**
+                         * 图片加载出现错误
+                         * @event error
+                         * @param error {Error} 错误对象
+                         */
+                        return the.emit('error', err);
+                    }
 
-            the._renderNav();
+                    if (the._index === meta.index) {
+                        attribute.removeClass(the._$content, loadingClass);
+                        the._opened = true;
 
-            //attribute.addClass(the._$ele, alienClass + '-isloading');
-            //the._ctrl();
-            //the._load(the._list[the._index], function (err, info) {
-            //    if (err) {
-            //        /**
-            //         * 图片加载出现错误
-            //         * @event error
-            //         * @param error {Error} 错误对象
-            //         */
-            //        return the.emit('error', err);
-            //    }
-            //
-            //    if (the._index === info.index) {
-            //        var width = Math.min(info.width, attribute.width(window) - 20);
-            //        var ratio = info.width / info.height;
-            //        var height = width / ratio;
-            //
-            //        the._window.setOptions({
-            //            width: width,
-            //            height: height
-            //        });
-            //        the._window.resize(function () {
-            //            var $img = modification.create('img', info);
-            //
-            //            the._$mainParent.innerHTML = '';
-            //            modification.insert($img, the._$mainParent, 'beforeend');
-            //            attribute.removeClass(the._$ele, alienClass + '-isloading');
-            //            the._scrollbar.resize();
-            //        });
-            //    }
-            //});
+                        var maxWidth = Math.min(attribute.width(the._$content) - 20, meta.width);
+                        var maxHeight = Math.min(attribute.height(the._$content) - 20, meta.height);
+                        var ratio = meta.width / meta.height;
+                        var realWidth = ratio > 1 ? maxWidth : maxHeight * ratio;
+                        var realHeight = ratio > 1 ? maxWidth / ratio : maxHeight;
+
+                        animation.transition(the._$body, {
+                            width: realWidth,
+                            height: realHeight
+                        }, transitionOptions, function () {
+                            attribute.css(the._$body, 'backgroundImage', 'url(' + meta.src + ')');
+                        });
+                    }
+                });
+            };
+
+            // 已经有 body 打开
+            if (the._opened) {
+                attribute.css(the._$body, 'backgroundImage', 'none');
+                attribute.transition(the._$body, {
+                    width: options.loading.width,
+                    height: options.loading.height
+                }, transitionOptions, onnext);
+            } else {
+                attribute.css(the._$body, {
+                    width: options.loading.width,
+                    height: options.loading.height,
+                    backgroundImage: 'none'
+                });
+                onnext();
+            }
         },
 
 
