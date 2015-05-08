@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 图片查看器
  * @author ydr.me
  * @create 2015-01-04 21:43
  */
@@ -31,20 +31,15 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
-    //var templateWrap = require('html!./wrap.html');
-    //var templateLoading = require('html!./loading.html');
     var template = require('./template.html', 'html');
     var style = require('css!./style.css');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
-    //var tplWrap = new Template(templateWrap);
-    //var tplLoading = new Template(templateLoading);
     var arrowLeft = require('./arrow-left.png', 'image');
     var arrowRight = require('./arrow-right.png', 'image');
     var tpl = new Template(template);
-    var win = window;
     var alienClass = 'alien-ui-imgview';
     var noop = function () {
         // ignore
@@ -108,7 +103,6 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            var options = the._options;
 
             the._mask = new Mask(window, {
                 style: {
@@ -353,7 +347,6 @@ define(function (require, exports, module) {
                     width: options.loading.width,
                     height: options.loading.height
                 }, transitionOptions, onnext);
-                //onnext();
             } else {
                 attribute.css(the._$body, {
                     width: options.loading.width,
@@ -409,11 +402,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            the._window.destroy(function () {
-                modification.remove(the._$ele);
-            });
             event.un(the._$prev, 'click');
             event.un(the._$next, 'click');
+            event.un(the._$navList, 'click');
+            the._window.destroy();
+            the._mask.destroy();
         }
     });
 
