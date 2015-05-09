@@ -466,7 +466,7 @@ define(function (require, exports, module) {
      * @param ascii {String} ascii 字符串
      * @returns {String} base64 字符串
      */
-    exports.btoa = function (ascii) {
+    exports.base64 = function (ascii) {
         return window.btoa(encodeURIComponent(String(ascii)));
     };
 
@@ -476,7 +476,7 @@ define(function (require, exports, module) {
      * @param base64 {String} base64 字符串
      * @returns {String} ascii 字符串
      */
-    exports.atob = function (base64) {
+    exports.debase64 = function (base64) {
         try {
             return decodeURIComponent(window.atob(String(base64)));
         } catch (err) {
