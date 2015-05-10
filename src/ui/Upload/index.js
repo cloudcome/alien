@@ -180,12 +180,15 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
 
             the.on('setoptions', the._applyOptions.bind(the));
             the._dialog.on('close', function () {
                 the._applyOptions();
-                the._xhr.abort();
+
+                if (the._xhr) {
+                    the._xhr.abort();
+                }
             });
 
 
