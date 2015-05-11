@@ -61,6 +61,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
+            the._id = alienIndex++;
             the._initNode();
             the._initEvent();
         },
@@ -75,11 +76,42 @@ define(function (require, exports, module) {
             var options = the._options;
             var $wrap = modification.create('div', {
                 class: alienClass + ' ' + options.addClass,
-                id: alienClass + '-' + alienIndex++
+                id: alienClass + '-' + the._id
             });
+            var nodes = selector.query('.j-flag', $wrap);
 
+            the._$year = nodes[0];
+            the._$month = nodes[1];
             modification.insert($wrap, $body);
             the._$wrap = $wrap;
+        },
+
+
+        /**
+         * 选择年份
+         * @param fullyear
+         * @returns {Datepicker}
+         */
+        selectYear: function (fullyear) {
+            var the = this;
+
+            the._$year.value = fullyear;
+
+            return the;
+        },
+
+
+        /**
+         * 选择年份
+         * @param natureMonth
+         * @returns {Datepicker}
+         */
+        selectMonth: function (natureMonth) {
+            var the = this;
+
+            the._$month.value = natureMonth - 1;
+
+            return the;
         },
 
 
@@ -90,8 +122,80 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
 
-            event.on(the._$input, 'focusin', the._onfocusin.bind(the));
-            event.on(the._$input, 'focusout', the._onfocusout.bind(the));
+            event.on(document, 'click', the._onclick.bind(the));
+            event.on(the._$input, 'focusin', the.open.bind(the));
+        },
+
+
+        /**
+         * 单击
+         * @param eve
+         * @private
+         */
+        _onclick: function (eve) {
+            var the = this;
+            var $target = eve.target;
+
+            if ($target === the._$input || selector.closest($target, '#' + alienClass + '-' + the._id)[0]) {
+                return;
+            }
+
+            the.close();
+        },
+
+
+        /**
+         * 打开日历
+         * @public
+         */
+        open: function () {
+            var the = this;
+            var options = the._options;
+            var pos = {
+                top: attribute.top(the._$input) + attribute.outerHeight(the._$input),
+                left: attribute.left(the._$input)
+            };
+            var d = date.parse(the._$input.value);
+            var fullyear = d.getFullYear();
+            var month = d.getMonth();
+
+            the.selectYear(fullyear);
+            the.selectMonth(month + 1);
+            the._render(fullyear, month, options);
+            pos.display = 'block';
+            attribute.css(the._$wrap, pos);
+            animation.transition(the._$wrap, {
+                opacity: 1
+            }, {
+                duration: options.duration,
+                easing: options.easing
+            }, function () {
+                the.emit('open');
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 关闭日历
+         * @returns {Datepicker}
+         */
+        close: function () {
+            var the = this;
+            var options = the._options;
+
+            animation.transition(the._$wrap, {
+                opacity: 0
+            }, {
+                duration: options.duration,
+                easing: options.easing
+            }, function () {
+                attribute.css(the._$wrap, 'display', 'none');
+                the.emit('close');
+            });
+
+            return the;
         },
 
 
@@ -129,52 +233,6 @@ define(function (require, exports, module) {
             }
 
             the._$wrap.innerHTML = tpl.render(data);
-        },
-
-
-        /**
-         * 打开日历
-         * @private
-         */
-        _onfocusin: function () {
-            var the = this;
-            var options = the._options;
-            var pos = {
-                top: attribute.top(the._$input) + attribute.outerHeight(the._$input),
-                left: attribute.left(the._$input)
-            };
-            var d = date.parse(the._$input.value);
-
-            the._render(d.getFullYear(), d.getMonth(), options);
-            pos.display = 'block';
-            attribute.css(the._$wrap, pos);
-            animation.transition(the._$wrap, {
-                opacity: 1
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                the.emit('open');
-            });
-        },
-
-
-        /**
-         * 关闭日历
-         * @private
-         */
-        _onfocusout: function () {
-            var the = this;
-            var options = the._options;
-
-            animation.transition(the._$wrap, {
-                opacity: 0
-            }, {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                the.emit('close');
-            });
         }
     });
 

@@ -10,5 +10,6 @@ define(function (require, exports, module) {
     
     var Datepicker = require('../../src/ui/Datepicker/');
 
-    new Datepicker('#text');
+    new Datepicker('#text1');
+    new Datepicker('#text2');
 });
