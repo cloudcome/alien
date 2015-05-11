@@ -47,6 +47,9 @@ define(function (require, exports, module) {
     });
 
     Datepicker.defaults = defaults;
+    Template.config({
+        debug: true
+    });
 
     Datepicker.implement({
         _init: function () {
@@ -54,7 +57,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._initNode();
-            the.render(options.year, options.month, options);
+            the._render(options.year, options.month, options);
         },
 
         _initNode: function () {
@@ -62,14 +65,14 @@ define(function (require, exports, module) {
             var options = the._options;
             var $wrap = modification.create('div', {
                 class: alienClass + ' ' + options.addClass,
-                id: alienIndex++
+                id: alienClass + '-' + alienIndex++
             });
 
             modification.insert($wrap, $body);
             the._$wrap = $wrap;
         },
 
-        render: function (year, month) {
+        _render: function (year, month) {
             var the = this;
             var options = the._options;
             var list = calendar.month(year, month, options);
@@ -87,6 +90,10 @@ define(function (require, exports, module) {
             }
 
             the._$wrap.innerHTML = tpl.render(data);
+        },
+
+        open: function () {
+
         }
     });
 

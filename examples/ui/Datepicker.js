@@ -9,6 +9,9 @@ define(function (require, exports, module) {
     "use strict";
     
     var Datepicker = require('../../src/ui/Datepicker/');
-    
-    new Datepicker();
+    var dp = new Datepicker();
+
+    document.getElementById('text').onfocus = function(){
+        dp.open();
+    };
 });

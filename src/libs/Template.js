@@ -351,17 +351,17 @@ define(function (require, exports, module) {
 
             try {
                 /* jshint evil: true */
-                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.configs.debug?err.message:"";}');
+                fn = new Function(_var, 'try{' + vars.join('') + this._fn + '}catch(err){return this.configs.debug?err.stack || message:"";}');
             } catch (err) {
                 fn = function () {
-                    return configs.debug ? err.message : '';
+                    return configs.debug ? err.stack || err.message : '';
                 };
             }
 
             try {
                 ret = fn.call(self, data);
             } catch (err) {
-                ret = configs.debug ? err.message : '';
+                ret = configs.debug ? err.stack || err.message : '';
             }
 
 

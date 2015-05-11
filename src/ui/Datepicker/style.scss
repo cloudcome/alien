@@ -1,0 +1,61 @@
+.alien-ui-datepicker{
+  display: none;
+  position: absolute;
+  width: 300px;
+
+  &:before,
+  &:after{
+    content: '';
+    position: absolute;
+    left: 20px;
+    border: 6px solid transparent;
+    margin-top: -12px;
+  }
+
+  &:before{
+    top: 0;
+    border-bottom-color: #bbb;
+  }
+
+  &:after{
+    top: 1px;
+    border-bottom-color: #eee;
+  }
+
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th,td{
+    border: 1px solid #ddd;
+    padding: 6px;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th{
+    background: #eee;
+  }
+
+  // 上个月
+  &-prev{
+    color: #ccc;
+  }
+
+  // 当前月
+  &-this{
+    color: #333;
+  }
+
+  // 下个月
+  &-next{
+    color: #ccc;
+  }
+
+  &-today{
+    background: #DDF1FD;
+  }
+}
