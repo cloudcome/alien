@@ -35,6 +35,7 @@ define(function (require, exports, module) {
     };
     var REG_ASSIGN_VARIBLE = /\$\{([^{}]*?)}/g;
     var REG_SEPARATOR = /[-_ ]([a-z])/g;
+    var REG_HUMP = /[A-Z]/g;
 
 
     /**
@@ -112,8 +113,8 @@ define(function (require, exports, module) {
      * @returns {String}
      *
      * @example
-     * string.hump('moz-border-radius');
-     * // => mozBorderRadius
+     * string.humprize('moz-border-radius');
+     * // => "mozBorderRadius"
      */
     exports.humprize = function (str, upperCaseFirstChar) {
         if (upperCaseFirstChar) {
@@ -126,8 +127,23 @@ define(function (require, exports, module) {
     };
 
 
+    /**
+     * 转换驼峰字符串为分隔符字符串
+     * @param str {String} 驼峰字符串
+     * @param [separator="-"] {String} 分隔符
+     * @returns {string}
+     * @example
+     * string.separatorize('mozBorderRadius');
+     * // => "moz-border-radius"
+     */
+    exports.separatorize = function (str, separator) {
+        separator = separator || '-';
+        str = str[0].toLowerCase() + str.substr(1);
 
-    //exports.separatorize
+        return str.replace(REG_HUMP, function ($0) {
+            return separator + $0.toLowerCase();
+        });
+    };
 });
 
 
