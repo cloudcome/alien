@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var dato = require('../utils/dato.js');
+    var string = require('../utils/string.js');
     var typeis = require('../utils/typeis.js');
     var random = require('../utils/random.js');
     var klass = require('../utils/class.js');
@@ -177,7 +178,7 @@ define(function (require, exports, module) {
             var inExp = false;
 
             the._template = {
-                escape: _escape,
+                escape: string.escapeHTML,
                 filters: {}
             };
             the._useFilters = {};
@@ -353,7 +354,7 @@ define(function (require, exports, module) {
             var existFilters = dato.extend(true, {}, filters, the._template.filters);
             var self = dato.extend(true, {}, {
                 each: dato.each,
-                escape: _escape,
+                escape: string.escapeHTML,
                 filters: existFilters,
                 configs: configs
             });
