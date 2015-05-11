@@ -76,7 +76,7 @@ define(function (require, exports, module) {
             style += '@' + prefix + 'keyframes ' + name + '{' + mainStyle + '}';
         });
 
-        keyframesMap[name] = modification.importStyle(style);
+        keyframesMap[name] = modification.importStyle(style, keyframesMap[name]);
 
         return name;
     };
