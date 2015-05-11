@@ -1,7 +1,52 @@
 .alien-ui-datepicker{
   display: none;
+  opacity: 0;
   position: absolute;
   width: 300px;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #DDD;
+  box-shadow: 0 0 10px #EEE;
+  cursor: default;
+
+  *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  &-toolbar{
+    overflow: hidden;
+    border: 1px solid #DDD;
+    border-bottom: 0;
+  }
+
+  &-select{
+    float: left;
+    width: 50%;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+
+    &:first-child{
+      border-right: 1px solid #ddd;
+    }
+
+    select{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 0;
+      border-radius: 0;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+  }
 
   &:before,
   &:after{
@@ -13,13 +58,13 @@
   }
 
   &:before{
-    top: 0;
-    border-bottom-color: #bbb;
+    top: -1px;
+    border-bottom-color: #DDD;
   }
 
   &:after{
     top: 1px;
-    border-bottom-color: #eee;
+    border-bottom-color: #fff;
   }
 
   table{

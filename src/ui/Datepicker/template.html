@@ -1,24 +1,38 @@
-<div class="alien-ui-datepicker">
-    <table class="alien-ui-datepicker-list">
-        <thead>
-        <tr>
-            {{list thead as th}}
-            <th>{{th}}</th>
+<div class="alien-ui-datepicker-toolbar">
+    <div class="alien-ui-datepicker-select j-flagr">
+        <select>
+            {{list years as year}}
+            <option value="{{year}}">{{year}}</option>
             {{/list}}
-        </tr>
-        </thead>
-        <tbody>
-        {{list tbody as index,tr}}
-        <tr>
-            {{list tr as td}}
-            <td data-id="{{td.id}}"
-                data-year="{{td.year}}"
-                data-month="{{td.month + 1}}"
-                data-date="{{td.date}}"
-                class="alien-ui-datepicker-{{td.type}} {{td.active ? 'alien-ui-datepicker-active' : ''}} {{td.today ? 'alien-ui-datepicker-today' : ''}}">{{td.date}}</td>
+        </select>
+    </div>
+    <div class="alien-ui-datepicker-select j-flagr">
+        <select>
+            {{list months as month}}
+            <option value="{{month}}">{{month}}</option>
             {{/list}}
-        </tr>
-        {{/list}}
-        </tbody>
-    </table>
+        </select>
+    </div>
 </div>
+<table class="alien-ui-datepicker-list">
+    <thead>
+    <tr>
+        {{list thead as th}}
+        <th>{{th}}</th>
+        {{/list}}
+    </tr>
+    </thead>
+    <tbody>
+    {{list tbody as index,tr}}
+    <tr>
+        {{list tr as td}}
+        <td data-id="{{td.id}}"
+            data-year="{{td.year}}"
+            data-month="{{td.month + 1}}"
+            data-date="{{td.date}}"
+            class="alien-ui-datepicker-{{td.type}} {{td.active ? 'alien-ui-datepicker-active' : ''}} {{td.today ? 'alien-ui-datepicker-today' : ''}}">{{td.date}}</td>
+        {{/list}}
+    </tr>
+    {{/list}}
+    </tbody>
+</table>
