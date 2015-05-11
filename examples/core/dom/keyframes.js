@@ -1,35 +1,22 @@
 define(function (require) {
     'use strict';
 
+    var selector = require('../../../src/core/dom/selector.js');
     var keyframes = require('../../../src/core/dom/keyframes.js');
     var animation = require('../../../src/core/dom/animation.js');
     var modification = require('../../../src/core/dom/modification.js');
-    var $demo = document.getElementById('demo');
-    var pengzhuang = keyframes.create({
-        0: {
-            scale: 0.8,
-            translateX: -10
-        },
-        0.3: {
-            scale: 1.2,
-            translateX: 60
-        },
-        0.6: {
-            scale: 0.9,
-            translateX: -30
-        },
-        1: {
-            scale: 1,
-            translateX: 20
-        }
-    });
+    var Template = require('../../../src/libs/Template.js');
+    var template = selector.query('#template')[0].innerHTML;
+    var tpl = new Template(template);
+    var $list = selector.query('#list')[0];
 
-    document.getElementById('btn').onclick = function () {
-        animation.keyframes($demo, pengzhuang, {
-            duration: 1000,
-            count: 3
-        }, function () {
-            modification.insert('动画完成<br>', document.body);
-        });
+    // 添加帧动画
+    selector.query('#add')[0].onclick = function () {
+        modification.insert(tpl.render(), $list, 'beforeend');
+    };
+
+    // 生成帧动画
+    selector.query('#gen')[0].onclick = function () {
+
     };
 });

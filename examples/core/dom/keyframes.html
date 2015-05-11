@@ -21,39 +21,56 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>keyframes.html</title>
     <style>
-        @-webkit-keyframes abc {
-            0% {
-                width: 200px;
-            }
-            100% {
-                width: 100px;
-            }
-            50% {
-                width: 300px;
-            }
+        .ipt{
+            display: block;
+            border: 2px solid #ddd;
+            padding: 4px;
+            margin: 10px 0;
+            width: 50%;
         }
 
-        #btn {
-            padding: 10px 20px;
+        button{
+            padding: 6px 12px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
 
-        #demo {
-            width: 100px;
-            height: 100px;
-            background: #000;
+        #demo{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ddd;
+            text-align: center;
+            line-height: 200px;
         }
     </style>
 </head>
 <body ontouchstart="">
 
-<button id="btn">开始</button>
+<h1>帧动画生成器（看右边）</h1>
 
-<div id="demo"></div>
+<ul id="list" class="keyframes">
 
-<div id="ret"></div>
+</ul>
 
-<script src="/examples/coolie.min.js" data-main="./core/dom/keyframes.js"></script>
-<script src="/examples/coolie-config.js"></script>
+<div id="demo">点我运行帧动画</div>
+
+<button id="add">加一帧</button>
+<button id="gen">生成</button>
+
+<script type="text-template" id="template">
+<li>
+    <div class="keyframe-key">帧点：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
+    <div class="keyframe-val">帧值：<textarea name="val" rows="2" class="ipt" placeholder="如：scale: 0.2, width: 200"></textarea></div>
+</li>
+</script>
+
+<script src="/examples/coolie.min.js"
+        data-config="./coolie-config.js"
+        data-main="./core/dom/keyframes.js"></script>
 
 </body>
 </html>
