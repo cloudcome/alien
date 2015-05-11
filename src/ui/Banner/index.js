@@ -15,6 +15,7 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires ui/
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/typeis
      * @requires utils/controller
      */
@@ -28,6 +29,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var ui = require('../');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
     var alienClass = 'alien-ui-banner';
@@ -405,7 +407,7 @@ define(function (require, exports, module) {
             var direction = '';
             var lastIndex = the._itemLength - 1;
 
-            index = dato.parseInt(index, 0);
+            index = number.parseInt(index, 0);
 
             if (index < 0) {
                 index = 0;

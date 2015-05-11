@@ -9,11 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module libs/Pagination
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/class
      */
     'use strict';
 
     var dato = require('./../utils/dato.js');
+    var number = require('./../utils/number.js');
     var klass = require('./../utils/class.js');
     var defaults = {
         max: 1,
@@ -39,10 +41,10 @@ define(function (require, exports, module) {
             var remainLeft = 0;
             var remainRight = 0;
 
-            options.max = Math.abs(dato.parseInt(options.max, 1));
-            options.page = Math.abs(dato.parseInt(options.page, 1));
+            options.max = Math.abs(number.parseInt(options.max, 1));
+            options.page = Math.abs(number.parseInt(options.page, 1));
             options.page = options.page > options.max ? options.max : options.page;
-            options.size = Math.abs(dato.parseInt(options.size, 3));
+            options.size = Math.abs(number.parseInt(options.size, 3));
             options.size += options.size % 2 ? 0 : 1;
             offset = Math.floor(options.size / 2);
 
