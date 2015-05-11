@@ -186,7 +186,54 @@ define(function (require, exports, module) {
     };
 
 
+    /**
+     * 填充字符串
+     * @param isLeft {Boolean} 是否左边
+     * @param str {String} 字符串
+     * @param [maxLength] {Number} 最大长度，默认为字符串长度
+     * @param [padding=" "] {String} 填充字符串
+     * @returns {String}
+     */
+    var pad = function (isLeft, str, maxLength, padding) {
+        var length = str.length;
 
+        padding = padding || ' ';
+        maxLength = maxLength || length;
+
+        if (maxLength <= length) {
+            return str;
+        }
+
+        while ((++length) <= maxLength) {
+            str = isLeft ? padding + str : str + padding;
+        }
+
+        return str;
+    };
+
+
+    /**
+     * 左填充
+     * @param str {String} 字符串
+     * @param [maxLength] {Number} 最大长度，默认为字符串长度
+     * @param [padding=" "] {String} 填充字符串
+     * @returns {String}
+     */
+    exports.padLeft = function (str, maxLength, padding) {
+        return pad(true, str, maxLength, padding);
+    };
+
+
+    /**
+     * 右填充
+     * @param str {String} 字符串
+     * @param [maxLength] {Number} 最大长度，默认为字符串长度
+     * @param [padding=" "] {String} 填充字符串
+     * @returns {String}
+     */
+    exports.padRight = function (str, maxLength, padding) {
+        return pad(false, str, maxLength, padding);
+    };
 });
 
 
