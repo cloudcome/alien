@@ -16,6 +16,7 @@ define(function (require, exports, module) {
 
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
+    var win = window;
     var escapeHTMLMap = {
         '&amp;': /&/g,
         '&lt;': /</g,
@@ -143,6 +144,20 @@ define(function (require, exports, module) {
         return str.replace(REG_HUMP, function ($0) {
             return separator + $0.toLowerCase();
         });
+    };
+
+
+    /**
+     * base64 编码
+     * @param str {String} 字符串
+     * @returns {string}
+     */
+    exports.base64 = function (str) {
+        if (typeis.undefined(win.Buffer)) {
+            return btoa(encodeURIComponent(str));
+        } else {
+            return new win.Buffer(str, 'utf8').toString('base64');
+        }
     };
 });
 
