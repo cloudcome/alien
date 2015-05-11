@@ -174,8 +174,15 @@ define(function (require, exports, module) {
                 the._renderList();
             });
             event.on(the._$list, 'click', 'td', the._onchoose = function () {
-                the._choose.year = attribute.data(this, 'year');
-                the._choose.month = attribute.data(this, 'month');
+                var year = attribute.data(this, 'year');
+                var month = attribute.data(this, 'month');
+
+                if (year < options.range[0] || year > options.range[1]) {
+                    return;
+                }
+
+                the._choose.year = year;
+                the._choose.month = month;
                 the._choose.date = attribute.data(this, 'date');
 
                 var d = new Date(the._choose.year, the._choose.month, the._choose.date);
@@ -216,9 +223,16 @@ define(function (require, exports, module) {
                 top: attribute.top(the._$input) + attribute.outerHeight(the._$input),
                 left: attribute.left(the._$input)
             };
-            var d = date.parse(the._$input.value);
+            var value = the._$input.value;
+            var d = date.parse(value);
             var year = d.getFullYear();
             var month = d.getMonth();
+
+            if (value) {
+                the._choose.year = year;
+                the._choose.month = month;
+                the._choose.date = d.getDate();
+            }
 
             if (the._current.year !== year || the._current.month !== month) {
                 the._current.year = year;

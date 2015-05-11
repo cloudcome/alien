@@ -19,7 +19,7 @@
   .alien-ui-datepicker-select {
     float: left;
     width: 50%;
-    height: 30px;
+    height: 34px;
     position: relative;
     overflow: hidden; }
     .alien-ui-datepicker-select:first-child {
@@ -56,8 +56,7 @@
     border-spacing: 0; }
   .alien-ui-datepicker th, .alien-ui-datepicker td {
     border: 1px solid #ddd;
-    padding: 6px;
-    font-size: 12px;
+    padding: 10px;
     vertical-align: middle;
     text-align: center; }
   .alien-ui-datepicker th {
