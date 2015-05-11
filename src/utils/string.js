@@ -275,7 +275,7 @@ define(function (require, exports, module) {
      */
     exports.bytes = function (string, doubleLength) {
         string += '';
-        doubleLength = exports.parseInt(doubleLength, 2);
+        doubleLength = doubleLength || 2;
 
         var i = 0,
             j = string.length,
