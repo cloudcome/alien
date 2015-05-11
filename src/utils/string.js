@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
-    var win = window;
+    var win = typeof global !== 'undefined' ? global : window;
     var escapeHTMLMap = {
         '&amp;': /&/g,
         '&lt;': /</g,
