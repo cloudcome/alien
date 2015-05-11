@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module utils/calendar
      * @requires utils/date
      * @requires utils/dato
+     * @requires utils/string
      * @requires utils/typeis
      */
 
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
 
     var date = require('./date.js');
     var dato = require('./dato.js');
+    var string = require('./string.js');
     var typeis = require('./typeis.js');
     var defaults = {
         // 激活的日期
@@ -131,7 +133,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _buildDateid(item) {
-        return [item.year, dato.fillString(item.month + 1, 2), dato.fillString(item.date, 2)].join('') * 1;
+        return [item.year, string.padLeft(item.month + 1, 2, '0'), string.padLeft(item.date, 2, '0')].join('') * 1;
     }
 
 });

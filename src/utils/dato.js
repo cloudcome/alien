@@ -400,47 +400,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 按长度填满指定字符
-     * @param {Number|String} orginalString 原始字符串
-     * @param {Number} length 长度
-     * @param {String} [fixString="0"] 补充的字符
-     * @param {Boolean} [isSuffix=false] 是否添加为后缀，默认前缀
-     * @returns {String}
-     *
-     * @example
-     * dato.fillString('2', 4);
-     * // => "0002"
-     */
-    exports.pad = exports.fillString = function (orginalString, length, fixString, isSuffix) {
-        var len = length;
-        var fixedString = '';
-        var args = arguments;
-        var argL = args.length;
-
-        // dato.fillString(originalString, length, isSuffix);
-        // dato.fillString(originalString, length, fixString, isSuffix);
-        if (typeis.boolean(args[argL - 1])) {
-            fixString = argL === 4 ? args[2] : '0';
-            isSuffix = args[argL - 1];
-        }
-        // dato.fillString(originalString, length);
-        // dato.fillString(originalString, length, fixString);
-        else {
-            fixString = argL === 3 ? args[2] : '0';
-            isSuffix = false;
-        }
-
-        while (len--) {
-            fixedString += fixString;
-        }
-
-        return isSuffix ?
-            (orginalString + fixedString).slice(0, length) :
-            (fixedString + orginalString).slice(-length);
-    };
-
-
-    /**
      * 修正正则字符串
      * @param regExpString
      * @returns {String}

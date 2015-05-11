@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module utils/date
      * @requires utils/allocation
      * @requires utils/dato
+     * @requires utils/string
      * @requires utils/typeis
      */
 
@@ -17,6 +18,7 @@ define(function (require, exports, module) {
 
     var allocation = require('./allocation.js');
     var dato = require('./dato.js');
+    var string = require('./string.js');
     var typeis = require('./typeis.js');
     var weeks = '日一二三四五六';
     var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -129,7 +131,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'MM',
-                val: dato.fillString(M, 2),
+                val: string.padLeft(M, 2, '0'),
                 is: 'M'
             },
             {
@@ -139,7 +141,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'DD',
-                val: dato.fillString(D, 2),
+                val: string.padLeft(D, 2, '0'),
                 is: 'D'
             },
             {
@@ -149,7 +151,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'HH',
-                val: dato.fillString(H, 2),
+                val: string.padLeft(H, 2, '0'),
                 is: 'H'
             },
             {
@@ -159,7 +161,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'hh',
-                val: dato.fillString(h, 2),
+                val: string.padLeft(h, 2, '0'),
                 is: 'h'
             },
             {
@@ -169,7 +171,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'mm',
-                val: dato.fillString(m, 2),
+                val: string.padLeft(m, 2, '0'),
                 is: 'm'
             },
             {
@@ -179,7 +181,7 @@ define(function (require, exports, module) {
             },
             {
                 key: 'ss',
-                val: dato.fillString(s, 2),
+                val: string.padLeft(s, 2, '0'),
                 is: 's'
             },
             {
@@ -189,12 +191,12 @@ define(function (require, exports, module) {
             },
             {
                 key: 'SSS',
-                val: dato.fillString(S, 3),
+                val: string.padLeft(S, 3, '0'),
                 is: 'S'
             },
             {
                 key: 'SS',
-                val: dato.fillString(S, 2),
+                val: string.padLeft(S, 2, '0'),
                 is: 'S'
             },
             {
