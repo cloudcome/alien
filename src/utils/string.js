@@ -9,12 +9,13 @@ define(function (require, exports, module) {
     /**
      * @module utils/string
      * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';
 
     var dato = require('./dato.js');
-    var allocation = require('./allocation.js');
+    var typeis = require('./typeis.js');
     var escapeHTMLMap = {
         '&amp;': /&/g,
         '&lt;': /</g,
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
         '&apos;': /'/g,
         '&#x2f;': /\//g
     };
+    var HTML_CODE_MATCH = /&#(x)?([\w\d]{0,5});/i;
     var unescapeHTMLMap = {
         '&': /&amp;/g,
         '<': /&lt;/g,
@@ -31,7 +33,7 @@ define(function (require, exports, module) {
         '\'': /&apos;/g,
         '/': /&#x2f;/g
     };
-    var HTML_CODE_MATCH = /&#(x)?([\w\d]{0,5});/i;
+    var assignVarible = /\$\{([^{}]*?)}/g;
 
 
     /**
@@ -67,13 +69,42 @@ define(function (require, exports, module) {
     };
 
 
-
-
+    /**
+     * 分配字符串，参考 es6
+     * @param str
+     * @example
+     * string.assign('Hello ${name}, how are you ${time}?', {
+     *     name: 'Bob',
+     *     time: 'today'
+     * });
+     * // => "Hello Bob, how are you today?"
+     *
+     * string.assign('Hello ${1}, how are you ${2}?', 'Bob', 'today');
+     * // => "Hello Bob, how are you today?"
+     */
     exports.assign = function (str/*arguments*/) {
-        allocation.args(arguments);
+        var args = arguments;
+        var data = {};
 
+        // {}
+        if (typeis.object(args[1])) {
+            data = args[1];
+        }
+        // 1, 2...
+        else {
+            dato.each([].slice.call(args, 1), function (index, val) {
+                data[index + 1] = val;
+            });
+        }
 
+        return str.replace(assignVarible, function ($0, $1) {
+            return String(data[$1]);
+        });
     };
+
+
+
+    //exports
 });
 
 
