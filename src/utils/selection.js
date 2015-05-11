@@ -9,10 +9,15 @@ define(function (require, exports) {
     /**
      * @module utils/selection
      * @require utils/dato
+     * @require utils/number
+     * @require core/dom/selector
+     * @require core/dom/attribute
+     * @require core/dom/modification
      */
     'use strict';
 
     var dato = require('./dato.js');
+    var number = require('./number.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
@@ -63,8 +68,8 @@ define(function (require, exports) {
      */
     exports.setPos = function ($ele, pos) {
         if ($ele && $ele.setSelectionRange) {
-            var pos0 = dato.parseInt(pos[0], 0);
-            $ele.setSelectionRange(pos0, dato.parseInt(pos[1], pos0));
+            var pos0 = number.parseInt(pos[0], 0);
+            $ele.setSelectionRange(pos0, number.parseInt(pos[1], pos0));
         }
     };
 

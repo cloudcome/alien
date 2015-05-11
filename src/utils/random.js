@@ -9,10 +9,12 @@ define(function (require, exports) {
     /**
      * @module utils/random
      * @requires utils/dato
+     * @requires utils/number
      */
     'use strict';
 
     var dato = require('./dato.js');
+    var number = require('./number.js');
     var regExist = /[aA0]/g;
     var dictionaryMap = {
         a: 'abcdefghijklmnopqrstuvwxyz',
@@ -33,8 +35,8 @@ define(function (require, exports) {
     exports.number = function (min, max) {
         var temp;
 
-        min = dato.parseInt(min, 0);
-        max = dato.parseInt(max, 0);
+        min = number.parseInt(min, 0);
+        max = number.parseInt(max, 0);
 
         if (min === max) {
             return min;
@@ -71,7 +73,7 @@ define(function (require, exports) {
         var pool = '';
         var max;
 
-        length = Math.abs(dato.parseInt(length, 6));
+        length = Math.abs(number.parseInt(length, 6));
         dictionary = String(dictionary || 'a');
 
         if (dictionary.indexOf('a') > -1) {
@@ -95,17 +97,17 @@ define(function (require, exports) {
 
         return ret;
     };
-    //
-    //
-    ///**
-    // * 随机16进制颜色值
-    // * @returns {string}
-    // *
-    // * @example
-    // * random.color()
-    // * => '#ff00ff'
-    // */
-    //exports.color = function () {
-    //    return '#'+Math.random().toString(16).substr(-6);
-    //};
+
+
+    /**
+     * 随机16进制颜色值
+     * @returns {string}
+     *
+     * @example
+     * random.color()
+     * => '#ff00ff'
+     */
+    exports.color = function () {
+        return '#'+Math.random().toString(16).substr(-6);
+    };
 });

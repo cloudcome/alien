@@ -63,7 +63,7 @@ define(function (require, exports, module) {
     exports.unescapeHTML = function (str) {
         // 转换实体数字为实体字母
         str.replace(REG_HTML_CODE, function (full, hex, code) {
-            return String.fromCharCode(dato.parseInt(code, hex ? 16 : 10));
+            return String.fromCharCode(parseInt(code, hex ? 16 : 10));
         });
 
         dato.each(unescapeHTMLMap, function (src, reg) {
