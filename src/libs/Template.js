@@ -38,28 +38,6 @@ define(function (require, exports, module) {
         'r': /\r/g,
         't': /\t/g
     }];
-    var escapes = [
-        {
-            reg: /</g,
-            rep: '&#60;'
-        },
-        {
-            reg: />/g,
-            rep: '&#62;'
-        },
-        {
-            reg: /"/g,
-            rep: '&#34;'
-        },
-        {
-            reg: /'/g,
-            rep: '&#39;'
-        },
-        {
-            reg: /&/g,
-            rep: '&#38;'
-        }
-    ];
     var openTag = '{{';
     var closeTag = '}}';
     var configs = {
@@ -563,21 +541,6 @@ define(function (require, exports, module) {
 
 
 
-    /**
-     * HTML 编码
-     * @param str
-     * @returns {*}
-     * @private
-     */
-    function _escape(str) {
-        str = String(str);
-
-        dato.each(escapes, function (index, obj) {
-            str = str.replace(obj.reg, obj.rep);
-        });
-
-        return str;
-    }
 
 
     /**
