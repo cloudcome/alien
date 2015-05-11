@@ -39,6 +39,7 @@ define(function (require, exports, module) {
     var REG_SEPARATOR = /[-_ ]([a-z])/g;
     var REG_HUMP = /[A-Z]/g;
     var REG_STAR = /\\\*/g;
+    var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
 
 
     /**
@@ -242,6 +243,25 @@ define(function (require, exports, module) {
      */
     exports.padRight = function (str, maxLength, padding) {
         return pad(false, String(str), maxLength, padding);
+    };
+
+
+    /**
+     * 计算字符串长度
+     * 双字节的字符使用 length 属性计算不准确
+     * @ref http://es6.ruanyifeng.com/#docs/string
+     * @param string {String} 原始字符串
+     *
+     * @example
+     * var s = "𠮷";
+     * s.length = 2;
+     * dato.length(s);
+     * // => 1
+     */
+    exports.length = function (string) {
+        string += '';
+
+        return string.replace(REG_NOT_UTF16_SINGLE, '*').length;
     };
 
 

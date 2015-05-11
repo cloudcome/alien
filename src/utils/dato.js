@@ -16,8 +16,6 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap'.split(' ');
-    var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
-    var REG_STRING_FIX = /[.*+?^=!:${}()|[\]\/\\]/g;
     var REG_BEGIN_0 = /^0+/;
 
 
@@ -237,25 +235,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 计算字符串长度
-     * 双字节的字符使用 length 属性计算不准确
-     * @ref http://es6.ruanyifeng.com/#docs/string
-     * @param string {String} 原始字符串
-     *
-     * @example
-     * var s = "𠮷";
-     * s.length = 2;
-     * dato.length(s);
-     * // => 1
-     */
-    exports.length = function (string) {
-        string += '';
-
-        return string.replace(REG_NOT_UTF16_SINGLE, '*').length;
-    };
-
-
-    /**
      * 对象1级比较，找出相同和不同的键
      * @param obj1 {Object|Array}
      * @param obj2 {Object|Array}
@@ -325,25 +304,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 人类数字，千位分割
-     * @param number {String|Number} 数字（字符串）
-     * @param [separator=","] {String} 分隔符
-     * @param [length=3] {Number} 分隔长度
-     * @returns {string} 分割后的字符串
-     */
-    exports.humanize = function (number, separator, length) {
-        separator = separator || ',';
-        length = length || 3;
-
-        var reg = new RegExp('(\\d)(?=(\\d{' + length + '})+$)', 'g');
-        var arr = String(number).split('.');
-        var p1 = arr[0].replace(reg, '$1' + separator);
-
-        return p1 + (arr[1] ? '.' + arr[1] : '');
-    };
-
-
-    /**
      * 比较两个长整型数值
      * @param long1 {String|Number} 长整型数值字符串1
      * @param long2 {String|Number} 长整型数值字符串2
@@ -397,7 +357,6 @@ define(function (require, exports, module) {
 
         return ret;
     };
-
 
 
     /////////////////////////////////////////////////////////////////////////////////
