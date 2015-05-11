@@ -43,16 +43,16 @@
             cursor: pointer;
         }
 
-        hr {
-            width: 50%;
-            margin: 30px 0;
-            border: 0;
-            border-bottom: 1px solid #DDD;
+        button[disabled]{
+            cursor: not-allowed;
         }
 
-        pre {
+        #ret {
+            position: absolute;
+            top: 0;
             display: block;
-            width: 80%;
+            width: 45%;
+            left: 55%;
             border: 1px solid #ddd;
             overflow: auto;
             padding: 10px;
@@ -74,9 +74,6 @@
         }
 
         #demo {
-            position: absolute;
-            right: 10px;
-            top: 10px;
             width: 200px;
             height: 200px;
             border: 2px solid #ddd;
@@ -88,19 +85,18 @@
 </head>
 <body ontouchstart="">
 
-<h1>帧动画生成器（看右边）</h1>
+<h1>帧动画生成器</h1>
 
 帧动画名称
 <input type="text" id="name" class="ipt" value="my-keyframes"/>
 <ul id="list" class="keyframes"></ul>
 
-<div id="demo">点我运行帧动画</div>
 
 <button id="add">加一帧</button>
-<button id="gen">生成</button>
+<button id="gen" disabled>生成</button>
+<button id="run" disabled>运行动画</button>
 
-<hr/>
-<pre id="ret">待生成</pre>
+<textarea id="ret">待生成</textarea>
 
 <div class="help">
     <h1>帮助</h1>
@@ -117,6 +113,8 @@
                                                placeholder="如：scale: 0.2, width: 200"></textarea></div>
     </li>
 </script>
+
+<div id="demo">点我</div>
 
 <script src="./cssbeautify.js"></script>
 <script src="/examples/coolie.min.js"

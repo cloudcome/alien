@@ -55,6 +55,10 @@ define(function (require, exports, module) {
             dato.each(properties, function (key, val) {
                 var fix = attribute.fixCss(key, val);
 
+                if (!fix.key) {
+                    return;
+                }
+
                 if (fix.key.indexOf('transform') > -1) {
                     transformKey = fix.key;
                     transformVal.push(fix.val + (fix.imp ? ' !important' : ''));
