@@ -46,12 +46,25 @@
 
         pre {
             display: block;
-            width: 50%;
+            width: 80%;
             border: 1px solid #ddd;
             overflow: auto;
             padding: 10px;
             border-radius: 4px;
             background: #f6f6f6;
+        }
+
+        .help{
+            padding: 10px;
+            border: 1px solid #69DA6F;
+            border-radius: 4px;
+        }
+
+        code{
+            background: #F5F5F5;
+            padding: 1px 2px;
+            color: #E02222;
+            margin: 0 1px;
         }
 
         #demo {
@@ -63,6 +76,7 @@
             border: 2px solid #ddd;
             text-align: center;
             line-height: 200px;
+            background: #eee;
         }
     </style>
 </head>
@@ -82,14 +96,21 @@
 <hr/>
 <pre id="ret">待生成</pre>
 
+<div class="help">
+    <h1>帮助</h1>
+    <p>帧值格式为：<code>width: 200</code>键值对，不必是严格 JSON 格式</p>
+    <p>属性值，除了<code>width</code>、<code>height</code>等，还可选过渡变化里的<code>rotate|skew|translate|scale|skew|rotate|matrix|perspective</code></p>
+</div>
+
 <script type="text-template" id="template">
     <li>
-        <div class="keyframe-key">帧点：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
-        <div class="keyframe-val">帧值：<textarea name="val" rows="2" class="ipt"
+        <div class="keyframe-key">帧点（0-1）：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
+        <div class="keyframe-val">帧值（css属性名与值，更多看帮助）：<textarea name="val" rows="2" class="ipt"
                                                placeholder="如：scale: 0.2, width: 200"></textarea></div>
     </li>
 </script>
 
+<script src="./cssbeautify.js"></script>
 <script src="/examples/coolie.min.js"
         data-config="./coolie-config.js"
         data-main="./core/dom/keyframes.js"></script>

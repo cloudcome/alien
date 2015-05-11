@@ -10,11 +10,12 @@ define(function (require) {
     var template = selector.query('#template')[0].innerHTML;
     var tpl = new Template(template);
     var $list = selector.query('#list')[0];
+    var $ret = selector.query('#ret')[0];
     var name = 'my-keyframes';
     var parseJSON = function (str) {
         str = '{' + str + '}';
 
-        var fn = new Function(str, 'return arguments[0];');
+        var fn = new Function('', 'return ' + str);
 
         try {
             return fn();
@@ -33,16 +34,27 @@ define(function (require) {
         var $itemList = selector.query('li');
         var obj = {};
 
-        $itemList.forEach(function (index, $li) {
+        $itemList.forEach(function ($li) {
             var $input = selector.query('input', $li)[0];
             var $textarea = selector.query('textarea', $li)[0];
 
             obj[$input.value] = parseJSON($textarea.value);
         });
 
+        if (!obj[0]) {
+            return alert('缺少开始帧动画，帧点为 0');
+        }
+
+        if (!obj[1]) {
+            return alert('缺少结束帧动画，帧点为 1');
+        }
+
         keyframes.create(name, obj);
+        $ret.innerHTML = window.cssbeautify(keyframes.getStyle(name));
+    };
 
-        var style = keyframes.getStyle(name);
-
+    // 运行动画
+    selector.query('#demo')[0].onclick = function () {
+        animation.keyframes(this, name);
     };
 });
