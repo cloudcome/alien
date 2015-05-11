@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module utils/date
      * @requires utils/allocation
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/string
      * @requires utils/typeis
      */
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
 
     var allocation = require('./allocation.js');
     var dato = require('./dato.js');
+    var number = require('./number.js');
     var string = require('./string.js');
     var typeis = require('./typeis.js');
     var weeks = '日一二三四五六';
@@ -561,7 +563,7 @@ define(function (require, exports, module) {
         }
 
         var type = temp[1];
-        var value = dato.parseInt(temp[2] || 1);
+        var value = number.parseInt(temp[2] || 1);
         var scope = temp[3];
         var oneDayMilliseconds = 1 * 24 * 60 * 60 * 1000;
         var from = exports.parse(ref);

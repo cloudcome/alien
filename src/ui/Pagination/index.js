@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module ui/Pagination/
      * @requires ui/
      * @requires utils/dato
+     * @requires utils/number
      * @requires libs/Pagination
      * @requires libs/Template
      * @requires core/dom/selector
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
     var style = require('css!./style.css');
     var template = require('html!./template.html');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var libsPagination = require('../../libs/Pagination.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);
@@ -88,7 +90,7 @@ define(function (require, exports, module) {
             var the = this;
             var page = attribute.data(eve.target, 'page');
 
-            page = dato.parseInt(page, 1);
+            page = number.parseInt(page, 1);
 
             if (page !== the._options.page) {
                 the._options.page = page;

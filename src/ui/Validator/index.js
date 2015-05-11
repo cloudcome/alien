@@ -13,6 +13,8 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/event/touch
      * @requires utils/typeis
+     * @requires utils/dato
+     * @requires utils/number
      * @requires utils/string
      * @requires libs/Validator
      */
@@ -24,8 +26,9 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var style = require('css!./style.css');
     var event = require('../../core/event/touch.js');
-    var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var string = require('../../utils/string.js');
     var Vldor = require('../../libs/Validator.js');
     var alienIndex = 0;
@@ -120,9 +123,9 @@ define(function (require, exports, module) {
                     name: name,
                     msg: msg,
                     maxLength: $input.maxLength === -1 ? Math.pow(2, 53) : $input.maxLength,
-                    min: dato.parseInt($input.min, udf),
-                    max: dato.parseInt($input.max, udf),
-                    step: dato.parseInt($input.step, udf),
+                    min: number.parseInt($input.min, udf),
+                    max: number.parseInt($input.max, udf),
+                    step: number.parseInt($input.step, udf),
                     required: $input.required,
                     type: typeArray.indexOf(type) > -1 ? type : 'string'
                 };

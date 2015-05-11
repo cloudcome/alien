@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/touch
      * @requires utils/dato
+     * @requires utils/number
      * @requires libs/Template
      */
     'use strict';
@@ -24,6 +25,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var Template = require('../../libs/Template.js');
     var template = require('html!./template.html');
     var style = require('css!./style.css');
@@ -90,7 +92,7 @@ define(function (require, exports, module) {
             var page = attribute.data($ele, 'page');
 
             if (!attribute.hasClass($ele, alienClass + '-disabled')) {
-                page = dato.parseInt(page, 1);
+                page = number.parseInt(page, 1);
 
                 if (page !== the._options.page) {
                     the._options.page = page;
