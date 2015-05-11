@@ -44,6 +44,5 @@ define(function (require) {
 
         var style = keyframes.getStyle(name);
 
-        alert(style ? style : '填写有误，请检查');
     };
 });

@@ -21,7 +21,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>keyframes.html</title>
     <style>
-        .ipt{
+        .ipt {
             display: block;
             border: 2px solid #ddd;
             padding: 4px;
@@ -29,14 +29,32 @@
             width: 50%;
         }
 
-        button{
-            padding: 6px 12px;
+        button {
+            padding: 8px 16px;
             background: #f5f5f5;
             border: 1px solid #ddd;
             border-radius: 4px;
+            cursor: pointer;
         }
 
-        #demo{
+        hr {
+            width: 50%;
+            margin: 30px 0;
+            border: 0;
+            border-bottom: 1px solid #DDD;
+        }
+
+        pre {
+            display: block;
+            width: 50%;
+            border: 1px solid #ddd;
+            overflow: auto;
+            padding: 10px;
+            border-radius: 4px;
+            background: #f6f6f6;
+        }
+
+        #demo {
             position: absolute;
             right: 10px;
             top: 10px;
@@ -61,11 +79,15 @@
 <button id="add">加一帧</button>
 <button id="gen">生成</button>
 
+<hr/>
+<pre id="ret">待生成</pre>
+
 <script type="text-template" id="template">
-<li>
-    <div class="keyframe-key">帧点：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
-    <div class="keyframe-val">帧值：<textarea name="val" rows="2" class="ipt" placeholder="如：scale: 0.2, width: 200"></textarea></div>
-</li>
+    <li>
+        <div class="keyframe-key">帧点：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
+        <div class="keyframe-val">帧值：<textarea name="val" rows="2" class="ipt"
+                                               placeholder="如：scale: 0.2, width: 200"></textarea></div>
+    </li>
 </script>
 
 <script src="/examples/coolie.min.js"
