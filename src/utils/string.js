@@ -34,6 +34,7 @@ define(function (require, exports, module) {
         '\'': /&apos;/g,
         '/': /&#x2f;/g
     };
+    var REG_REGESP = /[.*+?^=!:${}()|[\]\/\\-]/g;
     var REG_ASSIGN_VARIBLE = /\$\{([^{}]*?)}/g;
     var REG_SEPARATOR = /[-_ ]([a-z])/g;
     var REG_HUMP = /[A-Z]/g;
@@ -69,6 +70,16 @@ define(function (require, exports, module) {
         });
 
         return str;
+    };
+
+
+    /**
+     * 转换正则字符串为合法正则
+     * @param str {String} 正则字符串
+     * @returns {string}
+     */
+    exports.escapeRegExp = function (str) {
+        return str.replace(REG_REGESP, '\\$&');
     };
 
 
@@ -173,6 +184,9 @@ define(function (require, exports, module) {
             return new win.Buffer(str, 'base64').toString('utf8');
         }
     };
+
+
+
 });
 
 
