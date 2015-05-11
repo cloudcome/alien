@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     var event = require('../core/event/touch.js');
     var klass = require('../utils/class.js');
     var dato = require('../utils/dato.js');
+    var string = require('../utils/string.js');
     var typeis = require('../utils/typeis.js');
     var random = require('../utils/random.js');
     var Emitter = require('./Emitter.js');
@@ -77,7 +78,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._REG_ATTR_NAME = new RegExp('^' + dato.fixRegExp(options.prefix) + '-(.*)$', 'i');
+            the._REG_ATTR_NAME = new RegExp('^' + string.escapeRegExp(options.prefix) + '-(.*)$', 'i');
             the._prefix = the._generateKey();
             the._attrMap = {};
             the._views = [];

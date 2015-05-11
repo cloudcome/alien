@@ -38,7 +38,7 @@ Validator.registerRule({
 }, function (suffix, val, next) {
     var sf = (val.match(/\.[^.]*$/) || [''])[0];
     var reg = new RegExp('(' + suffix.map(function (sf) {
-        return dato.fixRegExp(sf);
+        return string.escapeRegExp(sf);
     }).join('|') + ')$', 'i');
 
     next(reg.test(sf) ? null : new Error(this.alias + '的后缀必须为“' +

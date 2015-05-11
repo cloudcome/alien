@@ -38,6 +38,7 @@ define(function (require, exports, module) {
     var REG_ASSIGN_VARIBLE = /\$\{([^{}]*?)}/g;
     var REG_SEPARATOR = /[-_ ]([a-z])/g;
     var REG_HUMP = /[A-Z]/g;
+    var REG_STAR = /\\\*/g;
 
 
     /**
@@ -233,6 +234,23 @@ define(function (require, exports, module) {
      */
     exports.padRight = function (str, maxLength, padding) {
         return pad(false, str, maxLength, padding);
+    };
+
+
+    /**
+     * 非点匹配
+     * @param str {String} 被匹配字符
+     * @param glob {String} 匹配字符
+     * @param [ignoreCase=false] {Boolean} 是否忽略大小写
+     * @returns {Boolean}
+     * @example
+     * string.glob('abc.def.com', 'abc.*.com');
+     * // => true
+     */
+    exports.glob = function (str, glob, ignoreCase) {
+        var reg = new RegExp(exports.escapeRegExp(glob).replace(REG_STAR, '[^.]+?'), ignoreCase ? 'i' : '');
+
+        return reg.test(str);
     };
 });
 

@@ -399,19 +399,6 @@ define(function (require, exports, module) {
     };
 
 
-    /**
-     * 修正正则字符串
-     * @param regExpString
-     * @returns {String}
-     *
-     * @example
-     * data.fixRegExp('/');
-     * // => '\/'
-     */
-    exports.fixRegExp = function (regExpString) {
-        return regExpString.replace(REG_STRING_FIX, '\\$&');
-    };
-
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////

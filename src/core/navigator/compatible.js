@@ -9,23 +9,21 @@ define(function (require, exports, module) {
     /**
      * @module core/navigator/compatible
      * @requires utils/dato
+     * @requires utils/string
      */
     'use strict';
 
     var dato = require('../../utils/dato.js');
+    var string = require('../../utils/string.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
-    var regCss3 = /^-(webkit|moz|ms)-/i;
-    var regSep = /-([a-z])/g;
-    var regHump = /[A-Z]/g;
-    var regFirstLetter = /^(\w)(.*)$/;
+    var regCss3 = /^-(webkit|moz|ms|o)-/i;
     var p = document.createElement('p');
     var fixCss = {
         'float': 'cssFloat'
     };
     var regOn = /^on/;
     var timeid = 0;
-    var lastTime = 0;
 
     /**
      * 获取有浏览器前缀的方法名称
@@ -84,14 +82,14 @@ define(function (require, exports, module) {
         var cssKey = null;
         var find = false;
 
-        standard = _toSepString(standard.trim().replace(regCss3, ''));
+        standard = string.separatorize(standard.trim().replace(regCss3, ''));
 
         dato.each(css3Prefixs, function (index, prefix) {
             cssKey = prefix ? prefix + '-' + standard : standard;
 
             var testCssKey = fixCss[cssKey] ? fixCss[cssKey] : cssKey;
 
-            if (_toHumbString(testCssKey) in p.style) {
+            if (string.humprize(testCssKey) in p.style) {
                 find = true;
                 return false;
             }
@@ -107,34 +105,6 @@ define(function (require, exports, module) {
      * @private
      */
     function _toUpperCaseFirstLetter(word) {
-        return word.replace(regFirstLetter, function ($0, $1, $2) {
-            return $1.toUpperCase() + $2;
-        });
-    }
-
-
-    /**
-     * 转换短横线连接字符串为驼峰形式
-     * @param {String} sepString
-     * @returns {String}
-     * @private
-     */
-    function _toHumbString(sepString) {
-        return sepString.replace(regSep, function ($0, $1) {
-            return $1.toUpperCase();
-        });
-    }
-
-
-    /**
-     * 转换驼峰字符串为短横线分隔符字符串
-     * @param {String} humpString 驼峰字符串
-     * @returns {String} 短横线分隔符字符串
-     * @private
-     */
-    function _toSepString(humpString) {
-        return humpString.replace(regHump, function ($0) {
-            return '-' + $0.toLowerCase();
-        });
+        return word[0].toUpperCase() + word.substr(1);
     }
 });
