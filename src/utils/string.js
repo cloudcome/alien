@@ -247,25 +247,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 计算字符串长度
-     * 双字节的字符使用 length 属性计算不准确
-     * @ref http://es6.ruanyifeng.com/#docs/string
-     * @param string {String} 原始字符串
-     *
-     * @example
-     * var s = "𠮷";
-     * s.length = 2;
-     * dato.length(s);
-     * // => 1
-     */
-    exports.length = function (string) {
-        string += '';
-
-        return string.replace(REG_NOT_UTF16_SINGLE, '*').length;
-    };
-
-
-    /**
      * 非点匹配
      * @param str {String} 被匹配字符
      * @param glob {String} 匹配字符
@@ -279,6 +260,52 @@ define(function (require, exports, module) {
         var reg = new RegExp(exports.escapeRegExp(glob).replace(REG_STAR, '[^.]+?'), ignoreCase ? 'i' : '');
 
         return reg.test(str);
+    };
+
+
+    /**
+     * 计算字节长度
+     * @param string {String} 原始字符串
+     * @param [doubleLength=2] {Number} 双字节长度，默认为2
+     * @returns {number}
+     *
+     * @example
+     * data.bytes('我123');
+     * // => 5
+     */
+    exports.bytes = function (string, doubleLength) {
+        string += '';
+        doubleLength = exports.parseInt(doubleLength, 2);
+
+        var i = 0,
+            j = string.length,
+            k = 0,
+            c;
+
+        for (; i < j; i++) {
+            c = string.charCodeAt(i);
+            k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : doubleLength;
+        }
+
+        return k;
+    };
+
+
+    /**
+     * 计算字符串长度
+     * 双字节的字符使用 length 属性计算不准确
+     * @ref http://es6.ruanyifeng.com/#docs/string
+     * @param str {String} 原始字符串
+     * @returns {Number}
+     *
+     * @example
+     * var s = "𠮷";
+     * s.length = 2;
+     * dato.length(s);
+     * // => 3
+     */
+    exports.length = function (str) {
+        return String(str).replace(REG_NOT_UTF16_SINGLE, '*').length;
     };
 });
 

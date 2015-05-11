@@ -151,7 +151,7 @@ define(function (require, exports, module) {
      * @param [filter] {Function} 过滤方法，默认取不为 undefined 键值
      * @returns {Object}
      */
-    exports.pick = function (data, keys, filter) {
+    exports.select = function (data, keys, filter) {
         var data2 = {};
 
         data = data || {};
@@ -203,34 +203,6 @@ define(function (require, exports, module) {
         }
 
         return ret;
-    };
-
-
-    /**
-     * 计算字节长度
-     * @param string {String} 原始字符串
-     * @param [doubleLength=2] {Number} 双字节长度，默认为2
-     * @returns {number}
-     *
-     * @example
-     * dato.bytes('我123');
-     * // => 5
-     */
-    exports.bytes = function (string, doubleLength) {
-        string += '';
-        doubleLength = exports.parseInt(doubleLength, 2);
-
-        var i = 0,
-            j = string.length,
-            k = 0,
-            c;
-
-        for (; i < j; i++) {
-            c = string.charCodeAt(i);
-            k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : doubleLength;
-        }
-
-        return k;
     };
 
 
