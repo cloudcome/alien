@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      * @requires core/event/base
      * @requires libs/Template
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/howdo
      */
     'use strict';
@@ -34,6 +35,7 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var style = require('css!./style.css');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
@@ -260,7 +262,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            attribute.css(the._$content, 'bottom', dato.parseFloat(options.thumbnailSize.height));
+            attribute.css(the._$content, 'bottom', number.parseFloat(options.thumbnailSize.height));
             attribute.css(the._$loading, {
                 width: options.loading.width,
                 height: options.loading.height,
@@ -287,7 +289,7 @@ define(function (require, exports, module) {
             the._$itemlist.forEach(function ($item) {
                 attribute.style($item, the._options.thumbnailSize);
             });
-            attribute.width(the._$navList, dato.parseFloat(the._options.thumbnailSize.width) * the._list.length);
+            attribute.width(the._$navList, number.parseFloat(the._options.thumbnailSize.width) * the._list.length);
         },
 
 

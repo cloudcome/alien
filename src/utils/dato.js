@@ -20,32 +20,6 @@ define(function (require, exports, module) {
 
 
     /**
-     * 格式化数字，如果是非数字则返回默认值
-     * @param {*} [obj] 待格式化对象
-     * @param {*} [dft] 非数字时的默认值
-     * @returns {*}
-     */
-    exports.parseInt = function (obj, dft) {
-        obj = parseInt(obj, 10);
-
-        return isNaN(obj) ? dft : obj;
-    };
-
-
-    /**
-     * 格式化数字，如果是非数字则返回默认值
-     * @param {*} obj 待格式化对象
-     * @param {*} [dft] 非数字时的默认值
-     * @returns {*}
-     */
-    exports.parseFloat = function (obj, dft) {
-        obj = parseFloat(obj);
-
-        return isNaN(obj) ? dft : obj;
-    };
-
-
-    /**
      * 遍历元素
      * @param {Array/Object} list  数组、可枚举对象
      * @param {Function} callback  回调，返回false时停止遍历
@@ -61,8 +35,8 @@ define(function (require, exports, module) {
         var j;
 
         // 数组 或 类似数组
-        if (list && list.length !== udf) {
-            for (i = 0, j = exports.parseInt(list.length, 0); i < j; i++) {
+        if (list && typeis.number(list.length)) {
+            for (i = 0, j = list.length; i < j; i++) {
                 context = context || window;
                 if (callback.call(context, i, list[i]) === false) {
                     break;

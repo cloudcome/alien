@@ -15,6 +15,7 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      * @requires utils/allocation
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/typeis
      * @requires utils/easing
      * @requires core/navigator/compatible
@@ -28,6 +29,7 @@ define(function (require, exports, module) {
     var see = require('./see.js');
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');
     var eeeing = require('../../utils/easing.js');
     var controller = require('../../utils/controller.js');
@@ -109,13 +111,13 @@ define(function (require, exports, module) {
             if (keys.indexOf('left') > -1) {
                 // 先定位好
                 attribute.left($ele, attribute.left($ele));
-                attribute.css($ele, 'left', dato.parseFloat(attribute.css($ele, 'left'), 0));
+                attribute.css($ele, 'left', number.parseFloat(attribute.css($ele, 'left'), 0));
             }
 
             if (keys.indexOf('top') > -1) {
                 // 先定位好
                 attribute.top($ele, attribute.top($ele));
-                attribute.css($ele, 'top', dato.parseFloat(attribute.css($ele, 'top'), 0));
+                attribute.css($ele, 'top', number.parseFloat(attribute.css($ele, 'top'), 0));
             }
 
             var durationVal = [];
@@ -323,8 +325,8 @@ define(function (require, exports, module) {
                 y: attribute.scrollTop($ele)
             };
 
-            to.x = typeis.element(to.x) ? attribute.top(to.x) : dato.parseFloat(to.x, from.x);
-            to.y = typeis.element(to.y) ? attribute.top(to.y) : dato.parseFloat(to.y, from.y);
+            to.x = typeis.element(to.x) ? attribute.top(to.x) : number.parseFloat(to.x, from.x);
+            to.y = typeis.element(to.y) ? attribute.top(to.y) : number.parseFloat(to.y, from.y);
 
             var totalDistance = {
                 x: to.x - from.x,

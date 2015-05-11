@@ -11,6 +11,7 @@ define(function (require, exports, module) {
      * @requires ui/
      * @requires libs/Template
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/controller
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -26,6 +27,7 @@ define(function (require, exports, module) {
     var template = require('text!./template.html');
     var Template = require('../../libs/Template.js');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -354,8 +356,8 @@ define(function (require, exports, module) {
 
                 if (state === 2) {
                     state = 3;
-                    left0 = dato.parseFloat(attribute.css(the._$sele, 'left'), 0);
-                    top0 = dato.parseFloat(attribute.css(the._$sele, 'top'), 0);
+                    left0 = number.parseFloat(attribute.css(the._$sele, 'left'), 0);
+                    top0 = number.parseFloat(attribute.css(the._$sele, 'top'), 0);
                     x0 = eve.pageX;
                     y0 = eve.pageY;
 

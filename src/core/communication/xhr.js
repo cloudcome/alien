@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module core/communication/xhr
      * @requires utils/typeis
      * @requires utils/dato
+     * @requires utils/number
      * @requires utils/class
      * @requires utils/querystring
      * @requires libs/Emitter
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
 
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
     var klass = require('../../utils/class.js');
     var qs = require('../../utils/querystring.js');
     var Emitter = require('../../libs/Emitter.js');
@@ -151,7 +153,7 @@ define(function (require, exports, module) {
                 var percent = eve.alienDetail.complete * 100;
 
                 // 最多小数点2位
-                percent = dato.parseFloat((percent >= 100 ? 99 : percent).toFixed(2));
+                percent = number.parseFloat((percent >= 100 ? 99 : percent).toFixed(2));
                 eve.alienDetail.percent = percent + '%';
             }
 

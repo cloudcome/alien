@@ -9,6 +9,8 @@ define(function (require, exports, module) {
     /**
      * @module utils/easing
      * @link https://github.com/gre/bezier-easing/blob/master/index.js
+     * @requires utils/dato
+     * @requires utils/number
      */
     'use strict';
     //var pow = Math.pow;
@@ -24,6 +26,7 @@ define(function (require, exports, module) {
     var win = window;
     var float32ArraySupported = 'Float32Array' in win;
     var dato = require('./dato.js');
+    var number = require('./number.js');
     var aaaa = function (aA1, aA2) {
         return 1.0 - 3.0 * aA2 + 3.0 * aA1;
     };
@@ -70,10 +73,10 @@ define(function (require, exports, module) {
      * @returns {Function}
      */
     var cubicBezierGenerator = function (mX1, mY1, mX2, mY2) {
-        mX1 = dato.parseFloat(mX1, 0.25);
-        mY1 = dato.parseFloat(mY1, 0.1);
-        mX2 = dato.parseFloat(mX2, 0.25);
-        mY2 = dato.parseFloat(mY2, 0.1);
+        mX1 = number.parseFloat(mX1, 0.25);
+        mY1 = number.parseFloat(mY1, 0.1);
+        mX2 = number.parseFloat(mX2, 0.25);
+        mY2 = number.parseFloat(mY2, 0.1);
 
         var mSampleValues = float32ArraySupported ? new Float32Array(KSPLINETABLESIZE) : new Array(KSPLINETABLESIZE);
 
