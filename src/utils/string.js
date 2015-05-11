@@ -130,6 +130,10 @@ define(function (require, exports, module) {
      * // => "mozBorderRadius"
      */
     exports.humprize = function (str, upperCaseFirstChar) {
+        if (!str.length) {
+            return str;
+        }
+
         if (upperCaseFirstChar) {
             str = str[0].toUpperCase() + str.substr(1);
         }
@@ -150,6 +154,10 @@ define(function (require, exports, module) {
      * // => "moz-border-radius"
      */
     exports.separatorize = function (str, separator) {
+        if (!str.length) {
+            return str;
+        }
+
         separator = separator || '-';
         str = str[0].toLowerCase() + str.substr(1);
 
