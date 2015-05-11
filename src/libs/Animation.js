@@ -12,6 +12,8 @@ define(function (require, exports, module) {
      * @requires utils/class
      * @requires utils/howdo
      * @requires utils/typeis
+     * @requires utils/dato
+     * @requires utils/number
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/animation
@@ -24,6 +26,7 @@ define(function (require, exports, module) {
     var howdo = require('../utils/howdo.js');
     var typeis = require('../utils/typeis.js');
     var dato = require('../utils/dato.js');
+    var number = require('../utils/number.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
     var animation = require('../core/dom/animation.js');
@@ -86,7 +89,7 @@ define(function (require, exports, module) {
 
             var repeatQueue = [];
 
-            repeatQueue.length = dato.parseInt(repeatTimes, 1);
+            repeatQueue.length = number.parseInt(repeatTimes, 1);
             callback = typeis.function(callback) ? callback : noop;
 
             /**
