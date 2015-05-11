@@ -223,25 +223,25 @@ define(function (require, exports, module) {
 
     /**
      * 左填充
-     * @param str {String} 字符串
+     * @param str {*} 字符串
      * @param [maxLength] {Number} 最大长度，默认为字符串长度
      * @param [padding=" "] {String} 填充字符串
      * @returns {String}
      */
     exports.padLeft = function (str, maxLength, padding) {
-        return pad(true, str, maxLength, padding);
+        return pad(true, String(str), maxLength, padding);
     };
 
 
     /**
      * 右填充
-     * @param str {String} 字符串
+     * @param str {*} 字符串
      * @param [maxLength] {Number} 最大长度，默认为字符串长度
      * @param [padding=" "] {String} 填充字符串
      * @returns {String}
      */
     exports.padRight = function (str, maxLength, padding) {
-        return pad(false, str, maxLength, padding);
+        return pad(false, String(str), maxLength, padding);
     };
 
 

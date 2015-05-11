@@ -636,4 +636,21 @@ define(function (require, exports, module) {
             to: to
         };
     };
+
+
+    /**
+     * 输出 ISO date string
+     * @param [date] {Date} 日期
+     * @returns {string}
+     */
+    exports.iso = function (date) {
+        date = exports.parse(date);
+        return string.padLeft(date.getUTCFullYear(), 4, '0') + '-' +
+            string.padLeft(date.getUTCMonth() + 1, 2, '0') + '-' +
+            string.padLeft(date.getUTCDate(), 2, '0') + 'T' +
+            string.padLeft(date.getUTCHours(), 2, '0') + ':' +
+            string.padLeft(date.getUTCMinutes(), 2, '0') + ':' +
+            string.padLeft(date.getUTCSeconds(), 2, '0') + '.' +
+            string.padLeft(date.getUTCMilliseconds(), 2, '0') + 'Z';
+    };
 });
