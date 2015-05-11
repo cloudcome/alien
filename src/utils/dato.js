@@ -411,7 +411,7 @@ define(function (require, exports, module) {
      * dato.fillString('2', 4);
      * // => "0002"
      */
-    exports.fillString = function (orginalString, length, fixString, isSuffix) {
+    exports.pad = exports.fillString = function (orginalString, length, fixString, isSuffix) {
         var len = length;
         var fixedString = '';
         var args = arguments;
