@@ -21,12 +21,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>keyframes.html</title>
     <style>
+        body{
+            line-height: 1.4;
+            color: #333;
+        }
+
         .ipt {
             display: block;
             border: 2px solid #ddd;
             padding: 4px;
             margin: 10px 0;
             width: 50%;
+            font-size: 16px;
         }
 
         button {
@@ -84,9 +90,9 @@
 
 <h1>帧动画生成器（看右边）</h1>
 
-<ul id="list" class="keyframes">
-
-</ul>
+帧动画名称
+<input type="text" id="name" class="ipt" value="my-keyframes"/>
+<ul id="list" class="keyframes"></ul>
 
 <div id="demo">点我运行帧动画</div>
 
@@ -104,8 +110,10 @@
 
 <script type="text-template" id="template">
     <li>
-        <div class="keyframe-key">帧点（0-1）：<input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
-        <div class="keyframe-val">帧值（css属性名与值，更多看帮助）：<textarea name="val" rows="2" class="ipt"
+        <div class="keyframe-key">帧点（0-1）：<button class="remove">删除</button>
+            <input class="ipt" type="text" name="key" placeholder="如：0.1"/></div>
+        <div class="keyframe-val">帧值（css属性名与值，更多看帮助）：
+            <textarea name="val" rows="2" class="ipt"
                                                placeholder="如：scale: 0.2, width: 200"></textarea></div>
     </li>
 </script>

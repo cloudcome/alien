@@ -5,10 +5,12 @@ define(function (require) {
     var keyframes = require('../../../src/core/dom/keyframes.js');
     var animation = require('../../../src/core/dom/animation.js');
     var modification = require('../../../src/core/dom/modification.js');
+    var event = require('../../../src/core/event/base.js');
     var Template = require('../../../src/libs/Template.js');
     var alert = require('../../../src/widgets/alert.js');
     var template = selector.query('#template')[0].innerHTML;
     var tpl = new Template(template);
+    var $name = selector.query('#name')[0];
     var $list = selector.query('#list')[0];
     var $ret = selector.query('#ret')[0];
     var name = 'my-keyframes';
@@ -24,6 +26,13 @@ define(function (require) {
         }
     };
 
+    // 删除
+    event.on($list, 'click', '.remove', function () {
+        var $li = selector.closest(this, 'li')[0];
+
+        modification.remove($li);
+    });
+
     // 添加帧动画
     selector.query('#add')[0].onclick = function () {
         modification.insert(tpl.render(), $list, 'beforeend');
@@ -33,6 +42,8 @@ define(function (require) {
     selector.query('#gen')[0].onclick = function () {
         var $itemList = selector.query('li');
         var obj = {};
+
+        name = $name.value;
 
         $itemList.forEach(function ($li) {
             var $input = selector.query('input', $li)[0];

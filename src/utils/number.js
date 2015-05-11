@@ -8,10 +8,12 @@
 define(function (require, exports, module) {
     /**
      * @module utils/number
+     * @reuqires utils/typeis
      */
 
     'use strict';
 
+    var typeis = require('./typeis.js');
     var REG_FORMAT = /(\d)(?=(\d{3})+$)/g;
     var abbrSuffix = 'kmbt';
 
@@ -25,7 +27,7 @@ define(function (require, exports, module) {
         dftNum = dftNum || 0;
         num = parseInt(num, 10);
 
-        return Number.isNaN(num) ? dftNum : num;
+        return typeis.nan(num) ? dftNum : num;
     };
 
 
@@ -39,7 +41,7 @@ define(function (require, exports, module) {
         dftNum = dftNum || 0;
         num = parseFloat(num);
 
-        return Number.isNaN(num) ? dftNum : num;
+        return typeis.nan(num) ? dftNum : num;
     };
 
 
