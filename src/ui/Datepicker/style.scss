@@ -85,6 +85,12 @@
     background: #eee;
   }
 
+  td{
+    &:hover{
+      background: #f9f9f9;
+    }
+  }
+
   // 上个月
   &-prev{
     color: #ccc;
@@ -100,7 +106,14 @@
     color: #ccc;
   }
 
-  &-today{
-    background: #DDF1FD;
+  & &-today,
+  & &-today:hover{
+    background: #ddd;
+  }
+
+  & &-active,
+  & &-active:hover{
+    background: #3AA1DF;
+    color: #FFF;
   }
 }

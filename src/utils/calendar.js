@@ -95,9 +95,14 @@ define(function (require, exports, module) {
         }
 
 
-        var activeDateMap = [];
+        var activeDateMap = {};
         options.activeDate.forEach(function (d) {
+            if (!d) {
+                return;
+            }
+
             d = date.parse(d);
+
 
             var id = _buildDateid({
                 year: d.getFullYear(),

@@ -22,15 +22,19 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var Template = require('../../libs/Template.js');
     var ui = require('../');
-    var html = require('html!./template.html');
-    var style = require('css!./style.css');
-    var tpl = new Template(html);
+    var templateWrap = require('./wrap.html', 'html');
+    var templateList = require('./list.html', 'html');
+    var templateToolbar = require('./toolbar.html', 'html');
+    var style = require('./style.css', 'css');
+    var tplWrap = new Template(templateWrap);
+    var tplList = new Template(templateList);
+    var tplToolbar = new Template(templateToolbar);
     var alienClass = 'alien-ui-datepicker';
     var alienIndex = 0;
     var $body = document.body;
     var now = new Date();
     var defaults = {
-        activeDate: now,
+        format: 'YYYY-MM-DD',
         firstDayInWeek: 0,
         addClass: '',
         lang: {
@@ -62,6 +66,8 @@ define(function (require, exports, module) {
             var the = this;
 
             the._id = alienIndex++;
+            the._current = {};
+            the._choose = {};
             the._initNode();
             the._initEvent();
         },
@@ -73,17 +79,51 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            var options = the._options;
-            var $wrap = modification.create('div', {
-                class: alienClass + ' ' + options.addClass,
-                id: alienClass + '-' + the._id
-            });
+
+            modification.insert(tplWrap.render({
+                id: the._id
+            }), $body, 'beforeend');
+
+            var $wrap = selector.query('#' + alienClass + '-' + the._id)[0];
             var nodes = selector.query('.j-flag', $wrap);
+
+            the._$toolbar = nodes[0];
+            the._$list = nodes[1];
+            the._$wrap = $wrap;
+            the._renderToolbar();
+        },
+
+
+        _renderToolbar: function () {
+            var the = this;
+            var options = the._options;
+            var data = {
+                years: [],
+                months: []
+            };
+            var i;
+            var j;
+
+            for (i = options.range[0], j = options.range[1]; i <= j; i++) {
+                data.years.push({
+                    value: i,
+                    text: i + options.lang.year
+                });
+            }
+
+            for (i = 1, j = 13; i < j; i++) {
+                data.months.push({
+                    value: i - 1,
+                    text: i + options.lang.month
+                });
+            }
+
+            the._$toolbar.innerHTML = tplToolbar.render(data);
+
+            var nodes = selector.query('.j-flag', the._$toolbar);
 
             the._$year = nodes[0];
             the._$month = nodes[1];
-            modification.insert($wrap, $body);
-            the._$wrap = $wrap;
         },
 
 
@@ -121,9 +161,30 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            var options = the._options;
 
             event.on(document, 'click', the._onclick.bind(the));
             event.on(the._$input, 'focusin', the.open.bind(the));
+            event.on(the._$year, 'change', the._onchangeyear = function () {
+                the._current.year = this.value;
+                the._renderList();
+            });
+            event.on(the._$month, 'change', the._onchangemonth = function () {
+                the._current.month = this.value;
+                the._renderList();
+            });
+            event.on(the._$list, 'click', 'td', the._onchoose = function () {
+                the._choose.year = attribute.data(this, 'year');
+                the._choose.month = attribute.data(this, 'month');
+                the._choose.date = attribute.data(this, 'date');
+
+                var d = new Date(the._choose.year, the._choose.month, the._choose.date);
+
+                the._$input.value = date.format(options.format, d);
+                attribute.removeClass(selector.query('td', the._$list), alienClass + '-active');
+                attribute.addClass(this, alienClass + '-active');
+                the.close();
+            });
         },
 
 
@@ -156,12 +217,17 @@ define(function (require, exports, module) {
                 left: attribute.left(the._$input)
             };
             var d = date.parse(the._$input.value);
-            var fullyear = d.getFullYear();
+            var year = d.getFullYear();
             var month = d.getMonth();
 
-            the.selectYear(fullyear);
-            the.selectMonth(month + 1);
-            the._render(fullyear, month, options);
+            if (the._current.year !== year || the._current.month !== month) {
+                the._current.year = year;
+                the._current.month = month;
+                the.selectYear(the._current.year);
+                the.selectMonth(the._current.month + 1);
+                the._renderList();
+            }
+
             pos.display = 'block';
             attribute.css(the._$wrap, pos);
             animation.transition(the._$wrap, {
@@ -201,19 +267,17 @@ define(function (require, exports, module) {
 
         /**
          * 渲染日历
-         * @param year
-         * @param month
          * @private
          */
-        _render: function (year, month) {
+        _renderList: function () {
             var the = this;
             var options = the._options;
-            var list = calendar.month(year, month, options);
+            var list = calendar.month(the._current.year, the._current.month, dato.extend({}, options, {
+                activeDate: the._choose.year ? new Date(the._choose.year, the._choose.month, the._choose.date) : null
+            }));
             var data = {
                 thead: [],
-                tbody: list,
-                years: [],
-                months: []
+                tbody: list
             };
             var i = options.firstDayInWeek;
             var j = i + 7;
@@ -224,15 +288,16 @@ define(function (require, exports, module) {
                 data.thead.push(options.lang.weekPrefix + options.lang.weeks[k]);
             }
 
-            for (i = options.range[0], j = options.range[1]; i <= j; i++) {
-                data.years.push(i + options.lang.year);
-            }
+            the._$list.innerHTML = tplList.render(data);
+        },
 
-            for (i = 1, j = 13; i < j; i++) {
-                data.months.push(i + options.lang.month);
-            }
 
-            the._$wrap.innerHTML = tpl.render(data);
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+
+
         }
     });
 

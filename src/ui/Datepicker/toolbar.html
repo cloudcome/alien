@@ -1,0 +1,16 @@
+<div class="alien-ui-datepicker-toolbar">
+    <div class="alien-ui-datepicker-select">
+        <select class="j-flag">
+            {{list years as year}}
+            <option value="{{year.value}}">{{year.text}}</option>
+            {{/list}}
+        </select>
+    </div>
+    <div class="alien-ui-datepicker-select">
+        <select class="j-flag">
+            {{list months as month}}
+            <option value="{{month.value}}">{{month.text}}</option>
+            {{/list}}
+        </select>
+    </div>
+</div>

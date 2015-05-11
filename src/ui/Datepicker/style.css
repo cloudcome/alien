@@ -62,11 +62,18 @@
     text-align: center; }
   .alien-ui-datepicker th {
     background: #eee; }
+  .alien-ui-datepicker td:hover {
+    background: #f9f9f9; }
   .alien-ui-datepicker-prev {
     color: #ccc; }
   .alien-ui-datepicker-this {
     color: #333; }
   .alien-ui-datepicker-next {
     color: #ccc; }
-  .alien-ui-datepicker-today {
-    background: #DDF1FD; }
+  .alien-ui-datepicker .alien-ui-datepicker-today,
+  .alien-ui-datepicker .alien-ui-datepicker-today:hover {
+    background: #ddd; }
+  .alien-ui-datepicker .alien-ui-datepicker-active,
+  .alien-ui-datepicker .alien-ui-datepicker-active:hover {
+    background: #3AA1DF;
+    color: #FFF; }

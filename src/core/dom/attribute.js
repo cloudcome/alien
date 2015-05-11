@@ -438,7 +438,7 @@ define(function (require, exports, module) {
 
     /**
      * 添加元素的className
-     * @param {HTMLElement|Node|Array} ele 元素
+     * @param {Object} ele 元素
      * @param {String} className 多个className使用空格分开
      * @returns {undefined}
      *
@@ -457,7 +457,7 @@ define(function (require, exports, module) {
 
     /**
      * 移除元素的className
-     * @param {HTMLElement|Node|Array} ele 元素
+     * @param {Object|Array} ele 元素
      * @param {String} [className] 多个className使用空格分开，留空表示移除所有className
      * @returns {undefined}
      *
