@@ -701,15 +701,7 @@ define(function (require, exports, module) {
             case 'number':
                 ret.number = data;
                 break;
-            //
-            //case 'array':
-            //    ret.arrayLength = dato.length;
-            //    break;
-            //
-            //case 'object':
-            //    ret.objectLength = Object.keys(data).length;
-            //    break;
-            //
+
             case 'boolean':
                 ret.booleanLength = 1;
                 break;
