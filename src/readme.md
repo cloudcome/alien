@@ -142,6 +142,7 @@
 - https://github.com/visionmedia/page.js
 - https://github.com/jashkenas/underscore/blob/master/underscore.js
 - https://github.com/gre/bezier-easing/blob/master/index.js
+- https://github.com/andrewplummer/Sugar
 
 
 # 文档注释变量
