@@ -24,7 +24,7 @@ define(function (require, exports, module) {
         '&apos;': /'/g,
         '&#x2f;': /\//g
     };
-    var HTML_CODE_MATCH = /&#(x)?([\w\d]{0,5});/i;
+    var REG_HTML_CODE = /&#(x)?([\w\d]{0,5});/i;
     var unescapeHTMLMap = {
         '&': /&amp;/g,
         '<': /&lt;/g,
@@ -33,7 +33,8 @@ define(function (require, exports, module) {
         '\'': /&apos;/g,
         '/': /&#x2f;/g
     };
-    var assignVarible = /\$\{([^{}]*?)}/g;
+    var REG_ASSIGN_VARIBLE = /\$\{([^{}]*?)}/g;
+    var REG_SEPARATOR = /[-_ ]([a-z])/g;
 
 
     /**
@@ -57,7 +58,7 @@ define(function (require, exports, module) {
      */
     exports.unescapeHTML = function (str) {
         // 转换实体数字为实体字母
-        str.replace(HTML_CODE_MATCH, function (full, hex, code) {
+        str.replace(REG_HTML_CODE, function (full, hex, code) {
             return String.fromCharCode(dato.parseInt(code, hex ? 16 : 10));
         });
 
@@ -71,7 +72,8 @@ define(function (require, exports, module) {
 
     /**
      * 分配字符串，参考 es6
-     * @param str
+     * @param str {String} 字符串模板
+     * @returns {String}
      * @example
      * string.assign('Hello ${name}, how are you ${time}?', {
      *     name: 'Bob',
@@ -97,14 +99,35 @@ define(function (require, exports, module) {
             });
         }
 
-        return str.replace(assignVarible, function ($0, $1) {
+        return str.replace(REG_ASSIGN_VARIBLE, function ($0, $1) {
             return String(data[$1]);
         });
     };
 
 
+    /**
+     * 转换分隔符字符串为驼峰形式
+     * @param str {String} 分隔符字符串
+     * @param [upperCaseFirstChar=false] {Boolean} 是否大写第一个字母
+     * @returns {String}
+     *
+     * @example
+     * string.hump('moz-border-radius');
+     * // => mozBorderRadius
+     */
+    exports.humprize = function (str, upperCaseFirstChar) {
+        if (upperCaseFirstChar) {
+            str = str[0].toUpperCase() + str.substr(1);
+        }
 
-    //exports
+        return str.replace(REG_SEPARATOR, function ($0, $1) {
+            return $1.toUpperCase();
+        });
+    };
+
+
+
+    //exports.separatorize
 });
 
 
