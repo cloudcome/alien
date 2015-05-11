@@ -159,6 +159,20 @@ define(function (require, exports, module) {
             return new win.Buffer(str, 'utf8').toString('base64');
         }
     };
+
+
+    /**
+     * base64 解码
+     * @param str {String} 字符串
+     * @returns {string}
+     */
+    exports.debase64 = function (str) {
+        if (typeis.undefined(win.Buffer)) {
+            return decodeURIComponent(atob(str));
+        } else {
+            return new win.Buffer(str, 'base64').toString('utf8');
+        }
+    };
 });
 
 
