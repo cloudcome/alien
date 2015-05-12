@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     /**
      * 在上下文中查找DOM元素，永远返回一个数组
      * @param {String|HTMLElement|NodeList}  selector  选择器
-     * @param {HTMLElement|Node} [context] 上下文
+     * @param {Object} [context] 上下文
      * @return {Array}
      *
      * @example
@@ -74,8 +74,8 @@ define(function (require, exports, module) {
 
     /**
      * 判断元素是否包含关系
-     * @param $child {HTMLElement|Node} 子元素
-     * @param $parent {HTMLElement|Node} 父元素
+     * @param $child {Object} 子元素
+     * @param $parent {Object} 父元素
      * @returns {Boolean}
      */
     exports.contains = function ($child, $parent) {
@@ -89,7 +89,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取当前元素的其他兄弟元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取当前元素的索引值
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {number} 未匹配到位-1，匹配到为[0,+∞)
      *
      * @example
@@ -147,7 +147,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取元素的上一个兄弟元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -165,7 +165,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取元素的下一个兄弟元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
 
     /**
      * 从元素本身开始获得最近匹配的祖先元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @param {String} selector 选择器
      * @returns {Array}
      *
@@ -218,7 +218,7 @@ define(function (require, exports, module) {
 
     /**
      * 获得父级元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -236,7 +236,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取子元素
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取子节点
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @returns {Array}
      *
      * @example
@@ -272,7 +272,7 @@ define(function (require, exports, module) {
 
     /**
      * 元素与选择器是否匹配
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @param {String} selector 选择器
      * @returns {Boolean}
      *
