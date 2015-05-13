@@ -157,7 +157,7 @@ define(function (require, exports, module) {
                 eve.alienDetail.percent = percent + '%';
             }
 
-            the.emit(xhr, 'progress', eve);
+            the.emit('progress', eve);
         };
 
         xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);

@@ -131,9 +131,11 @@ define(function (require, exports, module) {
             }
 
             _middleware(eventType, function (et) {
+                the._pipe(context, emitArgs);
+
                 if (the._emitterListener[et]) {
                     var time = Date.now();
-
+                    
                     dato.each(the._emitterListener[et], function (index, listener) {
                         context.alienEmitter = {
                             type: et,
