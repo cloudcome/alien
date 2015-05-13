@@ -45,9 +45,9 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
+    var template = require('./template.html', 'html');
     var tpl = new Template(template);
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var alert = require('../../widgets/alert.js');
     var alienClass = 'alien-ui-editor';
     var alienIndex = 0;

@@ -19,8 +19,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../');
-    var style = require('css!./style.css');
-    var template = require('html!./template.html');
+    var style = require('./style.css', 'css');
+    var template = require('./template.html', 'html');
     var dato = require('../../utils/dato.js');
     var Template = require('../../libs/Template.js');
     var tpl = new Template(template);

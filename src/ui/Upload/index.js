@@ -22,8 +22,8 @@ define(function (require, exports, module) {
     var Dialog = require('../../ui/Dialog/');
     var Imgclip = require('../../ui/Imgclip/');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
-    var style = require('css!./style.css');
+    var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
     var tpl = new Template(template);
     var URL = window[compatible.html5('URL', window)];
     var alienKey = 'alien-ui-upload';

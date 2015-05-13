@@ -27,8 +27,8 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
-    var style = require('css!./style.css');
+    var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
     var tpl = new Template(template);
     var defaults = {
         addClass: '',

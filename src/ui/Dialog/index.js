@@ -36,8 +36,8 @@ define(function (require, exports, module) {
     var event = require('../../core/event/drag.js');
     require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
-    var template = require('html!./template.html');
-    var style = require('css!./style.css');
+    var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
     var tpl = new Template(template);
     var ui = require('../');
     var $body = document.body;

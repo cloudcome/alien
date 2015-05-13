@@ -25,8 +25,8 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/drag.js');
     require('../../core/event/touch.js');
-    var template = require('html!./template.html');
-    var style = require('css!./style.css');
+    var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
     var tpl = new Template(template);
     var alienIndex = 0;
     var alienClass = 'alien-ui-msg';
