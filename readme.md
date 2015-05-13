@@ -1,4 +1,6 @@
-# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.2.1
+# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.4.0
+[![Build Status][travis-img]][travis-url] 
+
 一个为现代浏览器而生的前端解决方案。
 
 
@@ -118,3 +120,7 @@
 |-- package.json
 `-- readme.md
 ```
+
+
+[travis-img]: https://travis-ci.org/cloudcome/alien.svg?branch=master
+[travis-url]: https://travis-ci.org/cloudcome/alien
