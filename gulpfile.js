@@ -4,8 +4,11 @@ var gulp = require('gulp');
 var karma = require('karma').server;
 
 var taskList = [
+    'utils/allocation.js',
     'utils/dato.js',
+    'utils/number.js',
     'utils/random.js',
+    'utils/string.js',
     'utils/typeis.js'
 ];
 

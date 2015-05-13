@@ -11,25 +11,6 @@ describe('utils/dato', function () {
         base: '../src/'
     }).use('./utils/dato.js');
 
-    it('.parseInt', function (done) {
-        coolie.callback(function (dato) {
-            expect(dato.parseInt('1')).toBe(1);
-            expect(dato.parseInt(1)).toBe(1);
-            expect(dato.parseInt(null)).toBeUndefined();
-            expect(dato.parseInt(null, 1)).toBe(1);
-            done();
-        });
-    });
-
-    it('.parseFloat', function (done) {
-        coolie.callback(function (dato) {
-            expect(dato.parseFloat('1.1')).toBe(1.1);
-            expect(dato.parseFloat(1)).toBe(1);
-            expect(dato.parseFloat(null)).toBeUndefined();
-            expect(dato.parseFloat(null, 1)).toBe(1);
-            done();
-        });
-    });
 
     it('each', function (done) {
         coolie.callback(function (dato) {
@@ -90,12 +71,12 @@ describe('utils/dato', function () {
         });
     });
 
-    it('pick', function (done) {
+    it('select', function (done) {
         coolie.callback(function (dato) {
             var o1 = {a: 1, b: 2, c: 3, d: 4, e: 5};
             var keys = ['a', 'c', 'f'];
 
-            var o2 = dato.pick(o1, keys);
+            var o2 = dato.select(o1, keys);
 
             expect(o2.a).toBe(1);
             expect(o2.c).toBe(3);
@@ -116,33 +97,13 @@ describe('utils/dato', function () {
         });
     });
 
-    it('bytes', function (done) {
-        coolie.callback(function (dato) {
-            var l = dato.bytes('我123');
 
-            expect(l).toEqual(5);
-
-            done();
-        });
-    });
-
-    it('length', function (done) {
-        coolie.callback(function (dato) {
-            var s = "𠮷";
-
-            var l = dato.length(s);
-
-            expect(l).toBe(1);
-
-            done();
-        });
-    });
 
     it('compare', function (done) {
-        coolie.callback(function (dato) {
+        coolie.callback(function (number) {
             var o1 = {a: 1, b: 2, c: 3};
             var o2 = {a: 1, b: 3, d: 4};
-            var o3 = dato.compare(o1, o2);
+            var o3 = number.compare(o1, o2);
             var same = o3.same;
             var only0 = o3.only[0];
             var only1 = o3.only[1];
@@ -158,8 +119,8 @@ describe('utils/dato', function () {
 
             var a1 = [1, 2, 3];
             var a2 = [1, 3, 4];
-            var o1a1 = dato.compare(o1, a1);
-            var a3 = dato.compare(a1, a2);
+            var o1a1 = number.compare(o1, a1);
+            var a3 = number.compare(a1, a2);
 
             same = a3.same;
             only0 = a3.only[0];
@@ -175,80 +136,9 @@ describe('utils/dato', function () {
 
             var o4 = '1';
             var o5 = '2';
-            var o6 = dato.compare(o4, o5);
+            var o6 = number.compare(o4, o5);
 
             expect(o6).toEqual(null);
-
-            done();
-        });
-    });
-
-    it('humanize', function (done) {
-        coolie.callback(function (dato) {
-            var n1 = dato.humanize(10000);
-            var n2 = dato.humanize(10000.000001);
-
-            expect(n1).toEqual('10,000');
-            expect(n2).toEqual('10,000.000001');
-
-            done();
-        });
-    });
-
-    it('than', function (done) {
-        coolie.callback(function (dato) {
-            var b1 = dato.than(2, 1);
-            var b2 = dato.than('12345678901234567890123456789012345678901234567890123456', '12345678901234567890123456789012345678901234567890');
-            var b3 = dato.than('12345678901234567890123456789012345678901234567890', '12345678901234567890123456789012345678901234567890123456', '<');
-            var b4 = dato.than('12345678901234567890123456789012345678901234567892', '12345678901234567890123456789012345678901234567891');
-            var b5 = dato.than('12345678901234567890123456789012345678901234567892', '12345678901234567890123456789012345678901234567893', '<');
-
-            expect(b1).toEqual(true);
-            expect(b2).toEqual(true);
-            expect(b3).toEqual(true);
-            expect(b4).toEqual(true);
-            expect(b5).toEqual(true);
-
-            done();
-        });
-    });
-
-
-    it('fillString', function (done) {
-        coolie.callback(function (dato) {
-            var s1 = 'aa';
-            var s2 = dato.fillString(s1, 4, '-');
-            var s3 = dato.fillString(s1, 4, '-', true);
-            var s4 = dato.fillString(s1, 4);
-            var s5 = dato.fillString(s1, 4, true);
-
-            expect(s2).toEqual('--aa');
-            expect(s3).toEqual('aa--');
-            expect(s4).toEqual('00aa');
-            expect(s5).toEqual('aa00');
-
-            done();
-        });
-    });
-
-    it('fixRegExp', function (done) {
-        coolie.callback(function (dato) {
-            var r1 = '*';
-
-            expect(dato.fixRegExp(r1)).toEqual('\\*');
-
-            done();
-        });
-    });
-
-    it('btoa, atob', function (done) {
-        coolie.callback(function (dato) {
-            var s1 = '#云淡然 cloudcome';
-            var s2 = 'JTIzJUU0JUJBJTkxJUU2JUI3JUExJUU3JTg0JUI2JTIwY2xvdWRjb21l';
-
-            expect(dato.btoa(s1)).toEqual(s2);
-            expect(dato.atob(s2)).toEqual(s1);
-            expect(dato.atob('s')).toEqual('');
 
             done();
         });

@@ -16,7 +16,6 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap'.split(' ');
-    var REG_BEGIN_0 = /^0+/;
 
 
     /**
@@ -245,93 +244,6 @@ define(function (require, exports, module) {
             };
         } else {
             return null;
-        }
-    };
-
-
-    /**
-     * 比较两个长整型数值
-     * @param long1 {String|Number} 长整型数值字符串1
-     * @param long2 {String|Number} 长整型数值字符串2
-     * @param [operator=">"] {String} 比较操作符，默认比较 long1 > long2
-     * @returns {*}
-     */
-    exports.than = function (long1, long2, operator) {
-        operator = operator || '>';
-        long1 = String(long1).replace(REG_BEGIN_0, '');
-        long2 = String(long2).replace(REG_BEGIN_0, '');
-
-        // 1. 比较长度
-        if (long1.length > long2.length) {
-            return operator === '>';
-        } else if (long1.length < long2.length) {
-            return operator === '<';
-        }
-
-        var long1List = exports.humanize(long1, ',', 15).split(',');
-        var long2List = exports.humanize(long2, ',', 15).split(',');
-
-        //[
-        // '123456',
-        // '789012345678901',
-        // '234567890123456',
-        // '789012345678901',
-        // '234567890123457'
-        // ]
-
-        //// 2. 比较数组长度
-        //if (long1List.length > long2List.length) {
-        //    return operator === '>';
-        //} else if (long1List.length < long2List.length) {
-        //    return operator === '<';
-        //}
-
-        // 2. 遍历比较
-        var ret = false;
-
-        exports.each(long1List, function (index, number1) {
-            var number2 = long2List[index];
-
-            if (number1 > number2) {
-                ret = operator === '>';
-                return false;
-            } else if (number1 < number2) {
-                ret = operator === '<';
-                return false;
-            }
-        });
-
-        return ret;
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////[ ONLY BROWSER ]///////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-
-
-    /**
-     * base64 编码
-     * @param ascii {String} ascii 字符串
-     * @returns {String} base64 字符串
-     */
-    exports.base64 = function (ascii) {
-        return window.btoa(encodeURIComponent(String(ascii)));
-    };
-
-
-    /**
-     * base64 解码
-     * @param base64 {String} base64 字符串
-     * @returns {String} ascii 字符串
-     */
-    exports.debase64 = function (base64) {
-        try {
-            return decodeURIComponent(window.atob(String(base64)));
-        } catch (err) {
-            return '';
         }
     };
 });

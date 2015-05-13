@@ -16,6 +16,8 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var REG_FORMAT = /(\d)(?=(\d{3})+$)/g;
     var abbrSuffix = 'kmbt';
+    var REG_BEGIN_0 = /^0+/;
+
 
     /**
      * 整数化
@@ -102,6 +104,62 @@ define(function (require, exports, module) {
         }
 
         return exports.format(num.toFixed(fixedLength)) + abbrSuffix[i];
+    };
+
+
+    /**
+     * 比较两个长整型数值
+     * @param long1 {String|Number} 长整型数值字符串1
+     * @param long2 {String|Number} 长整型数值字符串2
+     * @param [operator=">"] {String} 比较操作符，默认比较 long1 > long2
+     * @returns {*}
+     */
+    exports.than = function (long1, long2, operator) {
+        operator = operator || '>';
+        long1 = String(long1).replace(REG_BEGIN_0, '');
+        long2 = String(long2).replace(REG_BEGIN_0, '');
+
+        // 1. 比较长度
+        if (long1.length > long2.length) {
+            return operator === '>';
+        } else if (long1.length < long2.length) {
+            return operator === '<';
+        }
+
+        var long1List = exports.format(long1, ',', 15).split(',');
+        var long2List = exports.format(long2, ',', 15).split(',');
+
+        //[
+        // '123456',
+        // '789012345678901',
+        // '234567890123456',
+        // '789012345678901',
+        // '234567890123457'
+        // ]
+
+        //// 2. 比较数组长度
+        //if (long1List.length > long2List.length) {
+        //    return operator === '>';
+        //} else if (long1List.length < long2List.length) {
+        //    return operator === '<';
+        //}
+
+        // 2. 遍历比较
+        var ret = false;
+
+        long1List.forEach(function (number1, index) {
+            var number2 = long2List[index];
+
+            if (number1 > number2) {
+                ret = operator === '>';
+                return false;
+            } else if (number1 < number2) {
+                ret = operator === '<';
+                return false;
+            }
+        });
+
+        return ret;
     };
 });
 
