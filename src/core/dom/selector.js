@@ -293,8 +293,8 @@ define(function (require, exports, module) {
      *
      * @example
      * selector.filter(ele, function(){
-         *     return this.nodeName === 'DIV';
-         * });
+     *     return this.nodeName === 'DIV';
+     * });
      * // => [div, div, ...]
      */
     exports.filter = function (nodeList, filter) {

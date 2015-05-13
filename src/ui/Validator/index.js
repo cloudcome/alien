@@ -196,19 +196,19 @@ define(function (require, exports, module) {
                     attribute.addClass($item, 'has-warning');
                 }
 
-                the.emit(this.alienEvent.type, the._nameInputMap[name]);
+                the.emit(this.alienEmitter.type, the._nameInputMap[name]);
             });
 
             the._validator.on('validateend', function (name, data) {
-                the.emit(this.alienEvent.type, the._nameInputMap[name], data);
+                the.emit(this.alienEmitter.type, the._nameInputMap[name], data);
             });
 
             the._validator.on('validateonestart', function (name) {
-                the.emit(this.alienEvent.type, the._nameItemMap[name]);
+                the.emit(this.alienEmitter.type, the._nameItemMap[name]);
             });
 
             the._validator.on('validateoneend', function (name, err) {
-                the.emit(this.alienEvent.type, the._nameItemMap[name], err);
+                the.emit(this.alienEmitter.type, the._nameItemMap[name], err);
             });
 
             the._validator.on('validateallstart', function () {
@@ -216,11 +216,11 @@ define(function (require, exports, module) {
                     attribute.removeClass($item, formItemStatusClass);
                 });
 
-                the.emit(this.alienEvent.type, the._$form);
+                the.emit(this.alienEmitter.type, the._$form);
             });
 
             the._validator.on('validateallend', function (errs) {
-                the.emit(this.alienEvent.type, the._$form, errs);
+                the.emit(this.alienEmitter.type, the._$form, errs);
             });
         },
 

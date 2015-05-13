@@ -22,8 +22,14 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var alienId = 0;
     var Emitter = klass.create(function () {
-        this._eventsPool = {};
-        this._eventsLimit = 999;
+        var the = this;
+
+        // 监听的事件 map
+        the._emitterListener = {};
+        // 监听的事件长度
+        the._emitterLimit = 999;
+        // 事件传输目标
+        the._emitterTargetList = [];
     });
 
 
@@ -42,16 +48,16 @@ define(function (require, exports, module) {
             var the = this;
 
             _middleware(eventType, function (et) {
-                if (!the._eventsPool[et]) {
-                    the._eventsPool[et] = [];
+                if (!the._emitterListener[et]) {
+                    the._emitterListener[et] = [];
                 }
 
-                if (the._eventsPool[et].length === the._eventsLimit) {
-                    throw new Error('instance event `' + et + '` pool is full as ' + this._eventsLimit);
+                if (the._emitterListener[et].length === the._emitterLimit) {
+                    throw new Error('instance event `' + et + '` pool is full as ' + this._emitterLimit);
                 }
 
                 if (typeis.function(listener)) {
-                    the._eventsPool[et].push(listener);
+                    the._emitterListener[et].push(listener);
                 }
             });
 
@@ -74,15 +80,15 @@ define(function (require, exports, module) {
             var the = this;
 
             _middleware(eventType, function (et) {
-                if (the._eventsPool[et] && listener) {
-                    dato.each(this._eventsPool, function (index, _listener) {
+                if (the._emitterListener[et] && listener) {
+                    dato.each(the._emitterListener, function (index, _listener) {
                         if (listener === _listener) {
-                            the._eventsPool.splice(index, 1);
+                            the._emitterListener.splice(index, 1);
                             return false;
                         }
                     });
                 } else {
-                    the._eventsPool = [];
+                    the._emitterListener = [];
                 }
             });
 
@@ -95,7 +101,6 @@ define(function (require, exports, module) {
          * @method emit
          * @param {Object} context 指定上下文，默认为 Emitter 实例对象
          * @param {String|Object} [eventType] 事件类型，多个事件类型使用空格分开
-         * @param {...*} arg 事件传参，多个参数依次即可
          * @returns {*} 函数执行结果
          *
          * @example
@@ -115,21 +120,22 @@ define(function (require, exports, module) {
             var arg0 = args[0];
             var arg0IsObject = typeis(arg0) !== 'string';
             var arg1 = args[1];
-            var emitArgs = Array.prototype.slice.call(arguments, arg0IsObject ? 2 : 1);
+            var emitArgs = [].slice.call(arguments, arg0IsObject ? 2 : 1);
             var ret = true;
 
             context = arg0IsObject ? arg0 : the;
             eventType = arg0IsObject ? arg1 : arg0;
 
-            if (!the._eventsPool) {
-                throw new Error('can not found emitter eventsPool');
+            if (!the._emitterListener) {
+                throw new Error('can not found emitterListener varible');
             }
 
             _middleware(eventType, function (et) {
-                if (the._eventsPool[et]) {
+                if (the._emitterListener[et]) {
                     var time = Date.now();
-                    dato.each(the._eventsPool[et], function (index, listener) {
-                        context.alienEvent = {
+
+                    dato.each(the._emitterListener[et], function (index, listener) {
+                        context.alienEmitter = {
                             type: et,
                             timestamp: time,
                             id: alienId++
@@ -143,6 +149,39 @@ define(function (require, exports, module) {
             });
 
             return ret;
+        },
+
+
+        /**
+         * 将所有的事件派发到目标
+         * @param target {Object}
+         */
+        pipe: function (target) {
+            var the = this;
+
+            the._emitterTargetList.push(target);
+
+            return the;
+        },
+
+
+        /**
+         * 派发事件
+         * @param context
+         * @param args
+         * @private
+         */
+        _pipe: function (context, args) {
+            var the = this;
+
+            dato.each(the._emitterTargetList, function (index, target) {
+                context.alienEmitter = {
+                    type: args[0],
+                    timestamp: Date.now(),
+                    id: alienId++
+                };
+                target.emit.apply(context, args);
+            });
         }
     });
 

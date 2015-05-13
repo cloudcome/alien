@@ -16,19 +16,33 @@ define(function (require, exports, module) {
 
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
+    var klass = require('../../utils/class.js');
+    var Emitter = require('../../libs/Emitter.js');
     var xhr = require('./xhr.js');
     var defaults = {
+        method: 'post',
         url: location.href,
         body: null,
         // 如：'file'
         blobName: null,
 //        如：'example.png'
 //        fileName: null,
-        file: null
+        file: null,
+        /**
+         * input files 过滤器
+         * @param index
+         * @param file
+         * @returns {boolean}
+         */
+        filter: function (index, file) {
+            return true;
+        }
     };
 
-    exports.defaults = defaults;
-    module.exports = function (options) {
+
+    var Upload = klass.create(function (options) {
+        var the = this;
+
         options = dato.extend(true, {}, defaults, options);
 
         if (!options.file) {
@@ -39,6 +53,7 @@ define(function (require, exports, module) {
         var files;
         var fd = new FormData();
         var name = options.blobName;
+        var hasFile = false;
 
         switch (fileType) {
             case 'element':
@@ -50,11 +65,21 @@ define(function (require, exports, module) {
                 files = options.file.files || [];
 
                 if (files.length === 1) {
-                    fd.append(name, files[0]);
+                    if(options.filter(files[0])){
+                        fd.append(name, files[0]);
+                        hasFile = true;
+                    }
                 } else {
                     dato.each(options.file.files, function (index, file) {
-                        fd.append(name + '[]', file);
+                        if(options.filter(files[0])){
+                            fd.append(name + '[]', file);
+                            hasFile = true;
+                        }
                     });
+                }
+
+                if(!hasFile){
+                    return the.emit('error', new Error('no files can be upload'));
                 }
 
                 break;
@@ -72,9 +97,13 @@ define(function (require, exports, module) {
             fd.append(key, val);
         });
 
-        options.method = 'POST';
         options.body = fd;
 
-        return xhr.ajax(options);
+        xhr.ajax(options).pipe(the);
+    }, Emitter);
+
+    module.exports = function(options){
+        return new Upload(options);
     };
+    module.exports.defaults = defaults;
 });
