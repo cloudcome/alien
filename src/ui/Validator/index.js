@@ -24,7 +24,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var event = require('../../core/event/touch.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');

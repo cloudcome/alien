@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/base.js');
     var animation = require('../../core/dom/animation.js');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var ui = require('../');
     var REG_AUTO_OR_100_PERCENT = /auto|100%/i;
     var alienIndex = 0;

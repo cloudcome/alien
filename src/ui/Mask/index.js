@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var animation = require('../../core/dom/animation.js');
     var ui = require('../');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var alienIndex = 0;
     var alienClass = 'alien-ui-mask';
     var maskWindowLength = 0;

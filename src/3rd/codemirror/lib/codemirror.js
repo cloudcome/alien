@@ -10,7 +10,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var style = require('css!./style.css');
+  var style = require('./style.css', 'css');
   var modification = require('../../../core/dom/modification.js');
 
   modification.importStyle(style);

@@ -13,7 +13,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var ui = require('../');
     var prettify = require('../../3rd/prettify.js');
 

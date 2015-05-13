@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');

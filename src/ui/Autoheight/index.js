@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var selection = require('../../utils/selection.js');
     var controller = require('../../utils/controller.js');
-    var style = require('css!./style.css');
+    var style = require('./style.css', 'css');
     var alienClass = 'alien-ui-autoheight';
     var defaults = {
         offsetTop: 0
