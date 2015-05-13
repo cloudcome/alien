@@ -99,7 +99,7 @@ define(function (require, exports, module) {
 
         options.body = fd;
 
-        xhr.ajax(options).pipe(the);
+        xhr(options).pipe(the);
     }, Emitter);
 
     module.exports = function(options){
