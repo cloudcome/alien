@@ -117,6 +117,6 @@ define(function (require, exports, module) {
             argL -= 1;
         }
 
-        return dato.toArray(args).splice(0, argL)
+        return dato.toArray(args).splice(0, argL);
     };
 });

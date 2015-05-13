@@ -42,7 +42,7 @@ describe('utils/allocation', function () {
         });
     });
 
-    it('getset', function (done) {
+    it('args', function (done) {
         coolie.callback(function (allocation) {
             var fn = function () {
                 var args = allocation.args(arguments);
