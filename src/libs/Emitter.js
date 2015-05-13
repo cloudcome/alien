@@ -131,11 +131,11 @@ define(function (require, exports, module) {
             }
 
             _middleware(eventType, function (et) {
-                the._pipe(context, emitArgs);
+                the._pipe(et, emitArgs);
 
                 if (the._emitterListener[et]) {
                     var time = Date.now();
-                    
+
                     dato.each(the._emitterListener[et], function (index, listener) {
                         context.alienEmitter = {
                             type: et,
@@ -169,20 +169,19 @@ define(function (require, exports, module) {
 
         /**
          * 派发事件
-         * @param context
+         * @param eventType
          * @param args
          * @private
          */
-        _pipe: function (context, args) {
-            var the = this;
-
-            dato.each(the._emitterTargetList, function (index, target) {
-                context.alienEmitter = {
-                    type: args[0],
+        _pipe: function (eventType, args) {
+            dato.each(this._emitterTargetList, function (index, target) {
+                target.alienEmitter = {
+                    type: eventType,
                     timestamp: Date.now(),
                     id: alienId++
                 };
-                target.emit.apply(context, args);
+                args.unshift(eventType);
+                target.emit.apply(target, args);
             });
         }
     });

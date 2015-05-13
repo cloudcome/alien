@@ -84,6 +84,12 @@ define(function (require, exports, module) {
             }
 
             setTimeout(function () {
+                if (lastProgressEvent) {
+                    lastProgressEvent.alienDetail.complete = 1;
+                    lastProgressEvent.alienDetail.percent = '100%';
+                    the.emit('progress', lastProgressEvent);
+                }
+
                 the.emit('complete', err, ret);
 
                 if (err) {
@@ -142,22 +148,32 @@ define(function (require, exports, module) {
 
         xhr.onerror = oncallback;
 
+        var lastProgressEvent;
+
         xhr.upload.onprogress = function (eve) {
             eve.alienDetail = eve.alienDetail || {};
             eve.alienDetail.complete = 0;
             eve.alienDetail.percent = '0%';
 
             if (eve.lengthComputable) {
+                eve.alienDetail.loaded = eve.loaded;
+                eve.alienDetail.total = eve.total;
                 eve.alienDetail.complete = eve.loaded / eve.total;
 
                 var percent = eve.alienDetail.complete * 100;
 
+                if (percent >= 100) {
+                    eve.alienDetail.complete = 0.99;
+                    percent = 99;
+                }
+
                 // 最多小数点2位
-                percent = number.parseFloat((percent >= 100 ? 99 : percent).toFixed(2));
+                percent = number.parseFloat(percent).toFixed(2);
                 eve.alienDetail.percent = percent + '%';
             }
 
             the.emit('progress', eve);
+            lastProgressEvent = eve;
         };
 
         xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
