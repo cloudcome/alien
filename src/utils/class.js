@@ -130,4 +130,8 @@ define(function (require, exports, module) {
 
         return c;
     };
+
+    //exports.new = function () {
+    //
+    //};
 });

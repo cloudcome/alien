@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     /**
      * 在上下文中查找DOM元素，永远返回一个数组
      * @param {String|HTMLElement|NodeList}  selector  选择器
-     * @param {Object} [context] 上下文
+     * @param {Object} [context=document] 上下文
      * @return {Array}
      *
      * @example
