@@ -26,19 +26,19 @@ define(function (require, exports, module) {
         stop: 4
     };
     var index = 0;
-    var Queue = klass.create(function () {
-        var the = this;
+    var Queue = klass.extends(Emitter).create({
+        constructor: function () {
+            var the = this;
 
-        the.id = index++;
-        the._queueList = [];
-        the.state = STATES.ready;
-        the._initEvent();
-    }, Emitter);
-
-    Queue.STATES = STATES;
-
-
-    Queue.implement({
+            the.id = index++;
+            the._queueList = [];
+            the.state = STATES.ready;
+            the._initEvent();
+        },
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
 
@@ -268,5 +268,6 @@ define(function (require, exports, module) {
     });
 
 
+    Queue.STATES = STATES;
     module.exports = Queue;
 });
