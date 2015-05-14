@@ -55,16 +55,15 @@ define(function (require, exports, module) {
         minOffset: 20,
         zIndex: null
     };
-    var Window = ui.create(function ($content, options) {
-        var the = this;
+    var Window = ui.create({
+        constructor: function ($content, options) {
+            var the = this;
 
-        the._$content = selector.query($content)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the.visible = false;
-        the._init();
-    });
-
-    Window.implement({
+            the._$content = selector.query($content)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the.visible = false;
+            the._init();
+        },
         _init: function () {
             var the = this;
             var options = the._options;
@@ -355,6 +354,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Window.defaults = defaults;
 
     /**
      * 创建一个窗口实例

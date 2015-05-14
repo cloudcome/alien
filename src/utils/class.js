@@ -102,10 +102,7 @@ define(function (require, exports, module) {
      * @returns {Function}
      */
     var create = function (prototypes, superConstructor, isInheritStatic) {
-        var isOld = false;
-
         if (typeis.function(prototypes)) {
-            isOld = true;
             prototypes = {
                 constructor: prototypes
             };
@@ -150,16 +147,6 @@ define(function (require, exports, module) {
          * @type {Function}
          */
         c.prototype.constructor = c;
-
-        if(isOld){
-            c.fn = c.prototype;
-            c.implement = c.fn.extend = function (properties) {
-                dato.extend(true, c.fn, properties);
-            };
-            c.extend = function (properties) {
-                dato.extend(true, c, properties);
-            };
-        }
 
         return c;
     };
