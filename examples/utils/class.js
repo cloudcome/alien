@@ -1,40 +1,28 @@
 define(function (require) {
     'use strict';
 
-    var klass = require('/src/utils/class.js');
+    var klass = require('../../src/utils/class.js');
 
-    var Father = klass.create(function (name) {
-        this.name = name;
+    // ============= Father =============
+    var Father = klass.create(function () {
+        this.name = 'Father';
     });
+    Father.type1 = 'Father';
+    Father.prototype.hehe = 'hehe';
 
-    var pro = Father.prototype;
 
-    pro.sayName = function () {
-        console.log(this.name);
-    };
-
-    var Child = klass.create(function(name, age){
-        this.age = age;
-    }, Father);
-
-    Child.prototype.speak = function () {
-        console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
-    };
-
-    var f1 = new Father('Fimme');
-    var c1 = new Child('Cmoo', 20);
-
-    Father.extend({
-        sayName2: function () {
-            console.log(this);
-        }
+    // ============= Child =============
+    var Child = klass.extends(Father, true).create({
+        constructor: function () {
+            this.name = 'Child';
+        },
+        heihei: 'heihei'
     });
+    Child.type2 = 'Child';
 
-    f1.extend({
-        sayName3: function () {
-            console.log(this.name);
-        }
-    });
-
+    window.Father = Father;
+    window.father = new Father();
+    window.Child = Child;
+    window.child = new Child();
     window.klass = klass;
 });

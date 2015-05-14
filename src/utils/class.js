@@ -1,8 +1,35 @@
 /*!
- * class.js
+ * 类的创建与继承
  * @author ydr.me
  * @create 2014-10-04 15:09
  */
+
+/*===============================
+// 【以前】
+// 创建一个类
+var A = function(){};
+A.prototype.abc = '123';
+
+// 继承一个类
+var B = function(){
+    A.apply(this, arguments);
+};
+
+B.prototype = new A();
+B.prototype.def = '456';
+
+// ===>
+
+//【现在】
+var A = klass.create({
+    constructor: function(){},
+    abc: '123'
+});
+var B = klass.extends(A).create({
+    constructor: function(){},
+    def: '456'
+});
+===============================*/
 
 
 define(function (require, exports, module) {
@@ -42,7 +69,7 @@ define(function (require, exports, module) {
      * // 这里开始写子类的原型方法
      * Child.prototype.fn = fn;
      */
-    exports.inherit = function (constructor, superConstructor, isCopyStatic) {
+    var inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
         //var F = function () {
         //    // ignore
@@ -69,73 +96,19 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个类（构造函数）【旧的方法，会在下一个大版本中废弃】
-     * @param {Function} constructor 构造函数
+     * @param {Object} prototypes 原型链
      * @param {Function} [superConstructor=null] 父类
      * @param {Boolean} [isInheritStatic=false] 是否继承父类的静态方法
-     * @returns {Constructor}
-     *
-     * @example
-     * var Father = klass.create(function(name){
-     *     this.name = name;
-     * });
-     *
-     * Father.prototype.sayName = function(){
-     *     console.log(this.name);
-     * };
-     *
-     * var Child = klass.create(function(name, age){
-     *    this.age = age;
-     * }, Father, true);
-     *
-     * Child.prototype.speak = function(){
-     *     console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
-     * };
-     *
-     * var f1 = new Father('Fimme');
-     * var c1 = new Child('Cmoo', 20);
-     *
-     * c1.sayName();
-     * // => "Cmoo"
-     *
-     * c1.speak();
-     * // => "My name is Cmoo, I'm 20 years old."
+     * @returns {Function}
      */
-    var oldCreate = function (constructor, superConstructor, isInheritStatic) {
-        console.warn('`class.create(constructor, superConstructor, isInheritStatic)` is deprecated, ' +
-            'please use `class.create(prototypes, superConstructor, isInheritStatic)` instead.');
+    var create = function (prototypes, superConstructor, isInheritStatic) {
+        var isOld = false;
 
-        var isConstructorFn = typeis.function(constructor);
-        var isSuperConstructorFn = typeis.function(superConstructor);
-        var c = function () {
-            if (isSuperConstructorFn) {
-                superConstructor.apply(this, arguments);
-            }
-
-            if (isConstructorFn) {
-                return constructor.apply(this, arguments);
-            }
-        };
-
-        if (isConstructorFn && isSuperConstructorFn) {
-            exports.inherit(c, superConstructor, isInheritStatic);
-        }
-
-        c.fn = c.prototype;
-        c.fn.constructor = c;
-        c.implement = c.fn.extend = function (properties) {
-            dato.extend(true, c.fn, properties);
-        };
-        c.extend = function (properties) {
-            dato.extend(true, c, properties);
-        };
-
-        return c;
-    };
-
-
-    exports.create = function (prototypes, superConstructor, isInheritStatic) {
         if (typeis.function(prototypes)) {
-            return oldCreate(prototypes, superConstructor, isInheritStatic);
+            isOld = true;
+            prototypes = {
+                constructor: prototypes
+            };
         }
 
         if (!typeis.function(prototypes.constructor)) {
@@ -157,6 +130,10 @@ define(function (require, exports, module) {
             con.apply(the, args);
         };
 
+        if (superConstructorIsAFn) {
+            inherit(c, superConstructor, isInheritStatic);
+        }
+
         dato.each(prototypes, function (key, val) {
             c.prototype[key] = val;
         });
@@ -173,6 +150,97 @@ define(function (require, exports, module) {
          * @type {Function}
          */
         c.prototype.constructor = c;
+
+        if(isOld){
+            c.fn = c.prototype;
+            c.implement = c.fn.extend = function (properties) {
+                dato.extend(true, c.fn, properties);
+            };
+            c.extend = function (properties) {
+                dato.extend(true, c, properties);
+            };
+        }
+
         return c;
+    };
+
+
+    /**
+     * 类的构造器
+     * @param prototypes
+     * @param superConstructor
+     * @param isInheritStatic
+     * @constructor
+     */
+    var Class = function (prototypes, superConstructor, isInheritStatic) {
+        var the = this;
+
+        the.p = prototypes;
+        the.s = superConstructor;
+        the.i = isInheritStatic;
+    };
+
+    Class.prototype = {
+        constructor: Class,
+
+        /**
+         * 类的创建
+         * @param {Object} [prototypes] 原型链
+         * @returns {Function}
+         */
+        create: function (prototypes) {
+            var the = this;
+
+            the.p = prototypes || the.p;
+
+            return create(the.p, the.s, the.i);
+        }
+    };
+
+
+    /**
+     * 类的继承，参考了 es6 的 class 表现
+     * @param superConstructor
+     * @param isInheritStatic
+     * @returns {Class}
+     */
+    exports.extends = function (superConstructor, isInheritStatic) {
+        return new Class(null, superConstructor, isInheritStatic);
+    };
+
+
+    /**
+     * 类的创建
+     * @param {Object} prototypes 原型链
+     * @param {Function} [superConstructor=null] 父类
+     * @param {Boolean} [isInheritStatic=false] 是否继承父类的静态方法
+     * @returns {Function}
+     *
+     * @example
+     * // 1. 创建一个空原型链的类
+     * var A = klass.create(fn);
+     *
+     * // 2. 创建一个有原型链的类
+     * var B = klass.create({
+     *     constructor: fn,
+     *     ...
+     * });
+     *
+     * // 3. 创建一个子类
+     * var C = klass.extends(B).create(fn);
+     * var D = klass.extends(C).create({
+     *     constructor: fn,
+     *     ...
+     * });
+     */
+    exports.create = function (prototypes, superConstructor, isInheritStatic) {
+        var the = this;
+
+        // 上一个级联应该是 extends
+        if (the.constructor === Class && the instanceof Class) {
+            return the.create(prototypes);
+        }
+
+        return new Class(prototypes, superConstructor, isInheritStatic).create();
     };
 });

@@ -105,29 +105,29 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
-<li><a href="module-ui_Banner_.html#~event:change">module:ui/Editor/.change</a></li>
+<li><a href="global.html#~event:cancel">null.cancel</a></li>
+<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Window_.html#~event:close">module:ui/Mask/.close</a></li>
-<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Mask_.html#~event:open">module:ui/Tooltip/.open</a></li>
+<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
 <li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
@@ -200,7 +200,7 @@
 
 <li class="">
     
-        <a class="" href="#.inherit">inherit</a>
+        <a class="" href="#.extends">extends</a>
     
 </li>
 
@@ -266,7 +266,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-3108993298374116410702678980305791" data-toggle="tab">Source</a>
+                <a href="#tab-meta-8333695619367063034502757247537374" data-toggle="tab">Source</a>
             </li>
 
         
@@ -287,7 +287,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-3108993298374116410702678980305791">
+            <div class="tab-pane active" id="tab-meta-8333695619367063034502757247537374">
                 <p><a href="utils_class.js.html#line9">utils/class.js:9</a></p>
             </div>
 
@@ -330,7 +330,7 @@
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".create">
-        <span class="type-signature">&lt;static> </span>create<span class="signature">(constructor, <span class="optional">superConstructor</span>, <span class="optional">isInheritStatic</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>create<span class="signature">(prototypes, <span class="optional">superConstructor</span>, <span class="optional">isInheritStatic</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -339,7 +339,7 @@
 
         
         <div class="description lead">
-            <blockquote>创建一个类（构造函数）
+            <blockquote>类的创建
                 
             </blockquote>
         </div>
@@ -379,13 +379,13 @@
 
         <tr>
             
-                <td class="name"><code>constructor</code></td>
+                <td class="name"><code>prototypes</code></td>
             
 
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
         
     
 
@@ -408,7 +408,7 @@
                 </td>
             
 
-            <td class="description last">构造函数</td>
+            <td class="description last">原型链</td>
         </tr>
 
 	
@@ -506,7 +506,7 @@
     <tbody>
         <tr>
             <td>
-&nbsp;&nbsp;<span class="param-type label label-info">Constructor</span>
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
         
     
 </td>
@@ -520,30 +520,21 @@
         
             <h5>Example</h5>
             
-    <pre class="prettyprint"><code>var Father = klass.create(function(name){
-    this.name = name;
+    <pre class="prettyprint"><code>// 1. 创建一个空原型链的类
+var A = klass.create(fn);
+
+// 2. 创建一个有原型链的类
+var B = klass.create({
+    constructor: fn,
+    ...
 });
 
-Father.prototype.sayName = function(){
-    console.log(this.name);
-};
-
-var Child = klass.create(function(name, age){
-   this.age = age;
-}, Father, true);
-
-Child.prototype.speak = function(){
-    console.log('My name is ' + this.name + ', I\'m ' + this.age + ' years old.');
-};
-
-var f1 = new Father('Fimme');
-var c1 = new Child('Cmoo', 20);
-
-c1.sayName();
-// => "Cmoo"
-
-c1.speak();
-// => "My name is Cmoo, I'm 20 years old."</code></pre>
+// 3. 创建一个子类
+var C = klass.extends(B).create(fn);
+var D = klass.extends(C).create({
+    constructor: fn,
+    ...
+});</code></pre>
 
         
 
@@ -567,7 +558,7 @@ c1.speak();
 
             
             <li class="active">
-                <a href="#tab-meta-757194346515461810587403923273087" data-toggle="tab">Source</a>
+                <a href="#tab-meta-65310527896508579493372566066682" data-toggle="tab">Source</a>
             </li>
 
         
@@ -588,8 +579,8 @@ c1.speak();
         
         
 
-            <div class="tab-pane active" id="tab-meta-757194346515461810587403923273087">
-                <p><a href="utils_class.js.html#line105">utils/class.js:105</a></p>
+            <div class="tab-pane active" id="tab-meta-65310527896508579493372566066682">
+                <p><a href="utils_class.js.html#line209">utils/class.js:209</a></p>
             </div>
 
         
@@ -614,8 +605,8 @@ c1.speak();
                 
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id=".inherit">
-        <span class="type-signature">&lt;static> </span>inherit<span class="signature">(constructor, superConstructor, <span class="optional">isCopyStatic</span>)</span><span class="type-signature"></span>
+    <h4 class="name alert alert-warning" id=".extends">
+        <span class="type-signature">&lt;static> </span>extends<span class="signature">(superConstructor, isInheritStatic)</span><span class="type-signature"> 
     </h4>
 
     
@@ -624,7 +615,7 @@ c1.speak();
 
         
         <div class="description lead">
-            <blockquote>单继承
+            <blockquote>类的继承，参考了 es6 的 class 表现
                 
             </blockquote>
         </div>
@@ -648,11 +639,7 @@ c1.speak();
 		<th class="th-type">Type</th>
 
 		
-		<th class="th-arg">Argument</th>
-		
 
-		
-		<th class="th-dft">Default</th>
 		
 
 		<th class="last">Description</th>
@@ -664,112 +651,36 @@ c1.speak();
 
         <tr>
             
-                <td class="name"><code>constructor</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">子类</td>
-        </tr>
-
-	
-
-        <tr>
-            
                 <td class="name"><code>superConstructor</code></td>
             
 
             <td class="type">
             
-                
-&nbsp;&nbsp;<span class="param-type label label-info">function</span>
-        
-    
-
-            
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">父类</td>
+            <td class="description last"></td>
         </tr>
 
 	
 
         <tr>
             
-                <td class="name"><code>isCopyStatic</code></td>
+                <td class="name"><code>isInheritStatic</code></td>
             
 
             <td class="type">
             
-                
-&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
-        
-    
-
-            
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
 
-            <td class="description last">是否复制静态方法</td>
+            <td class="description last"></td>
         </tr>
 
 	
@@ -779,26 +690,24 @@ c1.speak();
         
 
         
-
+        <h5>Returns:</h5>
         
-            <h5>Example</h5>
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">Class</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
             
-    <pre class="prettyprint"><code>// 父类
-var Father = function(){};
-
-// 子类
-var Child = function(){
-    // 执行一次父类的方法
-    Father.apply(this, arguments);
-
-    // 这里执行子类的方法、属性
-    this.sth = 123;
-};
-
-klass.inherit(Child, Father);
-
-// 这里开始写子类的原型方法
-Child.prototype.fn = fn;</code></pre>
 
         
 
@@ -822,7 +731,7 @@ Child.prototype.fn = fn;</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-69101233454421168465087728109211" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2080744032282382230675467383116484" data-toggle="tab">Source</a>
             </li>
 
         
@@ -843,8 +752,8 @@ Child.prototype.fn = fn;</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-69101233454421168465087728109211">
-                <p><a href="utils_class.js.html#line45">utils/class.js:45</a></p>
+            <div class="tab-pane active" id="tab-meta-2080744032282382230675467383116484">
+                <p><a href="utils_class.js.html#line180">utils/class.js:180</a></p>
             </div>
 
         
