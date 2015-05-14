@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var event = require('../core/event/base.js');
     var dato = require('../utils/dato.js');
     var klass = require('../utils/class.js');
-    var Emeitter = require('./Emitter.js');
+    var Emitter = require('./Emitter.js');
     var history = window.history;
     var localStorage = window.localStorage;
     var defaults = {
@@ -44,22 +44,20 @@ define(function (require, exports, module) {
             }
         }
     };
-    var Pjax = klass.create(function ($container, options) {
-        var the = this;
+    var Pjax = klass.extends(Emitter).create({
+        constructor: function ($container, options) {
+            var the = this;
 
-        the.$container = selector.query($container);
+            the.$container = selector.query($container);
 
-        if (!the.$container.length) {
-            throw new Error('Pjax require $container element');
-        }
+            if (!the.$container.length) {
+                throw new Error('Pjax require $container element');
+            }
 
-        the.$container = the.$container[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    }, Emeitter);
-
-
-    Pjax.implement({
+            the.$container = the.$container[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -213,5 +211,6 @@ define(function (require, exports, module) {
         }
     });
 
+    Pjax.defaults = defaults;
     module.exports = Pjax;
 });
