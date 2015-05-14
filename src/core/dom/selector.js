@@ -287,7 +287,7 @@ define(function (require, exports, module) {
 
     /**
      * 过滤节点集合
-     * @param {Node} nodeList   节点集合
+     * @param {Array|NodeList} nodeList 节点集合
      * @param {Function} filter 过滤方法，返回true选择该节点
      * @returns {Array} 过滤后的节点集合
      *
@@ -301,7 +301,7 @@ define(function (require, exports, module) {
         var ret = [];
 
         dato.each(nodeList, function (index, node) {
-            if (filter.call(node)) {
+            if (filter.call(node, index, node) === true) {
                 ret.push(node);
             }
         });

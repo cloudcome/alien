@@ -33,26 +33,24 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var Animation = klass.create(function () {
-        var the = this;
+    var Animation = klass.extends(Emitter).create({
+        constructor: function () {
+            var the = this;
 
-        /**
-         * 队列列表
-         * @type {Array}
-         * @private
-         */
-        the._queueList = [];
+            /**
+             * 队列列表
+             * @type {Array}
+             * @private
+             */
+            the._queueList = [];
 
-        /**
-         * 当前队列索引
-         * @type {number}
-         * @private
-         */
-        the._queueIndex = 0;
-    }, Emitter);
-
-
-    Animation.implement({
+            /**
+             * 当前队列索引
+             * @type {number}
+             * @private
+             */
+            the._queueIndex = 0;
+        },
         /**
          * 追加动画
          * @param $ele

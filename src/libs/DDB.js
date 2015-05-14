@@ -58,18 +58,15 @@ define(function (require, exports, module) {
         closeTag: '}}',
         debug: false
     };
-    var DDB = klass.create(function ($rootScope, data, options) {
-        var the = this;
+    var DDB = klass.extends(Emitter).create({
+        constructor: function ($rootScope, data, options) {
+            var the = this;
 
-        the._$rootScope = selector.query($rootScope)[0];
-        the.data = data;
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    }, Emitter);
-
-    DDB.defaults = defaults;
-
-    DDB.implement({
+            the._$rootScope = selector.query($rootScope)[0];
+            the.data = data;
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -585,5 +582,6 @@ define(function (require, exports, module) {
         }
     });
 
+    DDB.defaults = defaults;
     module.exports = DDB;
 });
