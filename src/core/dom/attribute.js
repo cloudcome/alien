@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     var regSpace = /\s+/;
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
+    var string = require('../../utils/string.js');
     var typeis = require('../../utils/typeis.js');
     var compatible = require('../navigator/compatible.js');
     var selector = require('./selector.js');
@@ -347,10 +348,10 @@ define(function (require, exports, module) {
     exports.data = function (ele, key, val) {
         return _getSet(arguments, {
             get: function (ele, key) {
-                var ret = ele.dataset[_toHumpString(key)];
+                var ret = ele.dataset[string.humprize(key)];
 
                 try {
-                    return JSON.parse(ret);
+                    ret = JSON.parse(ret);
                 } catch (err1) {
                     try {
                         /* jshint evil: true */
@@ -359,9 +360,9 @@ define(function (require, exports, module) {
                     } catch (err2) {
                         // ignore
                     }
-
-                    return ret;
                 }
+
+                return ret;
             },
             set: function (ele, key, val) {
                 if (typeis(val) === 'object') {
@@ -371,7 +372,7 @@ define(function (require, exports, module) {
                         val = '';
                     }
                 }
-                ele.dataset[_toHumpString(key)] = val;
+                ele.dataset[string.humprize(key)] = val;
             }
         });
     };
@@ -668,18 +669,6 @@ define(function (require, exports, module) {
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////[ private ]/////////////////////////////
     ////////////////////////////////////////////////////////////////////
-
-    /**
-     * 转换字符串为驼峰格式
-     * @param {String} string 原始字符串
-     * @returns {String} string 格式化后的字符串
-     * @private
-     */
-    function _toHumpString(string) {
-        return string.replace(regSep, '').replace(regHump, function ($0, $1) {
-            return $1.toUpperCase();
-        });
-    }
 
 
     /**
