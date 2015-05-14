@@ -96,6 +96,6 @@ define(function (require, exports, module) {
             };
         }
 
-        return klass.extends(Emitter, isInheritSuperStatic).create(prototypes.constructor);
+        return klass.extends(Emitter, isInheritSuperStatic).create(prototypes);
     };
 });

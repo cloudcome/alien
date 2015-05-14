@@ -64,17 +64,14 @@ define(function (require, exports, module) {
         remoteHeight: 400,
         zIndex: null
     };
-    var Dialog = ui.create(function ($content, options) {
-        var the = this;
+    var Dialog = ui.create({
+        constructor: function ($content, options) {
+            var the = this;
 
-        the._$content = selector.query($content)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Dialog.defaults = defaults;
-
-    Dialog.implement({
+            the._$content = selector.query($content)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
             var options = the._options;
@@ -359,6 +356,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Dialog.defaults = defaults;
 
     /**
      * 实例化一个对话框

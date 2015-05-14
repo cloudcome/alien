@@ -48,20 +48,14 @@ define(function (require, exports, module) {
         duration: 300,
         easing: 'in-out'
     };
-    var Datepicker = ui.create(function ($input, options) {
-        var the = this;
+    var Datepicker = ui.create({
+        constructor: function ($input, options) {
+            var the = this;
 
-        the._$input = selector.query($input)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Datepicker.defaults = defaults;
-    Template.config({
-        debug: true
-    });
-
-    Datepicker.implement({
+            the._$input = selector.query($input)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
 
@@ -315,6 +309,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Datepicker.defaults = defaults;
     module.exports = Datepicker;
     modification.importStyle(style);
 });

@@ -76,53 +76,51 @@ define(function (require, exports, module) {
         // [{url:'1.jpg',width:100,height:100}]
         uploadCallback: null
     };
-    var Editor = ui.create(function ($ele, options) {
-        var the = this;
-        the._isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
+    var Editor = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
+            the._isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
 
-        the._id = alienIndex++;
-        the._$ele = selector.query($ele)[0];
-        the._options = dato.extend({}, defaults, options);
-        the._calStoreId();
-        the._editor = CodeMirror.fromTextArea(the._$ele, {
-            mode: 'gfm',
-            lineNumbers: false,
-            theme: "fed",
-            autoCloseBrackets: true,
-            autoCloseTags: true,
-            dragDrop: false,
-            foldGutter: false,
-            indentWithTabs: true,
-            lineWrapping: true,
-            matchBrackets: true,
-            readOnly: false,
-            showTrailingSpace: true,
-            styleActiveLine: true,
-            styleSelectedText: true,
-            tabSize: the._options.tabSize
-        });
+            the._id = alienIndex++;
+            the._$ele = selector.query($ele)[0];
+            the._options = dato.extend({}, defaults, options);
+            the._calStoreId();
+            the._editor = CodeMirror.fromTextArea(the._$ele, {
+                mode: 'gfm',
+                lineNumbers: false,
+                theme: "fed",
+                autoCloseBrackets: true,
+                autoCloseTags: true,
+                dragDrop: false,
+                foldGutter: false,
+                indentWithTabs: true,
+                lineWrapping: true,
+                matchBrackets: true,
+                readOnly: false,
+                showTrailingSpace: true,
+                styleActiveLine: true,
+                styleSelectedText: true,
+                tabSize: the._options.tabSize
+            });
 
-        the._$wrapper = the._editor.getWrapperElement();
-        the._$scroller = the._editor.getScrollerElement();
-        the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
-        the._$editor.id = alienClass + '-' + the._id;
-        the._$preview = modification.create('div', {
-            class: alienClass + '-preview'
-        });
-        the._isFullScreen = false;
-        the._noPreview = true;
-        modification.insert(the._$preview, the._$editor);
-        attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
-        attribute.css(the._$scroller, 'min-height', the._options.minHeight);
-        the._initEvent();
+            the._$wrapper = the._editor.getWrapperElement();
+            the._$scroller = the._editor.getScrollerElement();
+            the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
+            the._$editor.id = alienClass + '-' + the._id;
+            the._$preview = modification.create('div', {
+                class: alienClass + '-preview'
+            });
+            the._isFullScreen = false;
+            the._noPreview = true;
+            modification.insert(the._$preview, the._$editor);
+            attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
+            attribute.css(the._$scroller, 'min-height', the._options.minHeight);
+            the._initEvent();
 
-        if (the._options.canBackup) {
-            controller.nextTick(the._initValue, the);
-        }
-    });
-
-    Editor.implement({
-
+            if (the._options.canBackup) {
+                controller.nextTick(the._initValue, the);
+            }
+        },
         /**
          * 设置编辑器内容
          * @param value {String} 设置内容
@@ -641,6 +639,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Editor.defaults = defaults;
     markedRender.image = require('./marked-render-image.js');
     markedRender.table = require('./marked-render-table.js');
     modification.importStyle(style);

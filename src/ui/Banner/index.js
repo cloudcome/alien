@@ -51,16 +51,16 @@ define(function (require, exports, module) {
         navGenerator: null,
         activeClass: 'active'
     };
-    var Banner = ui.create(function ($list, options) {
-        var the = this;
+    var Banner = ui.create({
+        constructor: function ($list, options) {
+            var the = this;
 
-        the._options = dato.extend(true, {}, defaults, options);
-        the._$list = selector.query($list)[0];
-        the._$items = selector.query(the._options.itemSelector, the._$list);
-        the._itemLength = the._$items.length;
-        the._init();
-    });
-    Banner.implement({
+            the._options = dato.extend(true, {}, defaults, options);
+            the._$list = selector.query($list)[0];
+            the._$items = selector.query(the._options.itemSelector, the._$list);
+            the._itemLength = the._$items.length;
+            the._init();
+        },
         /**
          * 初始化
          * @private
