@@ -36,5 +36,5 @@ define(function (require) {
         }
     });
 
-    debugger;
+    window.klass = klass;
 });

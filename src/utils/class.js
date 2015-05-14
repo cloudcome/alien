@@ -67,10 +67,8 @@ define(function (require, exports, module) {
     };
 
 
-
-
     /**
-     * 创建一个类（构造函数）
+     * 创建一个类（构造函数）【旧的方法，会在下一个大版本中废弃】
      * @param {Function} constructor 构造函数
      * @param {Function} [superConstructor=null] 父类
      * @param {Boolean} [isInheritStatic=false] 是否继承父类的静态方法
@@ -102,7 +100,10 @@ define(function (require, exports, module) {
      * c1.speak();
      * // => "My name is Cmoo, I'm 20 years old."
      */
-    exports.create = function (constructor, superConstructor, isInheritStatic) {
+    var oldCreate = function (constructor, superConstructor, isInheritStatic) {
+        console.warn('`class.create(constructor, superConstructor, isInheritStatic)` is deprecated, ' +
+            'please use `class.create(prototypes, superConstructor, isInheritStatic)` instead.');
+
         var isConstructorFn = typeis.function(constructor);
         var isSuperConstructorFn = typeis.function(superConstructor);
         var c = function () {
@@ -131,7 +132,47 @@ define(function (require, exports, module) {
         return c;
     };
 
-    //exports.new = function () {
-    //
-    //};
+
+    exports.create = function (prototypes, superConstructor, isInheritStatic) {
+        if (typeis.function(prototypes)) {
+            return oldCreate(prototypes, superConstructor, isInheritStatic);
+        }
+
+        if (!typeis.function(prototypes.constructor)) {
+            throw Error('propertypes.constructor must be a function');
+        }
+
+        var con = prototypes.constructor;
+        prototypes.constructor = null;
+        var superConstructorIsAFn = typeis.function(superConstructor);
+
+        var c = function () {
+            var the = this;
+            var args = arguments;
+
+            if (superConstructorIsAFn) {
+                superConstructor.apply(the, args);
+            }
+
+            con.apply(the, args);
+        };
+
+        dato.each(prototypes, function (key, val) {
+            c.prototype[key] = val;
+        });
+
+        /**
+         * 原始的 constructor
+         * @type {Function}
+         * @private
+         */
+        c.prototype.__constructor__ = con;
+
+        /**
+         * 输出的 constructor
+         * @type {Function}
+         */
+        c.prototype.constructor = c;
+        return c;
+    };
 });
