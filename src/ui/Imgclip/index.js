@@ -46,27 +46,25 @@ define(function (require, exports, module) {
         maxHeight: 0,
         ratio: 0
     };
-    var Imgclip = ui.create(function ($ele, options) {
-        var the = this;
+    var Imgclip = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
 
-        $ele = selector.query($ele);
+            $ele = selector.query($ele);
 
-        if (!$ele.length) {
-            throw 'instance require an element';
-        }
+            if (!$ele.length) {
+                throw 'instance require an element';
+            }
 
-        the._$ele = $ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
+            the._$ele = $ele[0];
+            the._options = dato.extend(!0, {}, defaults, options);
 
-        if (the._$ele.complete) {
-            the._init();
-        } else {
-            event.on(the._$ele, 'load', the._init.bind(the));
-        }
-    });
-
-
-    Imgclip.implement({
+            if (the._$ele.complete) {
+                the._init();
+            } else {
+                event.on(the._$ele, 'load', the._init.bind(the));
+            }
+        },
         /**
          * 调整裁剪尺寸
          * @private
@@ -527,6 +525,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Imgclip.defaults = defaults;
     modification.importStyle(style);
     module.exports = Imgclip;
 

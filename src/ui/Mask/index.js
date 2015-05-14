@@ -38,32 +38,15 @@ define(function (require, exports, module) {
         style: {},
         easing: 'ease-in-out-circ'
     };
-    var Mask = ui.create(function ($cover, options) {
-        var the = this;
+    var Mask = ui.create({
+        constructor: function ($cover, options) {
+            var the = this;
 
-        the._$cover = selector.query($cover)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the.visible = false;
-        the._init();
-    });
-
-    /**
-     * 覆盖 window 的 mask 列表
-     * @type {Array}
-     */
-    Mask.maskWindowList = maskWindowList;
-
-
-    /**
-     * 获得当前最顶层覆盖 window 的 mask
-     * @returns {*}
-     */
-    Mask.getTopMask = function () {
-        return maskWindowList[maskWindowLength - 1];
-    };
-
-
-    Mask.implement({
+            the._$cover = selector.query($cover)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the.visible = false;
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -272,6 +255,22 @@ define(function (require, exports, module) {
             }
         }
     });
+
+
+    /**
+     * 覆盖 window 的 mask 列表
+     * @type {Array}
+     */
+    Mask.maskWindowList = maskWindowList;
+
+
+    /**
+     * 获得当前最顶层覆盖 window 的 mask
+     * @returns {*}
+     */
+    Mask.getTopMask = function () {
+        return maskWindowList[maskWindowLength - 1];
+    };
 
     /**
      * 构造一个 mask

@@ -59,16 +59,13 @@ define(function (require, exports, module) {
             height: 60
         }
     };
-    var Imgview = ui.create(function (options) {
-        var the = this;
+    var Imgview = ui.create({
+        constructor: function (options) {
+            var the = this;
 
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Imgview.defaults = defaults;
-
-    Imgview.implement({
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
 
         /**
          * 初始化
@@ -411,7 +408,7 @@ define(function (require, exports, module) {
             the._mask.destroy();
         }
     });
-
+    Imgview.defaults = defaults;
     modification.importStyle(style);
     module.exports = Imgview;
 });
