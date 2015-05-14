@@ -25,22 +25,25 @@ define(function (require, exports, module) {
         // 是否忽略结尾斜杠
         isIgnoreEndSlash: true
     };
-    var Router = klass.create(function (options) {
-        var the = this;
+    var Router = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
 
-        the._options = dato.extend({}, defaults, options);
-        the._routerList = [];
-        the._routerMap = {};
-        the._unMatchedCallbackList = [];
-        the._lastMatchedRoute = null;
-        the._msgMap = {};
-        //the._isIgnoreHashChange = false;
-        //the._hashchangeTimes = 0;
-        //the._ignoreHashchangeTimes = -1;
-        the._initEvent();
-    }, Emitter);
-
-    Router.implement({
+            the._options = dato.extend({}, defaults, options);
+            the._routerList = [];
+            the._routerMap = {};
+            the._unMatchedCallbackList = [];
+            the._lastMatchedRoute = null;
+            the._msgMap = {};
+            //the._isIgnoreHashChange = false;
+            //the._hashchangeTimes = 0;
+            //the._ignoreHashchangeTimes = -1;
+            the._initEvent();
+        },
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
 
