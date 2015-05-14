@@ -19,19 +19,17 @@ define(function (require, exports, module) {
     var dato = require('../utils/dato.js');
     var Emitter = require('./Emitter.js');
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
-    var Weixin = klass.create(function (config, shareData) {
-        var the = this;
+    var Weixin = klass.extends(Emitter).create({
+        constructor: function (config, shareData) {
+            var the = this;
 
-        the._config = dato.extend({
-            jsApiList: jsApiList
-        }, config);
-        wx.config(the._config);
-        the._shareData = shareData;
-        the._init();
-    }, Emitter);
-
-
-    Weixin.implement({
+            the._config = dato.extend({
+                jsApiList: jsApiList
+            }, config);
+            wx.config(the._config);
+            the._shareData = shareData;
+            the._init();
+        },
         _init: function () {
             var the = this;
 

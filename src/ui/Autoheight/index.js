@@ -73,21 +73,20 @@ define(function (require, exports, module) {
 
         attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
     };
-    var Autoheight = ui.create(function ($ele, options) {
-        var the = this;
+    var Autoheight = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
 
-        the._$ele = selector.query($ele);
+            the._$ele = selector.query($ele);
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!the._$ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Autoheight.implement({
+            the._$ele = the._$ele[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private

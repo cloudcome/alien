@@ -34,50 +34,19 @@ define(function (require, exports, module) {
         // 服务器端，默认为 true
         isBreakOnInvalid: false
     };
-    var Validator = klass.create(function (options) {
-        var the = this;
+    var Validator = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
 
-        // 规则列表，有顺序之分
-        the._ruleList = [];
-        // 已经存在的验证规则
-        the._ruleNames = {};
-        the._customRules = {};
-        the.rules = {};
-        // 选项
-        the._options = dato.extend(true, {}, defaults, options);
-    }, Emitter);
-
-
-    /**
-     * 注册自定义的静态验证规则
-     * @param options {Object} 规则配置
-     * @param fn {Function} 规则方法
-     * @param [isOverride=false] 是否覆盖已有规则
-     *
-     * @example
-     * // 添加一个检查后缀的自定义规则
-     * Validator.registerRule({
-     *     name: 'suffix',
-     *     type: 'array'
-     * }, function(suffix, val, next){
-     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
-     *     var boolean = suffix.indexOf(sf) > -1;
-     *
-     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-     * });
-     */
-    Validator.registerRule = function (options, fn, isOverride) {
-        if (!customRules[options.name] || customRules[options.name] && isOverride) {
-            customRules[options.name] = {
-                name: options.name,
-                type: options.type,
-                fn: fn
-            };
-        }
-    };
-
-
-    Validator.implement({
+            // 规则列表，有顺序之分
+            the._ruleList = [];
+            // 已经存在的验证规则
+            the._ruleNames = {};
+            the._customRules = {};
+            the.rules = {};
+            // 选项
+            the._options = dato.extend(true, {}, defaults, options);
+        },
         /**
          * 注册自定义的实例验证规则
          * @param options {Object} 规则配置
@@ -87,14 +56,14 @@ define(function (require, exports, module) {
          * @example
          * // 添加一个检查后缀的自定义规则
          * validator.registerRule({
-     *     name: 'suffix',
-     *     type: 'array'
-     * }, function(suffix, val, next){
-     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
-     *     var boolean = suffix.indexOf(sf) > -1;
-     *
-     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
-     * });
+         *     name: 'suffix',
+         *     type: 'array'
+         * }, function(suffix, val, next){
+         *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+         *     var boolean = suffix.indexOf(sf) > -1;
+         *
+         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+         * });
          */
         registerRule: function (options, fn, isOverride) {
             var the = this;
@@ -679,6 +648,35 @@ define(function (require, exports, module) {
             }
         }
     });
+
+
+    /**
+     * 注册自定义的静态验证规则
+     * @param options {Object} 规则配置
+     * @param fn {Function} 规则方法
+     * @param [isOverride=false] 是否覆盖已有规则
+     *
+     * @example
+     * // 添加一个检查后缀的自定义规则
+     * Validator.registerRule({
+     *     name: 'suffix',
+     *     type: 'array'
+     * }, function(suffix, val, next){
+     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+     *     var boolean = suffix.indexOf(sf) > -1;
+     *
+     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+     * });
+     */
+    Validator.registerRule = function (options, fn, isOverride) {
+        if (!customRules[options.name] || customRules[options.name] && isOverride) {
+            customRules[options.name] = {
+                name: options.name,
+                type: options.type,
+                fn: fn
+            };
+        }
+    };
 
     module.exports = Validator;
 
