@@ -53,80 +53,11 @@ define(function (require, exports, module) {
         debug: false
     };
     var filters = {};
-    var Template = klass.create(function (tmplate, options) {
-        this._options = dato.extend(true, {}, configs, options);
-        this._init(tmplate);
-    });
-
-
-    /**
-     * 默认配置
-     * @type {Object}
-     * @static
-     */
-    Template.configs = configs;
-
-
-    /**
-     * 静态过滤方法
-     * @type {Object}
-     * @static
-     */
-    Template.filters = filters;
-
-    /**
-     * 设置默认配置
-     * @param options
-     */
-    Template.config = function (options) {
-        dato.extend(configs, options);
-    };
-
-
-    /**
-     * 添加过滤方法
-     * @param {String} name 过滤方法名称
-     * @param {Function} callback 方法
-     * @param {Boolean} [isOverride=false] 是否强制覆盖，默认 false
-     * @static
-     */
-    Template.addFilter = function (name, callback, isOverride) {
-        if (typeis(name) !== 'string') {
-            throw new Error('filter name must be a string');
-        }
-
-        // 未设置覆盖 && 已经覆盖
-        if (!isOverride && filters[name]) {
-            throw new Error('override a exist filter');
-        }
-
-        if (typeis(callback) !== 'function') {
-            throw new Error('filter callback must be a function');
-        }
-
-        filters[name] = callback;
-    };
-
-
-    /**
-     * 获取过滤方法
-     * @param {String} [name] 获取过滤方法的名称，为空表示获取全部过滤方法
-     * @returns {Function|Object} 放回过滤方法或过滤方法的集合
-     * @static
-     */
-    Template.getFilter = function (name) {
-        if (!name) {
-            return filters;
-        }
-
-        if (typeis(name) === 'string') {
-            return filters[name];
-        }
-    };
-
-
-
-    Template.implement({
+    var Template = klass.create({
+        constructor: function (tmplate, options) {
+            this._options = dato.extend(true, {}, configs, options);
+            this._init(tmplate);
+        },
 
         /**
          * 生成一个变量
@@ -540,9 +471,6 @@ define(function (require, exports, module) {
     });
 
 
-
-
-
     /**
      * 片段处理
      * @param str
@@ -604,6 +532,71 @@ define(function (require, exports, module) {
         return code;
     }
 
+
+    /**
+     * 默认配置
+     * @type {Object}
+     * @static
+     */
+    Template.configs = configs;
+
+
+    /**
+     * 静态过滤方法
+     * @type {Object}
+     * @static
+     */
+    Template.filters = filters;
+
+    /**
+     * 设置默认配置
+     * @param options
+     */
+    Template.config = function (options) {
+        dato.extend(configs, options);
+    };
+
+
+    /**
+     * 添加过滤方法
+     * @param {String} name 过滤方法名称
+     * @param {Function} callback 方法
+     * @param {Boolean} [isOverride=false] 是否强制覆盖，默认 false
+     * @static
+     */
+    Template.addFilter = function (name, callback, isOverride) {
+        if (typeis(name) !== 'string') {
+            throw new Error('filter name must be a string');
+        }
+
+        // 未设置覆盖 && 已经覆盖
+        if (!isOverride && filters[name]) {
+            throw new Error('override a exist filter');
+        }
+
+        if (typeis(callback) !== 'function') {
+            throw new Error('filter callback must be a function');
+        }
+
+        filters[name] = callback;
+    };
+
+
+    /**
+     * 获取过滤方法
+     * @param {String} [name] 获取过滤方法的名称，为空表示获取全部过滤方法
+     * @returns {Function|Object} 放回过滤方法或过滤方法的集合
+     * @static
+     */
+    Template.getFilter = function (name) {
+        if (!name) {
+            return filters;
+        }
+
+        if (typeis(name) === 'string') {
+            return filters[name];
+        }
+    };
 
 
     /**
