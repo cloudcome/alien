@@ -39,22 +39,21 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = ui.create(function ($parent, options) {
-        var the = this;
+    var Pagination = ui.create({
+        constructor: function ($parent, options) {
+            var the = this;
 
 
-        the._$ele = selector.query($parent);
+            the._$ele = selector.query($parent);
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!the._$ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
-        the._init();
-    });
-
-    Pagination.implement({
+            the._$ele = the._$ele[0];
+            the._options = dato.extend(!0, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private

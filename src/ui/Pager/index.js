@@ -40,23 +40,20 @@ define(function (require, exports, module) {
         max: 1
     };
     var alienClass = 'alien-ui-pager';
-    var Pager = ui.create(function ($parent, options) {
-        var the = this;
+    var Pager = ui.create({
+        constructor: function ($parent, options) {
+            var the = this;
 
-        the._$ele = selector.query($parent);
+            the._$ele = selector.query($parent);
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!the._$ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Pager.defaults = defaults;
-
-    Pager.implement({
+            the._$ele = the._$ele[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -133,7 +130,7 @@ define(function (require, exports, module) {
             the._$ele.innerHTML = '';
         }
     });
-
+    Pager.defaults = defaults;
     modification.importStyle(style);
     module.exports = Pager;
 });
