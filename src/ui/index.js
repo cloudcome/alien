@@ -35,24 +35,21 @@ define(function (require, exports, module) {
 
     /**
      * 创建一个 UI 类
-     * @param constructor {Function} 构造函数
+     * @param prototypes {Object} 原型链
      * @param [isInheritSuperStatic=false] {Boolean} 是否继承父类的静态方法
      * @returns {Constructor}
      *
      * @example
-     * var Dialog = ui.create(fn);
+     * var Dialog = ui.create({。。。});
      */
-    exports.create = function (constructor, isInheritSuperStatic) {
-        if (!typeis.function(constructor)) {
+    exports.create = function (prototypes, isInheritSuperStatic) {
+        if (!typeis.function(prototypes.constructor)) {
             throw 'UI class constructor must be a function';
         }
 
-        var UI = klass.create(constructor, Emitter, isInheritSuperStatic);
-        var pro = UI.prototype;
-
         // 添加默认方法
-        if (pro.getOptions === udf) {
-            pro.getOptions = function (key) {
+        if (prototypes.getOptions === udf) {
+            prototypes.getOptions = function (key) {
                 var the = this;
                 var keyType = typeis(key);
                 var ret = [];
@@ -77,8 +74,8 @@ define(function (require, exports, module) {
             };
         }
 
-        if (pro.setOptions === udf) {
-            pro.setOptions = function (key, val) {
+        if (prototypes.setOptions === udf) {
+            prototypes.setOptions = function (key, val) {
                 var the = this;
                 var keyType = typeis(key);
 
@@ -99,6 +96,6 @@ define(function (require, exports, module) {
             };
         }
 
-        return UI;
+        return klass.extends(Emitter, isInheritSuperStatic).create(prototypes.constructor);
     };
 });

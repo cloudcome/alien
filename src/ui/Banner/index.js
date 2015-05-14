@@ -60,7 +60,6 @@ define(function (require, exports, module) {
         the._itemLength = the._$items.length;
         the._init();
     });
-    var pro = Banner.prototype;
     Banner.implement({
         /**
          * 初始化
