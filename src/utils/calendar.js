@@ -39,6 +39,7 @@ define(function (require, exports, module) {
      * @param [options.activeDate=null] {Date|Number|Array} 高亮的日期，默认为今天
      * @param [options.isNatualMonth=false] {Boolean} 是否为自然月，默认 false
      * @param [options.firstDayInWeek=0] {Number} 一周的第一天星期几，默认为0，即星期日
+     * @param [options.weeks] {undefined|Number} 日历显示几周，默认最小行数，可以指定6+行
      * @returns [Array] 月历数组
      */
     exports.month = function calendar(year, month, options) {
@@ -49,6 +50,7 @@ define(function (require, exports, module) {
         var list = [];
         var prevDate = new Date(year, month - 1);
         var thisDate = new Date(year, month, 1);
+        var nextDate = new Date(year, month + 1, 1);
         var thisMonthDays = date.getDaysInMonth(year, month);
         var thisMonthFirstDateDay = thisDate.getDay();
         thisMonthFirstDateDay = thisMonthFirstDateDay < options.firstDayInWeek ? thisMonthFirstDateDay + 7 : thisMonthFirstDateDay;
@@ -82,8 +84,6 @@ define(function (require, exports, module) {
 
         // 下月
         if (deltaDays) {
-            var nextDate = new Date(year, month + 1);
-
             for (i = 1; i <= 7 - deltaDays; i++) {
                 list.push({
                     year: nextDate.getFullYear(),
@@ -94,6 +94,21 @@ define(function (require, exports, module) {
             }
         }
 
+        var weeks = Math.ceil(list.length / 7);
+        if (weeks < 6 && typeis.number(options.weeks) && options.weeks > weeks) {
+            // 下个月
+
+            var j = (options.weeks - weeks) * 7;
+
+            for (i = 1; i <= j; i++) {
+                list.push({
+                    year: nextDate.getFullYear(),
+                    month: nextDate.getMonth(),
+                    date: i,
+                    type: 'next'
+                });
+            }
+        }
 
         var activeDateMap = {};
         options.activeDate.forEach(function (d) {

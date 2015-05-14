@@ -12,7 +12,10 @@ define(function (require, exports, module) {
     var date = new Date();
     var year = date.getFullYear();
     var month = date.getMonth();
-    var group = calendar.month(year, month);
+    var group = calendar.month(2015, 0, {
+        weeks: 6
+    });
 
+    console.log(group);
     document.getElementById('pre').innerHTML = JSON.stringify(group, null, 4);
 });

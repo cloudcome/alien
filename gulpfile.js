@@ -5,6 +5,7 @@ var karma = require('karma').server;
 
 var taskList = [
     'utils/allocation.js',
+    'utils/calendar.js',
     'utils/dato.js',
     'utils/number.js',
     'utils/random.js',
