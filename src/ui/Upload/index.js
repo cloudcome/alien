@@ -42,15 +42,13 @@ define(function (require, exports, module) {
             fileKey: 'file'
         }
     };
-    var Upload = ui.create(function (options) {
-        var the = this;
+    var Upload = ui.create({
+        constructor: function (options) {
+            var the = this;
 
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-
-    Upload.implement({
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -491,6 +489,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Upload.defaults = defaults;
     modification.importStyle(style);
     module.exports = Upload;
 });

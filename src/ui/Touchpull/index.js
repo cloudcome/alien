@@ -17,17 +17,16 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var defaults = {
         minY: 30
-    }
-    var Touchpull = ui.create(function ($parent, $ele, options) {
-        var the = this;
+    };
+    var Touchpull = ui.create({
+        constructor: function ($parent, $ele, options) {
+            var the = this;
 
-        the._$parent = selector.query($parent)[0];
-        the._$ele = selector.query($ele)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Touchpull.implement({
+            the._$parent = selector.query($parent)[0];
+            the._$ele = selector.query($ele)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
 
@@ -42,4 +41,7 @@ define(function (require, exports, module) {
             });
         }
     });
+    Touchpull.defaults = defaults;
+
+    module.exports = Touchpull;
 });

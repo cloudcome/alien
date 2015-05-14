@@ -51,15 +51,14 @@ define(function (require, exports, module) {
         successMsg: null,
         canAddStatusClass: true
     };
-    var Validator = ui.create(function ($form, options) {
-        var the = this;
+    var Validator = ui.create({
+        constructor: function ($form, options) {
+            var the = this;
 
-        the._$form = selector.query($form)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Validator.implement({
+            the._$form = selector.query($form)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
