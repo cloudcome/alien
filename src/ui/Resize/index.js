@@ -47,24 +47,20 @@ define(function (require, exports, module) {
      * @param [options.maxHeight=0] {Number} 最大高度
      * @param [options.ratio=0] {Number} 指定宽高比
      */
-    var Resize = ui.create(function ($ele, options) {
-        var the = this;
+    var Resize = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
 
-        $ele = selector.query($ele);
+            $ele = selector.query($ele);
 
-        if (!$ele.length) {
-            throw 'instance element is empty';
-        }
+            if (!$ele.length) {
+                throw 'instance element is empty';
+            }
 
-        the._$ele = $ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
-        the._init();
-    });
-    
-
-    Resize.defaults = defaults;
-
-    Resize.implement({
+            the._$ele = $ele[0];
+            the._options = dato.extend(!0, {}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
             var $ele = the._$ele;
@@ -240,7 +236,7 @@ define(function (require, exports, module) {
             modification.remove(the._$wrap);
         }
     });
-
+    Resize.defaults = defaults;
     modification.importStyle(style);
     module.exports = Resize;
 

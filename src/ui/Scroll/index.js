@@ -30,24 +30,23 @@ define(function (require, exports, module) {
     var compatible = require('../../core/navigator/compatible.js');
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     var defaults = {};
-    var Scroll = UI.create(function ($container, options) {
-        var the = this;
+    var Scroll = UI.create({
+        constructor: function ($container, options) {
+            var the = this;
 
-        the._$container = selector.query($container)[0];
-        the._$parent = the._$container;
-        the._$offset = the._$container;
+            the._$container = selector.query($container)[0];
+            the._$parent = the._$container;
+            the._$offset = the._$container;
 
-        if (the._$container === window || the._$container === doc || the._$container === $html || the._$container === $body) {
-            the._$container = doc;
-            the._$parent = win;
-            the._$offset = $body;
-        }
+            if (the._$container === window || the._$container === doc || the._$container === $html || the._$container === $body) {
+                the._$container = doc;
+                the._$parent = win;
+                the._$offset = $body;
+            }
 
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-
-    Scroll.implement({
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
 
@@ -248,5 +247,6 @@ define(function (require, exports, module) {
         }
     });
 
+    Scroll.defaults = defaults;
     module.exports = Scroll;
 });
