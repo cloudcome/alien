@@ -28,18 +28,16 @@ define(function (require, exports, module) {
         wait: 30,
         offset: 10
     };
-    var Stickly = ui.create(function ($ele, options) {
-        var the = this;
+    var Stickly = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
 
-        the._$ele = selector.query($ele)[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._$container = selector.query(the._options.containerSelector)[0];
+            the._$ele = selector.query($ele)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._$container = selector.query(the._options.containerSelector)[0];
 
-        return the._init();
-    });
-
-
-    Stickly.implement({
+            return the._init();
+        },
         _init: function () {
             var the = this;
 
@@ -97,6 +95,7 @@ define(function (require, exports, module) {
     });
 
 
+    Stickly.defaults = defaults;
     /**
      * 滚动固定
      * @param $ele {Object} 监听的元素

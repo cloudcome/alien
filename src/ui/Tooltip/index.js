@@ -41,23 +41,21 @@ define(function (require, exports, module) {
         placement: 'auto',
         body: 'Hello world!'
     };
-    var Tooltip = ui.create(function (ele, options) {
-        var the = this;
+    var Tooltip = ui.create({
+        constructor: function (ele, options) {
+            var the = this;
 
-        ele = selector.query(ele);
+            ele = selector.query(ele);
 
-        if (!ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
-        the._id = alienIndex++;
-        the._init();
-    });
-
-
-    Tooltip.implement({
+            the._$ele = ele[0];
+            the._options = dato.extend(!0, {}, defaults, options);
+            the._id = alienIndex++;
+            the._init();
+        },
         _init: function () {
             var the = this;
             var tooltip = tpl.render({
@@ -205,6 +203,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Tooltip.defaults = defaults;
 
     /**
      * 实例化一个 Tooltip

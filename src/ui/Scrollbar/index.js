@@ -64,23 +64,21 @@ define(function (require, exports, module) {
         addClass: '',
         isStandAlone: false
     };
-    var Scrollbar = ui.create(function (ele, options) {
-        var the = this;
+    var Scrollbar = ui.create({
+        constructor: function (ele, options) {
+            var the = this;
 
-        the._$ele = selector.query(ele);
+            the._$ele = selector.query(ele);
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!the._$ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
-        the._id = alienIndex++;
-        the._init();
-    });
-    Scrollbar.defaults = defaults;
-
-    Scrollbar.implement({
+            the._$ele = the._$ele[0];
+            the._options = dato.extend(!0, {}, defaults, options);
+            the._id = alienIndex++;
+            the._init();
+        },
         /**
          * 初始化
          */
@@ -653,7 +651,7 @@ define(function (require, exports, module) {
             attribute.removeClass(the._$ele, the._className);
         }
     });
-
+    Scrollbar.defaults = defaults;
     require('../../core/event/drag.js');
     require('../../core/event/touch.js');
     modification.importStyle(style);

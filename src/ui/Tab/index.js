@@ -29,23 +29,20 @@ define(function (require, exports, module) {
         activeClass: 'active',
         tabSelector: 'a'
     };
-    var Tab = ui.create(function ($ele, options) {
-        var the = this;
+    var Tab = ui.create({
+        constructor: function ($ele, options) {
+            var the = this;
 
-        the._$ele = selector.query($ele);
+            the._$ele = selector.query($ele);
 
-        if (!the._$ele.length) {
-            throw new Error('instance element is empty');
-        }
+            if (!the._$ele.length) {
+                throw new Error('instance element is empty');
+            }
 
-        the._$ele = the._$ele[0];
-        the._options = dato.extend(true, {}, defaults, options);
-        the._init();
-    });
-    
-    Tab.defaults = defaults;
-
-    Tab.implement({
+            the._$ele = the._$ele[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
         /**
          * 初始化
          * @private
@@ -171,6 +168,7 @@ define(function (require, exports, module) {
             event.un(the._$ele, the._options.eventType, the._ontrigger);
         }
     });
+    Tab.defaults = defaults;
 
 
     /**

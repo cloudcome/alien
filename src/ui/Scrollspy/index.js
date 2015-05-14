@@ -35,21 +35,20 @@ define(function (require, exports, module) {
         selector: 'img',
         wait: 300
     };
-    var Scrollspy = ui.create(function ($parent, options) {
-        var the = this;
-        var args = allocation.args(arguments);
+    var Scrollspy = ui.create({
+        constructor: function ($parent, options) {
+            var the = this;
+            var args = allocation.args(arguments);
 
-        if (typeis.object(args[0])) {
-            options = args[0];
-            $parent = document;
-        }
+            if (typeis.object(args[0])) {
+                options = args[0];
+                $parent = document;
+            }
 
-        the._$parent = selector.query($parent)[0];
-        the._options = dato.extend({}, defaults, options);
-        the._init();
-    });
-
-    Scrollspy.implement({
+            the._$parent = selector.query($parent)[0];
+            the._options = dato.extend({}, defaults, options);
+            the._init();
+        },
         _init: function () {
             var the = this;
 
@@ -93,6 +92,7 @@ define(function (require, exports, module) {
     });
 
 
+    Scrollspy.defaults = defaults;
     /**
      * 实例化一个滚动监听，已加入性能优化
      * @param $parent {Object} 监听的父级元素
