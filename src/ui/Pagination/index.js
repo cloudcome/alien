@@ -116,7 +116,7 @@ define(function (require, exports, module) {
         render: function (data) {
             var the = this;
             var options = dato.extend(the._options, data);
-            var list = new libsPagination(options);
+            var list = new libsPagination(options).getList();
 
             the._$ele.innerHTML = tpl.render(dato.extend(options, {
                 pagination: list

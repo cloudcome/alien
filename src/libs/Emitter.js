@@ -21,19 +21,18 @@ define(function (require, exports, module) {
     var klass = require('../utils/class.js');
     var regSpace = /\s+/g;
     var alienId = 0;
-    var Emitter = klass.create(function () {
-        var the = this;
 
-        // 监听的事件 map
-        the._emitterListener = {};
-        // 监听的事件长度
-        the._emitterLimit = 999;
-        // 事件传输目标
-        the._emitterTargetList = [];
-    });
+    module.exports = klass.create({
+        constructor: function () {
+            var the = this;
 
-
-    Emitter.implement({
+            // 监听的事件 map
+            the._emitterListener = {};
+            // 监听的事件长度
+            the._emitterLimit = 999;
+            // 事件传输目标
+            the._emitterTargetList = [];
+        },
         /**
          * 添加事件回调
          * @method on
@@ -198,9 +197,4 @@ define(function (require, exports, module) {
             callback(eventType);
         });
     }
-
-    /**
-     * @constructor
-     */
-    module.exports = Emitter;
 });

@@ -22,16 +22,16 @@ define(function (require, exports, module) {
         page: 1,
         size: 3
     };
-    var Pagination = klass.create(function (options) {
-        this._options = dato.extend(!0, {}, defaults, options);
-        return this._init();
-    });
-    
+    var Pagination = klass.create({
+        constructor: function (options) {
+            this._options = dato.extend(!0, {}, defaults, options);
+        },
 
-    Pagination.defaults = defaults;
-
-    Pagination.implement({
-        _init: function () {
+        /**
+         * 返回分页列表
+         * @returns {Array}
+         */
+        getList: function () {
             var the = this;
             var options = the._options;
             var list = [];
@@ -149,6 +149,8 @@ define(function (require, exports, module) {
             return list;
         }
     });
+
+    Pagination.defaults = defaults;
 
     /**
      * 实例化一个分页器

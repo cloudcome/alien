@@ -3,13 +3,13 @@ define(function (require) {
 
     var Pagination = require('/src/libs/Pagination.js');
 
-    var list = new Pagination({
+    var pagi = new Pagination({
         count: 99,
         page: 67
     });
     var html = '';
 
-    list.forEach(function (item) {
+    pagi.getList().forEach(function (item) {
         html += JSON.stringify(item) + '\n';
     });
 
