@@ -5,31 +5,31 @@
  */
 
 /*===============================
-// 【以前】
-// 创建一个类
-var A = function(){};
-A.prototype.abc = '123';
+ // 【以前】
+ // 创建一个类
+ var A = function(){};
+ A.prototype.abc = '123';
 
-// 继承一个类
-var B = function(){
-    A.apply(this, arguments);
-};
+ // 继承一个类
+ var B = function(){
+ A.apply(this, arguments);
+ };
 
-B.prototype = new A();
-B.prototype.def = '456';
+ B.prototype = new A();
+ B.prototype.def = '456';
 
-// ===>
+ // ===>
 
-//【现在】
-var A = klass.create({
-    constructor: function(){},
-    abc: '123'
-});
-var B = klass.extends(A).create({
-    constructor: function(){},
-    def: '456'
-});
-===============================*/
+ //【现在】
+ var A = klass.create({
+ constructor: function(){},
+ abc: '123'
+ });
+ var B = klass.extends(A).create({
+ constructor: function(){},
+ def: '456'
+ });
+ ===============================*/
 
 
 define(function (require, exports, module) {
@@ -113,9 +113,10 @@ define(function (require, exports, module) {
         }
 
         var con = prototypes.constructor;
-        prototypes.constructor = null;
-        var superConstructorIsAFn = typeis.function(superConstructor);
 
+        prototypes.constructor = null;
+
+        var superConstructorIsAFn = typeis.function(superConstructor);
         var c = function () {
             var the = this;
             var args = arguments;
