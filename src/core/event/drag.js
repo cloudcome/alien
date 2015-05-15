@@ -17,10 +17,12 @@ define(function (require, exports, module) {
      * @requires core/dom/selector
      *
      * @example
+     * // 1、draggablefor="#被拖动的 id"
+     * // 2、draggableclone="false"，是否克隆一个元素来显示拖动
      * // dom结构
      * // &lt;div id="abc"&gt;
-     * //     这里的 draggablefor 属性指向的是拖拽影响的元素，为空表示拖拽自身
-     * //     &lt;div draggablefor="abc"&gt;&lt;/div&gt;
+     * //     &lt;!-- 这里的 draggablefor 属性指向的是拖拽影响的元素，为空表示拖拽自身 --&gt;
+     * //     &lt;div draggablefor="abc" draggableclone="false" &gt;&lt;/div&gt;
      * // &lt;/div&gt;
      * // 可以在事件监听里取消默认行为，即 eve.preventDefault();
      * event.on(ele, 'dragstart', fn);

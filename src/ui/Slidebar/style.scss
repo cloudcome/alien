@@ -1,0 +1,27 @@
+.alien-ui-slidebar{
+  position: relative;
+  height: 20px;
+
+  &-control{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    font-size: 0;
+    line-height: 1;
+    border-radius: 100%;
+    background: #f5f5f5;
+
+    &:hover{
+      background: #eee;
+    }
+
+    &-active,
+    &-active:hover{
+      background: #243ab4;
+    }
+  }
+
+  &-bar{
+
+  }
+}
