@@ -34,7 +34,7 @@ define(function (require, exports, module) {
             color: '#fff',
             radius: 4,
             offset: 26,
-            size: 100,
+            size: 80,
             count: 12,
             duration: 600,
             width: 4,
