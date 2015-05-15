@@ -14,15 +14,15 @@ define(function (require, exports, module) {
 
     var Slidebar = require('../../src/ui/Slidebar/');
     var random = require('../../src/utils/random.js');
-    var s1 = new Slidebar('#demo1', {
-        value: 40,
-        step: 10
-    });
     var $val1 = document.getElementById('val1');
     var $btn1 = document.getElementById('btn1');
     var $val2 = document.getElementById('val2');
     var $btn2 = document.getElementById('btn2');
 
+    var s1 = new Slidebar('#demo1', {
+        value: 40,
+        step: 10
+    });
     s1.on('change', function (val) {
         $val1.innerHTML = JSON.stringify(val);
     });
@@ -41,4 +41,8 @@ define(function (require, exports, module) {
     s2.on('change', function (val) {
         $val2.innerHTML = JSON.stringify(val);
     });
+
+    $btn2.onclick = function () {
+        s2.change([random.number(0, 10), random.number(0, 10)]);
+    };
 });

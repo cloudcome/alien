@@ -204,7 +204,7 @@ define(function (require, exports, module) {
 
             val = the._adjustVal(val);
 
-            if (index === 0 && val !== the._value0 && (!the._isDouble || val < the._value1)) {
+            if (index === 0 && val !== the._value0 && (!the._isDouble || !the._value1 || val < the._value1)) {
                 attribute.css(the._$control0, 'left', the._calPos(val));
                 the._value0 = val;
                 the._upBar();
