@@ -502,10 +502,6 @@ define(function (require, exports, module) {
      * attribute.addClass(ele, 'class1 class2');
      */
     exports.addClass = function (ele, className) {
-        if (!typeis.element(ele)) {
-            return;
-        }
-
         var eles = typeis.array(ele) ? ele : [ele];
 
         dato.each(eles, function (i, ele) {
@@ -527,10 +523,6 @@ define(function (require, exports, module) {
      * attribute.removeClass(ele, 'class1 class2');
      */
     exports.removeClass = function (ele, className) {
-        if (!typeis.element(ele)) {
-            return;
-        }
-
         var eles = typeis.array(ele) ? ele : [ele];
 
         dato.each(eles, function (i, ele) {
@@ -549,10 +541,6 @@ define(function (require, exports, module) {
      * attribute.hasClass(ele, 'class');
      */
     exports.hasClass = function (ele, className) {
-        if (!typeis.element(ele)) {
-            return false;
-        }
-
         return _class(ele, 2, className);
     };
 

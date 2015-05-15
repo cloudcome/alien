@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2015-05-15 15:31
+ -->
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,minimal-ui">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <title>Slidebar.html</title>
+    <style>
+        .demo{
+            padding: 10px;
+            border: 2px solid #d6e9c6;
+        }
+
+        button{
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+
+<div class="demo">
+    单值<span id="val1"></span><button id="btn1">随机值</button><br><br>
+    <div id="demo1"></div>
+</div>
+
+
+<div class="demo">
+    双值<span id="val2"></span><button id="btn2">随机值</button><br><br>
+    <div id="demo2"></div>
+</div>
+
+<pre>
+new Slidebar('#demo1', {
+    value: 40,
+    step: 10
+});
+
+new Slidebar('#demo2', {
+    value: [4, 6],
+    min: 0,
+    max: 10,
+    step: 1
+});
+</pre>
+
+<script src="../coolie.min.js"
+        data-config="./coolie-config.js"
+        data-main="./ui/Slidebar.js"></script>
+
+</body>
+</html>
