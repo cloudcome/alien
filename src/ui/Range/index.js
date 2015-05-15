@@ -1,5 +1,5 @@
 /*!
- * ui/Slidebar
+ * ui/Range
  * @author ydr.me
  * @create 2015-05-15 15:01
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Slidebar/
+     * @module ui/Range/
      */
 
     'use strict';
@@ -36,7 +36,7 @@ define(function (require, exports, module) {
         // 单值：------------o----
         value: 0
     };
-    var Slidebar = ui.create({
+    var Range = ui.create({
         constructor: function ($parent, options) {
             var the = this;
 
@@ -304,7 +304,7 @@ define(function (require, exports, module) {
         }
     });
 
-    Slidebar.defaults = defaults;
+    Range.defaults = defaults;
     modification.importStyle(style);
-    module.exports = Slidebar;
+    module.exports = Range;
 });
