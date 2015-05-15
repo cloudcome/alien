@@ -19,6 +19,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var allocation = require('../../utils/allocation.js');
+    var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var selector = require('../../core/dom/selector.js');
@@ -53,7 +54,8 @@ define(function (require, exports, module) {
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        zIndex: null
+        zIndex: null,
+        autoResize: true
     };
     var Window = ui.create({
         constructor: function ($content, options) {
@@ -97,6 +99,10 @@ define(function (require, exports, module) {
 
             setEasing(the._options);
             the.on('setoptions', setEasing);
+
+            if (options.autoResize) {
+                event.on(window, 'resize', the._onresize = controller.debounce(the.resize.bind(the)));
+            }
 
             return the;
         },
@@ -298,9 +304,24 @@ define(function (require, exports, module) {
 
         /**
          * 获取当前 window 节点
+         * @returns {Element}
          */
         getNode: function () {
             return this._$window;
+        },
+
+
+        /**
+         * 设置 window 内容
+         * @param html
+         * @returns {Window}
+         */
+        setContent: function (html) {
+            var the = this;
+
+            the._$window.innerHTML = html;
+
+            return the;
         },
 
 
@@ -332,13 +353,16 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
             var destroy = function () {
+                if (the._onresize) {
+                    event.on(window, 'resize', the._onresize);
+                }
+
                 if (the._$content) {
                     modification.insert(the._$content, the._$contentPos, 'afterend');
                     modification.remove(the._$contentPos);
                 }
 
                 modification.remove(the._$window);
-                event.un(the._$window, 'click');
 
                 if (typeis.function(callback)) {
                     callback();

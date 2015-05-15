@@ -208,10 +208,6 @@ define(function (require, exports, module) {
             event.on(the._$close, 'click', function () {
                 the.close();
             });
-
-            event.on(win, 'resize', the._onresize = controller.debounce(function (eve) {
-                the.resize();
-            }));
         },
 
 
@@ -345,7 +341,6 @@ define(function (require, exports, module) {
                 modification.remove(the._$pos);
                 event.un(the._$close, 'click');
                 event.un(the._$mask, 'click');
-                event.un(win, 'resize', the._onresize);
                 modification.remove(the._$dialog);
                 the._mask.destroy();
 

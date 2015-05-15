@@ -54,9 +54,9 @@ define(function (require, exports, module) {
     };
     var filters = {};
     var Template = klass.create({
-        constructor: function (tmplate, options) {
+        constructor: function (template, options) {
             this._options = dato.extend(true, {}, configs, options);
-            this._init(tmplate);
+            this._init(String(template));
         },
 
         /**
