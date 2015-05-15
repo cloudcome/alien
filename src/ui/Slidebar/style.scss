@@ -16,12 +16,12 @@
 
   &-bg{
     right: 0;
-    border-color: #BEC4E9;
+    border-color: #bbb;
   }
   
   &-fg{
     width: 0;
-    border-color: #243AB4;
+    border-color: #0b91f5;
     transition: all 200ms;
   }
 
@@ -32,7 +32,7 @@
     font-size: 0;
     line-height: 1;
     border-radius: 100%;
-    background: #BEC4E9;
+    background: #bbb;
     transition: all 200ms;
     top: 50%;
     transform: translateY(-50%);
@@ -40,14 +40,14 @@
     &:hover {
       width: 22px;
       height: 22px;
-      background: #7C89D2;
+      background: #888;
     }
 
     &-active,
     &-active:hover {
       width: 20px;
       height: 20px;
-      background: #243AB4;
+      background: #0b91f5;
     }
   }
 }
