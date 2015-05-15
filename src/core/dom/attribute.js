@@ -67,9 +67,17 @@ define(function (require, exports, module) {
     exports.attr = function (ele, key, val) {
         return _getSet(arguments, {
             get: function (ele, key) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 return ele.getAttribute(key);
             },
             set: function (ele, key, val) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 ele.setAttribute(key, val);
             }
         });
@@ -88,7 +96,7 @@ define(function (require, exports, module) {
      * // => true
      */
     exports.hasAttr = function (ele, key) {
-        if (!ele || ele.nodeType !== 1 || !key) {
+        if (!typeis.element(ele)) {
             return false;
         }
 
@@ -229,6 +237,10 @@ define(function (require, exports, module) {
 
         return _getSet(arguments, {
             get: function (ele, key) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 var temp = key.split('::');
                 var pseudo = temp.length === 1 ? null : temp[temp.length - 1];
 
@@ -237,6 +249,10 @@ define(function (require, exports, module) {
                 return getComputedStyle(ele, pseudo).getPropertyValue(_toSepString(key));
             },
             set: function (ele, key, val) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 key = key.split('::', 1)[0];
 
                 var fix = exports.fixCss(key, val);
@@ -267,7 +283,7 @@ define(function (require, exports, module) {
      * 设置、获取元素的滚动条高度
      * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [top] {Number} 高度
-     * @returns {number|*}
+     * @returns {number|undefined}
      *
      * @example
      * // get
@@ -277,9 +293,13 @@ define(function (require, exports, module) {
      * attribute.scrollTop(ele, 100);
      */
     exports.scrollTop = function (ele, top) {
+        if (!typeis.element(ele)) {
+            return;
+        }
+
         ele = selector.query(ele)[0];
 
-        if (top === undefined) {
+        if (typeis.undefined(top)) {
             return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
         }
 
@@ -296,7 +316,7 @@ define(function (require, exports, module) {
      * 设置、获取元素的滚动条左距离
      * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [left] {Number} 高度
-     * @returns {number|*}
+     * @returns {number|undefined}
      *
      * @example
      * // get
@@ -306,9 +326,13 @@ define(function (require, exports, module) {
      * attribute.scrollLeft(ele, 100);
      */
     exports.scrollLeft = function (ele, left) {
+        if (!typeis.element(ele)) {
+            return;
+        }
+
         ele = selector.query(ele)[0];
 
-        if (left === undefined) {
+        if (typeis.undefined(left)) {
             return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
         }
 
@@ -348,6 +372,10 @@ define(function (require, exports, module) {
     exports.data = function (ele, key, val) {
         return _getSet(arguments, {
             get: function (ele, key) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 var ret = ele.dataset[string.humprize(key)];
 
                 try {
@@ -365,6 +393,10 @@ define(function (require, exports, module) {
                 return ret;
             },
             set: function (ele, key, val) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 if (typeis(val) === 'object') {
                     try {
                         val = JSON.stringify(val);
@@ -385,6 +417,10 @@ define(function (require, exports, module) {
      * @returns {*}
      */
     exports.removeData = function ($ele, key) {
+        if (!typeis.element($ele)) {
+            return;
+        }
+
         return exports.removeAttr($ele, 'data-' + key);
     };
 
@@ -405,9 +441,17 @@ define(function (require, exports, module) {
     exports.html = function (ele, html) {
         return _getSet(arguments, {
             get: function (ele) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 return ele.innerHTML;
             },
             set: function (ele, html) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 ele.innerHTML = html;
             }
         }, 1);
@@ -430,9 +474,17 @@ define(function (require, exports, module) {
     exports.text = function (ele, text) {
         return _getSet(arguments, {
             get: function (ele) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 return ele.innerText;
             },
             set: function (ele, text) {
+                if (!typeis.element(ele)) {
+                    return;
+                }
+
                 ele.innerText = text;
             }
         }, 1);
@@ -450,6 +502,10 @@ define(function (require, exports, module) {
      * attribute.addClass(ele, 'class1 class2');
      */
     exports.addClass = function (ele, className) {
+        if (!typeis.element(ele)) {
+            return;
+        }
+
         var eles = typeis.array(ele) ? ele : [ele];
 
         dato.each(eles, function (i, ele) {
@@ -471,6 +527,10 @@ define(function (require, exports, module) {
      * attribute.removeClass(ele, 'class1 class2');
      */
     exports.removeClass = function (ele, className) {
+        if (!typeis.element(ele)) {
+            return;
+        }
+
         var eles = typeis.array(ele) ? ele : [ele];
 
         dato.each(eles, function (i, ele) {
@@ -489,7 +549,7 @@ define(function (require, exports, module) {
      * attribute.hasClass(ele, 'class');
      */
     exports.hasClass = function (ele, className) {
-        if (!ele || ele.nodeType !== 1) {
+        if (!typeis.element(ele)) {
             return false;
         }
 
