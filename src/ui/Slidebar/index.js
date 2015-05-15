@@ -190,16 +190,19 @@ define(function (require, exports, module) {
             var the = this;
 
             value = typeis.number(value) ? [value] : value;
-            the._update(0, value[0]);
-            the._update(1, value[the._isDouble ? 1 : 0]);
+            the._update(0, value[0], true);
+            the._update(1, value[the._isDouble ? 1 : 0], true);
         },
 
 
         /**
-         * 更新滑块
+         * 更新滑块 + 轨道
+         * @param index
+         * @param val
+         * @param [isUpdatePos]
          * @private
          */
-        _update: function (index, val) {
+        _update: function (index, val, isUpdatePos) {
             var the = this;
 
             val = the._adjustVal(val);
@@ -207,12 +210,12 @@ define(function (require, exports, module) {
             if (index === 0 && val !== the._value0 && (!the._isDouble || !the._value1 || val < the._value1)) {
                 attribute.css(the._$control0, 'left', the._calPos(val));
                 the._value0 = val;
-                the._upBar();
+                the._upBar(isUpdatePos);
                 the._onchange();
             } else if (index === 1 && val !== the._value1 && val > the._value0) {
                 attribute.css(the._$control1, 'left', the._calPos(val));
                 the._value1 = val;
-                the._upBar();
+                the._upBar(isUpdatePos);
                 the._onchange();
             }
         },
@@ -220,13 +223,19 @@ define(function (require, exports, module) {
 
         /**
          * 更新 bar 的长度和边距
+         * @param [isUpdatePos]
          * @private
          */
-        _upBar: function () {
+        _upBar: function (isUpdatePos) {
             var the = this;
 
             var pos0 = the._calPos(the._value0);
             var pos1 = the._calPos(the._value1);
+
+            if (isUpdatePos) {
+                the._pos0 = pos0;
+                the._pos1 = pos1;
+            }
 
             attribute.css(the._$fg, {
                 left: the._isDouble ? pos0 : 0,
