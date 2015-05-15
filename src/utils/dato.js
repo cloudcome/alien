@@ -57,6 +57,22 @@ define(function (require, exports, module) {
 
 
     /**
+     * 重复运行
+     * @param count {Number} 重复次数
+     * @param fn {Function} 重复方法
+     */
+    exports.repeat = function (count, fn) {
+        var i = -1;
+
+        while (++i < count) {
+            if (fn(i) === false) {
+                break;
+            }
+        }
+    };
+
+
+    /**
      * 扩展静态对象
      * @param {Boolean|Object} [isExtendDeep] 是否深度扩展，可省略，默认false
      * @param {Object}  [source] 源对象

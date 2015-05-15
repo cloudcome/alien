@@ -15,16 +15,31 @@ define(function (require, exports, module) {
     var klass = require('../../utils/class.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
     var Mask = require('../Mask/');
     var Window = require('../Window/');
     var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
     var Template = require('../../libs/Template.js');
+    Template.config({
+        debug: true
+    });
     var tpl = new Template(template);
     var win = window;
     var defaults = {
         isModal: true,
-        size: 100,
-        duration: 600,
+        style: {
+            backgroundColor: '#000',
+            color: '#fff',
+            radius: 4,
+            offset: 26,
+            size: 100,
+            count: 12,
+            duration: 600,
+            width: 4,
+            height: 18
+        },
         text: '加载中'
     };
     var Loading = klass.create({
@@ -52,10 +67,15 @@ define(function (require, exports, module) {
                 the._mask = new Mask(win).open();
             }
 
+            options.list = new Array(options.style.count);
             the._window = new Window(win, {
                 width: 'auto',
                 height: 'auto'
             }).setContent(tpl.render(options)).open();
+            attribute.css(the._window.getNode().children[0], {
+                backgroundColor: options.style.backgroundColor,
+                color: options.style.color
+            });
         },
 
 
@@ -74,7 +94,7 @@ define(function (require, exports, module) {
         }
     });
     Loading.defaults = defaults;
-
+    modification.importStyle(style);
 
     /**
      * 实例化一个 Loading
