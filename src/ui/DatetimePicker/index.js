@@ -434,8 +434,27 @@ define(function (require, exports, module) {
          * 销毁实例
          */
         destroy: function () {
+            var the = this;
 
+            if(the._rHours){
+                the._rHours.destroy();
+            }
 
+            if(the._rMinutes){
+                the._rMinutes.destroy();
+            }
+
+            if(the._rSeconds){
+                the._rSeconds.destroy();
+            }
+
+            event.un(the._$year, 'change');
+            event.un(the._$month, 'change');
+            event.un(the._$input, 'focusin', the.open);
+            event.un(the._$list, 'click');
+            event.un(the._$now, 'click');
+            event.un(the._$sure, 'click');
+            the._popup.destroy();
         }
     });
 
