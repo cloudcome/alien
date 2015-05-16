@@ -15,6 +15,8 @@ define(function (require, exports, module) {
     var selector = require('./selector.js');
     var hiddenTagList = 'script link head meta style'.split(' ');
     var alienKey = '-alien-core-dom-see-';
+    var win = window;
+    var doc = win.document;
 
 
     /**
@@ -32,6 +34,11 @@ define(function (require, exports, module) {
         var block = 'block';
         var visible = 'visible';
         var hidden = 'hidden';
+
+        if ($ele === win || $ele === doc) {
+            return visible;
+        }
+
         var nowDisplay = _getDisplay($ele);
 
         if ($ele && !$ele[alienKey + key] && nowDisplay !== 'none') {
