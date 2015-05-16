@@ -25,7 +25,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 获取 zIndex
+     * 使用 UI 基础类给各个 UI 组件来分配 z-index
      * @returns {number}
      */
     exports.getZindex = function () {
