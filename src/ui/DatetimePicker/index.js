@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     var tplWrap = new Template(templateWrap);
     var tplList = new Template(templateList);
     var tplToolbar = new Template(templateToolbar);
-    var alienClass = 'alien-ui-datepicker';
+    var alienClass = 'alien-ui-datetimepicker';
     var alienIndex = 0;
     var $body = document.body;
     var REG_HOUR = /h/i;
