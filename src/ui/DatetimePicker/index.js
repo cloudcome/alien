@@ -68,7 +68,7 @@ define(function (require, exports, module) {
 
             the._id = alienIndex++;
             // 选择的年、月
-            the._current = {};
+            the._select = {};
             // 选择的日期、时间
             the._choose = {};
             // 是否包含小时、分钟、秒
@@ -112,7 +112,7 @@ define(function (require, exports, module) {
             the._$sure = selector.query('.j-sure', $wrap)[0];
 
             if (the._$hour) {
-                the._rHour = new Range(the._$hour, {
+                the._rHours = new Range(the._$hour, {
                     min: 0,
                     max: 23,
                     step: 1,
@@ -125,7 +125,7 @@ define(function (require, exports, module) {
             }
 
             if (the._$minute) {
-                the._rHour = new Range(the._$minute, {
+                the._rMinutes = new Range(the._$minute, {
                     min: 0,
                     max: 59,
                     step: 1,
@@ -138,7 +138,7 @@ define(function (require, exports, module) {
             }
 
             if (the._$second) {
-                the._rHour = new Range(the._$second, {
+                the._rSeconds = new Range(the._$second, {
                     min: 0,
                     max: 59,
                     step: 1,
@@ -151,7 +151,6 @@ define(function (require, exports, module) {
             }
 
             the._renderToolbar();
-            the._renderTime();
         },
 
 
@@ -227,7 +226,7 @@ define(function (require, exports, module) {
         selectYear: function (fullyear) {
             var the = this;
 
-            the._$year.value = fullyear;
+            the._select.year = the._$year.value = fullyear;
 
             return the;
         },
@@ -235,13 +234,13 @@ define(function (require, exports, module) {
 
         /**
          * 选择年份
-         * @param natureMonth
+         * @param month {Number} 月份
          * @returns {DatetimePicker}
          */
-        selectMonth: function (natureMonth) {
+        selectMonth: function (month) {
             var the = this;
 
-            the._$month.value = natureMonth - 1;
+            the._select.month = the._$month.value = month;
 
             return the;
         },
@@ -255,15 +254,20 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            // 打开日历
             event.on(the._$input, 'focusin', the.open.bind(the));
+
+            // 改变年月
             event.on(the._$year, 'change', the._onchangeyear = function () {
-                the._current.year = this.value;
+                the._select.year = this.value;
                 the._renderList();
             });
             event.on(the._$month, 'change', the._onchangemonth = function () {
-                the._current.month = this.value;
+                the._select.month = this.value;
                 the._renderList();
             });
+
+            // 点击日期
             event.on(the._$list, 'click', 'td', the._onchoose = function () {
                 var y = attribute.data(this, 'year');
                 var m = attribute.data(this, 'month');
@@ -284,22 +288,67 @@ define(function (require, exports, module) {
                 attribute.addClass(this, alienClass + '-active');
                 the._onchange();
             });
+
+            // 点击现在
+            event.on(the._$now, 'click', function () {
+                the._date = new Date();
+                the._onchange(the._date);
+                the._render();
+            });
+
+            // 点击确定
+            event.on(the._$sure, 'click', function () {
+                the._popup.close();
+            });
         },
 
 
         /**
          * 日期、时间变化
+         * @param [d] {Date} 设置日期、时间
          * @private
          */
-        _onchange: function () {
+        _onchange: function (d) {
             var the = this;
             var options = the._options;
 
-            the._date = new Date(the._choose.year, the._choose.month, the._choose.date,
+            the._date = d || new Date(the._choose.year, the._choose.month, the._choose.date,
                 the._choose.hours, the._choose.minutes, the._choose.seconds, 0);
 
             the._$input.value = date.format(options.format, the._date);
             the.emit('change', the._date);
+        },
+
+
+        /**
+         * 渲染
+         * @private
+         */
+        _render: function () {
+            var the = this;
+
+            the._choose.year = the._date.getFullYear();
+            the._choose.month = the._date.getMonth();
+            the._choose.date = the._date.getDate();
+            the._choose.hours = the._date.getHours();
+            the._choose.minutes = the._date.getMinutes();
+            the._choose.seconds = the._date.getSeconds();
+            the.selectYear(the._choose.year);
+            the.selectMonth(the._choose.month);
+            the._renderList();
+            the._renderTime();
+
+            if (the._rHours) {
+                the._rHours.change(the._choose.hours);
+            }
+
+            if (the._rMinutes) {
+                the._rMinutes.change(the._choose.minutes);
+            }
+
+            if (the._rSeconds) {
+                the._rSeconds.change(the._choose.seconds);
+            }
         },
 
 
@@ -310,24 +359,9 @@ define(function (require, exports, module) {
         open: function () {
             var the = this;
             var value = the._$input.value;
-            var d = date.parse(value);
-            var year = d.getFullYear();
-            var month = d.getMonth();
 
-            if (value) {
-                the._choose.year = year;
-                the._choose.month = month;
-                the._choose.date = d.getDate();
-            }
-
-            if (the._current.year !== year || the._current.month !== month) {
-                the._current.year = year;
-                the._current.month = month;
-                the.selectYear(the._current.year);
-                the.selectMonth(the._current.month + 1);
-                the._renderList();
-            }
-
+            the._date = date.parse(value);
+            the._render();
             the._popup.open();
 
             return the;
@@ -354,7 +388,7 @@ define(function (require, exports, module) {
         _renderList: function () {
             var the = this;
             var options = the._options;
-            var list = calendar.month(the._current.year, the._current.month, dato.extend({}, options, {
+            var list = calendar.month(the._select.year, the._select.month, dato.extend({}, options, {
                 activeDate: the._choose.year ? new Date(the._choose.year, the._choose.month, the._choose.date) : null
             }));
             var data = {

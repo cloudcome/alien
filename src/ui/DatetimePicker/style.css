@@ -85,7 +85,9 @@
     padding-left: 50px;
     height: 20px;
     line-height: 20px;
-    margin-bottom: 30px; }
+    margin-bottom: 20px; }
+    .alien-ui-datetimepicker-item:last-child {
+      margin-bottom: 0; }
     .alien-ui-datetimepicker-item-key {
       position: absolute;
       top: 0;
