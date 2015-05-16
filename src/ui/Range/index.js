@@ -142,6 +142,12 @@ define(function (require, exports, module) {
             var options = the._options;
             var min;
             var max;
+            var upBar = function (pos0, pos1) {
+                attribute.css(the._$fg, {
+                    left: the._isDouble ? pos0 : 0,
+                    width: the._isDouble ? pos1 - pos0 : pos0
+                });
+            };
 
             event.on(the._$control0, 'dragstart', function () {
                 the._toggleActive(this, true);
@@ -154,7 +160,7 @@ define(function (require, exports, module) {
 
                 if (now >= 0 && now <= the._maxInner - the._size && now <= max) {
                     attribute.css(this, 'left', now);
-                    the._upBar(now, the._pos1);
+                    upBar(now, the._pos1);
                 }
 
                 return false;
@@ -179,7 +185,7 @@ define(function (require, exports, module) {
 
                     if (now >= 0 && now <= the._maxInner - the._size && now >= min) {
                         attribute.css(this, 'left', now);
-                        the._upBar(the._pos0, now);
+                        upBar(the._pos0, now);
                     }
 
                     return false;
@@ -244,7 +250,7 @@ define(function (require, exports, module) {
 
                 attribute.css(the._$control0, 'left', (val * 100 / options.max) + '%');
                 the._pos0 = the._calPos(val);
-                the._upBar(the._pos0, the._pos1);
+                the._upBar(val, the._value1);
 
                 if (val !== the._value0) {
                     the._value0 = val;
@@ -257,7 +263,7 @@ define(function (require, exports, module) {
 
                 attribute.css(the._$control1, 'left', (val * 100 / options.max) + '%');
                 the._pos1 = the._calPos(val);
-                the._upBar(the._pos0, the._pos1);
+                the._upBar(the._value0, val);
 
                 if (val !== the._value1) {
                     the._value1 = val;
@@ -269,17 +275,25 @@ define(function (require, exports, module) {
 
         /**
          * 更新 bar 的长度和边距
-         * @param pos0 {Number} control0 位置
-         * @param pos1 {Number} control1 位置
+         * @param val0 {Number} 小值
+         * @param val1 {Number} 大值
          * @private
          */
-        _upBar: function (pos0, pos1) {
+        _upBar: function (val0, val1) {
             var the = this;
+            var options = the._options;
 
-            attribute.css(the._$fg, {
-                left: the._isDouble ? pos0 : 0,
-                width: the._isDouble ? pos1 - pos0 : pos0
-            });
+            if (the._isDouble) {
+                attribute.css(the._$fg, {
+                    left: (val0 * 100 / options.max) + '%',
+                    width: ((val1 - val0) * 100 / options.max) + '%'
+                });
+            } else {
+                attribute.css(the._$fg, {
+                    left: 0,
+                    width: (val0 * 100 / options.max) + '%'
+                });
+            }
         },
 
 
