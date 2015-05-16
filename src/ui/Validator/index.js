@@ -178,7 +178,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            event.on(the._$form, 'focusin', inputSelector, the._onfocusin.bind(the));
+            event.on(the._$form, 'focus', inputSelector, the._onfocusin.bind(the));
 
             if (options.validateEvent) {
                 event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
@@ -509,7 +509,7 @@ define(function (require, exports, module) {
             var the = this;
 
             attribute.removeClass(the._nameItemMap, formItemStatusClass);
-            event.un(the._$form, 'focusin', the._onfocusin);
+            event.un(the._$form, 'focus', the._onfocusin);
             event.un(the._$form, the._options.validateEvent, the._onvalidate);
             event.un(the._$form, 'click', the._onsubmit);
             attribute.removeClass(the._$form, alienClass);
