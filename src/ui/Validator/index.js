@@ -229,7 +229,7 @@ define(function (require, exports, module) {
          * @param eve
          * @private
          */
-        _onfocusin: function (eve) {
+        _onfocus: function (eve) {
             var the = this;
             var $input = eve.target;
 
@@ -509,7 +509,7 @@ define(function (require, exports, module) {
             var the = this;
 
             attribute.removeClass(the._nameItemMap, formItemStatusClass);
-            event.un(the._$form, 'focus', the._onfocusin);
+            event.un(the._$form, 'focus', the._onfocus);
             event.un(the._$form, the._options.validateEvent, the._onvalidate);
             event.un(the._$form, 'click', the._onsubmit);
             attribute.removeClass(the._$form, alienClass);
