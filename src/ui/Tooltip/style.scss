@@ -1,0 +1,26 @@
+.alien-ui-tooltip{
+  &-popup{
+    background: #000;
+    color: #FFF;
+    border: 0;
+    border-radius: 3px;
+
+    .alien-ui-popup-arrow:before, .alien-ui-popup-arrow:after{
+      border: 5px solid rgba(0, 0, 0, 0);
+    }
+
+    .alien-ui-popup-arrow:before{
+      display: none;
+    }
+
+    .alien-ui-popup-arrow-bottom:after{
+      border-top-color: #000;
+    }
+
+    .alien-ui-popup-content{
+      padding: 5px 10px;
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+}

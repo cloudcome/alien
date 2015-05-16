@@ -21,41 +21,52 @@
     <title>Tooltip.html</title>
     <style>
         body {
-            margin: 50px;
-        }
-
-        button {
-            padding: 10px 20px;
             margin: 100px;
+            line-height: 2;
         }
 
-        pre{
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #f5f5f5;
-            padding: 20px;
-            margin: 10px;
+        .tooltip{
+            color: #7f0a0c;
+            font-weight: 900;
+            font-size: 120%;
         }
 
+        img{
+            display: block;
+            margin: 10px auto;
+        }
+
+        a.tooltip,
+        b.tooltip,
+        em.tooltip{
+            background: #f6f6f6;
+            padding: 10px;
+            margin: 0 10px;
+            border: 1px solid #d43f3a;
+        }
     </style>
 </head>
 <body>
 
-<pre>
-new Tooltip(this, {
-    body: '我是自动提示的，虽然我的位置是智能的，但是出现的位置还是以上边居多，因为通常鼠标是在下边一点，然后文字在中间，提示在上边，非常的合适'
-});
-</pre>
 
-<button id="btn-0">自动位置提示</button>
-<button id="btn-1">上边提示</button>
-<button id="btn-2">右边提示</button>
-<button id="btn-3">下边提示</button>
-<button id="btn-4">左边提示</button>
+<p>近日，Windows 10（Build 10120）主推的<a class="tooltip" data-tooltip="喜大普奔喜大普奔喜大普奔喜大普奔喜大普奔喜大普奔喜大普奔喜大普奔">新浏览器Edge</a>在用户体验方面获得诸多改善。
+    比如，获得了“New Tab（新标签）”页面（如下图），允许用户快速访问最新资讯和热点网站。
+    从图片中可以看到，相比于该系统的其他部分，全新的用户界面十分具备现代感。</p>
+
+<img class="tooltip" data-tooltip="图片的 tooltip" src="http://leiphone.qiniudn.com/uploads/new/article/600_600/201505/5556e1f1db93a.jpg" alt=""/>
+
+<p>搜索框下方是热门网站，你经常访问的网站也会出现在这个地方，在Edge浏览器中，
+    如果键入的关键字是<b class="tooltip" data-tooltip="windows Stroe 特指 windows 应用程序的在线商店">Windows Store</b>上的应用，那么热门网站下方的“Get this app”来直接跳转下载安装。
+    再下方则是最新资讯、Windows Store的热门应用和用户当地的天气情况。</p>
+
+<p>从整体上来说这个用户界面非常的简洁优秀，能够满足用户的使用需求。当然如果你并不喜欢这种新的<em class="tooltip">“New Tab”</em>页面的UI，
+    也可以通过选项进行关闭，由空白页面替代。</p>
 
 
-<script src="../coolie.min.js" data-main="./ui/Tooltip.js"></script>
-<script src="../coolie-config.js"></script>
+
+<script src="../coolie.min.js"
+        data-config="./coolie-config.js"
+        data-main="./ui/Tooltip.js"></script>
 
 
 </body>

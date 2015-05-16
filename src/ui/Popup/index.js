@@ -211,8 +211,14 @@ define(function (require, exports, module) {
             }, {
                 duration: options.duration,
                 easing: options.easing
-            }, callback);
-            the.visible = true;
+            }, function () {
+                the.visible = true;
+
+                if (typeis.function(callback)) {
+                    callback.apply(this, arguments);
+                }
+            });
+
             the.emit('open');
         },
 
@@ -236,11 +242,13 @@ define(function (require, exports, module) {
                     display: 'none',
                     scale: 1
                 });
+                the.visible = false;
+
                 if (typeis.function(callback)) {
                     callback.apply(this, arguments);
                 }
             });
-            the.visible = false;
+
             the.emit('close');
         },
 
