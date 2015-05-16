@@ -8,10 +8,10 @@
 define(function (require, exports, module) {
     "use strict";
     
-    var Datepicker = require('../../src/ui/Datepicker/');
+    var DatetimePicker = require('../../src/ui/DatetimePicker/');
 
-    //new Datepicker('#text1');
-    new Datepicker('#text2', {
+    //new DatetimePicker('#text1');
+    new DatetimePicker('#text2', {
         format: 'YYYY-MM-DD HH:mm:ss'
     });
 });
