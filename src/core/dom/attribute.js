@@ -43,6 +43,10 @@ define(function (require, exports, module) {
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
     //var alienKey = '-alien-core-dom-attribute-';
     var isRelativeToViewport = _isRelativeToViewport();
+    var win = window;
+    var doc = win.document;
+    var html = doc.documentElement;
+    var body = doc.body;
 
 
     /**
@@ -300,12 +304,12 @@ define(function (require, exports, module) {
         ele = selector.query(ele)[0];
 
         if (typeis.undefined(top)) {
-            return _isDispute(ele) ? Math.max(document.body.scrollTop, document.documentElement.scrollTop) : ele.scrollTop;
+            return _isDispute(ele) ? Math.max(body.scrollTop, html.scrollTop) : ele.scrollTop;
         }
 
         if (_isDispute(ele)) {
-            document.body.scrollTop = top;
-            document.documentElement.scrollTop = top;
+            body.scrollTop = top;
+            html.scrollTop = top;
         } else {
             ele.scrollTop = top;
         }
@@ -333,12 +337,12 @@ define(function (require, exports, module) {
         ele = selector.query(ele)[0];
 
         if (typeis.undefined(left)) {
-            return _isDispute(ele) ? Math.max(document.body.scrollLeft, document.documentElement.scrollLeft) : ele.scrollLeft;
+            return _isDispute(ele) ? Math.max(body.scrollLeft, html.scrollLeft) : ele.scrollLeft;
         }
 
         if (_isDispute(ele)) {
-            document.body.scrollLeft = left;
-            document.documentElement.scrollLeft = left;
+            body.scrollLeft = left;
+            html.scrollLeft = left;
         } else {
             ele.scrollLeft = left;
         }
@@ -584,7 +588,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位宽度
      * content + padding + border
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
@@ -603,7 +607,7 @@ define(function (require, exports, module) {
     /**
      * 获取、设置元素的占位宽度
      * content + padding
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 宽度值
      * @returns {Number|undefined|*}
      *
@@ -706,11 +710,11 @@ define(function (require, exports, module) {
      */
     exports.getElementFromPoint = function (clientX, clientY) {
         if (!isRelativeToViewport) {
-            clientX += window.pageXOffset;
-            clientY += window.pageYOffset;
+            clientX += win.pageXOffset;
+            clientY += win.pageYOffset;
         }
 
-        return document.elementFromPoint(clientX, clientY);
+        return doc.elementFromPoint(clientX, clientY);
     };
 
 
@@ -764,7 +768,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _isDispute(ele) {
-        return ele === window || ele === document || ele === document.body || ele === document.documentElement;
+        return ele === win || ele === doc || ele === body || ele === html;
     }
 
 
@@ -883,7 +887,7 @@ define(function (require, exports, module) {
                             return window['inner' + key2];
 
                         case 'document':
-                            return document.documentElement['scroll' + key2];
+                            return Math.max(html['scroll' + key2], html['client' + key2])
                     }
                 }
                 // set
@@ -970,8 +974,8 @@ define(function (require, exports, module) {
      * @returns {boolean}
      */
     function _isRelativeToViewport() {
-        var x = window.pageXOffset ? window.pageXOffset + window.innerWidth - 1 : 0;
-        var y = window.pageYOffset ? window.pageYOffset + window.innerHeight - 1 : 0;
+        var x = win.pageXOffset ? win.pageXOffset + win.innerWidth - 1 : 0;
+        var y = win.pageYOffset ? win.pageYOffset + win.innerHeight - 1 : 0;
 
         if (!x && !y) {
             return true;
@@ -979,6 +983,6 @@ define(function (require, exports, module) {
 
         // Test with a point larger than the viewport. If it returns an element,
         // then that means elementFromPoint takes page coordinates.
-        return !document.elementFromPoint(x, y);
+        return !doc.elementFromPoint(x, y);
     }
 });
