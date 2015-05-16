@@ -1,11 +1,14 @@
 <div class="alien-ui-datetimepicker {{if hasHour}}alien-ui-datetimepicker-wide{{/if}}" id="alien-ui-datetimepicker-{{id}}">
-    <!-- toolbar -->
-    <div class="j-flag"></div>
-    <!-- list -->
-    <div class="j-flag"></div>
+    <div class="alien-ui-datetimepicker-date">
+        <!-- toolbar -->
+        <div class="j-flag"></div>
+        <!-- list -->
+        <div class="j-flag"></div>
+    </div>
     <!-- range -->
     {{if hasHour}}
-        <div class=" alien-ui-datetimepicker-item">
+    <div class="alien-ui-datetimepicker-time">
+        <div class="alien-ui-datetimepicker-item">
             <div class="alien-ui-datetimepicker-item-key">时间：</div>
             <div class="alien-ui-datetimepicker-item-val j-flag"></div>
         </div>
@@ -28,5 +31,10 @@
             <div class="alien-ui-datetimepicker-item-val j-flag"></div>
         </div>
         {{/if}}
+    </div>
     {{/if}}
+    <div class="alien-ui-datetimepicker-action">
+        <div class="alien-ui-datetimepicker-button j-now">现在</div>
+        <div class="alien-ui-datetimepicker-button j-sure">确定</div>
+    </div>
 </div>

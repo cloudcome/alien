@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     
     var DatetimePicker = require('../../src/ui/DatetimePicker/');
 
-    //new DatetimePicker('#text1');
+    new DatetimePicker('#text1');
     new DatetimePicker('#text2', {
         format: 'YYYY-MM-DD HH:mm:ss'
     });
