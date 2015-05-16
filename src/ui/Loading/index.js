@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     var defaults = {
         isModal: true,
         style: {
-            backgroundColor: '#000',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
             color: '#fff',
             radius: 4,
             offset: 26,
