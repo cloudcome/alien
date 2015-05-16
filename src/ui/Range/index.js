@@ -44,7 +44,9 @@ define(function (require, exports, module) {
         max: 100,
         // 数组：---o--------o----
         // 单值：------------o----
-        value: 0
+        value: 0,
+        // 最小刻度间距，小于此间距将不会显示刻度
+        scale: 10
     };
     var Range = ui.create({
         constructor: function ($parent, options) {
