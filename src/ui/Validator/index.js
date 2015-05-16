@@ -234,7 +234,7 @@ define(function (require, exports, module) {
             var $input = eve.target;
 
             this.emitMsg($input.name, false);
-            this.emit('focusin', $input);
+            this.emit('focus', $input);
         },
 
 
