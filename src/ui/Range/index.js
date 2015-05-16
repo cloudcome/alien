@@ -128,8 +128,8 @@ define(function (require, exports, module) {
             the._$control0 = nodes[3];
             the._$control1 = nodes[4];
             the.update();
-            the._update(0, options.value[0]);
-            the._update(1, options.value[the._isDouble ? 1 : 0]);
+            the._update(0, the._value0 = options.value[0]);
+            the._update(1, the._value1 = options.value[the._isDouble ? 1 : 0]);
             the._pos0 = the._calPos(the._value0);
             the._pos1 = the._calPos(the._value1);
         },
@@ -160,10 +160,15 @@ define(function (require, exports, module) {
             event.on(the._$control0, 'drag', function (eve) {
                 var now = the._pos0 + eve.alienDetail.deltaX;
 
-                if (now >= 0 && now <= the._maxInner - the._size && now <= max) {
-                    attribute.css(this, 'left', now);
-                    upBar(now, the._pos1);
+                if (now > max) {
+                    now = max;
+                } else if (now < 0) {
+                    now = 0;
                 }
+
+                attribute.css(this, 'left', now);
+                upBar(now, the._pos1);
+                the._onchange(the._calVal(now), the._value1);
 
                 return false;
             });
@@ -179,16 +184,22 @@ define(function (require, exports, module) {
                 event.on(the._$control1, 'dragstart', function () {
                     the._toggleActive(this, true);
                     min = the._calPos(the._isDouble ? the._value0 + options.step : options.max);
+                    max = the._calPos(options.max);
                     return false;
                 });
 
                 event.on(the._$control1, 'drag', function (eve) {
                     var now = the._pos1 + eve.alienDetail.deltaX;
 
-                    if (now >= 0 && now <= the._maxInner - the._size && now >= min) {
-                        attribute.css(this, 'left', now);
-                        upBar(the._pos0, now);
+                    if (now < min) {
+                        now = min;
+                    } else if (now > max) {
+                        now = max;
                     }
+
+                    attribute.css(this, 'left', now);
+                    upBar(the._pos0, now);
+                    the._onchange(the._value0, the._calVal(now));
 
                     return false;
                 });
@@ -207,16 +218,23 @@ define(function (require, exports, module) {
          * 数据 change
          * @private
          */
-        _onchange: function () {
+        _onchange: function (val0, val1) {
             var the = this;
+            var change = function () {
+                the.emit('change', the._isDouble ? {
+                    min: the._value0,
+                    max: the._value1
+                } : {
+                    min: the._options.min,
+                    max: the._value0
+                });
+            };
 
-            the.emit('change', the._isDouble ? {
-                min: the._value0,
-                max: the._value1
-            } : {
-                min: the._options.min,
-                max: the._value0
-            });
+            if (val0 !== the._value0 || val1 !== the._value1) {
+                the._value0 = val0;
+                the._value1 = val1;
+                change();
+            }
         },
 
 
@@ -226,10 +244,27 @@ define(function (require, exports, module) {
          */
         change: function (value) {
             var the = this;
+            var options = the._options;
 
             value = typeis.number(value) ? [value] : value;
-            the._update(0, value[0], true);
-            the._update(1, value[the._isDouble ? 1 : 0], true);
+
+            if (the._isDouble) {
+                if (value[0] > value[1]) {
+                    value[2] = value[0];
+                    value[0] = value[1];
+                    value[1] = value[2];
+                }
+
+                if (value[1] - value[0] >= options.step) {
+                    the._value0 = the._adjustVal(value[0])
+                    the._value1 = the._adjustVal(value[1])
+                    the._update(0, value[0]);
+                    the._update(1, value[1]);
+                }
+            } else {
+                the._value0 = the._adjustVal(value[0])
+                the._update(0, value[0]);
+            }
         },
 
 
@@ -253,11 +288,6 @@ define(function (require, exports, module) {
                 attribute.css(the._$control0, 'left', (val * 100 / options.max) + '%');
                 the._pos0 = the._calPos(val);
                 the._upBar(val, the._value1);
-
-                if (val !== the._value0) {
-                    the._value0 = val;
-                    the._onchange();
-                }
             } else {
                 if (val <= the._value0) {
                     val = the._value0 + options.step;
@@ -266,11 +296,6 @@ define(function (require, exports, module) {
                 attribute.css(the._$control1, 'left', (val * 100 / options.max) + '%');
                 the._pos1 = the._calPos(val);
                 the._upBar(the._value0, val);
-
-                if (val !== the._value1) {
-                    the._value1 = val;
-                    the._onchange();
-                }
             }
         },
 
@@ -318,15 +343,14 @@ define(function (require, exports, module) {
         /**
          * 计算位置
          * @param val
-         * @param [isBar]
          * @returns {number}
          * @private
          */
-        _calPos: function (val, isBar) {
+        _calPos: function (val) {
             var the = this;
             var options = the._options;
 
-            return val / (options.max - options.min) * (the._maxInner - (isBar ? 0 : the._size));
+            return val * the._maxInner / (options.max - options.min);
         },
 
 
