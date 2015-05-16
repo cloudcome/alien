@@ -67,8 +67,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._id = alienIndex++;
-            // 选择的年、月
-            the._select = {};
+            the._lastChoose = {};
             // 选择的日期、时间
             the._choose = {};
             // 是否包含小时、分钟、秒
@@ -226,7 +225,7 @@ define(function (require, exports, module) {
         selectYear: function (fullyear) {
             var the = this;
 
-            the._select.year = the._$year.value = fullyear;
+            the._choose.year = the._$year.value = fullyear;
 
             return the;
         },
@@ -240,7 +239,7 @@ define(function (require, exports, module) {
         selectMonth: function (month) {
             var the = this;
 
-            the._select.month = the._$month.value = month;
+            the._choose.month = the._$month.value = month;
 
             return the;
         },
@@ -259,11 +258,11 @@ define(function (require, exports, module) {
 
             // 改变年月
             event.on(the._$year, 'change', the._onchangeyear = function () {
-                the._select.year = this.value;
+                the._choose.year = this.value;
                 the._renderList();
             });
             event.on(the._$month, 'change', the._onchangemonth = function () {
-                the._select.month = this.value;
+                the._choose.month = this.value;
                 the._renderList();
             });
 
@@ -298,6 +297,7 @@ define(function (require, exports, module) {
 
             // 点击确定
             event.on(the._$sure, 'click', function () {
+                the._onchange();
                 the._popup.close();
             });
         },
@@ -313,7 +313,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._date = d || new Date(the._choose.year, the._choose.month, the._choose.date,
-                the._choose.hours, the._choose.minutes, the._choose.seconds, 0);
+                    the._choose.hours, the._choose.minutes, the._choose.seconds, 0);
 
             the._$input.value = date.format(options.format, the._date);
             the.emit('change', the._date);
@@ -362,6 +362,7 @@ define(function (require, exports, module) {
 
             the._date = date.parse(value);
             the._render();
+            the._onchange();
             the._popup.open();
 
             return the;
@@ -387,8 +388,13 @@ define(function (require, exports, module) {
          */
         _renderList: function () {
             var the = this;
+
+            if (the._lastChoose.year === the._choose.year && the._lastChoose.month === the._choose.month) {
+                return;
+            }
+
             var options = the._options;
-            var list = calendar.month(the._select.year, the._select.month, dato.extend({}, options, {
+            var list = calendar.month(the._choose.year, the._choose.month, dato.extend({}, options, {
                 activeDate: the._choose.year ? new Date(the._choose.year, the._choose.month, the._choose.date) : null
             }));
             var data = {
@@ -405,6 +411,8 @@ define(function (require, exports, module) {
             }
 
             the._$list.innerHTML = tplList.render(data);
+            the._lastChoose.year = the._choose.year;
+            the._lastChoose.month = the._choose.month;
         },
 
 
