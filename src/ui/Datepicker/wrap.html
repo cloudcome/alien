@@ -1,4 +1,32 @@
 <div class="alien-ui-datepicker" id="alien-ui-datepicker-{{id}}">
+    <!-- toolbar -->
     <div class="j-flag"></div>
+    <!-- list -->
     <div class="j-flag"></div>
+    <!-- range -->
+    {{if hasHour}}
+        <div class=" alien-ui-datepicker-item">
+            <div class="alien-ui-datepicker-item-key">时间：</div>
+            <div class="alien-ui-datepicker-item-val j-flag"></div>
+        </div>
+
+        <div class="alien-ui-datepicker-item">
+            <div class="alien-ui-datepicker-item-key">小时：</div>
+            <div class="alien-ui-datepicker-item-val j-flag"></div>
+        </div>
+
+        {{if hasMinute}}
+        <div class="alien-ui-datepicker-item">
+            <div class="alien-ui-datepicker-item-key">分钟：</div>
+            <div class="alien-ui-datepicker-item-val j-flag"></div>
+        </div>
+        {{/if}}
+
+        {{if hasSecond}}
+        <div class="alien-ui-datepicker-item">
+            <div class="alien-ui-datepicker-item-key">秒数：</div>
+            <div class="alien-ui-datepicker-item-val j-flag"></div>
+        </div>
+        {{/if}}
+    {{/if}}
 </div>

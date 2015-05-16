@@ -76,3 +76,17 @@
   .alien-ui-datepicker .alien-ui-datepicker-active:hover {
     background: #3AA1DF;
     color: #FFF; }
+  .alien-ui-datepicker-item {
+    position: relative;
+    padding-left: 50px;
+    height: 50px; }
+    .alien-ui-datepicker-item-key {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center; }
+    .alien-ui-datepicker-item-val {
+      height: 50px; }

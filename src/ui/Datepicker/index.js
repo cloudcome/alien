@@ -26,13 +26,16 @@ define(function (require, exports, module) {
     var templateList = require('./list.html', 'html');
     var templateToolbar = require('./toolbar.html', 'html');
     var style = require('./style.css', 'css');
+    var Range = require('../../ui/Range/');
     var tplWrap = new Template(templateWrap);
     var tplList = new Template(templateList);
     var tplToolbar = new Template(templateToolbar);
     var alienClass = 'alien-ui-datepicker';
     var alienIndex = 0;
     var $body = document.body;
-    var now = new Date();
+    var REG_HOUR = /h/i;
+    var REG_MINUTE = /m/;
+    var REG_SECOND = /s/;
     var defaults = {
         format: 'YYYY-MM-DD',
         firstDayInWeek: 0,
@@ -44,9 +47,11 @@ define(function (require, exports, module) {
             weekPrefix: '',
             weeks: ['日', '一', '二', '三', '四', '五', '六']
         },
-        range: [1970, now.getFullYear()],
+        range: [new Date(1970, 0, 1, 8, 0, 0, 0), new Date()],
         duration: 300,
-        easing: 'in-out'
+        easing: 'in-out',
+        disabledPrevMonth: true,
+        disabledNextMonth: true
     };
     var Datepicker = ui.create({
         constructor: function ($input, options) {
@@ -58,10 +63,15 @@ define(function (require, exports, module) {
         },
         _init: function () {
             var the = this;
+            var options = the._options;
 
             the._id = alienIndex++;
             the._current = {};
             the._choose = {};
+            // 是否包含小时、分钟、秒
+            the._hasHour = REG_HOUR.test(options.format);
+            the._hasMinute = REG_MINUTE.test(options.format);
+            the._hasSecond = REG_SECOND.test(options.format);
             the._initNode();
             the._initEvent();
         },
@@ -75,16 +85,51 @@ define(function (require, exports, module) {
             var the = this;
 
             modification.insert(tplWrap.render({
-                id: the._id
+                id: the._id,
+                hasHour: the._hasHour,
+                hasMinute: the._hasMinute,
+                hasSecond: the._hasSecond,
             }), $body, 'beforeend');
 
             var $wrap = selector.query('#' + alienClass + '-' + the._id)[0];
             var nodes = selector.query('.j-flag', $wrap);
+            var now = new Date();
 
             the._$toolbar = nodes[0];
             the._$list = nodes[1];
+            the._$rangeText= nodes[2];
+            the._$hour = nodes[3];
+            the._$minute = nodes[4];
+            the._$second = nodes[5];
             the._$wrap = $wrap;
             the._renderToolbar();
+
+            if(the._$hour){
+                the._rHour = new Range(the._$hour, {
+                    min: 0,
+                    max: 24,
+                    step: 1,
+                    value: now.getHours()
+                });
+            }
+
+            if(the._$minute){
+                the._rHour = new Range(the._$minute, {
+                    min: 0,
+                    max: 60,
+                    step: 1,
+                    value: now.getMinutes()
+                });
+            }
+
+            if(the._$second){
+                the._rHour = new Range(the._$second, {
+                    min: 0,
+                    max: 60,
+                    step: 1,
+                    value: now.getSeconds()
+                });
+            }
         },
 
 
@@ -98,7 +143,7 @@ define(function (require, exports, module) {
             var i;
             var j;
 
-            for (i = options.range[0], j = options.range[1]; i <= j; i++) {
+            for (i = options.range[0].getFullYear(), j = options.range[1].getFullYear(); i <= j; i++) {
                 data.years.push({
                     value: i,
                     text: i + options.lang.year
@@ -157,7 +202,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            event.on(document, 'click', the._onclick.bind(the));
+            //event.on(document, 'click', the._onclick.bind(the));
             event.on(the._$input, 'focusin', the.open.bind(the));
             event.on(the._$year, 'change', the._onchangeyear = function () {
                 the._current.year = this.value;
@@ -171,7 +216,7 @@ define(function (require, exports, module) {
                 var year = attribute.data(this, 'year');
                 var month = attribute.data(this, 'month');
 
-                if (year < options.range[0] || year > options.range[1]) {
+                if (year < options.range[0].getFullYear() || year > options.range[1].getFullYear()) {
                     return;
                 }
 

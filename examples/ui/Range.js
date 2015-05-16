@@ -12,37 +12,37 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Slidebar = require('../../src/ui/Slidebar/');
+    var Range = require('../../src/ui/Range/');
     var random = require('../../src/utils/random.js');
     var $val1 = document.getElementById('val1');
     var $btn1 = document.getElementById('btn1');
     var $val2 = document.getElementById('val2');
     var $btn2 = document.getElementById('btn2');
 
-    var s1 = new Slidebar('#demo1', {
+    var r1 = new Range('#demo1', {
         value: 40,
         step: 10
     });
-    s1.on('change', function (val) {
+    r1.on('change', function (val) {
         $val1.innerHTML = JSON.stringify(val);
     });
 
     $btn1.onclick = function () {
-        s1.change(random.number(0, 100));
+        r1.change(random.number(0, 100));
     };
 
-    var s2 = new Slidebar('#demo2', {
+    var r2 = new Range('#demo2', {
         value: [4, 6],
         min: 0,
         max: 10,
         step: 1
     });
 
-    s2.on('change', function (val) {
+    r2.on('change', function (val) {
         $val2.innerHTML = JSON.stringify(val);
     });
 
     $btn2.onclick = function () {
-        s2.change([random.number(0, 10), random.number(0, 10)]);
+        r2.change([random.number(0, 10), random.number(0, 10)]);
     };
 });

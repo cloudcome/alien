@@ -431,7 +431,6 @@ define(function (require, exports, module) {
             });
 
             ajaxOptions.body = fd;
-
             the._xhr = xhr.ajax(ajaxOptions)
                 .on('progress', function (eve) {
                     the._$submit.innerHTML = '正在上传 <b>' + eve.alienDetail.percent + '</b>';
@@ -442,7 +441,11 @@ define(function (require, exports, module) {
                 .on('error', function (err) {
                     the.emit('error', err);
                 })
-                .on('finish', function () {
+                .on('complete', function (err, json) {
+                    the.emit('complete', err, json);
+                })
+                .on('finish', function (err, json) {
+                    the.emit('finish', err, json);
                     the._isUpload = false;
                     the._$submit.innerHTML = the._submitHTML;
                     the.close();
