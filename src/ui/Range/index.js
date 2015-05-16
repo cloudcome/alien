@@ -8,6 +8,16 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Range/
+     * @requires libs/Template/
+     * @requires core/dom/modification
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/animation
+     * @requires core/event/drag
+     * @requires utils/dato
+     * @requires utils/number
+     * @requires utils/typeis
+     * @requires ui/
      */
 
     'use strict';
