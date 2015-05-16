@@ -48,8 +48,41 @@ define(function (require, exports, module) {
         r2.change([random.number(0, 10), random.number(0, 10)]);
     };
 
+    var date = new Date();
+
+    var r3 = new Range('#demo3', {
+        value: date.getHours(),
+        min: 0,
+        max: 23,
+        step: 1
+    });
+
+    var r4 = new Range('#demo4', {
+        value: date.getMinutes(),
+        min: 0,
+        max: 59,
+        step: 1
+    });
+
+    var r5 = new Range('#demo5', {
+        value: date.getSeconds(),
+        min: 0,
+        max: 59,
+        step: 1
+    });
+
+    window.setInterval(function () {
+        var date = new Date();
+        r3.change(date.getHours());
+        r4.change(date.getMinutes());
+        r5.change(date.getSeconds());
+    }, 1000);
+
     window.onresize = function () {
         r1.update();
         r2.update();
+        r3.update();
+        r4.update();
+        r5.update();
     };
 });

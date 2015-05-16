@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         // 单值：------------o----
         value: 0,
         // 最小刻度间距，小于此间距将不会显示刻度
-        scale: 50
+        scale: 20
     };
     var Range = ui.create({
         constructor: function ($parent, options) {
