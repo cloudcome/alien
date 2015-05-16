@@ -1,0 +1,40 @@
+.alien-ui-slidebar {
+  position: relative;
+  height: 20px; }
+  .alien-ui-slidebar-bg,
+  .alien-ui-slidebar-fg {
+    position: absolute;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+    border-top: 2px solid;
+    top: 50%;
+    left: 0; }
+  .alien-ui-slidebar-bg {
+    right: 0;
+    border-color: #bbb; }
+  .alien-ui-slidebar-fg {
+    width: 0;
+    border-color: #0b91f5;
+    transition: all 200ms; }
+  .alien-ui-slidebar-control {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    font-size: 0;
+    line-height: 1;
+    border-radius: 100%;
+    background: #bbb;
+    transition: all 200ms;
+    top: 50%;
+    transform: translateY(-50%); }
+    .alien-ui-slidebar-control:hover {
+      width: 22px;
+      height: 22px;
+      background: #888; }
+    .alien-ui-slidebar-control-active,
+    .alien-ui-slidebar-control-active:hover {
+      width: 20px;
+      height: 20px;
+      background: #0b91f5; }
