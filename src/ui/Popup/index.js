@@ -217,6 +217,7 @@ define(function (require, exports, module) {
                 duration: options.duration,
                 easing: options.easing
             }, callback);
+            the.visible = true;
             the.emit('open');
         },
 
@@ -244,6 +245,7 @@ define(function (require, exports, module) {
                     callback.apply(this, arguments);
                 }
             });
+            the.visible = false;
             the.emit('close');
         },
 
