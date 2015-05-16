@@ -7,7 +7,20 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/DatetimePicker/
+     * @requires utils/calendar
+     * @requires utils/dato
+     * @requires utils/date
+     * @requires utils/string
+     * @requires utils/typeis
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires core/event/base
+     * @requires libs/Template
+     * @requires ui/Range/
+     * @requires ui/Popup/
      */
     'use strict';
 
@@ -49,7 +62,7 @@ define(function (require, exports, module) {
             weeks: ['日', '一', '二', '三', '四', '五', '六']
         },
         range: [new Date(1970, 0, 1, 8, 0, 0, 0), new Date()],
-        duration: 300,
+        duration: 234,
         easing: 'in-out',
         disabledPrevMonth: true,
         disabledNextMonth: true
