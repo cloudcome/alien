@@ -268,7 +268,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             // 打开日历
-            event.on(the._$input, 'focusin', the.open.bind(the));
+            event.on(the._$input, 'focus', the.open.bind(the));
 
             // 改变年月
             event.on(the._$year, 'change', the._onchangeyear = function () {
@@ -450,7 +450,7 @@ define(function (require, exports, module) {
 
             event.un(the._$year, 'change');
             event.un(the._$month, 'change');
-            event.un(the._$input, 'focusin', the.open);
+            event.un(the._$input, 'focus', the.open);
             event.un(the._$list, 'click');
             event.un(the._$now, 'click');
             event.un(the._$sure, 'click');
