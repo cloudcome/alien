@@ -40,10 +40,10 @@ define(function (require, exports, module) {
     var defaults = {
         // 位置：auto、top、right、bottom、left
         position: 'auto',
-        // 偏移距离，通常为箭头的尺寸
-        offset: 10,
-        // 是否有箭头指示
-        hasArrow: true,
+        // 箭头的尺寸
+        arrowSize: 10,
+        // 偏移距离，通常为0
+        offset: 0,
         // 对齐优先级：center、side
         // center:
         //       [=====]
@@ -68,11 +68,6 @@ define(function (require, exports, module) {
 
             the._$target = selector.query($target)[0];
             the._options = dato.extend({}, defaults, options);
-
-            if (!the._options.hasArrow) {
-                the._options.offset = 0;
-            }
-
             the._init();
         },
 
@@ -295,49 +290,49 @@ define(function (require, exports, module) {
                 switch (dir) {
                     case 'bottom':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top + the._target.height + options.offset;
+                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset;
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.offset;
+                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
 
                     case 'top':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top - options.offset - the._popup.height;
+                        pos.top = the._target.top - options.arrowSize - the._popup.height - options.offset;
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.offset - the._popup.width;
+                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
                 }
             } else {
                 switch (dir) {
                     case 'bottom':
-                        pos.top = the._target.top + the._target.height + options.offset;
+                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.offset;
+                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
                         break;
 
                     case 'top':
-                        pos.top = the._target.top - the._popup.height - options.offset;
+                        pos.top = the._target.top - the._popup.height - options.arrowSize - options.offset;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.offset - the._popup.width;
+                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
@@ -393,7 +388,7 @@ define(function (require, exports, module) {
             attribute.css(the._$arrowBottom, none);
             attribute.css(the._$arrowLeft, none);
 
-            if (!options.hasArrow) {
+            if (!options.arrowSize) {
                 return;
             }
 
@@ -413,7 +408,7 @@ define(function (require, exports, module) {
                             pos.left = the._popup.width / 2;
                             break;
                     }
-                    pos.left -= options.offset;
+                    pos.left -= options.arrowSize;
                     break;
 
                 case 'right':
@@ -431,7 +426,7 @@ define(function (require, exports, module) {
                             pos.top = the._popup.height / 2;
                             break;
                     }
-                    pos.top -= options.offset;
+                    pos.top -= options.arrowSize;
                     break;
             }
 
