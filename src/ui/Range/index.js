@@ -63,7 +63,6 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-
             the._initData();
             the._initNode();
             the._initEvent();
@@ -82,8 +81,6 @@ define(function (require, exports, module) {
             the._size = 16;
             options.value = typeis.number(options.value) ? [options.value] : options.value;
             the._isDouble = options.value.length > 1;
-            //the._value0 = options.value[0];
-            //the._value1 = options.value[the._isDouble ? 1 : 0];
         },
 
 
@@ -311,6 +308,18 @@ define(function (require, exports, module) {
             var val = (options.max - options.min) * pos / (the._maxInner - the._size);
 
             return options.min + the._adjustVal(val);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the._$control0, 'dragstart drag dragend');
+            event.un(the._$control1, 'dragstart drag dragend');
+            the._$parent.innerHTML = '';
         }
     });
 
