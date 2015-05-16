@@ -21,7 +21,9 @@ define(function (require, exports, module) {
 
     var r1 = new Range('#demo1', {
         value: 40,
-        step: 10
+        step: 10,
+        min: 0,
+        max: 100
     });
     r1.on('change', function (val) {
         $val1.innerHTML = JSON.stringify(val);

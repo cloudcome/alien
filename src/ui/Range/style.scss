@@ -2,6 +2,27 @@
   position: relative;
   height: 20px;
 
+  &-scale {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    &-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 20px;
+      background: #BBB;
+
+      &:first-child,
+      &:last-child {
+        width: 2px;
+      }
+    }
+  }
+
   &-bg,
   &-fg {
     position: absolute;
@@ -14,12 +35,12 @@
     left: 0;
   }
 
-  &-bg{
+  &-bg {
     right: 0;
     border-color: #bbb;
   }
-  
-  &-fg{
+
+  &-fg {
     width: 0;
     border-color: #0b91f5;
     transition: all 200ms;
@@ -29,6 +50,7 @@
     position: absolute;
     width: 16px;
     height: 16px;
+    margin-left: -8px;
     font-size: 0;
     line-height: 1;
     border-radius: 100%;

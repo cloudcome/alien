@@ -39,9 +39,9 @@ define(function (require, exports, module) {
     var defaults = {
         // 方向，horizontal OR vertical
         orientation: 'horizontal',
-        step: 10,
+        step: 1,
         min: 0,
-        max: 100,
+        max: 10,
         // 数组：---o--------o----
         // 单值：------------o----
         value: 0,
@@ -92,7 +92,7 @@ define(function (require, exports, module) {
         update: function () {
             var the = this;
 
-            the._maxInner = attribute.innerWidth(the._$inner);
+            the._maxInner = attribute.innerWidth(the._$parent);
         },
 
 
@@ -104,9 +104,21 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._$parent.innerHTML = tpl.render({
+            the.update();
+
+            var scaleCount = (options.max - options.min) / options.step;
+            var minScale = the._maxInner / scaleCount;
+            var data = {
                 isDouble: the._isDouble
-            });
+            };
+
+            if (minScale > options.scale) {
+                data.list = new Array(scaleCount);
+            } else {
+                data.list = [];
+            }
+
+            the._$parent.innerHTML = tpl.render(data);
 
             var nodes = selector.query('.j-flag', the._$parent);
 
@@ -114,7 +126,6 @@ define(function (require, exports, module) {
             the._$fg = nodes[1];
             the._$control0 = nodes[2];
             the._$control1 = nodes[3];
-            the.update();
             the._update(0, options.value[0]);
             the._update(1, options.value[the._isDouble ? 1 : 0]);
             the._pos0 = the._calPos(the._value0);
@@ -203,6 +214,7 @@ define(function (require, exports, module) {
 
         /**
          * 改变数据
+         * @param value {Number} 值
          */
         change: function (value) {
             var the = this;
@@ -230,7 +242,7 @@ define(function (require, exports, module) {
                     val = the._value1 - options.step;
                 }
 
-                attribute.css(the._$control0, 'left', the._calPos(val));
+                attribute.css(the._$control0, 'left', (val * 100 / options.max) + '%');
                 the._pos0 = the._calPos(val);
                 the._upBar(the._pos0, the._pos1);
 
@@ -243,7 +255,7 @@ define(function (require, exports, module) {
                     val = the._value0 + options.step;
                 }
 
-                attribute.css(the._$control1, 'left', the._calPos(val));
+                attribute.css(the._$control1, 'left', (val * 100 / options.max) + '%');
                 the._pos1 = the._calPos(val);
                 the._upBar(the._pos0, the._pos1);
 

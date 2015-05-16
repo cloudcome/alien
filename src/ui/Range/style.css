@@ -1,6 +1,21 @@
 .alien-ui-range {
   position: relative;
   height: 20px; }
+  .alien-ui-range-scale {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0; }
+    .alien-ui-range-scale-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 20px;
+      background: #BBB; }
+      .alien-ui-range-scale-item:first-child,
+      .alien-ui-range-scale-item:last-child {
+        width: 2px; }
   .alien-ui-range-bg,
   .alien-ui-range-fg {
     position: absolute;
@@ -22,6 +37,7 @@
     position: absolute;
     width: 16px;
     height: 16px;
+    margin-left: -8px;
     font-size: 0;
     line-height: 1;
     border-radius: 100%;

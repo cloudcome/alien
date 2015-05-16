@@ -3,8 +3,11 @@
     <div class="alien-ui-range-fg j-flag"></div>
     <div class="alien-ui-range-scale">
         {{list list as index,item}}
-        <div class="alien-ui-range-scale-item"></div>
+        <div class="alien-ui-range-scale-item" style="left:{{index * 100/list.length}}%;"></div>
         {{/list}}
+        {{if list.length}}
+        <div class="alien-ui-range-scale-item" style="left:100%;"></div>
+        {{/if}}
     </div>
     <div class="alien-ui-range-control alien-ui-range-control-0 j-flag" draggablefor></div>
     {{if isDouble}}
