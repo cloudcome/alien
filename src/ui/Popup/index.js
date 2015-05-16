@@ -113,9 +113,15 @@ define(function (require, exports, module) {
          * 打开弹出层
          * @param [$target] {Object} 参考对象
          * @param [callback] {Function} 回调
+         * @returns {Popup}
          */
         open: function ($target, callback) {
             var the = this;
+
+            if (the.visible) {
+                return the;
+            }
+
             var options = the._options;
             // popup 位置顺序
             var dirList = options.position === 'auto' ? ['bottom', 'right', 'top', 'left'] : [options.position];
@@ -220,12 +226,15 @@ define(function (require, exports, module) {
             });
 
             the.emit('open');
+
+            return the;
         },
 
 
         /**
          * 关闭弹出层
          * @param callback
+         * @returns {Popup}
          */
         close: function (callback) {
             var the = this;
@@ -250,6 +259,8 @@ define(function (require, exports, module) {
             });
 
             the.emit('close');
+
+            return the;
         },
 
 
