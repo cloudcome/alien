@@ -101,7 +101,7 @@ define(function (require, exports, module) {
      * // => "Hello Bob, how are you today?"
      */
     exports.assign = function (str/*arguments*/, filter) {
-        var args = arguments;
+        var args = [].slice.call(arguments);
         var argL = args.length;
         var data = {};
 
