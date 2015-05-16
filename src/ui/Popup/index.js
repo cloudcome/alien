@@ -8,6 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Popup/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/dom/animation
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires libs/Template
      */
 
     'use strict';
@@ -18,6 +25,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
@@ -28,10 +36,12 @@ define(function (require, exports, module) {
     var doc = win.document;
     var body = doc.body;
     var defaults = {
-        // 箭头位置：auto、top、right、bottom、left、none
-        arrow: 'auto',
-        // 箭头的大小
-        size: 10,
+        // 位置：auto、top、right、bottom、left
+        position: 'auto',
+        // 偏移距离，通常为箭头的尺寸
+        offset: 10,
+        // 是否有箭头指示
+        hasArrow: true,
         // 对齐优先级：center、side
         // center:
         //       [=====]
@@ -40,11 +50,13 @@ define(function (require, exports, module) {
         // [=====]
         // [==^==============]
         priority: 'center',
-        // 弹出层的宽度
-        width: 'auto',
-        // 弹出层的高度
-        height: 'auto',
-        duration: 234,
+        style: {
+            // 弹出层的宽度
+            width: 'auto',
+            // 弹出层的高度
+            height: 'auto'
+        },
+        duration: 123,
         easing: 'in-out'
     };
     var Popup = ui.create({
@@ -54,8 +66,8 @@ define(function (require, exports, module) {
             the._$target = selector.query($target)[0];
             the._options = dato.extend({}, defaults, options);
 
-            if (the._options.arrow === 'none') {
-                the._options.size = 0;
+            if (!the._options.hasArrow) {
+                the._options.offset = 0;
             }
 
             the._init();
@@ -98,12 +110,21 @@ define(function (require, exports, module) {
         },
 
 
-        open: function () {
+        /**
+         * 打开弹出层
+         * @param callback
+         */
+        open: function (callback) {
             var the = this;
             var options = the._options;
             // popup 位置顺序
-            var dirList = ['bottom', 'right', 'top', 'left'];
-            var arrowList = ['top', 'left', 'bottom', 'right'];
+            var dirList = options.position === 'auto' ? ['bottom', 'right', 'top', 'left'] : [options.position];
+            var arrowMap = {
+                bottom: 'top',
+                right: 'left',
+                top: 'bottom',
+                left: 'right'
+            };
             // 优先级顺序
             var priorityList = options.priority === 'center' ? ['center', 'side'] : ['side'];
 
@@ -122,16 +143,16 @@ define(function (require, exports, module) {
             };
 
             // 3. 透明显示 popup，便于计算
-            attribute.css(the._$popup, {
+            attribute.css(the._$popup, dato.extend({
                 zIndex: ui.getZindex(),
                 display: 'block',
-                opacity: 0
-            });
+                top: 0,
+                left: 0,
+                visibility: 'hidden'
+            }, options.style));
             the._popup = {
                 width: attribute.outerWidth(the._$popup),
-                height: attribute.outerHeight(the._$popup),
-                left: attribute.left(the._$popup),
-                top: attribute.top(the._$popup)
+                height: attribute.outerHeight(the._$popup)
             };
 
             // 3. 第一优先级的位置，如果全部位置都不符合，则选择第一优先级的位置
@@ -140,7 +161,7 @@ define(function (require, exports, module) {
             var findPos = null;
 
             dato.each(dirList, function (i, dir) {
-                var arrow = arrowList[i];
+                var arrow = arrowMap[dir];
 
                 dato.each(priorityList, function (j, priority) {
                     var pos = the._cal(dir, priority);
@@ -163,27 +184,53 @@ define(function (require, exports, module) {
 
             if (!findPos) {
                 findPos = firstPos;
-                findArrow = arrowList[0];
+                findArrow = arrowMap[dirList[0]];
             }
 
             // 4. 动画显示
             attribute.css(the._$popup, {
+                opacity: 0,
+                visibility: 'visible',
                 scale: 0.8,
                 top: findPos.top,
                 left: findPos.left
             });
+            the._arrow(findPos._side, findArrow);
             animation.transition(the._$popup, {
                 scale: 1,
                 opacity: 1
             }, {
                 duration: options.duration,
                 easing: options.easing
-            });
+            }, callback);
+            the.emit('open');
         },
 
 
-        close: function () {
+        /**
+         * 关闭弹出层
+         * @param callback
+         */
+        close: function (callback) {
+            var the = this;
+            var options = the._options;
 
+            animation.transition(the._$popup, {
+                scale: 0.8,
+                opacity: 0
+            }, {
+                duration: options.duration,
+                easing: options.easing
+            }, function () {
+                attribute.css(the._$popup, {
+                    display: 'none',
+                    scale: 1
+                });
+                if (typeis.function(callback)) {
+                    callback.apply(this, arguments);
+                }
+            });
+            the.emit('close');
         },
 
 
@@ -215,12 +262,14 @@ define(function (require, exports, module) {
 
                     if (the._check(pos)) {
                         findSide = side;
+                        pos._side = index;
                         return false;
                     }
                 });
 
                 if (findSide === null) {
                     findSide = firstSide;
+                    pos._side = 0;
                 }
 
                 pos[type] = findSide;
@@ -230,49 +279,49 @@ define(function (require, exports, module) {
                 switch (dir) {
                     case 'bottom':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top + the._target.height + options.size;
+                        pos.top = the._target.top + the._target.height + options.offset;
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.size;
+                        pos.left = the._target.left + the._target.width + options.offset;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
 
                     case 'top':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top - options.size - the._popup.height;
+                        pos.top = the._target.top - options.offset - the._popup.height;
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.size - the._popup.width;
+                        pos.left = the._target.left - options.offset - the._popup.width;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
                 }
             } else {
                 switch (dir) {
                     case 'bottom':
-                        pos.top = the._target.top + the._target.height + options.size;
+                        pos.top = the._target.top + the._target.height + options.offset;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.size;
+                        pos.left = the._target.left + the._target.width + options.offset;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
                         break;
 
                     case 'top':
-                        pos.top = the._target.top - the._popup.height - options.size;
+                        pos.top = the._target.top - the._popup.height - options.offset;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.size - the._popup.width;
+                        pos.left = the._target.left - options.offset - the._popup.width;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
@@ -298,6 +347,79 @@ define(function (require, exports, module) {
             }
 
             return pos.left + the._popup.width <= the._document.width && pos.top + the._popup.height <= the._document.height;
+        },
+
+
+        /**
+         * 显示箭头
+         * @param side {Number|undefined} 靠边，0=左上边，1=右下边，undefined：中间
+         * @param dir {String} 箭头显示的方向
+         * @private
+         */
+        _arrow: function (side, dir) {
+            var the = this;
+            var options = the._options;
+            var none = {
+                display: 'none'
+            };
+            var map = {
+                top: the._$arrowTop,
+                right: the._$arrowRight,
+                bottom: the._$arrowBottom,
+                left: the._$arrowLeft
+            };
+            var pos = {
+                display: 'block'
+            };
+
+            attribute.css(the._$arrowTop, none);
+            attribute.css(the._$arrowRight, none);
+            attribute.css(the._$arrowBottom, none);
+            attribute.css(the._$arrowLeft, none);
+
+            if (!options.hasArrow) {
+                return;
+            }
+
+            switch (dir) {
+                case 'top':
+                case 'bottom':
+                    switch (side) {
+                        case 0:
+                            pos.left = the._target.width / 2;
+                            break;
+
+                        case 1:
+                            pos.left = the._popup.width - the._target.width / 2;
+                            break;
+
+                        default:
+                            pos.left = the._popup.width / 2;
+                            break;
+                    }
+                    pos.left -= options.offset;
+                    break;
+
+                case 'right':
+                case 'left':
+                    switch (side) {
+                        case 0:
+                            pos.top = the._target.height / 2;
+                            break;
+
+                        case 1:
+                            pos.top = the._popup.height - the._target.height / 2;
+                            break;
+
+                        default:
+                            pos.top = the._popup.height / 2;
+                            break;
+                    }
+                    pos.top -= options.offset;
+                    break;
+            }
+
+            attribute.css(map[dir], pos);
         }
     });
 

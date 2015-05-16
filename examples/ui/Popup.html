@@ -20,21 +20,75 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>Popup.html</title>
     <style>
-        input,button{
+        button{
+            position: absolute;
             font-size: 40px;
             padding: 20px 40px;
-            margin: 50px;
         }
 
-        button{
-            margin-left: 500px;
+        #btn1{
+            top: 0;
+            left: 0;
+        }
+
+        #btn2{
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #btn3{
+            top: 0;
+            right: 0;
+        }
+
+        #btn4{
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+        }
+
+        #btn5{
+            right: 0;
+            bottom: 0;
+        }
+
+        #btn6{
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+
+        #btn7{
+            left: 0;
+            bottom: 0;
+        }
+
+        #btn8{
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #btn9{
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
         }
     </style>
 </head>
 <body ontouchstart="">
 
 
-<button id="btn">popup here</button>
+<button id="btn1">popup here 1</button>
+<button id="btn2">popup here 2</button>
+<button id="btn3">popup here 3</button>
+<button id="btn4">popup here 4</button>
+<button id="btn5">popup here 5</button>
+<button id="btn6">popup here 6</button>
+<button id="btn7">popup here 7</button>
+<button id="btn8">popup here 8</button>
+<button id="btn9">popup here 9</button>
 
 <script src="../coolie.min.js"
         data-config="./coolie-config.js"
