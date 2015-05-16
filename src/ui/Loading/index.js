@@ -7,12 +7,20 @@
 
 define(function (require, exports, module) {
     /**
-     * @module widgets/loading
+     * @module ui/Loading/
+     * @requires ui/
+     * @requires utils/typeis
+     * @requires utils/dato
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires ui/Mask/
+     * @requires ui/Window/
+     * @requires libs/Template
      */
 
     'use strict';
 
-    var klass = require('../../utils/class.js');
+    var ui = require('../');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -42,7 +50,7 @@ define(function (require, exports, module) {
         },
         text: '加载中'
     };
-    var Loading = klass.create({
+    var Loading = ui.create({
         constructor: function (options) {
             if (typeis.string(options)) {
                 options.text = options;
