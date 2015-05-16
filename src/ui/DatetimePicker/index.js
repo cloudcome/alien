@@ -19,6 +19,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/base
      * @requires libs/Template
+     * @requires ui/
      * @requires ui/Range/
      * @requires ui/Popup/
      */
