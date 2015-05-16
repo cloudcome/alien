@@ -229,10 +229,11 @@ define(function (require, exports, module) {
                 }
 
                 attribute.css(the._$control0, 'left', the._calPos(val));
-                the._pos0 = the._calPos(the._value0 = val);
+                the._pos0 = the._calPos(val);
                 the._upBar(the._pos0, the._pos1);
 
                 if (val !== the._value0) {
+                    the._value0 = val;
                     the._onchange();
                 }
             } else {
@@ -241,10 +242,11 @@ define(function (require, exports, module) {
                 }
 
                 attribute.css(the._$control1, 'left', the._calPos(val));
-                the._pos1 = the._calPos(the._value1 = val);
+                the._pos1 = the._calPos(val);
                 the._upBar(the._pos0, the._pos1);
 
                 if (val !== the._value1) {
+                    the._value1 = val;
                     the._onchange();
                 }
             }
