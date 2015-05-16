@@ -1,4 +1,4 @@
-.alien-ui-datepicker {
+.alien-ui-datetimepicker {
   display: none;
   opacity: 0;
   position: absolute;
@@ -8,23 +8,23 @@
   border: 1px solid #DDD;
   box-shadow: 0 0 10px #EEE;
   cursor: default; }
-  .alien-ui-datepicker * {
+  .alien-ui-datetimepicker * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
-  .alien-ui-datepicker-toolbar {
+  .alien-ui-datetimepicker-toolbar {
     overflow: hidden;
     border: 1px solid #DDD;
     border-bottom: 0; }
-  .alien-ui-datepicker-select {
+  .alien-ui-datetimepicker-select {
     float: left;
     width: 50%;
     height: 34px;
     position: relative;
     overflow: hidden; }
-    .alien-ui-datepicker-select:first-child {
+    .alien-ui-datetimepicker-select:first-child {
       border-right: 1px solid #ddd; }
-    .alien-ui-datepicker-select select {
+    .alien-ui-datetimepicker-select select {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -37,50 +37,50 @@
       font: inherit;
       color: inherit;
       background: #fff; }
-  .alien-ui-datepicker:before,
-  .alien-ui-datepicker:after {
+  .alien-ui-datetimepicker:before,
+  .alien-ui-datetimepicker:after {
     content: '';
     position: absolute;
     left: 20px;
     border: 6px solid transparent;
     margin-top: -12px; }
-  .alien-ui-datepicker:before {
+  .alien-ui-datetimepicker:before {
     top: -1px;
     border-bottom-color: #DDD; }
-  .alien-ui-datepicker:after {
+  .alien-ui-datetimepicker:after {
     top: 1px;
     border-bottom-color: #fff; }
-  .alien-ui-datepicker table {
+  .alien-ui-datetimepicker table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0; }
-  .alien-ui-datepicker th, .alien-ui-datepicker td {
+  .alien-ui-datetimepicker th, .alien-ui-datetimepicker td {
     border: 1px solid #ddd;
     padding: 10px;
     vertical-align: middle;
     text-align: center; }
-  .alien-ui-datepicker th {
+  .alien-ui-datetimepicker th {
     background: #eee; }
-  .alien-ui-datepicker td:hover {
+  .alien-ui-datetimepicker td:hover {
     background: #f9f9f9; }
-  .alien-ui-datepicker-prev {
+  .alien-ui-datetimepicker-prev {
     color: #ccc; }
-  .alien-ui-datepicker-this {
+  .alien-ui-datetimepicker-this {
     color: #333; }
-  .alien-ui-datepicker-next {
+  .alien-ui-datetimepicker-next {
     color: #ccc; }
-  .alien-ui-datepicker .alien-ui-datepicker-today,
-  .alien-ui-datepicker .alien-ui-datepicker-today:hover {
+  .alien-ui-datetimepicker .alien-ui-datetimepicker-today,
+  .alien-ui-datetimepicker .alien-ui-datetimepicker-today:hover {
     background: #ddd; }
-  .alien-ui-datepicker .alien-ui-datepicker-active,
-  .alien-ui-datepicker .alien-ui-datepicker-active:hover {
+  .alien-ui-datetimepicker .alien-ui-datetimepicker-active,
+  .alien-ui-datetimepicker .alien-ui-datetimepicker-active:hover {
     background: #3AA1DF;
     color: #FFF; }
-  .alien-ui-datepicker-item {
+  .alien-ui-datetimepicker-item {
     position: relative;
     padding-left: 50px;
     height: 50px; }
-    .alien-ui-datepicker-item-key {
+    .alien-ui-datetimepicker-item-key {
       position: absolute;
       top: 0;
       left: 0;
@@ -88,5 +88,5 @@
       height: 50px;
       line-height: 50px;
       text-align: center; }
-    .alien-ui-datepicker-item-val {
+    .alien-ui-datetimepicker-item-val {
       height: 50px; }
