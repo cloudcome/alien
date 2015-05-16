@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');
     var ui = require('../');
-    var alienClass = 'alien-ui-slidebar';
+    var alienClass = 'alien-ui-range';
     var defaults = {
         // 方向，horizontal OR vertical
         orientation: 'horizontal',

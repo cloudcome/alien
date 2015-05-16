@@ -1,8 +1,13 @@
-<div class="alien-ui-slidebar j-flag">
-    <div class="alien-ui-slidebar-bg"></div>
-    <div class="alien-ui-slidebar-fg j-flag"></div>
-    <div class="alien-ui-slidebar-control alien-ui-slidebar-control-0 j-flag" draggablefor></div>
+<div class="alien-ui-range j-flag">
+    <div class="alien-ui-range-bg"></div>
+    <div class="alien-ui-range-fg j-flag"></div>
+    <div class="alien-ui-range-scale">
+        {{list list as index,item}}
+        <div class="alien-ui-range-scale-item"></div>
+        {{/list}}
+    </div>
+    <div class="alien-ui-range-control alien-ui-range-control-0 j-flag" draggablefor></div>
     {{if isDouble}}
-    <div class="alien-ui-slidebar-control alien-ui-slidebar-control-1 j-flag" draggablefor></div>
+    <div class="alien-ui-range-control alien-ui-range-control-1 j-flag" draggablefor></div>
     {{/if}}
 </div>
