@@ -88,8 +88,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 销毁实例
+         */
+        destroy: function () {
+            this.done();
+        },
+
+
+        /**
          * loading 结束
-         * @public
          */
         done: function () {
             var the = this;
