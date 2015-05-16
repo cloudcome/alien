@@ -57,7 +57,8 @@ define(function (require, exports, module) {
             height: 'auto'
         },
         duration: 123,
-        easing: 'in-out'
+        easing: 'in-out',
+        addClass: ''
     };
     var Popup = ui.create({
         constructor: function ($target, options) {
@@ -85,6 +86,7 @@ define(function (require, exports, module) {
             });
             modification.insert(the._html, body);
             the._$popup = selector.query('#' + alienClass + '-' + the._id)[0];
+            attribute.addClass(the._$popup, the._options.addClass);
 
             var nodes = selector.query('.j-flag', the._$popup);
 
