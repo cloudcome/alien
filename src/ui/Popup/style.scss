@@ -1,0 +1,39 @@
+.alien-ui-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  border: 1px solid #ccc;
+  background: #fff;
+
+  &-arrow {
+    display: none;
+    top: -20px;
+    left: 0;
+
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      border: 10px solid rgba(0,0,0,0);
+    }
+
+    &-top {
+      &:before,
+      &:after {
+        left: 0;
+      }
+
+      &:before {
+        top: -1px;
+        border-bottom-color: #c3c3c3;
+      }
+
+      &:after {
+        top: 0;
+        border-bottom-color: #fff;
+      }
+    }
+  }
+}
+

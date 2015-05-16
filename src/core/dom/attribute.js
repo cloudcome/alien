@@ -42,11 +42,11 @@ define(function (require, exports, module) {
     var innerHeight = ['borderTopWidth', 'borderBottomWidth'];
     var height = innerHeight.concat(['paddingTop', 'paddingBottom']);
     //var alienKey = '-alien-core-dom-attribute-';
-    var isRelativeToViewport = _isRelativeToViewport();
     var win = window;
     var doc = win.document;
     var html = doc.documentElement;
     var body = doc.body;
+    var isRelativeToViewport = _isRelativeToViewport();
 
 
     /**
