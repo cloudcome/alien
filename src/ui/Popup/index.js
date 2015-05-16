@@ -420,6 +420,20 @@ define(function (require, exports, module) {
             }
 
             attribute.css(map[dir], pos);
+        },
+
+        /**
+         * 销毁实例
+         */
+        destroy: function (callback) {
+            var the = this;
+
+            the.close(function () {
+                modification.remove(the._$popup);
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
         }
     });
 
