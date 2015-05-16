@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         // 单值：------------o----
         value: 0,
         // 最小刻度间距，小于此间距将不会显示刻度
-        scale: 10
+        scale: 50
     };
     var Range = ui.create({
         constructor: function ($parent, options) {
@@ -91,8 +91,15 @@ define(function (require, exports, module) {
          */
         update: function () {
             var the = this;
+            var options = the._options;
 
             the._maxInner = attribute.innerWidth(the._$parent);
+
+            var scale = the._maxInner / the._steps;
+
+            attribute.css(the._$scale, 'display', scale < options.scale ? 'none' : 'block');
+            the._pos0 = the._calPos(the._value0);
+            the._pos1 = the._calPos(the._value1);
         },
 
 
@@ -104,28 +111,23 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the.update();
+            the._steps = (options.max - options.min) / options.step;
 
-            var scaleCount = (options.max - options.min) / options.step;
-            var minScale = the._maxInner / scaleCount;
             var data = {
                 isDouble: the._isDouble
             };
 
-            if (minScale > options.scale) {
-                data.list = new Array(scaleCount);
-            } else {
-                data.list = [];
-            }
-
+            data.list = new Array(the._steps);
             the._$parent.innerHTML = tpl.render(data);
 
             var nodes = selector.query('.j-flag', the._$parent);
 
             the._$inner = nodes[0];
-            the._$fg = nodes[1];
-            the._$control0 = nodes[2];
-            the._$control1 = nodes[3];
+            the._$scale = nodes[1];
+            the._$fg = nodes[2];
+            the._$control0 = nodes[3];
+            the._$control1 = nodes[4];
+            the.update();
             the._update(0, options.value[0]);
             the._update(1, options.value[the._isDouble ? 1 : 0]);
             the._pos0 = the._calPos(the._value0);
@@ -220,7 +222,7 @@ define(function (require, exports, module) {
 
         /**
          * 改变数据
-         * @param value {Number} 值
+         * @param value {Number|Array} 值
          */
         change: function (value) {
             var the = this;

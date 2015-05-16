@@ -47,4 +47,9 @@ define(function (require, exports, module) {
     $btn2.onclick = function () {
         r2.change([random.number(0, 10), random.number(0, 10)]);
     };
+
+    window.onresize = function () {
+        r1.update();
+        r2.update();
+    };
 });

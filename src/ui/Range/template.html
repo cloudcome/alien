@@ -1,7 +1,5 @@
 <div class="alien-ui-range j-flag">
-    <div class="alien-ui-range-bg"></div>
-    <div class="alien-ui-range-fg j-flag"></div>
-    <div class="alien-ui-range-scale">
+    <div class="alien-ui-range-scale j-flag">
         {{list list as index,item}}
         <div class="alien-ui-range-scale-item" style="left:{{index * 100/list.length}}%;"></div>
         {{/list}}
@@ -9,6 +7,8 @@
         <div class="alien-ui-range-scale-item" style="left:100%;"></div>
         {{/if}}
     </div>
+    <div class="alien-ui-range-bg"></div>
+    <div class="alien-ui-range-fg j-flag"></div>
     <div class="alien-ui-range-control alien-ui-range-control-0 j-flag" draggablefor></div>
     {{if isDouble}}
     <div class="alien-ui-range-control alien-ui-range-control-1 j-flag" draggablefor></div>
