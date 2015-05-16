@@ -436,15 +436,15 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            if(the._rHours){
+            if (the._rHours) {
                 the._rHours.destroy();
             }
 
-            if(the._rMinutes){
+            if (the._rMinutes) {
                 the._rMinutes.destroy();
             }
 
-            if(the._rSeconds){
+            if (the._rSeconds) {
                 the._rSeconds.destroy();
             }
 
