@@ -88,6 +88,7 @@ define(function (require, exports, module) {
     /**
      * 分配字符串，参考 es6
      * @param str {String} 字符串模板
+     * @param filter {Function} 过滤函数
      * @returns {String}
      * @example
      * string.assign('Hello ${name}, how are you ${time}?', {
@@ -99,9 +100,18 @@ define(function (require, exports, module) {
      * string.assign('Hello ${1}, how are you ${2}?', 'Bob', 'today');
      * // => "Hello Bob, how are you today?"
      */
-    exports.assign = function (str/*arguments*/) {
+    exports.assign = function (str/*arguments*/, filter) {
         var args = arguments;
+        var argL = args.length;
         var data = {};
+
+        if (typeis.function(args[argL - 1])) {
+            filter = args.splice(argL - 1, 1)[0];
+        } else {
+            filter = function (val) {
+                return val;
+            };
+        }
 
         // {}
         if (typeis.object(args[1])) {
@@ -115,7 +125,7 @@ define(function (require, exports, module) {
         }
 
         return str.replace(REG_ASSIGN_VARIBLE, function ($0, $1) {
-            return String(data[$1]);
+            return filter(String(data[$1]));
         });
     };
 
