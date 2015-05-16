@@ -116,7 +116,7 @@ define(function (require, exports, module) {
 
         /**
          * 打开弹出层
-         * @param $target {Object} 参考对象
+         * @param [$target] {Object} 参考对象
          * @param [callback] {Function} 回调
          */
         open: function ($target, callback) {
