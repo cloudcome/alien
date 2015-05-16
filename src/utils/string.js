@@ -217,7 +217,7 @@ define(function (require, exports, module) {
     var pad = function (isLeft, str, maxLength, padding) {
         var length = str.length;
 
-        padding = padding || ' ';
+        padding = padding === undefined ? ' ' : String(padding);
         maxLength = maxLength || length;
 
         if (maxLength <= length) {
