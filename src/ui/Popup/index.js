@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires utils/dato
      * @requires utils/typeis
+     * @requires utils/allocation
      * @requires libs/Template
      */
 
@@ -26,6 +27,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var allocation = require('../../utils/allocation.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
@@ -114,9 +116,10 @@ define(function (require, exports, module) {
 
         /**
          * 打开弹出层
-         * @param callback
+         * @param $target {Object} 参考对象
+         * @param [callback] {Function} 回调
          */
-        open: function (callback) {
+        open: function ($target, callback) {
             var the = this;
             var options = the._options;
             // popup 位置顺序
@@ -129,6 +132,15 @@ define(function (require, exports, module) {
             };
             // 优先级顺序
             var priorityList = options.priority === 'center' ? ['center', 'side'] : ['side'];
+            var args = allocation.args(arguments);
+
+            if (typeis.element(args[0])) {
+                the._$target = $target || the._$target;
+            }
+
+            if (!the._$target) {
+                throw 'miss a popup target element';
+            }
 
             // 1. 计算窗口位置
             the._document = {
