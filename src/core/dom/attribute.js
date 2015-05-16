@@ -297,10 +297,6 @@ define(function (require, exports, module) {
      * attribute.scrollTop(ele, 100);
      */
     exports.scrollTop = function (ele, top) {
-        if (!typeis.element(ele)) {
-            return;
-        }
-
         ele = selector.query(ele)[0];
 
         if (typeis.undefined(top)) {
@@ -330,10 +326,6 @@ define(function (require, exports, module) {
      * attribute.scrollLeft(ele, 100);
      */
     exports.scrollLeft = function (ele, left) {
-        if (!typeis.element(ele)) {
-            return;
-        }
-
         ele = selector.query(ele)[0];
 
         if (typeis.undefined(left)) {
