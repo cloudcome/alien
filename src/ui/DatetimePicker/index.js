@@ -274,10 +274,12 @@ define(function (require, exports, module) {
             event.on(the._$year, 'change', the._onchangeyear = function () {
                 the._choose.year = this.value;
                 the._renderList();
+                the._onchange();
             });
             event.on(the._$month, 'change', the._onchangemonth = function () {
                 the._choose.month = this.value;
                 the._renderList();
+                the._onchange();
             });
 
             // 点击日期
