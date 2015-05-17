@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * hotkey
  * @author ydr.me
  * @create 2015-04-16 15:13
  */
@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/hotkey
+     * @module core/event/hotkey
+     * @requires core/event/base
+     * @requires utils/dato
      */
     'use strict';
 

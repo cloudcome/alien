@@ -31,7 +31,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/touch.js');
+    var event = require('../../core/event/hotkey.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
@@ -44,6 +44,9 @@ define(function (require, exports, module) {
     var arrowRight = require('./arrow-right.png', 'image');
     var tpl = new Template(template);
     var alienClass = 'alien-ui-imgview';
+    var alienIndex = 0;
+    var win = window;
+    var doc = win.document;
     var noop = function () {
         // ignore
     };
@@ -111,6 +114,7 @@ define(function (require, exports, module) {
             });
             the._$window = the._window.getNode();
             the._$window.innerHTML = tpl.render({
+                id: alienIndex++,
                 list: the._list
             });
 
@@ -151,9 +155,8 @@ define(function (require, exports, module) {
                 the._window.resize();
             }));
 
-
             // 上一张
-            event.on(the._$prev, 'click', function () {
+            event.on(the._$prev, 'click', the._onprev = function () {
                 var length = the._list.length;
 
                 if (length > 1 && the._index > 0) {
@@ -162,9 +165,10 @@ define(function (require, exports, module) {
                     the._show();
                 }
             });
+            event.on(doc, 'left', the._onprev);
 
             // 下一张
-            event.on(the._$next, 'click', function () {
+            event.on(the._$next, 'click', the._onnext = function () {
                 var length = the._list.length;
 
                 if (length > 1 && the._index < length - 1) {
@@ -173,6 +177,7 @@ define(function (require, exports, module) {
                     the._show();
                 }
             });
+            event.on(doc, 'right', the._onnext);
 
             // 单击序列
             event.on(the._$navList, 'click', '*', function () {
@@ -188,7 +193,7 @@ define(function (require, exports, module) {
             });
 
             // 点击关闭
-            event.on(the._$close, 'click', function () {
+            event.on(the._$close, 'click', the._onclose = function () {
                 the._window.close(function () {
                     the._mask.close();
                     attribute.addClass(the._$content, alienClass + '-content-loading');
@@ -196,6 +201,7 @@ define(function (require, exports, module) {
                     the._renderContent();
                 });
             });
+            event.on(doc, 'esc', the._onclose);
         },
 
 
@@ -357,16 +363,9 @@ define(function (require, exports, module) {
 
             // 已经有 body 打开
             if (the._opened) {
-                animation.transition(the._$body, {
-                    width: 200,
-                    height: 200
-                }, transitionOptions, onnext);
+                animation.transition(the._$body, options.thumbnailSize, transitionOptions, onnext);
             } else {
-                attribute.css(the._$body, {
-                    width: 200,
-                    height: 200,
-                    backgroundImage: 'none'
-                });
+                attribute.css(the._$body, options.thumbnailSize);
                 onnext();
             }
         },
@@ -418,6 +417,9 @@ define(function (require, exports, module) {
             event.un(the._$prev, 'click');
             event.un(the._$next, 'click');
             event.un(the._$navList, 'click');
+            event.un(doc, 'left', the._onprev);
+            event.un(doc, 'right', the._onnext);
+            event.un(doc, 'esc', the._onclose);
             the._window.destroy();
             the._mask.destroy();
         }
