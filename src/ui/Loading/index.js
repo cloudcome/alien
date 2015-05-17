@@ -175,6 +175,48 @@ define(function (require, exports, module) {
 
 
         /**
+         * 打开 loading
+         * @param callback {Function} 关闭后回调
+         * @returns {Loading}
+         */
+        open: function (callback) {
+            var the = this;
+
+            if (the.visible) {
+                return the;
+            }
+
+            animation.transition(the._$loading, {
+                opacity: 1,
+                scale: 1
+            }, the._transitionOptions, callback);
+
+            return the;
+        },
+
+
+        /**
+         * 关闭 loading，关闭不会删除 loading，若要删除 loading 使用 done 或 destroy
+         * @param callback {Function} 关闭后回调
+         * @returns {Loading}
+         */
+        close: function (callback) {
+            var the = this;
+
+            if (!the.visible) {
+                return the;
+            }
+
+            animation.transition(the._$loading, {
+                opacity: 1,
+                scale: 1
+            }, the._transitionOptions, callback);
+
+            return the;
+        },
+
+
+        /**
          * 销毁实例
          */
         destroy: function () {
@@ -188,27 +230,33 @@ define(function (require, exports, module) {
         done: function (callback) {
             var the = this;
 
-            if (!the.visible) {
+            if (the._destory) {
                 return;
             }
 
-            the.visible = false;
+            the._destory = true;
 
             if (the._mask) {
                 the._mask.destroy();
             }
 
-            animation.transition(the._$loading, {
-                opacity: 0,
-                scale: 0.5
-            }, the._transitionOptions, function () {
+            var destory = function () {
+                the.visible = false;
                 modification.remove(the._$loading);
 
                 if (typeis.function(callback)) {
                     callback();
                 }
-            });
+            };
 
+            if (the.visible) {
+                animation.transition(the._$loading, {
+                    opacity: 0,
+                    scale: 0.5
+                }, the._transitionOptions, destory);
+            } else {
+                destory();
+            }
         }
     });
     Loading.defaults = defaults;
