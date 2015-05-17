@@ -176,7 +176,7 @@ define(function (require, exports, module) {
 
         /**
          * 打开 loading
-         * @param callback {Function} 关闭后回调
+         * @param [callback] {Function} 关闭后回调
          * @returns {Loading}
          */
         open: function (callback) {
@@ -197,7 +197,7 @@ define(function (require, exports, module) {
 
         /**
          * 关闭 loading，关闭不会删除 loading，若要删除 loading 使用 done 或 destroy
-         * @param callback {Function} 关闭后回调
+         * @param [callback] {Function} 关闭后回调
          * @returns {Loading}
          */
         close: function (callback) {

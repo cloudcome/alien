@@ -262,6 +262,12 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$content, 'bottom', number.parseFloat(options.thumbnailSize.height));
+            the._loading = new Loading(window, {
+                style: {
+                    border: '1px solid #333'
+                },
+                isModal: false
+            });
         },
 
 
@@ -288,31 +294,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 切换 loading 的显隐
-         * @param isShow
-         * @private
-         */
-        _loading: function (isShow) {
-            var the = this;
-
-            if (isShow) {
-                the._loading(false);
-                the._ld = new Loading(window, {
-                    style: {
-                        border: '1px solid #333'
-                    },
-                    isModal: false
-                });
-            } else {
-                if (the._ld) {
-                    the._ld.done();
-                    the._ld = null;
-                }
-            }
-        },
-
-
-        /**
          * 展示
          * @private
          */
@@ -326,7 +307,7 @@ define(function (require, exports, module) {
                 easing: options.easing
             };
             var onnext = function () {
-                the._loading(true);
+                the._loading.open();
                 attribute.addClass(the._$content, loadingClass);
                 attribute.removeClass(the._$itemlist, activeClass);
                 attribute.addClass(the._$itemlist[the._index], activeClass);
@@ -342,7 +323,7 @@ define(function (require, exports, module) {
 
                     if (the._index === meta.index) {
                         attribute.removeClass(the._$content, loadingClass);
-                        the._loading(false);
+                        the._loading.close();
                         the._opened = true;
 
                         var maxWidth = Math.min(attribute.width(the._$content) - 20, meta.width);
