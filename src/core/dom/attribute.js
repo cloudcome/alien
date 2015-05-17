@@ -543,7 +543,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 top 距离
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *
@@ -561,7 +561,7 @@ define(function (require, exports, module) {
 
     /**
      * 获取、设置元素距离文档边缘的 left 距离
-     * @param {HTMLElement|Node} $ele
+     * @param {Object} $ele
      * @param {Number} [val] 距离值
      * @returns {Number|undefined|*}
      *

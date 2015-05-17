@@ -112,10 +112,9 @@ define(function (require, exports, module) {
          */
         _getSize: function () {
             var the = this;
-            var $cover = the._$cover;
 
             // 其他节点
-            if ($cover === window) {
+            if (the._$cover === win) {
                 return {
                     position: 'fixed',
                     top: 0,
@@ -127,10 +126,10 @@ define(function (require, exports, module) {
 
             return {
                 position: 'absolute',
-                width: attribute.width($cover),
-                height: attribute.height($cover),
-                top: attribute.top($cover),
-                left: attribute.left($cover)
+                width: attribute.width(the._$cover),
+                height: attribute.height(the._$cover),
+                top: attribute.top(the._$cover),
+                left: attribute.left(the._$cover)
             };
         },
 
