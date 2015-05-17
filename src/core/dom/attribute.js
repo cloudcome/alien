@@ -36,6 +36,7 @@ define(function (require, exports, module) {
     var REG_TRANSFORM_WORD = /translate|scale|skew|rotate|matrix|perspective/i;
     var REG_IMPORTANT = /\s!important$/i;
     var REG_TRANSFORM_KEY = /transform/i;
+    var REG_PERCENT = /%/;
     // +123.456
     // -123.456
     var regNum = /^[+\-]?\d+(\.\d*)?$/;
@@ -994,8 +995,32 @@ define(function (require, exports, module) {
      * @private
      */
     function _setEleTransform(ele, key, val) {
+        var val2 = val;
+        var isPercent = REG_PERCENT.test(val);
+        var base;
+
+        // 计算百分比的 translate
+        switch (key) {
+            case 'translateX':
+                base = exports.outerWidth(ele);
+                val2 = number.parseFloat(val, 0);
+                val2 = isPercent ? base * val2 / 100 : val2;
+                break;
+
+            case 'translateY':
+                base = exports.outerHeight(ele);
+                val2 = number.parseFloat(val, 0);
+                val2 = isPercent ? base * val2 / 100 : val2;
+                break;
+
+            case 'translate':
+                _setEleTransform(ele, 'translateX', val);
+                _setEleTransform(ele, 'translateY', val);
+                return;
+        }
+
         ele[alienKey + 'transform'] = ele[alienKey + 'transform'] || {};
-        ele[alienKey + 'transform'][key] = val;
+        ele[alienKey + 'transform'][key] = val2;
     }
 
 
