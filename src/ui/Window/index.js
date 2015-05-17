@@ -54,7 +54,6 @@ define(function (require, exports, module) {
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        zIndex: null,
         autoResize: true
     };
     var Window = ui.create({
@@ -393,7 +392,6 @@ define(function (require, exports, module) {
      * @param [options.easing.open="ease-out-back"] {String} 窗口打开动画缓冲
      * @param [options.easing.close="ease-in-back"] {String} 窗口关闭动画缓冲
      * @param [options.addClass=""] {String} 窗口添加的 className
-     * @param [options.zIndex=null] {null|Number} 窗口层级，默认自动分配
      */
     module.exports = Window;
     modification.importStyle(style);
