@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
+    var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var Mask = require('../Mask/');
@@ -48,10 +49,11 @@ define(function (require, exports, module) {
             width: 4,
             height: 18
         },
-        text: '加载中'
+        text: '加载中',
+        addClass: ''
     };
     var Loading = ui.create({
-        constructor: function (options) {
+        constructor: function ($parent, options) {
             if (typeis.string(options)) {
                 options = {
                     text: options
@@ -60,6 +62,7 @@ define(function (require, exports, module) {
 
             var the = this;
 
+            the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
             the._init();
         },
