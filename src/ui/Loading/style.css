@@ -1,7 +1,8 @@
 .alien-ui-loading {
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px; }
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10%; }
   .alien-ui-loading-text {
     text-align: center;
     font-size: 14px;

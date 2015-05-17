@@ -91,22 +91,16 @@ define(function (require, exports, module) {
 
             options.list = new Array(options.style.count);
 
-            the._loading = modification.create('div', {
-                class: 'alien',
+            the._$loading = modification.create('div', {
+                class: alienClass,
+                id: alienClass + alienId++,
                 style: {
                     backgroundColor: options.style.backgroundColor,
                     color: options.style.color
                 }
             });
-
-            //the._window = new Window(win, {
-            //    width: 'auto',
-            //    height: 'auto'
-            //}).setContent(tpl.render(options)).open();
-            //attribute.css(the._window.getNode().children[0], {
-            //    backgroundColor: options.style.backgroundColor,
-            //    color: options.style.color
-            //});
+            the._$loading.innerHTML = tpl.render(options);
+            modification.insert(the._$loading, body);
         },
 
 
