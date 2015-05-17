@@ -57,9 +57,7 @@ define(function (require, exports, module) {
             resize: 'ease-out-back',
             close: 'ease-in-back'
         },
-        timeout: 0,
-        // 是否在单击按钮后关闭 msg
-        closeOnButton: true
+        timeout: 0
     };
     var Msg = ui.create(function (options) {
         var the = this;
@@ -184,8 +182,9 @@ define(function (require, exports, module) {
              * @event close
              * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
              */
-            the.emit('close', index);
-            the.destroy();
+            if(the.emit('close', index) !== false){
+                the.destroy();
+            }
         });
     };
 
