@@ -8,8 +8,17 @@
 define(function (require, exports, module) {
     /**
      * @module ui/Msg/
-     * @module ui/Mask/
-     * @module ui/Window/
+     * @requires ui/Mask/
+     * @requires ui/Window/
+     * @requires ui/
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires libs/Template
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/event/drag
+     * @requires core/event/touch
      */
 
     'use strict';
@@ -49,7 +58,8 @@ define(function (require, exports, module) {
             close: 'ease-in-back'
         },
         timeout: 0,
-        zIndex: null
+        // 是否在单击按钮后关闭 msg
+        closeOnButton: true
     };
     var Msg = ui.create(function (options) {
         var the = this;
@@ -100,8 +110,7 @@ define(function (require, exports, module) {
 
         if (options.isModal) {
             the._mask = new Mask(window, {
-                addClass: alienClass + '-bg ' + options.addClass,
-                zIndex: options.zIndex
+                addClass: alienClass + '-bg ' + options.addClass
             });
             the._mask.__msg = the;
             the._$mask = the._mask.getNode();
@@ -115,7 +124,6 @@ define(function (require, exports, module) {
             top: options.top,
             duration: options.duration,
             easing: options.easing,
-            zIndex: options.zIndex,
             addClass: options.isModal ? '' : options.addClass
         });
         the._$window = the._window.getNode();
@@ -241,7 +249,6 @@ define(function (require, exports, module) {
      * @param [options.duration=345] {Number} 动画时间
      * @param [options.timeout=0] {Number} 大于0时，消息框停留时间，超时后自动消失
      * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
-     * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */
     module.exports = Msg;
     modification.importStyle(style);
