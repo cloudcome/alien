@@ -252,8 +252,8 @@ define(function (require, exports, module) {
 
                 key = temp[0];
 
-                if (key && REG_TRANSFORM_KEY.test(key)) {
-                    return _getEleTransform(ele, key);
+                if (key && REG_TRANSFORM_WORD.test(key)) {
+                    return _toCssVal(key, _getEleTransform(ele, key));
                 }
 
                 pseudo = pseudo ? pseudo : null;
@@ -270,7 +270,7 @@ define(function (require, exports, module) {
 
                 if (fix.key && REG_TRANSFORM_KEY.test(fix.key)) {
                     transformKey = fix.key;
-                    _setEleTransform(ele, fix.key, val);
+                    _setEleTransform(ele, key, val);
 
                     if (!important && fix.imp) {
                         important = fix.imp;
@@ -745,11 +745,11 @@ define(function (require, exports, module) {
      * @private
      */
     function _toCssVal(key, val) {
+        val += '';
+
         if (!REG_PX.test(key) && !REG_DEG.test(key)) {
             return val;
         }
-
-        val += '';
 
         if (regNum.test(val)) {
             return val.replace(regEndPoint, '') +
