@@ -37,7 +37,6 @@ define(function (require, exports, module) {
     var body = doc.body;
     var defaults = {
         addClass: '',
-        zIndex: null,
         duration: 234,
         style: {},
         easing: 'ease-in-out-circ'
@@ -114,7 +113,7 @@ define(function (require, exports, module) {
             var pos = Mask.getCoverSize(the._$cover);
 
             pos.display = 'block';
-            pos.zIndex = the._options.zIndex || ui.getZindex();
+            pos.zIndex = ui.getZindex();
             attribute.css(the._$mask, pos);
             the.visible = true;
 
@@ -275,7 +274,6 @@ define(function (require, exports, module) {
      * 构造一个 mask
      * @param $cover {Object} 欲覆盖的节点
      * @param [options] {Object} 配置
-     * @param [options.zIndex=null] {Number} 层级，默认为null，即自动分配
      * @param [options.addClass=""] {String} 添加的 className，默认为空
      * @param [options.duration=234] {Number} resize 时的动画时间
      * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
