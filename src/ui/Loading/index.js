@@ -27,7 +27,6 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var Mask = require('../Mask/');
-    var Window = require('../Window/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var Template = require('../../libs/Template.js');
@@ -39,6 +38,8 @@ define(function (require, exports, module) {
         debug: true
     });
     var tpl = new Template(template);
+    var alienClass = 'alien-ui-loading';
+    var alienId = 0;
     var defaults = {
         isModal: true,
         style: {
@@ -89,14 +90,22 @@ define(function (require, exports, module) {
             }
 
             options.list = new Array(options.style.count);
-            the._window = new Window(win, {
-                width: 'auto',
-                height: 'auto'
-            }).setContent(tpl.render(options)).open();
-            attribute.css(the._window.getNode().children[0], {
-                backgroundColor: options.style.backgroundColor,
-                color: options.style.color
+
+            the._loading = modification.create('div', {
+                style: {
+                    backgroundColor: options.style.backgroundColor,
+                    color: options.style.color
+                }
             });
+
+            //the._window = new Window(win, {
+            //    width: 'auto',
+            //    height: 'auto'
+            //}).setContent(tpl.render(options)).open();
+            //attribute.css(the._window.getNode().children[0], {
+            //    backgroundColor: options.style.backgroundColor,
+            //    color: options.style.color
+            //});
         },
 
 
@@ -117,8 +126,6 @@ define(function (require, exports, module) {
             if (the._mask) {
                 the._mask.destroy();
             }
-
-            the._window.destroy();
         }
     });
     Loading.defaults = defaults;
