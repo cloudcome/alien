@@ -91,20 +91,44 @@ define(function (require, exports, module) {
 
             options.list = new Array(options.style.count);
 
-            var loadingStyle =  {
-                backgroundColor: options.style.backgroundColor,
-                color: options.style.color
-            };
-
-
-
             the._$loading = modification.create('div', {
                 class: alienClass,
-                id: alienClass + alienId++,
-                style:loadingStyle
+                id: alienClass + alienId++
             });
             the._$loading.innerHTML = tpl.render(options);
             modification.insert(the._$loading, body);
+
+            the.resize();
+        },
+
+
+        /**
+         * 重置尺寸
+         * @returns {Loading}
+         */
+        resize: function () {
+            var the = this;
+            var options = the._options;
+            var coverStyle = Mask.getCoverSize(the._$parent);
+            var loadingStyle = {
+                position: coverStyle.position,
+                backgroundColor: options.style.backgroundColor,
+                color: options.style.color,
+                visibility: 'hidden'
+            };
+
+            attribute.css(the._$loading, loadingStyle);
+
+            var width = attribute.outerWidth(the._$loading);
+            var height = attribute.outerHeight(the._$loading);
+
+            attribute.css(the._$loading, {
+                left: coverStyle.left + coverStyle.width / 2 - width / 2,
+                top: coverStyle.top + coverStyle.height / 2 - height / 2,
+                visibility: ''
+            });
+
+            return the;
         },
 
 
