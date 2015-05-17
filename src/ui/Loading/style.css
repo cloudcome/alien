@@ -2,9 +2,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 10%; }
+  border-radius: 10%;
+  text-align: center; }
+  .alien-ui-loading > svg {
+    display: inline-block; }
   .alien-ui-loading-text {
-    text-align: center;
     font-size: 14px;
     line-height: 1;
     padding: 0 0 10px 0; }

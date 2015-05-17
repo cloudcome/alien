@@ -130,7 +130,8 @@ define(function (require, exports, module) {
                     top: '50%',
                     left: '50%',
                     translateX: '-50%',
-                    translateY: '-50%'
+                    translateY: '-50%',
+                    visibility: ''
                 });
             } else {
                 attribute.css(the._$loading, {
