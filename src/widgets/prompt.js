@@ -35,36 +35,52 @@ define(function (require, exports, module) {
             placeholder: '请输入'
         }
     };
-    var Confirm = ui.create(function (tips, defaultValue, options) {
-        var args = allocation.args(arguments);
+    var Confirm = ui.create({
+        constructor: function (tips, defaultValue, options) {
+            var args = allocation.args(arguments);
 
-        if (!typeis.string(args[1])) {
-            defaultValue = '';
-            options = args[1];
+            if (!typeis.string(args[1])) {
+                defaultValue = '';
+                options = args[1];
+            }
+
+            options = dato.extend(true, {}, defaults, options);
+            options.input.tagName = options.input.tagName.toLowerCase();
+            options.input.type = options.input.type.toLowerCase();
+            options.content = '<div>' + tips + '</div>' +
+                '<' + options.input.tagName + ' ' +
+                'type="' + options.input.type + '" ' +
+                'class="' + options.input.className + '" ' +
+                'placeholder="' + options.input.placeholder + '" ' +
+                'value="' + defaultValue + '"' +
+                'id="' + alienClass + alienIndex + '">' +
+                (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '');
+
+            var the = this;
+
+            the._id = alienIndex++;
+            the.prompt = new Msg(options).on('open', function () {
+                the._$input = selector.query('#' + alienClass + the._id)[0];
+                the._$input.select();
+                the._$input.focus();
+            }).on('close', function (index) {
+                the.emit(options.sureIndex === index ? 'sure' : 'cancel', the._$input.value);
+
+                return index !== options.sureIndex;
+            });
+        },
+
+
+        /**
+         * 关闭 prompt
+         */
+        close: function () {
+            var the = this;
+
+            if (the.prompt) {
+                the.prompt.destroy();
+            }
         }
-
-        options = dato.extend(true, {}, defaults, options);
-        options.input.tagName = options.input.tagName.toLowerCase();
-        options.input.type = options.input.type.toLowerCase();
-        options.content = '<div>' + tips + '</div>' +
-        '<' + options.input.tagName + ' ' +
-        'type="' + options.input.type + '" ' +
-        'class="' + options.input.className + '" ' +
-        'placeholder="' + options.input.placeholder + '" ' +
-        'value="' + defaultValue + '"' +
-        'id="' + alienClass + alienIndex + '">' +
-        (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '');
-
-        var the = this;
-
-        the._id = alienIndex++;
-        the.prompt = new Msg(options).on('open', function () {
-            the._$input = selector.query('#' + alienClass + the._id)[0];
-            the._$input.select();
-            the._$input.focus();
-        }).on('close', function (index) {
-            the.emit(options.sureIndex === index ? 'sure' : 'cancel', the._$input.value);
-        });
     });
 
     module.exports = function (tips, defaultValue, options) {
