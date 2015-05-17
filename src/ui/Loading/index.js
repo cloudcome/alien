@@ -57,6 +57,11 @@ define(function (require, exports, module) {
         addClass: ''
     };
     var Loading = ui.create({
+        /**
+         * 生成一个 loading 实例
+         * @param $parent
+         * @param [options]
+         */
         constructor: function ($parent, options) {
             if (typeis.string(options)) {
                 options = {
@@ -131,7 +136,8 @@ define(function (require, exports, module) {
                     left: '50%',
                     translateX: '-50%',
                     translateY: '-50%',
-                    visibility: ''
+                    visibility: '',
+                    zIndex: ui.getZindex()
                 });
             } else {
                 attribute.css(the._$loading, {
@@ -139,7 +145,8 @@ define(function (require, exports, module) {
                     top: coverStyle.top + coverStyle.height / 2 - maxSize / 2,
                     visibility: '',
                     translateX: 0,
-                    translateY: 0
+                    translateY: 0,
+                    zIndex: ui.getZindex()
                 });
             }
 
