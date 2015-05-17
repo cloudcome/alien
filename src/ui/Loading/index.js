@@ -92,6 +92,7 @@ define(function (require, exports, module) {
             options.list = new Array(options.style.count);
 
             the._loading = modification.create('div', {
+                class: 'alien',
                 style: {
                     backgroundColor: options.style.backgroundColor,
                     color: options.style.color
