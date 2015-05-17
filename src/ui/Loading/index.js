@@ -77,7 +77,7 @@ define(function (require, exports, module) {
                 the._$parent = win;
             }
 
-            the._options = dato.extend({}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
