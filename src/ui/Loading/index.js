@@ -45,6 +45,7 @@ define(function (require, exports, module) {
         style: {
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
             color: '#fff',
+            border: '0',
             radius: 4,
             offset: 22,
             size: 65,
@@ -117,6 +118,7 @@ define(function (require, exports, module) {
             var loadingStyle = {
                 position: coverStyle.position,
                 backgroundColor: options.style.backgroundColor,
+                border: options.style.border,
                 color: options.style.color,
                 visibility: 'hidden'
             };
