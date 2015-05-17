@@ -51,7 +51,7 @@ define(function (require, exports, module) {
         top: 'center',
         title: '无标题对话框',
         addClass: '',
-        duration: 345,
+        duration: 234,
         easing: {
             open: 'ease-out-back',
             resize: 'ease-out-back',

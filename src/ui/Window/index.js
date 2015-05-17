@@ -45,7 +45,7 @@ define(function (require, exports, module) {
         right: null,
         bottom: null,
         left: 'center',
-        duration: 345,
+        duration: 234,
         easing: {
             open: 'ease-out-back',
             close: 'ease-in-back',
@@ -123,13 +123,14 @@ define(function (require, exports, module) {
 
             attribute.css(the._$window, {
                 display: 'block',
-                visibility: 'hidden',
                 width: options.width,
                 height: options.height,
-                position: hasMask ? 'absolute' : 'fixed'
+                position: hasMask ? 'absolute' : 'fixed',
+                scale: 1
             });
             pos.width = attribute.outerWidth(the._$window);
             pos.height = attribute.outerHeight(the._$window);
+            attribute.css(the._$window);
 
             if (options.width === 'height' && options.height === 'width') {
                 pos.width = pos.height = Math.max(pos.width, pos.height);
@@ -205,8 +206,7 @@ define(function (require, exports, module) {
             dato.extend(to, {
                 opacity: 0,
                 zIndex: ui.getZindex(),
-                scale: 0,
-                visibility: 'visible'
+                scale: 0.9
             });
 
             the.visible = true;
@@ -294,7 +294,7 @@ define(function (require, exports, module) {
 
             the.visible = false;
             animation.transition(the._$window, {
-                scale: 0,
+                scale: 0.9,
                 opacity: 0
             }, {
                 direction: 'reverse',

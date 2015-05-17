@@ -1017,6 +1017,12 @@ define(function (require, exports, module) {
                 _setEleTransform(ele, 'translateX', val);
                 _setEleTransform(ele, 'translateY', val);
                 return;
+
+            case 'scale':
+                // scale 到 0 的时候，会出现矩阵计算错误
+                val2 = number.parseFloat(val2, 0);
+                val2 = val === 0 ? 0.01 : val2;
+                break;
         }
 
         ele[alienKey + 'transform'] = ele[alienKey + 'transform'] || {};
