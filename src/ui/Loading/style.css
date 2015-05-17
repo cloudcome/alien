@@ -6,4 +6,5 @@
   .alien-ui-loading-text {
     text-align: center;
     font-size: 14px;
-    padding: 10px 0; }
+    line-height: 1;
+    padding: 0 0 10px 0; }
