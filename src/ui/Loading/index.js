@@ -245,7 +245,8 @@ define(function (require, exports, module) {
             attribute.css(the._$loading, {
                 display: 'block',
                 opacity: 0,
-                scale: 0.5
+                scale: 0.5,
+                zIndex: ui.getZindex()
             });
             animation.transition(the._$loading, {
                 opacity: 1,
