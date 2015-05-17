@@ -68,7 +68,7 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
 
-            if (the._$parent === win || the._$parent === doc || the._$parent === html || !the._$parent) {
+            if (the._$parent === win || the._$parent === doc || the._$parent === html || the._$parent === body || !the._$parent) {
                 the._$parent = win;
             }
 

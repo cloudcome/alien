@@ -31,6 +31,10 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-mask';
     var maskWindowLength = 0;
     var maskWindowList = [];
+    var win = window;
+    var doc = win.document;
+    var html = doc.documentElement;
+    var body = doc.body;
     var defaults = {
         addClass: '',
         zIndex: null,
@@ -43,6 +47,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$cover = selector.query($cover)[0];
+
+            if (the._$cover === win || the._$cover === doc || the._$cover === html || the._$cover === body || !the._$cover) {
+                the._$cover = win;
+            }
+
             the._options = dato.extend(true, {}, defaults, options);
             the.visible = false;
             the._init();
