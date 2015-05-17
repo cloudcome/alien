@@ -93,11 +93,10 @@ define(function (require, exports, module) {
 
             the._$loading = modification.create('div', {
                 class: alienClass,
-                id: alienClass + alienId++
+                id: alienClass + '-' + alienId++
             });
             the._$loading.innerHTML = tpl.render(options);
             modification.insert(the._$loading, body);
-
             the.resize();
         },
 
@@ -121,12 +120,27 @@ define(function (require, exports, module) {
 
             var width = attribute.outerWidth(the._$loading);
             var height = attribute.outerHeight(the._$loading);
+            var maxSize = Math.max(width, height);
 
-            attribute.css(the._$loading, {
-                left: coverStyle.left + coverStyle.width / 2 - width / 2,
-                top: coverStyle.top + coverStyle.height / 2 - height / 2,
-                visibility: ''
-            });
+            attribute.outerWidth(the._$loading, maxSize);
+            attribute.outerHeight(the._$loading, maxSize);
+
+            if (coverStyle.position === 'fixed') {
+                attribute.css(the._$loading, {
+                    top: '50%',
+                    left: '50%',
+                    translateX: '-50%',
+                    translateY: '-50%'
+                });
+            } else {
+                attribute.css(the._$loading, {
+                    left: coverStyle.left + coverStyle.width / 2 - maxSize / 2,
+                    top: coverStyle.top + coverStyle.height / 2 - maxSize / 2,
+                    visibility: '',
+                    translateX: 0,
+                    translateY: 0
+                });
+            }
 
             return the;
         },
@@ -148,6 +162,7 @@ define(function (require, exports, module) {
 
             if (the._mask) {
                 the._mask.destroy();
+                modification.remove(the._$loading);
             }
         }
     });

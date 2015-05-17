@@ -592,7 +592,7 @@ define(function (require, exports, module) {
      * position.width($ele);
      */
     exports.outerWidth = function ($ele, val) {
-        return _middleware('width', arguments);
+        return _middleware('width', arguments, []);
     };
 
 
@@ -649,7 +649,7 @@ define(function (require, exports, module) {
      * position.height(ele);
      */
     exports.outerHeight = function ($ele, val) {
-        return _middleware('height', arguments);
+        return _middleware('height', arguments, []);
     };
 
 
@@ -858,7 +858,7 @@ define(function (require, exports, module) {
             ele = args[0];
             eleType = typeis(ele);
 
-            if (extraKey && eleType === 'element') {
+            if (extraKey.length && eleType === 'element') {
                 dato.each(extraKey, function (i, key) {
                     extraVal += key.indexOf('scroll') > -1 ?
                         -number.parseFloat(exports[key](window), 0) :
@@ -922,7 +922,7 @@ define(function (require, exports, module) {
         height = rect.height;
         deleta = val - now;
 
-        if (key === 'top' || key === 'left') {
+        if ((key === 'top' || key === 'left') && extraKey) {
             deleta -= exports[extraKey](ele);
         }
 

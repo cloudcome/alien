@@ -13,23 +13,29 @@ define(function (require, exports, module) {
 
     var Loading = require('../../src/ui/Loading/');
 
-    //document.getElementById('btn1').onclick = function () {
-    //    var ld = new Loading(window, {
-    //        isModal: true
-    //    });
-    //};
+    document.getElementById('btn1').onclick = function () {
+        var ld = new Loading(window, {
+            isModal: true
+        });
+    };
 
-    //document.getElementById('btn2').onclick = function () {
-    //    var ld = new Loading(window, {
-    //        isModal: false,
-    //        text: '请稍后'
-    //    });
-    //};
+    document.getElementById('btn2').onclick = function () {
+        var ld = new Loading(window, {
+            isModal: false,
+            text: '请稍后'
+        });
+    };
 
     var ld3;
     document.getElementById('btn3').onclick = function () {
         ld3 = new Loading('#demo', {
             text: ''
         });
+    };
+    document.getElementById('btn4').onclick = function () {
+        if (ld3) {
+            ld3.done();
+            ld3 = null;
+        }
     };
 });
