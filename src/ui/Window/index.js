@@ -206,14 +206,16 @@ define(function (require, exports, module) {
             dato.extend(to, {
                 opacity: 0,
                 zIndex: ui.getZindex(),
-                scale: 0.9
+                scale: 0.9,
+                translateY: '6%'
             });
 
             the.visible = true;
             attribute.css(the._$window, to);
             animation.transition(the._$window, {
                 scale: 1,
-                opacity: 1
+                opacity: 1,
+                translateY: 0
             }, {
                 duration: options.duration,
                 easing: options.easing.open
@@ -285,8 +287,8 @@ define(function (require, exports, module) {
                 the.emit('close');
 
                 attribute.css(the._$window, {
-                    transform: '',
-                    display: 'none'
+                    display: 'none',
+                    translateY: 0
                 });
 
                 callback.call(the);
@@ -295,7 +297,8 @@ define(function (require, exports, module) {
             the.visible = false;
             animation.transition(the._$window, {
                 scale: 0.9,
-                opacity: 0
+                opacity: 0,
+                translateY: '-6%'
             }, {
                 direction: 'reverse',
                 duration: options.duration,

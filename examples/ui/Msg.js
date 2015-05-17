@@ -1,7 +1,8 @@
 define(function (require) {
     'use strict';
 
-    var Msg = require('/src/ui/Msg/index.js');
+    var Msg = require('../../src/ui/Msg/index.js');
+    var alert = require('../../src/widgets/alert.js');
 
     document.getElementById('btn0').onclick = function () {
         new Msg({
