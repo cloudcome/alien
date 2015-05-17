@@ -248,8 +248,8 @@ define(function (require, exports, module) {
 
         return {
             position: 'absolute',
-            width: attribute.width($ele),
-            height: attribute.height($ele),
+            width: attribute.outerWidth($ele),
+            height: attribute.outerHeight($ele),
             top: attribute.top($ele),
             left: attribute.left($ele)
         };
