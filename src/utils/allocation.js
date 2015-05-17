@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
     /**
      * getset 转换器
-     * @param getset {{get: Function, set: Function, onget: Function, onset: Function}} 获取与设置的 Map
+     * @param getset {{get: Function, set: Function, [onget]: Function, [onset]: Function}} 获取与设置的 Map
      * @param args {Object} 参数
      * @param [setLength=2] 设置行为的参数个数
      * @returns {*}
