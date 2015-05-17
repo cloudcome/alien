@@ -233,7 +233,7 @@ define(function (require, exports, module) {
 
         /**
          * 获取当前 mask 节点
-         * @returns {HTMLElementNode}
+         * @returns {Object}
          */
         getNode: function () {
             return this._$mask;
@@ -243,16 +243,12 @@ define(function (require, exports, module) {
         /**
          * 销毁实例
          */
-        destroy: function (callback) {
+        destroy: function () {
             var the = this;
 
             the.close();
             event.un(the._$mask, 'click');
             modification.remove(the._$mask);
-
-            if (typeis.function(callback)) {
-                callback();
-            }
         }
     });
 

@@ -31,11 +31,14 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var Template = require('../../libs/Template.js');
+    var win = window;
+    var doc = win.document;
+    var html = doc.documentElement;
+    var body = doc.body;
     Template.config({
         debug: true
     });
     var tpl = new Template(template);
-    var win = window;
     var defaults = {
         isModal: true,
         style: {
@@ -63,6 +66,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$parent = selector.query($parent)[0];
+
+            if (the._$parent === win || the._$parent === doc || the._$parent === html || !the._$parent) {
+                the._$parent = win;
+            }
+
             the._options = dato.extend({}, defaults, options);
             the._init();
         },
@@ -77,7 +85,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (options.isModal) {
-                the._mask = new Mask(win).open();
+                the._mask = new Mask(the._$parent).open();
             }
 
             options.list = new Array(options.style.count);
