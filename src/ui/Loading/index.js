@@ -51,7 +51,7 @@
   }
 }
 
-*************/
+ *************/
 
 
 
@@ -236,6 +236,12 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            the.visible = true;
+            attribute.css(the._$loading, {
+                display: 'block',
+                opacity: 0,
+                scale: 0.5
+            });
             animation.transition(the._$loading, {
                 opacity: 1,
                 scale: 1
@@ -257,10 +263,19 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            the.visible = false;
             animation.transition(the._$loading, {
-                opacity: 1,
-                scale: 1
-            }, the._transitionOptions, callback);
+                opacity: 0,
+                scale: 0.5
+            }, the._transitionOptions, function () {
+                attribute.css(the._$loading, {
+                    display: 'none'
+                });
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
 
             return the;
         },
