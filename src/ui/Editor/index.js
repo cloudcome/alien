@@ -567,7 +567,7 @@ define(function (require, exports, module) {
                     var _img = new Image();
 
                     _img.src = img.url;
-                    html.push('![' + img.name + '](' + img.url +
+                    html.push('![](' + img.url +
                     (typeis.undefined(img.width) ? '' : ' =' + img.width + 'x' + img.height) + ')');
                 });
 
