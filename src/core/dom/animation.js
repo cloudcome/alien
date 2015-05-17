@@ -170,7 +170,7 @@ define(function (require, exports, module) {
             });
 
             win[requestAnimationFrame](function () {
-                attribute.css($ele, fixTo);
+                attribute.css($ele, to);
             });
         };
     };
