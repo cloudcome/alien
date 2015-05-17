@@ -147,11 +147,6 @@ define(function (require, exports, module) {
                 the.emit('open');
             }).on('close', function () {
                 the._opened = false;
-
-                if (the._loading) {
-                    the._loading.close();
-                }
-
                 the.emit('close');
             });
 
@@ -199,6 +194,10 @@ define(function (require, exports, module) {
 
             // 点击关闭
             event.on(the._$close, 'click', the._onclose = function () {
+                if (the._loading) {
+                    the._loading.close();
+                }
+
                 the._window.close(function () {
                     the._mask.close();
                     attribute.addClass(the._$content, alienClass + '-content-loading');

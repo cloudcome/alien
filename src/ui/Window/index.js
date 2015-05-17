@@ -274,7 +274,6 @@ define(function (require, exports, module) {
             callback = typeis.function(callback) ? callback : noop;
 
             if (!the.visible) {
-                callback.call(the);
                 return the;
             }
 

@@ -41,9 +41,7 @@ define(function (require, exports, module) {
 
         var nowDisplay = _getDisplay($ele);
 
-        if ($ele && !$ele[alienKey + key] && nowDisplay !== 'none') {
-            $ele[alienKey + key] = nowDisplay;
-        }
+        $ele[alienKey + key] = nowDisplay;
 
         // get
         if (!changeVisibility) {

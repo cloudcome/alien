@@ -961,7 +961,7 @@ define(function (require, exports, module) {
             ret = doWhat(ele);
 
             dato.each(eles, function (index, ele) {
-                ele.style.display = ele['alien-core-dom-see-display'] || '';
+                ele.style.display = ele['-alien-core-dom-see-display'] || '';
             });
 
             return ret;
@@ -1002,13 +1002,13 @@ define(function (require, exports, module) {
         // 计算百分比的 translate
         switch (key) {
             case 'translateX':
-                base = exports.outerWidth(ele);
+                base = isPercent ? exports.outerWidth(ele) : 0;
                 val2 = number.parseFloat(val, 0);
                 val2 = isPercent ? base * val2 / 100 : val2;
                 break;
 
             case 'translateY':
-                base = exports.outerHeight(ele);
+                base = isPercent ? exports.outerHeight(ele) : 0;
                 val2 = number.parseFloat(val, 0);
                 val2 = isPercent ? base * val2 / 100 : val2;
                 break;
