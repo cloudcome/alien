@@ -24,6 +24,7 @@ define(function (require, exports, module) {
 
     var ui = require('../');
     var Scrollbar = require('../Scrollbar/');
+    var Loading = require('../Loading/');
     var Mask = require('../Mask/');
     var Window = require('../Window/index.js');
     var selector = require('../../core/dom/selector.js');
@@ -49,14 +50,9 @@ define(function (require, exports, module) {
     var defaults = {
         duration: 400,
         easing: 'in-out',
-        loading: {
-            url: 'http://s.ydr.me/p/i/loading-128.gif',
-            width: 64,
-            height: 64
-        },
         thumbnailSize: {
-            width: 60,
-            height: 60
+            width: 50,
+            height: 50
         }
     };
     var Imgview = ui.create({
@@ -260,11 +256,6 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$content, 'bottom', number.parseFloat(options.thumbnailSize.height));
-            attribute.css(the._$loading, {
-                width: options.loading.width,
-                height: options.loading.height,
-                backgroundImage: 'url(' + options.loading.url + ')'
-            });
         },
 
 
@@ -291,6 +282,31 @@ define(function (require, exports, module) {
 
 
         /**
+         * 切换 loading 的显隐
+         * @param isShow
+         * @private
+         */
+        _loading: function (isShow) {
+            var the = this;
+
+            if (isShow) {
+                the._loading(false);
+                the._ld = new Loading(window, {
+                    style: {
+                        border: '1px solid #333'
+                    },
+                    isModal: false
+                });
+            } else {
+                if (the._ld) {
+                    the._ld.done();
+                    the._ld = null;
+                }
+            }
+        },
+
+
+        /**
          * 展示
          * @private
          */
@@ -304,6 +320,7 @@ define(function (require, exports, module) {
                 easing: options.easing
             };
             var onnext = function () {
+                the._loading(true);
                 attribute.addClass(the._$content, loadingClass);
                 attribute.removeClass(the._$itemlist, activeClass);
                 attribute.addClass(the._$itemlist[the._index], activeClass);
@@ -319,6 +336,7 @@ define(function (require, exports, module) {
 
                     if (the._index === meta.index) {
                         attribute.removeClass(the._$content, loadingClass);
+                        the._loading(false);
                         the._opened = true;
 
                         var maxWidth = Math.min(attribute.width(the._$content) - 20, meta.width);
@@ -332,24 +350,21 @@ define(function (require, exports, module) {
                         animation.transition(the._$body, {
                             width: realWidth,
                             height: realHeight
-                        }, transitionOptions, function () {
-                            //attribute.css(the._$body, 'backgroundImage', 'url(' + meta.src + ')');
-                        });
+                        }, transitionOptions);
                     }
                 });
             };
 
             // 已经有 body 打开
             if (the._opened) {
-                //attribute.css(the._$body, 'backgroundImage', 'none');
                 animation.transition(the._$body, {
-                    width: options.loading.width,
-                    height: options.loading.height
+                    width: 200,
+                    height: 200
                 }, transitionOptions, onnext);
             } else {
                 attribute.css(the._$body, {
-                    width: options.loading.width,
-                    height: options.loading.height,
+                    width: 200,
+                    height: 200,
                     backgroundImage: 'none'
                 });
                 onnext();
@@ -372,7 +387,6 @@ define(function (require, exports, module) {
          */
         open: function (list, index) {
             var the = this;
-            //var options = the._options;
 
             list = list.map(function (item) {
                 if (typeis.string(item)) {
