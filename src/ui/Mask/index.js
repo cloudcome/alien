@@ -47,11 +47,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$cover = selector.query($cover)[0];
-
-            if (the._$cover === win || the._$cover === doc || the._$cover === html || the._$cover === body || !the._$cover) {
-                the._$cover = win;
-            }
-
+            the._$cover = _isSimilar2Window(the._$cover) ? win : the._$cover;
             the._options = dato.extend(true, {}, defaults, options);
             the.visible = false;
             the._init();
@@ -106,35 +102,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获得需要覆盖的尺寸
-         * @returns {*}
-         * @private
-         */
-        _getSize: function () {
-            var the = this;
-
-            // 其他节点
-            if (the._$cover === win) {
-                return {
-                    position: 'fixed',
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                };
-            }
-
-            return {
-                position: 'absolute',
-                width: attribute.width(the._$cover),
-                height: attribute.height(the._$cover),
-                top: attribute.top(the._$cover),
-                left: attribute.left(the._$cover)
-            };
-        },
-
-
-        /**
          * 打开 mask
          */
         open: function () {
@@ -144,7 +111,7 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            var pos = the._getSize();
+            var pos = Mask.getCoverSize(the._$cover);
 
             pos.display = 'block';
             pos.zIndex = the._options.zIndex || ui.getZindex();
@@ -180,7 +147,7 @@ define(function (require, exports, module) {
 
             var options = the._options;
 
-            pos = dato.extend({}, the._getSize(), pos);
+            pos = dato.extend({}, Mask.getCoverSize(the._$cover), pos);
             animation.transition(the._$mask, pos, {
                 duation: options.duration,
                 easing: options.easing
@@ -261,6 +228,35 @@ define(function (require, exports, module) {
 
 
     /**
+     * 获得需要覆盖的尺寸
+     * @param $ele {Object} 要覆盖的尺寸及定位
+     * @returns {*}
+     */
+    Mask.getCoverSize = function ($ele) {
+        $ele = _isSimilar2Window($ele) ? win : $ele;
+
+        // 其他节点
+        if ($ele === win) {
+            return {
+                position: 'fixed',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0
+            };
+        }
+
+        return {
+            position: 'absolute',
+            width: attribute.width($ele),
+            height: attribute.height($ele),
+            top: attribute.top($ele),
+            left: attribute.left($ele)
+        };
+    };
+
+
+    /**
      * 覆盖 window 的 mask 列表
      * @type {Array}
      */
@@ -323,5 +319,17 @@ define(function (require, exports, module) {
         modification.remove($div);
 
         return width;
+    }
+
+
+    /**
+     * 是否与 window 同等对待
+     * @param $ele
+     * @returns {boolean}
+     * @private
+     */
+    function _isSimilar2Window($ele) {
+        return $ele === win || $ele === doc ||
+            $ele === html || $ele === body || !$ele;
     }
 });
