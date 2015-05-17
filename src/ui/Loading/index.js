@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires core/dom/attribute
      * @requires core/dom/modification
+     * @requires core/dom/animation
      * @requires ui/Mask/
      * @requires ui/Window/
      * @requires libs/Template
@@ -26,6 +27,7 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var animation = require('../../core/dom/animation.js');
     var Mask = require('../Mask/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
@@ -55,7 +57,9 @@ define(function (require, exports, module) {
             height: 18
         },
         text: '加载中',
-        addClass: ''
+        addClass: '',
+        duration: 123,
+        easing: 'in-out'
     };
     var Loading = ui.create({
         /**
@@ -98,12 +102,31 @@ define(function (require, exports, module) {
             options.list = new Array(options.style.count);
 
             the._$loading = modification.create('div', {
-                class: alienClass,
+                class: alienClass + ' ' + options.addClass,
                 id: alienClass + '-' + alienId++
             });
             the._$loading.innerHTML = tpl.render(options);
             modification.insert(the._$loading, body);
             the.resize();
+
+            var fromStyle = {
+                visibility: '',
+                zIndex: ui.getZindex(),
+                opacity: 0,
+                scale: 0.5
+            };
+            var toStyle = {
+                opacity: 1,
+                scale: 1
+            };
+
+            attribute.css(the._$loading, fromStyle);
+            animation.transition(the._$loading, toStyle, the._transitionOptions = {
+                duration: options.duration,
+                easing: options.easing
+            }, function () {
+                the.visible = true;
+            });
         },
 
 
@@ -137,18 +160,14 @@ define(function (require, exports, module) {
                     top: '50%',
                     left: '50%',
                     translateX: '-50%',
-                    translateY: '-50%',
-                    visibility: '',
-                    zIndex: ui.getZindex()
+                    translateY: '-50%'
                 });
             } else {
                 attribute.css(the._$loading, {
                     left: coverStyle.left + coverStyle.width / 2 - maxSize / 2,
                     top: coverStyle.top + coverStyle.height / 2 - maxSize / 2,
-                    visibility: '',
                     translateX: 0,
-                    translateY: 0,
-                    zIndex: ui.getZindex()
+                    translateY: 0
                 });
             }
 
@@ -167,14 +186,30 @@ define(function (require, exports, module) {
         /**
          * loading 结束
          */
-        done: function () {
+        done: function (callback) {
             var the = this;
+
+            if (!the.visible) {
+                return;
+            }
+
+            the.visible = false;
 
             if (the._mask) {
                 the._mask.destroy();
             }
 
-            modification.remove(the._$loading);
+            animation.transition(the._$loading, {
+                opacity: 0,
+                scale: 0.5
+            }, the._transitionOptions, function () {
+                modification.remove(the._$loading);
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
+
         }
     });
     Loading.defaults = defaults;
