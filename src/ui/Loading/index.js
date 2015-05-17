@@ -121,11 +121,10 @@ define(function (require, exports, module) {
             };
 
             attribute.css(the._$loading, fromStyle);
+            the.visible = true;
             animation.transition(the._$loading, toStyle, the._transitionOptions = {
                 duration: options.duration,
                 easing: options.easing
-            }, function () {
-                the.visible = true;
             });
         },
 
