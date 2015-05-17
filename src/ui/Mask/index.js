@@ -157,12 +157,11 @@ define(function (require, exports, module) {
              */
             the.emit('open');
 
-            if (the._$cover === window) {
+            if (the._$cover === win) {
                 maskWindowLength++;
                 maskWindowList.push(the);
+                attribute.addClass(document.body, alienClass + '-overflow');
             }
-
-            attribute.addClass(document.body, alienClass + '-overflow');
 
             return the;
         },
