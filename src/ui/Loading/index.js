@@ -53,7 +53,9 @@ define(function (require, exports, module) {
     var Loading = ui.create({
         constructor: function (options) {
             if (typeis.string(options)) {
-                options.text = options;
+                options = {
+                    text: options
+                };
             }
 
             var the = this;
