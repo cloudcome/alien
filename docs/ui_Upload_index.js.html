@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: ui/Upload/index.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_Router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_Animation.html">libs/Animation</a></li>
+<li><a href="module-libs_DDB.html">libs/DDB</a></li>
+<li><a href="module-libs_Emitter.html">libs/Emitter</a></li>
+<li><a href="module-libs_Pagination.html">libs/Pagination</a></li>
+<li><a href="module-libs_Pjax.html">libs/Pjax</a></li>
+<li><a href="module-libs_Queue.html">libs/Queue</a></li>
+<li><a href="module-libs_Template.html">libs/Template</a></li>
+<li><a href="module-libs_Validator.html">libs/Validator</a></li>
+<li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
+<li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
+<li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
+<li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
+<li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
+<li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
+<li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
+<li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
+<li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
+<li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
+<li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
+<li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
+<li><a href="module-ui_Scrollspy_.html">ui/Scrollspy/</a></li>
+<li><a href="module-ui_Stickly_.html">ui/Stickly/</a></li>
+<li><a href="module-ui_Tab_.html">ui/Tab/</a></li>
+<li><a href="module-ui_Tooltip_.html">ui/Tooltip/</a></li>
+<li><a href="module-ui_Validator_.html">ui/Validator/</a></li>
+<li><a href="module-ui_Viewer_.html">ui/Viewer/</a></li>
+<li><a href="module-ui_Window_.html">ui/Window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
+<li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
+<li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
+<li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
+<li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
+<li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
+<li><a href="module-ui_Scrollbar_.html#~event:scrolly">module:ui/Scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_Queue.html#~event:shift">module:libs/Queue.shift</a></li>
+<li><a href="module-libs_Queue.html#~event:size">module:libs/Queue.size</a></li>
+<li><a href="module-libs_Animation.html#~event:start">module:libs/Animation.start</a></li>
+<li><a href="module-libs_Queue.html#~event:step">module:libs/Queue.step</a></li>
+<li><a href="module-libs_Queue.html#~event:stop">module:libs/Queue.stop</a></li>
+<li><a href="module-ui_Scroll_.html#~event:top">module:ui/Scroll/.top</a></li>
+<li><a href="module-ui_Scroll_.html#~event:up">module:ui/Scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallend">module:libs/Validator.validateallend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateallstart">module:libs/Validator.validateallstart</a></li>
+<li><a href="module-libs_Validator.html#~event:validateend">module:libs/Validator.validateend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateoneend">module:libs/Validator.validateoneend</a></li>
+<li><a href="module-libs_Validator.html#~event:validateonestart">module:libs/Validator.validateonestart</a></li>
+<li><a href="module-ui_Scroll_.html#~event:x">module:ui/Scroll/.x</a></li>
+<li><a href="module-ui_Scroll_.html#~event:y">module:ui/Scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#upload">upload</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 82</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:enterviewport">enterviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:leaveviewport">leaveviewport</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: ui/Upload/index.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * Upload
+ * @author ydr.me
+ * @create 2014-12-23 13:56
+ */
+
+
+define(function (require, exports, module) {
+    'use strict';
+
+    var ui = require('../');
+    var compatible = require('../../core/navigator/compatible.js');
+    var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var event = require('../../core/event/base.js');
+    var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var canvas = require('../../utils/canvas.js');
+    var xhr = require('../../core/communication/xhr.js');
+    var alert = require('../../widgets/alert.js');
+    var Dialog = require('../../ui/Dialog/');
+    var Imgclip = require('../../ui/Imgclip/');
+    var Template = require('../../libs/Template.js');
+    var template = require('./template.html', 'html');
+    var style = require('./style.css', 'css');
+    var tpl = new Template(template);
+    var URL = window[compatible.html5('URL', window)];
+    var alienKey = 'alien-ui-upload';
+    var defaults = {
+        isClip: true,
+        minWidth: 200,
+        minHeight: 200,
+        accept: 'image/png,image/jpg,image/jpeg,image/gif,image/bmp',
+        ratio: 1,
+        ajax: {
+            // xhr options 都可以传进来
+            url: '',
+            method: 'put',
+            headers: {},
+            body: {},
+            fileKey: 'file'
+        }
+    };
+    var Upload = ui.create({
+        constructor: function (options) {
+            var the = this;
+
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+
+            the._isChoosed = false;
+            the._isReady = false;
+            the._initNode();
+            the._applyOptions();
+            the._initEvent();
+        },
+
+
+        /**
+         * 初始化节点
+         * @private
+         */
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var dialogHTML = tpl.render(options);
+            var $dialog = modification.parse(dialogHTML)[0];
+
+            modification.insert($dialog, document.body, 'beforeend');
+            the._$dialog = $dialog;
+            the._dialog = new Dialog(the._$dialog, {
+                width: 'auto'
+            });
+
+            var nodes = selector.query('.j-flag', $dialog);
+
+            the._$file = nodes[0];
+            the._$imageWrap = nodes[1];
+            the._$cancel = nodes[2];
+            the._$submit = nodes[3];
+        },
+
+
+        /**
+         * 应用配置
+         * @private
+         */
+        _applyOptions: function () {
+            var the = this;
+            var options = the._options;
+
+            the._dialog.setTitle((options.isClip ? '裁剪并' : '') + '上传图片');
+            the._$submit.innerHTML = the._submitHTML = (options.isClip ? '裁剪并' : '确认') + '上传图片';
+            the._setChoosed(false);
+            the._resetFile();
+
+            if (the._imgclip) {
+                the._imgclip.destroy();
+                the._imgclip = null;
+            }
+        },
+
+
+        /**
+         * 重置 input:file
+         * @private
+         */
+        _resetFile: function () {
+            var the = this;
+
+            if (!the._$file.files) {
+                return;
+            }
+
+            var options = the._options;
+            var $newFile = modification.create('input', {
+                type: 'file',
+                accept: options.accept,
+                class: alienKey + '-file'
+            });
+
+            modification.insert($newFile, the._$file, 'afterend');
+            modification.remove(the._$file);
+            the._$file = $newFile;
+        },
+
+
+        /**
+         * 设置是否选择了图片
+         * @param boolean
+         * @private
+         */
+        _setChoosed: function (boolean) {
+            var the = this;
+
+            if (the._isChoosed === boolean) {
+                return;
+            }
+
+            the._isChoosed = boolean;
+            attribute[(boolean ? 'add' : 'remove') + 'Class'](the._$dialog, alienKey + '-choosed');
+
+            if (!boolean) {
+                the._setReady(boolean);
+            }
+        },
+
+
+        /**
+         * 设置是否可以准备上传了
+         * @param boolean
+         * @private
+         */
+        _setReady: function (boolean) {
+            var the = this;
+
+            if (the._isReady === boolean) {
+                return;
+            }
+
+            the._isReady = boolean;
+            attribute[(boolean ? 'add' : 'remove') + 'Class'](the._$dialog, alienKey + '-ready');
+            the._dialog.resize();
+        },
+
+
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            //var options = the._options;
+
+            the.on('setoptions', the._applyOptions.bind(the));
+            the._dialog.on('close', function () {
+                the._applyOptions();
+
+                if (the._xhr) {
+                    the._xhr.abort();
+                }
+            });
+
+
+            // 选择图片
+            event.on(the._$dialog, 'change', '.' + alienKey + '-file', function (eve) {
+                var file;
+
+                if (this.files &amp;&amp; this.files.length) {
+                    file = this.files[0];
+
+                    if (this.accept.indexOf(file.type) > -1) {
+                        /**
+                         * 选择图片
+                         * @event choose
+                         * @param eve
+                         */
+                        the.emit('choose', eve);
+                        the._setChoosed(true);
+                        the._renderImg(file);
+                    } else {
+                        alert('只能选择图片文件！');
+                    }
+                }
+            });
+
+
+            // 取消选择
+            event.on(the._$cancel, 'click', function () {
+                if (the._isUpload) {
+                    return;
+                }
+
+                the._applyOptions();
+                the._dialog.resize();
+                /**
+                 * 取消选择图片
+                 * @event cancel
+                 */
+                the.emit('cancel');
+            });
+
+
+            // 点击上传
+            event.on(the._$submit, 'click', function () {
+                /**
+                 * 上传图片
+                 * @event upload
+                 */
+                var ret = the.emit('upload');
+
+                if (ret === false) {
+                    return;
+                }
+
+                the.upload();
+            });
+
+
+            // 拖拽、粘贴
+            event.on(document, 'dragenter dragover', the._ondrag.bind(the));
+            event.on(document, 'drop', the._ondrop.bind(the));
+            event.on(document, 'paste', the._onpaste.bind(the));
+        },
+
+
+        /**
+         * 上传文件
+         */
+        upload: function () {
+            var the = this;
+            var options = the._options;
+
+            if (the._isUpload) {
+                return;
+            }
+
+            if (options.isClip) {
+                the._toBlob(function (blob) {
+                    the._toUpload(blob);
+                });
+            } else {
+                the._toUpload(the._file);
+            }
+        },
+
+
+        /**
+         * 拖拽回调
+         * @returns {boolean}
+         * @private
+         */
+        _ondrag: function () {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                return false;
+            }
+        },
+
+
+        /**
+         * 释放回调
+         * @private
+         */
+        _ondrop: function (eve) {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                the._parseImgList(eve, eve.dataTransfer &amp;&amp; eve.dataTransfer.items);
+                return false;
+            }
+        },
+
+
+        /**
+         * 粘贴回调
+         * @private
+         */
+        _onpaste: function (eve) {
+            var the = this;
+
+            if (the._dialog._window.visible) {
+                the._parseImgList(eve, eve.clipboardData &amp;&amp; eve.clipboardData.items);
+                return false;
+            }
+        },
+
+
+        /**
+         * 解析图片列表
+         * @param eve
+         * @param items
+         * @private
+         */
+        _parseImgList: function (eve, items) {
+            var the = this;
+            var options = the._options;
+            var fileAFile = null;
+
+            dato.each(items, function (index, item) {
+                var file;
+
+                if (options.accept.indexOf(item.type) > -1 &amp;&amp; item.kind === 'file') {
+                    file = item.getAsFile();
+
+                    if (file &amp;&amp; file.size > 0) {
+                        fileAFile = file;
+
+                        return false;
+                    }
+                }
+            });
+
+
+            if (fileAFile) {
+                the._setChoosed(true);
+                the._renderImg(fileAFile);
+            }
+        },
+
+
+        /**
+         * 渲染图片
+         * @param file
+         * @private
+         */
+        _renderImg: function (file) {
+            var the = this;
+            var src = URL.createObjectURL(file);
+            var $img = modification.create('img', {
+                src: src
+            });
+            var options = the._options;
+
+            $img.onload = function () {
+                the._dialog.resize();
+            };
+            the._$imageWrap.innerHTML = '';
+            modification.insert($img, the._$imageWrap, 'beforeend');
+
+            if (the._imgclip) {
+                the._imgclip.destroy();
+            }
+
+            if (options.isClip) {
+                the._imgclip = new Imgclip($img, the._options)
+                    .on('clipend', function (seletion) {
+                        the._selection = seletion;
+                        the._setReady(true);
+                    })
+                    .on('error', function (err) {
+                        the.emit('error', err);
+                    });
+            } else {
+                the._setReady(true);
+            }
+
+            the._file = file;
+            the._$img = $img;
+        },
+
+
+        /**
+         * 转换为二进制
+         * @param callback
+         * @private
+         */
+        _toBlob: function (callback) {
+            var the = this;
+            var selection = the._selection;
+            var options = the._options;
+
+            canvas.imgToBlob(the._$img, {
+                srcX: selection.srcLeft,
+                srcY: selection.srcTop,
+                srcWidth: selection.srcWidth,
+                srcHeight: selection.srcHeight,
+                drawWidth: options.minWidth,
+                drawHeight: options.minHeight
+            }, callback);
+        },
+
+
+        /**
+         * 上传
+         * @param blob
+         * @private
+         */
+        _toUpload: function (blob) {
+            var the = this;
+            var options = the._options;
+            var fd = new FormData();
+            var ajaxOptions = dato.extend({}, options.ajax);
+
+            the._isUpload = true;
+
+            // key, val, name
+            fd.append(ajaxOptions.fileKey, blob);
+
+            dato.each(ajaxOptions.body, function (key, val) {
+                fd.append(key, val);
+            });
+
+            ajaxOptions.body = fd;
+            the._xhr = xhr.ajax(ajaxOptions)
+                .on('progress', function (eve) {
+                    the._$submit.innerHTML = '正在上传 &lt;b>' + eve.alienDetail.percent + '&lt;/b>';
+                })
+                .on('success', function (json) {
+                    the.emit('success', json);
+                })
+                .on('error', function (err) {
+                    the.emit('error', err);
+                })
+                .on('complete', function (err, json) {
+                    the.emit('complete', err, json);
+                })
+                .on('finish', function (err, json) {
+                    the.emit('finish', err, json);
+                    the._isUpload = false;
+                    the._$submit.innerHTML = the._submitHTML;
+                    the.close();
+                });
+        },
+
+
+        /**
+         * 打开上传对话框
+         */
+        open: function () {
+            this._dialog.open();
+            return this;
+        },
+
+
+        /**
+         * 关闭上传的对话框
+         */
+        close: function () {
+            var the = this;
+
+            the._dialog.close();
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         * @param callback
+         */
+        destroy: function (callback) {
+            var the = this;
+
+            event.un(the._$dialog, 'change');
+            event.un(the._$cancel, 'click');
+            event.un(the._$submit, 'click');
+            event.un(document, 'dragenter dragover', the._ondrag);
+            event.un(document, 'drop', the._ondrop);
+            event.un(document, 'paste', the._onpaste);
+            the._applyOptions();
+            the._dialog.destroy(callback);
+        }
+    });
+
+    Upload.defaults = defaults;
+    modification.importStyle(style);
+    module.exports = Upload;
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>
