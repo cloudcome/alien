@@ -147,6 +147,11 @@ define(function (require, exports, module) {
                 the.emit('open');
             }).on('close', function () {
                 the._opened = false;
+
+                if (the._loading) {
+                    the._loading.close();
+                }
+
                 the.emit('close');
             });
 
@@ -262,12 +267,15 @@ define(function (require, exports, module) {
             var options = the._options;
 
             attribute.css(the._$content, 'bottom', number.parseFloat(options.thumbnailSize.height));
-            the._loading = new Loading(window, {
-                style: {
-                    border: '1px solid #333'
-                },
-                isModal: false
-            });
+
+            if (!the._loading) {
+                the._loading = new Loading(window, {
+                    style: {
+                        border: '1px solid #333'
+                    },
+                    isModal: false
+                });
+            }
         },
 
 
@@ -307,7 +315,10 @@ define(function (require, exports, module) {
                 easing: options.easing
             };
             var onnext = function () {
-                the._loading.open();
+                if (!the._hasLoadMap[the._index]) {
+                    the._loading.open();
+                }
+
                 attribute.addClass(the._$content, loadingClass);
                 attribute.removeClass(the._$itemlist, activeClass);
                 attribute.addClass(the._$itemlist[the._index], activeClass);
@@ -322,6 +333,7 @@ define(function (require, exports, module) {
                     }
 
                     if (the._index === meta.index) {
+                        the._hasLoadMap[the._index] = true;
                         attribute.removeClass(the._$content, loadingClass);
                         the._loading.close();
                         the._opened = true;
@@ -379,6 +391,7 @@ define(function (require, exports, module) {
                 return item;
             });
 
+            the._hasLoadMap = {};
             the._list = list;
             the._index = index || 0;
             the._ctrl();

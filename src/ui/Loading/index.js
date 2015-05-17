@@ -237,6 +237,11 @@ define(function (require, exports, module) {
             }
 
             the.visible = true;
+
+            if (the._mask) {
+                the._mask.open();
+            }
+
             attribute.css(the._$loading, {
                 display: 'block',
                 opacity: 0,
@@ -264,6 +269,11 @@ define(function (require, exports, module) {
             }
 
             the.visible = false;
+
+            if (the._mask) {
+                the._mask.close();
+            }
+
             animation.transition(the._$loading, {
                 opacity: 0,
                 scale: 0.5

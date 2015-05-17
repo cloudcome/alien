@@ -122,6 +122,8 @@ define(function (require, exports, module) {
             var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
             attribute.css(the._$window, {
+                display: 'block',
+                visibility: 'hidden',
                 width: options.width,
                 height: options.height,
                 position: hasMask ? 'absolute' : 'fixed'
@@ -200,11 +202,14 @@ define(function (require, exports, module) {
             };
             var to = the._getPos();
 
+            dato.extend(to, {
+                opacity: 0,
+                zIndex: ui.getZindex(),
+                scale: 0,
+                visibility: 'visible'
+            });
+
             the.visible = true;
-            to.display = 'block';
-            to.opacity = 0;
-            to.zIndex = ui.getZindex();
-            to.scale = 0;
             attribute.css(the._$window, to);
             animation.transition(the._$window, {
                 scale: 1,
