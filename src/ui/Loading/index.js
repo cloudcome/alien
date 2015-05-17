@@ -172,8 +172,9 @@ define(function (require, exports, module) {
 
             if (the._mask) {
                 the._mask.destroy();
-                modification.remove(the._$loading);
             }
+
+            modification.remove(the._$loading);
         }
     });
     Loading.defaults = defaults;
