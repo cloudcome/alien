@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -206,7 +211,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:cancel">cancel</a>
+        <a class="" href="#event:cancel">cancel</a>
     
 </li>
 
@@ -356,7 +361,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-244753189384937337819411628879607" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5066498401574797947949066292495" data-toggle="tab">Source</a>
             </li>
 
         
@@ -377,7 +382,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-244753189384937337819411628879607">
+            <div class="tab-pane active" id="tab-meta-5066498401574797947949066292495">
                 <p><a href="ui_Imgclip_index.js.html#line9">ui/Imgclip/index.js:9</a></p>
             </div>
 
@@ -483,7 +488,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-71742634335532785665185383986682" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2392644665669649817962431372143328" data-toggle="tab">Source</a>
             </li>
 
         
@@ -504,8 +509,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-71742634335532785665185383986682">
-                <p><a href="ui_Imgclip_index.js.html#line512">ui/Imgclip/index.js:512</a></p>
+            <div class="tab-pane active" id="tab-meta-2392644665669649817962431372143328">
+                <p><a href="ui_Imgclip_index.js.html#line510">ui/Imgclip/index.js:510</a></p>
             </div>
 
         
@@ -539,7 +544,7 @@
             
 <section class="docs-method ">
     <dt>
-    <h4 class="name alert alert-warning" id="~event:cancel">
+    <h4 class="name alert alert-warning" id="event:cancel">
         cancel : event
     </h4>
 
@@ -635,7 +640,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0932085881941020521405748347751796" data-toggle="tab">Source</a>
+                <a href="#tab-meta-10228738421574235006366589805111289" data-toggle="tab">Source</a>
             </li>
 
         
@@ -656,8 +661,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0932085881941020521405748347751796">
-                <p><a href="ui_Imgclip_index.js.html#line483">ui/Imgclip/index.js:483</a></p>
+            <div class="tab-pane active" id="tab-meta-10228738421574235006366589805111289">
+                <p><a href="ui_Imgclip_index.js.html#line481">ui/Imgclip/index.js:481</a></p>
             </div>
 
         
@@ -778,7 +783,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-3669961490668356405215685232542455" data-toggle="tab">Source</a>
+                <a href="#tab-meta-29807296814396985469179546926171" data-toggle="tab">Source</a>
             </li>
 
         
@@ -799,8 +804,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-3669961490668356405215685232542455">
-                <p><a href="ui_Imgclip_index.js.html#line407">ui/Imgclip/index.js:407</a></p>
+            <div class="tab-pane active" id="tab-meta-29807296814396985469179546926171">
+                <p><a href="ui_Imgclip_index.js.html#line299">ui/Imgclip/index.js:299</a></p>
             </div>
 
         
@@ -921,7 +926,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-122254967456683529512509980704635" data-toggle="tab">Source</a>
+                <a href="#tab-meta-687636313959956207058676611632109" data-toggle="tab">Source</a>
             </li>
 
         
@@ -942,8 +947,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-122254967456683529512509980704635">
-                <p><a href="ui_Imgclip_index.js.html#line450">ui/Imgclip/index.js:450</a></p>
+            <div class="tab-pane active" id="tab-meta-687636313959956207058676611632109">
+                <p><a href="ui_Imgclip_index.js.html#line448">ui/Imgclip/index.js:448</a></p>
             </div>
 
         
@@ -1064,7 +1069,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-1918710751924663819636168493889272" data-toggle="tab">Source</a>
+                <a href="#tab-meta-752053505042567813207024056464434" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1085,8 +1090,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-1918710751924663819636168493889272">
-                <p><a href="ui_Imgclip_index.js.html#line301">ui/Imgclip/index.js:301</a></p>
+            <div class="tab-pane active" id="tab-meta-752053505042567813207024056464434">
+                <p><a href="ui_Imgclip_index.js.html#line405">ui/Imgclip/index.js:405</a></p>
             </div>
 
         
@@ -1207,7 +1212,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-95884603704325857879817755892873" data-toggle="tab">Source</a>
+                <a href="#tab-meta-43014345294795938024013948161155" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1228,8 +1233,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-95884603704325857879817755892873">
-                <p><a href="ui_Imgclip_index.js.html#line345">ui/Imgclip/index.js:345</a></p>
+            <div class="tab-pane active" id="tab-meta-43014345294795938024013948161155">
+                <p><a href="ui_Imgclip_index.js.html#line462">ui/Imgclip/index.js:462</a></p>
             </div>
 
         
@@ -1350,7 +1355,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0099030996207147841764017001260072" data-toggle="tab">Source</a>
+                <a href="#tab-meta-351043392671272165664621721953154" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1371,8 +1376,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0099030996207147841764017001260072">
-                <p><a href="ui_Imgclip_index.js.html#line423">ui/Imgclip/index.js:423</a></p>
+            <div class="tab-pane active" id="tab-meta-351043392671272165664621721953154">
+                <p><a href="ui_Imgclip_index.js.html#line343">ui/Imgclip/index.js:343</a></p>
             </div>
 
         
@@ -1493,7 +1498,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-206509535433724523723773469682783" data-toggle="tab">Source</a>
+                <a href="#tab-meta-87576094013638796953037981875241" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1514,8 +1519,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-206509535433724523723773469682783">
-                <p><a href="ui_Imgclip_index.js.html#line464">ui/Imgclip/index.js:464</a></p>
+            <div class="tab-pane active" id="tab-meta-87576094013638796953037981875241">
+                <p><a href="ui_Imgclip_index.js.html#line421">ui/Imgclip/index.js:421</a></p>
             </div>
 
         
@@ -1636,7 +1641,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-4748792108148336438094153604470193" data-toggle="tab">Source</a>
+                <a href="#tab-meta-410671014105901118022027355618775" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1657,8 +1662,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-4748792108148336438094153604470193">
-                <p><a href="ui_Imgclip_index.js.html#line436">ui/Imgclip/index.js:436</a></p>
+            <div class="tab-pane active" id="tab-meta-410671014105901118022027355618775">
+                <p><a href="ui_Imgclip_index.js.html#line434">ui/Imgclip/index.js:434</a></p>
             </div>
 
         
@@ -1779,7 +1784,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-96988214831799277079253613483161" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0242064124904572962648924831300974" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1800,8 +1805,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-96988214831799277079253613483161">
-                <p><a href="ui_Imgclip_index.js.html#line364">ui/Imgclip/index.js:364</a></p>
+            <div class="tab-pane active" id="tab-meta-0242064124904572962648924831300974">
+                <p><a href="ui_Imgclip_index.js.html#line262">ui/Imgclip/index.js:262</a></p>
             </div>
 
         
@@ -1922,7 +1927,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-024237500969320536969680666225031" data-toggle="tab">Source</a>
+                <a href="#tab-meta-1100016345735639311500619584694505" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1943,8 +1948,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-024237500969320536969680666225031">
-                <p><a href="ui_Imgclip_index.js.html#line264">ui/Imgclip/index.js:264</a></p>
+            <div class="tab-pane active" id="tab-meta-1100016345735639311500619584694505">
+                <p><a href="ui_Imgclip_index.js.html#line362">ui/Imgclip/index.js:362</a></p>
             </div>
 
         
@@ -2065,7 +2070,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-704936665249988437470738240517676" data-toggle="tab">Source</a>
+                <a href="#tab-meta-52605435531586414843763750977814" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2086,8 +2091,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-704936665249988437470738240517676">
-                <p><a href="ui_Imgclip_index.js.html#line110">ui/Imgclip/index.js:110</a></p>
+            <div class="tab-pane active" id="tab-meta-52605435531586414843763750977814">
+                <p><a href="ui_Imgclip_index.js.html#line108">ui/Imgclip/index.js:108</a></p>
             </div>
 
         

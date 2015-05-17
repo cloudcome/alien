@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -307,7 +312,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-703950460767373449470060993917286" data-toggle="tab">Source</a>
+                <a href="#tab-meta-72358937561511992351407236419618" data-toggle="tab">Source</a>
             </li>
 
         
@@ -328,7 +333,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-703950460767373449470060993917286">
+            <div class="tab-pane active" id="tab-meta-72358937561511992351407236419618">
                 <p><a href="core_event_base.js.html#line9">core/event/base.js:9</a></p>
             </div>
 
@@ -675,7 +680,7 @@ event.create('myclick', {
 
             
             <li class="active">
-                <a href="#tab-meta-66558503103442491555506782606244" data-toggle="tab">Source</a>
+                <a href="#tab-meta-877328800503164532179040904156864" data-toggle="tab">Source</a>
             </li>
 
         
@@ -696,7 +701,7 @@ event.create('myclick', {
         
         
 
-            <div class="tab-pane active" id="tab-meta-66558503103442491555506782606244">
+            <div class="tab-pane active" id="tab-meta-877328800503164532179040904156864">
                 <p><a href="core_event_base.js.html#line116">core/event/base.js:116</a></p>
             </div>
 
@@ -723,7 +728,7 @@ event.create('myclick', {
 <section class="docs-method ">
     <dt>
     <h4 class="name alert alert-warning" id=".dispatch">
-        <span class="type-signature">&lt;static> </span>dispatch<span class="signature">(ele, eventTypeOrEvent, <span class="optional">copyEvent</span>)</span><span class="type-signature"> 
+        <span class="type-signature">&lt;static> </span>dispatch<span class="signature">(ele, eventTypeOrEvent, <span class="optional">copyEvent</span>, <span class="optional">alienDetail</span>)</span><span class="type-signature"> 
     </h4>
 
     
@@ -874,6 +879,40 @@ event.create('myclick', {
         </tr>
 
 	
+
+        <tr>
+            
+                <td class="name"><code>alienDetail</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）</td>
+        </tr>
+
+	
 	</tbody>
 </table>
 
@@ -929,7 +968,7 @@ event.dispatch(ele, myclikEvent, eve);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-51593721983954316354742830153555" data-toggle="tab">Source</a>
+                <a href="#tab-meta-082030385034158837679419468622655" data-toggle="tab">Source</a>
             </li>
 
         
@@ -950,8 +989,8 @@ event.dispatch(ele, myclikEvent, eve);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-51593721983954316354742830153555">
-                <p><a href="core_event_base.js.html#line167">core/event/base.js:167</a></p>
+            <div class="tab-pane active" id="tab-meta-082030385034158837679419468622655">
+                <p><a href="core_event_base.js.html#line168">core/event/base.js:168</a></p>
             </div>
 
         
@@ -1177,7 +1216,7 @@ event.dispatch(ele, myclikEvent, eve);</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-042010072851553567792646223679185" data-toggle="tab">Source</a>
+                <a href="#tab-meta-390888667665421968447509279940277" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1198,8 +1237,8 @@ event.dispatch(ele, myclikEvent, eve);</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-042010072851553567792646223679185">
-                <p><a href="core_event_base.js.html#line200">core/event/base.js:200</a></p>
+            <div class="tab-pane active" id="tab-meta-390888667665421968447509279940277">
+                <p><a href="core_event_base.js.html#line201">core/event/base.js:201</a></p>
             </div>
 
         
@@ -1445,7 +1484,7 @@ event.length(ele, 'click', true);
 
             
             <li class="active">
-                <a href="#tab-meta-26703502959571786347007127478719" data-toggle="tab">Source</a>
+                <a href="#tab-meta-076292206998914480759849522728473" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1466,8 +1505,8 @@ event.length(ele, 'click', true);
         
         
 
-            <div class="tab-pane active" id="tab-meta-26703502959571786347007127478719">
-                <p><a href="core_event_base.js.html#line371">core/event/base.js:371</a></p>
+            <div class="tab-pane active" id="tab-meta-076292206998914480759849522728473">
+                <p><a href="core_event_base.js.html#line372">core/event/base.js:372</a></p>
             </div>
 
         
@@ -1750,7 +1789,7 @@ event.on(ele, 'click', 'li', fn, true):</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-752606210298836232702230173163116" data-toggle="tab">Source</a>
+                <a href="#tab-meta-285233226139098407545840996317565" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1771,8 +1810,8 @@ event.on(ele, 'click', 'li', fn, true):</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-752606210298836232702230173163116">
-                <p><a href="core_event_base.js.html#line244">core/event/base.js:244</a></p>
+            <div class="tab-pane active" id="tab-meta-285233226139098407545840996317565">
+                <p><a href="core_event_base.js.html#line245">core/event/base.js:245</a></p>
             </div>
 
         
@@ -2052,7 +2091,7 @@ event.once(ele, 'click', 'li', fn, true):</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-68383275717496875821241622325033" data-toggle="tab">Source</a>
+                <a href="#tab-meta-86348968558013443840322920586914" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2073,8 +2112,8 @@ event.once(ele, 'click', 'li', fn, true):</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-68383275717496875821241622325033">
-                <p><a href="core_event_base.js.html#line338">core/event/base.js:338</a></p>
+            <div class="tab-pane active" id="tab-meta-86348968558013443840322920586914">
+                <p><a href="core_event_base.js.html#line339">core/event/base.js:339</a></p>
             </div>
 
         
@@ -2347,7 +2386,7 @@ event.un(ele, 'click');</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-3206354815047234308793279924429953" data-toggle="tab">Source</a>
+                <a href="#tab-meta-400650642579421418497042381204665" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2368,8 +2407,8 @@ event.un(ele, 'click');</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-3206354815047234308793279924429953">
-                <p><a href="core_event_base.js.html#line304">core/event/base.js:304</a></p>
+            <div class="tab-pane active" id="tab-meta-400650642579421418497042381204665">
+                <p><a href="core_event_base.js.html#line305">core/event/base.js:305</a></p>
             </div>
 
         

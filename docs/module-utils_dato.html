@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -184,7 +189,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Methods &times; 5</li>
+	                    <li class="sidebar-header">Methods &times; 6</li>
 
 	                    
 	                        
@@ -210,6 +215,15 @@
 <li class="">
     
         <a class="" href="#.extend">extend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.repeat">repeat</a>
     
 </li>
 
@@ -289,7 +303,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-186552891507744864131940738298" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3080001643393188717954514338634908" data-toggle="tab">Source</a>
             </li>
 
         
@@ -310,7 +324,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-186552891507744864131940738298">
+            <div class="tab-pane active" id="tab-meta-3080001643393188717954514338634908">
                 <p><a href="utils_dato.js.html#line9">utils/dato.js:9</a></p>
             </div>
 
@@ -508,7 +522,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-73971555964089937227056226693094" data-toggle="tab">Source</a>
+                <a href="#tab-meta-727331504691392246780761471018195" data-toggle="tab">Source</a>
             </li>
 
         
@@ -529,8 +543,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-73971555964089937227056226693094">
-                <p><a href="utils_dato.js.html#line200">utils/dato.js:200</a></p>
+            <div class="tab-pane active" id="tab-meta-727331504691392246780761471018195">
+                <p><a href="utils_dato.js.html#line216">utils/dato.js:216</a></p>
             </div>
 
         
@@ -734,7 +748,7 @@ data.each(list, function(key, val){});</code></pre>
 
             
             <li class="active">
-                <a href="#tab-meta-140376062830910110212805308401585" data-toggle="tab">Source</a>
+                <a href="#tab-meta-384472384350374343762295038904995" data-toggle="tab">Source</a>
             </li>
 
         
@@ -755,7 +769,7 @@ data.each(list, function(key, val){});</code></pre>
         
         
 
-            <div class="tab-pane active" id="tab-meta-140376062830910110212805308401585">
+            <div class="tab-pane active" id="tab-meta-384472384350374343762295038904995">
                 <p><a href="utils_dato.js.html#line32">utils/dato.js:32</a></p>
             </div>
 
@@ -999,7 +1013,7 @@ o1 === o3
 
             
             <li class="active">
-                <a href="#tab-meta-207193235866725448987496376503259" data-toggle="tab">Source</a>
+                <a href="#tab-meta-788115528179332607805838924832642" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1020,8 +1034,175 @@ o1 === o3
         
         
 
-            <div class="tab-pane active" id="tab-meta-207193235866725448987496376503259">
-                <p><a href="utils_dato.js.html#line83">utils/dato.js:83</a></p>
+            <div class="tab-pane active" id="tab-meta-788115528179332607805838924832642">
+                <p><a href="utils_dato.js.html#line99">utils/dato.js:99</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".repeat">
+        <span class="type-signature">&lt;static> </span>repeat<span class="signature">(count, fn)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>重复运行
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">重复次数</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">重复方法</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-403762437403202067009085575118661" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-403762437403202067009085575118661">
+                <p><a href="utils_dato.js.html#line64">utils/dato.js:64</a></p>
             </div>
 
         
@@ -1236,7 +1417,7 @@ o1 === o3
 
             
             <li class="active">
-                <a href="#tab-meta-78267771145328889624498693738133" data-toggle="tab">Source</a>
+                <a href="#tab-meta-607419413514435333652848936617374" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1257,8 +1438,8 @@ o1 === o3
         
         
 
-            <div class="tab-pane active" id="tab-meta-78267771145328889624498693738133">
-                <p><a href="utils_dato.js.html#line127">utils/dato.js:127</a></p>
+            <div class="tab-pane active" id="tab-meta-607419413514435333652848936617374">
+                <p><a href="utils_dato.js.html#line143">utils/dato.js:143</a></p>
             </div>
 
         
@@ -1457,7 +1638,7 @@ a2 === a1;
 
             
             <li class="active">
-                <a href="#tab-meta-0327212400734424606669738097116351" data-toggle="tab">Source</a>
+                <a href="#tab-meta-35061243292875596294944360852242" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1478,8 +1659,8 @@ a2 === a1;
         
         
 
-            <div class="tab-pane active" id="tab-meta-0327212400734424606669738097116351">
-                <p><a href="utils_dato.js.html#line164">utils/dato.js:164</a></p>
+            <div class="tab-pane active" id="tab-meta-35061243292875596294944360852242">
+                <p><a href="utils_dato.js.html#line180">utils/dato.js:180</a></p>
             </div>
 
         

@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -419,7 +424,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-70197924645617612321412866003811" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85206463467329747609932254999876" data-toggle="tab">Source</a>
             </li>
 
         
@@ -440,7 +445,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-70197924645617612321412866003811">
+            <div class="tab-pane active" id="tab-meta-85206463467329747609932254999876">
                 <p><a href="libs_Queue.js.html#line9">libs/Queue.js:9</a></p>
             </div>
 
@@ -546,7 +551,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-41952127311378727385275028645992" data-toggle="tab">Source</a>
+                <a href="#tab-meta-74074516166001567161006319802254" data-toggle="tab">Source</a>
             </li>
 
         
@@ -567,7 +572,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-41952127311378727385275028645992">
+            <div class="tab-pane active" id="tab-meta-74074516166001567161006319802254">
                 <p><a href="libs_Queue.js.html#line114">libs/Queue.js:114</a></p>
             </div>
 
@@ -639,7 +644,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-1914360935334116205114749586209655" data-toggle="tab">Source</a>
+                <a href="#tab-meta-409933658316731458024748777970672" data-toggle="tab">Source</a>
             </li>
 
         
@@ -660,7 +665,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-1914360935334116205114749586209655">
+            <div class="tab-pane active" id="tab-meta-409933658316731458024748777970672">
                 <p><a href="libs_Queue.js.html#line257">libs/Queue.js:257</a></p>
             </div>
 
@@ -750,7 +755,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-6709313127212226899049375904724" data-toggle="tab">Source</a>
+                <a href="#tab-meta-460698083741590447350704460404813" data-toggle="tab">Source</a>
             </li>
 
         
@@ -771,7 +776,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-6709313127212226899049375904724">
+            <div class="tab-pane active" id="tab-meta-460698083741590447350704460404813">
                 <p><a href="libs_Queue.js.html#line204">libs/Queue.js:204</a></p>
             </div>
 
@@ -861,7 +866,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-48845312627963726810298562049866" data-toggle="tab">Source</a>
+                <a href="#tab-meta-31142681953497236480313816573471" data-toggle="tab">Source</a>
             </li>
 
         
@@ -882,7 +887,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-48845312627963726810298562049866">
+            <div class="tab-pane active" id="tab-meta-31142681953497236480313816573471">
                 <p><a href="libs_Queue.js.html#line186">libs/Queue.js:186</a></p>
             </div>
 
@@ -1074,7 +1079,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-323551603127270943708625677973032" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4570266772061586423389053787104785" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1095,7 +1100,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-323551603127270943708625677973032">
+            <div class="tab-pane active" id="tab-meta-4570266772061586423389053787104785">
                 <p><a href="libs_Queue.js.html#line67">libs/Queue.js:67</a></p>
             </div>
 
@@ -1185,7 +1190,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-62513469345867639589972298126668" data-toggle="tab">Source</a>
+                <a href="#tab-meta-939443405019119441333874175325036" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1206,7 +1211,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-62513469345867639589972298126668">
+            <div class="tab-pane active" id="tab-meta-939443405019119441333874175325036">
                 <p><a href="libs_Queue.js.html#line89">libs/Queue.js:89</a></p>
             </div>
 
@@ -1296,7 +1301,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-69577196845784780774205222260207" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0424567658919841058032078060787171" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1317,7 +1322,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-69577196845784780774205222260207">
+            <div class="tab-pane active" id="tab-meta-0424567658919841058032078060787171">
                 <p><a href="libs_Queue.js.html#line249">libs/Queue.js:249</a></p>
             </div>
 
@@ -1407,7 +1412,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-66740481113083664980645782779902" data-toggle="tab">Source</a>
+                <a href="#tab-meta-020603199023753405636162132024765" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1428,7 +1433,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-66740481113083664980645782779902">
+            <div class="tab-pane active" id="tab-meta-020603199023753405636162132024765">
                 <p><a href="libs_Queue.js.html#line221">libs/Queue.js:221</a></p>
             </div>
 
@@ -1503,7 +1508,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-27545978152193134670644875150174" data-toggle="tab">Source</a>
+                <a href="#tab-meta-45098720677196988163305721245706" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1524,7 +1529,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-27545978152193134670644875150174">
+            <div class="tab-pane active" id="tab-meta-45098720677196988163305721245706">
                 <p><a href="libs_Queue.js.html#line261">libs/Queue.js:261</a></p>
             </div>
 
@@ -1590,7 +1595,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-59609992033801976628448632545769" data-toggle="tab">Source</a>
+                <a href="#tab-meta-92302125063724825612717722542584" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1611,181 +1616,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-59609992033801976628448632545769">
-                <p><a href="libs_Queue.js.html#line234">libs/Queue.js:234</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:done">
-        done : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-274356507696211344376878759358078" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-274356507696211344376878759358078">
-                <p><a href="libs_Queue.js.html#line159">libs/Queue.js:159</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:done">
-        done : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-85987881594337526825963964220136" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-85987881594337526825963964220136">
+            <div class="tab-pane active" id="tab-meta-92302125063724825612717722542584">
                 <p><a href="libs_Queue.js.html#line148">libs/Queue.js:148</a></p>
             </div>
 
@@ -1851,7 +1682,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-145971351070329554193082544952631" data-toggle="tab">Source</a>
+                <a href="#tab-meta-235128998523578055532409420702606" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1872,8 +1703,182 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-145971351070329554193082544952631">
+            <div class="tab-pane active" id="tab-meta-235128998523578055532409420702606">
+                <p><a href="libs_Queue.js.html#line234">libs/Queue.js:234</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:done">
+        done : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-381975187920033939517529760487378" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-381975187920033939517529760487378">
                 <p><a href="libs_Queue.js.html#line125">libs/Queue.js:125</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:done">
+        done : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-46548332297243187869978337548673" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-46548332297243187869978337548673">
+                <p><a href="libs_Queue.js.html#line159">libs/Queue.js:159</a></p>
             </div>
 
         
@@ -1938,7 +1943,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-84134245268069219064922109246254" data-toggle="tab">Source</a>
+                <a href="#tab-meta-74879981437698019423401020467281" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1959,7 +1964,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-84134245268069219064922109246254">
+            <div class="tab-pane active" id="tab-meta-74879981437698019423401020467281">
                 <p><a href="libs_Queue.js.html#line134">libs/Queue.js:134</a></p>
             </div>
 
@@ -2025,7 +2030,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-323194041615352037419528951868415" data-toggle="tab">Source</a>
+                <a href="#tab-meta-53343645972199746658106597606093" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2046,7 +2051,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-323194041615352037419528951868415">
+            <div class="tab-pane active" id="tab-meta-53343645972199746658106597606093">
                 <p><a href="libs_Queue.js.html#line76">libs/Queue.js:76</a></p>
             </div>
 
@@ -2112,7 +2117,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-62112190388143067317899668123573" data-toggle="tab">Source</a>
+                <a href="#tab-meta-348713743733242151471487891394645" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2133,7 +2138,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-62112190388143067317899668123573">
+            <div class="tab-pane active" id="tab-meta-348713743733242151471487891394645">
                 <p><a href="libs_Queue.js.html#line101">libs/Queue.js:101</a></p>
             </div>
 
@@ -2249,7 +2254,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-00749324099160730810655949637293816" data-toggle="tab">Source</a>
+                <a href="#tab-meta-7956390939652927531691109761596" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2270,7 +2275,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-00749324099160730810655949637293816">
+            <div class="tab-pane active" id="tab-meta-7956390939652927531691109761596">
                 <p><a href="libs_Queue.js.html#line46">libs/Queue.js:46</a></p>
             </div>
 
@@ -2336,7 +2341,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-029064554721117029103334296960384" data-toggle="tab">Source</a>
+                <a href="#tab-meta-6883742071222514790462359553203" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2357,7 +2362,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-029064554721117029103334296960384">
+            <div class="tab-pane active" id="tab-meta-6883742071222514790462359553203">
                 <p><a href="libs_Queue.js.html#line167">libs/Queue.js:167</a></p>
             </div>
 
@@ -2423,7 +2428,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-360312997130677112144704326055944" data-toggle="tab">Source</a>
+                <a href="#tab-meta-103964657289907348473056415095925" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2444,7 +2449,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-360312997130677112144704326055944">
+            <div class="tab-pane active" id="tab-meta-103964657289907348473056415095925">
                 <p><a href="libs_Queue.js.html#line142">libs/Queue.js:142</a></p>
             </div>
 

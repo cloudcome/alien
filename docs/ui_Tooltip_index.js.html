@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -186,7 +191,7 @@
 	                
 
 	                
-	                    <li class="sidebar-header">Events &times; 84</li>
+	                    <li class="sidebar-header">Events &times; 82</li>
 
 	                    
 	                        
@@ -220,7 +225,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:cancel">cancel</a>
+        <a class="" href="#event:cancel">cancel</a>
     
 </li>
 
@@ -229,7 +234,7 @@
 
 <li class="">
     
-        <a class="" href="#~event:cancel">cancel</a>
+        <a class="" href="#event:cancel">cancel</a>
     
 </li>
 
@@ -445,15 +450,6 @@
 
 <li class="">
     
-        <a class="" href="#~event:close">close</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
         <a class="" href="#~event:done">done</a>
     
 </li>
@@ -599,15 +595,6 @@
 <li class="">
     
         <a class="" href="#~event:leaveviewport">leaveviewport</a>
-    
-</li>
-
-	                    
-	                        
-
-<li class="">
-    
-        <a class="" href="#~event:open">open</a>
     
 </li>
 
@@ -982,6 +969,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../');
+    var Popup = require('../Popup/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
@@ -993,193 +981,82 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
     var alienIndex = 0;
-    var tooltipClass = 'alien-ui-tooltip';
-    // http://www.sitepoint.com/css3-animation-javascript-event-handlers/
-    //var animationendEventType = 'animationend webkitAnimationEnd oanimationend MSAnimationEnd';
+    var alienClass = 'alien-ui-tooltip';
+    var doc = window.document;
     var defaults = {
-        duration: 234,
-        easing: 'ease-out-quart',
-        zIndex: 9999,
-        placement: 'auto',
-        body: 'Hello world!'
+        duration: 123,
+        easing: 'out-quart',
+        selector: '.tooltip',
+        // 标签的 data 值，即“data-tooltip”
+        data: 'tooltip',
+        // 触发打开、关闭事件类型
+        openEvent: 'mouseover',
+        closeEvent: 'mouseout',
+        // 超时消失时间
+        timeout: 300
     };
-    var Tooltip = ui.create(function (ele, options) {
-        var the = this;
-
-        ele = selector.query(ele);
-
-        if (!ele.length) {
-            throw new Error('instance element is empty');
-        }
-
-        the._$ele = ele[0];
-        the._options = dato.extend(!0, {}, defaults, options);
-        the._id = alienIndex++;
-        the._init();
-    });
-
-
-    Tooltip.implement({
-        _init: function () {
+    var Tooltip = ui.create({
+        constructor: function (options) {
             var the = this;
-            var tooltip = tpl.render({
-                id: the._id
-            });
-            var $tooltip = modification.parse(tooltip)[0];
-            var $body = selector.query('.' + tooltipClass + '-body', $tooltip)[0];
 
-            $body.innerHTML = the._options.body;
-            modification.insert($tooltip, document.body, 'beforeend');
-            the._$tooltip = $tooltip;
-            the._position(1);
-            the._position(2);
-        },
-
-        _position: function (times) {
-            var the = this;
-            var $ele = the._$ele;
-            var $tip = the._$tooltip;
-            var options = the._options;
-            var scrL = attribute.scrollLeft(window);
-            var scrT = attribute.scrollTop(window);
-            var eleW = attribute.outerWidth($ele);
-            var eleH = attribute.outerHeight($ele);
-            var eleL = attribute.left($ele) - scrL;
-            var eleT = attribute.top($ele) - scrT;
-            var tipW = attribute.outerWidth($tip);
-            var tipH = attribute.outerHeight($tip);
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
-            var vieW = scrL + winW;
-            var vieH = scrT + winH;
-            var at = 'top';
-            var left;
-            var top;
-
-            switch (options.placement) {
-                case 'auto':
-                    // 上下右左
-                    if (eleL + eleW / 2 - tipW / 2 > scrL &amp;&amp; eleT - tipH > scrT &amp;&amp; eleL + eleW / 2 + tipW / 2 &lt; vieW) {
-                        at = 'top';
-                    } else if (eleL + eleW / 2 + tipW / 2 &lt; vieW &amp;&amp; eleT + eleH + tipH &lt; vieH &amp;&amp; eleL + eleW / 2 - tipW / 2 > scrL) {
-                        at = 'bottom';
-                    } else if (eleT + eleH / 2 - tipH / 2 > scrT &amp;&amp; eleL + eleW + tipW &lt; vieW &amp;&amp; eleT + eleH / 2 + tipH / 2 &lt; vieH) {
-                        at = 'right';
-                    } else if (eleT + eleH / 2 + tipH / 2 &lt; vieH &amp;&amp; eleL - tipW > scrL &amp;&amp; eleT + eleH / 2 - tipH / 2 > scrT) {
-                        at = 'left';
-                    } else {
-                        at = 'top';
-                    }
-                    break;
-                default:
-                    at = options.placement;
-            }
-
-            switch (at) {
-                case 'top':
-                    left = eleL + eleW / 2 - tipW / 2;
-                    top = eleT - tipH;
-                    break;
-                case 'right':
-                    left = eleL + eleW;
-                    top = eleT + eleH / 2 - tipH / 2;
-                    break;
-                case 'bottom':
-                    left = eleL + eleW / 2 - tipW / 2;
-                    top = eleT + eleH;
-                    break;
-                case 'left':
-                    left = eleL - tipW;
-                    top = eleT + eleH / 2 - tipH / 2;
-                    break;
-            }
-
-            the._at = at;
-
-            if (times === 2) {
-                attribute.css($tip, 'visibility', 'visible');
-                attribute.addClass($tip, tooltipClass + '-' + at);
-                the._animate(true, function () {
-                    /**
-                     * 提示框打开之后
-                     * @event open
-                     */
-                    the.emit('open');
-                });
-            }
-
-            attribute.css($tip, {
-                left: left + scrL,
-                top: top + scrT
-            });
+            the._options = dato.extend({}, defaults, options);
+            the._init();
         },
 
 
         /**
-         * 动画
-         * @param isShow
-         * @param callback
+         * 初始化
          * @private
          */
-        _animate: function (isShow, callback) {
+        _init: function () {
             var the = this;
             var options = the._options;
-            var at = the._at;
-            var from = {
-                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-                '(' +
-                (isShow ? (at === 'right' || at === 'bottom' ? '-' : '') + '50%' : '0') +
-                ')',
-                opacity: isShow ? 0 : 1
-            };
-            var to = {
-                transform: 'translate' + (at === 'top' || at === 'bottom' ? 'Y' : 'X') +
-                '(' +
-                (isShow ? '0' : (at === 'right' || at === 'bottom' ? '-' : '') + '50%') +
-                ')',
-                opacity: isShow ? 1 : 0
-            };
-            var $tip = the._$tooltip;
 
-            attribute.css($tip, from);
-            animation.transition($tip, to, {
-                duration: options.duration,
-                easing: options.easing
-            }, callback);
-        },
+            the._popup = new Popup(null, {
+                position: 'top',
+                addClass: alienClass + '-popup',
+                arrowSize: 5,
+                offset: 5,
+                style: {
+                    maxWidth: 300
+                }
+            });
+            the._$lastEle = null;
+            the._timeid = 0;
 
+            event.on(doc, options.openEvent, options.selector, the._onTooltip = function () {
+                var $ele = this;
+                var content = attribute.data($ele, options.data) || $ele.innerHTML;
 
-        /**
-         * 销毁实例
-         * @public
-         */
-        destroy: function () {
-            var the = this;
+                clearTimeout(the._timeid);
 
-            the._animate(false, function () {
-                /**
-                 * 提示框关闭之后
-                 * @event close
-                 */
-                the.emit('close');
-                modification.remove(the._$tooltip);
+                if (the._$lastEle === $ele) {
+                    return;
+                }
+
+                var onpop = function () {
+                    the._popup.setContent(content).open($ele, function () {
+                        the._$lastEle = $ele;
+                    });
+                };
+
+                if (the._popup.visible) {
+                    the._popup.close(onpop);
+                } else {
+                    onpop();
+                }
+            });
+
+            event.on(doc, options.closeEvent, options.selector, the._offTooltip = function () {
+                the._timeid = setTimeout(function () {
+                    the._popup.close();
+                    the._$lastEle = null;
+                }, options.duration);
             });
         }
     });
 
-
-    /**
-     * 实例化一个 Tooltip
-     * @param ele {Node|Element|String} 参考元素或选择器
-     * @param [options] {Object} 配置
-     * @param [options.zIndex=9999] {Number} 层级
-     * @param [options.placement="auto"] {String} 所在位置，可选：top、bottom、right、left
-     * @param [options.body="Hello world!"] {String} 提示内容
-     * @constructor
-     *
-     * @example
-     * var tp = new Tooltip(ele, options);
-     */
+    Tooltip.defaults = defaults;
     module.exports = Tooltip;
     modification.importStyle(style);
 });</code></pre>

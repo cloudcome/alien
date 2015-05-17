@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -920,7 +925,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-64825021103024485435594478622079" data-toggle="tab">Source</a>
+                <a href="#tab-meta-96152063366025698766562652308494" data-toggle="tab">Source</a>
             </li>
 
         
@@ -941,8 +946,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-64825021103024485435594478622079">
-                <p><a href="ui_Scrollbar_index.js.html#line677">ui/Scrollbar/index.js:677</a></p>
+            <div class="tab-pane active" id="tab-meta-96152063366025698766562652308494">
+                <p><a href="ui_Scrollbar_index.js.html#line675">ui/Scrollbar/index.js:675</a></p>
             </div>
 
         
@@ -990,7 +995,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-44402186316438026468502911739051" data-toggle="tab">Source</a>
+                <a href="#tab-meta-256060169776901618751480127684772" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1011,7 +1016,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-44402186316438026468502911739051">
+            <div class="tab-pane active" id="tab-meta-256060169776901618751480127684772">
                 <p><a href="ui_Scrollbar_index.js.html#line9">ui/Scrollbar/index.js:9</a></p>
             </div>
 
@@ -1117,7 +1122,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-74572878680191938596737175248563" data-toggle="tab">Source</a>
+                <a href="#tab-meta-25890547293238348565946572925895" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1138,8 +1143,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-74572878680191938596737175248563">
-                <p><a href="ui_Scrollbar_index.js.html#line87">ui/Scrollbar/index.js:87</a></p>
+            <div class="tab-pane active" id="tab-meta-25890547293238348565946572925895">
+                <p><a href="ui_Scrollbar_index.js.html#line85">ui/Scrollbar/index.js:85</a></p>
             </div>
 
         
@@ -1210,7 +1215,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-86495941248722373697669035755098" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4067989455070346640392806148156524" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1231,8 +1236,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-86495941248722373697669035755098">
-                <p><a href="ui_Scrollbar_index.js.html#line512">ui/Scrollbar/index.js:512</a></p>
+            <div class="tab-pane active" id="tab-meta-4067989455070346640392806148156524">
+                <p><a href="ui_Scrollbar_index.js.html#line510">ui/Scrollbar/index.js:510</a></p>
             </div>
 
         
@@ -1303,7 +1308,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-9795917677693069036775809014216065" data-toggle="tab">Source</a>
+                <a href="#tab-meta-85961938928812749331806795671582" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1324,8 +1329,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-9795917677693069036775809014216065">
-                <p><a href="ui_Scrollbar_index.js.html#line570">ui/Scrollbar/index.js:570</a></p>
+            <div class="tab-pane active" id="tab-meta-85961938928812749331806795671582">
+                <p><a href="ui_Scrollbar_index.js.html#line568">ui/Scrollbar/index.js:568</a></p>
             </div>
 
         
@@ -1396,7 +1401,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-2386245471425354525766795966774225" data-toggle="tab">Source</a>
+                <a href="#tab-meta-991207975428551437881494453176856" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1417,8 +1422,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-2386245471425354525766795966774225">
-                <p><a href="ui_Scrollbar_index.js.html#line628">ui/Scrollbar/index.js:628</a></p>
+            <div class="tab-pane active" id="tab-meta-991207975428551437881494453176856">
+                <p><a href="ui_Scrollbar_index.js.html#line626">ui/Scrollbar/index.js:626</a></p>
             </div>
 
         
@@ -1489,7 +1494,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-28611615905538201907845283858478" data-toggle="tab">Source</a>
+                <a href="#tab-meta-35733842640183866602610984351486" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1510,8 +1515,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-28611615905538201907845283858478">
-                <p><a href="ui_Scrollbar_index.js.html#line155">ui/Scrollbar/index.js:155</a></p>
+            <div class="tab-pane active" id="tab-meta-35733842640183866602610984351486">
+                <p><a href="ui_Scrollbar_index.js.html#line153">ui/Scrollbar/index.js:153</a></p>
             </div>
 
         
@@ -1582,7 +1587,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-609594360226765301822243118658662" data-toggle="tab">Source</a>
+                <a href="#tab-meta-411218093708157541920279897749424" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1603,8 +1608,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-609594360226765301822243118658662">
-                <p><a href="ui_Scrollbar_index.js.html#line613">ui/Scrollbar/index.js:613</a></p>
+            <div class="tab-pane active" id="tab-meta-411218093708157541920279897749424">
+                <p><a href="ui_Scrollbar_index.js.html#line611">ui/Scrollbar/index.js:611</a></p>
             </div>
 
         
@@ -1675,7 +1680,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0856550349853932904337739874608815" data-toggle="tab">Source</a>
+                <a href="#tab-meta-834025538992136700766841066069901" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1696,8 +1701,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0856550349853932904337739874608815">
-                <p><a href="ui_Scrollbar_index.js.html#line540">ui/Scrollbar/index.js:540</a></p>
+            <div class="tab-pane active" id="tab-meta-834025538992136700766841066069901">
+                <p><a href="ui_Scrollbar_index.js.html#line538">ui/Scrollbar/index.js:538</a></p>
             </div>
 
         
@@ -1768,7 +1773,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-441278296289965531907871807925403" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2021284026559442330290048685856164" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1789,8 +1794,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-441278296289965531907871807925403">
-                <p><a href="ui_Scrollbar_index.js.html#line555">ui/Scrollbar/index.js:555</a></p>
+            <div class="tab-pane active" id="tab-meta-2021284026559442330290048685856164">
+                <p><a href="ui_Scrollbar_index.js.html#line553">ui/Scrollbar/index.js:553</a></p>
             </div>
 
         
@@ -1861,7 +1866,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-608612598385661825714350305497646" data-toggle="tab">Source</a>
+                <a href="#tab-meta-7098276098258793691240843385458" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1882,8 +1887,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-608612598385661825714350305497646">
-                <p><a href="ui_Scrollbar_index.js.html#line598">ui/Scrollbar/index.js:598</a></p>
+            <div class="tab-pane active" id="tab-meta-7098276098258793691240843385458">
+                <p><a href="ui_Scrollbar_index.js.html#line596">ui/Scrollbar/index.js:596</a></p>
             </div>
 
         
@@ -2013,7 +2018,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-90927069983445119062470579519868" data-toggle="tab">Source</a>
+                <a href="#tab-meta-197264689719304445486769373528659" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2034,8 +2039,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-90927069983445119062470579519868">
-                <p><a href="ui_Scrollbar_index.js.html#line528">ui/Scrollbar/index.js:528</a></p>
+            <div class="tab-pane active" id="tab-meta-197264689719304445486769373528659">
+                <p><a href="ui_Scrollbar_index.js.html#line526">ui/Scrollbar/index.js:526</a></p>
             </div>
 
         
@@ -2156,7 +2161,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-88094404689036315901572238653898" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0030828856397420174754114313982427" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2177,8 +2182,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-88094404689036315901572238653898">
-                <p><a href="ui_Scrollbar_index.js.html#line436">ui/Scrollbar/index.js:436</a></p>
+            <div class="tab-pane active" id="tab-meta-0030828856397420174754114313982427">
+                <p><a href="ui_Scrollbar_index.js.html#line434">ui/Scrollbar/index.js:434</a></p>
             </div>
 
         
@@ -2299,7 +2304,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0369554315693676519709936389699578" data-toggle="tab">Source</a>
+                <a href="#tab-meta-036812930367887026556877042166889" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2320,8 +2325,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0369554315693676519709936389699578">
-                <p><a href="ui_Scrollbar_index.js.html#line586">ui/Scrollbar/index.js:586</a></p>
+            <div class="tab-pane active" id="tab-meta-036812930367887026556877042166889">
+                <p><a href="ui_Scrollbar_index.js.html#line445">ui/Scrollbar/index.js:445</a></p>
             </div>
 
         
@@ -2442,7 +2447,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-57800368941389029024921266827732" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3500348366796970412318123178556561" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2463,8 +2468,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-57800368941389029024921266827732">
-                <p><a href="ui_Scrollbar_index.js.html#line447">ui/Scrollbar/index.js:447</a></p>
+            <div class="tab-pane active" id="tab-meta-3500348366796970412318123178556561">
+                <p><a href="ui_Scrollbar_index.js.html#line584">ui/Scrollbar/index.js:584</a></p>
             </div>
 
         

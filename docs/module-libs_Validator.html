@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -365,7 +370,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-197908204281702645970113964285702" data-toggle="tab">Source</a>
+                <a href="#tab-meta-76373550086282197258029037620872" data-toggle="tab">Source</a>
             </li>
 
         
@@ -386,7 +391,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-197908204281702645970113964285702">
+            <div class="tab-pane active" id="tab-meta-76373550086282197258029037620872">
                 <p><a href="libs_Validator.js.html#line9">libs/Validator.js:9</a></p>
             </div>
 
@@ -1482,7 +1487,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-038415263872593649661022762302309" data-toggle="tab">Source</a>
+                <a href="#tab-meta-74830686766654250029213856905698776" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1503,8 +1508,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-038415263872593649661022762302309">
-                <p><a href="libs_Validator.js.html#line206">libs/Validator.js:206</a></p>
+            <div class="tab-pane active" id="tab-meta-74830686766654250029213856905698776">
+                <p><a href="libs_Validator.js.html#line175">libs/Validator.js:175</a></p>
             </div>
 
         
@@ -1725,7 +1730,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-46409855037927636968436101451516" data-toggle="tab">Source</a>
+                <a href="#tab-meta-464010541560128337553486498072743" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1746,8 +1751,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-46409855037927636968436101451516">
-                <p><a href="libs_Validator.js.html#line99">libs/Validator.js:99</a></p>
+            <div class="tab-pane active" id="tab-meta-464010541560128337553486498072743">
+                <p><a href="libs_Validator.js.html#line68">libs/Validator.js:68</a></p>
             </div>
 
         
@@ -1892,7 +1897,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-4570974630769342641620813170448" data-toggle="tab">Source</a>
+                <a href="#tab-meta-46771285519935197193371155299246" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1913,8 +1918,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-4570974630769342641620813170448">
-                <p><a href="libs_Validator.js.html#line293">libs/Validator.js:293</a></p>
+            <div class="tab-pane active" id="tab-meta-46771285519935197193371155299246">
+                <p><a href="libs_Validator.js.html#line262">libs/Validator.js:262</a></p>
             </div>
 
         
@@ -2059,7 +2064,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-391627856064587831930726005230099" data-toggle="tab">Source</a>
+                <a href="#tab-meta-44446942280046647817460084334016" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2080,8 +2085,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-391627856064587831930726005230099">
-                <p><a href="libs_Validator.js.html#line350">libs/Validator.js:350</a></p>
+            <div class="tab-pane active" id="tab-meta-44446942280046647817460084334016">
+                <p><a href="libs_Validator.js.html#line319">libs/Validator.js:319</a></p>
             </div>
 
         
@@ -2235,7 +2240,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-0673995204269886618791017215699" data-toggle="tab">Source</a>
+                <a href="#tab-meta-82754279952496296719627559650689" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2256,8 +2261,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-0673995204269886618791017215699">
-                <p><a href="libs_Validator.js.html#line332">libs/Validator.js:332</a></p>
+            <div class="tab-pane active" id="tab-meta-82754279952496296719627559650689">
+                <p><a href="libs_Validator.js.html#line301">libs/Validator.js:301</a></p>
             </div>
 
         
@@ -2328,7 +2333,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-162478325190022608892382448539138" data-toggle="tab">Source</a>
+                <a href="#tab-meta-79673252068459996959912669844925" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2349,8 +2354,151 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-162478325190022608892382448539138">
-                <p><a href="libs_Validator.js.html#line301">libs/Validator.js:301</a></p>
+            <div class="tab-pane active" id="tab-meta-79673252068459996959912669844925">
+                <p><a href="libs_Validator.js.html#line270">libs/Validator.js:270</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateend">
+        validateend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证开始
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-93570380215533082303382116369903" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-93570380215533082303382116369903">
+                <p><a href="libs_Validator.js.html#line449">libs/Validator.js:449</a></p>
             </div>
 
         
@@ -2495,7 +2643,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-751895312685519534894872712902725" data-toggle="tab">Source</a>
+                <a href="#tab-meta-106960516190156343406211759429425" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2516,151 +2664,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-751895312685519534894872712902725">
-                <p><a href="libs_Validator.js.html#line466">libs/Validator.js:466</a></p>
-            </div>
-
-        
-        
-        
-        
-    </div>
-</dl>
-
-
-        
-
-        
-
-        
-
-        
-    </dd>
-</section>
-
-        
-            
-<section class="docs-method ">
-    <dt>
-    <h4 class="name alert alert-warning" id="~event:validateend">
-        validateend : event
-    </h4>
-
-    
-    </dt>
-    <dd>
-
-        
-        <div class="description lead">
-            <blockquote>单个字段验证开始
-                
-            </blockquote>
-        </div>
-        
-
-        
-
-        
-
-        
-            <h5>Parameters/Arguments:</h5>
-            
-
-<table class="params table table-bordered table-striped">
-    <thead>
-	<tr>
-		
-		<th class="th-name">Name</th>
-		
-
-		<th class="th-type">Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-&nbsp;&nbsp;<span class="param-type label label-info">String</span>
-        
-    
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">字段名称</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-        
-
-        
-
-        
-
-        
-
-
-<dl class="details">
-    
-
-    
-    <ul class="nav nav-tabs">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            
-            <li class="active">
-                <a href="#tab-meta-353503473801538356094889633823186" data-toggle="tab">Source</a>
-            </li>
-
-        
-        
-        
-        
-    </ul>
-
-    <!-- CONTENT PANES -->
-    <div class="tab-content">
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-            <div class="tab-pane active" id="tab-meta-353503473801538356094889633823186">
-                <p><a href="libs_Validator.js.html#line480">libs/Validator.js:480</a></p>
+            <div class="tab-pane active" id="tab-meta-106960516190156343406211759429425">
+                <p><a href="libs_Validator.js.html#line435">libs/Validator.js:435</a></p>
             </div>
 
         
@@ -2829,7 +2834,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-1597082722000777734038511221297085" data-toggle="tab">Source</a>
+                <a href="#tab-meta-93585669365711519194839017000049" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2850,8 +2855,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-1597082722000777734038511221297085">
-                <p><a href="libs_Validator.js.html#line402">libs/Validator.js:402</a></p>
+            <div class="tab-pane active" id="tab-meta-93585669365711519194839017000049">
+                <p><a href="libs_Validator.js.html#line371">libs/Validator.js:371</a></p>
             </div>
 
         
@@ -3020,7 +3025,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-76821806700900248175071994774044" data-toggle="tab">Source</a>
+                <a href="#tab-meta-907459903508424818971027131192386" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3041,8 +3046,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-76821806700900248175071994774044">
-                <p><a href="libs_Validator.js.html#line373">libs/Validator.js:373</a></p>
+            <div class="tab-pane active" id="tab-meta-907459903508424818971027131192386">
+                <p><a href="libs_Validator.js.html#line353">libs/Validator.js:353</a></p>
             </div>
 
         
@@ -3211,7 +3216,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-24087236775085333688368273433298" data-toggle="tab">Source</a>
+                <a href="#tab-meta-591161317657679324659588281065226" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3232,8 +3237,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-24087236775085333688368273433298">
-                <p><a href="libs_Validator.js.html#line384">libs/Validator.js:384</a></p>
+            <div class="tab-pane active" id="tab-meta-591161317657679324659588281065226">
+                <p><a href="libs_Validator.js.html#line342">libs/Validator.js:342</a></p>
             </div>
 
         
@@ -3354,7 +3359,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-7973232807125896485606896225363" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9582941106054932764338256791234" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3375,8 +3380,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-7973232807125896485606896225363">
-                <p><a href="libs_Validator.js.html#line395">libs/Validator.js:395</a></p>
+            <div class="tab-pane active" id="tab-meta-9582941106054932764338256791234">
+                <p><a href="libs_Validator.js.html#line364">libs/Validator.js:364</a></p>
             </div>
 
         
@@ -3497,7 +3502,7 @@ validator.registerRule({
 
             
             <li class="active">
-                <a href="#tab-meta-51260164449922746650779044721276" data-toggle="tab">Source</a>
+                <a href="#tab-meta-83278640755452225825102562084794" data-toggle="tab">Source</a>
             </li>
 
         
@@ -3518,8 +3523,8 @@ validator.registerRule({
         
         
 
-            <div class="tab-pane active" id="tab-meta-51260164449922746650779044721276">
-                <p><a href="libs_Validator.js.html#line358">libs/Validator.js:358</a></p>
+            <div class="tab-pane active" id="tab-meta-83278640755452225825102562084794">
+                <p><a href="libs_Validator.js.html#line327">libs/Validator.js:327</a></p>
             </div>
 
         

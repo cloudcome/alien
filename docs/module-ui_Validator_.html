@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -298,7 +303,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-0933218344580382106150662153959274" data-toggle="tab">Source</a>
+                <a href="#tab-meta-115075140725821266703379314858466" data-toggle="tab">Source</a>
             </li>
 
         
@@ -319,7 +324,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-0933218344580382106150662153959274">
+            <div class="tab-pane active" id="tab-meta-115075140725821266703379314858466">
                 <p><a href="ui_Validator_index.js.html#line9">ui/Validator/index.js:9</a></p>
             </div>
 
@@ -421,7 +426,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-68615440023131678893260231707245" data-toggle="tab">Source</a>
+                <a href="#tab-meta-04274188331328332417252280795946717" data-toggle="tab">Source</a>
             </li>
 
         
@@ -442,8 +447,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-68615440023131678893260231707245">
-                <p><a href="ui_Validator_index.js.html#line509">ui/Validator/index.js:509</a></p>
+            <div class="tab-pane active" id="tab-meta-04274188331328332417252280795946717">
+                <p><a href="ui_Validator_index.js.html#line508">ui/Validator/index.js:508</a></p>
             </div>
 
         
@@ -618,7 +623,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-603086835239082620308675384148955" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3944007484242328082273656036705" data-toggle="tab">Source</a>
             </li>
 
         
@@ -639,8 +644,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-603086835239082620308675384148955">
-                <p><a href="ui_Validator_index.js.html#line435">ui/Validator/index.js:435</a></p>
+            <div class="tab-pane active" id="tab-meta-3944007484242328082273656036705">
+                <p><a href="ui_Validator_index.js.html#line434">ui/Validator/index.js:434</a></p>
             </div>
 
         
@@ -1715,7 +1720,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-034815971506759524053839329397305846" data-toggle="tab">Source</a>
+                <a href="#tab-meta-5729674724861987821947745978832" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1736,8 +1741,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-034815971506759524053839329397305846">
-                <p><a href="ui_Validator_index.js.html#line420">ui/Validator/index.js:420</a></p>
+            <div class="tab-pane active" id="tab-meta-5729674724861987821947745978832">
+                <p><a href="ui_Validator_index.js.html#line419">ui/Validator/index.js:419</a></p>
             </div>
 
         
@@ -1808,7 +1813,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-70026142406277367992455044295639" data-toggle="tab">Source</a>
+                <a href="#tab-meta-94926178804598758499467694200575" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1829,8 +1834,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-70026142406277367992455044295639">
-                <p><a href="ui_Validator_index.js.html#line96">ui/Validator/index.js:96</a></p>
+            <div class="tab-pane active" id="tab-meta-94926178804598758499467694200575">
+                <p><a href="ui_Validator_index.js.html#line95">ui/Validator/index.js:95</a></p>
             </div>
 
         
@@ -1963,7 +1968,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-70981185743585235508264568634331" data-toggle="tab">Source</a>
+                <a href="#tab-meta-31090993271209327298625418916345" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1984,8 +1989,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-70981185743585235508264568634331">
-                <p><a href="ui_Validator_index.js.html#line479">ui/Validator/index.js:479</a></p>
+            <div class="tab-pane active" id="tab-meta-31090993271209327298625418916345">
+                <p><a href="ui_Validator_index.js.html#line478">ui/Validator/index.js:478</a></p>
             </div>
 
         
@@ -2150,7 +2155,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-181340572424232966962440072093159" data-toggle="tab">Source</a>
+                <a href="#tab-meta-245421199826523664001376708038151" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2171,8 +2176,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-181340572424232966962440072093159">
-                <p><a href="ui_Validator_index.js.html#line459">ui/Validator/index.js:459</a></p>
+            <div class="tab-pane active" id="tab-meta-245421199826523664001376708038151">
+                <p><a href="ui_Validator_index.js.html#line458">ui/Validator/index.js:458</a></p>
             </div>
 
         

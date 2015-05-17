@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -356,7 +361,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-50733123742975349997500819154084" data-toggle="tab">Source</a>
+                <a href="#tab-meta-82177991908974956121162865310907" data-toggle="tab">Source</a>
             </li>
 
         
@@ -377,7 +382,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-50733123742975349997500819154084">
+            <div class="tab-pane active" id="tab-meta-82177991908974956121162865310907">
                 <p><a href="core_dom_selector.js.html#line9">core/dom/selector.js:9</a></p>
             </div>
 
@@ -541,7 +546,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-083802739623934034400168671272695" data-toggle="tab">Source</a>
+                <a href="#tab-meta-247972951969131833371066399849951" data-toggle="tab">Source</a>
             </li>
 
         
@@ -562,7 +567,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-083802739623934034400168671272695">
+            <div class="tab-pane active" id="tab-meta-247972951969131833371066399849951">
                 <p><a href="core_dom_selector.js.html#line246">core/dom/selector.js:246</a></p>
             </div>
 
@@ -732,7 +737,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-187983654206618679537220888305455" data-toggle="tab">Source</a>
+                <a href="#tab-meta-845701480749994534836823446676135" data-toggle="tab">Source</a>
             </li>
 
         
@@ -753,7 +758,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-187983654206618679537220888305455">
+            <div class="tab-pane active" id="tab-meta-845701480749994534836823446676135">
                 <p><a href="core_dom_selector.js.html#line202">core/dom/selector.js:202</a></p>
             </div>
 
@@ -917,7 +922,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-3796606594696641682199502363801" data-toggle="tab">Source</a>
+                <a href="#tab-meta-78435886814258994796188708860427" data-toggle="tab">Source</a>
             </li>
 
         
@@ -938,7 +943,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-3796606594696641682199502363801">
+            <div class="tab-pane active" id="tab-meta-78435886814258994796188708860427">
                 <p><a href="core_dom_selector.js.html#line81">core/dom/selector.js:81</a></p>
             </div>
 
@@ -1084,7 +1089,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-762657781597226908518169866874814" data-toggle="tab">Source</a>
+                <a href="#tab-meta-2100368554238238652365955058485" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1105,7 +1110,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-762657781597226908518169866874814">
+            <div class="tab-pane active" id="tab-meta-2100368554238238652365955058485">
                 <p><a href="core_dom_selector.js.html#line264">core/dom/selector.js:264</a></p>
             </div>
 
@@ -1183,7 +1188,10 @@
             <td class="type">
             
                 
-&nbsp;&nbsp;<span class="param-type label label-info">Node</span>
+&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
+        |
+    
+&nbsp;&nbsp;<span class="param-type label label-info">NodeList</span>
         
     
 
@@ -1277,7 +1285,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-60739973816089338860187011305243" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4862883395981043607861320651136339" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1298,7 +1306,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-60739973816089338860187011305243">
+            <div class="tab-pane active" id="tab-meta-4862883395981043607861320651136339">
                 <p><a href="core_dom_selector.js.html#line300">core/dom/selector.js:300</a></p>
             </div>
 
@@ -1445,7 +1453,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-355173340532928715104520157910883" data-toggle="tab">Source</a>
+                <a href="#tab-meta-35725623578764512478353944607079" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1466,7 +1474,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-355173340532928715104520157910883">
+            <div class="tab-pane active" id="tab-meta-35725623578764512478353944607079">
                 <p><a href="core_dom_selector.js.html#line128">core/dom/selector.js:128</a></p>
             </div>
 
@@ -1636,7 +1644,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-897533390205353546111982874572277" data-toggle="tab">Source</a>
+                <a href="#tab-meta-0422572086099535209804849489592016" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1657,7 +1665,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-897533390205353546111982874572277">
+            <div class="tab-pane active" id="tab-meta-0422572086099535209804849489592016">
                 <p><a href="core_dom_selector.js.html#line283">core/dom/selector.js:283</a></p>
             </div>
 
@@ -1803,7 +1811,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-02825282653793692623152954992838204" data-toggle="tab">Source</a>
+                <a href="#tab-meta-45503680850379178334468912798911" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1824,7 +1832,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-02825282653793692623152954992838204">
+            <div class="tab-pane active" id="tab-meta-45503680850379178334468912798911">
                 <p><a href="core_dom_selector.js.html#line175">core/dom/selector.js:175</a></p>
             </div>
 
@@ -1970,7 +1978,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-60220030904747558478896911256015" data-toggle="tab">Source</a>
+                <a href="#tab-meta-4856933807022869619561323849484324" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1991,7 +1999,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-60220030904747558478896911256015">
+            <div class="tab-pane active" id="tab-meta-4856933807022869619561323849484324">
                 <p><a href="core_dom_selector.js.html#line228">core/dom/selector.js:228</a></p>
             </div>
 
@@ -2137,7 +2145,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-5729171710554519567749311681837" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3783961061853915532844192697666585" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2158,7 +2166,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-5729171710554519567749311681837">
+            <div class="tab-pane active" id="tab-meta-3783961061853915532844192697666585">
                 <p><a href="core_dom_selector.js.html#line157">core/dom/selector.js:157</a></p>
             </div>
 
@@ -2368,7 +2376,7 @@ selector.query('div');
 
             
             <li class="active">
-                <a href="#tab-meta-251755227101966745815126120578498" data-toggle="tab">Source</a>
+                <a href="#tab-meta-51010316051542761729676944669336" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2389,7 +2397,7 @@ selector.query('div');
         
         
 
-            <div class="tab-pane active" id="tab-meta-251755227101966745815126120578498">
+            <div class="tab-pane active" id="tab-meta-51010316051542761729676944669336">
                 <p><a href="core_dom_selector.js.html#line39">core/dom/selector.js:39</a></p>
             </div>
 
@@ -2535,7 +2543,7 @@ selector.query('div');
 
             
             <li class="active">
-                <a href="#tab-meta-0472230811137706048431405951268971" data-toggle="tab">Source</a>
+                <a href="#tab-meta-610605502035468846350324410013855" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2556,7 +2564,7 @@ selector.query('div');
         
         
 
-            <div class="tab-pane active" id="tab-meta-0472230811137706048431405951268971">
+            <div class="tab-pane active" id="tab-meta-610605502035468846350324410013855">
                 <p><a href="core_dom_selector.js.html#line99">core/dom/selector.js:99</a></p>
             </div>
 

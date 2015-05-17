@@ -37,6 +37,7 @@
 <li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
 <li><a href="module-core_event_base.html">core/event/base</a></li>
 <li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
 <li><a href="module-core_event_ready.html">core/event/ready</a></li>
 <li><a href="module-core_event_scroll.html">core/event/scroll</a></li>
 <li><a href="module-core_event_touch.html">core/event/touch</a></li>
@@ -57,19 +58,23 @@
 <li><a href="module-libs_Template.html">libs/Template</a></li>
 <li><a href="module-libs_Validator.html">libs/Validator</a></li>
 <li><a href="module-libs_Weixin.html">libs/Weixin</a></li>
-<li><a href="module-parent_hotkey.html">parent/hotkey</a></li>
 <li><a href="module-parent_index.html">parent/index</a></li>
 <li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
 <li><a href="module-ui_.html">ui/</a></li>
 <li><a href="module-ui_Autoheight_.html">ui/Autoheight/</a></li>
 <li><a href="module-ui_Banner_.html">ui/Banner/</a></li>
+<li><a href="module-ui_DatetimePicker_.html">ui/DatetimePicker/</a></li>
 <li><a href="module-ui_Dialog_.html">ui/Dialog/</a></li>
 <li><a href="module-ui_Editor_.html">ui/Editor/</a></li>
 <li><a href="module-ui_Imgclip_.html">ui/Imgclip/</a></li>
+<li><a href="module-ui_Loading_.html">ui/Loading/</a></li>
 <li><a href="module-ui_Mask_.html">ui/Mask/</a></li>
+<li><a href="module-ui_Msg_.html">ui/Msg/</a></li>
 <li><a href="module-ui_Pager_.html">ui/Pager/</a></li>
 <li><a href="module-ui_Pagination_.html">ui/Pagination/</a></li>
+<li><a href="module-ui_Popup_.html">ui/Popup/</a></li>
 <li><a href="module-ui_Prettify_.html">ui/Prettify/</a></li>
+<li><a href="module-ui_Range_.html">ui/Range/</a></li>
 <li><a href="module-ui_Resize_.html">ui/Resize/</a></li>
 <li><a href="module-ui_Scroll_.html">ui/Scroll/</a></li>
 <li><a href="module-ui_Scrollbar_.html">ui/Scrollbar/</a></li>
@@ -105,30 +110,30 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="module-ui_Scroll_.html#~event:bottom">module:ui/Scroll/.bottom</a></li>
-<li><a href="global.html#~event:cancel">null.cancel</a></li>
-<li><a href="module-ui_Editor_.html#~event:change">module:libs/Animation.change</a></li>
+<li><a href="module-ui_Imgclip_.html#event:cancel">module:ui/Imgclip/.cancel</a></li>
+<li><a href="module-ui_Tab_.html#~event:change">module:ui/Banner/.change</a></li>
 <li><a href="global.html#event:choose">null.choose</a></li>
 <li><a href="module-libs_Queue.html#~event:clear">module:libs/Queue.clear</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clip">module:ui/Imgclip/.clip</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipend">module:ui/Imgclip/.clipend</a></li>
 <li><a href="module-ui_Imgclip_.html#~event:clipstart">module:ui/Imgclip/.clipstart</a></li>
-<li><a href="module-ui_Tooltip_.html#~event:close">module:ui/Window/.close</a></li>
-<li><a href="module-ui_Prettify_.html#~event:done">module:libs/Queue.done</a></li>
+<li><a href="module-ui_Msg_.html#~event:close">module:ui/Window/.close</a></li>
+<li><a href="module-libs_Queue.html#~event:done">module:libs/Queue.done</a></li>
 <li><a href="module-ui_Scroll_.html#~event:down">module:ui/Scroll/.down</a></li>
 <li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
 <li><a href="module-libs_Animation.html#~event:end">module:libs/Animation.end</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:enterviewport">module:ui/Scrollspy/.enterviewport</a></li>
-<li><a href="module-ui_Imgclip_.html#~event:error">module:ui/Viewer/.error</a></li>
-<li><a href="module-ui_Mask_.html#~event:esc">module:ui/Dialog/.esc</a></li>
+<li><a href="module-ui_Viewer_.html#~event:error">module:ui/Imgclip/.error</a></li>
+<li><a href="module-ui_Dialog_.html#~event:esc">module:ui/Mask/.esc</a></li>
 <li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
 <li><a href="module-ui_Mask_.html#~event:hit">module:ui/Mask/.hit</a></li>
 <li><a href="module-ui_Dialog_.html#~event:hitbg">module:ui/Dialog/.hitbg</a></li>
 <li><a href="module-ui_Scrollspy_.html#~event:leaveviewport">module:ui/Scrollspy/.leaveviewport</a></li>
-<li><a href="module-ui_Window_.html#~event:open">module:ui/Window/.open</a></li>
+<li><a href="module-ui_Dialog_.html#~event:open">module:ui/Window/.open</a></li>
 <li><a href="module-libs_Queue.html#~event:pause">module:libs/Queue.pause</a></li>
 <li><a href="module-ui_Scroll_.html#~event:pull">module:ui/Scroll/.pull</a></li>
-<li><a href="module-ui_Scroll_.html#~event:push">module:ui/Scroll/.push</a></li>
-<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Resize/.resize</a></li>
+<li><a href="module-libs_Queue.html#~event:push">module:libs/Queue.push</a></li>
+<li><a href="module-ui_Mask_.html#~event:resize">module:ui/Mask/.resize</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizeend">module:ui/Resize/.resizeend</a></li>
 <li><a href="module-ui_Resize_.html#~event:resizestart">module:ui/Resize/.resizestart</a></li>
 <li><a href="module-ui_Scrollbar_.html#~event:scrollx">module:ui/Scrollbar/.scrollx</a></li>
@@ -365,7 +370,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-87426137272268533002005824819207" data-toggle="tab">Source</a>
+                <a href="#tab-meta-107224746840074663471516966819763" data-toggle="tab">Source</a>
             </li>
 
         
@@ -386,7 +391,7 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-87426137272268533002005824819207">
+            <div class="tab-pane active" id="tab-meta-107224746840074663471516966819763">
                 <p><a href="ui_Dialog_index.js.html#line9">ui/Dialog/index.js:9</a></p>
             </div>
 
@@ -556,7 +561,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-545423109550029363491723081097" data-toggle="tab">Source</a>
+                <a href="#tab-meta-27253834577277316962157655507326" data-toggle="tab">Source</a>
             </li>
 
         
@@ -577,8 +582,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-545423109550029363491723081097">
-                <p><a href="ui_Dialog_index.js.html#line323">ui/Dialog/index.js:323</a></p>
+            <div class="tab-pane active" id="tab-meta-27253834577277316962157655507326">
+                <p><a href="ui_Dialog_index.js.html#line316">ui/Dialog/index.js:316</a></p>
             </div>
 
         
@@ -649,7 +654,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-015071725007146597300500221317634" data-toggle="tab">Source</a>
+                <a href="#tab-meta-48194661736488344198577795177698" data-toggle="tab">Source</a>
             </li>
 
         
@@ -670,8 +675,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-015071725007146597300500221317634">
-                <p><a href="ui_Dialog_index.js.html#line343">ui/Dialog/index.js:343</a></p>
+            <div class="tab-pane active" id="tab-meta-48194661736488344198577795177698">
+                <p><a href="ui_Dialog_index.js.html#line336">ui/Dialog/index.js:336</a></p>
             </div>
 
         
@@ -763,7 +768,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-88232449651695797942245863378048" data-toggle="tab">Source</a>
+                <a href="#tab-meta-97268558503128597435360110830516" data-toggle="tab">Source</a>
             </li>
 
         
@@ -784,8 +789,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-88232449651695797942245863378048">
-                <p><a href="ui_Dialog_index.js.html#line153">ui/Dialog/index.js:153</a></p>
+            <div class="tab-pane active" id="tab-meta-97268558503128597435360110830516">
+                <p><a href="ui_Dialog_index.js.html#line150">ui/Dialog/index.js:150</a></p>
             </div>
 
         
@@ -918,7 +923,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-02753863134421408221969247772358358" data-toggle="tab">Source</a>
+                <a href="#tab-meta-79989151353947824324855636805296" data-toggle="tab">Source</a>
             </li>
 
         
@@ -939,8 +944,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-02753863134421408221969247772358358">
-                <p><a href="ui_Dialog_index.js.html#line296">ui/Dialog/index.js:296</a></p>
+            <div class="tab-pane active" id="tab-meta-79989151353947824324855636805296">
+                <p><a href="ui_Dialog_index.js.html#line289">ui/Dialog/index.js:289</a></p>
             </div>
 
         
@@ -1107,7 +1112,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-2346927786711603437211179709993303" data-toggle="tab">Source</a>
+                <a href="#tab-meta-92747724917717288708140356466174" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1128,8 +1133,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-2346927786711603437211179709993303">
-                <p><a href="ui_Dialog_index.js.html#line314">ui/Dialog/index.js:314</a></p>
+            <div class="tab-pane active" id="tab-meta-92747724917717288708140356466174">
+                <p><a href="ui_Dialog_index.js.html#line307">ui/Dialog/index.js:307</a></p>
             </div>
 
         
@@ -1250,7 +1255,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-463903359370306139065189622342587" data-toggle="tab">Source</a>
+                <a href="#tab-meta-457031879574060445748399270232767" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1271,8 +1276,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-463903359370306139065189622342587">
-                <p><a href="ui_Dialog_index.js.html#line238">ui/Dialog/index.js:238</a></p>
+            <div class="tab-pane active" id="tab-meta-457031879574060445748399270232767">
+                <p><a href="ui_Dialog_index.js.html#line231">ui/Dialog/index.js:231</a></p>
             </div>
 
         
@@ -1411,7 +1416,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-77558919484727085903542442247272" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9796135528013113727767763193697" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1432,8 +1437,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-77558919484727085903542442247272">
-                <p><a href="ui_Dialog_index.js.html#line253">ui/Dialog/index.js:253</a></p>
+            <div class="tab-pane active" id="tab-meta-9796135528013113727767763193697">
+                <p><a href="ui_Dialog_index.js.html#line246">ui/Dialog/index.js:246</a></p>
             </div>
 
         
@@ -1554,7 +1559,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-63228777004405867885790760628879" data-toggle="tab">Source</a>
+                <a href="#tab-meta-93985520768910659803049031179398" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1575,8 +1580,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-63228777004405867885790760628879">
-                <p><a href="ui_Dialog_index.js.html#line225">ui/Dialog/index.js:225</a></p>
+            <div class="tab-pane active" id="tab-meta-93985520768910659803049031179398">
+                <p><a href="ui_Dialog_index.js.html#line218">ui/Dialog/index.js:218</a></p>
             </div>
 
         
@@ -1647,7 +1652,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-7929938409943134416666415752843" data-toggle="tab">Source</a>
+                <a href="#tab-meta-3004594293888658331498790928162634" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1668,8 +1673,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-7929938409943134416666415752843">
-                <p><a href="ui_Dialog_index.js.html#line283">ui/Dialog/index.js:283</a></p>
+            <div class="tab-pane active" id="tab-meta-3004594293888658331498790928162634">
+                <p><a href="ui_Dialog_index.js.html#line276">ui/Dialog/index.js:276</a></p>
             </div>
 
         
@@ -1749,7 +1754,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-78522414201870563916195034980774" data-toggle="tab">Source</a>
+                <a href="#tab-meta-84455987159162767092320260126144" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1770,8 +1775,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-78522414201870563916195034980774">
-                <p><a href="ui_Dialog_index.js.html#line168">ui/Dialog/index.js:168</a></p>
+            <div class="tab-pane active" id="tab-meta-84455987159162767092320260126144">
+                <p><a href="ui_Dialog_index.js.html#line165">ui/Dialog/index.js:165</a></p>
             </div>
 
         
@@ -1842,7 +1847,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-233119362266734247011950199957937" data-toggle="tab">Source</a>
+                <a href="#tab-meta-9681398191023618013543955516070127" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1863,8 +1868,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-233119362266734247011950199957937">
-                <p><a href="ui_Dialog_index.js.html#line179">ui/Dialog/index.js:179</a></p>
+            <div class="tab-pane active" id="tab-meta-9681398191023618013543955516070127">
+                <p><a href="ui_Dialog_index.js.html#line176">ui/Dialog/index.js:176</a></p>
             </div>
 
         
@@ -1935,7 +1940,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-8574845199473202980720428051427" data-toggle="tab">Source</a>
+                <a href="#tab-meta-58671007561497397809119336307049" data-toggle="tab">Source</a>
             </li>
 
         
@@ -1956,8 +1961,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-8574845199473202980720428051427">
-                <p><a href="ui_Dialog_index.js.html#line196">ui/Dialog/index.js:196</a></p>
+            <div class="tab-pane active" id="tab-meta-58671007561497397809119336307049">
+                <p><a href="ui_Dialog_index.js.html#line193">ui/Dialog/index.js:193</a></p>
             </div>
 
         
@@ -2028,7 +2033,7 @@
 
             
             <li class="active">
-                <a href="#tab-meta-805736376205459228816149896010756" data-toggle="tab">Source</a>
+                <a href="#tab-meta-53187602059915661807620911858976" data-toggle="tab">Source</a>
             </li>
 
         
@@ -2049,8 +2054,8 @@
         
         
 
-            <div class="tab-pane active" id="tab-meta-805736376205459228816149896010756">
-                <p><a href="ui_Dialog_index.js.html#line203">ui/Dialog/index.js:203</a></p>
+            <div class="tab-pane active" id="tab-meta-53187602059915661807620911858976">
+                <p><a href="ui_Dialog_index.js.html#line200">ui/Dialog/index.js:200</a></p>
             </div>
 
         
