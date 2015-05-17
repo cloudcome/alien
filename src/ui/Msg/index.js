@@ -165,8 +165,9 @@ define(function (require, exports, module) {
              * @event close
              * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
              */
-            the.emit('close', -1);
-            the.destroy();
+            if (the.emit('close', -1) !== false) {
+                the.destroy();
+            }
         });
 
         // 点击按钮
@@ -182,7 +183,7 @@ define(function (require, exports, module) {
              * @event close
              * @param index {Number} 选择的按钮索引，-1 为点击关闭按钮
              */
-            if(the.emit('close', index) !== false){
+            if (the.emit('close', index) !== false) {
                 the.destroy();
             }
         });
