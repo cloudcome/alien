@@ -102,15 +102,16 @@
     border-top: 1px solid #CCC;
     overflow: hidden; }
   .alien-ui-datetimepicker-button {
-    width: 50%;
+    width: 33.33333333%;
     float: left;
     text-align: center;
     height: 34px;
     line-height: 34px;
     color: #888;
-    cursor: pointer; }
+    cursor: pointer;
+    border-right: 1px solid #ccc; }
     .alien-ui-datetimepicker-button:hover {
       background: #f8f8f8;
       color: #666; }
-    .alien-ui-datetimepicker-button:first-child {
-      border-right: 1px solid #ccc; }
+    .alien-ui-datetimepicker-button:last-child {
+      border-right: 0; }

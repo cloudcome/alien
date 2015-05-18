@@ -166,21 +166,22 @@
   }
 
   &-button{
-    width: 50%;
+    width: 33.33333333%;
     float: left;
     text-align: center;
     height: 34px;
     line-height: 34px;
     color: #888;
     cursor: pointer;
+    border-right: 1px solid #ccc;
 
     &:hover{
       background: #f8f8f8;
       color: #666;
     }
 
-    &:first-child{
-      border-right: 1px solid #ccc;
+    &:last-child{
+      border-right: 0;
     }
   }
 }
