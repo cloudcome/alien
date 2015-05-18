@@ -332,7 +332,6 @@ define(function (require, exports, module) {
          */
         _onchange: function (d) {
             var the = this;
-            var options = the._options;
 
             the._date = d || new Date(the._choose.year, the._choose.month, the._choose.date,
                     the._choose.hours, the._choose.minutes, the._choose.seconds, 0);
