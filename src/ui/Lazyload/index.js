@@ -7,7 +7,13 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/Lazyload/
+     * @requires utils/dato
+     * @requires utils/controller
+     * @requires libs/Scroll
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/see
      */
 
     'use strict';
@@ -18,12 +24,18 @@ define(function (require, exports, module) {
     var Scroll = require('../../libs/Scroll.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
+    var see = require('../../core/dom/see.js');
+    var win = window;
+    var doc = win.document;
+    var html = doc.documentElement;
+    var body = doc.body;
     var alienClass = 'alien-ui-lazyload';
     var REG_RES = /img|iframe/i;
     var defaults = {
         selector: 'img',
         data: 'original',
-        offset: 10
+        offset: 10,
+        wait: 123
     };
     var Lazyload = ui.create({
         constructor: function ($container, options) {
@@ -56,15 +68,19 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            the._isDoc = the._$container === win || the._$container === doc ||
+                the._$container === html || the._$container === body;
             the.update();
             the._scroll = new Scroll(the._$container);
-            the._scroll.on('x y', function () {
-                if (!the.visible) {
+            the._scroll.on('x y', controller.debounce(function () {
+                if (!the.visible && !the._isDoc) {
                     return;
                 }
 
                 dato.each(the._$targets, function (index, $target) {
-                    if (the.emit('match', $target) !== false) {
+                    var isInViewport = see.isInViewport($target);
+
+                    if (isInViewport && the.emit('match', $target) !== false) {
                         var original = attribute.data($target, options.data);
 
                         if (original && REG_RES.test($target.tagName)) {
@@ -73,11 +89,15 @@ define(function (require, exports, module) {
                         }
                     }
                 });
-            }).on('enter', function () {
+            }, options.wait)).on('enter', function () {
                 the.visible = true;
             }).on('leave', function () {
                 the.visible = false;
             });
+        },
+
+        destroy: function(){
+
         }
     });
 
