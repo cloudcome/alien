@@ -137,6 +137,8 @@ define(function (require, exports, module) {
 
             if (typeis.element(args[0])) {
                 the._$target = $target || the._$target;
+            }else{
+                callback = args[0];
             }
 
             if (!the._$target) {
