@@ -53,9 +53,9 @@ define(function (require, exports, module) {
                 var matchKey = '';
                 var msgs;
 
-                // ignore last redirect
-                if (the._redirectURL) {
-                    the._redirectURL = null;
+                // 默认忽略主动跳转的地址，详见#redirect
+                if (the._isIgnore) {
+                    the._isIgnore = false;
                     return;
                 }
 
@@ -154,11 +154,13 @@ define(function (require, exports, module) {
         /**
          * 路由跳转
          * @param url {String} 跳转的地址
+         * @param [isListenHashChange=false] {Boolean} 是否监听本次 hash 变化
          */
-        redirect: function (url) {
+        redirect: function (url, isListenHashChange) {
             var the = this;
 
-            the._redirectURL = location.hash = '#!' + url;
+            location.hash = '#!' + url;
+            the._isIgnore = !isListenHashChange;
 
             return the;
         },
