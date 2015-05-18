@@ -866,6 +866,10 @@ define(function (require, exports, module) {
             ele = args[0];
             eleType = typeis(ele);
 
+            if (ele === win || ele === doc || eleType === 'element') {
+                return;
+            }
+
             if (extraKey.length && eleType === 'element') {
                 dato.each(extraKey, function (i, key) {
                     extraVal += key.indexOf('scroll') > -1 ?

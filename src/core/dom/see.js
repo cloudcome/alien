@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var alienKey = '-alien-core-dom-see-';
     var win = window;
     var doc = win.document;
+    var html = doc.documentElement;
 
 
     /**
@@ -35,13 +36,11 @@ define(function (require, exports, module) {
         var visible = 'visible';
         var hidden = 'hidden';
 
-        if ($ele === win || $ele === doc) {
+        if ($ele === win || $ele === doc || $ele === html || !$ele) {
             return visible;
         }
 
-        var nowDisplay = _getDisplay($ele);
-
-        $ele[alienKey + key] = nowDisplay;
+        $ele[alienKey + key] = _getDisplay($ele);
 
         // get
         if (!changeVisibility) {
