@@ -866,7 +866,7 @@ define(function (require, exports, module) {
             ele = args[0];
             eleType = typeis(ele);
 
-            if (ele === win || ele === doc || eleType === 'element') {
+            if (ele !== win && ele !== doc && eleType !== 'element') {
                 return;
             }
 
