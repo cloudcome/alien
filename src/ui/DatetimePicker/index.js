@@ -379,20 +379,20 @@ define(function (require, exports, module) {
             the._date = date.parse(value);
             the._render();
             the._onchange();
-            the._popup.open();
+            the._popup.open(function () {
+                // 重新打开后，更新滑块的位置信息
+                if (the._rHours) {
+                    the._rHours.update();
+                }
 
-            // 重新打开后，更新滑块的位置信息
-            if (the._rHours) {
-                the._rHours.update();
-            }
+                if (the._rMinutes) {
+                    the._rMinutes.update();
+                }
 
-            if (the._rMinutes) {
-                the._rMinutes.update();
-            }
-
-            if (the._rSeconds) {
-                the._rSeconds.update();
-            }
+                if (the._rSeconds) {
+                    the._rSeconds.update();
+                }
+            });
 
             return the;
         },
