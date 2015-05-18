@@ -24,17 +24,18 @@ define(function (require, exports, module) {
     var controller = require('../utils/controller.js');
     var selector = require('../core/dom/selector.js');
     var attribute = require('../core/dom/attribute.js');
+    var see = require('../core/dom/see.js');
     var event = require('../core/event/touch.js');
     var compatible = require('../core/navigator/compatible.js');
     var Emitter = require('./Emitter.js');
-    var alienKey = 'alien-libs-scroll';
+    var alienKey = '-alien-libs-scroll';
     var win = window;
     var doc = win.document;
     var $html = doc.documentElement;
     var $body = doc.body;
     var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     // 存储被监听滚动的元素
-    var listenMap = null;
+    var listenElements = [];
     var defaults = {};
     var Scroll = klass.extends(Emitter).create({
         constructor: function ($container, options) {
@@ -60,7 +61,7 @@ define(function (require, exports, module) {
             var the = this;
             var isListenDoc = the._$container === doc;
 
-            event.on(the._$container, 'scroll touchstart touchmove', the._onscroll = function () {
+            event.on(the._$container, 'scroll touchstart touchmove touchend', the._onscroll = function () {
                 var scrollTop = attribute.scrollTop(the._$container);
                 var scrollLeft = attribute.scrollLeft(the._$container);
                 var top = isListenDoc ? 0 : attribute.top(the._$container);
@@ -81,7 +82,13 @@ define(function (require, exports, module) {
                     ratioX: scrollWidth <= innerWidth ? 1 : scrollLeft / (scrollWidth - innerWidth),
                     ratioY: scrollHeight <= innerHeight ? 1 : scrollTop / (scrollHeight - innerHeight)
                 };
-                var lastScroll = the._$container[alienKey];
+                var lastScroll = the._$container[alienKey + '-ret'];
+                var instance = the._$container[alienKey + '-instance'];
+
+                if (!isListenDoc && !instance) {
+                    the._$container[alienKey + '-instance'] = the;
+                    listenElements.push(the._$container);
+                }
 
                 if (lastScroll) {
                     /**
@@ -241,30 +248,30 @@ define(function (require, exports, module) {
                     the.emit('x', ret);
                 }
 
-                the._$container[alienKey] = {t: scrollTop, l: scrollLeft};
+                the._$container[alienKey + '-ret'] = {t: scrollTop, l: scrollLeft};
             });
 
             win[requestAnimationFrame](the._onscroll, the);
         }
     });
+    var onenterleave = function (ret) {
+        dato.each(listenElements, function (index, $ele) {
+            var instance = $ele[alienKey + '-instance'];
+            var isInViewport = see.isInViewport($ele);
+            var last = $ele[alienKey + '-in-viewport'];
 
-    new Scroll(doc).on('x', function (ret) {
-        console.log('....');
+            if ((last === true || last === undefined) && isInViewport === false) {
+                instance.emit('leave');
+            } else if (!last && isInViewport === true) {
+                instance.emit('enter');
+            }
 
-        //if(!listenMap && isListenDoc){
-        //    listenMap = {};
-        //    console.log('.....');
-        //}
+            instance.emit(isInViewport ? 'visible' : 'hidden');
+            $ele[alienKey + '-in-viewport'] = isInViewport;
+        });
+    };
 
-        //// 如果监听的是 document，那么永远触发 enter 事件
-        //if (isListenDoc) {
-        //    the.emit('enter');
-        //} else {
-        //    the.emit(top < scrollTop && left < scrollLeft ? 'leave' : 'enter');
-        //}
-    }).on('y', function (ret) {
-        console.log('+++++');
-    });
+    new Scroll(doc).on('x', onenterleave).on('y', onenterleave);
 
     Scroll.defaults = defaults;
     module.exports = Scroll;

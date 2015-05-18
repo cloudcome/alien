@@ -57,6 +57,14 @@ define(function (require, exports, module) {
     //    console.log(2, 'bottom');
     //});
 
+    sc2.on('visible', function () {
+        console.log(2, 'visible');
+    });
+
+    sc2.on('hidden', function () {
+        console.log(2, 'hidden');
+    });
+
     sc2.on('enter', function () {
         console.log(2, 'enter');
     });
