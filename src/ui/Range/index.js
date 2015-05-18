@@ -256,8 +256,8 @@ define(function (require, exports, module) {
                 }
 
                 if (value[1] - value[0] >= options.step) {
-                    the._value0 = the._adjustVal(value[0])
-                    the._value1 = the._adjustVal(value[1])
+                    the._value0 = the._adjustVal(value[0]);
+                    the._value1 = the._adjustVal(value[1]);
                     the._update(0, value[0]);
                     the._update(1, value[1]);
                 }
