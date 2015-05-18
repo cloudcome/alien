@@ -381,6 +381,19 @@ define(function (require, exports, module) {
             the._onchange();
             the._popup.open();
 
+            // 重新打开后，更新滑块的位置信息
+            if (the._rHours) {
+                the._rHours.update();
+            }
+
+            if (the._rMinutes) {
+                the._rMinutes.update();
+            }
+
+            if (the._rSeconds) {
+                the._rSeconds.update();
+            }
+
             return the;
         },
 
