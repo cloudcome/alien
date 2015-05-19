@@ -308,6 +308,7 @@ define(function (require, exports, module) {
             // 点击现在
             event.on(the._$cancel, 'click', function () {
                 the.close();
+                the.emit('cancel');
             });
 
             // 点击现在
@@ -315,12 +316,14 @@ define(function (require, exports, module) {
                 the._date = new Date();
                 the._onchange(the._date);
                 the._render();
+                the.emit('now', the._date);
             });
 
             // 点击确定
             event.on(the._$sure, 'click', function () {
                 the._$input.value = date.format(options.format, the._date);
                 the.close();
+                the.emit('sure', the._date);
             });
         },
 
