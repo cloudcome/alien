@@ -57,6 +57,11 @@ define(function (require, exports, module) {
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
+
+        /**
+         * 初始化
+         * @private
+         */
         _init: function () {
             var the = this;
             var isListenDoc = the._$container === doc;
@@ -252,9 +257,36 @@ define(function (require, exports, module) {
             });
 
             win[requestAnimationFrame](the._onscroll, the);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            // 移除事件
+            event.un(the._$container, 'scroll touchstart touchmove touchend');
+
+            // 移除派发
+            var findIndex = -1;
+
+            dato.each(listenElements, function (index, $ele) {
+                if($ele === the._$container){
+                    findIndex = index;
+                    return false;
+                }
+            });
+
+            if(findIndex > -1){
+                listenElements.splice(findIndex, 1);
+            }
         }
     });
-    var onenterleave = function (ret) {
+
+    // 监听 document 来分发 enter、leave 等事件
+    new Scroll(doc).on('x y', function (ret) {
         dato.each(listenElements, function (index, $ele) {
             var instance = $ele[alienKey + '-instance'];
             var isInViewport = see.isInViewport($ele);
@@ -269,9 +301,7 @@ define(function (require, exports, module) {
             instance.emit(isInViewport ? 'visible' : 'hidden');
             $ele[alienKey + '-in-viewport'] = isInViewport;
         });
-    };
-
-    new Scroll(doc).on('x', onenterleave).on('y', onenterleave);
+    });
 
     Scroll.defaults = defaults;
     module.exports = Scroll;
