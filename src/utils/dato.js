@@ -65,7 +65,7 @@ define(function (require, exports, module) {
         var i = -1;
 
         while (++i < count) {
-            if (fn(i) === false) {
+            if (fn(i, count) === false) {
                 break;
             }
         }

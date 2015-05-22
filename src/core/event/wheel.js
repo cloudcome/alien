@@ -36,11 +36,7 @@ define(function (require, exports, module) {
         var dispatchStart;
         var dispatchChange;
 
-        if (timeid) {
-            clearTimeout(timeid);
-            timeid = 0;
-        }
-
+        clearTimeout(timeid);
         timeid = setTimeout(function () {
             event.dispatch(ele, endEvent);
             isStart = false;
