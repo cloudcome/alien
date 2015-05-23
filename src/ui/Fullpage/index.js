@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var body = doc.body;
     var defaults = {
         // 动画时间
-        duration: 456,
+        duration: 345,
         // 两次事件触发等待间隔
         wait: 123,
         // 动画缓冲
@@ -62,9 +62,23 @@ define(function (require, exports, module) {
 
             the.index = 0;
             the._animating = false;
-            the.update();
             the._initNode();
+            the.update();
             the._initEvent();
+        },
+
+
+        /**
+         * 初始化节点
+         * @private
+         */
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+
+            var $items = selector.query(options.itemSelector, the._$container);
+
+            the.length = $items.length;
         },
 
 
@@ -77,46 +91,22 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (typeis.function(options.navGenerator) && the._$nav) {
-                var html = '';
+                var navHtml = '';
 
                 dato.repeat(the.length, function (index) {
-                    html += options.navGenerator.call(the, index, the.length);
+                    navHtml += options.navGenerator.call(the, index, the.length);
                 });
 
-                the._$nav.innerHTML = html;
-            }
-
-            the._winWidth = attribute.width(win);
-            the._winHeight = attribute.height(win);
-            the._initStyle();
-
-            return the;
-        },
-
-
-        /**
-         * 初始化节点
-         * @private
-         */
-        _initNode: function () {
-            var the = this;
-            var options = the._options;
-
-            if (typeis.function(options.navGenerator) && the._$nav) {
+                the._$nav.innerHTML = navHtml;
                 the._$navItems = selector.children(the._$nav);
-                attribute.addClass(the._$navItems[0], options.navActiveClass);
+
+                if (!the._hasInit) {
+                    the._hasInit = true;
+                    attribute.addClass(the._$navItems[0], options.navActiveClass);
+                }
             }
-        },
 
-
-        /**
-         * 初始化样式
-         * @private
-         */
-        _initStyle: function () {
-            var the = this;
-            var options = the._options;
-            var winWidth = the._winWidth;
+            var winWidth = the._winWidth = attribute.width(win);
             var winHeight = the._winHeight = attribute.height(win);
             var $items = selector.query(options.itemSelector, the._$container);
             var overStyle = {
@@ -125,7 +115,7 @@ define(function (require, exports, module) {
                 overflow: 'hidden'
             };
             var containerStyle = {};
-            var length = the.length = $items.length;
+            var length = the.length;
 
             if (options.axis === 'x') {
                 containerStyle.width = winWidth * length;
@@ -149,12 +139,14 @@ define(function (require, exports, module) {
                     style.left = index * winWidth;
                     style.top = 0;
                 } else {
-                    style.top = index * winWidth;
+                    style.top = index * winHeight;
                     style.left = 0;
                 }
 
                 attribute.css($item, style);
             });
+
+            return the;
         },
 
 
@@ -164,7 +156,6 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            var options = the._options;
             var onup = function () {
                 if (the._animating || !the.index) {
                     return;
@@ -181,6 +172,7 @@ define(function (require, exports, module) {
                 the.index++;
                 the._translate();
             };
+            var wheelState = 1;
 
             event.on(doc, 'touch1start', the._ontouch1start = function () {
                 return false;
@@ -196,13 +188,31 @@ define(function (require, exports, module) {
                 }
             });
 
-            event.on(doc, 'wheelchange', the._onwheel = controller.throttle(function (eve) {
+            event.on(doc, 'wheelstart', function () {
+                wheelState = 2;
+                //console.log('wheelstart', wheelState);
+            });
+
+            event.on(doc, 'wheelchange', the._onwheel = function (eve) {
+                //console.log('wheelchange', wheelState);
+
+                if (wheelState !== 2) {
+                    return;
+                }
+
+                wheelState = 3;
+
                 if (eve.alienDetail.deltaY < 0) {
                     ondown();
                 } else {
                     onup();
                 }
-            }, options.wait, false));
+            });
+
+            event.on(doc, 'wheelend', function () {
+                wheelState = 1;
+                //console.log('wheelend', wheelState);
+            });
 
             event.on(win, 'resize', the._onresize = controller.debounce(the.update.bind(the)));
         },

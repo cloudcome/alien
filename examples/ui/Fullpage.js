@@ -15,6 +15,6 @@ define(function (require, exports, module) {
     var Fullpage = require('../../src/ui/Fullpage/');
 
     new Fullpage('#fullpage', {
-        axis: 'x'
+        axis: 'y'
     });
 });

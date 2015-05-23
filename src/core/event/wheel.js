@@ -23,7 +23,7 @@ define(function (require, exports, module) {
 
     var event = require('./base.js');
     var mousewheel = 'wheel mousewheel DOMMouseScroll MozMousePixelScroll';
-    var timeout = 500;
+    var timeout = 100;
     var timeid = 0;
     var isStart = false;
 
@@ -38,15 +38,21 @@ define(function (require, exports, module) {
 
         clearTimeout(timeid);
         timeid = setTimeout(function () {
-            event.dispatch(ele, endEvent);
+            event.dispatch(ele, endEvent, eve, {
+                deltaX: 0,
+                deltaY: deltaY,
+                deltaZ: 0
+            });
             isStart = false;
         }, timeout);
 
         if (!isStart) {
             isStart = true;
-
-            event.extend(startEvent, eve);
-            dispatchStart = event.dispatch(ele, startEvent);
+            dispatchStart = event.dispatch(ele, startEvent, eve, {
+                deltaX: 0,
+                deltaY: deltaY,
+                deltaZ: 0
+            });
 
             if (dispatchStart.defaultPrevented === true) {
                 eve.preventDefault();
@@ -66,12 +72,11 @@ define(function (require, exports, module) {
             deltaY = eve.wheelDelta > 0 ? 1 : -1;
         }
 
-        event.extend(changeEvent, eve, {
+        dispatchChange = event.dispatch(ele, changeEvent, eve, {
             deltaX: 0,
             deltaY: deltaY,
             deltaZ: 0
         });
-        dispatchChange = event.dispatch(ele, changeEvent);
 
         if (dispatchChange.defaultPrevented === true) {
             eve.preventDefault();

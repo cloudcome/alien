@@ -180,7 +180,6 @@ define(function (require, exports, module) {
             var the = this;
             //var options = the._options;
 
-            the.on('setoptions', the._applyOptions.bind(the));
             the._dialog.on('close', function () {
                 the._applyOptions();
 
