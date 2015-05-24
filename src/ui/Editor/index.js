@@ -372,27 +372,27 @@ define(function (require, exports, module) {
                 }
             });
 
-            // space
-            the._addKeyMap(null, 'Space', the._offat = function () {
-                if (attribute.css(the._$at, 'display') !== 'none') {
-                    attribute.css(the._$at, 'display', 'none');
-                }
+            //// space
+            //the._addKeyMap(null, 'Space', the._offat = function () {
+            //    if (attribute.css(the._$at, 'display') !== 'none') {
+            //        attribute.css(the._$at, 'display', 'none');
+            //    }
+            //
+            //    the.replace(' ');
+            //});
 
-                the.replace(' ');
-            });
+            //// @
+            //the._addKeyMap('shift', '2', function () {
+            //    the.replace('@');
+            //    the._onat();
+            //});
 
-            // @
-            the._addKeyMap('shift', '2', function () {
-                the.replace('@');
-                the._onat();
-            });
-
-            event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
-                var value = attribute.data(this, 'value');
-
-                the.replace(value);
-                the._offat();
-            });
+            //event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
+            //    var value = attribute.data(this, 'value');
+            //
+            //    the.replace(value);
+            //    the._offat();
+            //});
 
             // **blod**
             the._addKeyMap('ctrl', 'B', function () {
