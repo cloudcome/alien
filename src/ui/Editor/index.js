@@ -154,10 +154,10 @@ define(function (require, exports, module) {
             // 1天之内的本地记录 && 内容部分不一致
             if (deltaTime < minTime && Math.abs(nowLen - storeLen) >= the._options.checkLength) {
                 confirm('本地缓存内容与当前不一致。' +
-                '<br>缓存时间为：<b>' + humanTime + '</b>。' +
-                '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
-                '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
-                '<br>是否恢复？')
+                    '<br>缓存时间为：<b>' + humanTime + '</b>。' +
+                    '<br>本地缓存内容长度为：<b>' + storeLen + '</b>。' +
+                    '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
+                    '<br>是否恢复？')
                     .on('sure', function () {
                         the.setValue(storeVal);
                         the._$ele.value = storeVal;
@@ -210,9 +210,9 @@ define(function (require, exports, module) {
                 });
 
                 the._storeId += pathname +
-                '<' + the._$ele.tagName + '>.' +
-                the._$ele.className +
-                '[' + attrList.join(';') + ']';
+                    '<' + the._$ele.tagName + '>.' +
+                    the._$ele.className +
+                    '[' + attrList.join(';') + ']';
             }
         },
 
@@ -355,7 +355,7 @@ define(function (require, exports, module) {
 
 
             // `code`
-            the._addKeyMap('`', function () {
+            the._addKeyMap(null, '`', function () {
                 var raw = the._editor.getSelection();
 
                 if (raw) {
@@ -363,27 +363,27 @@ define(function (require, exports, module) {
                 } else {
                     the.replace('`');
                 }
-            }, false);
+            });
 
 
             // __blod__
-            the._addKeyMap('B', function () {
-                the.wrap('__');
+            the._addKeyMap('ctrl', 'B', function () {
+                the.wrap('**');
             });
 
 
             // _italic_
-            the._addKeyMap('I', function () {
-                the.wrap('_');
+            the._addKeyMap('ctrl', 'I', function () {
+                the.wrap('*');
             });
 
 
             // fullScreen
-            the._addKeyMap('F11', toggleFullScreen);
+            the._addKeyMap('ctrl', 'F11', toggleFullScreen);
 
 
             // preview
-            the._addKeyMap('P', togglePreview);
+            the._addKeyMap('ctrl', 'P', togglePreview);
 
 
             // change
@@ -568,7 +568,7 @@ define(function (require, exports, module) {
 
                     _img.src = img.url;
                     html.push('![](' + img.url +
-                    (typeis.undefined(img.width) ? '' : ' =' + img.width + 'x' + img.height) + ')');
+                        (typeis.undefined(img.width) ? '' : ' =' + img.width + 'x' + img.height) + ')');
                 });
 
                 the.replace(html.join(' '));
@@ -595,20 +595,28 @@ define(function (require, exports, module) {
 
         /**
          * 添加事件回调
-         * @param key
+         * @param extraKey
+         * @param mainKey
          * @param callback
-         * @param [isCtrl=true]
          * @private
          */
-        _addKeyMap: function (key, callback, isCtrl) {
+        _addKeyMap: function (extraKey, mainKey, callback) {
             var the = this;
             var ctrl = the._isMac ? 'Cmd-' : 'Ctrl-';
             var map = {};
 
-            if (isCtrl === false) {
-                map[key] = callback;
-            } else {
-                map[ctrl + key] = callback;
+            switch (extraKey) {
+                case null:
+                    map[mainKey] = callback;
+                    break;
+
+                case 'shift':
+                    map['shift' + mainKey] = callback;
+                    break;
+
+                case 'ctrl':
+                    map[ctrl + mainKey] = callback;
+                    break;
             }
 
             the._editor.addKeyMap(map);
