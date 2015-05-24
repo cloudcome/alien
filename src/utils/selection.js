@@ -22,7 +22,7 @@ define(function (require, exports) {
     var attribute = require('../core/dom/attribute.js');
     var modification = require('../core/dom/modification.js');
     var $div = modification.create('div', {
-        style:{
+        style: {
             position: 'absolute',
             top: '-9999em',
             left: '-9999em'
@@ -42,7 +42,7 @@ define(function (require, exports) {
         'border'
     ];
 
-    
+
     /**
      * 获取选区
      * @param  {Object} $ele 元素
@@ -75,12 +75,19 @@ define(function (require, exports) {
 
 
     /**
-     * 获取光标所在的坐标
+     * 获取光标所在的坐标，相对于元素自身
      * @param $ele {Object} 元素
-     * @returns {Array}
+     * @returns {{left: number, top: number}}
      */
     exports.getOffset = function ($ele) {
-        if ($ele && $ele.setSelectionRange) {
+        var pos = {left: 0, top: 0};
+
+        if (!$ele) {
+            return pos;
+        }
+
+        // input/textarea
+        if ($ele.setSelectionRange) {
             var style = attribute.css($ele, typographyStyles);
             var pos0 = exports.getPos($ele)[0];
             var val = $ele.value;
@@ -88,13 +95,33 @@ define(function (require, exports) {
             val = val.slice(0, pos0) + '<i style="display:inline;font-size:0;"></i>' + val.slice(pos0);
             $div.innerHTML = val;
             attribute.css($div, style);
-            
+
             var $i = selector.query('i', $div)[0];
-            
-            return [$i.offsetLeft, $i.offsetTop];
+
+            pos.left = $i.offsetLeft;
+            pos.top = $i.offsetTop;
+        }
+        // div[contenteditable]
+        else {
+            var nodeLeft = attribute.left($ele) - attribute.scrollLeft(window);
+            var nodeTop = attribute.top($ele) - attribute.scrollTop(window);
+            var selection = document.getSelection();
+
+            if (selection.type === 'Caret') {
+                var range = selection.getRangeAt(0);
+                var rects = range.getClientRects();
+
+                if (rects.length) {
+                    // 相对于窗口
+                    var rect = rects[0];
+
+                    pos.left = rect.left - nodeLeft;
+                    pos.top = rect.top - nodeTop;
+                }
+            }
         }
 
-        return [0, 0];
+        return pos;
     };
 
     modification.insert($div, document.body);

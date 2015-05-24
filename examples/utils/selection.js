@@ -25,4 +25,6 @@ define(function (require) {
 
         window.alert(ofs);
     };
+
+    window.selection = selection;
 });

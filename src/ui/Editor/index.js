@@ -44,6 +44,7 @@ define(function (require, exports, module) {
     var date = require('../../utils/date.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var selection = require('../../utils/selection.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
@@ -105,6 +106,7 @@ define(function (require, exports, module) {
 
             the._$wrapper = the._editor.getWrapperElement();
             the._$scroller = the._editor.getScrollerElement();
+            the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
             the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
             the._$editor.id = alienClass + '-' + the._id;
             the._$preview = modification.create('div', {
@@ -365,8 +367,13 @@ define(function (require, exports, module) {
                 }
             });
 
+            // @
+            the._addKeyMap('shift', '2', function () {
+                the.replace('@');
+                the._onat();
+            });
 
-            // __blod__
+            // **blod**
             the._addKeyMap('ctrl', 'B', function () {
                 the.wrap('**');
             });
@@ -374,7 +381,7 @@ define(function (require, exports, module) {
 
             // _italic_
             the._addKeyMap('ctrl', 'I', function () {
-                the.wrap('*');
+                the.wrap('_');
             });
 
 
@@ -427,6 +434,14 @@ define(function (require, exports, module) {
             event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
             event.on(the._$wrapper, 'paste', the._onpaste.bind(the));
             event.on(the._$wrapper, 'click', the._onclick.bind(the));
+        },
+
+
+        _onat: function () {
+            var the = this;
+            var offset = selection.getOffset(the._$code);
+
+            debugger;
         },
 
 
@@ -611,7 +626,7 @@ define(function (require, exports, module) {
                     break;
 
                 case 'shift':
-                    map['shift' + mainKey] = callback;
+                    map['Shift-' + mainKey] = callback;
                     break;
 
                 case 'ctrl':
