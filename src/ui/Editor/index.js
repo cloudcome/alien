@@ -441,7 +441,6 @@ define(function (require, exports, module) {
             var the = this;
             var offset = selection.getOffset(the._$code);
 
-            debugger;
         },
 
 

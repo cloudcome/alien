@@ -110,11 +110,15 @@ define(function (require, exports) {
             if (selection.type === 'Caret') {
                 var range = selection.getRangeAt(0);
                 var rects = range.getClientRects();
+                var rect;
 
                 if (rects.length) {
                     // 相对于窗口
-                    var rect = rects[0];
-
+                    rect = rects[0];
+                    pos.left = rect.left - nodeLeft;
+                    pos.top = rect.top - nodeTop;
+                } else if (range.endContainer && range.endContainer.getBoundingClientRect) {
+                    rect = range.endContainer.getBoundingClientRect();
                     pos.left = rect.left - nodeLeft;
                     pos.top = rect.top - nodeTop;
                 }
