@@ -47,7 +47,9 @@ define(function (require, exports, module) {
     var selection = require('../../utils/selection.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
+    var templateAt = require('./at.html', 'html');
     var tpl = new Template(template);
+    var tplAt = new Template(templateAt);
     var style = require('./style.css', 'css');
     var alert = require('../../widgets/alert.js');
     var alienClass = 'alien-ui-editor';
@@ -112,9 +114,13 @@ define(function (require, exports, module) {
             the._$preview = modification.create('div', {
                 class: alienClass + '-preview'
             });
+            the._$at = modification.create('div', {
+                class: alienClass + '-at'
+            });
             the._isFullScreen = false;
             the._noPreview = true;
             modification.insert(the._$preview, the._$editor);
+            modification.insert(the._$at, the._$editor);
             attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
             attribute.css(the._$scroller, 'min-height', the._options.minHeight);
             the._initEvent();
@@ -355,7 +361,6 @@ define(function (require, exports, module) {
                 the._$preview.innerHTML = marked(the._$ele.value, {renderer: markedRender});
             };
 
-
             // `code`
             the._addKeyMap(null, '`', function () {
                 var raw = the._editor.getSelection();
@@ -367,17 +372,32 @@ define(function (require, exports, module) {
                 }
             });
 
+            // space
+            the._addKeyMap(null, 'Space', the._offat = function () {
+                if (attribute.css(the._$at, 'display') !== 'none') {
+                    attribute.css(the._$at, 'display', 'none');
+                }
+
+                the.replace(' ');
+            });
+
             // @
             the._addKeyMap('shift', '2', function () {
-                the.replace('@');
+                the.replace(' @');
                 the._onat();
+            });
+
+            event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
+                var value = attribute.data(this, 'value');
+
+                the.replace(value);
+                the._offat();
             });
 
             // **blod**
             the._addKeyMap('ctrl', 'B', function () {
                 the.wrap('**');
             });
-
 
             // _italic_
             the._addKeyMap('ctrl', 'I', function () {
@@ -391,7 +411,6 @@ define(function (require, exports, module) {
 
             // preview
             the._addKeyMap('ctrl', 'P', togglePreview);
-
 
             // change
             the._editor.on('change', function () {
@@ -412,16 +431,13 @@ define(function (require, exports, module) {
                 syncMarkedOnChange();
             });
 
-
             // 同步滚动
             event.on(the._$scroller, 'scroll', the._onscroll = function () {
                 the._$preview.scrollTop = (the._$preview.scrollHeight - the._$preview.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
             });
 
-
             // cursor
             the._editor.on('cursorActivity', the._saveLocal.bind(the));
-
 
             // 修改设置时
             the.on('setoptions', function (options) {
@@ -437,10 +453,26 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 展开 At
+         * @private
+         */
         _onat: function () {
             var the = this;
             var offset = selection.getOffset(the._$code);
+            var list = the.emit('at') || [];
 
+            if (list.length) {
+                the._$at.innerHTML = tplAt.render({
+                    list: list
+                });
+                attribute.css(the._$at, {
+                    display: 'block',
+                    left: offset.left + 15,
+                    top: offset.top + 30,
+                    zIndex: ui.getZindex()
+                });
+            }
         },
 
 
@@ -487,6 +519,7 @@ define(function (require, exports, module) {
 
         /**
          * 解析拖拽、粘贴里的图片信息
+         * @param eve
          * @param items
          * @private
          */

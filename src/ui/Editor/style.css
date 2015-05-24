@@ -67,7 +67,22 @@
   box-sizing: border-box; }
 
 .alien-ui-editor-at {
+  display: none;
   position: absolute;
   min-width: 100px;
   border: 2px solid #CCC;
-  background: #fff; }
+  background: #fff;
+  max-height: 200px;
+  overflow: auto; }
+  .alien-ui-editor-at-item {
+    line-height: 16px;
+    padding: 5px;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: default;
+    color: #666; }
+    .alien-ui-editor-at-item:hover {
+      background: #eee;
+      color: #000; }
