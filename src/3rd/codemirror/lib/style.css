@@ -434,7 +434,7 @@ span.CodeMirror-selectedtext {
 /*}*/
 
 .cm-s-fed .cm-comment{
-    color: #B63125;
+    color: #888;
     font-family: Consolas, Monaco, courier, monospace;
 }
 
@@ -443,16 +443,24 @@ span.CodeMirror-selectedtext {
 }
 
 .cm-s-fed .cm-tag{
-    color: #B64919;
+    color: #B63125;
 }
 
 .cm-s-fed .cm-string{
-    color: #0040D0;
+    color: #0D92F5;
 }
 
 .cm-s-fed .cm-link{
-    color: #B64919;
+    color: #0D92F5;
     text-decoration: underline;
+}
+
+.cm-s-fed .cm-at{
+    color: #FFF;
+    background: #0D92F5;
+    font-weight: 900;
+    padding: 2px 4px;
+    border-radius: 4px;
 }
 
 .cm-s-fed .cm-comment.cm-quote,

@@ -64,7 +64,7 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   ,   linkhref = 'string'
   ,   em       = 'em'
   ,   strong   = 'strong'
-  ,   strikethrough = 'strikethrough';
+  ,   strikethrough = 'strikethrough', at = 'at';
 
   var hrRE = /^([*\-=_])(?:\s*\1){2,}\s*$/
   ,   ulRE = /^[*\-+]\s+/
@@ -72,7 +72,7 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   ,   taskListRE = /^\[(x| )\](?=\s)/ // Must follow ulRE or olRE
   ,   atxHeaderRE = /^#+/
   ,   setextHeaderRE = /^(?:\={1,}|-{1,})$/
-  ,   textRE = /^[^#!\[\]*_\\<>` "'(~]+/;
+  ,   textRE = /^[^#!\[\]*_\\<>` "'(~]+/, atRE = /(@[\w]+)/;
 
   function switchInline(stream, state, f) {
     state.f = state.inline = f;

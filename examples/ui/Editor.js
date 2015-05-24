@@ -3,6 +3,8 @@ define(function (require, exports, module) {
 
     var Editor = require('../../src/ui/Editor/index.js');
     var xhr = require('../../src/core/communication/xhr.js');
+    var random = require('../../src/utils/random.js');
+    var dato = require('../../src/utils/dato.js');
     var editor = new Editor('#editor', {
         uploadCallback: function (list, progress, done) {
             var fd = new FormData();
@@ -24,7 +26,18 @@ define(function (require, exports, module) {
             });
         }
     });
-    
+
+    var list = [];
+
+    dato.repeat(random.number(2, 10), function () {
+        var str = random.string(random.number(2, 10), 'aA');
+        list.push({
+            value: str,
+            text: str
+        });
+    });
+
+    editor.setAtList(list);
 
     document.getElementById('btn').onclick = function () {
         alert(editor.getValue());

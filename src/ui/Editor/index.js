@@ -383,7 +383,7 @@ define(function (require, exports, module) {
 
             // @
             the._addKeyMap('shift', '2', function () {
-                the.replace(' @');
+                the.replace('@');
                 the._onat();
             });
 
@@ -454,17 +454,29 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置 at 列表
+         * @param list {Array} 列表
+         * @returns {Editor}
+         */
+        setAtList: function (list) {
+            var the = this;
+
+            the._atList = list;
+            return the;
+        },
+
+
+        /**
          * 展开 At
          * @private
          */
         _onat: function () {
             var the = this;
             var offset = selection.getOffset(the._$code);
-            var list = the.emit('at') || [];
 
-            if (list.length) {
+            if (the._atList.length) {
                 the._$at.innerHTML = tplAt.render({
-                    list: list
+                    list: the._atList
                 });
                 attribute.css(the._$at, {
                     display: 'block',
