@@ -386,6 +386,7 @@ define(function (require, exports, module) {
             // ctrlList 打开
             the._ctrlList.on('open', function () {
                 the._isAt = true;
+                the._searchLength = 0;
             });
 
             // ctrlList 关闭
@@ -394,11 +395,14 @@ define(function (require, exports, module) {
                 CodeMirror.commands.goLineUp = codeMirrorGoLineUp;
                 CodeMirror.commands.goLineDown = codeMirrorGoLineDown;
                 CodeMirror.commands.newlineAndIndent = codeMirrorNewlineAndIndent;
+                dato.repeat(the._searchLength, function () {
+                    the._editor.execCommand('delCharBefore')
+                });
             });
 
             // 选择
             the._ctrlList.on('sure', function (choose) {
-                the.replace(choose.value);
+                the.replace(choose.value + '');
             });
 
             // @
@@ -432,8 +436,9 @@ define(function (require, exports, module) {
                 }
 
                 var searchList = [];
-                var reg = new RegExp(string.escapeRegExp(value));
+                var reg = new RegExp(string.escapeRegExp(value), 'i');
 
+                the._searchLength++;
                 the._atList.forEach(function (item) {
                     if (reg.test(item.text)) {
                         searchList.push(item);

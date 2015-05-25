@@ -195,12 +195,12 @@ define(function (require, exports, module) {
                     return;
                 }
 
+                the.close();
                 the.emit('sure', {
                     text: the._text,
                     value: the._value,
                     index: the._index
                 });
-                the.close();
                 return false;
             };
 
