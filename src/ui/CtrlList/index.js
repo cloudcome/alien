@@ -137,7 +137,8 @@ define(function (require, exports, module) {
             the._popup = new Popup(window, {
                 arrowSize: 0,
                 priority: 'side',
-                offset: the._options.offset
+                offset: the._options.offset,
+                addClass: alienClass
             });
         }
     });
