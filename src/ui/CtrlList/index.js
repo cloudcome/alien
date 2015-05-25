@@ -31,7 +31,8 @@ define(function (require, exports, module) {
         offset: {
             left: 0,
             top: 0
-        }
+        },
+        maxHeight: 'none'
     };
 
     var CtrlList = ui.create({
@@ -65,12 +66,15 @@ define(function (require, exports, module) {
             });
 
             the._length = the._list.length;
+
+            if (!the._length) {
+                return the.close();
+            }
+
             the._index = 0;
 
-            if (the._length) {
-                the._text = the._list[0].text;
-                the._value = the._list[0].value;
-            }
+            the._text = the._list[0].text;
+            the._value = the._list[0].value;
 
             the._popup.setContent(tpl.render({
                 list: the._list,
@@ -157,15 +161,18 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
+            var options = the._options;
 
             the._popup = new Popup(window, {
                 arrowSize: 0,
                 priority: 'side',
-                offset: the._options.offset,
+                offset: options.offset,
                 addClass: alienClass
             });
             the._$popup = the._popup.getNode();
+            attribute.css(the._$popup, 'maxHeight', options.maxHeight);
         },
+
 
         /**
          * 初始化事件

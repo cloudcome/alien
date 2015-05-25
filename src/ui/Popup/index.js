@@ -320,6 +320,22 @@ define(function (require, exports, module) {
                 }
 
                 pos[type] = findSide;
+
+                switch (type) {
+                    case 'left':
+                        pos[type] += options.offset.left;
+                        break;
+                    case 'right':
+                        pos[type] -= options.offset.left;
+                        break;
+                    case 'top':
+                        pos[type] += options.offset.top;
+                        break;
+                    case 'bottom':
+                        pos[type] -= options.offset.top;
+                        break;
+                }
+
             };
 
             if (priority === 'center') {

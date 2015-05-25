@@ -29,7 +29,7 @@ define(function (require, exports, module) {
 
     var list = [];
 
-    dato.repeat(random.number(2, 10), function () {
+    dato.repeat(random.number(20, 30), function () {
         var str = random.string(random.number(2, 10), 'aA');
         list.push({
             value: str,

@@ -48,6 +48,7 @@ define(function (require, exports, module) {
     var date = require('../../utils/date.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var string = require('../../utils/string.js');
     var selection = require('../../utils/selection.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
@@ -113,8 +114,10 @@ define(function (require, exports, module) {
                 tabSize: the._options.tabSize
             });
             the._ctrlList = new CtrlList([], {
+                maxHeight: 200,
                 offset: {
-                    left: 40
+                    left: 20,
+                    top: 10
                 }
             });
             the._$wrapper = the._editor.getWrapperElement();
@@ -409,11 +412,35 @@ define(function (require, exports, module) {
 
                     var offset = selection.getOffset(the._$code);
 
+                    console.log(the._$input.value);
                     offset.width = offset.height = 1;
                     the._ctrlList.update(the._atList).open(offset);
                 }
             });
 
+            // 退格
+            event.on(the._$input, 'backspace', function () {
+                the._ctrlList.close();
+            });
+
+            // 监听输入
+            event.on(the._$input, 'input', function () {
+                var value = this.value;
+
+                if (!value) {
+                    return;
+                }
+
+                var searchList = [];
+                var reg = new RegExp(string.escapeRegExp(value));
+
+                the._atList.forEach(function (item) {
+                    if (reg.test(item.text)) {
+                        searchList.push(item);
+                    }
+                });
+                the._ctrlList.update(searchList);
+            });
 
             // **blod**
             the._addKeyMap('ctrl', 'B', function () {
