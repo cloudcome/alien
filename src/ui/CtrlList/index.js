@@ -45,6 +45,7 @@ define(function (require, exports, module) {
         /**
          * 更新 list
          * @param list {Array} 列表
+         * @returns {CtrlList}
          */
         update: function (list) {
             var the = this;
@@ -63,19 +64,54 @@ define(function (require, exports, module) {
 
             the._length = the._list.length;
             the._index = 0;
-            the._$container.innerHTML = tpl.render({
+            the._popup.setContent(tpl.render({
                 list: the._list,
                 id: alienIndex++
-            });
+            }));
+
+            return the;
         },
 
 
-        open: function () {
+        /**
+         * 打开控制列表
+         * @param [position] {Object} 指定位置
+         * @param [position.width] {Number} 指定位置
+         * @param [position.height] {Number} 指定位置
+         * @param [position.pageX] {Number} 指定位置
+         * @param [position.left] {Number} 指定位置
+         * @param [position.top] {Number} 指定位置
+         * @param [position.pageY] {Number} 指定位置
+         * @param [callback] {Function} 回调
+         * @returns {CtrlList}
+         */
+        open: function (position, callback) {
+            var the = this;
 
+            if (position && 'pageX' in position) {
+                position.width = 1;
+                position.height = 1;
+                position.left = position.pageX;
+                position.top = position.pageY;
+            }
+
+            the._popup.open(position, callback);
+
+            return the;
         },
 
-        close: function () {
 
+        /**
+         * 关闭控制列表
+         * @param callback
+         * @returns {CtrlList}
+         */
+        close: function (callback) {
+            var the = this;
+
+            the._popup.close(callback);
+
+            return the;
         },
 
 
@@ -98,9 +134,10 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
 
-            the._$container = modification.create('div', {
-                id: alienClass + (alienIndex++),
-                class: alienClass
+            the._popup = new Popup(window, {
+                arrowSize: 0,
+                priority: 'side',
+                offset: the._options.offset
             });
         }
     });
