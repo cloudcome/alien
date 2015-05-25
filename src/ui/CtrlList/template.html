@@ -1,0 +1,5 @@
+{{list list as index,item}}
+<div class="alien-ui-ctrllist-item {{if !index}}alien-ui-ctrllist-active{{/if}}"
+     data-index="{{index}}"
+     data-value="{{=item.value}}">{{=item.text}}</div>
+{{/list}}

@@ -43,7 +43,10 @@ define(function (require, exports, module) {
         // 箭头的尺寸
         arrowSize: 10,
         // 偏移距离，通常为0
-        offset: 0,
+        offset: {
+            left: 0,
+            top: 0
+        },
         // 对齐优先级：center、side
         // center:
         //       [=====]
@@ -67,7 +70,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$target = selector.query($target)[0];
-            the._options = dato.extend({}, defaults, options);
+            the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
 
@@ -311,49 +314,49 @@ define(function (require, exports, module) {
                 switch (dir) {
                     case 'bottom':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset;
+                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset.top;
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset;
+                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset.left;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
 
                     case 'top':
                         pos.left = the._target.left + the._target.width / 2 - the._popup.width / 2;
-                        pos.top = the._target.top - options.arrowSize - the._popup.height - options.offset;
+                        pos.top = the._target.top - options.arrowSize - the._popup.height - options.offset.top;
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset;
+                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset.left;
                         pos.top = the._target.top + the._target.height / 2 - the._popup.height / 2;
                         break;
                 }
             } else {
                 switch (dir) {
                     case 'bottom':
-                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset;
+                        pos.top = the._target.top + the._target.height + options.arrowSize + options.offset.top;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'right':
-                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset;
+                        pos.left = the._target.left + the._target.width + options.arrowSize + options.offset.left;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
                         break;
 
                     case 'top':
-                        pos.top = the._target.top - the._popup.height - options.arrowSize - options.offset;
+                        pos.top = the._target.top - the._popup.height - options.arrowSize - options.offset.top;
                         firstSide = the._target.left;
                         secondSide = the._target.left + the._target.width - the._popup.width;
                         sideCheck('left', firstSide, secondSide);
                         break;
 
                     case 'left':
-                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset;
+                        pos.left = the._target.left - options.arrowSize - the._popup.width - options.offset.left;
                         firstSide = the._target.top;
                         secondSide = the._target.top + the._target.height - the._popup.height;
                         sideCheck('top', firstSide, secondSide);
