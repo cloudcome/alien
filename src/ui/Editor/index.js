@@ -29,6 +29,9 @@ define(function (require, exports, module) {
      */
 
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
+    var codeMirrorGoLineUp = CodeMirror.commands.goLineUp;
+    var codeMirrorGoLineDown = CodeMirror.commands.goLineDown;
+    var codeMirrorNewlineAndIndent = CodeMirror.commands.newlineAndIndent;
     //require('../../3rd/codemirror/addon/display/fullscreen.js');
     require('../../3rd/codemirror/addon/display/placeholder.js');
     //require('../../3rd/codemirror/addon/selection/active-line.js');
@@ -60,6 +63,9 @@ define(function (require, exports, module) {
     var pathname = location.pathname;
     var $html = document.documentElement;
     var markedRender = new marked.Renderer();
+    var noop = function () {
+        // ignore
+    };
     var defaults = {
         // 手动设置 ID
         id: '',
@@ -108,6 +114,7 @@ define(function (require, exports, module) {
 
             the._$wrapper = the._editor.getWrapperElement();
             the._$scroller = the._editor.getScrollerElement();
+            the._$input = the._editor.display.input.textarea;
             the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
             the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
             the._$editor.id = alienClass + '-' + the._id;
@@ -372,27 +379,56 @@ define(function (require, exports, module) {
                 }
             });
 
-            //// space
-            //the._addKeyMap(null, 'Space', the._offat = function () {
-            //    if (attribute.css(the._$at, 'display') !== 'none') {
-            //        attribute.css(the._$at, 'display', 'none');
-            //    }
-            //
-            //    the.replace(' ');
-            //});
+            // space
+            the._addKeyMap(null, 'Space', the._offat = function () {
+                if (the._isAt) {
+                    the._isAt = false;
+                    attribute.css(the._$at, 'display', 'none');
+                    CodeMirror.commands.goLineUp = codeMirrorGoLineUp;
+                    CodeMirror.commands.goLineDown = codeMirrorGoLineDown;
+                    CodeMirror.commands.newlineAndIndent = codeMirrorNewlineAndIndent;
+                }
 
-            //// @
-            //the._addKeyMap('shift', '2', function () {
-            //    the.replace('@');
-            //    the._onat();
-            //});
+                the.replace(' ');
+            });
 
-            //event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
-            //    var value = attribute.data(this, 'value');
-            //
-            //    the.replace(value);
-            //    the._offat();
-            //});
+            // up
+            event.on(document, 'up', function () {
+                if (the._isAt) {
+                    console.log('up');
+                } else {
+                    //codeMirrorGoLineUp();
+                }
+            });
+
+            // down
+            event.on(document, 'down', function () {
+                if (the._isAt) {
+                    console.log('down');
+                } else {
+                    //codeMirrorGoLineUp();
+                }
+            });
+
+            // @
+            the._addKeyMap('shift', '2', function () {
+                if (!the._isAt) {
+                    the.replace('@');
+                    CodeMirror.commands.goLineUp = noop;
+                    CodeMirror.commands.goLineDown = noop;
+                    CodeMirror.commands.newlineAndIndent = noop;
+                    the._isAt = true;
+                    the._onat();
+                }
+            });
+
+            // 选择被 at 人
+            event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
+                var value = attribute.data(this, 'value');
+
+                the.replace(value);
+                the._offat();
+            });
 
             // **blod**
             the._addKeyMap('ctrl', 'B', function () {
@@ -707,6 +743,7 @@ define(function (require, exports, module) {
     });
 
     Editor.defaults = defaults;
+    require('../../core/event/hotkey.js');
     markedRender.image = require('./marked-render-image.js');
     markedRender.table = require('./marked-render-table.js');
     modification.importStyle(style);
