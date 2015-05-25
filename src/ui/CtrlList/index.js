@@ -101,7 +101,7 @@ define(function (require, exports, module) {
         open: function (position, callback) {
             var the = this;
 
-            if (the.visible) {
+            if (the.visible || !the._length) {
                 return the;
             }
 

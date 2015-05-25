@@ -131,6 +131,7 @@ define(function (require, exports, module) {
             });
             the._isFullScreen = false;
             the._noPreview = true;
+            the._atList = [];
             modification.insert(the._$preview, the._$editor);
             attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
             attribute.css(the._$scroller, 'min-height', the._options.minHeight);
@@ -407,8 +408,13 @@ define(function (require, exports, module) {
 
             // @
             the._addKeyMap('shift', '2', function () {
+                the.replace('@');
+
+                if(!the._atList.length){
+                    return;
+                }
+
                 if (!the._isAt) {
-                    the.replace('@');
                     CodeMirror.commands.goLineUp = noop;
                     CodeMirror.commands.goLineDown = noop;
                     CodeMirror.commands.newlineAndIndent = noop;
@@ -416,7 +422,6 @@ define(function (require, exports, module) {
 
                     var offset = selection.getOffset(the._$code);
 
-                    console.log(the._$input.value);
                     offset.width = offset.height = 1;
                     the._ctrlList.update(the._atList).open(offset);
                 }
