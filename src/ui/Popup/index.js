@@ -99,6 +99,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取当前 popup 节点
+         * @returns {Object}
+         */
+        getNode: function () {
+            return this._$popup;
+        },
+
+
+        /**
          * 设置弹出层的内容
          * @param html {String} 内容
          * @returns {Popup}

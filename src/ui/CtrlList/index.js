@@ -140,9 +140,21 @@ define(function (require, exports, module) {
                 offset: the._options.offset,
                 addClass: alienClass
             });
+            the._$popup = the._popup.getNode();
+        },
+
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+
+            event.on();
         }
     });
 
+    modification.importStyle(style);
     CtrlList.defaults = defaults;
     module.exports = CtrlList;
 });
