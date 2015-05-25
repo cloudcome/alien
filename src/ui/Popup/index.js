@@ -114,11 +114,15 @@ define(function (require, exports, module) {
 
         /**
          * 打开弹出层
-         * @param [$target] {Object} 参考对象
+         * @param [position] {Object} 指定位置
+         * @param [position.width] {Number} 指定位置
+         * @param [position.height] {Number} 指定位置
+         * @param [position.left] {Number} 指定位置
+         * @param [position.top] {Number} 指定位置
          * @param [callback] {Function} 回调
          * @returns {Popup}
          */
-        open: function ($target, callback) {
+        open: function (position, callback) {
             var the = this;
 
             if (the.visible) {
@@ -138,14 +142,11 @@ define(function (require, exports, module) {
             var priorityList = options.priority === 'center' ? ['center', 'side'] : ['side'];
             var args = allocation.args(arguments);
 
-            if (typeis.element(args[0])) {
-                the._$target = $target || the._$target;
-            }else{
+            if (typeis.object(args[0])) {
+                the._$target = null;
+                the._target = args[0];
+            } else {
                 callback = args[0];
-            }
-
-            if (!the._$target) {
-                throw 'miss a popup target element';
             }
 
             // 1. 计算窗口位置
@@ -155,12 +156,14 @@ define(function (require, exports, module) {
             };
 
             // 2. 计算目标位置
-            the._target = {
-                width: attribute.outerWidth(the._$target),
-                height: attribute.outerHeight(the._$target),
-                left: attribute.left(the._$target),
-                top: attribute.top(the._$target)
-            };
+            if (the._$target !== null) {
+                the._target = {
+                    width: attribute.outerWidth(the._$target),
+                    height: attribute.outerHeight(the._$target),
+                    left: attribute.left(the._$target),
+                    top: attribute.top(the._$target)
+                };
+            }
 
             // 3. 透明显示 popup，便于计算
             attribute.css(the._$popup, dato.extend({
