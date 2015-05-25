@@ -403,7 +403,7 @@ define(function (require, exports, module) {
 
             // 选择
             the._ctrlList.on('sure', function (choose) {
-                the.replace(choose.value + '');
+                the.replace(choose.value + ' ');
             });
 
             // @
