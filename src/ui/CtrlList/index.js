@@ -21,8 +21,10 @@ define(function (require, exports, module) {
     var event = require('../../core/event/hotkey.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
+    var doc = document;
     var alienClass = 'alien-ui-ctrllist';
     var alienIndex = 0;
     var defaults = {
@@ -64,10 +66,17 @@ define(function (require, exports, module) {
 
             the._length = the._list.length;
             the._index = 0;
+
+            if (the._length) {
+                the._text = the._list[0].text;
+                the._value = the._list[0].value;
+            }
+
             the._popup.setContent(tpl.render({
                 list: the._list,
                 id: alienIndex++
             }));
+            the._$items = selector.query('.' + alienClass + '-item', the._$popup);
 
             return the;
         },
@@ -95,7 +104,16 @@ define(function (require, exports, module) {
                 position.top = position.pageY;
             }
 
-            the._popup.open(position, callback);
+            the.emit('open');
+
+            if (the.visible) {
+                the._popup.close(function () {
+                    the._popup.open(position, callback);
+                });
+            } else {
+                the.visible = true;
+                the._popup.open(position, callback);
+            }
 
             return the;
         },
@@ -109,7 +127,9 @@ define(function (require, exports, module) {
         close: function (callback) {
             var the = this;
 
+            the.visible = false;
             the._popup.close(callback);
+            the.emit('close');
 
             return the;
         },
@@ -124,6 +144,7 @@ define(function (require, exports, module) {
 
             the._initNode();
             the.update(the._list);
+            the._initEvent();
         },
 
 
@@ -149,8 +170,64 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            var activeClass = alienClass + '-item-active';
+            var activeIndex = function () {
+                var $ele = the._$items[the._index];
 
-            event.on();
+                the._value = attribute.data($ele, 'value');
+                the._text = $ele.innerText;
+                attribute.removeClass(the._$items, activeClass);
+                attribute.addClass($ele, activeClass);
+            };
+
+            // 悬浮高亮
+            event.on(the._$popup, 'mouseover', '.' + alienClass + '-item', function () {
+                the._index = attribute.data(this, 'index') * 1;
+                activeIndex();
+            });
+
+            // 上移
+            event.on(doc, 'up', function () {
+                if (!the.visible || the._index === 0) {
+                    return;
+                }
+
+                the._index--;
+                activeIndex();
+            });
+
+            // 下移
+            event.on(doc, 'down', function () {
+                if (!the.visible || the._index === the._length - 1) {
+                    return;
+                }
+
+                the._index++;
+                activeIndex();
+            });
+
+            // esc
+            event.on(doc, 'esc', function () {
+                if (!the.visible) {
+                    return;
+                }
+
+                the.close();
+            });
+
+            // enter
+            event.on(doc, 'return', function () {
+                if (!the.visible) {
+                    return;
+                }
+
+                the.emit('sure', {
+                    text: the._text,
+                    value: the._value,
+                    index: the._index
+                });
+                the.close();
+            });
         }
     });
 
