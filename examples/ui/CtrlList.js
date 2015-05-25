@@ -14,6 +14,10 @@ define(function (require, exports, module) {
     var dato = require('../../src/utils/dato.js');
     var cl = new CtrlList();
 
+    cl.on('sure', function (choose) {
+        console.log(choose);
+    });
+
     event.on(document, 'contextmenu', function (eve) {
         var list = [];
 
@@ -25,7 +29,14 @@ define(function (require, exports, module) {
             });
         });
 
-        cl.update(list).open(eve);
+        if (cl.visible) {
+            cl.close(function () {
+                cl.update(list).open(eve);
+            });
+        } else {
+            cl.update(list).open(eve);
+        }
+
         return false;
     });
 });

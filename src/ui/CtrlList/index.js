@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 控制列表
  * @author ydr.me
  * @create 2015-05-25 09:53
  */
@@ -97,6 +97,10 @@ define(function (require, exports, module) {
         open: function (position, callback) {
             var the = this;
 
+            if (the.visible) {
+                return the;
+            }
+
             if (position && 'pageX' in position) {
                 position.width = 1;
                 position.height = 1;
@@ -106,14 +110,9 @@ define(function (require, exports, module) {
 
             the.emit('open');
 
-            if (the.visible) {
-                the._popup.close(function () {
-                    the._popup.open(position, callback);
-                });
-            } else {
-                the.visible = true;
-                the._popup.open(position, callback);
-            }
+
+            the.visible = true;
+            the._popup.open(position, callback);
 
             return the;
         },
@@ -126,6 +125,10 @@ define(function (require, exports, module) {
          */
         close: function (callback) {
             var the = this;
+
+            if (!the.visible) {
+                return the;
+            }
 
             the.visible = false;
             the._popup.close(callback);
@@ -180,43 +183,7 @@ define(function (require, exports, module) {
                 attribute.addClass($ele, activeClass);
             };
 
-            // 悬浮高亮
-            event.on(the._$popup, 'mouseover', '.' + alienClass + '-item', function () {
-                the._index = attribute.data(this, 'index') * 1;
-                activeIndex();
-            });
-
-            // 上移
-            event.on(doc, 'up', function () {
-                if (!the.visible || the._index === 0) {
-                    return;
-                }
-
-                the._index--;
-                activeIndex();
-            });
-
-            // 下移
-            event.on(doc, 'down', function () {
-                if (!the.visible || the._index === the._length - 1) {
-                    return;
-                }
-
-                the._index++;
-                activeIndex();
-            });
-
-            // esc
-            event.on(doc, 'esc', function () {
-                if (!the.visible) {
-                    return;
-                }
-
-                the.close();
-            });
-
-            // enter
-            event.on(doc, 'return', function () {
+            the._onsure = function () {
                 if (!the.visible) {
                     return;
                 }
@@ -227,7 +194,69 @@ define(function (require, exports, module) {
                     index: the._index
                 });
                 the.close();
+                return false;
+            };
+
+            the._onclose = function () {
+                if (!the.visible) {
+                    return;
+                }
+
+                the.close();
+            };
+
+            // 悬浮高亮
+            event.on(the._$popup, 'mouseover', '.' + alienClass + '-item', the._onhover = function () {
+                the._index = attribute.data(this, 'index') * 1;
+                activeIndex();
             });
+
+            // 单击
+            event.on(the._$popup, 'click', '.' + alienClass + '-item', the._onsure);
+
+            // 上移
+            event.on(doc, 'up', the._onup = function () {
+                if (!the.visible || the._index === 0) {
+                    return;
+                }
+
+                the._index--;
+                activeIndex();
+            });
+
+            // 下移
+            event.on(doc, 'down', the._ondown = function () {
+                if (!the.visible || the._index === the._length - 1) {
+                    return;
+                }
+
+                the._index++;
+                activeIndex();
+            });
+
+            // esc
+            event.on(doc, 'esc', the._onclose);
+
+            // enter
+            event.on(doc, 'return', the._onsure);
+
+            // 单击其他地方
+            event.on(doc, 'click', the._onclose);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(doc, 'up', the._onup);
+            event.un(doc, 'down', the._ondown);
+            event.un(doc, 'esc', the._onclose);
+            event.un(doc, 'return', the._onsure);
+            event.un(the._$popup, 'click mouseover');
+            the._popup.destroy();
         }
     });
 
