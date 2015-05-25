@@ -39,6 +39,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var confirm = require('../../widgets/confirm.js');
     var Dialog = require('../Dialog/');
+    var CtrlList = require('../CtrlList/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -111,7 +112,11 @@ define(function (require, exports, module) {
                 styleSelectedText: true,
                 tabSize: the._options.tabSize
             });
-
+            the._ctrlList = new CtrlList([], {
+                offset: {
+                    left: 40
+                }
+            });
             the._$wrapper = the._editor.getWrapperElement();
             the._$scroller = the._editor.getScrollerElement();
             the._$input = the._editor.display.input.textarea;
@@ -121,13 +126,9 @@ define(function (require, exports, module) {
             the._$preview = modification.create('div', {
                 class: alienClass + '-preview'
             });
-            the._$at = modification.create('div', {
-                class: alienClass + '-at'
-            });
             the._isFullScreen = false;
             the._noPreview = true;
             modification.insert(the._$preview, the._$editor);
-            modification.insert(the._$at, the._$editor);
             attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
             attribute.css(the._$scroller, 'min-height', the._options.minHeight);
             the._initEvent();
@@ -379,35 +380,22 @@ define(function (require, exports, module) {
                 }
             });
 
-            // space
-            the._addKeyMap(null, 'Space', the._offat = function () {
-                if (the._isAt) {
-                    the._isAt = false;
-                    attribute.css(the._$at, 'display', 'none');
-                    CodeMirror.commands.goLineUp = codeMirrorGoLineUp;
-                    CodeMirror.commands.goLineDown = codeMirrorGoLineDown;
-                    CodeMirror.commands.newlineAndIndent = codeMirrorNewlineAndIndent;
-                }
-
-                the.replace(' ');
+            // ctrlList 打开
+            the._ctrlList.on('open', function () {
+                the._isAt = true;
             });
 
-            // up
-            event.on(document, 'up', function () {
-                if (the._isAt) {
-                    console.log('up');
-                } else {
-                    //codeMirrorGoLineUp();
-                }
+            // ctrlList 关闭
+            the._ctrlList.on('close', function () {
+                the._isAt = false;
+                CodeMirror.commands.goLineUp = codeMirrorGoLineUp;
+                CodeMirror.commands.goLineDown = codeMirrorGoLineDown;
+                CodeMirror.commands.newlineAndIndent = codeMirrorNewlineAndIndent;
             });
 
-            // down
-            event.on(document, 'down', function () {
-                if (the._isAt) {
-                    console.log('down');
-                } else {
-                    //codeMirrorGoLineUp();
-                }
+            // 选择
+            the._ctrlList.on('sure', function (choose) {
+                the.replace(choose.value);
             });
 
             // @
@@ -418,17 +406,14 @@ define(function (require, exports, module) {
                     CodeMirror.commands.goLineDown = noop;
                     CodeMirror.commands.newlineAndIndent = noop;
                     the._isAt = true;
-                    the._onat();
+
+                    var offset = selection.getOffset(the._$code);
+
+                    offset.width = offset.height = 1;
+                    the._ctrlList.update(the._atList).open(offset);
                 }
             });
 
-            // 选择被 at 人
-            event.on(the._$at, 'click', '.' + alienClass + '-at-item', function () {
-                var value = attribute.data(this, 'value');
-
-                the.replace(value);
-                the._offat();
-            });
 
             // **blod**
             the._addKeyMap('ctrl', 'B', function () {
@@ -499,28 +484,6 @@ define(function (require, exports, module) {
 
             the._atList = list;
             return the;
-        },
-
-
-        /**
-         * 展开 At
-         * @private
-         */
-        _onat: function () {
-            var the = this;
-            var offset = selection.getOffset(the._$code);
-
-            if (the._atList.length) {
-                the._$at.innerHTML = tplAt.render({
-                    list: the._atList
-                });
-                attribute.css(the._$at, {
-                    display: 'block',
-                    left: offset.left + 15,
-                    top: offset.top + 30,
-                    zIndex: ui.getZindex()
-                });
-            }
         },
 
 
