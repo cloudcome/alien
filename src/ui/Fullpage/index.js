@@ -99,6 +99,20 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            the._axis = [];
+
+            if (typeis.string(options.axis)) {
+                dato.repeat(the.length, function () {
+                    the._axis.push(options.axis);
+                });
+            } else {
+                var axisLength = options.axis.length;
+
+                dato.repeat(the.length, function (index) {
+                    the._axis.push(options.axis[index % axisLength]);
+                });
+            }
+
             if (typeis.function(options.navGenerator) && the._$nav) {
                 var navHtml = '';
 
@@ -124,16 +138,22 @@ define(function (require, exports, module) {
                 overflow: 'hidden'
             };
             var containerStyle = {};
-            var length = the.length;
+            var xLength = 0;
+            var yLength = 0;
+            var xTimes = 0;
+            var yTimes = 0;
+            var lastAxis = null;
 
-            if (options.axis === 'x') {
-                containerStyle.width = winWidth * length;
-                containerStyle.height = winHeight;
-            } else {
-                containerStyle.width = winWidth;
-                containerStyle.height = winHeight * length;
-            }
+            dato.each(the._axis, function (index, axis) {
+                if (axis === 'x') {
+                    xLength++;
+                } else {
+                    yLength++;
+                }
+            });
 
+            containerStyle.width = winWidth * xLength;
+            containerStyle.height = winHeight * yLength;
             attribute.css(html, overStyle);
             attribute.css(body, overStyle);
             attribute.css(the._$container, containerStyle);
@@ -144,12 +164,27 @@ define(function (require, exports, module) {
                     height: winHeight
                 };
 
-                if (options.axis === 'x') {
-                    style.left = index * winWidth;
-                    style.top = 0;
+                if (index) {
+                    if (the._axis[index] === 'x') {
+                        xTimes++;
+
+                        if (lastAxis && lastAxis === 'y') {
+                            yTimes++;
+                        }
+                    } else {
+                        yTimes++;
+
+                        if (lastAxis && lastAxis === 'x') {
+                            xTimes++;
+                        }
+                    }
+
+                    lastAxis = the._axis[index];
+                    style.left = xTimes * winWidth;
+                    style.top = yTimes * winHeight;
                 } else {
-                    style.top = index * winHeight;
                     style.left = 0;
+                    style.top = 0;
                 }
 
                 attribute.css($item, style);
@@ -231,8 +266,9 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var to = {};
+            var axis = the._axis[the.index];
 
-            to['translate' + (options.axis.toUpperCase())] = -the.index * (options.axis === 'x' ? the._winWidth : the._winHeight);
+            to['translate' + (axis.toUpperCase())] = -the.index * (axis === 'x' ? the._winWidth : the._winHeight);
 
             if (the._animating) {
                 return;
