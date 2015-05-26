@@ -190,12 +190,9 @@ define(function (require, exports, module) {
 
             event.on(doc, 'wheelstart', function () {
                 wheelState = 2;
-                //console.log('wheelstart', wheelState);
             });
 
             event.on(doc, 'wheelchange', the._onwheel = function (eve) {
-                //console.log('wheelchange', wheelState);
-
                 if (wheelState !== 2) {
                     return;
                 }
@@ -211,7 +208,6 @@ define(function (require, exports, module) {
 
             event.on(doc, 'wheelend', function () {
                 wheelState = 1;
-                //console.log('wheelend', wheelState);
             });
 
             event.on(win, 'resize', the._onresize = controller.debounce(the.update.bind(the)));
@@ -233,6 +229,21 @@ define(function (require, exports, module) {
                 return;
             }
 
+            if (!typeis.undefined(the._lastIndex)) {
+                /**
+                 * 待离开 page
+                 * @event beforeleave
+                 * @params index {Number} 待离开的索引值
+                 */
+                the.emit('beforeleave', the._lastIndex);
+            }
+
+            /**
+             * 待进入 page
+             * @event beforeenter
+             * @params index {Number} 待进入的索引值
+             */
+            the.emit('beforeenter', the.index);
             the._animating = true;
             animation.transition(the._$container, to, {
                 duration: options.duration,
@@ -241,6 +252,19 @@ define(function (require, exports, module) {
                 attribute.removeClass(the._$navItems, options.navActiveClass);
                 attribute.addClass(the._$navItems[the.index], options.navActiveClass);
                 the._animating = false;
+                /**
+                 * 已离开 page
+                 * @event beforeleave
+                 * @params index {Number} 已离开的索引值
+                 */
+                the.emit('beforeleave', the._lastIndex);
+
+                /**
+                 * 已进入 page
+                 * @event afterenter
+                 * @params index {Number} 已进入的索引值
+                 */
+                the.emit('afterenter', the._lastIndex = the.index);
             });
         },
 

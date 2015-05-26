@@ -965,7 +965,7 @@ define(function (require, exports, module) {
             ret = doWhat(ele);
 
             dato.each(eles, function (index, ele) {
-                ele.style.display = ele['-alien-core-dom-see-display'] || '';
+                ele.style.display = ele['-alien-core-dom-see-display'] || 'block';
             });
 
             return ret;

@@ -83,7 +83,7 @@ define(function (require, exports, module) {
         } else {
             while ($ele !== document && exports.visibility($ele) !== changeVisibility) {
                 if (_getDisplay($ele) === none) {
-                    _setDisplay($ele, $ele[alienKey + key] || block);
+                    _setDisplay($ele, $ele[alienKey + key] !== none ? $ele[alienKey + key] : block);
                     ret.push($ele);
                 }
 
