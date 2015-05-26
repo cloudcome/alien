@@ -13,8 +13,23 @@ define(function (require, exports, module) {
     'use strict';
 
     var Fullpage = require('../../src/ui/Fullpage/');
-
-    new Fullpage('#fullpage', {
+    var f = new Fullpage('#fullpage', {
         axis: 'y'
+    });
+
+    f.on('beforeleave', function (index) {
+        console.log(this.alienEmitter.type, index);
+    });
+
+    f.on('beforeenter', function (index) {
+        console.log(this.alienEmitter.type, index);
+    });
+
+    f.on('afterleave', function (index) {
+        console.log(this.alienEmitter.type, index);
+    });
+
+    f.on('afterenter', function (index) {
+        console.log(this.alienEmitter.type, index);
     });
 });

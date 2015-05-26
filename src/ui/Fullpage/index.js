@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * Fullpage
  * @author ydr.me
  * @create 2015-05-22 14:56
  */
@@ -7,7 +7,15 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/Fullpage/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/animation
+     * @requires core/event/touch
+     * @requires core/event/wheel
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/controller
      */
 
     'use strict';
@@ -17,6 +25,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
+    require('../../core/event/wheel.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
@@ -60,7 +69,7 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
 
-            the.index = 0;
+            the._lastIndex = the.index = 0;
             the._animating = false;
             the._initNode();
             the.update();
@@ -192,7 +201,7 @@ define(function (require, exports, module) {
                 wheelState = 2;
             });
 
-            event.on(doc, 'wheelchange', the._onwheel = function (eve) {
+            event.on(doc, 'wheelchange', function (eve) {
                 if (wheelState !== 2) {
                     return;
                 }
@@ -229,21 +238,22 @@ define(function (require, exports, module) {
                 return;
             }
 
-            if (!typeis.undefined(the._lastIndex)) {
-                /**
-                 * 待离开 page
-                 * @event beforeleave
-                 * @params index {Number} 待离开的索引值
-                 */
-                the.emit('beforeleave', the._lastIndex);
-            }
+            /**
+             * 待离开 page
+             * @event beforeleave
+             * @params index {Number} 待离开的索引值
+             * @params length {Number} page 总长度
+             */
+            the.emit('beforeleave', the._lastIndex, the.length);
 
             /**
              * 待进入 page
              * @event beforeenter
              * @params index {Number} 待进入的索引值
+             * @params length {Number} page 总长度
              */
-            the.emit('beforeenter', the.index);
+            the.emit('beforeenter', the.index, the.length);
+
             the._animating = true;
             animation.transition(the._$container, to, {
                 duration: options.duration,
@@ -256,15 +266,17 @@ define(function (require, exports, module) {
                  * 已离开 page
                  * @event beforeleave
                  * @params index {Number} 已离开的索引值
+                 * @params length {Number} page 总长度
                  */
-                the.emit('beforeleave', the._lastIndex);
+                the.emit('afterleave', the._lastIndex, the.length);
 
                 /**
                  * 已进入 page
                  * @event afterenter
                  * @params index {Number} 已进入的索引值
+                 * @params length {Number} page 总长度
                  */
-                the.emit('afterenter', the._lastIndex = the.index);
+                the.emit('afterenter', the._lastIndex = the.index, the.length);
             });
         },
 
@@ -274,7 +286,6 @@ define(function (require, exports, module) {
         }
     });
 
-    require('../../core/event/wheel.js');
     Fullpage.defaults = defaults;
     module.exports = Fullpage;
 });
