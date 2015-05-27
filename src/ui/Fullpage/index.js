@@ -163,30 +163,29 @@ define(function (require, exports, module) {
                     width: winWidth,
                     height: winHeight
                 };
+                var axis = the._axis[index];
 
                 if (index) {
-                    if (the._axis[index] === 'x') {
-                        xTimes++;
-
-                        if (lastAxis && lastAxis === 'y') {
-                            yTimes++;
-                        }
-                    } else {
+                    if (lastAxis && lastAxis === 'y') {
                         yTimes++;
-
-                        if (lastAxis && lastAxis === 'x') {
-                            xTimes++;
-                        }
+                    } else if (lastAxis && lastAxis === 'x') {
+                        xTimes++;
                     }
 
-                    lastAxis = the._axis[index];
                     style.left = xTimes * winWidth;
                     style.top = yTimes * winHeight;
+
+                    if (axis === 'x') {
+                        xTimes++;
+                    } else {
+                        yTimes++;
+                    }
                 } else {
                     style.left = 0;
                     style.top = 0;
                 }
 
+                lastAxis = axis;
                 attribute.css($item, style);
             });
 

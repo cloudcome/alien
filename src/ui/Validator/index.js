@@ -178,7 +178,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            event.on(the._$form, 'focus', inputSelector, the._onfocusin.bind(the));
+            event.on(the._$form, 'focus', inputSelector, the._onfocus.bind(the));
 
             if (options.validateEvent) {
                 event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
@@ -233,8 +233,8 @@ define(function (require, exports, module) {
             var the = this;
             var $input = eve.target;
 
-            this.emitMsg($input.name, false);
-            this.emit('focus', $input);
+            the.emitMsg($input.name, false);
+            the.emit('focus', $input);
         },
 
 
