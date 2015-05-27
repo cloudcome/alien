@@ -82,7 +82,14 @@ define(function (require, exports, module) {
 
         var xhr = new XMLHttpRequest();
         var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
+        the._hasCallback = false;
         var oncallback = function (err, ret) {
+            if (the._hasCallback) {
+                return;
+            }
+
+            the._hasCallback = true;
+
             if (err) {
                 err.message = err.message || 'network error';
             }
@@ -247,7 +254,7 @@ define(function (require, exports, module) {
      * @example
      * xhr().on('success', fn).on('error', fn);
      */
-    module.exports = function(options){
+    module.exports = function (options) {
         return new XHR(options);
     };
 
