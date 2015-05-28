@@ -129,7 +129,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _getDisplay($ele) {
-        return $ele && $ele.nodeType === 1 ? getComputedStyle($ele).getPropertyValue('display') : undefined;
+        return $ele && $ele.nodeType === 1 ? $ele.style.display : undefined;
     }
 
     /**
