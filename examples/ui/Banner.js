@@ -23,8 +23,8 @@ define(function (require) {
         navGenerator: function (index, length) {
             return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
         },
-        $navParent: $nav,
-        index: 2
+        navSelector: $nav,
+        index: 0
     });
 
     event.on($banner, 'click', '.prev', function () {
@@ -36,10 +36,8 @@ define(function (require) {
     });
 
     event.on($nav, 'click', 'li', function () {
-        var index = this.dataset.index;
-
         banner.pause();
-        banner.index(index);
+        banner.index(this.dataset.index);
         banner.play();
     });
 

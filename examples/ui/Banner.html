@@ -92,8 +92,8 @@
 <ul id="banner">
     <li><img src="./img/1.png" alt=""/></li>
     <li><img src="./img/2.png" alt=""/></li>
-    <li><img src="./img/3.png" alt=""/></li>
-    <li><img src="./img/4.png" alt=""/></li>
+    <!--<li><img src="./img/3.png" alt=""/></li>-->
+    <!--<li><img src="./img/4.png" alt=""/></li>-->
 </ul>
 
 <ul id="nav"></ul>
@@ -120,8 +120,8 @@ var banner = new Banner('#banner', {
     navGenerator: function (index, length) {
         return '<li data-index="' + index + '">' + (index + 1) + '/' + length + '</li>';
     },
-    $navParent: $nav,
-    index: 2
+    navSelector: '#nav',
+    index: 0
 });</pre>
 
 

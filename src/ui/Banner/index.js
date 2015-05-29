@@ -76,7 +76,7 @@ define(function (require, exports, module) {
             the._initNode();
             the.resize(options);
             the._initEvent();
-            the._autoPlay(true);
+            the._autoPlay(options.isAutoPlay);
 
             controller.nextTick(function () {
                 the.emit('change', the._showIndex);
@@ -117,9 +117,7 @@ define(function (require, exports, module) {
                 });
             });
 
-            the._translate = the._itemLength > 1
-                ? -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height)
-                : 0;
+            the._translate = the._itemLength > 1 ? -(the._showIndex + 1) * (the._direction === 'X' ? optons.width : optons.height) : 0;
             attribute.css(the._$list, the._calTranslate(the._itemLength > 1 ? the._showIndex + 1 : 0));
 
             return the;
@@ -399,7 +397,7 @@ define(function (require, exports, module) {
          * 动画到某一张
          * @method index
          * @param index {Number} 索引值
-         * @param callback {Function} 回调
+         * @param [callback] {Function} 回调
          */
         index: function (index, callback) {
             var the = this;
@@ -485,25 +483,6 @@ define(function (require, exports, module) {
 
     /**
      * 构建一个 banner，标准的 DOM 结构为：<code>ul#banner1>li*N</code>
-     *
-     * @constructor
-     * @param {HTMLElement|Node} $list banner 列表
-     * @param {Object} [options] 配置
-     * @param {Number} [options.width=700] banner 宽度，默认700
-     * @param {Number} [options.height=300] banner 高度，默认300
-     * @param {String} [options.itemSelector="li"] banner 项目选择器，默认"li"
-     * @param {String} [options.axis="+x"] banner 播放方向，x为左右，y为上下，+为正右边或正上方
-     * @param {String} [options.addClass=""] banner 最外层添加 className
-     * @param {Number} [options.duration=345] banner 播放动画时间，单位毫秒
-     * @param {Number} [options.interval=5000] banner 自动播放间隔时间
-     * @param {String} [options.easing="ease-out-cubic"] banner 播放动画缓冲效果
-     * @param {Number} [options.index=0] banner 初始化索引
-     * @param {Number} [options.minSwipe=40] banner 触摸过边界多少像素切换
-     * @param {Boolean} [options.isAutoPlay=true] banner 自动播放，1为自动向后播放，-1为自动向前播放，其他为不自动播放
-     * @param {Boolean} [options.isLoop=true] banner 是否循环
-     * @param {null|String|HTMLElement|Node} [options.navSelector=null] banner 导航父级选择器
-     * @param {null|Function} [options.navGenerator=null] banner 导航生成器
-     * @param {String} [options.activeClass="active"] banner 高亮的样式类
      */
     module.exports = Banner;
 });
