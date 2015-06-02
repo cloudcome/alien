@@ -232,13 +232,16 @@ define(function (require, exports, module) {
 
 
         /**
-         * 监听
+         * 监听，目前注册的事件有：
+         * club.follow 俱乐部关注
+         * bottom.apply 点击报名
+         * bottom.respond 点击咨询
+         * location.back 点击返回
          * @param event {String} 事件名称
          * @param [callback] {Function} 事件回调
          */
         when: function (event, callback) {
             var the = this;
-
 
             callback = typeis.function(callback) ? callback : noop;
 
@@ -317,6 +320,7 @@ define(function (require, exports, module) {
 
         /**
          * 发送数据
+         * type: 'love' 点击想去
          * @param [data] {Object} 数据
          * @param [callback] {Function} 回调
          */
@@ -578,8 +582,9 @@ define(function (require, exports, module) {
 
 
         /**
-         * 页面关闭
-         * @param [data] {Object} 数据
+         * 页面全屏，此时页面的返回功能将会失效
+         * @param data {Object} 数据
+         * @param data.active {Boolean} 是否启用
          * @param [callback] {Function} 回调
          */
         locationFullscreen: function (data, callback) {
@@ -594,6 +599,17 @@ define(function (require, exports, module) {
          */
         locationFinished: function (data, callback) {
             return this._location('finished', data, callback);
+        },
+
+
+        /**
+         * 修改页面标题
+         * @param data {Object} 数据
+         * @param data.title {String} 数据
+         * @param [callback] {Function} 回调
+         */
+        locationTitle: function (data, callback) {
+            return this._location('title', data, callback);
         },
 
 
@@ -827,7 +843,9 @@ define(function (require, exports, module) {
 
         /**
          * 显示/隐藏底部报名按钮
-         * @param [data]
+         * @param data {Object} 数据
+         * @param data.active {Boolean} 是否可以报名
+         * @param data.hidden {Boolean} 是否隐藏
          * @param [callback]
          * @returns {*}
          */
