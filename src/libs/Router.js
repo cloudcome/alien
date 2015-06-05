@@ -85,7 +85,7 @@ define(function (require, exports, module) {
                     });
                     the._lastMatchedRoute = matchKey;
                     the._routerList[matchIndex][matchKey].forEach(function (callback) {
-                        callback.call(the, matched, msgs, hashbang.parse(eve.newURL));
+                        callback.call(the, matched, hashbang.parse(eve.newURL).query, msgs);
                     });
                 } else {
                     the._lastMatchedRoute = null;
@@ -158,9 +158,13 @@ define(function (require, exports, module) {
          */
         redirect: function (url, isListenHashChange) {
             var the = this;
+            var to = '#!' + url;
 
-            location.hash = '#!' + url;
-            the._isIgnore = !isListenHashChange;
+            if (location.hash === to) {
+                return;
+            }
+
+            location.hash = to;            the._isIgnore = !isListenHashChange;
 
             return the;
         },
