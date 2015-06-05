@@ -85,7 +85,7 @@ define(function (require, exports, module) {
                     });
                     the._lastMatchedRoute = matchKey;
                     the._routerList[matchIndex][matchKey].forEach(function (callback) {
-                        callback.call(the, matched, msgs);
+                        callback.call(the, matched, msgs, hashbang.parse(eve.newURL));
                     });
                 } else {
                     the._lastMatchedRoute = null;
