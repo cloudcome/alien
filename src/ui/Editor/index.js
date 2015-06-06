@@ -72,6 +72,7 @@ define(function (require, exports, module) {
         // 手动设置 ID
         id: '',
         addClass: '',
+        previewClass: '',
         // tab 长度
         tabSize: 4,
         // 是否允许备份
@@ -128,7 +129,7 @@ define(function (require, exports, module) {
             the._$editor = modification.wrap(the._$input, '<div class="' + alienClass + '"/>')[0];
             the._$editor.id = alienClass + '-' + the._id;
             the._$output = modification.create('div', {
-                class: alienClass + '-output'
+                class: alienClass + '-output ' + options.previewClass
             });
             the._isFullScreen = false;
             the._isPreview = false;
@@ -368,7 +369,7 @@ define(function (require, exports, module) {
                 controller.nextTick(function () {
                     the._isPreview = !the._isPreview;
                     the.emit('preview', the._isPreview);
-                    attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
+                    attribute.css(the._$editor, 'z-index', the._isPreview ? ui.getZindex() : '');
                     attribute[(the._isPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-preview');
                     attribute.css($html, 'overflow', the._isPreview ? 'hidden' : '');
 
