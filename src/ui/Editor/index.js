@@ -368,6 +368,7 @@ define(function (require, exports, module) {
                 controller.nextTick(function () {
                     the._isPreview = !the._isPreview;
                     the.emit('preview', the._isPreview);
+                    attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
                     attribute[(the._isPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-preview');
                     attribute.css($html, 'overflow', the._isPreview ? 'hidden' : '');
 
