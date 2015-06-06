@@ -122,17 +122,18 @@ define(function (require, exports, module) {
             });
             the._$wrapper = the._editor.getWrapperElement();
             the._$scroller = the._editor.getScrollerElement();
-            the._$input = the._editor.display.input.textarea;
+            the._$textarea = the._editor.display.input.textarea;
             the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
-            the._$editor = modification.wrap(the._$wrapper, '<div class="' + alienClass + '"/>')[0];
+            the._$input = modification.wrap(the._$wrapper, '<div class="' + alienClass + '-input"/>')[0];
+            the._$editor = modification.wrap(the._$input, '<div class="' + alienClass + '"/>')[0];
             the._$editor.id = alienClass + '-' + the._id;
-            the._$preview = modification.create('div', {
-                class: alienClass + '-preview'
+            the._$output = modification.create('div', {
+                class: alienClass + '-output'
             });
             the._isFullScreen = false;
-            the._noPreview = true;
+            the._isPreview = false;
             the._atList = [];
-            modification.insert(the._$preview, the._$editor);
+            modification.insert(the._$output, the._$editor);
             attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
             attribute.css(the._$scroller, 'min-height', the._options.minHeight);
             the._initEvent();
@@ -330,47 +331,55 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            // 切换全屏
             var toggleFullScreen = function () {
-                the._isFullScreen = !the._isFullScreen;
-                the.emit('fullscreen', the._isFullScreen);
-                attribute[(the._isFullScreen ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-fullscreen');
-                attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
-                attribute.css($html, 'overflow', the._isFullScreen ? 'hidden' : '');
+                if (the._isPreview) {
+                    togglePreview();
+                }
 
-                if (the._isFullScreen) {
-                    the._lastStyle = the._$wrapper.style;
-                    attribute.css(the._$wrapper, {
-                        width: '',
-                        height: 'auto'
-                    });
+                controller.nextTick(function () {
+                    the._isFullScreen = !the._isFullScreen;
+                    the.emit('fullscreen', the._isFullScreen);
+                    attribute[(the._isFullScreen ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-fullscreen');
+                    attribute.css(the._$editor, 'z-index', the._isFullScreen ? ui.getZindex() : '');
+                    attribute.css($html, 'overflow', the._isFullScreen ? 'hidden' : '');
 
-                    if (the._noPreview) {
-                        togglePreview();
+                    if (the._isFullScreen) {
+                        the._lastStyle = the._$wrapper.style;
+                        attribute.css(the._$wrapper, {
+                            width: '',
+                            height: 'auto'
+                        });
+                    } else {
+                        the._$wrapper.style.width = the._lastStyle.width;
+                        the._$wrapper.style.height = the._lastStyle.height;
                     }
-                } else {
-                    the._noPreview = true;
-                    the._$wrapper.style.width = the._lastStyle.width;
-                    the._$wrapper.style.height = the._lastStyle.height;
-                }
 
-                the._editor.refresh();
+                    the._editor.refresh();
+                });
+
             };
+            // 切换双屏预览
             var togglePreview = function () {
-                if (!the._isFullScreen) {
-                    return;
+                if (the._isFullScreen) {
+                    toggleFullScreen();
                 }
 
-                the._noPreview = !the._noPreview;
-                attribute[(the._noPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-nopreview');
+                controller.nextTick(function () {
+                    the._isPreview = !the._isPreview;
+                    the.emit('preview', the._isPreview);
+                    attribute[(the._isPreview ? 'add' : 'remove') + 'Class'](the._$editor, alienClass + '-preview');
+                    attribute.css($html, 'overflow', the._isPreview ? 'hidden' : '');
 
-                if (!the._noPreview) {
-                    syncMarked();
-                }
+                    if (the._isPreview) {
+                        syncMarked();
+                    }
 
-                the._editor.refresh();
+                    the._editor.refresh();
+                });
             };
             var syncMarked = function () {
-                the._$preview.innerHTML = marked(the._$ele.value, {renderer: markedRender});
+                the._$output.innerHTML = marked(the._$ele.value, {renderer: markedRender});
             };
 
             // `code`
@@ -410,7 +419,7 @@ define(function (require, exports, module) {
             the._addKeyMap('shift', '2', function () {
                 the.replace('@');
 
-                if(!the._atList.length){
+                if (!the._atList.length) {
                     return;
                 }
 
@@ -423,19 +432,19 @@ define(function (require, exports, module) {
                     var offset = selection.getOffset(the._$code);
 
                     offset.width = offset.height = 1;
-                    offset.left+=attribute.left(the._$editor);
-                    offset.top+=attribute.top(the._$editor);
+                    offset.left += attribute.left(the._$editor);
+                    offset.top += attribute.top(the._$editor);
                     the._ctrlList.update(the._atList).open(offset);
                 }
             });
 
             // 退格
-            event.on(the._$input, 'backspace', function () {
+            event.on(the._$textarea, 'backspace', function () {
                 the._ctrlList.close();
             });
 
             // 监听输入
-            event.on(the._$input, 'input', function () {
+            event.on(the._$textarea, 'input', function () {
                 var value = this.value;
 
                 if (!value) {
@@ -470,12 +479,13 @@ define(function (require, exports, module) {
 
 
             // preview
-            the._addKeyMap('ctrl', 'P', togglePreview);
+            the._addKeyMap('ctrl', 'F12', togglePreview);
+
 
             // change
             the._editor.on('change', function () {
                 var syncMarkedOnChange = controller.debounce(function () {
-                    if (!the._noPreview) {
+                    if (the._isPreview) {
                         syncMarked();
                     }
                 });
@@ -493,7 +503,7 @@ define(function (require, exports, module) {
 
             // 同步滚动
             event.on(the._$scroller, 'scroll', the._onscroll = function () {
-                the._$preview.scrollTop = (the._$preview.scrollHeight - the._$preview.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
+                the._$output.scrollTop = (the._$output.scrollHeight - the._$output.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
             });
 
             // cursor

@@ -1,48 +1,63 @@
 .alien-ui-editor {
-  &-fullscreen {
-    position: fixed;
+  &-fullscreen,
+  &-preview,
+  &-fullscreen &-input,
+  &-preview &-input,
+  &-output,
+  &-preview .cm-s-fed{
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background: #fff;
+  }
 
-    .CodeMirror {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      border: 0;
-      left: 0;
-      width: 50%;
-    }
+  &-fullscreen,
+  &-preview {
+    position: fixed;
+  }
 
-    &-preview {
-      display: block;
+  &-fullscreen {
+    background: #EEE;
+    overflow: auto;
+
+    .alien-ui-editor-input {
+      width: 100%;
+      min-width: 100px;
+      max-width: 900px;
+      left: 50%;
+      bottom: auto;
+      transform: translateX(-50%);
+      height: auto;
+      margin: 40px 0 90px;
     }
+  }
+
+  &-output {
+    display: none;
+    position: absolute;
+    left: 50%;
+    overflow: auto;
+    padding: 20px;
+    border-left: 2px solid #ccc;
   }
 
   &-preview {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    border: 0;
-    display: none;
-    right: 0;
-    left: 50%;
-    margin-left: 20px;
-    overflow: auto;
-    padding: 10px;
-    background: #f9f9f9;
-    border-left: 1px solid #ccc;
-  }
+    background: #FCFAF2;
+    overflow: hidden;
 
-  &-nopreview {
-    .CodeMirror {
-      width: 100%;
+    .alien-ui-editor-input {
+      right: 50%;
     }
 
-    .alien-ui-editor-preview {
-      display: none;
+    .cm-s-fed {
+      border: 0;
+      border-radius: 0;
+      padding: 20px;
+    }
+
+    .alien-ui-editor-output {
+      display: block;
     }
   }
 
@@ -97,7 +112,7 @@
     box-shadow: 2px 2px 5px #C8C8C8;
     border-radius: 4px;
 
-    &-item{
+    &-item {
       line-height: 16px;
       padding: 5px;
       font-size: 13px;
@@ -107,7 +122,7 @@
       cursor: default;
       color: #666;
 
-      &-hover{
+      &-hover {
         background: #57B3F8;
         color: #FFF;
       }

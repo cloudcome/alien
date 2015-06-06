@@ -1,39 +1,51 @@
-.alien-ui-editor-fullscreen {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: #fff; }
-  .alien-ui-editor-fullscreen .CodeMirror {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    border: 0;
-    left: 0;
-    width: 50%; }
-  .alien-ui-editor-fullscreen-preview {
-    display: block; }
-
-.alien-ui-editor-preview {
+.alien-ui-editor-fullscreen,
+.alien-ui-editor-preview,
+.alien-ui-editor-fullscreen .alien-ui-editor-input,
+.alien-ui-editor-preview .alien-ui-editor-input,
+.alien-ui-editor-output,
+.alien-ui-editor-preview .cm-s-fed {
   position: absolute;
   top: 0;
-  bottom: 0;
-  border: 0;
-  display: none;
   right: 0;
+  bottom: 0;
+  left: 0; }
+
+.alien-ui-editor-fullscreen,
+.alien-ui-editor-preview {
+  position: fixed; }
+
+.alien-ui-editor-fullscreen {
+  background: #EEE;
+  overflow: auto; }
+  .alien-ui-editor-fullscreen .alien-ui-editor-input {
+    width: 100%;
+    min-width: 100px;
+    max-width: 900px;
+    left: 50%;
+    bottom: auto;
+    transform: translateX(-50%);
+    height: auto;
+    margin: 40px 0 90px; }
+
+.alien-ui-editor-output {
+  display: none;
+  position: absolute;
   left: 50%;
-  margin-left: 20px;
   overflow: auto;
-  padding: 10px;
-  background: #f9f9f9;
-  border-left: 1px solid #ccc; }
+  padding: 20px;
+  border-left: 2px solid #ccc; }
 
-.alien-ui-editor-nopreview .CodeMirror {
-  width: 100%; }
-
-.alien-ui-editor-nopreview .alien-ui-editor-preview {
-  display: none; }
+.alien-ui-editor-preview {
+  background: #FCFAF2;
+  overflow: hidden; }
+  .alien-ui-editor-preview .alien-ui-editor-input {
+    right: 50%; }
+  .alien-ui-editor-preview .cm-s-fed {
+    border: 0;
+    border-radius: 0;
+    padding: 20px; }
+  .alien-ui-editor-preview .alien-ui-editor-output {
+    display: block; }
 
 .alien-ui-editor-upload {
   text-align: center; }
