@@ -23,8 +23,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../');
-    var style = require('text!./style.css');
-    var template = require('text!./template.html');
+    var style = require('./style.css', 'css');
+    var template = require('./template.html', 'html');
     var Template = require('../../libs/Template.js');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
