@@ -1,4 +1,18 @@
 .alien-ui-editor {
+
+  &>textarea{
+    display: block !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    padding: 10px;
+    //overflow: auto !important;
+    //-webkit-overflow-scrolling: touch;
+  }
+
   &-fullscreen,
   &-preview,
   &-fullscreen &-input,

@@ -59,18 +59,23 @@ define(function (require, exports, module) {
     var alienIndex = 0;
     var RE_IMG_TYPE = /^image\//;
     //var alienIndex = 0;
-    var localStorage = window.localStorage;
+    var win = window;
+    var doc = win.document;
+    var localStorage = win.localStorage;
     var pathname = location.pathname;
-    var $html = document.documentElement;
+    var $html = doc.documentElement;
     var markedRender = new marked.Renderer();
     var noop = function () {
         // ignore
     };
+    var isMobile = 'ontouchend' in doc;
     var defaults = {
         // 手动设置 ID
         id: '',
         addClass: '',
         previewClass: '',
+        // 是否自动适配移动端，将富文本替换为 textarea
+        isAdaptMobile: true,
         // tab 长度
         tabSize: 4,
         // 是否允许备份
@@ -90,57 +95,64 @@ define(function (require, exports, module) {
         constructor: function ($ele, options) {
             var the = this;
             the._isMac = CodeMirror.keyMap.default === CodeMirror.keyMap.macDefault;
-
             the._id = alienIndex++;
             the._$ele = selector.query($ele)[0];
             the._options = dato.extend({}, defaults, options);
             the._calStoreId();
-            the._editor = CodeMirror.fromTextArea(the._$ele, {
-                mode: 'gfm',
-                lineNumbers: false,
-                theme: "fed",
-                autoCloseBrackets: true,
-                autoCloseTags: true,
-                dragDrop: false,
-                foldGutter: false,
-                indentWithTabs: true,
-                lineWrapping: true,
-                matchBrackets: true,
-                readOnly: false,
-                showTrailingSpace: true,
-                styleActiveLine: true,
-                styleSelectedText: true,
-                tabSize: the._options.tabSize
-            });
-            the._ctrlList = new CtrlList([], {
-                maxHeight: 200,
-                offset: {
-                    left: 20,
-                    top: 10
-                }
-            });
-            the._$wrapper = the._editor.getWrapperElement();
-            the._$scroller = the._editor.getScrollerElement();
-            the._$textarea = the._editor.display.input.textarea;
-            the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
-            the._$input = modification.wrap(the._$wrapper, '<div class="' + alienClass + '-input"/>')[0];
-            the._$editor = modification.wrap(the._$input, '<div class="' + alienClass + '"/>')[0];
-            the._$editor.id = alienClass + '-' + the._id;
-            the._$output = modification.create('div', {
-                class: alienClass + '-output ' + options.previewClass
-            });
-            the._isFullScreen = false;
-            the._isPreview = false;
-            the._atList = [];
-            modification.insert(the._$output, the._$editor);
-            attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
-            attribute.css(the._$scroller, 'min-height', the._options.minHeight);
-            the._initEvent();
+
+            if (isMobile) {
+                the._ctrlList = null;
+                the._$editor = modification.wrap(the._$ele, '<div class="' + alienClass + '"/>')[0];
+            } else {
+                the._editor = CodeMirror.fromTextArea(the._$ele, {
+                    mode: 'gfm',
+                    lineNumbers: false,
+                    theme: "fed",
+                    autoCloseBrackets: true,
+                    autoCloseTags: true,
+                    dragDrop: false,
+                    foldGutter: false,
+                    indentWithTabs: true,
+                    lineWrapping: true,
+                    matchBrackets: true,
+                    readOnly: false,
+                    showTrailingSpace: true,
+                    styleActiveLine: true,
+                    styleSelectedText: true,
+                    tabSize: the._options.tabSize
+                });
+                the._$wrapper = the._editor.getWrapperElement();
+                the._$scroller = the._editor.getScrollerElement();
+                the._$textarea = the._editor.display.input.textarea;
+                the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
+                the._$input = modification.wrap(the._$wrapper, '<div class="' + alienClass + '-input"/>')[0];
+                the._$editor = modification.wrap(the._$input, '<div class="' + alienClass + '"/>')[0];
+                the._$editor.id = alienClass + '-' + the._id;
+                the._$output = modification.create('div', {
+                    class: alienClass + '-output ' + options.previewClass
+                });
+                modification.insert(the._$output, the._$editor);
+                attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
+                attribute.css(the._$scroller, 'min-height', the._options.minHeight);
+                the._ctrlList = new CtrlList([], {
+                    maxHeight: 200,
+                    offset: {
+                        left: 20,
+                        top: 10
+                    }
+                });
+                the._isFullScreen = false;
+                the._isPreview = false;
+                the._atList = [];
+                the._initEvent();
+            }
 
             if (the._options.canBackup) {
                 controller.nextTick(the._initValue, the);
             }
         },
+
+
         /**
          * 设置编辑器内容
          * @param value {String} 设置内容
@@ -149,8 +161,12 @@ define(function (require, exports, module) {
         setValue: function (value) {
             var the = this;
 
-            the._editor.setValue(value);
-            the._editor.refresh();
+            if (isMobile) {
+                the._$ele.value = value;
+            } else {
+                the._editor.setValue(value);
+                the._editor.refresh();
+            }
 
             return the;
         },
@@ -280,7 +296,7 @@ define(function (require, exports, module) {
         clearStore: function () {
             var the = this;
 
-            window.localStorage.setItem(the._storeId, '');
+            win.localStorage.setItem(the._storeId, '');
 
             return the;
         },
@@ -595,7 +611,7 @@ define(function (require, exports, module) {
 
                     if (file && file.size > 0) {
                         the._uploadList.push({
-                            url: window.URL.createObjectURL(item.getAsFile()),
+                            url: win.URL.createObjectURL(item.getAsFile()),
                             file: file
                         });
                     }
@@ -638,7 +654,7 @@ define(function (require, exports, module) {
             }
 
             $dialog = modification.parse(tpl.render(dt))[0];
-            modification.insert($dialog, document.body, 'beforeend');
+            modification.insert($dialog, doc.body, 'beforeend');
             the._$dialog = $dialog;
             the._dialog = new Dialog($dialog, {
                 title: '上传' + the._uploadList.length + '张图片（0%）',
