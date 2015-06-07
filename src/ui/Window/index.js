@@ -212,6 +212,15 @@ define(function (require, exports, module) {
 
             the.visible = true;
             attribute.css(the._$window, to);
+
+            /**
+             * 窗口打开之前
+             * @event beforeopen
+             */
+            if (the.emit('beforeopen') === false) {
+                return the;
+            }
+
             animation.transition(the._$window, {
                 scale: 1,
                 opacity: 1,
@@ -253,10 +262,23 @@ define(function (require, exports, module) {
 
             var to = the._getPos();
 
+            /**
+             * 窗口大小改变之前
+             * @event beforeresize
+             */
+            if (the.emit('beforeresize') === false) {
+                return the;
+            }
+
             animation.transition(the._$window, to, {
                 duration: options.duration,
                 easing: options.easing.resize
             }, function () {
+                /**
+                 * 窗口大小改变之后
+                 * @event resize
+                 */
+                the.emit('resize');
                 callback.call(the);
             });
 
