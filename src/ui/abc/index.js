@@ -73,7 +73,7 @@ define(function (require, exports, module) {
 
         attribute.innerHeight($ref, scrollHeight > the._innerHeight ? scrollHeight : the._innerHeight);
     };
-    var Autoheight = ui.create({
+    var AutoHeight = ui.create({
         constructor: function ($ele, options) {
             var the = this;
 
@@ -172,8 +172,6 @@ define(function (require, exports, module) {
 
     modification.importStyle(style);
     document.body.appendChild($mirror);
-    /**
-     * 实例化一个 Autoheight
-     */
-    module.exports = Autoheight;
+    AutoHeight.defaults = defaults;
+    module.exports = AutoHeight;
 });

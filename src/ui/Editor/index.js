@@ -40,6 +40,7 @@ define(function (require, exports, module) {
     var confirm = require('../../widgets/confirm.js');
     var Dialog = require('../Dialog/');
     var CtrlList = require('../CtrlList/');
+    var AutoHeight = require('../AutoHeight/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -100,9 +101,11 @@ define(function (require, exports, module) {
             the._options = dato.extend({}, defaults, options);
             the._calStoreId();
 
-            if (isMobile) {
+            if (isMobile && the._options.isAdaptMobile) {
+                the._adaptMobile = true;
                 the._ctrlList = null;
                 the._$editor = modification.wrap(the._$ele, '<div class="' + alienClass + '"/>')[0];
+                the._autoHeight = new AutoHeight(the._$ele);
             } else {
                 the._editor = CodeMirror.fromTextArea(the._$ele, {
                     mode: 'gfm',
@@ -144,8 +147,9 @@ define(function (require, exports, module) {
                 the._isFullScreen = false;
                 the._isPreview = false;
                 the._atList = [];
-                the._initEvent();
             }
+
+            the._initEvent();
 
             if (the._options.canBackup) {
                 controller.nextTick(the._initValue, the);
@@ -161,10 +165,13 @@ define(function (require, exports, module) {
         setValue: function (value) {
             var the = this;
 
-            if (isMobile) {
-                the._$ele.value = value;
-            } else {
+            the._$ele.value = value;
+
+            if (the._adaptMobile) {
+                the._autoHeight.resize();
+            }else{
                 the._editor.setValue(value);
+                the._$ele.value = value;
                 the._editor.refresh();
             }
 
@@ -195,16 +202,18 @@ define(function (require, exports, module) {
                     '<br>当前内容长度为：<b>' + nowLen + '</b>。' +
                     '<br>是否恢复？')
                     .on('sure', function () {
-                        the.setValue(storeVal);
-                        the._$ele.value = storeVal;
+                        if (!the._adaptMobile) {
+                            controller.nextTick(function () {
+                                try {
+                                    the._editor.setCursor(local.cur);
+                                } catch (err) {
+                                    // ignore
+                                }
+                            });
+                        }
 
-                        controller.nextTick(function () {
-                            try {
-                                the._editor.setCursor(local.cur);
-                            } catch (err) {
-                                // ignore
-                            }
-                        });
+                        the.setValue(storeVal);
+
                         /**
                          * 编辑器内容变化之后
                          * @event change
@@ -282,7 +291,7 @@ define(function (require, exports, module) {
                 localStorage.setItem(the._storeId, JSON.stringify({
                     val: the._$ele.value,
                     ver: Date.now(),
-                    cur: the._editor.getCursor()
+                    cur: the._adaptMobile ? 0 : the._editor.getCursor()
                 }));
             } catch (err) {
                 // ignore
@@ -309,6 +318,10 @@ define(function (require, exports, module) {
         replace: function (value) {
             var the = this;
 
+            if (the._adaptMobile) {
+                return the;
+            }
+
             the._editor.focus();
             the._editor.replaceSelection(value);
             the._editor.refresh();
@@ -323,6 +336,10 @@ define(function (require, exports, module) {
          */
         wrap: function (value) {
             var the = this;
+
+            if (the._adaptMobile) {
+                return the;
+            }
 
             the._editor.focus();
 
@@ -346,6 +363,29 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+
+            // 修改设置时
+            the.on('setoptions', function (options) {
+                if (the._storeId !== options.id) {
+                    the._storeId = options.id;
+                }
+            });
+
+            if (the._adaptMobile) {
+                // change
+                event.on(the._$ele, 'change input', function () {
+                    /**
+                     * 编辑器内容变化之后
+                     * @event change
+                     * @param value {String} 变化之后的内容
+                     */
+                    the.emit('change', the._$ele.value);
+                    the._saveLocal();
+                });
+
+                return;
+            }
+
             // 切换全屏
             var toggleFullScreen = function () {
                 if (the._isPreview) {
@@ -525,12 +565,6 @@ define(function (require, exports, module) {
             // cursor
             the._editor.on('cursorActivity', the._saveLocal.bind(the));
 
-            // 修改设置时
-            the.on('setoptions', function (options) {
-                if (the._storeId !== options.id) {
-                    the._storeId = options.id;
-                }
-            });
 
             event.on(the._$wrapper, 'dragenter dragover', the._ondrag.bind(the));
             event.on(the._$wrapper, 'drop', the._ondrop.bind(the));
@@ -546,6 +580,10 @@ define(function (require, exports, module) {
          */
         setAtList: function (list) {
             var the = this;
+
+            if (the._adaptMobile) {
+                return the;
+            }
 
             the._atList = list;
             return the;
@@ -709,6 +747,10 @@ define(function (require, exports, module) {
         uploadDestroy: function () {
             var the = this;
 
+            if (the._adaptMobile) {
+                return the;
+            }
+
             the._dialog.destroy(function () {
                 modification.remove(the._$dialog);
                 the._editor.focus();
@@ -751,7 +793,9 @@ define(function (require, exports, module) {
          * @returns {*}
          */
         getValue: function () {
-            return this._editor.getValue();
+            var the = this;
+
+            return the._adaptMobile ? the._$ele.value : the._editor.getValue();
         },
 
 
@@ -761,12 +805,16 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            event.un(the._$scroller, 'scroll', the._onscroll);
-            event.un(the._$wrapper, 'input', the._oninput);
-            event.un(the._$wrapper, 'dragenter dragover', the._ondrag);
-            event.un(the._$wrapper, 'drop', the._ondrop);
-            event.un(the._$wrapper, 'paste', the._onpaste);
-            this._editor.toTextArea();
+            if (the._adaptMobile) {
+                modification.unwrap(the._$ele, 'div');
+            } else {
+                event.un(the._$scroller, 'scroll', the._onscroll);
+                event.un(the._$wrapper, 'input', the._oninput);
+                event.un(the._$wrapper, 'dragenter dragover', the._ondrag);
+                event.un(the._$wrapper, 'drop', the._ondrop);
+                event.un(the._$wrapper, 'paste', the._onpaste);
+                this._editor.toTextArea();
+            }
         }
     });
 
