@@ -201,17 +201,6 @@ define(function (require, exports, module) {
                     callback.call(the);
                 }
             };
-            var to = the._getPos();
-
-            dato.extend(to, {
-                opacity: 0,
-                zIndex: ui.getZindex(),
-                scale: 0.9,
-                translateY: '6%'
-            });
-
-            the.visible = true;
-            attribute.css(the._$window, to);
 
             /**
              * 窗口打开之前
@@ -221,6 +210,15 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            var to = the._getPos();
+            the.visible = true;
+            dato.extend(to, {
+                opacity: 0,
+                zIndex: ui.getZindex(),
+                scale: 0.9,
+                translateY: '6%'
+            });
+            attribute.css(the._$window, to);
             animation.transition(the._$window, {
                 scale: 1,
                 opacity: 1,
@@ -314,6 +312,14 @@ define(function (require, exports, module) {
 
                 callback.call(the);
             };
+
+            /**
+             * 窗口关闭之前
+             * @event beforeclose
+             */
+            if (the.emit('beforeclose') === false) {
+                return the;
+            }
 
             the.visible = false;
             animation.transition(the._$window, {
