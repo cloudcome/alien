@@ -155,12 +155,16 @@ define(function (require, exports, module) {
 
         /**
          * 将所有的事件派发到目标
-         * @param target {Object}
+         * @param target {Object} 目标
+         * @param [emitters] {Array} 传递的事件数组，默认为全部
          */
-        pipe: function (target) {
+        pipe: function (target, emitters) {
             var the = this;
 
-            the._emitterTargetList.push(target);
+            the._emitterTargetList.push({
+                source: target,
+                emitters: typeis.array(emitters) ? emitters : []
+            });
 
             return the;
         },
@@ -174,13 +178,15 @@ define(function (require, exports, module) {
          */
         _pipe: function (eventType, args) {
             dato.each(this._emitterTargetList, function (index, target) {
-                target.alienEmitter = {
-                    type: eventType,
-                    timestamp: Date.now(),
-                    id: alienId++
-                };
-                args.unshift(eventType);
-                target.emit.apply(target, args);
+                if (!target.emitters.length || target.emitters.indexOf(eventType) > -1) {
+                    target.source.alienEmitter = {
+                        type: eventType,
+                        timestamp: Date.now(),
+                        id: alienId++
+                    };
+                    args.unshift(eventType);
+                    target.source.emit.apply(target.source, args);
+                }
             });
         }
     });

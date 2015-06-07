@@ -178,9 +178,8 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            //var options = the._options;
 
-            the._dialog.on('open', function () {
+            the._dialog.on('beforeopen', function () {
                 the._applyOptions();
             });
 
@@ -189,7 +188,6 @@ define(function (require, exports, module) {
                     the._xhr.abort();
                 }
             });
-
 
             // 选择图片
             event.on(the._$dialog, 'change', '.' + alienKey + '-file', function (eve) {
