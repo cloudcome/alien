@@ -18,7 +18,6 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var canvas = require('../../utils/canvas.js');
     var xhr = require('../../core/communication/xhr.js');
-    var alert = require('../../widgets/alert.js');
     var Dialog = require('../../ui/Dialog/');
     var Imgclip = require('../../ui/Imgclip/');
     var Template = require('../../libs/Template.js');
@@ -206,7 +205,12 @@ define(function (require, exports, module) {
                         the._setChoosed(true);
                         the._renderImg(file);
                     } else {
-                        alert('只能选择图片文件！');
+                        /**
+                         * 错误文件类型
+                         * @event error
+                         * @param Error
+                         */
+                        the.emit('error', new Error('只能选择图片文件！'));
                     }
                 }
             });
@@ -230,13 +234,15 @@ define(function (require, exports, module) {
 
             // 点击上传
             event.on(the._$submit, 'click', function () {
+                if (the._isUpload) {
+                    return;
+                }
+
                 /**
                  * 上传图片
                  * @event upload
                  */
-                var ret = the.emit('upload');
-
-                if (ret === false) {
+                if (the.emit('upload') === false) {
                     return;
                 }
 
@@ -435,10 +441,14 @@ define(function (require, exports, module) {
                     the._$submit.innerHTML = '正在上传 <b>' + eve.alienDetail.percent + '</b>';
                 })
                 .on('success', function (json) {
-                    the.emit('success', json);
+                    if (the.emit('success', json) !== false) {
+                        the.close();
+                    }
                 })
                 .on('error', function (err) {
-                    the.emit('error', err);
+                    if (the.emit('error', err) !== false) {
+                        the.close();
+                    }
                 })
                 .on('complete', function (err, json) {
                     the.emit('complete', err, json);
@@ -447,7 +457,6 @@ define(function (require, exports, module) {
                     the.emit('finish', err, json);
                     the._isUpload = false;
                     the._$submit.innerHTML = the._submitHTML;
-                    the.close();
                 });
         },
 
