@@ -52,9 +52,7 @@ define(function (require, exports, module) {
     var selection = require('../../utils/selection.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
-    var templateAt = require('./at.html', 'html');
     var tpl = new Template(template);
-    var tplAt = new Template(templateAt);
     var style = require('./style.css', 'css');
     var alert = require('../../widgets/alert.js');
     var alienClass = 'alien-ui-editor';
