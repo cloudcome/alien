@@ -197,7 +197,7 @@ define(function (require, exports, module) {
             }
 
             if (!maskWindowLength) {
-                attribute.removeClass(document.body, alienClass + '-overflow');
+                attribute.removeClass([html, body], alienClass + '-overflow');
             }
 
             return the;
