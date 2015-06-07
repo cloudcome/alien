@@ -202,31 +202,33 @@ define(function (require, exports, module) {
                 }
             };
 
-            /**
-             * 窗口打开之前
-             * @event beforeopen
-             */
-            if (the.emit('beforeopen') === false) {
-                return the;
-            }
+            controller.nextTick(function () {
+                /**
+                 * 窗口打开之前
+                 * @event beforeopen
+                 */
+                if (the.emit('beforeopen') === false) {
+                    return;
+                }
 
-            var to = the._getPos();
-            the.visible = true;
-            dato.extend(to, {
-                opacity: 0,
-                zIndex: ui.getZindex(),
-                scale: 0.9,
-                translateY: '6%'
+                var to = the._getPos();
+                the.visible = true;
+                dato.extend(to, {
+                    opacity: 0,
+                    zIndex: ui.getZindex(),
+                    scale: 0.9,
+                    translateY: '6%'
+                });
+                attribute.css(the._$window, to);
+                animation.transition(the._$window, {
+                    scale: 1,
+                    opacity: 1,
+                    translateY: 0
+                }, {
+                    duration: options.duration,
+                    easing: options.easing.open
+                }, onopen);
             });
-            attribute.css(the._$window, to);
-            animation.transition(the._$window, {
-                scale: 1,
-                opacity: 1,
-                translateY: 0
-            }, {
-                duration: options.duration,
-                easing: options.easing.open
-            }, onopen);
 
             return the;
         },
@@ -313,24 +315,26 @@ define(function (require, exports, module) {
                 callback.call(the);
             };
 
-            /**
-             * 窗口关闭之前
-             * @event beforeclose
-             */
-            if (the.emit('beforeclose') === false) {
-                return the;
-            }
+            controller.nextTick(function () {
+                /**
+                 * 窗口关闭之前
+                 * @event beforeclose
+                 */
+                if (the.emit('beforeclose') === false) {
+                    return;
+                }
 
-            the.visible = false;
-            animation.transition(the._$window, {
-                scale: 0.9,
-                opacity: 0,
-                translateY: '-6%'
-            }, {
-                direction: 'reverse',
-                duration: options.duration,
-                easing: options.easing.close
-            }, onclose);
+                the.visible = false;
+                animation.transition(the._$window, {
+                    scale: 0.9,
+                    opacity: 0,
+                    translateY: '-6%'
+                }, {
+                    direction: 'reverse',
+                    duration: options.duration,
+                    easing: options.easing.close
+                }, onclose);
+            });
 
             return the;
         },

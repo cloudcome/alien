@@ -130,7 +130,9 @@ define(function (require, exports, module) {
             }
 
             _middleware(eventType, function (et) {
-                the._pipe(et, emitArgs);
+                if (the._pipe(et, emitArgs) === false) {
+                    ret = false;
+                }
 
                 if (the._emitterListener[et]) {
                     var time = Date.now();
@@ -177,17 +179,21 @@ define(function (require, exports, module) {
          * @private
          */
         _pipe: function (eventType, args) {
+            var ret = true;
+
             dato.each(this._emitterTargetList, function (index, target) {
-                if (!target.emitters.length || target.emitters.indexOf(eventType) > -1) {
+                if (_matches(eventType, target.emitters)) {
                     target.source.alienEmitter = {
                         type: eventType,
                         timestamp: Date.now(),
                         id: alienId++
                     };
                     args.unshift(eventType);
-                    target.source.emit.apply(target.source, args);
+                    ret = target.source.emit.apply(target.source, args);
                 }
             });
+
+            return ret;
         }
     });
 
@@ -202,5 +208,42 @@ define(function (require, exports, module) {
         dato.each(eventTypes.trim().split(regSpace), function (index, eventType) {
             callback(eventType);
         });
+    }
+
+
+    /**
+     * 判断是否匹配
+     * @param name {String} 待匹配字符串
+     * @param names {Array} 被匹配字符串数组
+     * @returns {boolean}
+     * @private
+     */
+    function _matches(name, names) {
+        if (!names.length) {
+            return true;
+        }
+
+        var matched = true;
+
+        dato.each(names, function (index, _name) {
+            var flag = _name[0];
+
+            // !name
+            if (flag === '!') {
+                if (name === _name.slice(1)) {
+                    matched = false;
+                    return false;
+                }
+            }
+            // name
+            else {
+                if (name === _name) {
+                    matched = true;
+                    return false;
+                }
+            }
+        });
+
+        return matched;
     }
 });

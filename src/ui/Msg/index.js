@@ -187,6 +187,9 @@ define(function (require, exports, module) {
                     the.destroy();
                 }
             });
+
+            // 传递部分 window 事件到 msg
+            the._window.pipe(the, ['!open', '!close']);
         },
 
 
