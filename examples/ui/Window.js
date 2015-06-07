@@ -13,22 +13,10 @@ define(function (require, exports, module) {
     var animation = require('/src/core/dom/animation.js');
     var see = require('/src/core/dom/see.js');
     var attribute = require('/src/core/dom/attribute.js');
-    var win1 = new Window('#demo', {
-        addClass: 'hehhhhh',
-        width: 300,
-        height: 200
-    //    open: function ($window, to, onopen) {
-    //        to.bottom = -to.height;
-    //        attribute.css($window, to);
-    //        animation.animate($window, {
-    //            bottom: 0
-    //        }, {
-    //            duration: 456
-    //        }, onopen);
-    //    }
-    });
+    var win1;
 
     document.getElementById('btn1').onclick = function () {
+        console.log('...');
         win1.open();
     };
 
@@ -42,4 +30,19 @@ define(function (require, exports, module) {
             height: random.number(50, 300)
         });
     };
+
+    win1 = new Window('#demo', {
+        addClass: 'hehhhhh',
+        width: 300,
+        height: 200,
+        //    open: function ($window, to, onopen) {
+        //        to.bottom = -to.height;
+        //        attribute.css($window, to);
+        //        animation.animate($window, {
+        //            bottom: 0
+        //        }, {
+        //            duration: 456
+        //        }, onopen);
+        //    }
+    });
 });

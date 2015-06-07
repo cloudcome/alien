@@ -39,9 +39,9 @@ define(function (require, exports, module) {
     var $body = document.body;
     var defaults = {
         parentNode: $body,
-        width: 'auto',
+        width: '90%',
         minWidth: 300,
-        maxWidth: '90%',
+        maxWidth: 900,
         height: 'auto',
         top: 'center',
         right: null,
@@ -67,6 +67,12 @@ define(function (require, exports, module) {
             the.visible = false;
             the._init();
         },
+
+        /**
+         * 初始化
+         * @returns {Window}
+         * @private
+         */
         _init: function () {
             var the = this;
             var options = the._options;
@@ -89,8 +95,12 @@ define(function (require, exports, module) {
                     position: 'absolute'
                 }
             });
+            the._$focus = modification.create('input', {
+                class: alienClass + '-focus'
+            });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);
+            modification.insert(the._$focus, the._$window);
 
             if (the._$content) {
                 modification.insert($pos, the._$content, 'afterend');
@@ -200,6 +210,8 @@ define(function (require, exports, module) {
                  * @event open
                  */
                 the.emit('open');
+                the._$focus.focus();
+                the._$focus.blur();
 
                 if (typeis.function(callback)) {
                     callback.call(the);
@@ -216,6 +228,7 @@ define(function (require, exports, module) {
                 }
 
                 var to = the._getPos();
+
                 the.visible = true;
                 dato.extend(to, {
                     opacity: 0,

@@ -5,6 +5,24 @@
     height: 100%;
 }
 
+.alien-ui-window > .alien-ui-window-focus{
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+}
+
 @-webkit-keyframes alien-ui-window-shake {
     0%, 100% {
         -webkit-transform: translateX(0);

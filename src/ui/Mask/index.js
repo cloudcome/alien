@@ -79,7 +79,7 @@ define(function (require, exports, module) {
                 'class': alienClass
             });
             attribute.addClass(the._$mask, options.addClass);
-            modification.insert(the._$mask, document.body);
+            modification.insert(the._$mask, body);
         },
 
 
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
             if (the._$cover === win) {
                 maskWindowLength++;
                 maskWindowList.push(the);
-                attribute.addClass(document.body, alienClass + '-overflow');
+                attribute.addClass([html, body], alienClass + '-overflow');
             }
 
             return the;
@@ -233,25 +233,29 @@ define(function (require, exports, module) {
      */
     Mask.getCoverSize = function ($ele) {
         $ele = _isSimilar2Window($ele) ? win : $ele;
+        var ret = {
+            overflow: 'auto',
+            overflowScrolling: 'touch'
+        };
 
         // 其他节点
         if ($ele === win) {
-            return {
+            return dato.extend(ret, {
                 position: 'fixed',
                 top: 0,
                 right: 0,
                 bottom: 0,
                 left: 0
-            };
+            });
         }
 
-        return {
+        return dato.extend(ret, {
             position: 'absolute',
             width: attribute.outerWidth($ele),
             height: attribute.outerHeight($ele),
             top: attribute.top($ele),
             left: attribute.left($ele)
-        };
+        });
     };
 
 
