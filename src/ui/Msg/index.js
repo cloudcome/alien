@@ -41,7 +41,7 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-msg';
     var $body = document.body;
     var defaults = {
-        width: 300,
+        width: 'auto',
         height: 'auto',
         left: 'center',
         top: 'center',

@@ -11,7 +11,6 @@ define(function (require) {
             buttons: []
         }).on('beforeopen', function () {
                 console.log(this.alienEmitter);
-                return false;
             });
     };
 

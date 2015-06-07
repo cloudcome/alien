@@ -39,7 +39,9 @@ define(function (require, exports, module) {
     var $body = document.body;
     var defaults = {
         parentNode: $body,
-        width: 500,
+        width: 'auto',
+        minWidth: 300,
+        maxWidth: '90%',
         height: 'auto',
         top: 'center',
         right: null,
@@ -124,6 +126,8 @@ define(function (require, exports, module) {
             attribute.css(the._$window, {
                 display: 'block',
                 width: options.width,
+                minWidth: options.minWidth,
+                maxWidth: options.maxWidth,
                 height: options.height,
                 position: hasMask ? 'absolute' : 'fixed',
                 scale: 1
