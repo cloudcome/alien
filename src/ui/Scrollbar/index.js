@@ -131,13 +131,15 @@ define(function (require, exports, module) {
                 the._initEvent();
             } else {
                 attribute.css($parent, {
-                    overflow: 'auto !important'
+                    overflow: 'auto !important',
+                    overflowScrolling: 'touch'
                 });
                 the._$scroll = isTextarea ? $ele : $parent;
 
                 if (isTextarea) {
                     attribute.css($ele, {
-                        overflow: 'auto !important'
+                        overflow: 'auto !important',
+                        overflowScrolling: 'touch'
                     });
                 }
             }

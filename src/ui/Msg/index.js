@@ -42,6 +42,8 @@ define(function (require, exports, module) {
     var $body = document.body;
     var defaults = {
         width: 'auto',
+        minWidth: 300,
+        maxWidth: '50%',
         height: 'auto',
         left: 'center',
         top: 'center',
@@ -118,6 +120,8 @@ define(function (require, exports, module) {
             the._window = new Window(null, {
                 parentNode: the._mask ? the._$mask : $body,
                 width: options.width,
+                minWidth: options.minWidth,
+                maxWidth: options.maxWidth,
                 height: options.height,
                 left: options.left,
                 top: options.top,
