@@ -30,9 +30,11 @@ define(function (require, exports, module) {
         // ignore
     };
     var ua = navigator.userAgent;
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
     var defaults = {
         shareData: {},
-        dkTokenKey: '-dkToken-'
+        dkTokenKey: '-dkToken-',
+        timeout: 678
     };
     var Dangke = klass.extends(Emitter).create({
         constructor: function (options) {
@@ -52,6 +54,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._readyCallbacks = [];
+            the._brokenCallbacks = [];
             the._asyncCallbacks = {};
             the._andCallbacks = {};
             the._hasReady = false;
@@ -81,11 +84,11 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            var options = the._options;
             var onready = function (bridge) {
                 if (the._hasReady) {
                     return;
                 }
-
 
                 the._hasReady = true;
                 the.bridge = bridge;
@@ -106,6 +109,8 @@ define(function (require, exports, module) {
                  * @private
                  */
                 the._isAndroid = !!bridge.require;
+                the.isDangke = true;
+                the.platform = the._isAndroid ? 'aos' : 'ios';
 
 
                 /**
@@ -119,13 +124,31 @@ define(function (require, exports, module) {
                     callback.call(the);
                 });
             };
+            var onbroken = function () {
+                if (the._hasBroken) {
+                    return;
+                }
+
+                the._hasBroken = true;
+                the.isDangke = false;
+                the.platform = isIOS ? 'ios' : 'aos';
+                the._brokenCallbacks.forEach(function (callback) {
+                    callback.call(the);
+                });
+            };
+            var past = Date.now();
 
             the._timeid = setInterval(function () {
+                if (Date.now() - past > options.timeout) {
+                    clearInterval(the._timeid);
+                    return onbroken();
+                }
+
                 if (the._namespace in win && !the._hasReady) {
                     clearInterval(the._timeid);
                     onready(win[the._namespace]);
                 }
-            }, 200);
+            }, 30);
 
             // WebViewJavascriptBridgeReady
             document.addEventListener(the._namespace + 'Ready', function (eve) {
@@ -232,16 +255,13 @@ define(function (require, exports, module) {
 
 
         /**
-         * 监听，目前注册的事件有：
-         * club.follow 俱乐部关注
-         * bottom.apply 点击报名
-         * bottom.respond 点击咨询
-         * location.back 点击返回
+         * 监听
          * @param event {String} 事件名称
          * @param [callback] {Function} 事件回调
          */
         when: function (event, callback) {
             var the = this;
+
 
             callback = typeis.function(callback) ? callback : noop;
 
@@ -295,12 +315,31 @@ define(function (require, exports, module) {
         ready: function (callback) {
             var the = this;
 
-            callback = typeis.function(callback) ? callback : noop;
+            if (typeis.function(callback)) {
+                if (the._hasReady) {
+                    callback.call(the);
+                } else {
+                    the._readyCallbacks.push(callback);
+                }
+            }
 
-            if (the._hasReady) {
-                callback.call(the);
-            } else {
-                the._readyCallbacks.push(callback);
+            return the;
+        },
+
+
+        /**
+         * 荡客准备失败后执行
+         * @param callback {Function} 事件回调
+         */
+        broken: function (callback) {
+            var the = this;
+
+            if (typeis.function(callback)) {
+                if (the._hasBroken) {
+                    callback.call(the);
+                } else {
+                    the._brokenCallbacks.push(callback);
+                }
             }
 
             return the;
@@ -320,7 +359,6 @@ define(function (require, exports, module) {
 
         /**
          * 发送数据
-         * type: 'love' 点击想去
          * @param [data] {Object} 数据
          * @param [callback] {Function} 回调
          */
@@ -582,9 +620,8 @@ define(function (require, exports, module) {
 
 
         /**
-         * 页面全屏，此时页面的返回功能将会失效
-         * @param data {Object} 数据
-         * @param data.active {Boolean} 是否启用
+         * 页面关闭
+         * @param [data] {Object} 数据
          * @param [callback] {Function} 回调
          */
         locationFullscreen: function (data, callback) {
@@ -599,17 +636,6 @@ define(function (require, exports, module) {
          */
         locationFinished: function (data, callback) {
             return this._location('finished', data, callback);
-        },
-
-
-        /**
-         * 修改页面标题
-         * @param data {Object} 数据
-         * @param data.title {String} 数据
-         * @param [callback] {Function} 回调
-         */
-        locationTitle: function (data, callback) {
-            return this._location('title', data, callback);
         },
 
 
@@ -843,9 +869,7 @@ define(function (require, exports, module) {
 
         /**
          * 显示/隐藏底部报名按钮
-         * @param data {Object} 数据
-         * @param data.active {Boolean} 是否可以报名
-         * @param data.hidden {Boolean} 是否隐藏
+         * @param [data]
          * @param [callback]
          * @returns {*}
          */
