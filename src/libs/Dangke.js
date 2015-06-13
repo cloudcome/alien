@@ -16,6 +16,8 @@
  * @create 2015-03-10 17:29
  */
 
+// aos 和 ios 都已经在全局注入了相同的属性，并且都是同步的，因此可以不必等待 ready？
+// ios https://github.com/marcuswestin/WebViewJavascriptBridge/blob/master/WebViewJavascriptBridge/WebViewJavascriptBridge.js.txt
 
 define(function (require, exports, module) {
     'use strict';
@@ -31,16 +33,17 @@ define(function (require, exports, module) {
     };
     var ua = navigator.userAgent;
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
+    var namespace = 'WebViewJavascriptBridge';
     var defaults = {
         shareData: {},
         dkTokenKey: '-dkToken-',
-        timeout: 678
+        timeout: 1000
     };
     var Dangke = klass.extends(Emitter).create({
         constructor: function (options) {
             var the = this;
 
-            the._namespace = 'WebViewJavascriptBridge';
+            //the._namespace = 'WebViewJavascriptBridge';
             the._options = dato.extend(true, {}, defaults, options);
             the._shareData = the._options.shareData;
             the._init();
@@ -73,7 +76,7 @@ define(function (require, exports, module) {
          */
         _setDkToken: function (json) {
             json = json || {};
-            window[defaults.dkTokenKey] = json.dkToken || '';
+            win[defaults.dkTokenKey] = json.dkToken || '';
         },
 
 
@@ -119,7 +122,6 @@ define(function (require, exports, module) {
                  * @param bridge {Object} jsbridge 对象
                  */
                 the.emit('ready', bridge);
-
                 the._readyCallbacks.forEach(function (callback) {
                     callback.call(the);
                 });
@@ -132,6 +134,7 @@ define(function (require, exports, module) {
                 the._hasBroken = true;
                 the.isDangke = false;
                 the.platform = isIOS ? 'ios' : 'aos';
+                the.emit('broken');
                 the._brokenCallbacks.forEach(function (callback) {
                     callback.call(the);
                 });
@@ -144,14 +147,14 @@ define(function (require, exports, module) {
                     return onbroken();
                 }
 
-                if (the._namespace in win && !the._hasReady) {
+                if (namespace in win && !the._hasReady) {
                     clearInterval(the._timeid);
-                    onready(win[the._namespace]);
+                    onready(win[namespace]);
                 }
-            }, 30);
+            }, 10);
 
             // WebViewJavascriptBridgeReady
-            document.addEventListener(the._namespace + 'Ready', function (eve) {
+            document.addEventListener(namespace + 'Ready', function (eve) {
                 onready(eve.bridge);
             });
         },
@@ -280,7 +283,7 @@ define(function (require, exports, module) {
                     the._andCallbacks[event].push(callback);
                 }
 
-                window[the._namespace + event] = function (res) {
+                win[namespace + event] = function (res) {
                     the._onreceive.call(the, res, function (err, json) {
                         var self = this;
                         var args = arguments;
@@ -878,7 +881,7 @@ define(function (require, exports, module) {
         }
     });
 
-    Dangke.isDangke = /\bdangke\b/i.test(ua);
+    Dangke.isDangke = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
     Dangke.defaults = defaults;
     module.exports = Dangke;
 });

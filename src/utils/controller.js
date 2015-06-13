@@ -11,11 +11,14 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    var win = window;
+    var doc = win.document;
     var typeis = require('./typeis.js');
     var compatible = require('../core/navigator/compatible.js');
+    var $link = doc.createElement('a');
     // MutationObserver 给开发者们提供了一种能在某个范围内的 DOM 树发生变化时作出适当反应的能力.
     // 该 API 设计用来替换掉在 DOM3 事件规范中引入的 Mutation 事件.
-    var MutationObserver = compatible.html5('MutationObserver', window);
+    var MutationObserver = compatible.html5('MutationObserver', win);
 
     /**
      * 至少间隔一段时间执行
@@ -150,13 +153,15 @@ define(function (require, exports, module) {
     };
 
 
+
+
     /**
      * 下一步
      * @param callback {Function} 回调
      * @param [context=window] {Object} 上下文
      */
     exports.nextTick = function (callback, context) {
-        context = context || window;
+        context = context || win;
 
         var args = [].slice.call(arguments, 2);
         var $doc = document;
@@ -167,19 +172,17 @@ define(function (require, exports, module) {
 
         // chrome18+, safari6+, firefox14+,ie11+,opera15
         if (MutationObserver) {
-            var $link = $doc.createElement('a');
-            var observer = new window[MutationObserver](fn);
+            var observer = new win[MutationObserver](fn);
 
             observer.observe($link, {
                 attributes: true
             });
-            $link.setAttribute('a', Math.random());
+            $link.setAttribute('a', String(Math.random()));
 
             return;
-        } else if (window.VBArray) {
-            var $script = $doc.createElement('script');
-
-            // IE下这个通常只要1ms,而且没有副作用，不会发现请求
+        } else if ('VBArray' in win) {
+            var $script = doc.createElement('script');
+            // IE下这个通常只要 1 ms,而且没有副作用，不会发现请求
             $script.onreadystatechange = function () {
                 fn(); //在interactive阶段就触发
                 $script.onreadystatechange = null;
@@ -194,4 +197,12 @@ define(function (require, exports, module) {
 
         setTimeout(fn, 0);
     };
+
+
+    ///**
+    // * 不断轮询
+    // */
+    //exports.intervalTick = function () {
+    //
+    //};
 });
