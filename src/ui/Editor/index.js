@@ -383,6 +383,15 @@ define(function (require, exports, module) {
                     the._saveLocal();
                 });
 
+                event.on(the._$ele, 'cmd+return ctrl+return', function () {
+                    /**
+                     * 提交
+                     * @event submit
+                     * @params value {String} markdown 编辑器内容
+                     */
+                    the.emit('submit', the._$ele.value);
+                });
+
                 return;
             }
 
@@ -527,6 +536,16 @@ define(function (require, exports, module) {
             // _italic_
             the._addKeyMap('ctrl', 'I', function () {
                 the.wrap('_');
+            });
+
+            // cmd + enter
+            the._addKeyMap('ctrl', 'enter', function () {
+                /**
+                 * 提交
+                 * @event submit
+                 * @params value {String} markdown 编辑器内容
+                 */
+                the.emit('submit', the._editor.getValue());
             });
 
 
