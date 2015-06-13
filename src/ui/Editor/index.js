@@ -538,8 +538,8 @@ define(function (require, exports, module) {
                 the.wrap('_');
             });
 
-            // cmd + enter
-            the._addKeyMap('ctrl', 'enter', function () {
+            // cmd + return
+            the._addKeyMap('ctrl', 'Enter', function () {
                 /**
                  * 提交
                  * @event submit

@@ -39,6 +39,10 @@ define(function (require, exports, module) {
 
     editor.setAtList(list);
 
+    editor.on('submit', function (val) {
+        alert(val);
+    });
+
     document.getElementById('btn').onclick = function () {
         alert(editor.getValue());
     };
