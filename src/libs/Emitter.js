@@ -230,6 +230,8 @@ define(function (require, exports, module) {
 
             // !name
             if (flag === '!') {
+                matched = true;
+
                 if (name === _name.slice(1)) {
                     matched = false;
                     return false;
@@ -237,6 +239,8 @@ define(function (require, exports, module) {
             }
             // name
             else {
+                matched = false;
+
                 if (name === _name) {
                     matched = true;
                     return false;

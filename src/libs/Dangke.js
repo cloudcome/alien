@@ -36,7 +36,6 @@ define(function (require, exports, module) {
     var namespace = 'WebViewJavascriptBridge';
     var defaults = {
         shareData: {},
-        dkTokenKey: '-dkToken-',
         timeout: 1000
     };
     var Dangke = klass.extends(Emitter).create({
@@ -76,7 +75,7 @@ define(function (require, exports, module) {
          */
         _setDkToken: function (json) {
             json = json || {};
-            win[defaults.dkTokenKey] = json.dkToken || '';
+            win[Dangke.tokenKey] = json.dkToken || '';
         },
 
 
@@ -881,6 +880,7 @@ define(function (require, exports, module) {
         }
     });
 
+    Dangke.tokenKey = '-dkToken-';
     Dangke.isDangke = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
     Dangke.defaults = defaults;
     module.exports = Dangke;
