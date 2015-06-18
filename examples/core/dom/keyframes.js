@@ -9,7 +9,7 @@ define(function (require) {
     var Template = require('../../../src/libs/Template.js');
     var alert = require('../../../src/widgets/alert.js');
     var Dialog = require('../../../src/ui/Dialog/');
-    var Autoheight = require('../.././');
+    var Autoheight = require('../../../src/ui/AutoHeight/');
     var template = selector.query('#template')[0].innerHTML;
     var tpl = new Template(template);
     var $name = selector.query('#name')[0];
