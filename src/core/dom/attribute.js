@@ -821,7 +821,7 @@ define(function (require, exports, module) {
             // addClass
             case 0:
                 dato.each(classNames, function (index, klass) {
-                    if (klass) {
+                    if (klass && !_class(ele, 2, klass)) {
                         classList.add(klass);
                     }
                 });

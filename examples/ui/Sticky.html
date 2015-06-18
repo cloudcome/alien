@@ -32,7 +32,6 @@
         }
 
         .placeholder{
-            background: #eee;
             height: 200px;
             text-align: center;
             line-height: 200px;
@@ -40,16 +39,24 @@
             margin-bottom: 50px;
         }
 
-        #stickly{
-            background: #000;
-            height: 40px;
+        .placeholder-1{
+            background: #c4c7fa;
+            color: #9396bc;
         }
 
-        .stickly{
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
+        .placeholder-2{
+            background: #d0fae5;
+            color: #8fac9e;
+        }
+
+        .placeholder-3{
+            background: #fab8ce;
+            color: #b08291;
+        }
+
+        #sticky{
+            background: #000;
+            height: 40px;
         }
 
         pre{
@@ -64,29 +71,38 @@
 </head>
 <body ontouchstart="">
 
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
+<p class="placeholder placeholder-1">占位</p>
+<p class="placeholder placeholder-1">占位</p>
+<p class="placeholder placeholder-1">占位</p>
+<p class="placeholder placeholder-1">占位</p>
+<p class="placeholder placeholder-1">占位</p>
 
-<div id="stickly"></div>
+<div class="sticky-parent">
+    <div id="sticky"></div>
 
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
-<p class="placeholder">占位</p>
+    <p class="placeholder placeholder-2">占位</p>
+    <p class="placeholder placeholder-2">占位</p>
+    <p class="placeholder placeholder-2">占位</p>
+    <p class="placeholder placeholder-2">占位</p>
+    <p class="placeholder placeholder-2">占位</p>
+</div>
+
+<p class="placeholder placeholder-3">占位</p>
+<p class="placeholder placeholder-3">占位</p>
+<p class="placeholder placeholder-3">占位</p>
+<p class="placeholder placeholder-3">占位</p>
+<p class="placeholder placeholder-3">占位</p>
+
 
 <pre>
-var tab = new Tab('#tab');
+var sticky = new Sticky('#sticky');
 </pre>
 
 
 
 <script src="../coolie.min.js"
         data-config="./coolie-config.js"
-        data-main="./ui/Stickly.js"></script>
+        data-main="./ui/Sticky.js"></script>
 
 
 
