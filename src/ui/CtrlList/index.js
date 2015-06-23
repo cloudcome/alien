@@ -8,6 +8,15 @@
 define(function (require, exports, module) {
     /**
      * @module ui/CtrlList/
+     * @requires ui/
+     * @requires ui/Popup/
+     * @requires libs/Template
+     * @requires core/event/hotkey
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires utils/typeis
+     * @requires utils/dato
      */
 
     'use strict';
@@ -32,7 +41,7 @@ define(function (require, exports, module) {
             left: 0,
             top: 0
         },
-        maxHeight: 'none'
+        maxHeight: 300
     };
 
     var CtrlList = ui.create({
@@ -113,8 +122,6 @@ define(function (require, exports, module) {
             }
 
             the.emit('open');
-
-
             the.visible = true;
             the._popup.open(position, callback);
 
@@ -181,13 +188,23 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var activeClass = alienClass + '-item-active';
-            var activeIndex = function () {
-                var $ele = the._$items[the._index];
-
-                the._value = attribute.data($ele, 'value');
-                the._text = $ele.innerText;
+            var activeIndex = function (isKeyboard) {
+                var $item = the._$items[the._index];
+                the._value = attribute.data($item, 'value');
+                the._text = $item.innerText;
                 attribute.removeClass(the._$items, activeClass);
-                attribute.addClass($ele, activeClass);
+                attribute.addClass($item, activeClass);
+
+                if (isKeyboard) {
+                    var itemsHeight = attribute.outerHeight($item) * (the._index + 2);
+                    var containerHeight = attribute.outerHeight(the._$popup);
+
+                    if (itemsHeight > containerHeight) {
+                        attribute.scrollTop(the._$popup, itemsHeight - containerHeight);
+                    }else{
+                        attribute.scrollTop(the._$popup, 0);
+                    }
+                }
             };
 
             the._onsure = function () {
@@ -228,7 +245,7 @@ define(function (require, exports, module) {
                 }
 
                 the._index--;
-                activeIndex();
+                activeIndex(true);
             });
 
             // 下移
@@ -238,13 +255,13 @@ define(function (require, exports, module) {
                 }
 
                 the._index++;
-                activeIndex();
+                activeIndex(true);
             });
 
             // esc
             event.on(doc, 'esc', the._onclose);
 
-            // enter
+            // return
             event.on(doc, 'return', the._onsure);
 
             // 单击其他地方

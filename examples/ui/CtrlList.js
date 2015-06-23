@@ -21,8 +21,9 @@ define(function (require, exports, module) {
     event.on(document, 'contextmenu', function (eve) {
         var list = [];
 
-        dato.repeat(random.number(2, 10), function () {
+        dato.repeat(random.number(1, 30), function () {
             var str = random.string(random.number(2, 10), 'aA');
+
             list.push({
                 value: str,
                 text: str

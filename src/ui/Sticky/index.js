@@ -54,7 +54,6 @@ define(function (require, exports, module) {
 
             the._initNode();
             the._initEvent();
-            the._stickly();
 
             return the;
         },
@@ -75,24 +74,21 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the.update();
-            the._onscroll = controller.throttle(the._stickly.bind(the), options.wait);
+            the._listening = false;
+            the._onscroll = controller.throttle(the._sticky.bind(the), options.wait);
             event.on(the._$scroller, options.event, the._onscroll.bind(the));
-            controller.nextTick(the._stickly.bind(the));
+            controller.nextTick(the._sticky.bind(the));
         },
 
 
-        _stickly: function () {
+        _sticky: function () {
             var the = this;
             var options = the._options;
             var scrollerTop = attribute.scrollTop(the._$scroller);
 
-            //attribute.removeClass(the._$ele, options.className);
-            //
-            //var top = attribute.top(the._$ele) + options.offset;
-            //var scrollTop = attribute.scrollTop(the._$scroller);
+            the.update(false);
 
-            if (scrollerTop >= the._containerSize.top && scrollerTop <= the._containerSize.top + the._containerSize.height) {
+            if (scrollerTop > the._containerSize.top && scrollerTop < the._containerSize.top + the._containerSize.height) {
                 attribute.addClass(the._$ele, options.className);
                 attribute.css(the._$ele, 'position', 'fixed');
                 /**
@@ -112,16 +108,22 @@ define(function (require, exports, module) {
 
         /**
          * 更新内容、滚动区域尺寸
+         * @param [isSticky=true] {Boolean} 是否触发 sticky
+         * @returns {Sticky}
          */
-        update: function () {
+        update: function (isSticky) {
             var the = this;
 
-            the._scrollerSize = {};
             the._containerSize = {
                 height: attribute.outerHeight(the._$container),
                 top: attribute.top(the._$container)
             };
 
+            if (the._listening && isSticky !== false) {
+                the._sticky();
+            }
+
+            the._listening = true;
             return the;
         },
 
