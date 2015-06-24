@@ -117,20 +117,16 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.function(options.navGenerator) && the._$nav) {
+            if (typeis.function(options.navGenerator) && the._$nav && !the._hasInit) {
                 var navHtml = '';
 
+                the._hasInit = true;
                 dato.repeat(the.length, function (index) {
                     navHtml += options.navGenerator.call(the, index, the.length);
                 });
-
                 the._$nav.innerHTML = navHtml;
                 the._$navItems = selector.children(the._$nav);
-
-                if (!the._hasInit) {
-                    the._hasInit = true;
-                    attribute.addClass(the._$navItems[0], options.navActiveClass);
-                }
+                attribute.addClass(the._$navItems[0], options.navActiveClass);
             }
 
             var winWidth = the._winWidth = attribute.width(win);
@@ -186,6 +182,11 @@ define(function (require, exports, module) {
 
                 dato.extend(style, lastPos);
                 attribute.css($item, style);
+            });
+
+            attribute.css(the._$container, {
+                translateX: -the._pos[the.index].x,
+                translateY: -the._pos[the.index].y
             });
 
             return the;
