@@ -100,6 +100,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._axis = [];
+            the._pos = [{
+                x: 0,
+                y: 0
+            }];
 
             if (typeis.string(options.axis)) {
                 dato.repeat(the.length, function () {
@@ -108,7 +112,7 @@ define(function (require, exports, module) {
             } else {
                 var axisLength = options.axis.length;
 
-                dato.repeat(the.length, function (index) {
+                dato.repeat(the.length - 1, function (index) {
                     the._axis.push(options.axis[index % axisLength]);
                 });
             }
@@ -140,9 +144,10 @@ define(function (require, exports, module) {
             var containerStyle = {};
             var xLength = 0;
             var yLength = 0;
-            var xTimes = 0;
-            var yTimes = 0;
-            var lastAxis = null;
+            var lastPos = {
+                top: 0,
+                left: 0
+            };
 
             dato.each(the._axis, function (index, axis) {
                 if (axis === 'x') {
@@ -163,29 +168,23 @@ define(function (require, exports, module) {
                     width: winWidth,
                     height: winHeight
                 };
-                var axis = the._axis[index];
 
                 if (index) {
-                    if (lastAxis && lastAxis === 'y') {
-                        yTimes++;
-                    } else if (lastAxis && lastAxis === 'x') {
-                        xTimes++;
-                    }
-
-                    style.left = xTimes * winWidth;
-                    style.top = yTimes * winHeight;
+                    var axis = the._axis[index - 1];
 
                     if (axis === 'x') {
-                        xTimes++;
+                        lastPos.left += winWidth;
                     } else {
-                        yTimes++;
+                        lastPos.top += winHeight;
                     }
-                } else {
-                    style.left = 0;
-                    style.top = 0;
+
+                    the._pos.push({
+                        x: lastPos.left,
+                        y: lastPos.top
+                    });
                 }
 
-                lastAxis = axis;
+                dato.extend(style, lastPos);
                 attribute.css($item, style);
             });
 
@@ -263,11 +262,12 @@ define(function (require, exports, module) {
          */
         _translate: function () {
             var the = this;
-            var options = the._options;
-            var to = {};
-            var axis = the._axis[the.index];
 
-            to['translate' + (axis.toUpperCase())] = -the.index * (axis === 'x' ? the._winWidth : the._winHeight);
+            if (the._lastIndex === the.index) {
+                return;
+            }
+
+            var options = the._options;
 
             if (the._animating) {
                 return;
@@ -290,7 +290,10 @@ define(function (require, exports, module) {
             the.emit('beforeenter', the.index, the.length);
 
             the._animating = true;
-            animation.transition(the._$container, to, {
+            animation.transition(the._$container, {
+                translateX: -the._pos[the.index].x,
+                translateY: -the._pos[the.index].y
+            }, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
@@ -317,7 +320,7 @@ define(function (require, exports, module) {
 
         destroy: function () {
             event.un(win, 'resize');
-            event.un(doc, 'touch1start swipe wheelchange');
+            event.un(doc, 'touch1start swipe wheelstart wheelchange wheelend');
         }
     });
 

@@ -32,6 +32,8 @@ define(function (require, exports, module) {
         minHeight: 200,
         accept: 'image/png,image/jpg,image/jpeg,image/gif,image/bmp',
         ratio: 1,
+        // image 图片质量
+        quality: 1,
         ajax: {
             // xhr options 都可以传进来
             url: '',
