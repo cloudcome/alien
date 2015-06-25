@@ -126,7 +126,7 @@ define(function (require, exports, module) {
             if (the._$cover === win) {
                 maskWindowLength++;
                 maskWindowList.push(the);
-                attribute.addClass([html, body], alienClass + '-overflow');
+                //attribute.addClass([html, body], alienClass + '-overflow');
             }
 
             return the;
@@ -196,9 +196,9 @@ define(function (require, exports, module) {
                 maskWindowList.splice(findIndex, 1);
             }
 
-            if (!maskWindowLength) {
-                attribute.removeClass([html, body], alienClass + '-overflow');
-            }
+            //if (!maskWindowLength) {
+            //    attribute.removeClass([html, body], alienClass + '-overflow');
+            //}
 
             return the;
         },
@@ -283,7 +283,7 @@ define(function (require, exports, module) {
      * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
      */
     module.exports = Mask;
-    style += '.' + alienClass + '-overflow{margin-right:' + _getScrollbarWidth() + 'px !important;}';
+    //style += '.' + alienClass + '-overflow{margin-right:' + _getScrollbarWidth() + 'px !important;}';
     modification.importStyle(style);
     event.on(document, 'keyup', function (eve) {
         var mask;
