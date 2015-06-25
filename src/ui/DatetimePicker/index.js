@@ -51,6 +51,7 @@ define(function (require, exports, module) {
     var REG_HOUR = /h/i;
     var REG_MINUTE = /m/;
     var REG_SECOND = /s/;
+    var doc = document;
     var defaults = {
         format: 'YYYY-MM-DD',
         firstDayInWeek: 0,
@@ -76,6 +77,12 @@ define(function (require, exports, module) {
             the._options = dato.extend(true, {}, defaults, options);
             the._init();
         },
+
+
+        /**
+         * 初始化
+         * @private
+         */
         _init: function () {
             var the = this;
             var options = the._options;
@@ -303,12 +310,16 @@ define(function (require, exports, module) {
                 attribute.removeClass(selector.query('td', the._$list), alienClass + '-active');
                 attribute.addClass(this, alienClass + '-active');
                 the._onchange();
+
+                return false;
             });
 
-            // 点击现在
+            // 点击取消
             event.on(the._$cancel, 'click', function () {
                 the.close();
                 the.emit('cancel');
+
+                return false;
             });
 
             // 点击现在
@@ -317,6 +328,8 @@ define(function (require, exports, module) {
                 the._onchange(the._date);
                 the._render();
                 the.emit('now', the._date);
+
+                return false;
             });
 
             // 点击确定
@@ -324,6 +337,24 @@ define(function (require, exports, module) {
                 the._$input.value = date.format(options.format, the._date);
                 the.close();
                 the.emit('sure', the._date);
+
+                return false;
+            });
+
+            // 点击 document
+            event.on(doc, 'click', function (eve) {
+                if (!the._visible) {
+                    return;
+                }
+
+                var $target = eve.target;
+
+                if ($target === the._$input || selector.closest($target, '.' + alienClass)[0]) {
+                    return;
+                }
+
+                the.close();
+                the.emit('cancel');
             });
         },
 
@@ -398,6 +429,8 @@ define(function (require, exports, module) {
                 if (the._rSeconds) {
                     the._rSeconds.update();
                 }
+
+                the._visible = true;
             });
 
             return the;
@@ -411,7 +444,9 @@ define(function (require, exports, module) {
         close: function () {
             var the = this;
 
-            the._popup.close();
+            the._popup.close(function () {
+                the._visible = false;
+            });
 
             return the;
         },
@@ -470,6 +505,7 @@ define(function (require, exports, module) {
             event.un(the._$list, 'click');
             event.un(the._$now, 'click');
             event.un(the._$sure, 'click');
+            event.un(doc, 'click');
             the._popup.destroy();
         }
     });

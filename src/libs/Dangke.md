@@ -481,3 +481,23 @@ __只在当前通知了 location.fullscreen 的时候回调__
 ```
 location.back
 ```
+
+## 11.5 点击了分享
+```
+share.click
+
+=> 
+{
+    type: "qq"
+}
+
+{
+    wxtimeline: "朋友圈",
+    wxsession: "微信好友",
+    sms: "短信",
+    sina: "新浪微博",
+    qq: "QQ 好友",
+    qzone: "QQ 空间"
+}
+```
+

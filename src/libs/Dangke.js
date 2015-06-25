@@ -31,8 +31,18 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
+    var netMap = {
+        '-1': 'unknow',
+        0: 'none',
+        1: 'wap',
+        2: 'wifi'
+    };
+    // IOS: systemName/%@; systemVersion/%@; deviceVersion/%@; dangkr/1.1.5/%@
+    // AOS: navigator.userAgent + "; dangkr/1.1.5/1"
     var ua = navigator.userAgent;
+    var REG_END = /;([^;]*)$/;
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
+    var dkuaList = (ua.match(REG_END) || ['', ''])[1].split('/');
     var namespace = 'WebViewJavascriptBridge';
     var defaults = {
         shareData: {},
@@ -883,5 +893,8 @@ define(function (require, exports, module) {
     Dangke.tokenKey = '-dkToken-';
     Dangke.isDangke = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
     Dangke.defaults = defaults;
+    Dangke.version = dkuaList[1] || '1.1.0';
+    Dangke.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';
+    Dangke.platform = isIOS ? 'ios' : 'aos';
     module.exports = Dangke;
 });
