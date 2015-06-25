@@ -180,7 +180,7 @@ define(function (require, exports, module) {
             event.on(the._$wrap, 'touch1start', function (eve) {
                 hasScroll = false;
                 translate0 = the._translate;
-                the._autoPlay(the, false);
+                the._autoPlay(false);
             });
 
             // 触摸过程
