@@ -24,6 +24,12 @@
 {{/list}}
 ```
 
+# 过滤器
+```
+{{varible|filter}}
+{{varible|filter:arg0, arg1}}
+```
+
 
 # 赋值
 ```
