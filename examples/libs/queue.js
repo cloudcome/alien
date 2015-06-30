@@ -28,7 +28,7 @@ define(function (require, exports, module) {
             }, random.number(500, 1000));
         };
     };
-    var Queue = require('/src/libs/Queue.js');
+    var Queue = require('/src/libs/queue.js');
     var q = new Queue();
 
     q.on('size', function (size) {

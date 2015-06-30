@@ -8,7 +8,7 @@
 define(function (require) {
     'use strict';
 
-    var Pjax = require('/src/libs/Pjax.js');
+    var Pjax = require('/src/libs/pjax.js');
     var $btn = document.getElementById('btn');
     var $status = document.getElementById('status');
     var $container = document.getElementById('container');

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Emitter = require('/src/libs/Emitter.js');
+    var Emitter = require('../../src/libs/emitter.js');
     var emitter = new Emitter();
 
     emitter.on('hi', function (data) {

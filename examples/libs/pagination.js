@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Pagination = require('/src/libs/Pagination.js');
+    var Pagination = require('/src/libs/pagination.js');
 
     var pagi = new Pagination({
         count: 99,

@@ -9,7 +9,7 @@ define(function (require) {
     'use strict';
 
     var console = window.console;
-    var Router = require('/src/libs/Router.js');
+    var Router = require('/src/libs/router.js');
     var router = new Router();
 
     router

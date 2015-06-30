@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Template = require('../../src/libs/Template.js');
+    var Template = require('../../src/libs/template.js');
     var dato = require('../../src/utils/dato.js');
     var $textarea = document.getElementById('template');
     var $render = document.getElementById('render');

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Validator = require('/src/libs/Validator.js');
+    var Validator = require('/src/libs/validator.js');
     var selector = require('/src/core/dom/selector.js');
     var modification = require('/src/core/dom/modification.js');
     var v1 = new Validator();

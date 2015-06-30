@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Scroll = require('../../src/libs/Scroll.js');
+    var Scroll = require('../../src/libs/scroll.js');
     var sc = new Scroll('body');
     var sc2 = new Scroll('#demo');
     var console = window.console;
