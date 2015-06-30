@@ -109,6 +109,6 @@ define(function (require, exports, module) {
      * @param styleText {String}
      */
     exports.importStyle = function (styleText) {
-        ui.importStyle(styleText, $style, true);
+        modification.importStyle(styleText, $style, true);
     };
 });

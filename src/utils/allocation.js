@@ -106,7 +106,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 修正参数传参，参数最后一位为 undefined 将被舍去
+     * 修正参数传参，参数最末尾的 undefined 参数都将被舍去
      * @param args {Arguments} 参数
      * @returns {Array}
      */
