@@ -20,8 +20,8 @@ define(function (require, exports, module) {
      * @requires core/event/base
      * @requires libs/Template
      * @requires ui/
-     * @requires ui/Range/
-     * @requires ui/Popup/
+     * @requires ui/range/
+     * @requires ui/popup/
      */
     'use strict';
 
@@ -41,8 +41,8 @@ define(function (require, exports, module) {
     var templateList = require('./list.html', 'html');
     var templateToolbar = require('./toolbar.html', 'html');
     var style = require('./style.css', 'css');
-    var Range = require('../../ui/Range/');
-    var Popup = require('../../ui/Popup/');
+    var Range = require('../range/');
+    var Popup = require('../popup/');
     var tplWrap = new Template(templateWrap);
     var tplList = new Template(templateList);
     var tplToolbar = new Template(templateToolbar);

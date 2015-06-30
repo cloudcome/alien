@@ -7,10 +7,10 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Dialog/
-     * @requires ui/Mask/
-     * @requires ui/Window/
-     * @requires ui/Scrollbar/
+     * @module ui/dialog/
+     * @requires ui/mask/
+     * @requires ui/window/
+     * @requires ui/scrollbar/
      * @requires utils/dato
      * @requires utils/typeis
      * @requires core/dom/selector
@@ -24,8 +24,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var Mask = require('../mask/');
-    var Window = require('../Window/');
-    var Scrollbar = require('../Scrollbar/');
+    var Window = require('../window/');
+    var Scrollbar = require('../scrollbar/');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
