@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Window = require('/src/ui/Window/');
+    var Window = require('/src/ui/window/');
     var random = require('/src/utils/random.js');
     var animation = require('/src/core/dom/animation.js');
     var see = require('/src/core/dom/see.js');

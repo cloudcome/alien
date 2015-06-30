@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Validator = require('/src/ui/Validator/');
+    var Validator = require('/src/ui/validator/');
     var v1 = new Validator('#form');
     var $submit = document.getElementById('submit');
 
