@@ -3,19 +3,14 @@
   box-shadow: 5px 5px 10px #DDD;
   background: #f9f9f9;
   min-width: 200px;
-  overflow: auto; }
+  overflow: auto;
+  padding: 3px 0; }
   .alien-ui-ctrllist-item {
     line-height: 14px;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     padding: 5px 10px; }
-    .alien-ui-ctrllist-item:first-child {
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px; }
-    .alien-ui-ctrllist-item:last-child {
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px; }
     .alien-ui-ctrllist-item-active {
-      background: #3f61ee;
+      background: #3682f9;
       color: #FFF; }

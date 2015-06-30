@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var CtrlList = require('../../src/ui/CtrlList/');
+    var CtrlList = require('../../src/ui/ctrl-list/');
     var event = require('../../src/core/event/base.js');
     var random = require('../../src/utils/random.js');
     var dato = require('../../src/utils/dato.js');

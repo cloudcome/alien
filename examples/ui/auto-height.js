@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Autoheight = require('/src/ui/Autoheight/index.js');
+    var Autoheight = require('/src/ui/auto-height/index.js');
 
     var ah1 = new Autoheight('#textarea1');
     var ah2 = new Autoheight('#textarea2');
