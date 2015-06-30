@@ -25,8 +25,6 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
-    var Template = require('../../libs/template.js');
-    var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -38,7 +36,7 @@ define(function (require, exports, module) {
         duration: 123,
         easing: 'out-quart',
         selector: '.tooltip',
-        // 标签的 data 值，即“data-tooltip”
+        // 标签的 data 值，即“data-tooltip”，否则读取 图片的 alt 属性，或者 innerText 值
         data: 'tooltip',
         // 触发打开、关闭事件类型
         openEvent: 'mouseover',
@@ -78,9 +76,9 @@ define(function (require, exports, module) {
             the._$lastEle = null;
             the._timeid = 0;
 
-            event.on(doc, options.openEvent, options.selector, the._onTooltip = function (eve) {
+            event.on(doc, options.openEvent, options.selector, the._onTooltip = function () {
                 var $ele = this;
-                var content = attribute.data($ele, options.data) || $ele.innerHTML;
+                var content = attribute.data($ele, options.data) || attribute.text($ele);
 
                 clearTimeout(the._timeid);
 
@@ -105,8 +103,21 @@ define(function (require, exports, module) {
                 the._timeid = setTimeout(function () {
                     the._popup.close();
                     the._$lastEle = null;
-                }, options.duration);
+                }, options.timeout);
             });
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+            var options = the._options;
+
+            event.un(doc, options.openEvent, the._onTooltip);
+            event.un(doc, options.closeEvent, the._offTooltip);
+            the._popup.destroy();
         }
     });
 

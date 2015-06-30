@@ -431,8 +431,8 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的innerHTML
-     * @param {HTMLElement|Node} ele 元素
-     * @param {String}      [html] html字符串
+     * @param {Object} $ele 元素
+     * @param {String} [html] html字符串
      * @returns {String|undefined}
      *
      * @example
@@ -442,14 +442,14 @@ define(function (require, exports, module) {
      * // get
      * attribute.html(ele);
      */
-    exports.html = function (ele, html) {
+    exports.html = function ($ele, html) {
         return _getSet(arguments, {
-            get: function (ele) {
-                if (!typeis.element(ele)) {
+            get: function ($ele) {
+                if (!typeis.element($ele)) {
                     return;
                 }
 
-                return ele.innerHTML;
+                return $ele.innerHTML;
             },
             set: function (ele, html) {
                 if (!typeis.element(ele)) {
@@ -464,32 +464,36 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的innerText
-     * @param {HTMLElement|Node} ele 元素
-     * @param {String}      [text]  text字符串
+     * @param {Object} $ele 元素
+     * @param {String} [text]  text字符串
      * @returns {String|undefined}
      *
      * @example
      * // set
-     * attribute.text(ele, 'html');
+     * attribute.text(ele, 'text');
      *
      * // get
      * attribute.text(ele);
      */
-    exports.text = function (ele, text) {
+    exports.text = function ($ele, text) {
         return _getSet(arguments, {
-            get: function (ele) {
-                if (!typeis.element(ele)) {
-                    return;
+            get: function ($ele) {
+                if (!typeis.element($ele)) {
+                    return null;
                 }
 
-                return ele.innerText;
+                return $ele.innerText || $ele.textContent;
             },
             set: function (ele, text) {
                 if (!typeis.element(ele)) {
                     return;
                 }
 
-                ele.innerText = text;
+                if ('innerText' in ele) {
+                    ele.innerText = text;
+                } else {
+                    ele.textContent = text;
+                }
             }
         }, 1);
     };
