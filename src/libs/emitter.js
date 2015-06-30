@@ -22,7 +22,12 @@ define(function (require, exports, module) {
     var regSpace = /\s+/g;
     var alienId = 0;
 
+
     module.exports = klass.create({
+        /**
+         * @constructor Emitter
+         * @type {Function}
+         */
         constructor: function () {
             var the = this;
 
@@ -38,6 +43,7 @@ define(function (require, exports, module) {
          * @method on
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} listener 事件回调
+         * @returns {this}
          *
          * @example
          * var emitter = new Emitter();
@@ -64,8 +70,25 @@ define(function (require, exports, module) {
         },
 
 
-        before: function () {
+        /**
+         * 添加事件触发前事件
+         * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
+         * @param listener {Function} 事件回调
+         * @returns {this}
+         */
+        before: function (eventType, listener) {
+            return this.on('before' + eventType, listener);
+        },
 
+
+        /**
+         * 添加事件触发后事件
+         * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
+         * @param listener {Function} 事件回调
+         * @returns {this}
+         */
+        after: function (eventType, listener) {
+            return this.on('after' + eventType, listener);
         },
 
 
@@ -74,6 +97,7 @@ define(function (require, exports, module) {
          * @method un
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} [listener] 事件回调，缺省时将移除该事件类型上的所有事件回调
+         * @returns {this}
          *
          * @example
          * var emitter = new Emitter();
@@ -155,6 +179,7 @@ define(function (require, exports, module) {
          * 将所有的事件派发到目标
          * @param target {Object} 目标
          * @param [emitters] {Array} 传递的事件数组，默认为全部
+         * @returns {this}
          */
         pipe: function (target, emitters) {
             var the = this;
