@@ -170,7 +170,7 @@ define(function (require, exports, module) {
         }
     });
 
-    modification.importStyle(style);
+    ui.importStyle(style);
     document.body.appendChild($mirror);
     AutoHeight.defaults = defaults;
     module.exports = AutoHeight;

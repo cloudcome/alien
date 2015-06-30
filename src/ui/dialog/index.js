@@ -365,5 +365,5 @@ define(function (require, exports, module) {
      * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
      */
     module.exports = Dialog;
-    modification.importStyle(style);
+    ui.importStyle(style);
 });

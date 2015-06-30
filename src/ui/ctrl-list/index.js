@@ -284,7 +284,7 @@ define(function (require, exports, module) {
         }
     });
 
-    modification.importStyle(style);
+    ui.importStyle(style);
     CtrlList.defaults = defaults;
     module.exports = CtrlList;
 });

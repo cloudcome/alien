@@ -24,7 +24,7 @@ define(function (require, exports, module) {
     //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;
     var $style = modification.create('style', {
-        id: 'alien-ui' + Date.now()
+        id: 'alien-ui-' + Date.now()
     });
 
 
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
      * @returns {Constructor}
      *
      * @example
-     * var Dialog = ui.create({。。。});
+     * var Dialog = ui.create({...});
      */
     exports.create = function (prototypes, isInheritSuperStatic) {
         if (!typeis.function(prototypes.constructor)) {
@@ -109,6 +109,6 @@ define(function (require, exports, module) {
      * @param styleText {String}
      */
     exports.importStyle = function (styleText) {
-        modification.importStyle(styleText, $style);
+        modification.importStyle(styleText, $style, true);
     };
 });

@@ -261,5 +261,5 @@ define(function (require, exports, module) {
      */
     module.exports = Msg;
     Msg.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
 });

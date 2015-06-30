@@ -512,5 +512,5 @@ define(function (require, exports, module) {
 
     DatetimePicker.defaults = defaults;
     module.exports = DatetimePicker;
-    modification.importStyle(style);
+    ui.importStyle(style);
 });

@@ -840,6 +840,6 @@ define(function (require, exports, module) {
     require('../../core/event/hotkey.js');
     markedRender.image = require('./marked-render-image.js');
     markedRender.table = require('./marked-render-table.js');
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Editor;
 });
