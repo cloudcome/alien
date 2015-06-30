@@ -19,9 +19,13 @@ define(function (require, exports, module) {
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
     var Emitter = require('../libs/emitter.js');
+    var modification = require('../core/dom/modification.js');
     var udf;
     //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;
+    var $style = modification.create('style', {
+        id: 'alien-ui' + Date.now()
+    });
 
 
     /**
@@ -97,5 +101,14 @@ define(function (require, exports, module) {
         }
 
         return klass.extends(Emitter, isInheritSuperStatic).create(prototypes);
+    };
+
+
+    /**
+     * 导入样式
+     * @param styleText {String}
+     */
+    exports.importStyle = function (styleText) {
+        modification.importStyle(styleText, $style);
     };
 });

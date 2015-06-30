@@ -265,12 +265,20 @@ define(function (require, exports, module) {
      * 添加样式
      * @param {String} styleText 样式内容
      * @param {String|HTMLElement|Node} [selector=null] 选择器
+     * @param {Boolean} [isAppend=false] 是否为追加模式
      * @returns {HTMLStyleElement}
      *
      * @example
      * modification.importStyle('body{padding: 10px;}');
      */
-    exports.importStyle = function (styleText, selector) {
+    exports.importStyle = function (styleText, selector, isAppend) {
+        var args = arguments;
+
+        if (typeis.boolean(args[1])) {
+            isAppend = args[1];
+            selector = null;
+        }
+
         var $style = domSelector.query(selector)[0] || exports.create('style');
 
         styleText = String(styleText);
@@ -285,11 +293,19 @@ define(function (require, exports, module) {
             //     throw new Error('Exceed the maximal count of style tags in IE')
             // }
 
-            $style.styleSheet.cssText = styleText;
+            if (isAppend) {
+                $style.styleSheet.cssText += styleText;
+            } else {
+                $style.styleSheet.cssText = styleText;
+            }
         }
         // W3C
         else {
-            $style.innerHTML = styleText;
+            if (isAppend) {
+                $style.innerHTML += styleText;
+            } else {
+                $style.innerHTML = styleText;
+            }
         }
 
         return $style;
