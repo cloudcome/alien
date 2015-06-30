@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var Scrollbar = require('../Scrollbar/');
     var Loading = require('../loading/');
-    var Mask = require('../Mask/');
+    var Mask = require('../mask/');
     var Window = require('../Window/index.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');

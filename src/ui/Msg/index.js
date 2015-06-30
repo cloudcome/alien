@@ -23,7 +23,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Mask = require('../Mask/');
+    var Mask = require('../mask/');
     var Window = require('../Window/');
     var ui = require('../');
     var dato = require('../../utils/dato.js');
