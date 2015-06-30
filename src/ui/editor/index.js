@@ -38,7 +38,7 @@ define(function (require, exports, module) {
     var marked = require('../../3rd/marked.js');
     var ui = require('../');
     var confirm = require('../../widgets/confirm.js');
-    var Dialog = require('../Dialog/');
+    var Dialog = require('../dialog/');
     var CtrlList = require('../ctrl-list/');
     var AutoHeight = require('../auto-height/');
     var selector = require('../../core/dom/selector.js');

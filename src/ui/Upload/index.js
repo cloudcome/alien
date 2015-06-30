@@ -18,8 +18,8 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var canvas = require('../../utils/canvas.js');
     var xhr = require('../../core/communication/xhr.js');
-    var Dialog = require('../../ui/Dialog/');
-    var Imgclip = require('../../ui/Imgclip/');
+    var Dialog = require('../../ui/dialog/');
+    var Imgclip = require('../../ui/img-clip/');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
