@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Fullpage/
+     * @module ui/fullpage/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/animation

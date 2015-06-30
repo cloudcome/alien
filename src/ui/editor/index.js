@@ -15,8 +15,7 @@ define(function (require, exports, module) {
      * @requires 3rd/codemirror/addon/display/placeholder
      * @requires 3rd/codemirror/marked
      * @requires ui/
-     * @requires ui/Msg/
-     * @requires ui/Dialog/
+     * @requires ui/dialog/
      * @requires code/dom/selector
      * @requires code/dom/attribute
      * @requires code/dom/modification
