@@ -7,8 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Tooltip/
+     * @module ui/tooltip/
      * @requires ui/
+     * @requires ui/popup/
      * @requires utils/dato
      * @requires libs/Template
      * @requires core/dom/selector
@@ -20,7 +21,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../');
-    var Popup = require('../Popup/');
+    var Popup = require('../popup/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
