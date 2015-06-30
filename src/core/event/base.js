@@ -174,8 +174,8 @@ define(function (require, exports, module) {
             et = this.extend(et, copyEvent, alienDetail);
         }
 
-        // 同时触发相同的原生事件会报错
         try {
+            // 同时触发相同的原生事件会报错
             ele.dispatchEvent(et);
         } catch (err) {
             // ignore
@@ -402,9 +402,9 @@ define(function (require, exports, module) {
             stopPropagation: 'isPropagationStopped'
         };
 
-        for (var i in eve) {
-            buildEve[i] = eve[i];
-        }
+        dato.each(eve, function (key, val) {
+            buildEve[key] = val;
+        });
 
         dato.each(eventMethods, function (key, val) {
             var eventMethod = eve[key];

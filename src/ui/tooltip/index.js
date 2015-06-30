@@ -32,7 +32,6 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var alienIndex = 0;
     var alienClass = 'alien-ui-tooltip';
     var doc = window.document;
     var defaults = {
@@ -68,7 +67,10 @@ define(function (require, exports, module) {
                 position: 'top',
                 addClass: alienClass + '-popup',
                 arrowSize: 5,
-                offset: 5,
+                offset: {
+                    left: 5,
+                    top: 5
+                },
                 style: {
                     maxWidth: 300
                 }
@@ -76,7 +78,7 @@ define(function (require, exports, module) {
             the._$lastEle = null;
             the._timeid = 0;
 
-            event.on(doc, options.openEvent, options.selector, the._onTooltip = function () {
+            event.on(doc, options.openEvent, options.selector, the._onTooltip = function (eve) {
                 var $ele = this;
                 var content = attribute.data($ele, options.data) || $ele.innerHTML;
 

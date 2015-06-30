@@ -123,7 +123,7 @@ define(function (require, exports, module) {
 
         /**
          * 打开弹出层
-         * @param [position] {Object} 指定位置
+         * @param [position] {Object} 指定位置或者元素
          * @param [position.width] {Number} 指定位置
          * @param [position.height] {Number} 指定位置
          * @param [position.left] {Number} 指定位置
@@ -150,9 +150,11 @@ define(function (require, exports, module) {
             // 优先级顺序
             var priorityList = options.priority === 'center' ? ['center', 'side'] : ['side'];
             var args = allocation.args(arguments);
+            var $target2 = the._$target;
 
-            if (typeis.object(args[0])) {
-                the._$target = null;
+            if (typeis.element(args[0])) {
+                $target2 = args[0];
+            }else if (typeis.object(args[0])) {
                 the._target = args[0];
             } else {
                 callback = args[0];
@@ -165,12 +167,12 @@ define(function (require, exports, module) {
             };
 
             // 2. 计算目标位置
-            if (the._$target !== null) {
+            if (!the._target) {
                 the._target = {
-                    width: attribute.outerWidth(the._$target),
-                    height: attribute.outerHeight(the._$target),
-                    left: attribute.left(the._$target),
-                    top: attribute.top(the._$target)
+                    width: attribute.outerWidth($target2),
+                    height: attribute.outerHeight($target2),
+                    left: attribute.left($target2),
+                    top: attribute.top($target2)
                 };
             }
 
@@ -243,6 +245,7 @@ define(function (require, exports, module) {
             });
 
             the.emit('open');
+            the._target = null;
 
             return the;
         },

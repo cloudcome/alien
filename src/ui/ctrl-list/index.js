@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../');
-    var Popup = require('../Popup/');
+    var Popup = require('../popup/');
     var Template = require('../../libs/template.js');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');
