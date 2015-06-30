@@ -11,14 +11,14 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/class
-     * @requires libs/Emitter
+     * @requires libs/emitter
      */
     'use strict';
 
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
-    var Emitter = require('../libs/Emitter.js');
+    var Emitter = require('../libs/emitter.js');
     var udf;
     //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;

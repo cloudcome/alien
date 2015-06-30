@@ -65,7 +65,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires ui/mask/
-     * @requires libs/Template
+     * @requires libs/template
      */
 
     'use strict';
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
     var Mask = require('../mask/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var win = window;
     var doc = win.document;
     var html = doc.documentElement;

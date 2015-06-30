@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires ui/
      * @requires utils/dato
      * @requires utils/typeis
-     * @requires libs/Template
+     * @requires libs/template
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');

@@ -17,7 +17,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/event/base
-     * @requires libs/Template
+     * @requires libs/template
      * @requires utils/dato
      * @requires utils/number
      * @requires utils/howdo
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/hotkey.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');

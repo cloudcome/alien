@@ -24,7 +24,7 @@ define(function (require, exports, module) {
 
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var tpl = new Template(template);
     var modification = require('../../core/dom/modification.js');
     var selector = require('../../core/dom/selector.js');

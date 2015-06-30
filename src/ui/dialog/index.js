@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires core/event/drag
-     * @requires libs/Template
+     * @requires libs/template
      * @requires ui/
      */
     'use strict';
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/drag.js');
     require('../../core/event/touch.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var tpl = new Template(template);

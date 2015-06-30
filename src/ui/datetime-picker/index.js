@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires core/event/base
-     * @requires libs/Template
+     * @requires libs/template
      * @requires ui/
      * @requires ui/range/
      * @requires ui/popup/
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var ui = require('../');
     var templateWrap = require('./wrap.html', 'html');
     var templateList = require('./list.html', 'html');

@@ -24,7 +24,7 @@ define(function (require, exports, module) {
      * @requires utils/date
      * @requires utils/dato
      * @requires utils/typeis
-     * @requires libs/Template
+     * @requires libs/template
      */
 
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
@@ -50,7 +50,7 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
     var selection = require('../../utils/selection.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');

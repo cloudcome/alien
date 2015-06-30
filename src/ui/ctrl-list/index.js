@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * @module ui/CtrlList/
      * @requires ui/
      * @requires ui/popup/
-     * @requires libs/Template
+     * @requires libs/template
      * @requires core/event/hotkey
      * @requires core/dom/selector
      * @requires core/dom/modification
@@ -23,7 +23,7 @@ define(function (require, exports, module) {
 
     var ui = require('../');
     var Popup = require('../Popup/');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);

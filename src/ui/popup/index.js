@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/allocation
-     * @requires libs/Template
+     * @requires libs/template
      */
 
     'use strict';
@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var allocation = require('../../utils/allocation.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');

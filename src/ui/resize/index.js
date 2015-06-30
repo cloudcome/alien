@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * @module ui/resize/
      * @requires ui/
      * @requires utils/dato
-     * @requires libs/Template
+     * @requires libs/template
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');
     var dato = require('../../utils/dato.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');

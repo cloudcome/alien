@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     var xhr = require('../../core/communication/xhr.js');
     var Dialog = require('../../ui/dialog/');
     var Imgclip = require('../../ui/img-clip/');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var tpl = new Template(template);

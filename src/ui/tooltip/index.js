@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      * @requires ui/
      * @requires ui/popup/
      * @requires utils/dato
-     * @requires libs/Template
+     * @requires libs/template
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');

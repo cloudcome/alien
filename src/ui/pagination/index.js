@@ -12,7 +12,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/number
      * @requires libs/Pagination
-     * @requires libs/Template
+     * @requires libs/template
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var libsPagination = require('../../libs/Pagination.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');

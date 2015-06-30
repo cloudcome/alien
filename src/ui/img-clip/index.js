@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/Imgclip/
      * @requires ui/
-     * @requires libs/Template
+     * @requires libs/template
      * @requires utils/dato
      * @requires utils/number
      * @requires utils/controller
@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var controller = require('../../utils/controller.js');

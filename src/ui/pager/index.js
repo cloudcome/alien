@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @requires core/event/touch
      * @requires utils/dato
      * @requires utils/number
-     * @requires libs/Template
+     * @requires libs/template
      */
     'use strict';
 
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
-    var Template = require('../../libs/Template.js');
+    var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var tpl = new Template(template);
