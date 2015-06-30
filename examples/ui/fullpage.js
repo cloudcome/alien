@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Fullpage = require('../../src/ui/FullPage/');
+    var Fullpage = require('../../src/ui/fullpage/');
     var f = new Fullpage('#fullpage', {
         axis: ['x', 'y']
     });

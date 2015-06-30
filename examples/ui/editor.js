@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Editor = require('../../src/ui/Editor/index.js');
+    var Editor = require('../../src/ui/editor/index.js');
     var xhr = require('../../src/core/communication/xhr.js');
     var random = require('../../src/utils/random.js');
     var dato = require('../../src/utils/dato.js');

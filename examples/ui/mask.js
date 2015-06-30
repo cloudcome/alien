@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Mask = require('/src/ui/Mask/');
+    var Mask = require('/src/ui/mask/');
     var mask1 = new Mask('#demo', {
         addClass: 'mask'
     });

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Pager = require('/src/ui/Pager/index.js');
+    var Pager = require('/src/ui/pager/index.js');
     var pager = new Pager('#demo', {
         page: 1,
         max: 4

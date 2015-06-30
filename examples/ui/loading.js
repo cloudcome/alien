@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var Loading = require('../../src/ui/Loading/');
+    var Loading = require('../../src/ui/loading/');
 
     document.getElementById('btn1').onclick = function () {
         var ld = new Loading(window, {

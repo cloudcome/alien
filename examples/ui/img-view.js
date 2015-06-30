@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Imgview = require('/src/ui/Imgview/');
+    var Imgview = require('/src/ui/img-view/');
     var imgview = new Imgview();
     var list = [];
 

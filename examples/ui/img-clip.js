@@ -1,5 +1,5 @@
 define(function (require) {
-    var Imgclip = require('/src/ui/Imgclip/index.js');
+    var Imgclip = require('/src/ui/img-clip/index.js');
     var $ret = document.getElementById('ret');
     var imgclip = new Imgclip('#img', {
         minWidth: 100,
