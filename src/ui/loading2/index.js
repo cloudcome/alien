@@ -78,7 +78,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
-    var Mask = require('../Mask/');
+    var Mask = require('../mask/');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var Template = require('../../libs/Template.js');
