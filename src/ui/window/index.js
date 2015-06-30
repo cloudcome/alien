@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Window/
+     * @module ui/window/
      * @requires utils/allocation
      * @requires utils/dato
      * @requires core/dom/selector
