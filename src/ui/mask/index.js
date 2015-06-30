@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 遮罩
  * @author ydr.me
  * @create 2015-01-11 13:06
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Mask/
+     * @module ui/mask/
      * @requires utils/dato
      * @requires utils/typeis
      * @requires core/dom/selector

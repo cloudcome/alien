@@ -7,9 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Msg/
-     * @requires ui/Mask/
-     * @requires ui/Window/
+     * @module ui/msg/
+     * @requires ui/mask/
+     * @requires ui/window/
      * @requires ui/
      * @requires utils/dato
      * @requires utils/typeis
@@ -24,7 +24,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var Mask = require('../mask/');
-    var Window = require('../Window/');
+    var Window = require('../window/');
     var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
