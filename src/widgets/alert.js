@@ -10,13 +10,13 @@ define(function (require, exports, module) {
 
     /**
      * @module widgets/confirm
-     * @requires ui/Msg/
+     * @requires ui/msg/
      * @requires ui/
      * @requires utils/dato
      */
 
     var ui = require('../ui/');
-    var Msg = require('../ui/Msg/');
+    var Msg = require('../ui/msg/');
     var dato = require('../utils/dato.js');
     var defaults = {
         title: '提示',

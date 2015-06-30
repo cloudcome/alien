@@ -10,14 +10,14 @@ define(function (require, exports, module) {
 
     /**
      * @module widgets/prompt
-     * @requires ui/Msg/
+     * @requires ui/msg/
      * @requires ui/
      * @requires utils/dato
      */
 
     var selector = require('../core/dom/selector.js');
     var ui = require('../ui/');
-    var Msg = require('../ui/Msg/');
+    var Msg = require('../ui/msg/');
     var typeis = require('../utils/typeis.js');
     var dato = require('../utils/dato.js');
     var allocation = require('../utils/allocation.js');
