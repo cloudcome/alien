@@ -7,8 +7,8 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Range/
-     * @requires libs/Template/
+     * @module ui/range/
+     * @requires libs/template/
      * @requires core/dom/modification
      * @requires core/dom/selector
      * @requires core/dom/attribute
