@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Stickly/
+     * @module ui/stickly/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/event/touch
