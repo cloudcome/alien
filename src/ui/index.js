@@ -23,9 +23,7 @@ define(function (require, exports, module) {
     var udf;
     //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;
-    var $style = modification.create('style', {
-        id: 'alien-ui-' + Date.now()
-    });
+    var $style = modification.create('style');
 
 
     /**

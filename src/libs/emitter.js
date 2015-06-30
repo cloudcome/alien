@@ -64,6 +64,12 @@ define(function (require, exports, module) {
         },
 
 
+
+        before: function () {
+
+        },
+
+
         /**
          * 移除事件回调
          * @method un
@@ -98,8 +104,7 @@ define(function (require, exports, module) {
         /**
          * 事件触发，只要有一个事件返回false，那么就返回false，非链式调用
          * @method emit
-         * @param {Object} context 指定上下文，默认为 Emitter 实例对象
-         * @param {String|Object} [eventType] 事件类型，多个事件类型使用空格分开
+         * @param {String} [eventType] 事件类型，多个事件类型使用空格分开
          * @returns {*} 函数执行结果
          *
          * @example
@@ -108,25 +113,17 @@ define(function (require, exports, module) {
          * emitter.emit('hi', 1, 2);
          * emitter.emit('hi', 1);
          * emitter.emit('hi');
-         * emitter.emit(window, 'hi');
-         * emitter.emit(window, 'hi', 1);
-         * emitter.emit(window, 'hi', 1, 2);
-         * emitter.emit(window, 'hi', 1, 2, 3);
+         *
+         * // 为 before* 的事件可以被派发到 before 回调
+         * // 为 after* 的开头的事件可以被派发到 after 回调
          */
-        emit: function (context, eventType/*arguments*/) {
+        emit: function (eventType/*arguments*/) {
             var the = this;
-            var args = allocation.args(arguments);
-            var arg0 = args[0];
-            var arg0IsObject = typeis(arg0) !== 'string';
-            var arg1 = args[1];
-            var emitArgs = [].slice.call(arguments, arg0IsObject ? 2 : 1);
+            var emitArgs = dato.toArray(arguments).slice(1);
             var ret = true;
 
-            context = arg0IsObject ? arg0 : the;
-            eventType = arg0IsObject ? arg1 : arg0;
-
             if (!the._emitterListener) {
-                throw new Error('can not found emitterListener varible');
+                throw 'can not found emitterListener property';
             }
 
             _middleware(eventType, function (et) {
@@ -138,13 +135,13 @@ define(function (require, exports, module) {
                     var time = Date.now();
 
                     dato.each(the._emitterListener[et], function (index, listener) {
-                        context.alienEmitter = {
+                        the.alienEmitter = {
                             type: et,
                             timestamp: time,
                             id: alienId++
                         };
 
-                        if (listener.apply(context, emitArgs) === false) {
+                        if (listener.apply(the, emitArgs) === false) {
                             ret = false;
                         }
                     });
