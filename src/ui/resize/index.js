@@ -237,7 +237,7 @@ define(function (require, exports, module) {
         }
     });
     Resize.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Resize;
 
 

@@ -501,6 +501,6 @@ define(function (require, exports, module) {
     });
 
     Popup.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Popup;
 });

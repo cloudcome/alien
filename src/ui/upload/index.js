@@ -503,6 +503,6 @@ define(function (require, exports, module) {
     });
 
     Upload.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Upload;
 });

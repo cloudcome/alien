@@ -136,7 +136,7 @@ define(function (require, exports, module) {
         }
     });
 
-    modification.importStyle(style);
+    ui.importStyle(style);
 
 
     /**

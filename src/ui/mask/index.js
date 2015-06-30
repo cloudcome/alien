@@ -284,7 +284,7 @@ define(function (require, exports, module) {
      */
     module.exports = Mask;
     //style += '.' + alienClass + '-overflow{margin-right:' + _getScrollbarWidth() + 'px !important;}';
-    modification.importStyle(style);
+    ui.importStyle(style);
     event.on(document, 'keyup', function (eve) {
         var mask;
 

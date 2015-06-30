@@ -450,5 +450,5 @@ define(function (require, exports, module) {
      * @param [options.addClass=""] {String} 窗口添加的 className
      */
     module.exports = Window;
-    modification.importStyle(style);
+    ui.importStyle(style);
 });

@@ -421,6 +421,6 @@ define(function (require, exports, module) {
         }
     });
     Imgview.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Imgview;
 });

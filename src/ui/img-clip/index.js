@@ -526,7 +526,7 @@ define(function (require, exports, module) {
     });
 
     Imgclip.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Imgclip;
 
 

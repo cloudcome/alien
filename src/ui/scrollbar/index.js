@@ -656,7 +656,7 @@ define(function (require, exports, module) {
     Scrollbar.defaults = defaults;
     require('../../core/event/drag.js');
     require('../../core/event/touch.js');
-    modification.importStyle(style);
+    ui.importStyle(style);
 
     /**
      * 实例化一个自定义滚动条

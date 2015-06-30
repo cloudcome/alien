@@ -335,7 +335,7 @@ define(function (require, exports, module) {
         }
     });
     Loading.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
 
     /**
      * 实例化一个 Loading

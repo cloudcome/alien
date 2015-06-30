@@ -16,7 +16,7 @@ define(function (require, exports, module) {
     var prettify = require('../../3rd/prettify.js');
 
 
-    modification.importStyle(style);
+    ui.importStyle(style);
 
     /**
      * 语法高亮

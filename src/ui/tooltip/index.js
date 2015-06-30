@@ -110,5 +110,5 @@ define(function (require, exports, module) {
 
     Tooltip.defaults = defaults;
     module.exports = Tooltip;
-    modification.importStyle(style);
+    ui.importStyle(style);
 });

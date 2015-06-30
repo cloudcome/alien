@@ -570,7 +570,7 @@ define(function (require, exports, module) {
      * @param [options.canAddStatusClass=null] {Boolean} 是否可以添加验证状态的 className
      */
     module.exports = Validator;
-    modification.importStyle(style);
+    ui.importStyle(style);
 
     Validator.registerRule({
         name: 'suffix',

@@ -406,6 +406,6 @@ define(function (require, exports, module) {
     });
 
     Range.defaults = defaults;
-    modification.importStyle(style);
+    ui.importStyle(style);
     module.exports = Range;
 });
