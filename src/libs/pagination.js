@@ -1,5 +1,5 @@
 /*!
- * Pagination.js
+ * 分页计算
  * @author ydr.me
  * @create 2014-10-09 18:36
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Pagination
+     * @module libs/pagination
      * @requires utils/dato
      * @requires utils/number
      * @requires utils/class

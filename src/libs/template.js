@@ -1,5 +1,5 @@
 /*!
- * Template.js
+ * html 字符串模板引擎
  * @author ydr.me
  * @create 2014-10-09 18:35
  * @2015年05月03日00:07:41 增加 {{ignore}}...{{/ignore}} 忽略 parse 区间
@@ -8,7 +8,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Template
+     * @module libs/template
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/random

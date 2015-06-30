@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Pjax
+     * @module libs/pjax
      * @requires core/dom/selector
      * @requires core/dom/modification
      * @requires core/dom/attribute
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var event = require('../core/event/base.js');
     var dato = require('../utils/dato.js');
     var klass = require('../utils/class.js');
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var history = window.history;
     var localStorage = window.localStorage;
     var defaults = {

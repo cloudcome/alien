@@ -7,19 +7,36 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Weixin
+     * @module libs/weixin
      * @requires utils/class.js
      * @requires utils/dato.js
-     * @requires libs/Emitter
+     * @requires libs/emitter
      */
     'use strict';
 
     var wx = require('../3rd/weixin.js');
     var klass = require('../utils/class.js');
     var dato = require('../utils/dato.js');
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
-    var Weixin = klass.extends(Emitter).create({
+
+
+    /**
+     * 配置微信 JS SDK
+     * @param config {Object}
+     * @param config.debug {Boolean} 是否开启调试模式
+     * @param config.appId {String} appId
+     * @param config.timestamp {Number} 签名的时间戳
+     * @param config.nonceStr {String} 生成签名的随机串
+     * @param config.signature {String} 签名
+     * @param [config.jsApiList] {Array} 需要使用的JS接口列表
+     * @param shareData {Object}
+     * @param shareData.title {String} 分享的标题
+     * @param shareData.desc {String} 分享的描述
+     * @param shareData.link {String} 分享的链接
+     * @param shareData.img {String} 分享的图片
+     */
+    module.exports = klass.extends(Emitter).create({
         constructor: function (config, shareData) {
             var the = this;
 
@@ -215,22 +232,4 @@ define(function (require, exports, module) {
 
         wx: wx
     });
-
-
-    /**
-     * 配置微信 JS SDK
-     * @param config {Object}
-     * @param config.debug {Boolean} 是否开启调试模式
-     * @param config.appId {String} appId
-     * @param config.timestamp {Number} 签名的时间戳
-     * @param config.nonceStr {String} 生成签名的随机串
-     * @param config.signature {String} 签名
-     * @param [config.jsApiList] {Array} 需要使用的JS接口列表
-     * @param shareData {Object}
-     * @param shareData.title {String} 分享的标题
-     * @param shareData.desc {String} 分享的描述
-     * @param shareData.link {String} 分享的链接
-     * @param shareData.img {String} 分享的图片
-     */
-    module.exports = Weixin;
 });

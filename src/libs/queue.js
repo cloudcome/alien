@@ -7,8 +7,9 @@
 
 define(function (require, exports, module) {
     /**
+     * @module libs/queue
      * @requires utils/class
-     * @requires libs/Emitter
+     * @requires libs/emitter
      * @module libs/Queue
      */
     'use strict';
@@ -18,7 +19,7 @@ define(function (require, exports, module) {
     };
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var STATES = {
         ready: 1,
         begin: 2,

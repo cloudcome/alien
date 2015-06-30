@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Animation
+     * @module libs/animation
      * @requires utils/allocation
      * @requires utils/class
      * @requires utils/howdo
@@ -20,7 +20,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var allocation = require('../utils/allocation.js');
     var klass = require('../utils/class.js');
     var howdo = require('../utils/howdo.js');

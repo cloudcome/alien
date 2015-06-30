@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Emitter
+     * @module libs/emitter
      * @requires utils/allocation
      * @requires utils/dato
      * @requires utils/typeis

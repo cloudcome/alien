@@ -1,5 +1,5 @@
 /*!
- * Validator.js
+ * 表单验证基础
  * @author ydr.me
  * @create 2014-10-05 23:29
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Validator
+     * @module libs/validator
      * @requires utils/class
      * @requires utils/dato
      * @requires utils/typeis
@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     var string = require('../utils/string.js');
     var typeis = require('../utils/typeis.js');
     var howdo = require('../utils/howdo.js');
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var types = 'string,number,email,url,boolean'.split(',');
     var noop = function () {
         // ignore

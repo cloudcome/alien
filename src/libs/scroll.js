@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Scroll/
+     * @module libs/scroll/
      * @requires utils/class
      * @requires utils/dato
      * @requires utils/controller
@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     var see = require('../core/dom/see.js');
     var event = require('../core/event/touch.js');
     var compatible = require('../core/navigator/compatible.js');
-    var Emitter = require('./Emitter.js');
+    var Emitter = require('./emitter.js');
     var alienKey = '-alien-libs-scroll';
     var win = window;
     var doc = win.document;

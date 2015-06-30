@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var controller = require('../utils/controller.js');
     var typeis = require('../utils/typeis.js');
     var dato = require('../utils/dato.js');
-    var Emitter = require('./Emitter.js');
+    var emitter = require('./emitter.js');
     var win = window;
     var noop = function () {
         // ignore
