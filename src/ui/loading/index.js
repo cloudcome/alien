@@ -57,15 +57,14 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Loading/
+     * @module ui/loading/
      * @requires ui/
      * @requires utils/typeis
      * @requires utils/dato
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
-     * @requires ui/Mask/
-     * @requires ui/Window/
+     * @requires ui/mask/
      * @requires libs/Template
      */
 
