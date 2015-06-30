@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Tab = require('/src/ui/Tab/index.js');
+    var Tab = require('/src/ui/tab/index.js');
     var $index = document.getElementById('index');
     var tab = new Tab('#tab');
 
