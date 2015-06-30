@@ -7,8 +7,13 @@
 describe('utils/allocation', function () {
     'use strict';
 
+    var currentScript = coolie.getCurrentScript();
+    var currentScriptURL = coolie.getScriptURL(currentScript);
+    var host = coolie.getHost(currentScriptURL);
+    var dir = coolie.getPathDir(currentScriptURL);
+
     coolie.config({
-        base: '../src/'
+        base: host + coolie.getPathJoin(dir, '../../src/'),
     }).use('./utils/allocation.js');
 
     it('getset', function (done) {

@@ -8,8 +8,13 @@
 describe('utils/typeis', function () {
     'use strict';
 
+    var currentScript = coolie.getCurrentScript();
+    var currentScriptURL = coolie.getScriptURL(currentScript);
+    var host = coolie.getHost(currentScriptURL);
+    var dir = coolie.getPathDir(currentScriptURL);
+
     coolie.config({
-        base: '../src/'
+        base: host + coolie.getPathJoin(dir, '../../src/'),
     }).use('./utils/typeis.js');
 
     it('()', function (done) {
