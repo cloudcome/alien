@@ -1,7 +1,7 @@
 define(function (require) {
     "use strict";
 
-    var Prettify = require('/src/ui/Prettify/');
+    var Prettify = require('/src/ui/prettify/');
     var pf = new Prettify('pre');
 
     setTimeout(function () {

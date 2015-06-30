@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Popup = require('../../src/ui/Popup/');
+    var Popup = require('../../src/ui/popup/');
     var selector = require('../../src/core/dom/selector.js');
     var random = require('../../src/utils/random.js');
 
