@@ -7,9 +7,12 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Viewer/
-     * @requires ui//
-     * @requires ui/Dialog/
+     * @module ui/viewer/
+     * @requires ui/
+     * @requires ui/scrollbar/
+     * @requires ui/loading/
+     * @requires ui/mask/
+     * @requires ui/window/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -23,10 +26,10 @@ define(function (require, exports, module) {
 
 
     var ui = require('../');
-    var Scrollbar = require('../Scrollbar/');
+    var Scrollbar = require('../scrollbar/');
     var Loading = require('../loading/');
     var Mask = require('../mask/');
-    var Window = require('../Window/index.js');
+    var Window = require('../window/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');

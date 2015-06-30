@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/animation
      * @requires core/event/drag
-     * @requires ui/Resize/index
+     * @requires ui/resize/
      */
     'use strict';
 
@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/drag.js');
-    var Resize = require('../Resize/index.js');
+    var Resize = require('../resize/index.js');
     var animationOptions = {
         duration: 345
     };

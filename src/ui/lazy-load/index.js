@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Lazyload/
+     * @module ui/lazyload/
      * @requires utils/dato
      * @requires utils/controller
      * @requires libs/Scroll
