@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var Scrollbar = require('/src/ui/Scrollbar/index.js');
+    var Scrollbar = require('../../src/ui/scrollbar/index.js');
     var demo = document.getElementById('demo');
     var scrollbar1 = new Scrollbar('#demo');
     var scrollbar2 = new Scrollbar('#textarea');

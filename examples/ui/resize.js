@@ -1,5 +1,5 @@
 define(function (require) {
-    var Resize = require('/src/ui/Resize/index.js');
+    var Resize = require('../../src/ui/resize/index.js');
     var $inner = document.getElementById('inner');
 
     var resize = new Resize('#resize',{

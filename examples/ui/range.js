@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Range = require('../../src/ui/Range/');
+    var Range = require('../../src/ui/range/');
     var random = require('../../src/utils/random.js');
     var $val1 = document.getElementById('val1');
     var $btn1 = document.getElementById('btn1');
