@@ -22,7 +22,6 @@ define(function (require, exports, module) {
 
     var ui = require('../');
     var Popup = require('../popup/');
-    var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var dato = require('../../utils/dato.js');
     var selector = require('../../core/dom/selector.js');
