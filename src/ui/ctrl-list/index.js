@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module ui/CtrlList/
      * @requires ui/
-     * @requires ui/Popup/
+     * @requires ui/popup/
      * @requires libs/Template
      * @requires core/event/hotkey
      * @requires core/dom/selector
