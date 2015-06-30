@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Scrollbar/
+     * @module ui/scrollbar/
      * @requires ui/
      * @requires utils/dato
      * @requires utils/controller
