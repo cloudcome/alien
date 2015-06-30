@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Popup/
+     * @module ui/popup/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification

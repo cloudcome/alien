@@ -1,8 +1,6 @@
-
-
 define(function (require, exports, module) {
     /**
-     * @module ui/Prettify/
+     * @module ui/prettify/
      * @reuqires core/dom/selector
      * @reuqires core/dom/attribute
      * @reuqires core/dom/modification
@@ -16,8 +14,6 @@ define(function (require, exports, module) {
     var style = require('./style.css', 'css');
     var ui = require('../');
     var prettify = require('../../3rd/prettify.js');
-
-
 
 
     modification.importStyle(style);
