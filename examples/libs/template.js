@@ -22,27 +22,27 @@ define(function (require) {
         },
         bio: undefined
     };
-    //var t = new Template($textarea.value);
-    //
-    //$render.innerHTML = t.render(dd);
-    //$data.innerHTML = JSON.stringify(dd, null, 4);
-    //
-    //$btn.onclick = function () {
-    //    var t = new Template($textarea.value);
-    //    $render.innerHTML = t.render(dd);
-    //    $data.innerHTML = JSON.stringify(dd, null, 4);
-    //};
+    var t = new Template($textarea.value);
 
-    var list = [];
-    dato.repeat(1000, function () {
-        list.push();
-    });
-    console.time('1000条数据x1000次渲染');
-    var tpl = new Template('{{list list as item}}{{item}}{{/list}}');
-    dato.repeat(1000, function () {
-        tpl.render({
-            list: list
-        });
-    });
-    console.timeEnd('1000条数据x1000次渲染');
+    $render.innerHTML = t.render(dd);
+    $data.innerHTML = JSON.stringify(dd, null, 4);
+
+    $btn.onclick = function () {
+        var t = new Template($textarea.value);
+        $render.innerHTML = t.render(dd);
+        $data.innerHTML = JSON.stringify(dd, null, 4);
+    };
+
+    //var list = [];
+    //dato.repeat(1000, function () {
+    //    list.push();
+    //});
+    //console.time('1000条数据x1000次渲染');
+    //var tpl = new Template('{{list list as item}}{{item}}{{/list}}');
+    //dato.repeat(1000, function () {
+    //    tpl.render({
+    //        list: list
+    //    });
+    //});
+    //console.timeEnd('1000条数据x1000次渲染');
 });

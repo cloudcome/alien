@@ -47,14 +47,15 @@ define(function (require, exports, module) {
             options = dato.extend(true, {}, defaults, options);
             options.input.tagName = options.input.tagName.toLowerCase();
             options.input.type = options.input.type.toLowerCase();
-            options.content = '<div>' + tips + '</div>' +
+            options.content = '<div class="' + alienClass + '-tips">' + tips +
+                '</div><div class="' + alienClass + '-input">' +
                 '<' + options.input.tagName + ' ' +
                 'type="' + options.input.type + '" ' +
                 'class="' + options.input.className + '" ' +
                 'placeholder="' + options.input.placeholder + '" ' +
                 'value="' + defaultValue + '"' +
                 'id="' + alienClass + alienIndex + '">' +
-                (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '');
+                (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '') + '</div>';
 
             var the = this;
 
