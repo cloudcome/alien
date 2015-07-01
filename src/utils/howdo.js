@@ -179,6 +179,7 @@ define(function (require, exports, module) {
         /**
          * 跟着做，任务串行执行
          * 链式结束
+         * @param [callback] {Function} 回调
          * @example
          * howdo
          * .task(function(next){
@@ -253,6 +254,7 @@ define(function (require, exports, module) {
         /**
          * 一起做，任务并行执行
          * 链式结束
+         * @param [callback] {Function} 回调
          * @example
          * howdo
          * .task(function(done){
