@@ -18,25 +18,65 @@ define(function (require, exports, module) {
         var args = [].slice.call(arguments, 1);
         return function (callback) {
             setTimeout(function () {
-                var err = Date.now() % 2 === 1 ? new Error(name + ' do error') : null;
+                var err = random.number(1, 10) > 8 ? new Error(name + ' do error') : null;
 
                 args.unshift(err);
-                console.log('task', name, err);
+                console.log(err ? '×' : '√', 'task', name);
                 callback.apply(window, args);
-            }, random.number(100, 500));
+            }, random.number(100, 900));
         };
     };
 
 
+    //howdo
+    //    .task(task('1', 1))
+    //    .task(task('2', 2))
+    //    .task(task('3', 3))
+    //    .follow()
+    //    .try(function () {
+    //        console.log('try', [].slice.call(arguments));
+    //    })
+    //    .catch(function () {
+    //        console.log('catch', arguments);
+    //    });
+
+    //howdo
+    //    .task(task('1', 1))
+    //    .task(task('2', 2))
+    //    .task(task('3', 3))
+    //    .together()
+    //    .try(function () {
+    //        console.log('try', [].slice.call(arguments));
+    //    })
+    //    .catch(function (err) {
+    //        console.log('catch', err);
+    //    });
+
+    //howdo
+    //    .task(task(0, 0))
+    //    .each([1, 2, 3], function (index, value, next) {
+    //        task(value, value)(next);
+    //    })
+    //    .task(task(4, 4))
+    //    .follow()
+    //    .try(function () {
+    //        console.log('try', [].slice.call(arguments));
+    //    })
+    //    .catch(function () {
+    //        console.log('catch', arguments);
+    //    });
+
     howdo
-        .task(task('1'))
-        .task(task('2'))
-        .task(task('3'))
-        .follow()
+        .task(task(0, 0))
+        .each([1, 2, 3], function (index, value, done) {
+            task(value, value)(done);
+        })
+        .task(task(4, 4))
+        .together()
         .try(function () {
-            console.log('do success');
+            console.log('try', [].slice.call(arguments));
         })
         .catch(function () {
-            console.log('do error');
+            console.log('catch', arguments);
         });
 });

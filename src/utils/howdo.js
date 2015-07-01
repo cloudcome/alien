@@ -30,12 +30,25 @@ define(function (require, exports, module) {
 
     /**
      * 遍历
-     * @param list
+     * @param object
      * @param callback
      */
-    var each = function (list, callback) {
-        for (var i = 0, j = list.length; i < j; i++) {
-            callback(list[i]);
+    var each = function (object, callback) {
+        var i;
+        var j;
+
+        if (object && object.constructor === Array) {
+            for (i = 0, j = object.length; i < j; i++) {
+                callback(i, object[i]);
+            }
+        } else if (typeof object === "object") {
+            for (i in object) {
+                if (object.hasOwnProperty && object.hasOwnProperty(i)) {
+                    callback(i, object[i]);
+                } else {
+                    callback(i, object[i]);
+                }
+            }
         }
     };
 
@@ -148,24 +161,8 @@ define(function (require, exports, module) {
          */
         each: function (object, callback) {
             var howdo = this;
-            var i;
-            var j;
 
-            if (object && object.constructor === Array) {
-                for (i = 0, j = object.length; i < j; i++) {
-                    task(i, object[i]);
-                }
-            } else if (typeof object === "object") {
-                for (i in object) {
-                    if (object.hasOwnProperty && object.hasOwnProperty(i)) {
-                        task(i, object[i]);
-                    } else {
-                        task(i, object[i]);
-                    }
-                }
-            } else {
-                throw new Error('can not call each on' + object);
-            }
+            each(object, task);
 
             function task(key, val) {
                 howdo = howdo.task(function () {
@@ -371,19 +368,20 @@ define(function (require, exports, module) {
          * @param err
          * @private
          */
-        _fixCallback: function (err/*argument*/) {
+        _fixCallback: function (err/*arguments*/) {
             var the = this;
+            var args = slice.call(arguments, 1);
 
-            callback.apply(_global, arguments);
+            the._allCallback.apply(_global, arguments);
 
             if (err) {
-                return each(the._catchCallbacks, function (callback) {
+                return each(the._catchCallbacks, function (i, callback) {
                     callback.call(_global, err);
                 });
             }
 
-            each(the._tryCallbacks, function (callback) {
-                callback.apply(_global, slice.call(arguments, 1));
+            each(the._tryCallbacks, function (i, callback) {
+                callback.apply(_global, args);
             });
         }
     };
