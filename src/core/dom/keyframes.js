@@ -76,22 +76,22 @@ define(function (require, exports, module) {
             style += '@' + prefix + 'keyframes ' + name + '{' + mainStyle + '}';
         });
 
-        keyframesMap[name] = modification.importStyle(style, keyframesMap[name]);
+        keyframesMap[name] = modification.importStyle(style, keyframesMap[name], true);
 
         return name;
     };
 
 
-    /**
-     * 从 DOM 中移除某个帧动画样式
-     * @param name {String} 帧动画名称
-     */
-    exports.remove = function (name) {
-        var $style = keyframesMap[name];
-
-        modification.remove($style);
-        keyframesMap[name] = null;
-    };
+    ///**
+    // * 从 DOM 中移除某个帧动画样式
+    // * @param name {String} 帧动画名称
+    // */
+    //exports.remove = function (name) {
+    //    var $style = keyframesMap[name];
+    //
+    //    modification.remove($style);
+    //    keyframesMap[name] = null;
+    //};
 
 
     /**

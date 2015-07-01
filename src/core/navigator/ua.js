@@ -18,33 +18,38 @@ define(function (require, exports, module) {
      * @module core/navigator/ua
      * @requires utils/dato
      */
+
     'use strict';
+
+
+    var dato = require('../../utils/dato.js');
+
 
     //////////////
     // Constants
     /////////////
 
 
-    var LIBVERSION  = '0.7.8',
-        EMPTY       = '',
-        UNKNOWN     = '?',
-        FUNC_TYPE   = 'function',
-        UNDEF_TYPE  = 'undefined',
-        OBJ_TYPE    = 'object',
-        STR_TYPE    = 'string',
-        MAJOR       = 'major', // deprecated
-        MODEL       = 'model',
-        NAME        = 'name',
-        TYPE        = 'type',
-        VENDOR      = 'vendor',
-        VERSION     = 'version',
-        ARCHITECTURE= 'architecture',
-        CONSOLE     = 'console',
-        MOBILE      = 'mobile',
-        TABLET      = 'tablet',
-        SMARTTV     = 'smarttv',
-        WEARABLE    = 'wearable',
-        EMBEDDED    = 'embedded';
+    var LIBVERSION = '0.7.8',
+        EMPTY = '',
+        UNKNOWN = '?',
+        FUNC_TYPE = 'function',
+        UNDEF_TYPE = 'undefined',
+        OBJ_TYPE = 'object',
+        STR_TYPE = 'string',
+        MAJOR = 'major', // deprecated
+        MODEL = 'model',
+        NAME = 'name',
+        TYPE = 'type',
+        VENDOR = 'vendor',
+        VERSION = 'version',
+        ARCHITECTURE = 'architecture',
+        CONSOLE = 'console',
+        MOBILE = 'mobile',
+        TABLET = 'tablet',
+        SMARTTV = 'smarttv',
+        WEARABLE = 'wearable',
+        EMBEDDED = 'embedded';
 
 
     ///////////
@@ -53,7 +58,7 @@ define(function (require, exports, module) {
 
 
     var util = {
-        extend : function (regexes, extensions) {
+        extend: function (regexes, extensions) {
             for (var i in extensions) {
                 if ("browser cpu device engine os".indexOf(i) !== -1 && extensions[i].length % 2 === 0) {
                     regexes[i] = extensions[i].concat(regexes[i]);
@@ -61,17 +66,17 @@ define(function (require, exports, module) {
             }
             return regexes;
         },
-        has : function (str1, str2) {
+        has: function (str1, str2) {
             if (typeof str1 === "string") {
                 return str2.toLowerCase().indexOf(str1.toLowerCase()) !== -1;
             } else {
                 return false;
             }
         },
-        lowerize : function (str) {
+        lowerize: function (str) {
             return str.toLowerCase();
         },
-        major : function (version) {
+        major: function (version) {
             return typeof(version) === STR_TYPE ? version.split(".")[0] : undefined;
         }
     };
@@ -84,7 +89,7 @@ define(function (require, exports, module) {
 
     var mapper = {
 
-        rgx : function () {
+        rgx: function () {
 
             var result, i = 0, j, k, p, q, matches, match, args = arguments;
 
@@ -148,7 +153,7 @@ define(function (require, exports, module) {
             return result;
         },
 
-        str : function (str, map) {
+        str: function (str, map) {
 
             for (var i in map) {
                 // check if array
@@ -174,52 +179,52 @@ define(function (require, exports, module) {
 
     var maps = {
 
-        browser : {
-            oldsafari : {
-                version : {
-                    '1.0'   : '/8',
-                    '1.2'   : '/1',
-                    '1.3'   : '/3',
-                    '2.0'   : '/412',
-                    '2.0.2' : '/416',
-                    '2.0.3' : '/417',
-                    '2.0.4' : '/419',
-                    '?'     : '/'
+        browser: {
+            oldsafari: {
+                version: {
+                    '1.0': '/8',
+                    '1.2': '/1',
+                    '1.3': '/3',
+                    '2.0': '/412',
+                    '2.0.2': '/416',
+                    '2.0.3': '/417',
+                    '2.0.4': '/419',
+                    '?': '/'
                 }
             }
         },
 
-        device : {
-            amazon : {
-                model : {
-                    'Fire Phone' : ['SD', 'KF']
+        device: {
+            amazon: {
+                model: {
+                    'Fire Phone': ['SD', 'KF']
                 }
             },
-            sprint : {
-                model : {
-                    'Evo Shift 4G' : '7373KT'
+            sprint: {
+                model: {
+                    'Evo Shift 4G': '7373KT'
                 },
-                vendor : {
-                    'HTC'       : 'APA',
-                    'Sprint'    : 'Sprint'
+                vendor: {
+                    'HTC': 'APA',
+                    'Sprint': 'Sprint'
                 }
             }
         },
 
-        os : {
-            windows : {
-                version : {
-                    'ME'        : '4.90',
-                    'NT 3.11'   : 'NT3.51',
-                    'NT 4.0'    : 'NT4.0',
-                    '2000'      : 'NT 5.0',
-                    'XP'        : ['NT 5.1', 'NT 5.2'],
-                    'Vista'     : 'NT 6.0',
-                    '7'         : 'NT 6.1',
-                    '8'         : 'NT 6.2',
-                    '8.1'       : 'NT 6.3',
-                    '10'        : ['NT 6.4', 'NT 10.0'],
-                    'RT'        : 'ARM'
+        os: {
+            windows: {
+                version: {
+                    'ME': '4.90',
+                    'NT 3.11': 'NT3.51',
+                    'NT 4.0': 'NT4.0',
+                    '2000': 'NT 5.0',
+                    'XP': ['NT 5.1', 'NT 5.2'],
+                    'Vista': 'NT 6.0',
+                    '7': 'NT 6.1',
+                    '8': 'NT 6.2',
+                    '8.1': 'NT 6.3',
+                    '10': ['NT 6.4', 'NT 10.0'],
+                    'RT': 'ARM'
                 }
             }
         }
@@ -233,7 +238,7 @@ define(function (require, exports, module) {
 
     var regexes = {
 
-        browser : [[
+        browser: [[
 
             // Presto based
             /(opera\smini)\/([\w\.-]+)/i,                                       // Opera Mini
@@ -439,7 +444,7 @@ define(function (require, exports, module) {
 
         ],
 
-        cpu : [[
+        cpu: [[
 
             /(?:(amd|x(?:(?:86|64)[_-])?|wow|win)64)[;\)]/i                     // AMD64
         ], [[ARCHITECTURE, 'amd64']], [
@@ -465,7 +470,7 @@ define(function (require, exports, module) {
         ], [[ARCHITECTURE, util.lowerize]]
         ],
 
-        device : [[
+        device: [[
 
             /\((ipad|playbook);[\w\s\);-]+(rim|apple)/i                         // iPad/PlayBook
         ], [MODEL, VENDOR, [TYPE, TABLET]], [
@@ -662,7 +667,7 @@ define(function (require, exports, module) {
 
         ],
 
-        engine : [[
+        engine: [[
 
             /windows.+\sedge\/([\w\.]+)/i                                       // EdgeHTML
         ], [VERSION, [NAME, 'EdgeHTML']], [
@@ -677,7 +682,7 @@ define(function (require, exports, module) {
         ], [VERSION, NAME]
         ],
 
-        os : [[
+        os: [[
 
             // Windows based
             /microsoft\s(windows)\s(vista|xp)/i                                 // Windows (iTunes)
@@ -718,7 +723,7 @@ define(function (require, exports, module) {
         ], [NAME, VERSION], [
 
             /(cros)\s[\w]+\s([\w\.]+\w)/i                                       // Chromium OS
-        ], [[NAME, 'Chromium OS'], VERSION],[
+        ], [[NAME, 'Chromium OS'], VERSION], [
 
             // Solaris
             /(sunos)\s?([\w\.]+\d)*/i                                           // Solaris
@@ -726,7 +731,7 @@ define(function (require, exports, module) {
 
             // BSD based
             /\s([frentopc-]{0,4}bsd|dragonfly)\s?([\w\.]+)*/i                   // FreeBSD/NetBSD/OpenBSD/PC-BSD/DragonFly
-        ], [NAME, VERSION],[
+        ], [NAME, VERSION], [
 
             /(ip[honead]+)(?:.*os\s*([\w]+)*\slike\smac|;\sopera)/i             // iOS
         ], [[NAME, 'iOS'], [VERSION, /_/g, '.']], [
@@ -778,14 +783,14 @@ define(function (require, exports, module) {
         this.getOS = function () {
             return mapper.rgx.apply(this, rgxmap.os);
         };
-        this.getResult = function() {
+        this.getResult = function () {
             return {
-                ua      : this.getUA(),
-                browser : this.getBrowser(),
-                engine  : this.getEngine(),
-                os      : this.getOS(),
-                device  : this.getDevice(),
-                cpu     : this.getCPU()
+                ua: this.getUA(),
+                browser: this.getBrowser(),
+                engine: this.getEngine(),
+                os: this.getOS(),
+                device: this.getDevice(),
+                cpu: this.getCPU()
             };
         };
         this.getUA = function () {
@@ -801,31 +806,31 @@ define(function (require, exports, module) {
 
     UAParser.VERSION = LIBVERSION;
     UAParser.BROWSER = {
-        NAME    : NAME,
-        MAJOR   : MAJOR, // deprecated
-        VERSION : VERSION
+        NAME: NAME,
+        MAJOR: MAJOR, // deprecated
+        VERSION: VERSION
     };
     UAParser.CPU = {
-        ARCHITECTURE : ARCHITECTURE
+        ARCHITECTURE: ARCHITECTURE
     };
     UAParser.DEVICE = {
-        MODEL   : MODEL,
-        VENDOR  : VENDOR,
-        TYPE    : TYPE,
-        CONSOLE : CONSOLE,
-        MOBILE  : MOBILE,
-        SMARTTV : SMARTTV,
-        TABLET  : TABLET,
+        MODEL: MODEL,
+        VENDOR: VENDOR,
+        TYPE: TYPE,
+        CONSOLE: CONSOLE,
+        MOBILE: MOBILE,
+        SMARTTV: SMARTTV,
+        TABLET: TABLET,
         WEARABLE: WEARABLE,
         EMBEDDED: EMBEDDED
     };
     UAParser.ENGINE = {
-        NAME    : NAME,
-        VERSION : VERSION
+        NAME: NAME,
+        VERSION: VERSION
     };
     UAParser.OS = {
-        NAME    : NAME,
-        VERSION : VERSION
+        NAME: NAME,
+        VERSION: VERSION
     };
 
 
@@ -874,64 +879,62 @@ define(function (require, exports, module) {
     //    };
     //}
 
-    module.exports = new UAParser();
-    module.exports.parse = module.exports.getResult();
+
+    var uap = new UAParser();
 
 
+    /**
+     * ua 解析
+     * @returns {{browser:Object,engine:Object,os:Object,ua:String}}
+     *
+     * @example
+     * // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36
+     * ua.parse();
+     * // =>
+     * // {
+     * //    browser: {
+     * //        major: "37", name: "Chrome", version: "37.0.2062.124"
+     * //    },
+     * //    cpu: {
+     * //        architecture: undefined
+     * //    },
+     * //    device: {
+     * //        model: undefined, type: undefined, vendor: undefined
+     * //    },
+     * //    engine: {
+     * //        name: "WebKit", version: "537.36"
+     * //    },
+     * //    os: {
+     * //        name: "Mac OS X", version: "10.9.5"
+     * //    },
+     * //    ua: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36"
+     * // }
+     */
+    exports.parse = function () {
+        return uap.getResult();
+    };
 
 
-    ///**
-    // * ua 解析
-    // * @returns {{browser:Object,engine:Object,os:Object,ua:String}}
-    // *
-    // * @example
-    // * // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36
-    // * ua.parse();
-    // * // =>
-    // * // {
-    // * //    browser: {
-    // * //        major: "37", name: "Chrome", version: "37.0.2062.124"
-    // * //    },
-    // * //    cpu: {
-    // * //        architecture: undefined
-    // * //    },
-    // * //    device: {
-    // * //        model: undefined, type: undefined, vendor: undefined
-    // * //    },
-    // * //    engine: {
-    // * //        name: "WebKit", version: "537.36"
-    // * //    },
-    // * //    os: {
-    // * //        name: "Mac OS X", version: "10.9.5"
-    // * //    },
-    // * //    ua: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36"
-    // * // }
-    // */
-    //exports.parse = function () {
-    //    return uap.getResult();
-    //};
-    //
-    //
-    ///**
-    // * 获取当前 ua
-    // * @returns {*}
-    // */
-    //exports.get = function () {
-    //    return uap.getUA();
-    //};
-    //
-    //
-    ///**
-    // * 设置当前 ua
-    // * @param uastring {String} ua 字符串
-    // * @returns {{browser:Object,engine:Object,os:Object,ua:String}}
-    // */
-    //exports.set = function (uastring) {
-    //    uap.setUA(uastring);
-    //    dato.each(uap.getResult(), function (key, val) {
-    //        exports.parse[key] = val;
-    //    });
-    //
-    //    return exports.parse();
-    //};
+    /**
+     * 获取当前 ua
+     * @returns {*}
+     */
+    exports.get = function () {
+        return uap.getUA();
+    };
+
+
+    /**
+     * 设置当前 ua
+     * @param uastring {String} ua 字符串
+     * @returns {{browser:Object,engine:Object,os:Object,ua:String}}
+     */
+    exports.set = function (uastring) {
+        uap.setUA(uastring);
+        dato.each(uap.getResult(), function (key, val) {
+            exports.parse[key] = val;
+        });
+
+        return exports.parse();
+    };
 });

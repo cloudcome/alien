@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var Animation = klass.extends(Emitter).create({
+    module.exports = klass.extends(Emitter).create({
         constructor: function () {
             var the = this;
 
@@ -101,15 +101,10 @@ define(function (require, exports, module) {
                     howdo
                         .each(the._queueList, function (j, queue, next) {
                             var toType = typeis(queue.to);
-                            var to;
 
                             if (toType === 'string') {
-                                to = dato.extend({}, queue.options, {
-                                    name: queue.to
-                                });
-
                                 howdo.each(queue.$eles, function (k, $ele, done) {
-                                    animation.keyframes($ele, to, done);
+                                    animation.keyframes($ele, queue.to, queue.options, done);
                                 }).together(function () {
                                     /**
                                      * 动画发生变化时
@@ -149,14 +144,14 @@ define(function (require, exports, module) {
     });
 
 
-    /**
-     * 创建一系列动画
-     * @example
-     * var an = new Animation();
-     * an.push(function(){
-     *
-     * });
-     * an.start();
-     */
-    module.exports = Animation;
+    ///**
+    // * 创建一系列动画
+    // * @example
+    // * var an = new Animation();
+    // * an.push(function(){
+    // *
+    // * });
+    // * an.start();
+    // */
+    //module.exports = Animation;
 });
