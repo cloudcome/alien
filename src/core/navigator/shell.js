@@ -11,8 +11,12 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ieAX = window.ActiveXObject;
-    var ieMode = document.documentMode;
+    var win = window;
+    var nav = win.navigator;
+    var doc = win.document;
+    var ieAX = win.ActiveXObject;
+    var ieMode = doc.documentMode;
+    var REG_APPLE = /^Apple/;
     var ieVer = _getIeVersion() || ieMode || 0;
     var isIe = ieAX || ieMode;
     var chromiumType = _getChromiumType();
@@ -137,7 +141,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _testExternal(reg, type) {
-        var external = window.external || {};
+        var external = win.external || {};
 
         for (var i in external) {
             if (reg.test(type ? external[i] : i)) {
@@ -166,12 +170,12 @@ define(function (require, exports, module) {
      */
 
     function _getChromiumType() {
-        if (isIe || typeof window.scrollMaxX !== 'undefined') {
+        if (isIe || typeof win.scrollMaxX !== 'undefined' || REG_APPLE.test(nav.vendor || '')) {
             return '';
         }
 
         var _track = 'track' in document.createElement('track');
-        var webstoreKeysLength = window.chrome && window.chrome.webstore ? Object.keys(window.chrome.webstore).length : 0;
+        var webstoreKeysLength = win.chrome && win.chrome.webstore ? Object.keys(win.chrome.webstore).length : 0;
 
         // 搜狗浏览器
         if (_testExternal(/^sogou/i, 0)) {
@@ -184,7 +188,7 @@ define(function (require, exports, module) {
         }
 
         // chrome
-        if (window.clientInformation && window.clientInformation.languages && window.clientInformation.languages.length > 2) {
+        if (win.clientInformation && win.clientInformation.languages && win.clientInformation.languages.length > 2) {
             return 'chrome';
         }
 
