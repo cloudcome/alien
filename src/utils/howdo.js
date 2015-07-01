@@ -13,7 +13,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var _global = window;
+    var _global = typeof window !== 'undefined' ? window : global;
     var slice = Array.prototype.slice;
     var noop = function () {
         // ignore
