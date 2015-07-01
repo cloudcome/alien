@@ -1,5 +1,5 @@
 /*!
- * wheel.js
+ * 鼠标滚轮事件
  * @author ydr.me
  * @create 2014-10-07 14:45
  */
