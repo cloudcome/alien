@@ -44,12 +44,6 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
-            the._init();
-        },
-
-        _init: function () {
-            var the = this;
-
         },
 
         render: function (text) {
@@ -184,7 +178,7 @@ define(function (require, exports, module) {
                 options.background +
                 ';">');
             // 计算每个节点的长宽；取整，防止点之间出现分离
-            var caculateW;
+            var  caculateW;
             var caculateH;
             var tileW;
             var tileH;
@@ -226,5 +220,10 @@ define(function (require, exports, module) {
     });
 
     QrcodeUI.defaults = defaults;
+    /**
+     * @todo 二维码不正确
+     * @todo table 样式抽出来
+     * @type {Constructor}
+     */
     module.exports = QrcodeUI;
 });
