@@ -6,10 +6,10 @@ define(function (require) {
     var animation = require('../../../src/core/dom/animation.js');
     var modification = require('../../../src/core/dom/modification.js');
     var event = require('../../../src/core/event/base.js');
-    var Template = require('../../../src/libs/Template.js');
+    var Template = require('../../../src/libs/template.js');
     var alert = require('../../../src/widgets/alert.js');
-    var Dialog = require('../../../src/ui/Dialog/');
-    var Autoheight = require('../../../src/ui/AutoHeight/');
+    var Dialog = require('../../../src/ui/dialog/');
+    var Autoheight = require('../../../src/ui/auto-height/');
     var template = selector.query('#template')[0].innerHTML;
     var tpl = new Template(template);
     var $name = selector.query('#name')[0];

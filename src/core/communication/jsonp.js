@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     };
     var regQ = /\?$/;
     var $container = document.body || document.documentElement;
-    var JSONP = klass.create(function (options) {
+    var JSONP = klass.extends(Emitter).create(function (options) {
         var the = this;
 
         options = dato.extend(true, {}, defaults, options);
@@ -51,9 +51,9 @@ define(function (require, exports, module) {
             options.query._ = Date.now();
         }
 
-        var name = 'alienJSONP' + random.string(9, 'aA0_');
+        var name = 'alienJSONP' + random.string(9, 'aA0_') + Date.now();
         var qss = qs.stringify(options.query);
-        var script = modification.create('script', {
+        var $script = modification.create('script', {
             async: 'async',
             src: options.url.replace(regQ, name) + (qss ? '&' + qss : '')
         });
@@ -62,27 +62,27 @@ define(function (require, exports, module) {
             window[name] = function (dt) {
                 the.emit('success', dt);
                 delete(window[name]);
-                modification.remove(script);
+                modification.remove($script);
             };
         } else {
             window[name] = null;
         }
 
-        script.onerror = function (err) {
+        $script.onerror = function (err) {
             the.emit('error', err);
-            modification.remove(script);
+            modification.remove($script);
         };
 
-        script.onload = function () {
+        $script.onload = function () {
             if (options.type === 'var') {
                 the.emit('success', window[name]);
                 window[name] = null;
-                modification.remove(script);
+                modification.remove($script);
             }
         };
 
-        modification.insert(script, $container, 'beforeend');
-    }, Emitter);
+        modification.insert($script, $container, 'beforeend');
+    });
 
     exports.defaults = defaults;
 

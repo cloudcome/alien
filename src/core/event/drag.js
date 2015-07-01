@@ -170,7 +170,7 @@ define(function (require, exports, module) {
                 deltaY: y1 - y0
             });
 
-            if (dispatchDragend.defaultPrevented !== true) {
+            if (!preventDefault && dispatchDragend.defaultPrevented !== true) {
                 from = attribute.css(dragfor, ['visibility', 'left', 'top', 'margin-left', 'margin-top']);
 
                 attribute.css(dragfor, 'visibility', 'hidden');
