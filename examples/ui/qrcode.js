@@ -14,9 +14,7 @@ define(function (require, exports, module) {
 
     var Qrcode = require('../../src/ui/qrcode/index.js');
 
-    var qrcode = new Qrcode('#demo', {
-        type: 'svg'
-    });
+    var qrcode = new Qrcode('#demo');
 
     document.getElementById('submit').onclick = function () {
         qrcode.render(document.getElementById('text').value);

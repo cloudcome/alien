@@ -93,7 +93,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * canvas 渲染
+         * 0: canvas 渲染
          * @returns {Node}
          * @private
          */
@@ -126,6 +126,11 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 1: svg 渲染
+         * @returns {string}
+         * @private
+         */
         _render1: function () {
             var the = this;
             var options = the._options;
@@ -161,6 +166,11 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 2 table 渲染
+         * @returns {string}
+         * @private
+         */
         _render2: function () {
             //创建table节点
             var s = [];
@@ -171,12 +181,17 @@ define(function (require, exports, module) {
             var options = the._options;
 
             s.push('<table style="border:0px; margin:0px; padding:0px; border-collapse:collapse; background-color: ' +
-                this.options.background +
+                options.background +
                 ';">');
             // 计算每个节点的长宽；取整，防止点之间出现分离
-            var tileW = -1, tileH = -1, caculateW = -1, caculateH = -1;
-            tileW = caculateW = Math.floor(options.width / the.qrCodeAlg.getModuleCount());
-            tileH = caculateH = Math.floor(options.height / the.qrCodeAlg.getModuleCount());
+            var caculateW;
+            var caculateH;
+            var tileW;
+            var tileH;
+
+            tileW = caculateW = Math.floor(options.size / the.qrCodeAlg.getModuleCount());
+            tileH = caculateH = Math.floor(options.size / the.qrCodeAlg.getModuleCount());
+
             if (caculateW <= 0) {
                 if (the.qrCodeAlg.getModuleCount() < 80) {
                     tileW = 2;
@@ -193,8 +208,8 @@ define(function (require, exports, module) {
             }
 
             // 绘制二维码
-            foreTd = '<td style="border:0px; margin:0px; padding:0px; width:' + tileW + 'px; background-color: ' + this.options.foreground + '"></td>',
-                backTd = '<td style="border:0px; margin:0px; padding:0px; width:' + tileW + 'px; background-color: ' + this.options.background + '"></td>',
+            foreTd = '<td style="border:0px; margin:0px; padding:0px; width:' + tileW + 'px; background-color: ' + options.foreground + '"></td>',
+                backTd = '<td style="border:0px; margin:0px; padding:0px; width:' + tileW + 'px; background-color: ' + options.background + '"></td>',
                 l = the.qrCodeAlg.getModuleCount();
 
             for (var row = 0; row < l; row++) {
