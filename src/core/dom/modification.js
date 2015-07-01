@@ -186,6 +186,17 @@ define(function (require, exports, module) {
     };
 
 
+    ///**
+    // * 清空元素
+    // * @param $ele
+    // */
+    //exports.empty = function ($ele) {
+    //    while($ele.firstChild){
+    //        exports.remove($ele.firstChild);
+    //    }
+    //};
+
+
     /**
      * 元素外层追加一层
      * @param {HTMLElement|Node} source 元素
