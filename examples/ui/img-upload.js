@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var Upload = require('../../src/ui/upload/');
+    var Upload = require('../../src/ui/img-upload/index.js');
     var upload = new Upload({
         ajax: {
             timeout: 400

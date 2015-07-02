@@ -1,5 +1,5 @@
 /*!
- * Upload
+ * 图片上传
  * @author ydr.me
  * @create 2014-12-23 13:56
  */

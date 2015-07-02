@@ -103,7 +103,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 导入样式
+     * 导入 UI 样式
      * @param styleText {String}
      */
     exports.importStyle = function (styleText) {
