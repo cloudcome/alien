@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
-    var Emitter = require('../../libs/Emitter.js');
+    var Emitter = require('../../libs/emitter.js');
     var xhr = require('./xhr.js');
     var defaults = {
         method: 'post',

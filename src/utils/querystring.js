@@ -20,7 +20,24 @@ define(function (require, exports) {
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
     var regSp = /\+/g;
-    var regQ = /^\?+/;
+    var REG_SPLIT = /[\?#]/g;
+
+
+    /**
+     * 获取 URL 上的 querystring
+     * @param url {String} url
+     * @param [isReturnAll=false] {Boolean} 是否返回所有字段
+     * @returns {String|Array}
+     */
+    exports.get = function (url, isReturnAll) {
+        var arr = (url + '').split(REG_SPLIT);
+
+        if (!isReturnAll) {
+            return arr[1] || '';
+        }
+
+        return [arr.shift(), arr.shift(), arr.join('#')];
+    };
 
 
     /**
@@ -56,7 +73,7 @@ define(function (require, exports) {
         });
 
         return ret.join(sep);
-    }
+    };
 
 
     /**
@@ -83,7 +100,7 @@ define(function (require, exports) {
         }
 
         // 最大长度100
-        arr = querystring.replace(regQ, '').split(sep).slice(0, 100);
+        arr = querystring.split(sep).slice(0, 100);
 
         dato.each(arr, function (index, item) {
             var temp = item.split(eq);

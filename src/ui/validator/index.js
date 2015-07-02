@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var string = require('../../utils/string.js');
-    var Vldor = require('../../libs/Validator.js');
+    var Vldor = require('../../libs/validator.js');
     var alienIndex = 0;
     var alienClass = 'alien-ui-validator';
     var udf;

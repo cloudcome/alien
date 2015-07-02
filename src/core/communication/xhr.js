@@ -13,7 +13,7 @@ define(function (require, exports, module) {
      * @requires utils/number
      * @requires utils/class
      * @requires utils/querystring
-     * @requires libs/Emitter
+     * @requires libs/emitter
      */
     'use strict';
 
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     var number = require('../../utils/number.js');
     var klass = require('../../utils/class.js');
     var qs = require('../../utils/querystring.js');
-    var Emitter = require('../../libs/Emitter.js');
+    var Emitter = require('../../libs/emitter.js');
     var regCache = /\b_=[^&]*&?/;
     var regEnd = /[?&]$/;
     var REG_DOMAIN = /^([\w-]+:)?\/\/([^\/]+)/;
@@ -40,9 +40,9 @@ define(function (require, exports, module) {
         // 请求头
         headers: null,
         // 是否异步
-        isAsync: true,
+        async: true,
         // 是否保留缓存
-        isCache: false,
+        cache: false,
         // 是否进行跨域请求，Cross-Origin Resource Sharing
         // http://www.w3.org/TR/cors/
         isCORS: false,
@@ -58,181 +58,178 @@ define(function (require, exports, module) {
         timeout: 150000
     };
     var regProtocol = /^([\w-]+:)\/\//;
-    /**
-     * @extends {libs/Emitter}
-     * @type {Constructor}
-     */
-    var XHR = klass.create(function (options) {
-        var the = this;
+    var XHR = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
 
-        options = dato.extend(true, {}, defaults, options);
+            options = dato.extend(true, {}, defaults, options);
 
-        var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
-        var hasCrossDomain = requestDomain && requestDomain !== window.location.host;
+            var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
+            var hasCrossDomain = requestDomain && requestDomain !== window.location.host;
 
-        if (!options.headers) {
-            options.headers = {};
-        }
-
-        if (!options.headers['x-request-with'] && !hasCrossDomain) {
-            options.headers['x-request-with'] = 'XMLHttpRequest';
-        }
-
-        options.method = options.method.toUpperCase();
-
-        var xhr = new XMLHttpRequest();
-        var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
-        the._hasCallback = false;
-        var oncallback = function (err, ret) {
-            if (the._hasCallback) {
-                return;
+            if (!options.headers) {
+                options.headers = {};
             }
 
-            the._hasCallback = true;
-
-            if (err) {
-                err.message = err.message || 'network error';
+            if (!options.headers['x-request-with'] && !hasCrossDomain) {
+                options.headers['x-request-with'] = 'XMLHttpRequest';
             }
 
-            setTimeout(function () {
-                if (lastProgressEvent) {
-                    lastProgressEvent.alienDetail.complete = 1;
-                    lastProgressEvent.alienDetail.percent = '100%';
-                    the.emit('progress', lastProgressEvent);
+            options.method = options.method.toUpperCase();
+
+            var xhr = new XMLHttpRequest();
+            var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
+            the._hasCallback = false;
+            var oncallback = function (err, ret) {
+                if (the._hasCallback) {
+                    return;
                 }
 
-                the.emit('complete', err, ret);
+                the._hasCallback = true;
 
                 if (err) {
-                    the.emit('error', err);
+                    err.message = err.message || 'network error';
+                }
+
+                setTimeout(function () {
+                    if (lastProgressEvent) {
+                        lastProgressEvent.alienDetail.complete = 1;
+                        lastProgressEvent.alienDetail.percent = '100%';
+                        the.emit('progress', lastProgressEvent);
+                    }
+
+                    the.emit('complete', err, ret);
+
+                    if (err) {
+                        the.emit('error', err);
+                    } else {
+                        the.emit('success', ret);
+                    }
+
+                    the.emit('finish', err, ret);
+                }, options.delay);
+            };
+
+            xhr.onload = function () {
+                var responseText = xhr.responseText;
+                var json;
+                var err;
+
+                // 200 - 300
+                if ((xhr.status >= 200 && xhr.status < 300) ||
+                        // 304
+                    xhr.status === 304 ||
+                        // file
+                    (xhr.status === 0 && protocol === 'file:')) {
+                    switch (options.type) {
+                        case 'json':
+                            try {
+                                json = JSON.parse(responseText);
+                            } catch (_err) {
+                                err = _err;
+                            }
+
+                            oncallback(err, json);
+                            break;
+
+                        default:
+                            oncallback(null, responseText);
+                    }
                 } else {
-                    the.emit('success', ret);
+                    oncallback(new Error(xhr.statusText || 'response status is ' + xhr.status));
+                }
+            };
+
+            xhr.onabort = function () {
+                var err = new Error('transmission has aborted');
+
+                err.type = 'abort';
+                oncallback(err);
+            };
+
+            xhr.ontimeout = function () {
+                var err = new Error('transmission has timeout');
+
+                err.type = 'timeout';
+                oncallback(err);
+            };
+
+            xhr.onerror = oncallback;
+
+            var lastProgressEvent;
+
+            xhr.upload.onprogress = function (eve) {
+                eve.alienDetail = eve.alienDetail || {};
+                eve.alienDetail.complete = 0;
+                eve.alienDetail.percent = '0%';
+
+                if (eve.lengthComputable) {
+                    eve.alienDetail.loaded = eve.loaded;
+                    eve.alienDetail.total = eve.total;
+                    eve.alienDetail.complete = eve.loaded / eve.total;
+
+                    var percent = eve.alienDetail.complete * 100;
+
+                    if (percent >= 100) {
+                        eve.alienDetail.complete = 0.99;
+                        percent = 99;
+                    }
+
+                    // 最多小数点2位
+                    percent = number.parseFloat(percent).toFixed(2);
+                    eve.alienDetail.percent = percent + '%';
                 }
 
-                the.emit('finish', err, ret);
-            }, options.delay);
-        };
+                the.emit('progress', eve);
+                lastProgressEvent = eve;
+            };
 
-        xhr.onload = function () {
-            var responseText = xhr.responseText;
-            var json;
-            var err;
+            xhr.open(options.method, _buildURL(options), options.async, options.username, options.password);
 
-            // 200 - 300
-            if ((xhr.status >= 200 && xhr.status < 300) ||
-                    // 304
-                xhr.status === 304 ||
-                    // file
-                (xhr.status === 0 && protocol === 'file:')) {
-                switch (options.type) {
-                    case 'json':
-                        try {
-                            json = JSON.parse(responseText);
-                        } catch (_err) {
-                            err = _err;
-                        }
-
-                        oncallback(err, json);
-                        break;
-
-                    default:
-                        oncallback(null, responseText);
-                }
-            } else {
-                oncallback(new Error(xhr.statusText || 'response status is ' + xhr.status));
-            }
-        };
-
-        xhr.onabort = function () {
-            var err = new Error('transmission has aborted');
-
-            err.type = 'abort';
-            oncallback(err);
-        };
-
-        xhr.ontimeout = function () {
-            var err = new Error('transmission has timeout');
-
-            err.type = 'timeout';
-            oncallback(err);
-        };
-
-        xhr.onerror = oncallback;
-
-        var lastProgressEvent;
-
-        xhr.upload.onprogress = function (eve) {
-            eve.alienDetail = eve.alienDetail || {};
-            eve.alienDetail.complete = 0;
-            eve.alienDetail.percent = '0%';
-
-            if (eve.lengthComputable) {
-                eve.alienDetail.loaded = eve.loaded;
-                eve.alienDetail.total = eve.total;
-                eve.alienDetail.complete = eve.loaded / eve.total;
-
-                var percent = eve.alienDetail.complete * 100;
-
-                if (percent >= 100) {
-                    eve.alienDetail.complete = 0.99;
-                    percent = 99;
-                }
-
-                // 最多小数点2位
-                percent = number.parseFloat(percent).toFixed(2);
-                eve.alienDetail.percent = percent + '%';
+            if (options.isCORS) {
+                xhr.withCredentials = true;
             }
 
-            the.emit('progress', eve);
-            lastProgressEvent = eve;
-        };
+            if (options.mimeType) {
+                xhr.overrideMimeType(options.mimeType);
+            }
 
-        xhr.open(options.method, _buildURL(options), options.isAsync, options.username, options.password);
+            // 当 body 为 FormData 时，删除 content-type header
+            if (options.body && options.body.constructor === FormData) {
+                delete options.headers['content-type'];
+            }
 
-        if (options.isCORS) {
-            xhr.withCredentials = true;
+            dato.each(options.headers, function (key, val) {
+                xhr.setRequestHeader(key, val);
+            });
+            xhr.send(_buildBody(options));
+
+            if (options.timeout) {
+                the._timer = setTimeout(function () {
+                    the.abort();
+                }, options.timeout);
+            }
+
+            the.xhr = xhr;
+            return the;
+        },
+
+        /**
+         * 中断当前请求
+         * @returns {XHR}
+         */
+        abort: function () {
+            var the = this;
+
+            try {
+                the.xhr.abort();
+            } catch (err) {
+                // ignore
+            }
+
+            return the;
         }
-
-        if (options.mimeType) {
-            xhr.overrideMimeType(options.mimeType);
-        }
-
-        // 当 body 为 FormData 时，删除 content-type header
-        if (options.body && options.body.constructor === FormData) {
-            delete options.headers['content-type'];
-        }
-
-        dato.each(options.headers, function (key, val) {
-            xhr.setRequestHeader(key, val);
-        });
-        xhr.send(_buildBody(options));
-
-        if (options.timeout) {
-            the._timer = setTimeout(function () {
-                the.abort();
-            }, options.timeout);
-        }
-
-        the.xhr = xhr;
-        return the;
-    }, Emitter);
-    var pro = XHR.prototype;
-
-
-    /**
-     * 中止当前请求
-     */
-    pro.abort = function () {
-        var the = this;
-
-        try {
-            the.xhr.abort();
-        } catch (err) {
-            // ignore
-        }
-
-        return the;
-    };
+    });
 
 
     /**
@@ -254,7 +251,7 @@ define(function (require, exports, module) {
      * @example
      * xhr().on('success', fn).on('error', fn);
      */
-    module.exports = function (options) {
+    var xhr = function (options) {
         return new XHR(options);
     };
 
@@ -278,7 +275,7 @@ define(function (require, exports, module) {
      * @example
      * xhr.ajax().on('success', fn).on('error', fn);
      */
-    module.exports.ajax = function (options) {
+    xhr.ajax = function (options) {
         return new XHR(options);
     };
 
@@ -289,7 +286,7 @@ define(function (require, exports, module) {
      * @param query {String|Object} 请求参数
      * @returns {*}
      */
-    module.exports.get = function (url, query) {
+    xhr.get = function (url, query) {
         return this.ajax({
             method: 'GET',
             url: url,
@@ -304,13 +301,16 @@ define(function (require, exports, module) {
      * @param body {String|Object} 请求数据
      * @returns {*}
      */
-    module.exports.post = function (url, body) {
+    xhr.post = function (url, body) {
         return this.ajax({
             method: 'POST',
             url: url,
             body: body
         });
     };
+
+
+    module.exports = xhr;
 
 
     /**
@@ -322,17 +322,26 @@ define(function (require, exports, module) {
     function _buildURL(options) {
         var url = options.url;
         var query = options.query;
-        var querystring = typeis.string(query) === 'string' ? query : qs.stringify(query);
-        var cache = options.isCache ? '' : '_=' + Date.now();
+        var arr = qs.get(url, true);
+        var base = arr[0];
+        var obj = qs.parse(arr[1]);
+        var cacheKey = '_';
 
-        // 删除原有的缓存字符串
-        url = options.isCache ? url : url.replace(regCache, '').replace(regEnd, '');
+        if (typeis.string(query)) {
+            query = qs.parse(query);
+        }
 
-        return (url +
-        (url.indexOf('?') > -1 ? '&' : '?') +
-        cache +
-        (cache ? '&' : '') +
-        querystring).replace(regEnd, '');
+        dato.extend(obj, query);
+
+        if (!options.cache) {
+            while (obj[cacheKey]) {
+                cacheKey += '_';
+            }
+
+            obj[cacheKey] = Date.now();
+        }
+
+        return base + '?' + qs.stringify(obj);
     }
 
 

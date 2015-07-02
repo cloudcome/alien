@@ -1,11 +1,15 @@
 define(function (require) {
     'use strict';
 
-    var xhr = require('/src/core/communication/xhr.js');
+    var xhr = require('../../../src/core/communication/xhr.js');
 
     xhr.ajax({
-        url: 'http://s.ydr.me/p/t/test.txt',
-        type: 'text'
+        url: './data.json?a=1&b=2&_=abc',
+        type: 'json',
+        query: {
+            c: 3,
+            d: 4
+        }
     }).on('success', function (json) {
         console.log(json);
     }).on('error', function (err) {

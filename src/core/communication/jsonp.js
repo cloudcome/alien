@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * @module core/communication/jsonp
      * @requires utils/dato
      * @requires utils/class
-     * @requires libs/Emitter
+     * @requires libs/emitter
      * @requires utils/querystring
      * @requires core/dom/modification
      */
@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
     var random = require('../../utils/random.js');
-    var Emitter = require('../../libs/Emitter.js');
+    var Emitter = require('../../libs/emitter.js');
     var qs = require('../../utils/querystring.js');
     var modification = require('../../core/dom/modification.js');
     var defaults = {

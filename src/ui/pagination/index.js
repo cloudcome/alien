@@ -25,7 +25,7 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
-    var libsPagination = require('../../libs/Pagination.js');
+    var libsPagination = require('../../libs/pagination.js');
     var Template = require('../../libs/template.js');
     var tpl = new Template(template);
     var selector = require('../../core/dom/selector.js');

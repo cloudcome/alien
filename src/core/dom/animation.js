@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     var controller = require('../../utils/controller.js');
     var compatible = require('../navigator/compatible.js');
     var event = require('../event/base.js');
-    var Queue = require('../../libs/Queue.js');
+    var Queue = require('../../libs/queue.js');
     var transitionDefaults = {
         easing: 'in-out',
         duration: 567,
