@@ -1,25 +1,28 @@
 define(function (require) {
-    var Dangke = require('../../src/libs/Dangke.js');
+    var Dangke = require('../../src/libs/dangke.js');
 
     document.body.innerHTML = Dangke.isDangke;
 
 
-    function dfn(obj){
-        return Object.defineProperties(obj, {
-            name: {
-                get: function () {
-                    console.log('get');
-                    return this.name2;
-                },
-                set: function (val) {
-                    console.log('set', val);
-                    this.name2 = val;
-                }
-            }
-        });
-    }
+var add = function (n) {
+    var sum = 0;
+    var plus = function (n) {
+        if (n) {
+            sum += n;
+            return plus;
+        }
 
-    var o = dfn({});
+        return sum;
+    };
 
-    o.name = 'xx';
+    return plus(n);
+};
+
+
+    alert(add());
+    alert(add(1)());
+    alert(add(1)(2)());
+    alert(add(1)(2)(3)());
+    alert(add(1)(2)(3)(4)());
+    alert(add(1)(2)(3)(4)(5)());
 });
