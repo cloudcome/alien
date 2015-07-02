@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var klass = require('../../utils/class.js');
+    var urlUtils = require('../../utils/url.js');
     var qs = require('../../utils/querystring.js');
     var Emitter = require('../../libs/emitter.js');
     var regCache = /\b_=[^&]*&?/;
@@ -320,28 +321,25 @@ define(function (require, exports, module) {
      * @private
      */
     function _buildURL(options) {
-        var url = options.url;
+        var ret = urlUtils.parse( options.url);
         var query = options.query;
-        var arr = qs.get(url, true);
-        var base = arr[0];
-        var obj = qs.parse(arr[1]);
         var cacheKey = '_';
 
         if (typeis.string(query)) {
             query = qs.parse(query);
         }
 
-        dato.extend(obj, query);
+        dato.extend(ret.query, query);
 
         if (!options.cache) {
-            while (obj[cacheKey]) {
+            while (ret.query[cacheKey]) {
                 cacheKey += '_';
             }
 
-            obj[cacheKey] = Date.now();
+            ret.query[cacheKey] = Date.now();
         }
 
-        return base + '?' + qs.stringify(obj);
+        return ret.base + '?' + qs.stringify(ret.query);
     }
 
 

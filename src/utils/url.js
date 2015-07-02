@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * url 相关操作
  * @author ydr.me
  * @create 2015-03-05 15:42
  */
@@ -15,8 +15,8 @@ define(function (require, exports, module) {
 
     var qs = require('./querystring.js');
     var hb = require('./hashbang.js');
-    var keys = ['hash', 'host', 'hostname', 'href', 'path', 'pathname', 'port', 'protocol'];
-    var REG_QUERY = /\?(.*)#/;
+    var keys = ['hash', 'host', 'hostname', 'href', 'pathname', 'port', 'protocol'];
+    var REG_QUERY = /\?(.*?)(#|$)/;
 
     /**
      * url 解析
@@ -34,10 +34,11 @@ define(function (require, exports, module) {
             ret[key] = link[key];
         });
 
-        ret.querystring = (url.match(REG_QUERY) || ['', ''])[1];
+        ret.querystring = (ret.href.match(REG_QUERY) || ['', ''])[1];
         ret.query = qs.parse(ret.querystring);
         ret.search = ret.querystring ? '?' + ret.querystring : '';
         ret.hashbang = hb.parse(ret.hash);
+        ret.base = ret.protocol + '//' + ret.host + ret.pathname;
 
         return ret;
     };
