@@ -215,12 +215,20 @@ define(function (require, exports, module) {
         // 布尔值
         if (typeis.regexp(rule)) {
             callback = function (value, done) {
+                if (typeis.empty(value)) {
+                    return done(msg);
+                }
+
                 done(rule.test(value) ? null : msg);
             };
         } else if (typeis.function(rule)) {
             // 同步的
             if (rule.length === 1) {
                 callback = function (value, done) {
+                    if (typeis.empty(value)) {
+                        return done(msg);
+                    }
+
                     done(rule(value) ? null : msg);
                 };
             } else {

@@ -19,7 +19,7 @@ define(function (require) {
     var v = new Validation();
 
     var callback = function (path, ruleName) {
-        console.log(this.alienEmitter.type, path, ruleName);
+        console.log(this.alienEmitter.type, path, ruleName ? ruleName : '');
     };
 
     v.before('validate', callback);

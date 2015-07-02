@@ -186,6 +186,16 @@ define(function (require, exports, module) {
 
 
     /**
+     * 判断是否为 undefine 或 null
+     * @param obj
+     * @returns {Boolean}
+     */
+    typeis.empty = function (obj) {
+        return typeof obj === udf || typeis.null(obj);
+    };
+
+
+    /**
      * 判断是否为 URL 格式
      * @param string
      * @returns {Boolean}
