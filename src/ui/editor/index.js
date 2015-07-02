@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     'use strict';
 
     /**
-     * @module ui/Editor/
+     * @module ui/editor/
      * @requires 3rd/codemirror/mode/gfm
      * @requires 3rd/codemirror/addon/display/fullscreen
      * @requires 3rd/codemirror/addon/display/placeholder

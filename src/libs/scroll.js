@@ -15,7 +15,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/event/touch
      * @requires core/navigator/compatible
-     * @requires libs/Emitter
+     * @requires libs/emitter
      */
     'use strict';
 

@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/DatetimePicker/
+     * @module ui/datetime-picker/
      * @requires utils/calendar
      * @requires utils/dato
      * @requires utils/date

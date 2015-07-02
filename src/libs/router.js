@@ -7,7 +7,14 @@
 
 define(function (require, exports, module) {
     /**
-     * @module libs/Router.js
+     * @module libs/router.js
+     * @requires libs/emitter
+     * @requires core/event/base
+     * @requires utils/class
+     * @requires utils/typeis
+     * @requires utils/hashbang
+     * @requires utils/dato
+     * @requires utils/controller
      */
     'use strict';
 

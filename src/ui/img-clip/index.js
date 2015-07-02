@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Imgclip/
+     * @module ui/img-clip/
      * @requires ui/
      * @requires libs/template
      * @requires utils/dato

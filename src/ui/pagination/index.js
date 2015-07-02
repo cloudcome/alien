@@ -11,7 +11,7 @@ define(function (require, exports, module) {
      * @requires ui/
      * @requires utils/dato
      * @requires utils/number
-     * @requires libs/Pagination
+     * @requires libs/pagination
      * @requires libs/template
      * @requires core/dom/selector
      * @requires core/dom/modification

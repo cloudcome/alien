@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/CtrlList/
+     * @module ui/ctrl-list/
      * @requires ui/
      * @requires ui/popup/
      * @requires libs/template

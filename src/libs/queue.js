@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * @module libs/queue
      * @requires utils/class
      * @requires libs/emitter
-     * @module libs/Queue
+     * @module libs/queue
      */
     'use strict';
 

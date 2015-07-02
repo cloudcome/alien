@@ -22,7 +22,7 @@ define(function (require, exports, module) {
      * 语法高亮
      * @param $pre {Element|Node|String} 节点或节点选择器
      * @example
-     * var Prettify = require('ui/Prettify/');
+     * var Prettify = require('ui/prettify/');
      * var pf = new Prettify('pre');
      */
     module.exports = ui.create(function ($pre) {

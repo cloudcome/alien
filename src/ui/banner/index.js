@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module ui/Banner/
+     * @module ui/banner/
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification

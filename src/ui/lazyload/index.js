@@ -10,7 +10,7 @@ define(function (require, exports, module) {
      * @module ui/lazyload/
      * @requires utils/dato
      * @requires utils/controller
-     * @requires libs/Scroll
+     * @requires libs/scroll
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/see

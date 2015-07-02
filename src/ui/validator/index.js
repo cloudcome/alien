@@ -16,7 +16,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/number
      * @requires utils/string
-     * @requires libs/Validator
+     * @requires libs/validator
      */
     'use strict';
 
