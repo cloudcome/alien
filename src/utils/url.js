@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var hb = require('./hashbang.js');
     var keys = ['hash', 'host', 'hostname', 'href', 'pathname', 'port', 'protocol'];
     var REG_QUERY = /\?(.*?)(#|$)/;
+    var link = document.createElement('a');
 
     /**
      * url 解析
@@ -24,8 +25,6 @@ define(function (require, exports, module) {
      * @returns {Object}
      */
     exports.parse = function (url) {
-        var link = document.createElement('a');
-
         link.href = url;
 
         var ret = {};
@@ -55,6 +54,11 @@ define(function (require, exports, module) {
         obj.pathname = obj.pathname || '';
         obj.search = obj.search || '';
         obj.hash = obj.hash || '';
+
+        if (!obj.search) {
+            obj.search = qs.stringify(obj.query);
+            obj.search = obj.search ? '?' + obj.search : '';
+        }
 
         return obj.protocol + '//' + obj.host + obj.pathname + obj.search + obj.hash;
     };
