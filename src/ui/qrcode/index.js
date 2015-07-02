@@ -7,7 +7,13 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/qrcode/
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires libs/qrcode
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires ui/
      */
 
     'use strict';

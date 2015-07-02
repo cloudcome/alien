@@ -9,7 +9,6 @@ define(function (require, exports, module) {
     /**
      * @module ui/img-view/
      * @requires ui/
-     * @requires ui/scrollbar/
      * @requires ui/loading/
      * @requires ui/mask/
      * @requires ui/window/
@@ -26,7 +25,6 @@ define(function (require, exports, module) {
 
 
     var ui = require('../');
-    var Scrollbar = require('../scrollbar/');
     var Loading = require('../loading/');
     var Mask = require('../mask/');
     var Window = require('../window/');

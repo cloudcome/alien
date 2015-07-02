@@ -39,7 +39,7 @@ define(function (require, exports, module) {
     };
     /**
      * 实例化一个可拖拽改变尺寸的元素
-     * @param $ele {Strig|HTMLElement} 被改变尺寸的元素
+     * @param $ele {String|HTMLElement} 被改变尺寸的元素
      * @param options {Object} 配置
      * @param [options.minWidth=0] {Number} 最小宽度
      * @param [options.minHeight=0] {Number} 最小高度
