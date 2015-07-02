@@ -62,21 +62,21 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 设置忽略
-         * @param path {String}
-         */
-        setIgnore: function (path) {
-            var the = this;
-
-            path = typeis.array(path) ? path : [path];
-
-            dato.each(path, function (i, path) {
-                the._ignoreMap[path] = true;
-            });
-
-            return the;
-        },
+        ///**
+        // * 设置忽略
+        // * @param path {String}
+        // */
+        //setIgnore: function (path) {
+        //    var the = this;
+        //
+        //    path = typeis.array(path) ? path : [path];
+        //
+        //    dato.each(path, function (i, path) {
+        //        the._ignoreMap[path] = true;
+        //    });
+        //
+        //    return the;
+        //},
 
 
         /**
@@ -114,11 +114,50 @@ define(function (require, exports, module) {
 
 
         /**
-         * 执行验证
+         * 获取字段的规则
+         * @param path {String}
+         * @returns {*}
+         */
+        getRules: function (path) {
+            var the = this;
+            var rules;
+
+            dato.each(the._validateList, function (i, validate) {
+                if (path === validate.path) {
+                    rules = validate.rules;
+
+                    return false;
+                }
+            });
+
+            return rules;
+        },
+
+
+        /**
+         * 执行单部验证
          * @param data {Object} 待验证的数据
+         * @param [callback] {Function} 验证回调
          * @returns {Validation}
          */
-        validate: function (data) {
+        validateOne: function (data, callback) {
+            var path = Object.keys(data)[0];
+            var the = this;
+            var rules = the.getRules(path);
+
+            the._validateOne(data, path, rules, callback);
+
+            return the;
+        },
+
+
+        /**
+         * 执行全部验证
+         * @param data {Object} 待验证的数据
+         * @param [callback] {Function} 验证回调
+         * @returns {Validation}
+         */
+        validateAll: function (data, callback) {
             var the = this;
             var options = the._options;
             var path = '';
@@ -131,37 +170,18 @@ define(function (require, exports, module) {
             the.data = data;
 
             var complete = function () {
+                if (typeis.function(callback)) {
+                    callback.apply(the, arguments);
+                }
+
                 the._isValidating = false;
+                the.emit('complete');
             };
 
             var hd = howdo
                 // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
-                    the.emit('beforevalidate', path = item.path);
-                    howdo
-                        // 遍历验证规则
-                        .each(item.rules, function (j, ruleName, next) {
-                            var rule = the._validationMap[ruleName] || validationMap[ruleName];
-
-                            if (!rule) {
-                                throw 'rule `' + ruleName + '` is not found';
-                            }
-
-                            the.emit('validate', item.path, ruleName);
-                            rule.call(the, data[item.path], next);
-                        })
-                        .try(function () {
-                            the.emit('aftervalidate', item.path);
-                        })
-                        .catch(function (err) {
-                            if (!options.isBreakOnInvalid) {
-                                err = new Error(string.assign(err || options.defaultMsg, {
-                                    path: the._aliasMap[item.path] || item.path
-                                }));
-                                the.emit('error', err, item.path);
-                            }
-                        })
-                        .follow(next);
+                    the._validateOne(data, path = item.path, item.rules, next);
                 })
                 .try(function () {
                     the.emit('success');
@@ -181,6 +201,53 @@ define(function (require, exports, module) {
             } else {
                 hd.together(complete);
             }
+
+            return the;
+        },
+
+        /**
+         * 表单验证
+         * @param data {Object} 验证数据
+         * @param path {String} 字段
+         * @param rules {Array} 验证规则
+         * @param callback {Function} 验证回调
+         * @private
+         */
+        _validateOne: function (data, path, rules, callback) {
+            var the = this;
+            var options = the._options;
+
+            the.emit('beforevalidate', path);
+            howdo
+                // 遍历验证规则
+                .each(rules, function (j, ruleName, next) {
+                    var rule = the._validationMap[ruleName] || validationMap[ruleName];
+
+                    if (!rule) {
+                        throw 'rule `' + ruleName + '` is not found';
+                    }
+
+                    the.emit('validate', path, ruleName);
+                    rule.call(the, data[path], next);
+                })
+                .try(function () {
+                    the.emit('aftervalidate', path);
+                })
+                .catch(function (err) {
+                    if (!options.isBreakOnInvalid) {
+                        err = new Error(string.assign(err || options.defaultMsg, {
+                            path: the._aliasMap[path] || path
+                        }));
+                        the.emit('error', err, path);
+                    }
+                })
+                .follow(function () {
+                    the.emit('aftervalidate', path);
+
+                    if (typeis.function(callback)) {
+                        callback.apply(the, arguments);
+                    }
+                });
         }
     });
 

@@ -19,11 +19,11 @@ define(function (require) {
     var v = new Validation();
 
     var callback = function (path, ruleName) {
-        console.log(this.alienEmitter.type, path, ruleName ? ruleName : '');
+        console.log('alienEmitter =>', this.alienEmitter.type, path ? path : '', ruleName ? ruleName : '');
     };
 
     v.before('validate', callback);
-    v.on('validate error success', callback);
+    v.on('validate error success complete', callback);
     v.after('validate', callback);
 
     // 姓名
@@ -48,8 +48,15 @@ define(function (require) {
     v.addRule('age', 'timeout');
 
     // 验证
-    v.setIgnore('name').validate({
+    v.validateAll({
         name: 'yundanran',
         age: 12
     });
+
+    // 验证
+    v.validateOne({
+        name: 'yundanran'
+    });
+
+    //console.log(v.getRules('name'));
 });
