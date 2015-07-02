@@ -199,6 +199,19 @@ define(function (require, exports, module) {
     };
 
     Validation.defaults = defaults;
+
+    Validation.addRule('required', /^.+$/, '${path}必填');
+
+    Validation.addRule('number', /^\d+$/, '${path}必须是数字');
+
+    Validation.addRule('email', function (val) {
+        return typeis.email(val);
+    }, '${path}不符合 email 格式');
+
+    Validation.addRule('url', function (val) {
+        return typeis.url(val);
+    }, '${path}不符合 url 格式');
+
     module.exports = Validation;
 
 

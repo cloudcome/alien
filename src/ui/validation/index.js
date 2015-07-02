@@ -20,6 +20,14 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
     var ui = require('../');
+    // {
+    //     minLength: function(ruleValue){
+    //         retrun function(value, done){
+    //              done(value.length >= ruleValue * 1 ? null : '${path}长度必须大于${0}');
+    //         };
+    //     };
+    // }
+    var validationMap = {};
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -44,7 +52,6 @@ define(function (require, exports, module) {
     //    number: /^\d+$/,
     //    url: ''
     //};
-    var validationMap = {};
     var ValidationUI = ui.create({
         constructor: function ($form, options) {
             var the = this;
@@ -176,12 +183,17 @@ define(function (require, exports, module) {
         }
     });
 
-    ValidationUI.addRule = function (ruleName, value, fn) {
-        if(validationMap[name] && DEBUG){
-            console.warn('override rule of ' + name);
+    /**
+     * 添加静态的 ui 验证规则
+     * @param ruleName {String} 规则名称
+     * @param fn {Function} 返回包含生成规则的方法的高阶方法
+     */
+    ValidationUI.addRule = function (ruleName, fn) {
+        if(validationMap[ruleName] && DEBUG){
+            console.warn('override rule of ' + ruleName);
         }
 
-        validationMap[name] = function(){};
+        validationMap[ruleName] = fn;
     };
 
     require('./rules.js');

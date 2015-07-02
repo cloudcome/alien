@@ -12,17 +12,21 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Validation = require('../../libs/validation.js');
     var typeis = require('../../utils/typeis.js');
 
-    Validation.addRule('required', /^.+$/, '${path}必填');
-    Validation.addRule('number', /^\d+$/, '${path}必须是数字');
+    // 最小长度
+    exports.minLength = function (ruleValue) {
+        return function (value, done) {
+            value = value || '';
+            done(value.length >= ruleValue ? null : '${path}长度不能少于${0}');
+        };
+    };
 
-    Validation.addRule('email', function (val) {
-        return typeis.email(val);
-    }, '${path}不符合 email 格式');
-
-    Validation.addRule('url', function (val) {
-        return typeis.url(val);
-    }, '${path}不符合 url 格式');
+    // 最大长度
+    exports.maxLength = function (ruleValue) {
+        return function (value, done) {
+            value = value || '';
+            done(value.length <= ruleValue ? null : '${path}长度不能超过${0}');
+        };
+    };
 });
