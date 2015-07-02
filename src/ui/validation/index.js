@@ -28,6 +28,11 @@ define(function (require, exports, module) {
     //     };
     // }
     var validationMap = {};
+    var tagNameMap = {
+        textarea: 1,
+        select: 1
+    };
+    var REG_LABEL = /^([^:：]*)/;
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -130,12 +135,12 @@ define(function (require, exports, module) {
         _parseRules: function ($item) {
             var the = this;
             var options = the._options;
+            var id = $item.id;
             var path = $item.name;
-            var type = $item.type;
+            var tagName = $item.tagName.toLowerCase();
+            var type = tagNameMap[tagName] ? tagName : $item.type;
             var validationStr = attribute.data($item, options.dataAttribute);
             var validationList = the._parseValidation(validationStr);
-
-            debugger;
 
             // 规则顺序
             // required => type => minLength => maxLength => pattern => data
@@ -152,9 +157,29 @@ define(function (require, exports, module) {
                     break;
             }
 
-            validationList.forEach(function (item) {
-                the._validation.addRule(path, item.name);
+            var hasAlias = false;
+
+            validationList.forEach(function (validation) {
+                if (validation.name === 'alias') {
+                    the._validation.setAlias(path, validation.value);
+                    hasAlias = true;
+                    return;
+                }
+
+                if (!validationMap[validation.name]) {
+                    throw '`' + validation.name + '` is not found';
+                }
+
+                the._validation.addRule(path, validationMap[validation.name](validation.value));
             });
+
+            if (!hasAlias) {
+                var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
+
+                if ($label) {
+                    the._validation.setAlias(path, (attribute.text($label).match(REG_LABEL) || ['', ''])[1].trim());
+                }
+            }
         },
 
 
@@ -189,14 +214,14 @@ define(function (require, exports, module) {
      * @param fn {Function} 返回包含生成规则的方法的高阶方法
      */
     ValidationUI.addRule = function (ruleName, fn) {
-        if(validationMap[ruleName] && DEBUG){
+        if (validationMap[ruleName] && DEBUG) {
             console.warn('override rule of ' + ruleName);
         }
 
         validationMap[ruleName] = fn;
     };
 
-    require('./rules.js');
+    dato.each(require('./rules.js'), ValidationUI.addRule);
     ValidationUI.defaults = defaults;
     module.exports = ValidationUI;
 });

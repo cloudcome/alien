@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     exports.minLength = function (ruleValue) {
         return function (value, done) {
             value = value || '';
-            done(value.length >= ruleValue ? null : '${path}长度不能少于${0}');
+            done(value.length >= ruleValue ? null : '${path}不能少于' + ruleValue + '个长度');
         };
     };
 
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     exports.maxLength = function (ruleValue) {
         return function (value, done) {
             value = value || '';
-            done(value.length <= ruleValue ? null : '${path}长度不能超过${0}');
+            done(value.length <= ruleValue ? null : '${path}不能超过' + ruleValue + '个长度');
         };
     };
 });
