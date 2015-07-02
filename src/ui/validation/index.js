@@ -13,10 +13,12 @@ define(function (require, exports, module) {
     'use strict';
 
     var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var string = require('../../utils/string.js');
     var ui = require('../');
     var defaults = {
         // true: 返回单个错误对象
@@ -25,9 +27,24 @@ define(function (require, exports, module) {
         // 服务器端，默认为 true
         isBreakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${path}字段不合法',
+        // 规则的 data 属性
+        dataAttribute: 'validation',
+        // data 规则分隔符
+        dataSep: ',',
+        // data 规则等于符
+        dataEqual: ':',
+        // 验证的表单项目选择器
         itemSelector: 'input,select,textarea',
-        submitSelector: '.form-submit'
+        // 提交按钮
+        submitSelector: '.form-submit',
+        // 验证事件
+        event: 'focusout change'
     };
+    //var typeRegExpMap = {
+    //    number: /^\d+$/,
+    //    url: ''
+    //};
+    var validationMap = {};
     var ValidationUI = ui.create({
         constructor: function ($form, options) {
             var the = this;
@@ -105,14 +122,67 @@ define(function (require, exports, module) {
          */
         _parseRules: function ($item) {
             var the = this;
+            var options = the._options;
             var path = $item.name;
+            var type = $item.type;
+            var validationStr = attribute.data($item, options.dataAttribute);
+            var validationList = the._parseValidation(validationStr);
+
+            debugger;
+
+            // 规则顺序
+            // required => type => minLength => maxLength => pattern => data
 
             if ($item.required) {
                 the._validation.addRule(path, 'required');
             }
+
+            switch (type) {
+                case 'number':
+                case 'email':
+                case 'url':
+                    the._validation.addRule(path, type);
+                    break;
+            }
+
+            validationList.forEach(function (item) {
+                the._validation.addRule(path, item.name);
+            });
+        },
+
+
+        /**
+         * 解析 data 验证规则
+         * @param ruleString
+         * @returns {Array}
+         * @private
+         */
+        _parseValidation: function (ruleString) {
+            var the = this;
+            var options = the._options;
+            var list1 = ruleString.split(options.dataSep);
+            var list2 = [];
+
+            list1.forEach(function (item) {
+                var temp = item.split(options.dataEqual);
+
+                list2.push({
+                    name: temp[0].trim(),
+                    value: temp[1] ? temp[1].trim() : true
+                });
+            });
+
+            return list2;
         }
     });
 
+    ValidationUI.addRule = function (ruleName, value, fn) {
+        if(validationMap[name] && DEBUG){
+            console.warn('override rule of ' + name);
+        }
+
+        validationMap[name] = function(){};
+    };
 
     require('./rules.js');
     ValidationUI.defaults = defaults;

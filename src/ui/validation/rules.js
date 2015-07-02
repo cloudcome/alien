@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
 
     Validation.addRule('required', /^.+$/, '${path}必填');
+    Validation.addRule('number', /^\d+$/, '${path}必须是数字');
 
     Validation.addRule('email', function (val) {
         return typeis.email(val);

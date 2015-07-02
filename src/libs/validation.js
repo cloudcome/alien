@@ -191,7 +191,7 @@ define(function (require, exports, module) {
      * @param [msg] {String} 验证出错的消息，如果 callback 是函数的话，需要在内部传递
      */
     Validation.addRule = function (name, rule, msg) {
-        if (validationMap[name]) {
+        if (validationMap[name] && DEBUG) {
             console.warn('override `' + name + '` rule');
         }
 
