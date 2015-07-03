@@ -14,6 +14,7 @@ define(function (require, exports, module) {
 
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
     var dato = require('../../utils/dato.js');
@@ -75,9 +76,34 @@ define(function (require, exports, module) {
         update: function () {
             var the = this;
 
+            the._$submit = selector.query(the._options.submitSelector, the._$form)[0];
+
+            //if (!the._$submit) {
+            //    the._$submit = modification.create('button', {
+            //        type: 'submit',
+            //        style: {
+            //            display: 'none'
+            //        }
+            //    });
+            //    modification.insert(the._$submit, the._$form);
+            //}
+
             the._validation = new Validation(the._options);
             the._validation.pipe(the);
             the._parseItems();
+
+            return the;
+        },
+
+
+        submit: function () {
+            var the = this;
+
+            if (!the._$submit) {
+                throw 'submit button is not found';
+            }
+
+            event.dispatch(the._$submit, 'click');
 
             return the;
         },
@@ -106,7 +132,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             event.on(the._$form, 'click', options.submitSelector, the._onsubmit = function () {
-                the._validation.validate(the.getData());
+                the._validation.validateAll(the.getData());
             });
         },
 

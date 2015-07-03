@@ -23,4 +23,8 @@ define(function (require, exports, module) {
     validation.on('success', function () {
         alert('验证通过');
     });
+
+    document.getElementById('dispatch').onclick = function () {
+        validation.submit();
+    };
 });
