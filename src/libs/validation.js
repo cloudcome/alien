@@ -282,7 +282,7 @@ define(function (require, exports, module) {
 
     Validation.defaults = defaults;
 
-    Validation.addRule('required', /^.+$/, '${path}必填');
+    Validation.addRule('required', /^.+$/, '${path}不能为空');
 
     Validation.addRule('number', /^\d+$/, '${path}必须是数字');
 

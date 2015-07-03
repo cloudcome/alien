@@ -197,11 +197,17 @@ define(function (require, exports, module) {
         _parseItems: function () {
             var the = this;
             var options = the._options;
+            var parseName = {};
 
             the._items = [];
             the._$items = selector.query(options.itemSelector, the._$form);
             dato.each(the._$items, function (i, $item) {
-                the._parseRules($item);
+                var name = $item.name;
+
+                if (!parseName[name]) {
+                    parseName[name] = 1;
+                    the._parseRules($item);
+                }
             });
         },
 
