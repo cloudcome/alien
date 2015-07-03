@@ -286,13 +286,15 @@ define(function (require, exports, module) {
 
     Validation.addRule('number', /^\d+$/, '${path}必须是数字');
 
+    Validation.addRule('mobile', /^1\d{10}$/, '${path}必须是手机号');
+
     Validation.addRule('email', function (val) {
         return typeis.email(val);
-    }, '${path}不符合 email 格式');
+    }, '${path}必须是邮箱');
 
     Validation.addRule('url', function (val) {
         return typeis.url(val);
-    }, '${path}不符合 url 格式');
+    }, '${path}必须是 url 地址');
 
     module.exports = Validation;
 

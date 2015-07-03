@@ -128,17 +128,38 @@ define(function (require, exports, module) {
 
                 switch (type) {
                     case 'checkbox':
-                    case 'select:multiple':
                         data[path] = data[path] || [];
 
-                        if ($item.checked) {
+                        if ($item.checked && val) {
                             data[path].push(val);
                         }
 
                         break;
 
-                    case 'radio':
                     case 'select':
+                        var isMultiple = $item.multiple;
+
+                        if (isMultiple) {
+                            data[path] = [];
+                        }
+
+                        dato.repeat($item.length, function (index) {
+                            var $option = $item[index];
+                            var val = attribute.attr($option, 'value');
+
+                            if ($option.selected && val) {
+                                if (isMultiple) {
+                                    data[path].push(val);
+                                } else {
+                                    data[path] = val;
+                                    return false;
+                                }
+                            }
+                        });
+
+                        break;
+
+                    case 'radio':
                         if ($item.checked) {
                             data[path] = val;
                         }
@@ -149,7 +170,6 @@ define(function (require, exports, module) {
                         data[path] = val;
                 }
 
-                // @todo select mutiple
                 // @todo input:file
             });
 
@@ -165,11 +185,8 @@ define(function (require, exports, module) {
          */
         _getType: function ($item) {
             var tagName = $item.tagName.toLowerCase();
-            var multiple = $item.multiple;
 
-            var type = tagNameMap[tagName] ? tagName : $item.type;
-
-            return multiple ? type + ':multiple' : type;
+            return tagNameMap[tagName] ? tagName : $item.type;
         },
 
 
