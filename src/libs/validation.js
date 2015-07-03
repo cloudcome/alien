@@ -273,10 +273,11 @@ define(function (require, exports, module) {
 
     /**
      * 返回静态规则
-     * @returns {{}}
+     * @param [name] {String} 规则名
+     * @returns {Object|Function}
      */
-    Validation.getRules = function () {
-        return validationMap;
+    Validation.getRule = function (name) {
+        return name ? validationMap[name] : validationMap;
     };
 
     Validation.defaults = defaults;

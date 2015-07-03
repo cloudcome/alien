@@ -200,11 +200,17 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if (!validationMap[validation.name]) {
-                    throw '`' + validation.name + '` is not found';
+                // 1. 当前静态规则
+                if (validationMap[validation.name]) {
+                    return the._validation.addRule(path, validationMap[validation.name](validation.value));
                 }
 
-                the._validation.addRule(path, validationMap[validation.name](validation.value));
+                // 2. 库的静态规则
+                if (Validation.getRule(validation.name)) {
+                    return the._validation.addRule(path, Validation.getRule(validation.name));
+                }
+
+                throw '`' + validation.name + '` is not found';
             });
 
             if (!hasAlias) {
