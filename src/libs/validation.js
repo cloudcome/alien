@@ -60,23 +60,6 @@ define(function (require, exports, module) {
         },
 
 
-        ///**
-        // * 设置忽略
-        // * @param path {String}
-        // */
-        //setIgnore: function (path) {
-        //    var the = this;
-        //
-        //    path = typeis.array(path) ? path : [path];
-        //
-        //    dato.each(path, function (i, path) {
-        //        the._ignoreMap[path] = true;
-        //    });
-        //
-        //    return the;
-        //},
-
-
         /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段

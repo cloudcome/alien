@@ -31,7 +31,13 @@
 
 <ul id="form">
     <li>
-        <label for="username">用户名1</label>：<input name="username" type="text" required id="username" data-validation="minLength:3,maxLength:5"/>
+        <label for="username">用户名</label>：<input name="username" type="text" required id="username" data-validation="minLength:3,maxLength:5"/>
+    </li>
+    <li>
+        <label for="password">密码</label>：<input name="password" type="password" required id="password" data-validation="minLength:3,maxLength:5"/>
+    </li>
+    <li>
+        <label for="password2">确认密码</label>：<input name="password2" type="password" required id="password2" data-validation="equal:password"/>
     </li>
     <li>
         <button class="form-submit" id="submit">提交</button>

@@ -29,4 +29,13 @@ define(function (require, exports, module) {
             done(value.length <= ruleValue ? null : '${path}不能超过' + ruleValue + '个长度');
         };
     };
+
+    // 相等于
+    exports.equal = function (ruleValue) {
+        return function (value, done) {
+            debugger;
+            value = value || '';
+            done(value.length <= ruleValue ? null : '${path}不能超过' + ruleValue + '个长度');
+        };
+    };
 });
