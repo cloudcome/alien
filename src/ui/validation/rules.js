@@ -18,7 +18,6 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var REG_NUMBERIC = /^[\d.]+$/;
 
-
     // 必填
     exports.required = function () {
         return function (value, done) {

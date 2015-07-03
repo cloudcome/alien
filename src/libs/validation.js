@@ -282,6 +282,13 @@ define(function (require, exports, module) {
 
     Validation.defaults = defaults;
 
+    //Validation.addRule('required', function (value, done) {
+    //    var boolean = typeis(value) === 'file' ? true :
+    //    ( typeis.array(value) || typeis(value) === 'filelist' ? value : (value || '') ).length > 0;
+    //
+    //    done(boolean ? null : '${path}不能为空');
+    //});
+
     Validation.addRule('number', /^\d+$/, '${path}必须是数字');
 
     Validation.addRule('mobile', /^1\d{10}$/, '${path}必须是手机号');

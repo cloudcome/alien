@@ -271,7 +271,7 @@ define(function (require, exports, module) {
             // required => type => minLength => maxLength => pattern => data
 
             if ($item.required) {
-                the._validation.addRule(path, 'required');
+                the._validation.addRule(path, the._getRule('required'));
             }
 
             if ($item.min !== '' && !typeis.empty($item.min)) {
