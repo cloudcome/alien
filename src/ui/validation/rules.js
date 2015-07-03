@@ -105,7 +105,7 @@ define(function (require, exports, module) {
             }
 
             dato.each(files, function (index, file) {
-                if (!string.glob(file.type, ruleValue, true)) {
+                if (file && file.type && !string.glob(file.type, ruleValue, true)) {
                     invalidIndexs.push(index + 1);
                 }
             });

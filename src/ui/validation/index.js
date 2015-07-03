@@ -169,15 +169,13 @@ define(function (require, exports, module) {
                     case 'file':
                         var files = $item.files;
 
-                        data[path] = isMultiple ? files : files[0];
+                        data[path] = isMultiple ? files : (files.length ? files[0] : null);
 
                         break;
 
                     default :
                         data[path] = val;
                 }
-
-                // @todo input:file
             });
 
             return data;
