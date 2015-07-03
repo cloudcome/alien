@@ -201,7 +201,6 @@ define(function (require, exports, module) {
             event.on(the._$form, 'click', options.submitSelector, the._onsubmit = function () {
                 var data = the.getData();
 
-                console.log(data);
                 the._validation.validateAll(data);
             });
         },
@@ -250,6 +249,10 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'required');
             }
 
+            if ($item.min) {
+                //the._validation.addRule(path, );
+            }
+
             switch (type) {
                 case 'number':
                 case 'email':
@@ -261,25 +264,27 @@ define(function (require, exports, module) {
             var hasAlias = false;
 
             validationList.forEach(function (validation) {
-                if (validation.name === 'alias') {
-                    the._validation.setAlias(path, validation.value);
+                var validationName = validation.name;
+                var validationVal = validation.value;
+
+                if (validationName === 'alias') {
+                    the._validation.setAlias(path, validationVal);
                     hasAlias = true;
+                    return;
+                }
+
+                if (validationName === 'type') {
+                    the._validation.addRule(path, validationVal);
                     return;
                 }
 
                 var rule;
 
-                // 1. 当前静态规则
-                if ((rule = validationMap[validation.name])) {
-                    return the._validation.addRule(path, rule(validation.value));
-                }
-
-                // 2. 库的静态规则
-                if ((rule = Validation.getRule(validation.name))) {
+                if ((rule = the._getRule(validationName, validationVal))) {
                     return the._validation.addRule(path, rule);
                 }
 
-                throw '`' + validation.name + '` is not found';
+                throw '`' + validationName + '` is not found';
             });
 
             if (!hasAlias) {
@@ -288,6 +293,28 @@ define(function (require, exports, module) {
                 if ($label) {
                     the._validation.setAlias(path, (attribute.text($label).match(REG_LABEL) || ['', ''])[1].trim());
                 }
+            }
+        },
+
+
+        /**
+         * 获取验证规则
+         * @param ruleName
+         * @param validationVal
+         * @returns {*}
+         * @private
+         */
+        _getRule: function (ruleName, validationVal) {
+            var rule;
+
+            // 1. 当前静态规则
+            if ((rule = validationMap[ruleName])) {
+                return rule(validationVal);
+            }
+
+            // 2. 库的静态规则
+            if ((rule = Validation.getRule(ruleName))) {
+                return rule;
             }
         },
 

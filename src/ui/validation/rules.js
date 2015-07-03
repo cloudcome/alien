@@ -13,6 +13,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var typeis = require('../../utils/typeis.js');
+    var number = require('../../utils/number.js');
+    var REG_NUMBERIC = /^[\d.]+$/;
 
     // 最小长度
     exports.minLength = function (ruleValue) {
@@ -53,4 +55,35 @@ define(function (require, exports, module) {
             done(value.length <= ruleValue ? null : '${path}最多只能选择' + ruleValue + '项');
         };
     };
+
+    // 最小值
+    exports.min = function (ruleValue) {
+        return function (value, done) {
+            value = value || '';
+
+            if (!REG_NUMBERIC.test(value)) {
+                return done('${path}必须为数值格式');
+            }
+
+            value = number.parseFloat(value);
+            ruleValue = number.parseFloat(ruleValue);
+            done(value >= ruleValue ? null : '${path}不能小于' + ruleValue);
+        };
+    };
+
+    // 最大值
+    exports.max = function (ruleValue) {
+        return function (value, done) {
+            value = value || '';
+
+            if (!REG_NUMBERIC.test(value)) {
+                return done('${path}必须为数值格式');
+            }
+
+            value = number.parseFloat(value);
+            ruleValue = number.parseFloat(ruleValue);
+            done(value <= ruleValue ? null : '${path}不能大于' + ruleValue);
+        };
+    };
+
 });
