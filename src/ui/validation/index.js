@@ -226,6 +226,11 @@ define(function (require, exports, module) {
         _parseValidation: function (ruleString) {
             var the = this;
             var options = the._options;
+
+            if (!ruleString) {
+                return [];
+            }
+
             var list1 = ruleString.split(options.dataSep);
             var list2 = [];
 

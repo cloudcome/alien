@@ -270,6 +270,15 @@ define(function (require, exports, module) {
         validationMap[name] = _fixValidationRule(rule, msg);
     };
 
+
+    /**
+     * 返回静态规则
+     * @returns {{}}
+     */
+    Validation.getRules = function () {
+        return validationMap;
+    };
+
     Validation.defaults = defaults;
 
     Validation.addRule('required', /^.+$/, '${path}必填');

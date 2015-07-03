@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     exports.equal = function (ruleValue) {
         return function (value, done) {
             value = value || '';
-            done(value === this.data[ruleValue]? null : '${path}不能超过' + ruleValue + '个长度');
+            done(value === this.getData(ruleValue) ? null : '${path}必须与' + this.getAlias(ruleValue) + '相同');
         };
     };
 });
