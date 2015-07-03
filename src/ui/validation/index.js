@@ -179,6 +179,22 @@ define(function (require, exports, module) {
 
 
         /**
+         * 注册验证规则，按顺序执行验证
+         * @param path {String} 字段
+         * @param rule {String|Array|RegExp|Function} 验证规则，可以是静态规则，也可以添加规则
+         * @param [msg] {String} 验证失败消息
+         * @returns {ValidationUI}
+         */
+        addRule: function (path, rule, msg) {
+            var the = this;
+
+            the._validation.addRule.apply(the, arguments);
+
+            return the;
+        },
+
+
+        /**
          * 获取元素类型
          * @param $item
          * @returns {String}
@@ -250,17 +266,24 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'required');
             }
 
-            if (!typeis.undefined($item.min)) {
+            if ($item.min !== '' && !type.empty($item.min)) {
                 the._validation.addRule(path, the._getRule('min', $item.min));
             }
 
-            if (!typeis.undefined($item.max)) {
+            if ($item.max !== '' && !type.empty($item.max)) {
                 the._validation.addRule(path, the._getRule('max', $item.max));
             }
 
-            if (!typeis.undefined($item.step)) {
-                the._validation.addRule(path, the._getRule('step', $item.step));
-            }
+            // @todo step
+            //if (!typeis.undefined($item.step)) {
+            //    var step = $item.step;
+            //
+            //    if(typeis.undefined($item.min)){
+            //        throw 'the `min` attribute of element is not found';
+            //    }
+            //
+            //    //the._validation.addRule(path, the._getRule('step', $item.step));
+            //}
 
             switch (type) {
                 case 'number':
