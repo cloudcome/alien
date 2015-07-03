@@ -91,8 +91,12 @@
         <!--<input type="tel" name="age" id="age" data-validation="min:18,max:30"/>-->
     <!--</li>-->
     <li>
-        <label for="file">文件</label>
-        <input type="file" name="file" id="file" data-validation="required,accept:image/*,minSize:10,maxSize:200"/>
+        <label for="file">头像</label>
+        <input type="file" name="file" id="file" data-validation="required,accept:image/*,minSize:10,maxSize:20000"/>
+    </li>
+    <li>
+        <label for="file2">相册</label>
+        <input type="file" name="file2" id="file2" multiple data-validation="required,accept:image/*,minSize:10,maxSize:20000"/>
     </li>
     <li>
         <button class="form-submit" id="submit">提交</button>
