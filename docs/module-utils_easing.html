@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Module: utils/easing - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+	                    <li class="sidebar-header">Methods &times; 2</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.define">define</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#.get">get</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Module: utils/easing</h1>
+
+		            
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            utils/easing
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-91589065664447849558989964425564" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-91589065664447849558989964425564">
+                <p><a href="utils_easing.js.html#line9">utils/easing.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+        
+            <li><a href="module-utils_number.html">module:utils/number</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+        <section id="docs-methods">
+            <h3 class="subsection-title">Methods</h3>
+
+            <dl>
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".define">
+        <span class="type-signature">&lt;static> </span>define<span class="signature">(name, mX1, mY1, mX2, mY2)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>定义一个 easing
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>mX1</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>mY1</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>mX2</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>mY2</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-175599719164893039714274960570037" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-175599719164893039714274960570037">
+                <p><a href="utils_easing.js.html#line231">utils/easing.js:231</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id=".get">
+        <span class="type-signature">&lt;static> </span>get<span class="signature">(name)</span><span class="type-signature"> 
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>获取 easing function
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+        <h5>Returns:</h5>
+        
+                
+
+<table class="returns-table">
+    <tbody>
+        <tr>
+            <td>
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+</td>
+            <td class="param-desc"></td>
+        </tr>
+    </tbody>
+</table>
+
+            
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-81188252684660266515666702762246" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-81188252684660266515666702762246">
+                <p><a href="utils_easing.js.html#line245">utils/easing.js:245</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

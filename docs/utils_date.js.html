@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: utils/date.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 91</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:afterenter">afterenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeclose">beforeclose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeenter">beforeenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeopen">beforeopen</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeresize">beforeresize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:ready">ready</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: utils/date.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * date.js
+ * @author ydr.me
+ * @create 2014-09-28 13:54
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module utils/date
+     * @requires utils/allocation
+     * @requires utils/dato
+     * @requires utils/number
+     * @requires utils/string
+     * @requires utils/typeis
+     */
+
+    'use strict';
+
+    var allocation = require('./allocation.js');
+    var dato = require('./dato.js');
+    var number = require('./number.js');
+    var string = require('./string.js');
+    var typeis = require('./typeis.js');
+    var weeks = '日一二三四五六';
+    var monthDates = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var REG_RANGE = /^(this|in)\s+?(?:(\d+)\s+?)?(day|week|month|year)s?$/i;
+    var dateFormDefaults = {
+        // 是否在小时内显示分钟，默认false，即：6小时前；若未true，即：6小时20分钟前
+        minutesInHour: false
+    };
+
+    /**
+     * 格式化日期&lt;br>
+     * 主要参考ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ&lt;br>
+     * 其他参数参考自moment&lt;br>
+     *
+     * @param {String} format 格式化字符串&lt;br>
+     * 假设当前时间为：2014年1月1日 19点9分9秒9毫秒 周三&lt;br>
+     * &lt;strong>日期&lt;/strong>&lt;br>
+     * 至少4位年份&lt;code>YYYY&lt;/code> 2014&lt;br>
+     * 至少2位年份&lt;code>YY&lt;/code> 14&lt;br>
+     * 至少2位月份&lt;code>MM&lt;/code> 01&lt;br>
+     * 至少1位月份&lt;code>M&lt;/code> 1&lt;br>
+     * 至少2位日期&lt;code>DD&lt;/code> 01&lt;br>
+     * 至少1位日期&lt;code>D&lt;/code> 1&lt;br>
+     *
+     * &lt;strong>时间&lt;/strong>&lt;br>
+     * 至少2位24小时制小时&lt;code>HH&lt;/code> 19&lt;br>
+     * 至少1位24小时制小时&lt;code>H&lt;/code> 19&lt;br>
+     * 至少2位12小时制小时&lt;code>hh&lt;/code> 07&lt;br>
+     * 至少1位12小时制小时&lt;code>h&lt;/code> 7&lt;br>
+     * 至少2位分钟数&lt;code>mm&lt;/code> 09&lt;br>
+     * 至少1位分钟数&lt;code>m&lt;/code> 9&lt;br>
+     * 至少2位秒数&lt;code>ss&lt;/code> 09&lt;br>
+     * 至少1位秒数&lt;code>s&lt;/code> 9&lt;br>
+     * 至少3位毫秒数&lt;code>SSS&lt;/code> 009&lt;br>
+     * 至少2位毫秒数&lt;code>SS&lt;/code> 09&lt;br>
+     * 至少1位毫秒数&lt;code>S&lt;/code> 9&lt;br>
+     *
+     * &lt;strong>时段&lt;/strong>&lt;br>
+     * 星期&lt;code>e&lt;/code> 三&lt;br>
+     * 上下午&lt;code>a&lt;/code> 下午&lt;br>
+     *
+     * @param {Date|Object|Number|String} [date] 日期
+     * @param {Object} [config] 格式配置
+     * @returns {null|string}
+     *
+     * @example
+     * // 默认的格式化
+     * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a');
+     * // => "2014 年"
+     * date.format('YYYY 年');
+     * // => "2014 年"
+     *
+     * // 自定义格式化
+     * var month = {
+         *    "01": "January",
+         *    "02": "February",
+         *    "03": "March",
+         *    "04": "April",
+         *    "05": "May",
+         *    "06": "June",
+         *    "07": "July",
+         *    "08": "August",
+         *    "09": "September",
+         *    "10": "October",
+         *    "11": "November",
+         *    "12": "December",
+         * };
+     * date.format('YYYY年MM月DD日 HH:mm:ss.SSS 星期e a', {
+         *    // 要替换的字段，以及要替换的值
+         *    'MM': month
+         * });
+     * // => "2014年October月04日 17:28:06.363 星期六 下午"
+     */
+    exports.format = function (format, date, config) {
+        if (typeis(format) !== 'string') {
+            throw new Error('date format must be a string');
+        }
+
+        var args = allocation.args(arguments);
+
+        if (typeis(arguments[1]) === 'object') {
+            config = args[1];
+            date = new Date();
+        }
+
+        format = format || 'YYYY-MM-DD HH:mm:ss www';
+        date = exports.parse(date);
+        config = config || {};
+
+        var Y = String(date.getFullYear());
+        var M = String(date.getMonth() + 1);
+        var D = String(date.getDate());
+        var H = String(date.getHours());
+        var h = H > 12 ? H - 12 : H;
+        var a = H > 12 ? 0 : 1;
+        var m = String(date.getMinutes());
+        var s = String(date.getSeconds());
+        var S = String(date.getMilliseconds());
+        var e = String(date.getDay());
+        var formater = [
+            {
+                key: 'YYYY',
+                val: Y,
+                is: 'Y'
+            },
+            {
+                key: 'YY',
+                val: Y.slice(-2),
+                is: 'Y'
+            },
+            {
+                key: 'MM',
+                val: string.padLeft(M, 2, '0'),
+                is: 'M'
+            },
+            {
+                key: 'M',
+                val: M,
+                is: 'M'
+            },
+            {
+                key: 'DD',
+                val: string.padLeft(D, 2, '0'),
+                is: 'D'
+            },
+            {
+                key: 'D',
+                val: D,
+                is: 'D'
+            },
+            {
+                key: 'HH',
+                val: string.padLeft(H, 2, '0'),
+                is: 'H'
+            },
+            {
+                key: 'H',
+                val: H,
+                is: 'H'
+            },
+            {
+                key: 'hh',
+                val: string.padLeft(h, 2, '0'),
+                is: 'h'
+            },
+            {
+                key: 'h',
+                val: h,
+                is: 'h'
+            },
+            {
+                key: 'mm',
+                val: string.padLeft(m, 2, '0'),
+                is: 'm'
+            },
+            {
+                key: 'm',
+                val: m,
+                is: 'm'
+            },
+            {
+                key: 'ss',
+                val: string.padLeft(s, 2, '0'),
+                is: 's'
+            },
+            {
+                key: 's',
+                val: s,
+                is: 's'
+            },
+            {
+                key: 'SSS',
+                val: string.padLeft(S, 3, '0'),
+                is: 'S'
+            },
+            {
+                key: 'SS',
+                val: string.padLeft(S, 2, '0'),
+                is: 'S'
+            },
+            {
+                key: 'S',
+                val: S,
+                is: 'S'
+            },
+            {
+                key: 'e',
+                val: weeks[e],
+                is: 'e'
+            },
+            {
+                key: 'a',
+                val: a ? '上午' : '下午',
+                is: 'a'
+            }
+        ];
+        var hasFormat = {};
+        var configFormater = [];
+
+        // 年、月、日、时、分、秒、毫秒、星期、上下午
+        // 只保证每个字段只被格式化一次，防止误操作
+        dato.each(formater, function (index, fmt) {
+            var reg = new RegExp(fmt.key, 'mg');
+
+            if (!hasFormat[fmt.is]) {
+                if (config[fmt.key]) {
+                    hasFormat[fmt.is] = !0;
+                    configFormater.push({
+                        key: fmt.key,
+                        val: config[fmt.key][fmt.val],
+                        is: fmt.is
+                    });
+                } else {
+                    if (reg.test(format)) {
+                        hasFormat[fmt.is] = !0;
+                        format = format.replace(reg, fmt.val);
+                    }
+                }
+            }
+        });
+
+        // 自定义格式化
+        dato.each(configFormater, function (index, fmt) {
+            var reg = new RegExp(fmt.key, 'mg');
+            format = format.replace(reg, fmt.val);
+        });
+
+        return format;
+    };
+
+
+    /**
+     * 解析时间
+     * @param {String|Date} string 时间字符串
+     * @param {Date} [dftDate] 如果前置时间不合法，默认时间，默认为现在
+     * @returns {Date}
+     *
+     * @example
+     * date.parse('12/21/2014 12:21:22');
+     * // => Sun Dec 21 2014 12:21:22 GMT+0800 (CST)
+     */
+    exports.parse = function (string, dftDate) {
+        var date;
+
+        dftDate = dftDate || new Date();
+
+        switch (typeis(string)) {
+            case 'string':
+            case 'number':
+                date = string;
+                break;
+
+            case 'date':
+                return string;
+
+            default :
+                return dftDate;
+        }
+
+        return typeis.validDate(date) ? new Date(date) : dftDate;
+    };
+
+
+    /**
+     * 是否为闰年
+     * @param {Number} year 年份
+     * @returns {boolean}
+     *
+     * @example
+     * date.isLeapYear(2014);
+     * // => false
+     */
+    exports.isLeapYear = function (year) {
+        return (year % 4 === 0 &amp;&amp; (year % 100 !== 0 || year % 400 === 0));
+    };
+
+
+    /**
+     * 获得某年某月的天数
+     * @param {Number} year 年
+     * @param {Number} month 月份，默认序列月，即1月为第0月
+     * @param {Boolean} [isNatualMonth=false] 是否为自然月，默认为 false
+     * @returns {Number} 天数
+     *
+     * @example
+     * // 获得10月份的天数
+     * date.getDaysInMonth(2014, 9);
+     * // => 31
+     */
+    exports.getDaysInMonth = function (year, month, isNatualMonth) {
+        month = isNatualMonth ? month - 1 : month;
+        month = new Date(year, month).getMonth();
+
+        return month === 1 ? (exports.isLeapYear(year) ? 29 : 28) : monthDates[month];
+    };
+
+
+    /**
+     * 获得某年某月某日在当年的第几天
+     * @param {Number} year 年份
+     * @param {Number} month 默认序列月
+     * @param {Number} date 日期
+     * @param {Boolean} [isNatualMonth=false] 是否自然月，默认 false
+     * @returns {Number}
+     */
+    exports.getDaysInYear = function (year, month, date, isNatualMonth) {
+        month = isNatualMonth ? month - 1 : month;
+
+        var days = date;
+
+        while (month--) {
+            days += exports.getDaysInMonth(year, month);
+        }
+
+        return days;
+    };
+
+
+    /**
+     * 计算某年某月某日是当年的第几周
+     * @param {Number} year 年
+     * @param {Number} month 月
+     * @param {Number} date 日
+     * @param {Boolean} [isNatualMonth] 是否为自然月
+     * @returns {number}
+     *
+     * @example
+     * // 判断2014年10月24日是今年的第几周
+     * date.getWeeksInYear(2014, 9, 24);
+     * // => 43
+     */
+    exports.getWeeksInYear = function (year, month, date, isNatualMonth) {
+        month = isNatualMonth ? month - 1 : month;
+
+        var pastDate = date + new Date(year, 0, 1).getDay();
+        var i = 0;
+
+        for (; i &lt; month; i++) {
+            pastDate += exports.getDaysInMonth(year, i);
+        }
+
+        return Math.ceil(pastDate / 7);
+    };
+
+
+    /**
+     * 计算某年某月某日是当月的第几周
+     * @param {Number} year 年
+     * @param {Number} month 月
+     * @param {Number} date 日
+     * @param {Boolean} [isNatualMonth=false] 是否为自然月
+     * @returns {number}
+     *
+     * @example
+     * // 判断2014年10月24日是当月的第几周
+     * date.getWeeksInMonth(2014, 9, 24);
+     * // => 4
+     */
+    exports.getWeeksInMonth = function (year, month, date, isNatualMonth) {
+        month = isNatualMonth ? month - 1 : month;
+
+        var pastDate = date + new Date(year, month, 1).getDay();
+
+        return Math.ceil(pastDate / 7);
+    };
+
+
+    /**
+     * 人性化比较时间时间
+     * @param {String|Number|Date} date 比较时间
+     * @param {String|Number|Date|Object} [compareDate] 被比较时间，默认为当前时间
+     * @param {Object} [options] 配置
+     * @param {Object} [options.minutesInHour=true] 是否在小时内显示分钟，默认true，即：6小时20分钟前，若为false，即：6小时前
+     * @returns {string}
+     *
+     * @example
+     * // 过去时间
+     * date.from(Date.now() - 1);
+     * // => "刚刚"
+     * date.from(Date.now() - 10*1000);
+     * // => "10秒前"
+     * date.from(Date.now() - 61*1000);
+     * // => "1分钟前"
+     * date.from(Date.now() - 60*60*1000);
+     * // => "1小时前"
+     * date.from(Date.now() - 24*60*60*1000);
+     * // => "1天前"
+     * date.from(Date.now() - 30*24*60*60*1000);
+     * // => "1个月前"
+     * date.from(Date.now() - 12*30*24*60*60*1000);
+     * // => "1年前"
+     * date.from(Date.now() - 20*12*30*24*60*60*1000);
+     * // => "19年前"
+     * date.from(Date.now() - 100*12*30*24*60*60*1000);
+     * // => "很久之前"
+     *
+     * // 将来时间
+     * date.from(Date.now() + 1);
+     * // => "即将"
+     * date.from(Date.now() + 10*1000);
+     * // => "10秒后"
+     * date.from(Date.now() + 61*1000);
+     * // => "1分钟后"
+     * date.from(Date.now() + 60*60*1000);
+     * // => "1小时后"
+     * date.from(Date.now() + 24*60*60*1000);
+     * // => "1天后"
+     * date.from(Date.now() + 30*24*60*60*1000);
+     * // => "1个月后"
+     * date.from(Date.now() + 12*30*24*60*60*1000);
+     * // => "11个月后"
+     * date.from(Date.now() + 20*12*30*24*60*60*1000);
+     * // => "19年后"
+     * date.from(Date.now() + 100*12*30*24*60*60*1000);
+     * // => "98年后"
+     * date.from(Date.now() + 200*12*30*24*60*60*1000);
+     * // => "很久之后"
+     */
+    exports.from = function (date, compareDate, options) {
+        var args = arguments;
+        var argL = args.length;
+
+        // date.from(date, options)
+        if (argL === 2 &amp;&amp; typeis.object(args[1])) {
+            options = args[1];
+            compareDate = null;
+        }
+
+        options = dato.extend({}, dateFormDefaults, options);
+        compareDate = compareDate || new Date();
+        compareDate = exports.parse(compareDate);
+
+        var old = exports.parse(date);
+        var oldTime;
+        var diff;
+        var seconds;
+        var minutes;
+        var hours;
+        var days;
+        var months;
+        var years;
+        var isInFeature;
+
+        if (!old || !compareDate) {
+            return '未知';
+        }
+
+        oldTime = old.getTime();
+
+        // 小于 1970年1月1日 08:00:00
+        if (oldTime &lt;= 0) {
+            return '很久之前';
+        } else if (oldTime >= Number.MAX_VALUE) {
+            return '很久之后';
+        }
+
+        diff = compareDate.getTime() - oldTime;
+        isInFeature = diff &lt; 0;
+        diff = isInFeature ? -diff : diff;
+        seconds = Math.floor(diff / 1000);
+        minutes = Math.floor(diff / (1000 * 60));
+        hours = Math.floor(diff / (1000 * 60 * 60));
+        days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        years = Math.abs(compareDate.getFullYear() - old.getFullYear());
+        months = isInFeature ?
+        years * 12 - compareDate.getMonth() + old.getMonth() :
+        years * 12 + compareDate.getMonth() - old.getMonth();
+        years -= (isInFeature ? 1 : 0);
+
+        var suffix = isInFeature ? '后' : '前';
+
+        // &lt; 10s
+        if (seconds &lt; 10) {
+            return isInFeature ? '即将' : '刚刚';
+        }
+        // &lt; 60s
+        else if (minutes &lt; 1) {
+            return seconds + '秒' + suffix;
+        }
+        // &lt; 1h
+        else if (hours &lt; 1) {
+            return minutes + '分钟' + suffix;
+        }
+        // &lt; 1D
+        else if (days &lt; 1) {
+            var pastMinutes = options.minutesInHour ? minutes % 60 : '';
+            return hours + '小时' + (pastMinutes ? pastMinutes + '分钟' : '') + suffix;
+        }
+        // &lt; 30D
+        else if (days &lt; 30) {
+            return days + '天' + suffix;
+        }
+        // &lt; 12M
+        else if (months &lt; 12) {
+            return months + '个月' + suffix;
+        }
+        // &lt; 100Y
+        else if (years &lt; 100) {
+            return years + '年' + suffix;
+        }
+
+        return '很久之' + suffix;
+    };
+
+
+    /**
+     * 计算日期范围
+     * @param range {String} 范围，可选
+     * `this N days`/`this N weeks`/`this N months`/`this N years` 当日/周/月/年
+     * `in Ndays`/`in N weeks`/`in N months`/`in N years` 几日/周/月/年内
+     * @param [ref] {Date} 起点时间，默认为当前时间
+     * @returns {{from: Date, to: Date}}
+     *
+     * @example
+     * // this
+     * date.range('this 1 day');
+     * // 本周日 - 本周一
+     * date.range('this 1 week');
+     * // 本月一 - 本月末
+     * date.range('this 1 month');
+     * // 本年头 - 本年尾
+     * date.range('this 1 year');
+     *
+     * // in
+     * date.range('in 1 day');
+     * // 今天 - 一周内
+     * date.range('in 1 week');
+     * // 今天 - 下个月今天
+     * date.range('in 1 month');
+     * // 今天 - 明年今天
+     * date.range('in 1 year');
+     */
+    exports.range = function (range, ref) {
+        range = String(range).toLowerCase();
+
+        var temp = range.match(REG_RANGE);
+
+        if (!temp) {
+            throw new Error('date range error');
+        }
+
+        var type = temp[1];
+        var value = number.parseInt(temp[2] || 1);
+        var scope = temp[3];
+        var oneDayMilliseconds = 1 * 24 * 60 * 60 * 1000;
+        var from = exports.parse(ref);
+        var thisYear = from.getFullYear();
+        var thisMonth = from.getMonth();
+        var thisDate = from.getDate();
+        var thisDay = from.getDay();
+
+        // 今日 00:00:00:000
+        from.setHours(0);
+        from.setMinutes(0);
+        from.setSeconds(0);
+        from.setMilliseconds(0);
+        // 昨日 23:59:59:999
+        var to = new Date(from.getTime() - 1);
+
+        switch (type) {
+            case 'this':
+                switch (scope) {
+                    case 'day':
+                        to.setDate(thisDate + value - 1);
+                        break;
+
+                    case 'week':
+                        from.setDate(thisDate + (0 - thisDay));
+                        to.setDate(thisDate + (6 - thisDay) + (value - 1) * 7);
+                        break;
+
+                    case 'month':
+                        from.setDate(1);
+                        to.setMonth(thisMonth + value, 1);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+
+                    case 'year':
+                        from.setMonth(0);
+                        from.setDate(1);
+                        to.setFullYear(thisYear + value - 1);
+                        to.setMonth(12, 1);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+                }
+                break;
+
+            case 'in':
+                switch (scope) {
+                    case 'day':
+                        to.setDate(thisDate + value - 1);
+                        break;
+
+                    case 'week':
+                        to.setDate(thisDate + value * 7);
+                        break;
+
+                    case 'month':
+                        to.setMonth(thisMonth + value, thisDate);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+
+                    case 'year':
+                        to.setFullYear(thisYear + value, thisMonth, thisDate);
+                        to = new Date(to.getTime() - oneDayMilliseconds);
+                        break;
+                }
+                break;
+        }
+
+        return {
+            from: from,
+            to: to
+        };
+    };
+
+
+    /**
+     * 输出 ISO date string
+     * @param [date] {Date} 日期
+     * @returns {string}
+     */
+    exports.iso = function (date) {
+        date = exports.parse(date);
+        return string.padLeft(date.getUTCFullYear(), 4, '0') + '-' +
+            string.padLeft(date.getUTCMonth() + 1, 2, '0') + '-' +
+            string.padLeft(date.getUTCDate(), 2, '0') + 'T' +
+            string.padLeft(date.getUTCHours(), 2, '0') + ':' +
+            string.padLeft(date.getUTCMinutes(), 2, '0') + ':' +
+            string.padLeft(date.getUTCSeconds(), 2, '0') + '.' +
+            string.padLeft(date.getUTCMilliseconds(), 2, '0') + 'Z';
+    };
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

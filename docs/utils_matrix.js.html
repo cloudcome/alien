@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: utils/matrix.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 91</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:afterenter">afterenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeclose">beforeclose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeenter">beforeenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeopen">beforeopen</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeresize">beforeresize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:ready">ready</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: utils/matrix.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * matrix
+ * @author ydr.me
+ * @create 2015-05-17 22:41
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module utils/matrix
+     */
+
+    'use strict';
+
+    /*!
+     Transformation Matrix v2.0
+     (c) Epistemex 2014-2015
+     www.epistemex.com
+     By Ken Fyrstenberg
+     Contributions by leeoniya.
+     License: MIT, header required.
+     */
+
+    /**
+     * 2D transformation matrix object initialized with identity matrix.
+     *
+     * The matrix can synchronize a canvas context by supplying the context
+     * as an argument, or later apply current absolute transform to an
+     * existing context.
+     *
+     * All values are handled as floating point values.
+     *
+     * @param {CanvasRenderingContext2D} [context] - Optional context to sync with Matrix
+     * @prop {number} a - scale x
+     * @prop {number} b - shear y
+     * @prop {number} c - shear x
+     * @prop {number} d - scale y
+     * @prop {number} e - translate x
+     * @prop {number} f - translate y
+     * @prop {CanvasRenderingContext2D|null} [context=null] - set or get current canvas context
+     * @constructor
+     */
+    function Matrix(context) {
+
+        var me = this;
+        me._t = me.transform;
+
+        me.a = me.d = 1;
+        me.b = me.c = me.e = me.f = 0;
+
+        me.context = context;
+
+        // reset canvas transformations (if any) to enable 100% sync.
+        if (context) context.setTransform(1, 0, 0, 1, 0, 0);
+    }
+
+    Matrix.prototype = {
+
+        /**
+         * Concatenates transforms of this matrix onto the given child matrix and
+         * returns a new matrix. This instance is used on left side.
+         *
+         * @param {Matrix} cm - child matrix to apply concatenation to
+         * @returns {Matrix}
+         */
+        concat: function(cm) {
+            return this.clone()._t(cm.a, cm.b, cm.c, cm.d, cm.e, cm.f);
+        },
+
+        /**
+         * Flips the horizontal values.
+         */
+        flipX: function() {
+            return this._t(-1, 0, 0, 1, 0, 0);
+        },
+
+        /**
+         * Flips the vertical values.
+         */
+        flipY: function() {
+            return this._t(1, 0, 0, -1, 0, 0);
+        },
+
+        /**
+         * Reflects incoming (velocity) vector on the normal which will be the
+         * current transformed x axis. Call when a trigger condition is met.
+         *
+         * NOTE: BETA, simple implementation
+         *
+         * @param {number} x - vector end point for x (start = 0)
+         * @param {number} y - vector end point for y (start = 0)
+         * @returns {{x: number, y: number}}
+         */
+        reflectVector: function(x, y) {
+
+            var v = this.applyToPoint(0, 1),
+                d = 2 * (v.x * x + v.y * y);
+
+            x -= d * v.x;
+            y -= d * v.y;
+
+            return {x:x, y:y};
+        },
+
+        /**
+         * Short-hand to reset current matrix to an identity matrix.
+         */
+        reset: function() {
+            return this.setTransform(1, 0, 0, 1, 0, 0);
+        },
+
+        /**
+         * Rotates current matrix accumulative by angle.
+         * @param {number} angle - angle in radians
+         */
+        rotate: function(angle) {
+            var cos = Math.cos(angle),
+                sin = Math.sin(angle);
+            return this._t(cos, sin, -sin, cos, 0, 0);
+        },
+
+        /**
+         * Converts a vector given as x and y to angle, and
+         * rotates (accumulative).
+         * @param x
+         * @param y
+         * @returns {*}
+         */
+        rotateFromVector: function(x, y) {
+            return this.rotate(Math.atan2(y, x));
+        },
+
+        /**
+         * Helper method to make a rotation based on an angle in degrees.
+         * @param {number} angle - angle in degrees
+         */
+        rotateDeg: function(angle) {
+            return this.rotate(angle * Math.PI / 180);
+        },
+
+        /**
+         * Scales current matrix uniformly and accumulative.
+         * @param {number} f - scale factor for both x and y (1 does nothing)
+         */
+        scaleU: function(f) {
+            return this._t(f, 0, 0, f, 0, 0);
+        },
+
+        /**
+         * Scales current matrix accumulative.
+         * @param {number} sx - scale factor x (1 does nothing)
+         * @param {number} sy - scale factor y (1 does nothing)
+         */
+        scale: function(sx, sy) {
+            return this._t(sx, 0, 0, sy, 0, 0);
+        },
+
+        /**
+         * Scales current matrix on x axis accumulative.
+         * @param {number} sx - scale factor x (1 does nothing)
+         */
+        scaleX: function(sx) {
+            return this._t(sx, 0, 0, 1, 0, 0);
+        },
+
+        /**
+         * Scales current matrix on y axis accumulative.
+         * @param {number} sy - scale factor y (1 does nothing)
+         */
+        scaleY: function(sy) {
+            return this._t(1, 0, 0, sy, 0, 0);
+        },
+
+        /**
+         * Apply shear to the current matrix accumulative.
+         * @param {number} sx - amount of shear for x
+         * @param {number} sy - amount of shear for y
+         */
+        shear: function(sx, sy) {
+            return this._t(1, sy, sx, 1, 0, 0);
+        },
+
+        /**
+         * Apply shear for x to the current matrix accumulative.
+         * @param {number} sx - amount of shear for x
+         */
+        shearX: function(sx) {
+            return this._t(1, 0, sx, 1, 0, 0);
+        },
+
+        /**
+         * Apply shear for y to the current matrix accumulative.
+         * @param {number} sy - amount of shear for y
+         */
+        shearY: function(sy) {
+            return this._t(1, sy, 0, 1, 0, 0);
+        },
+
+        /**
+         * Apply skew to the current matrix accumulative.
+         * @param {number} ax - angle of skew for x
+         * @param {number} ay - angle of skew for y
+         */
+        skew: function(ax, ay) {
+            return this.shear(Math.tan(ax), Math.tan(ay));
+        },
+
+        /**
+         * Apply skew for x to the current matrix accumulative.
+         * @param {number} ax - angle of skew for x
+         */
+        skewX: function(ax) {
+            return this.shearX(Math.tan(ax));
+        },
+
+        /**
+         * Apply skew for y to the current matrix accumulative.
+         * @param {number} ay - angle of skew for y
+         */
+        skewY: function(ay) {
+            return this.shearY(Math.tan(ay));
+        },
+
+        /**
+         * Set current matrix to new absolute matrix.
+         * @param {number} a - scale x
+         * @param {number} b - shear y
+         * @param {number} c - shear x
+         * @param {number} d - scale y
+         * @param {number} e - translate x
+         * @param {number} f - translate y
+         */
+        setTransform: function(a, b, c, d, e, f) {
+            var me = this;
+            me.a = a;
+            me.b = b;
+            me.c = c;
+            me.d = d;
+            me.e = e;
+            me.f = f;
+            return me._x();
+        },
+
+        /**
+         * Translate current matrix accumulative.
+         * @param {number} tx - translation for x
+         * @param {number} ty - translation for y
+         */
+        translate: function(tx, ty) {
+            return this._t(1, 0, 0, 1, tx, ty);
+        },
+
+        /**
+         * Translate current matrix on x axis accumulative.
+         * @param {number} tx - translation for x
+         */
+        translateX: function(tx) {
+            return this._t(1, 0, 0, 1, tx, 0);
+        },
+
+        /**
+         * Translate current matrix on y axis accumulative.
+         * @param {number} ty - translation for y
+         */
+        translateY: function(ty) {
+            return this._t(1, 0, 0, 1, 0, ty);
+        },
+
+        /**
+         * Multiplies current matrix with new matrix values.
+         * @param {number} a2 - scale x
+         * @param {number} b2 - shear y
+         * @param {number} c2 - shear x
+         * @param {number} d2 - scale y
+         * @param {number} e2 - translate x
+         * @param {number} f2 - translate y
+         */
+        transform: function(a2, b2, c2, d2, e2, f2) {
+
+            var me = this,
+                a1 = me.a,
+                b1 = me.b,
+                c1 = me.c,
+                d1 = me.d,
+                e1 = me.e,
+                f1 = me.f;
+
+            /* matrix order (canvas compatible):
+             * ace
+             * bdf
+             * 001
+             */
+            me.a = a1 * a2 + c1 * b2;
+            me.b = b1 * a2 + d1 * b2;
+            me.c = a1 * c2 + c1 * d2;
+            me.d = b1 * c2 + d1 * d2;
+            me.e = a1 * e2 + c1 * f2 + e1;
+            me.f = b1 * e2 + d1 * f2 + f1;
+
+            return me._x();
+        },
+
+        /**
+         * Divide this matrix on input matrix which must be invertible.
+         * @param {Matrix} m - matrix to divide on (divisor)
+         * @returns {Matrix}
+         */
+        divide: function(m) {
+
+            if (!m.isInvertible())
+                throw "Input matrix is not invertible";
+
+            var im = m.inverse();
+
+            return this._t(im.a, im.b, im.c, im.d, im.e, im.f);
+        },
+
+        /**
+         * Divide current matrix on scalar value != 0.
+         * @param {number} d - divisor (can not be 0)
+         * @returns {Matrix}
+         */
+        divideScalar: function(d) {
+
+            var me = this;
+            me.a /= d;
+            me.b /= d;
+            me.c /= d;
+            me.d /= d;
+            me.e /= d;
+            me.f /= d;
+
+            return me._x();
+        },
+
+        /**
+         * Get an inverse matrix of current matrix. The method returns a new
+         * matrix with values you need to use to get to an identity matrix.
+         * Context from parent matrix is not applied to the returned matrix.
+         * @returns {Matrix}
+         */
+        inverse: function() {
+
+            if (this.isIdentity()) {
+                return new Matrix();
+            }
+            else if (!this.isInvertible()) {
+                throw "Matrix is not invertible.";
+            }
+            else {
+                var me = this,
+                    a = me.a,
+                    b = me.b,
+                    c = me.c,
+                    d = me.d,
+                    e = me.e,
+                    f = me.f,
+
+                    m = new Matrix(),
+                    dt = a * d - b * c;	// determinant(), skip DRY here...
+
+                m.a = d / dt;
+                m.b = -b / dt;
+                m.c = -c / dt;
+                m.d = a / dt;
+                m.e = (c * f - d * e) / dt;
+                m.f = -(a * f - b * e) / dt;
+
+                return m;
+            }
+        },
+
+        /**
+         * Interpolate this matrix with another and produce a new matrix.
+         * t is a value in the range [0.0, 1.0] where 0 is this instance and
+         * 1 is equal to the second matrix. The t value is not constrained.
+         *
+         * Context from parent matrix is not applied to the returned matrix.
+         *
+         * Note: this interpolation is naive. For animation use the
+         * intrpolateAnim() method instead.
+         *
+         * @param {Matrix} m2 - the matrix to interpolate with.
+         * @param {number} t - interpolation [0.0, 1.0]
+         * @param {CanvasRenderingContext2D} [context] - optional context to affect
+         * @returns {Matrix} - new instance with the interpolated result
+         */
+        interpolate: function(m2, t, context) {
+
+            var me = this,
+                m = context ? new Matrix(context) : new Matrix();
+
+            m.a = me.a + (m2.a - me.a) * t;
+            m.b = me.b + (m2.b - me.b) * t;
+            m.c = me.c + (m2.c - me.c) * t;
+            m.d = me.d + (m2.d - me.d) * t;
+            m.e = me.e + (m2.e - me.e) * t;
+            m.f = me.f + (m2.f - me.f) * t;
+
+            return m._x();
+        },
+
+        /**
+         * Interpolate this matrix with another and produce a new matrix.
+         * t is a value in the range [0.0, 1.0] where 0 is this instance and
+         * 1 is equal to the second matrix. The t value is not constrained.
+         *
+         * Context from parent matrix is not applied to the returned matrix.
+         *
+         * Note: this interpolation method uses decomposition which makes
+         * it suitable for animations (in particular where rotation takes
+         * places).
+         *
+         * @param {Matrix} m2 - the matrix to interpolate with.
+         * @param {number} t - interpolation [0.0, 1.0]
+         * @param {CanvasRenderingContext2D} [context] - optional context to affect
+         * @returns {Matrix} - new instance with the interpolated result
+         */
+        interpolateAnim: function(m2, t, context) {
+
+            var me = this,
+                m = context ? new Matrix(context) : new Matrix(),
+                d1 = me.decompose(),
+                d2 = m2.decompose(),
+                rotation = d1.rotation + (d2.rotation - d1.rotation) * t,
+                translateX = d1.translate.x + (d2.translate.x - d1.translate.x) * t,
+                translateY = d1.translate.y + (d2.translate.y - d1.translate.y) * t,
+                scaleX = d1.scale.x + (d2.scale.x - d1.scale.x) * t,
+                scaleY = d1.scale.y + (d2.scale.y - d1.scale.y) * t
+                ;
+
+            m.translate(translateX, translateY);
+            m.rotate(rotation);
+            m.scale(scaleX, scaleY);
+
+            return m._x();
+        },
+
+        /**
+         * Decompose the current matrix into simple transforms using either
+         * QR (default) or LU decomposition. Code adapted from
+         * http://www.maths-informatique-jeux.com/blog/frederic/?post/2013/12/01/Decomposition-of-2D-transform-matrices
+         *
+         * The result must be applied in the following order to reproduce the current matrix:
+         *
+         *     QR: translate -> rotate -> scale -> skewX
+         *     LU: translate -> skewY  -> scale -> skewX
+         *
+         * @param {boolean} [useLU=false] - set to true to use LU rather than QR algorithm
+         * @returns {*} - an object containing current decomposed values (rotate, skew, scale, translate)
+         */
+        decompose: function(useLU) {
+
+            var me = this,
+                a = me.a,
+                b = me.b,
+                c = me.c,
+                d = me.d,
+                acos = Math.acos,
+                atan = Math.atan,
+                sqrt = Math.sqrt,
+                pi = Math.PI,
+
+                translate = {x: me.e, y: me.f},
+                rotation  = 0,
+                scale     = {x: 1, y: 1},
+                skew      = {x: 0, y: 0},
+
+                determ = a * d - b * c;	// determinant(), skip DRY here...
+
+            if (useLU) {
+                if (a) {
+                    skew = {x:atan(c/a), y:atan(b/a)};
+                    scale = {x:a, y:determ/a};
+                }
+                else if (b) {
+                    rotation = pi * 0.5;
+                    scale = {x:b, y:determ/b};
+                    skew.x = atan(d/b);
+                }
+                else { // a = b = 0
+                    scale = {x:c, y:d};
+                    skew.x = pi * 0.25;
+                }
+            }
+            else {
+                // Apply the QR-like decomposition.
+                if (a || b) {
+                    var r = sqrt(a*a + b*b);
+                    rotation = b > 0 ? acos(a/r) : -acos(a/r);
+                    scale = {x:r, y:determ/r};
+                    skew.x = atan((a*c + b*d) / (r*r));
+                }
+                else if (c || d) {
+                    var s = sqrt(c*c + d*d);
+                    rotation = pi * 0.5 - (d > 0 ? acos(-c/s) : -acos(c/s));
+                    scale = {x:determ/s, y:s};
+                    skew.y = atan((a*c + b*d) / (s*s));
+                }
+                else { // a = b = c = d = 0
+                    scale = {x:0, y:0};		// = invalid matrix
+                }
+            }
+
+            return {
+                scale    : scale,
+                translate: translate,
+                rotation : rotation,
+                skew     : skew
+            };
+        },
+
+        /**
+         * Returns the determinant of the current matrix.
+         * @returns {number}
+         */
+        determinant : function() {
+            return this.a * this.d - this.b * this.c;
+        },
+
+        /**
+         * Apply current matrix to x and y point.
+         * Returns a point object.
+         *
+         * @param {number} x - value for x
+         * @param {number} y - value for y
+         * @returns {{x: number, y: number}} A new transformed point object
+         */
+        applyToPoint: function(x, y) {
+
+            var me = this;
+
+            return {
+                x: x * me.a + y * me.c + me.e,
+                y: x * me.b + y * me.d + me.f
+            };
+        },
+
+        /**
+         * Apply current matrix to array with point objects or point pairs.
+         * Returns a new array with points in the same format as the input array.
+         *
+         * A point object is an object literal:
+         *
+         * {x: x, y: y}
+         *
+         * so an array would contain either:
+         *
+         * [{x: x1, y: y1}, {x: x2, y: y2}, ... {x: xn, y: yn}]
+         *
+         * or
+         * [x1, y1, x2, y2, ... xn, yn]
+         *
+         * @param {Array} points - array with point objects or pairs
+         * @returns {Array} A new array with transformed points
+         */
+        applyToArray: function(points) {
+
+            var i = 0, p, l,
+                mxPoints = [];
+
+            if (typeof points[0] === 'number') {
+
+                l = points.length;
+
+                while(i &lt; l) {
+                    p = this.applyToPoint(points[i++], points[i++]);
+                    mxPoints.push(p.x, p.y);
+                }
+            }
+            else {
+                for(; p = points[i]; i++) {
+                    mxPoints.push(this.applyToPoint(p.x, p.y));
+                }
+            }
+
+            return mxPoints;
+        },
+
+        /**
+         * Apply current matrix to a typed array with point pairs. Although
+         * the input array may be an ordinary array, this method is intended
+         * for more performant use where typed arrays are used. The returned
+         * array is regardless always returned as a Float32Array.
+         *
+         * @param {*} points - (typed) array with point pairs
+         * @param {boolean} [use64=false] - use Float64Array instead of Float32Array
+         * @returns {*} A new typed array with transformed points
+         */
+        applyToTypedArray: function(points, use64) {
+
+            var i = 0, p,
+                l = points.length,
+                mxPoints = use64 ? new Float64Array(l) : new Float32Array(l);
+
+            while(i &lt; l) {
+                p = this.applyToPoint(points[i], points[i+1]);
+                mxPoints[i++] = p.x;
+                mxPoints[i++] = p.y;
+            }
+
+            return mxPoints;
+        },
+
+        /**
+         * Apply to any canvas 2D context object. This does not affect the
+         * context that optionally was referenced in constructor unless it is
+         * the same context.
+         * @param {CanvasRenderingContext2D} context
+         */
+        applyToContext: function(context) {
+            var me = this;
+            context.setTransform(me.a, me.b, me.c, me.d, me.e, me.f);
+            return me;
+        },
+
+        /**
+         * Returns true if matrix is an identity matrix (no transforms applied).
+         * @returns {boolean} True if identity (not transformed)
+         */
+        isIdentity: function() {
+            var me = this;
+            return (me._q(me.a, 1) &amp;&amp;
+            me._q(me.b, 0) &amp;&amp;
+            me._q(me.c, 0) &amp;&amp;
+            me._q(me.d, 1) &amp;&amp;
+            me._q(me.e, 0) &amp;&amp;
+            me._q(me.f, 0));
+        },
+
+        /**
+         * Returns true if matrix is invertible
+         * @returns {boolean}
+         */
+        isInvertible: function() {
+            return !this._q(this.determinant(), 0)
+        },
+
+        /**
+         * Test if matrix is valid.
+         */
+        isValid : function() {
+            return !this._q(this.a * this.d, 0);
+        },
+
+        /**
+         * Clones current instance and returning a new matrix.
+         * @param {boolean} [noContext=false] don't clone context reference if true
+         * @returns {Matrix}
+         */
+        clone : function(noContext) {
+            var me = this,
+                m = new Matrix();
+            m.a = me.a;
+            m.b = me.b;
+            m.c = me.c;
+            m.d = me.d;
+            m.e = me.e;
+            m.f = me.f;
+            if (!noContext) m.context = me.context;
+
+            return m;
+        },
+
+        /**
+         * Compares current matrix with another matrix. Returns true if equal
+         * (within epsilon tolerance).
+         * @param {Matrix} m - matrix to compare this matrix with
+         * @returns {boolean}
+         */
+        isEqual: function(m) {
+
+            var me = this,
+                q = me._q;
+
+            return (q(me.a, m.a) &amp;&amp;
+            q(me.b, m.b) &amp;&amp;
+            q(me.c, m.c) &amp;&amp;
+            q(me.d, m.d) &amp;&amp;
+            q(me.e, m.e) &amp;&amp;
+            q(me.f, m.f));
+        },
+
+        /**
+         * Returns an array with current matrix values.
+         * @returns {Array}
+         */
+        toArray: function() {
+            var me = this;
+            return [me.a, me.b, me.c, me.d, me.e, me.f];
+        },
+
+        /**
+         * Generates a string that can be used with CSS `transform:`.
+         * @returns {string}
+         */
+        toCSS: function() {
+            return "matrix(" + this.toArray() + ")";
+        },
+
+        /**
+         * Returns a JSON compatible string of current matrix.
+         * @returns {string}
+         */
+        toJSON: function() {
+            var me = this;
+            return '{"a":' + me.a + ',"b":' + me.b + ',"c":' + me.c + ',"d":' + me.d + ',"e":' + me.e + ',"f":' + me.f + '}';
+        },
+
+        /**
+         * Returns a string with current matrix as comma-separated list.
+         * @returns {string}
+         */
+        toString: function() {
+            return "" + this.toArray();
+        },
+
+        /**
+         * Compares floating point values with some tolerance (epsilon)
+         * @param {number} f1 - float 1
+         * @param {number} f2 - float 2
+         * @returns {boolean}
+         * @private
+         */
+        _q: function(f1, f2) {
+            return Math.abs(f1 - f2) &lt; 1e-14;
+        },
+
+        /**
+         * Apply current absolute matrix to context if defined, to sync it.
+         * @private
+         */
+        _x: function() {
+            var me = this;
+            if (me.context)
+                me.context.setTransform(me.a, me.b, me.c, me.d, me.e, me.f);
+            return me;
+        }
+    };
+
+
+    var dato = require('./dato.js');
+
+
+    /**
+     * 计算矩阵
+     * @param transform {Object} 变换
+     * @returns {String}
+     */
+    module.exports = function(transform){
+        var m = new Matrix();
+
+        dato.each(transform, function (key, val) {
+            switch(key){
+                case 'translate':
+                    m = m.translate(val, val);
+                    break;
+
+                case 'translateX':
+                    m = m.translateX(val);
+                    break;
+
+                case 'translateY':
+                    m = m.translateY(val);
+                    break;
+
+                case 'scale':
+                    m = m.scaleU(val);
+                    break;
+
+                case 'scaleX':
+                    m = m.scaleX(val);
+                    break;
+
+                case 'scaleY':
+                    m = m.scaleY(val);
+                    break;
+
+                case 'skew':
+                    m = m.skew(val, val);
+                    break;
+
+                case 'skewX':
+                    m = m.skewX(val);
+                    break;
+
+                case 'skewY':
+                    m = m.skewY(val);
+                    break;
+
+                case 'rotate':
+                    m = m.rotateDeg(val);
+                    break;
+
+            }
+        });
+
+        return m.toCSS();
+    };
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

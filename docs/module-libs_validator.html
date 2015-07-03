@@ -1,0 +1,3637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Module: libs/validator - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+	                    <li class="sidebar-header">Methods &times; 4</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~pushRule">pushRule</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~registerRule">registerRule</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~validateAll">validateAll</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~validateOne">validateOne</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 9</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Module: libs/validator</h1>
+
+		            
+
+
+
+<section>
+
+<header class="page-header">
+    <h2 class="page-subtitle">
+        
+            libs/validator
+        
+    
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+        
+
+        
+            
+
+            
+
+            
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-96142378728836779449228728190064" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-96142378728836779449228728190064">
+                <p><a href="libs_validator.js.html#line9">libs/validator.js:9</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+        
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-utils_class.html">module:utils/class</a></li>
+        
+            <li><a href="module-utils_dato.html">module:utils/dato</a></li>
+        
+            <li><a href="module-utils_typeis.html">module:utils/typeis</a></li>
+        
+            <li>module:utils/howdo</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+        <section id="docs-methods">
+            <h3 class="subsection-title">Methods</h3>
+
+            <dl>
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~pushRule">
+        <span class="type-signature">&lt;inner> </span>pushRule<span class="signature">(rule, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>添加单个验证规则
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>rule</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则对象
+                <h6>Properties</h6>
+                
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">数据字段名称【必须】</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">数据类型【必须】</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>alias</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">别称，否则在消息中字段名称以`name`输出</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>onbefore</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证前置：数据验证之前的处理回调</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>exist</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">验证前置：是否存在的时候才验证，默认false</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>trim</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">验证前置：是否去除验证数据的左右空白，默认true</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>required</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：是否必填</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>minLength</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>maxLength</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>bytes</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>minBytes</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>maxBytes</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定数字数据的最小值，仅当为数值类型（number）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Number</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：指定数字数据的最大值，仅当为数值类型（number）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>regexp</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">RegExp</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：正则表达式，仅当为字符串类型（string/email/url）有效</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>equal</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：全等于指定值</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>inArray</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：用数组指定范围值</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>function</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>onafter</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证后置：数据验证之后的处理回调</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证出错的消息</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isOverride</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Boolean</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">是否覆盖已经存在的验证规则，默认false</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>validator.pushRule({
+   // 字段名称，必须，唯一性
+   name: 'username',
+   // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+   type: 'string',
+   // 别称，当没有填写自定义错误消息时
+   // 提示为 username不能为空
+   // 当前设置别名之后
+   // 提示为 用户名不能为空
+   alias: '用户名',
+
+   // 验证前置
+   // val 当前字段值
+   // data 所有数据
+   onbefore: function(val, data){
+       return val + 'abc';
+   },
+   exist: false,
+   trim: true,
+
+   // 验证规则
+   required: true,
+   length: 10,
+   minLength: 4,
+   maxLength: 12,
+   bytes: 10,
+   minBytes: 4,
+   maxBytes: 12,
+   min: 4,
+   max: 4,
+   regexp: /^[a-z]\w{3,11}$/,
+   equal: 'cloudcome',
+   inArray: ['cloudcome', 'yundanran'],
+   // val 当前字段值
+   // [data 所有数据] 可选
+   // next 执行下一步
+   function: function(val, next){
+       // 这里可以是异步的
+       // 比如远程校验可以写在这里
+       ajax.post('./validate.json', {
+           username: val
+       }).on('success', function(json){
+           if(json.code>0){
+               next();
+           }else{
+               next(new Error(json.msg));
+           }
+       }).on('error', function(){
+           next(new Error('网络连接错误，验证失败'));
+       });
+   },
+
+   // 验证消息
+   msg: {
+       required: '用户名不能为空',
+       length: '用户名长度必须为10'
+       // 未自定义的消息，以默认输出
+       // 每个验证规则都必须配备一个消息体，
+       // 除了自定义的`function`
+   },
+
+   // 验证后置
+   onafter: function(val){
+       return val + 'abc';
+   }
+});</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-713952738326042915270746941678226" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-713952738326042915270746941678226">
+                <p><a href="libs_validator.js.html#line177">libs/validator.js:177</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~registerRule">
+        <span class="type-signature">&lt;inner> </span>registerRule<span class="signature">(options, fn, <span class="optional">isOverride</span>)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>注册自定义的实例验证规则
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+		<th class="th-arg">Argument</th>
+		
+
+		
+		<th class="th-dft">Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">规则配置</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">规则方法</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>isOverride</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">是否覆盖已有规则</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+            <h5>Example</h5>
+            
+    <pre class="prettyprint"><code>// 添加一个检查后缀的自定义规则
+validator.registerRule({
+    name: 'suffix',
+    type: 'array'
+}, function(suffix, val, next){
+    var sf = (val.match(/\.[^.]*$/) || [''])[0];
+    var boolean = suffix.indexOf(sf) > -1;
+
+    next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+});</code></pre>
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-3893720223568387908288114704192" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-3893720223568387908288114704192">
+                <p><a href="libs_validator.js.html#line70">libs/validator.js:70</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~validateAll">
+        <span class="type-signature">&lt;inner> </span>validateAll<span class="signature">(data, callback)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>执行所有数据验证
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">数据</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-712365843821317112051174743101" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-712365843821317112051174743101">
+                <p><a href="libs_validator.js.html#line264">libs/validator.js:264</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            
+                
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~validateOne">
+        <span class="type-signature">&lt;inner> </span>validateOne<span class="signature">(data, callback)</span><span class="type-signature"></span>
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>只对当前一个数据验证
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">数据</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">function</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">回调</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-60218106349930175357528878375888" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-60218106349930175357528878375888">
+                <p><a href="libs_validator.js.html#line321">libs/validator.js:321</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+            </dl>
+        </section>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateallend">
+        validateallend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>所有字段验证结束
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>errs</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Array</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">错误消息数组</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">验证过滤后的数据</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-952189416624605731541894446127117" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-952189416624605731541894446127117">
+                <p><a href="libs_validator.js.html#line303">libs/validator.js:303</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateallstart">
+        validateallstart : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>所有字段验证开始
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-83334577013738457738198940642178" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-83334577013738457738198940642178">
+                <p><a href="libs_validator.js.html#line272">libs/validator.js:272</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateend">
+        validateend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证结束
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Object</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">验证过滤后的数据</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-226388081908226846447974210605" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-226388081908226846447974210605">
+                <p><a href="libs_validator.js.html#line455">libs/validator.js:455</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateend">
+        validateend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证开始
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-97986258892342451885096791666001" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-97986258892342451885096791666001">
+                <p><a href="libs_validator.js.html#line469">libs/validator.js:469</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateoneend">
+        validateoneend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证结束
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Error</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">错误消息</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-86308635678142311661335949320346" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-86308635678142311661335949320346">
+                <p><a href="libs_validator.js.html#line344">libs/validator.js:344</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateoneend">
+        validateoneend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证结束
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Error</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">错误消息</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-79594001686200505612040311098099" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-79594001686200505612040311098099">
+                <p><a href="libs_validator.js.html#line355">libs/validator.js:355</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateoneend">
+        validateoneend : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证结束
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">Error</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">错误消息</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">*</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段值</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-45723902061581619723852428141981" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-45723902061581619723852428141981">
+                <p><a href="libs_validator.js.html#line373">libs/validator.js:373</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateonestart">
+        validateonestart : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证开始
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-4562993457075208421960653853602707" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-4562993457075208421960653853602707">
+                <p><a href="libs_validator.js.html#line329">libs/validator.js:329</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        
+            
+<section class="docs-method ">
+    <dt>
+    <h4 class="name alert alert-warning" id="~event:validateonestart">
+        validateonestart : event
+    </h4>
+
+    
+    </dt>
+    <dd>
+
+        
+        <div class="description lead">
+            <blockquote>单个字段验证开始
+                
+            </blockquote>
+        </div>
+        
+
+        
+
+        
+
+        
+            <h5>Parameters/Arguments:</h5>
+            
+
+<table class="params table table-bordered table-striped">
+    <thead>
+	<tr>
+		
+		<th class="th-name">Name</th>
+		
+
+		<th class="th-type">Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+&nbsp;&nbsp;<span class="param-type label label-info">String</span>
+        
+    
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">字段名称</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+        
+
+        
+
+        
+
+        
+
+
+<dl class="details">
+    
+
+    
+    <ul class="nav nav-tabs">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            
+            <li class="active">
+                <a href="#tab-meta-96012745867483322156775202602148" data-toggle="tab">Source</a>
+            </li>
+
+        
+        
+        
+        
+    </ul>
+
+    <!-- CONTENT PANES -->
+    <div class="tab-content">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+            <div class="tab-pane active" id="tab-meta-96012745867483322156775202602148">
+                <p><a href="libs_validator.js.html#line366">libs/validator.js:366</a></p>
+            </div>
+
+        
+        
+        
+        
+    </div>
+</dl>
+
+
+        
+
+        
+
+        
+
+        
+    </dd>
+</section>
+
+        </dl>
+    
+</article>
+
+</section>
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

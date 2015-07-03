@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: core/communication/xhr.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 91</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:afterenter">afterenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeclose">beforeclose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeenter">beforeenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeopen">beforeopen</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeresize">beforeresize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:ready">ready</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: core/communication/xhr.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * xhr.js
+ * @author ydr.me
+ * 2014-09-23 22:14
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module core/communication/xhr
+     * @requires utils/typeis
+     * @requires utils/dato
+     * @requires utils/number
+     * @requires utils/class
+     * @requires utils/querystring
+     * @requires libs/emitter
+     */
+    'use strict';
+
+    var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
+    var klass = require('../../utils/class.js');
+    var urlUtils = require('../../utils/url.js');
+    var qs = require('../../utils/querystring.js');
+    var Emitter = require('../../libs/emitter.js');
+    var regCache = /\b_=[^&amp;]*&amp;?/;
+    var regEnd = /[?&amp;]$/;
+    var REG_DOMAIN = /^([\w-]+:)?\/\/([^\/]+)/;
+    var defaults = {
+        // 请求地址
+        url: location.href,
+        // 请求方式
+        method: 'GET',
+        // 响应数据类型：json、text
+        type: 'json',
+        // 请求 querystring
+        query: {},
+        // 请求数据
+        body: null,
+        // 请求头
+        headers: null,
+        // 是否异步
+        async: true,
+        // 是否保留缓存
+        cache: false,
+        // 是否进行跨域请求，Cross-Origin Resource Sharing
+        // http://www.w3.org/TR/cors/
+        isCORS: false,
+        // 请求鉴权用户名
+        username: null,
+        // 请求鉴权密码
+        password: null,
+        // 覆盖 MIME
+        mimeType: null,
+        // 延时请求时间
+        delay: 0,
+        // 请求超时时间，15秒
+        timeout: 150000
+    };
+    var regProtocol = /^([\w-]+:)\/\//;
+    var XHR = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
+
+            options = dato.extend(true, {}, defaults, options);
+
+            var requestDomain = (options.url.match(REG_DOMAIN) || ['', '', ''])[2];
+            var hasCrossDomain = requestDomain &amp;&amp; requestDomain !== window.location.host;
+
+            if (!options.headers) {
+                options.headers = {};
+            }
+
+            if (!options.headers['x-request-with'] &amp;&amp; !hasCrossDomain) {
+                options.headers['x-request-with'] = 'XMLHttpRequest';
+            }
+
+            options.method = options.method.toUpperCase();
+
+            var xhr = new XMLHttpRequest();
+            var protocol = (options.url.match(regProtocol) || ['', location.protocol])[1];
+            the._hasCallback = false;
+            var oncallback = function (err, ret) {
+                if (the._hasCallback) {
+                    return;
+                }
+
+                the._hasCallback = true;
+
+                if (err) {
+                    err.message = err.message || 'network error';
+                }
+
+                setTimeout(function () {
+                    if (lastProgressEvent) {
+                        lastProgressEvent.alienDetail.complete = 1;
+                        lastProgressEvent.alienDetail.percent = '100%';
+                        the.emit('progress', lastProgressEvent);
+                    }
+
+                    the.emit('complete', err, ret);
+
+                    if (err) {
+                        the.emit('error', err);
+                    } else {
+                        the.emit('success', ret);
+                    }
+
+                    the.emit('finish', err, ret);
+                }, options.delay);
+            };
+
+            xhr.onload = function () {
+                var responseText = xhr.responseText;
+                var json;
+                var err;
+
+                // 200 - 300
+                if ((xhr.status >= 200 &amp;&amp; xhr.status &lt; 300) ||
+                        // 304
+                    xhr.status === 304 ||
+                        // file
+                    (xhr.status === 0 &amp;&amp; protocol === 'file:')) {
+                    switch (options.type) {
+                        case 'json':
+                            try {
+                                json = JSON.parse(responseText);
+                            } catch (_err) {
+                                err = _err;
+                            }
+
+                            oncallback(err, json);
+                            break;
+
+                        default:
+                            oncallback(null, responseText);
+                    }
+                } else {
+                    oncallback(new Error(xhr.statusText || 'response status is ' + xhr.status));
+                }
+            };
+
+            xhr.onabort = function () {
+                var err = new Error('transmission has aborted');
+
+                err.type = 'abort';
+                oncallback(err);
+            };
+
+            xhr.ontimeout = function () {
+                var err = new Error('transmission has timeout');
+
+                err.type = 'timeout';
+                oncallback(err);
+            };
+
+            xhr.onerror = oncallback;
+
+            var lastProgressEvent;
+
+            xhr.upload.onprogress = function (eve) {
+                eve.alienDetail = eve.alienDetail || {};
+                eve.alienDetail.complete = 0;
+                eve.alienDetail.percent = '0%';
+
+                if (eve.lengthComputable) {
+                    eve.alienDetail.loaded = eve.loaded;
+                    eve.alienDetail.total = eve.total;
+                    eve.alienDetail.complete = eve.loaded / eve.total;
+
+                    var percent = eve.alienDetail.complete * 100;
+
+                    if (percent >= 100) {
+                        eve.alienDetail.complete = 0.99;
+                        percent = 99;
+                    }
+
+                    // 最多小数点2位
+                    percent = number.parseFloat(percent).toFixed(2);
+                    eve.alienDetail.percent = percent + '%';
+                }
+
+                the.emit('progress', eve);
+                lastProgressEvent = eve;
+            };
+
+            xhr.open(options.method, _buildURL(options), options.async, options.username, options.password);
+
+            if (options.isCORS) {
+                xhr.withCredentials = true;
+            }
+
+            if (options.mimeType) {
+                xhr.overrideMimeType(options.mimeType);
+            }
+
+            // 当 body 为 FormData 时，删除 content-type header
+            if (options.body &amp;&amp; options.body.constructor === FormData) {
+                delete options.headers['content-type'];
+            }
+
+            dato.each(options.headers, function (key, val) {
+                xhr.setRequestHeader(key, val);
+            });
+            xhr.send(_buildBody(options));
+
+            if (options.timeout) {
+                the._timer = setTimeout(function () {
+                    the.abort();
+                }, options.timeout);
+            }
+
+            the.xhr = xhr;
+            return the;
+        },
+
+        /**
+         * 中断当前请求
+         * @returns {XHR}
+         */
+        abort: function () {
+            var the = this;
+
+            try {
+                the.xhr.abort();
+            } catch (err) {
+                // ignore
+            }
+
+            return the;
+        }
+    });
+
+
+    /**
+     * 异步请求
+     * @param {Object} [options] 配置参数
+     * @param {String} [options.url] 请求地址
+     * @param {String} [options.method] 请求方法，默认 GET
+     * @param {Object} [options.headers] 请求头
+     * @param {String} [options.type=json] 数据类型，默认 json
+     * @param {String|Object} [options.query] URL querstring
+     * @param {*} [options.body] 请求数据
+     * @param {Boolean} [options.isAsync] 是否异步，默认 true
+     * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+     * @param {String} [options.username] 请求鉴权用户名
+     * @param {String} [options.password] 请求鉴权密码
+     * @param {String|null} [options.mimeType=null] 覆盖 MIME
+     * @param {Number} [options.delay=0] 请求延迟时间
+     *
+     * @example
+     * xhr().on('success', fn).on('error', fn);
+     */
+    var xhr = function (options) {
+        return new XHR(options);
+    };
+
+
+    /**
+     * ajax 请求
+     * @param {Object} [options] 配置参数
+     * @param {String} [options.url] 请求地址
+     * @param {String} [options.method] 请求方法，默认 GET
+     * @param {Object} [options.headers] 请求头
+     * @param {String} [options.type=json] 数据类型，默认 json
+     * @param {String|Object} [options.query] URL querstring
+     * @param {*} [options.body] 请求数据
+     * @param {Boolean} [options.isAsync] 是否异步，默认 true
+     * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+     * @param {String} [options.username] 请求鉴权用户名
+     * @param {String} [options.password] 请求鉴权密码
+     * @param {String|null} [options.mimeType=null] 覆盖 MIME
+     * @param {Number} [options.delay=0] 请求延迟时间
+     *
+     * @example
+     * xhr.ajax().on('success', fn).on('error', fn);
+     */
+    xhr.ajax = function (options) {
+        return new XHR(options);
+    };
+
+
+    /**
+     * ajax GET 请求
+     * @param url {String} 请求地址
+     * @param query {String|Object} 请求参数
+     * @returns {*}
+     */
+    xhr.get = function (url, query) {
+        return this.ajax({
+            method: 'GET',
+            url: url,
+            query: query
+        });
+    };
+
+
+    /**
+     * ajax POST 请求
+     * @param url {String} 请求地址
+     * @param body {String|Object} 请求数据
+     * @returns {*}
+     */
+    xhr.post = function (url, body) {
+        return this.ajax({
+            method: 'POST',
+            url: url,
+            body: body
+        });
+    };
+
+
+    module.exports = xhr;
+
+
+    /**
+     * 构建 URL
+     * @param {Object} options 配置参数
+     * @returns {string}
+     * @private
+     */
+    function _buildURL(options) {
+        var ret = urlUtils.parse( options.url);
+        var query = options.query;
+        var cacheKey = '_';
+
+        if (typeis.string(query)) {
+            query = qs.parse(query);
+        }
+
+        dato.extend(ret.query, query);
+
+        if (!options.cache) {
+            while (ret.query[cacheKey]) {
+                cacheKey += '_';
+            }
+
+            ret.query[cacheKey] = Date.now();
+        }
+
+        return ret.base + '?' + qs.stringify(ret.query);
+    }
+
+
+    /**
+     * 构建传输数据
+     * @param options
+     * @returns {*}
+     * @private
+     */
+    function _buildBody(options) {
+        if (options.method === 'GET') {
+            return null;
+        }
+
+        return options.body;
+    }
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

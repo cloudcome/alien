@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: ui/validator/index.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 91</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:afterenter">afterenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeclose">beforeclose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeenter">beforeenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeopen">beforeopen</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeresize">beforeresize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:ready">ready</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: ui/validator/index.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * 表单验证
+ * @author ydr.me
+ * @create 2015-01-16 13:51
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module ui/validator/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/event/touch
+     * @requires utils/typeis
+     * @requires utils/dato
+     * @requires utils/number
+     * @requires utils/string
+     * @requires libs/validator
+     */
+    'use strict';
+
+    var ui = require('../');
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var modification = require('../../core/dom/modification.js');
+    var style = require('./style.css', 'css');
+    var event = require('../../core/event/touch.js');
+    var typeis = require('../../utils/typeis.js');
+    var dato = require('../../utils/dato.js');
+    var number = require('../../utils/number.js');
+    var string = require('../../utils/string.js');
+    var Vldor = require('../../libs/validator.js');
+    var alienIndex = 0;
+    var alienClass = 'alien-ui-validator';
+    var udf;
+    var inputSelector = 'input,select,textarea';
+    var formItemStatusClass = 'has-error has-success has-warning';
+    var noop = function () {
+        // ignore
+    };
+    var customRulesList = [];
+    var REG_END_MAO = /[:：]+$/;
+    var defaults = {
+        dataRuleAttr: 'validator',
+        dataMessageAttr: 'msg',
+        formItemSelector: '.form-item',
+        formMsgSelector: '.form-msg',
+        isBreakOnInvalid: false,
+        validateEvent: 'focusout',
+        successMsg: null,
+        canAddStatusClass: true
+    };
+    var Validator = ui.create({
+        constructor: function ($form, options) {
+            var the = this;
+
+            the._$form = selector.query($form)[0];
+            the._options = dato.extend(true, {}, defaults, options);
+            the._init();
+        },
+        /**
+         * 初始化
+         * @private
+         */
+        _init: function () {
+            var the = this;
+
+            the.id = alienIndex++;
+            the.updateRule();
+            the._initCustomRules();
+            the._initEvent();
+
+            return the;
+        },
+
+
+        /**
+         * 添加自定义规则
+         * 添加到实例上，避免污染
+         * @private
+         */
+        _initCustomRules: function () {
+            var the = this;
+
+            dato.each(customRulesList, function (index, args) {
+                the._validator.registerRule.apply(the._validator, args);
+            });
+        },
+
+
+        /**
+         * 更新验证规则，当表单发生变化时可以手动触发
+         */
+        updateRule: function () {
+            var the = this;
+            var options = the._options;
+            var $inputs = selector.query(inputSelector, the._$form);
+            var typeArray = ['url', 'email', 'number', 'string'];
+
+            attribute.addClass(the._$form, alienClass);
+            the._validator = new Vldor();
+            the._nameItemMap = {};
+            the._nameMsgMap = {};
+            the._nameInputMap = {};
+            the._nameRuleMap = {};
+            dato.each($inputs, function (index, $input) {
+                var name = $input.name;
+
+                if (!name) {
+                    return;
+                }
+
+                var id = $input.id;
+                var $label = id ? selector.query('label[for=' + id + ']')[0] : selector.closest($input, 'label')[0];
+                var $formItem = selector.closest($input, options.formItemSelector)[0];
+                var $formMsg = selector.query(options.formMsgSelector, $formItem)[0];
+                var rule = attribute.data($input, options.dataRuleAttr) || {};
+                var msg = attribute.data($input, options.dataMessageAttr);
+                var type = attribute.attr($input, 'type');
+                var standar = {
+                    name: name,
+                    msg: msg,
+                    maxLength: $input.maxLength === -1 ? Math.pow(2, 53) : $input.maxLength,
+                    min: number.parseInt($input.min, udf),
+                    max: number.parseInt($input.max, udf),
+                    step: number.parseInt($input.step, udf),
+                    required: $input.required,
+                    type: typeArray.indexOf(type) > -1 ? type : 'string'
+                };
+
+                if ($formMsg) {
+                    attribute.data($formMsg, 'original', $formMsg.innerHTML);
+                }
+
+                // regexp
+                if ($input.pattern) {
+                    try {
+                        standar.regexp = new RegExp($input.pattern);
+                    } catch (err) {
+                        // ignore
+                    }
+                }
+
+                // 验证前置
+                rule.onbefore = function (val, data) {
+                    var self = this;
+
+                    if (self.equalName) {
+                        var equalRule = the._nameRuleMap[self.equalName];
+
+                        self.equal = the._getVal(self.equalName);
+                        self.msg.equal = self.msg.equal || self.alias +
+                        (equalRule ? '必须与' + equalRule.alias + '相同' : '不正确');
+                    }
+
+                    return val;
+                };
+
+                dato.extend(true, rule, standar);
+                rule.alias = rule.alias || ($label ? $label.innerText.trim().replace(REG_END_MAO, '') : udf);
+                the._validator.pushRule(rule);
+                the._nameItemMap[name] = $formItem;
+                the._nameMsgMap[name] = $formMsg;
+                the._nameInputMap[name] = $input;
+                the._nameRuleMap[name] = rule;
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
+
+            event.on(the._$form, 'focus', inputSelector, the._onfocus.bind(the));
+
+            if (options.validateEvent) {
+                event.on(the._$form, options.validateEvent, inputSelector, the._onvalidate.bind(the));
+            }
+
+            event.on(the._$form, 'click', 'input[type=submit],button', the._onsubmit.bind(the));
+
+            the._validator.on('validatestart', function (name) {
+                var $item = the._nameItemMap[name];
+
+                attribute.removeClass($item, formItemStatusClass);
+
+                if (options.canAddStatusClass) {
+                    attribute.addClass($item, 'has-warning');
+                }
+
+                the.emit(this.alienEmitter.type, the._nameInputMap[name]);
+            });
+
+            the._validator.on('validateend', function (name, data) {
+                the.emit(this.alienEmitter.type, the._nameInputMap[name], data);
+            });
+
+            the._validator.on('validateonestart', function (name) {
+                the.emit(this.alienEmitter.type, the._nameItemMap[name]);
+            });
+
+            the._validator.on('validateoneend', function (name, err) {
+                the.emit(this.alienEmitter.type, the._nameItemMap[name], err);
+            });
+
+            the._validator.on('validateallstart', function () {
+                dato.each(the._nameItemMap, function (name, $item) {
+                    attribute.removeClass($item, formItemStatusClass);
+                });
+
+                the.emit(this.alienEmitter.type, the._$form);
+            });
+
+            the._validator.on('validateallend', function (errs) {
+                the.emit(this.alienEmitter.type, the._$form, errs);
+            });
+        },
+
+
+        /**
+         * 聚焦时回调
+         * @param eve
+         * @private
+         */
+        _onfocus: function (eve) {
+            var the = this;
+            var $input = eve.target;
+
+            the.emitMsg($input.name, false);
+            the.emit('focus', $input);
+        },
+
+
+        /**
+         * 正在验证
+         * @param eve
+         * @private
+         */
+        _onvalidate: function (eve) {
+            var the = this;
+            var $input = eve.target;
+            var name = $input.name;
+
+            the.validateOne(name);
+        },
+
+
+        /**
+         * 提交验证
+         * @param eve
+         * @private
+         */
+        _onsubmit: function (eve) {
+            var $ele = eve.target;
+            var $btn = selector.closest($ele, 'button')[0] || $ele;
+
+            if ($btn.type !== 'submit' || $btn.disabled || attribute.hasClass($btn, 'disabled')) {
+                return;
+            }
+
+            this.validateAll();
+            eve.preventDefault();
+        },
+
+
+        /**
+         * 获取输入框的值
+         * @param name
+         * @private
+         */
+        _getVal: function (name) {
+            var $input = this._nameInputMap[name];
+
+            if (!$input) {
+                return udf;
+            }
+
+            var type = $input.type;
+            var multiple = $input.multiple;
+            var tagName = $input.tagName.toLowerCase();
+            var val;
+
+            type = tagName === 'select' || tagName === 'textarea' ? tagName : type;
+
+            switch (type) {
+                case 'checkbox':
+                    val = [];
+                    dato.each(selector.query('input[name=' + name + '][type=checkbox]:checked'), function (index, $checkbox) {
+                        val.push($checkbox.value);
+                    });
+                    break;
+
+                case 'radio':
+                    $input = selector.query('input[name=' + name + '][type=radio]:checked')[0];
+                    val = $input ? $input.value : udf;
+                    break;
+
+                case 'select':
+                    if (multiple) {
+                        val = [];
+                        dato.each(selector.query('select[name=' + name + '] > option:selected'), function (index, $option) {
+                            val.push($option.value);
+                        });
+                    } else {
+                        $input = selector.query('select[name=' + name + ']')[0];
+                        val = $input ? $input.value : udf;
+                    }
+                    break;
+
+                default:
+                    val = $input.value;
+            }
+
+            return val;
+        },
+
+
+        /**
+         * 添加单个验证规则
+         * @param {Object}     rule 验证规则对象
+         * @param {String}     rule.name                数据字段名称【必须】
+         * @param {String}     rule.type                数据类型【必须】
+         * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
+         * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
+         * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
+         * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
+         * @param {Boolean}    [rule.required]          验证规则：是否必填
+         * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
+         * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
+         * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
+         * @param {*}          [rule.equal]             验证规则：全等于指定值
+         * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
+         * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
+         * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
+         * @param {Object}     [rule.msg]               验证出错的消息
+         * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
+         *
+         * @example
+         * validator.pushRule({
+         *    // 字段名称，必须，唯一性
+         *    name: 'username',
+         *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+         *    type: 'string',
+         *    // 别称，当没有填写自定义错误消息时
+         *    // 提示为 username不能为空
+         *    // 当前设置别名之后
+         *    // 提示为 用户名不能为空
+         *    alias: '用户名',
+         *
+         *    // 验证前置
+         *    // val 当前字段值
+         *    // data 所有数据
+         *    onbefore: function(val, data){
+         *        return val + 'abc';
+         *    },
+         *    exist: false,
+         *    trim: true,
+         *
+         *    // 验证规则
+         *    required: true,
+         *    length: 10,
+         *    minLength: 4,
+         *    maxLength: 12,
+         *    bytes: 10,
+         *    minBytes: 4,
+         *    maxBytes: 12,
+         *    min: 4,
+         *    max: 4,
+         *    regexp: /^[a-z]\w{3,11}$/,
+         *    equal: 'cloudcome',
+         *    inArray: ['cloudcome', 'yundanran'],
+         *    // val 当前字段值
+         *    // [data 所有数据] 可选
+         *    // next 执行下一步
+         *    function: function(val, next){
+         *        // 这里可以是异步的
+         *        // 比如远程校验可以写在这里
+         *        ajax.post('./validate.json', {
+         *            username: val
+         *        }).on('success', function(json){
+         *            if(json.code>0){
+         *                next();
+         *            }else{
+         *                next(new Error(json.msg));
+         *            }
+         *        }).on('error', function(){
+         *            next(new Error('网络连接错误，验证失败'));
+         *        });
+         *    },
+         *
+         *    // 验证消息
+         *    msg: {
+         *        required: '用户名不能为空',
+         *        length: '用户名长度必须为10'
+         *        // 未自定义的消息，以默认输出
+         *        // 每个验证规则都必须配备一个消息体，
+         *        // 除了自定义的`function`
+         *    },
+         *
+         *    // 验证后置
+         *    onafter: function(val){
+         *        return val + 'abc';
+         *    }
+         * });
+         */
+        pushRule: function (rule, isOverride) {
+            var the = this;
+
+            the._validator.pushRule(rule, isOverride);
+
+            return the;
+        },
+
+
+        /**
+         * 触发表单消息
+         * @param name {String} 需要验证的表单 name
+         * @param message {String|undefined|false} 消息
+         * @param type {String} 消息类型
+         */
+        emitMsg: function (name, message, type) {
+            var the = this;
+            var $formItem = the._nameItemMap[name];
+            var $formMsg = the._nameMsgMap[name];
+
+            if ($formMsg) {
+                $formMsg.innerHTML = message === false ? attribute.data($formMsg, 'original') : message;
+            }
+
+            attribute.removeClass($formItem, formItemStatusClass);
+
+            if (type &amp;&amp; the._options.canAddStatusClass) {
+                attribute.addClass($formItem, 'has-' + type);
+            }
+
+            return the;
+        },
+
+
+        /**
+         * 单个验证
+         * @param name {String} 需要验证的表单 name
+         * @param [callback] {Function} 回调
+         */
+        validateOne: function (name, callback) {
+            var the = this;
+            var data = {};
+            var $input = the._nameInputMap[name];
+
+            callback = typeis.function(callback) ? callback : noop;
+            data[name] = the._getVal(name);
+            the._validator.validateOne(data, function (err) {
+                the.emitMsg(name, err ? err.message : this.rules[name].msg.success || the._options.successMsg, err ? 'error' : 'success');
+                callback.apply(this, arguments);
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 全部验证
+         * @param [callback] {Function} 回调
+         */
+        validateAll: function (callback) {
+            var the = this;
+            var data = {};
+
+            callback = typeis.function(callback) ? callback : noop;
+
+            dato.each(the._nameInputMap, function (name) {
+                data[name] = the._getVal(name);
+            });
+            the._validator.validateAll(data, function (errs) {
+                var self = this;
+
+                callback.apply(self, arguments);
+
+                dato.each(the._nameInputMap, function (name) {
+                    if (errs &amp;&amp; errs[name]) {
+                        the.emitMsg(name, errs[name].message, 'error');
+                    } else {
+                        the.emitMsg(name, self.rules[name].msg.success || the._options.successMsg, 'success');
+                    }
+                });
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            attribute.removeClass(the._nameItemMap, formItemStatusClass);
+            event.un(the._$form, 'focus', the._onfocus);
+            event.un(the._$form, the._options.validateEvent, the._onvalidate);
+            event.un(the._$form, 'click', the._onsubmit);
+            attribute.removeClass(the._$form, alienClass);
+        }
+    });
+
+
+    /**
+     * 注册自定义的静态验证规则
+     * @param options {Object} 规则配置
+     * @param fn {Function} 规则方法
+     * @param [isOverride=false] 是否覆盖已有规则
+     *
+     * @example
+     * // 添加一个检查后缀的自定义规则
+     * Validator.registerRule({
+     *     name: 'suffix',
+     *     type: 'array'
+     * }, function(suffix, val, next){
+     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+     *     var boolean = suffix.indexOf(sf) > -1;
+     *
+     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+     * });
+     */
+    Validator.registerRule = function (options, fn, isOverride) {
+        customRulesList.push(arguments);
+    };
+
+
+    /**
+     * 表单验证
+     * 推荐的表单结构为：
+     * ```
+     * ul.m-form>(li.form-item>div.form-msg)*n
+     * ```
+     * 表单的验证规则：
+     * ```
+     * input data-validator="{required: true, maxLength: 5}" maxlength="6"
+     * ```
+     * 以标准属性规则为准，以上的验证规则为
+     * ```
+     * {
+     *     required: true,
+     *     maxlength: 6
+     * }
+     * ```
+     *
+     * @param $form {Node|String} form 节点
+     * @param [options] {Object} 配置
+     * @param [options.dataRuleAttr="validator"] {String} 存放验证规则的 data-attribute 名称
+     * @param [options.dataMessageAttr="msg"] {String} 存放验证消息的 data-attribute 名称
+     * @param [options.formItemSelector=".form-item"] {String} 表单项选择器
+     * @param [options.formMsgSelector=".form-msg"] {String} 表单消息选择器
+     * @param [options.isBreakOnInvalid=false] {Boolean} 是否在错误时就停止后续验证
+     * @param [options.validateEvent="focusout"] {String} 触发表单验证事件类型
+     * @param [options.successMsg=null] {String|null} 正确消息，如果为 null，则在正确时隐藏
+     * @param [options.canAddStatusClass=null] {Boolean} 是否可以添加验证状态的 className
+     */
+    module.exports = Validator;
+    ui.importStyle(style);
+
+    Validator.registerRule({
+        name: 'suffix',
+        type: 'array'
+    }, function (suffix, val, next) {
+        var sf = (val.match(/\.[^.]*$/) || [''])[0];
+        var reg = new RegExp('(' + suffix.map(function (sf) {
+            return string.escapeRegExp(sf);
+        }).join('|') + ')$', 'i');
+
+        next(reg.test(sf) ? null : new Error(this.alias + '的后缀必须为“' +
+        suffix.join('/') + '”' +
+        (suffix.length > 1 ? '之一' : '')), val);
+    });
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>

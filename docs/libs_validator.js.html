@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Source: libs/validator.js - Alien documents</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/docs.css">
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+	    <div class="navbar-header">
+	        <a class="navbar-brand" href="index.html">Alien documents</a>
+	    </div>
+	    <nav role="navigation">
+			<ul class="nav navbar-nav">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="libs_router.module_js.html">js</a></li>
+<li><a href="module-core_communication_jsonp.html">core/communication/jsonp</a></li>
+<li><a href="module-core_communication_upload.html">core/communication/upload</a></li>
+<li><a href="module-core_communication_xhr.html">core/communication/xhr</a></li>
+<li><a href="module-core_dom_animation.html">core/dom/animation</a></li>
+<li><a href="module-core_dom_attribute.html">core/dom/attribute</a></li>
+<li><a href="module-core_dom_canvas.html">core/dom/canvas</a></li>
+<li><a href="module-core_dom_modification.html">core/dom/modification</a></li>
+<li><a href="module-core_dom_see.html">core/dom/see</a></li>
+<li><a href="module-core_dom_selector.html">core/dom/selector</a></li>
+<li><a href="module-core_event_base.html">core/event/base</a></li>
+<li><a href="module-core_event_drag.html">core/event/drag</a></li>
+<li><a href="module-core_event_hotkey.html">core/event/hotkey</a></li>
+<li><a href="module-core_event_ready.html">core/event/ready</a></li>
+<li><a href="module-core_event_touch.html">core/event/touch</a></li>
+<li><a href="module-core_event_wheel.html">core/event/wheel</a></li>
+<li><a href="module-core_navigator_compatible.html">core/navigator/compatible</a></li>
+<li><a href="module-core_navigator_cookie.html">core/navigator/cookie</a></li>
+<li><a href="module-core_navigator_hashbang.html">core/navigator/hashbang</a></li>
+<li><a href="module-core_navigator_querystring.html">core/navigator/querystring</a></li>
+<li><a href="module-core_navigator_shell.html">core/navigator/shell</a></li>
+<li><a href="module-core_navigator_storage.html">core/navigator/storage</a></li>
+<li><a href="module-core_navigator_ua.html">core/navigator/ua</a></li>
+<li><a href="module-libs_animation.html">libs/animation</a></li>
+<li><a href="module-libs_emitter.html">libs/emitter</a></li>
+<li><a href="module-libs_pagination.html">libs/pagination</a></li>
+<li><a href="module-libs_pjax.html">libs/pjax</a></li>
+<li><a href="module-libs_qrcode.html">libs/qrcode</a></li>
+<li><a href="module-libs_queue.html">libs/queue</a></li>
+<li><a href="module-libs_scroll_.html">libs/scroll/</a></li>
+<li><a href="module-libs_template.html">libs/template</a></li>
+<li><a href="module-libs_validation.html">libs/validation</a></li>
+<li><a href="module-libs_validator.html">libs/validator</a></li>
+<li><a href="module-libs_weixin.html">libs/weixin</a></li>
+<li><a href="module-parent_color.html">parent/color</a></li>
+<li><a href="module-parent_index.html">parent/index</a></li>
+<li><a href="module-parent_keyframes.html">parent/keyframes</a></li>
+<li><a href="module-parent_rules.html">parent/rules</a></li>
+<li><a href="module-ui_.html">ui/</a></li>
+<li><a href="module-ui_auto-height_.html">ui/auto-height/</a></li>
+<li><a href="module-ui_banner_.html">ui/banner/</a></li>
+<li><a href="module-ui_ctrl-list_.html">ui/ctrl-list/</a></li>
+<li><a href="module-ui_datetime-picker_.html">ui/datetime-picker/</a></li>
+<li><a href="module-ui_dialog_.html">ui/dialog/</a></li>
+<li><a href="module-ui_editor_.html">ui/editor/</a></li>
+<li><a href="module-ui_fullpage_.html">ui/fullpage/</a></li>
+<li><a href="module-ui_img-clip_.html">ui/img-clip/</a></li>
+<li><a href="module-ui_img-view_.html">ui/img-view/</a></li>
+<li><a href="module-ui_lazyload_.html">ui/lazyload/</a></li>
+<li><a href="module-ui_loading_.html">ui/loading/</a></li>
+<li><a href="module-ui_mask_.html">ui/mask/</a></li>
+<li><a href="module-ui_msg_.html">ui/msg/</a></li>
+<li><a href="module-ui_pager_.html">ui/pager/</a></li>
+<li><a href="module-ui_pagination_.html">ui/pagination/</a></li>
+<li><a href="module-ui_popup_.html">ui/popup/</a></li>
+<li><a href="module-ui_prettify_.html">ui/prettify/</a></li>
+<li><a href="module-ui_qrcode_.html">ui/qrcode/</a></li>
+<li><a href="module-ui_range_.html">ui/range/</a></li>
+<li><a href="module-ui_resize_.html">ui/resize/</a></li>
+<li><a href="module-ui_scrollbar_.html">ui/scrollbar/</a></li>
+<li><a href="module-ui_stickly_.html">ui/stickly/</a></li>
+<li><a href="module-ui_tab_.html">ui/tab/</a></li>
+<li><a href="module-ui_tooltip_.html">ui/tooltip/</a></li>
+<li><a href="module-ui_validator_.html">ui/validator/</a></li>
+<li><a href="module-ui_window_.html">ui/window/</a></li>
+<li><a href="module-utils_allocation.html">utils/allocation</a></li>
+<li><a href="module-utils_calendar.html">utils/calendar</a></li>
+<li><a href="module-utils_canvas.html">utils/canvas</a></li>
+<li><a href="module-utils_class.html">utils/class</a></li>
+<li><a href="module-utils_controller.html">utils/controller</a></li>
+<li><a href="module-utils_date.html">utils/date</a></li>
+<li><a href="module-utils_dato.html">utils/dato</a></li>
+<li><a href="module-utils_easing.html">utils/easing</a></li>
+<li><a href="module-utils_hashbang.html">utils/hashbang</a></li>
+<li><a href="module-utils_matrix.html">utils/matrix</a></li>
+<li><a href="module-utils_number.html">utils/number</a></li>
+<li><a href="module-utils_querystring.html">utils/querystring</a></li>
+<li><a href="module-utils_random.html">utils/random</a></li>
+<li><a href="module-utils_selection.html">utils/selection</a></li>
+<li><a href="module-utils_string.html">utils/string</a></li>
+<li><a href="module-utils_typeis.html">utils/typeis</a></li>
+<li><a href="module-utils_url.html">utils/url</a></li>
+<li><a href="module-widgets_confirm.html">widgets/confirm</a></li>
+<li><a href="module-widgets_prompt.html">widgets/prompt</a></li>
+<li><a href="parent_marked-render-table.module_js.html">js</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-libs_emitter-Emitter.html">Emitter</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a href="module-ui_fullpage_.html#~event:afterenter">module:ui/fullpage/.afterenter</a></li>
+<li><a href="module-ui_window_.html#~event:beforeclose">module:ui/window/.beforeclose</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeenter">module:ui/fullpage/.beforeenter</a></li>
+<li><a href="module-ui_fullpage_.html#~event:beforeleave">module:ui/fullpage/.beforeleave</a></li>
+<li><a href="module-ui_window_.html#~event:beforeopen">module:ui/window/.beforeopen</a></li>
+<li><a href="module-ui_window_.html#~event:beforeresize">module:ui/window/.beforeresize</a></li>
+<li><a href="module-libs_scroll_.html#~event:bottom">module:libs/scroll/.bottom</a></li>
+<li><a href="global.html#~event:cancel">module:ui/img-clip/.cancel</a></li>
+<li><a href="module-libs_animation.html#~event:change">module:ui/pagination/.change</a></li>
+<li><a href="global.html#event:choose">null.choose</a></li>
+<li><a href="module-libs_queue.html#~event:clear">module:libs/queue.clear</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clip">module:ui/img-clip/.clip</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipend">module:ui/img-clip/.clipend</a></li>
+<li><a href="module-ui_img-clip_.html#~event:clipstart">module:ui/img-clip/.clipstart</a></li>
+<li><a href="module-ui_msg_.html#~event:close">module:ui/window/.close</a></li>
+<li><a href="module-libs_queue.html#~event:done">module:libs/queue.done</a></li>
+<li><a href="module-libs_scroll_.html#~event:down">module:libs/scroll/.down</a></li>
+<li><a href="module-core_event_drag.html#~event:drag">module:core/event/drag.drag</a></li>
+<li><a href="module-libs_animation.html#~event:end">module:libs/animation.end</a></li>
+<li><a href="module-ui_img-view_.html#~event:error">module:ui/img-clip/.error</a></li>
+<li><a href="module-ui_dialog_.html#~event:esc">module:ui/mask/.esc</a></li>
+<li><a href="module-ui_.html#~event:getoptions">module:ui/.getoptions</a></li>
+<li><a href="module-ui_mask_.html#~event:hit">module:ui/mask/.hit</a></li>
+<li><a href="module-ui_dialog_.html#~event:hitbg">module:ui/dialog/.hitbg</a></li>
+<li><a href="module-ui_msg_.html#~event:open">module:ui/window/.open</a></li>
+<li><a href="module-libs_queue.html#~event:pause">module:libs/queue.pause</a></li>
+<li><a href="module-libs_scroll_.html#~event:pull">module:libs/scroll/.pull</a></li>
+<li><a href="module-libs_queue.html#~event:push">module:libs/scroll/.push</a></li>
+<li><a href="global.html#event:ready">null.ready</a></li>
+<li><a href="module-ui_window_.html#~event:resize">module:ui/mask/.resize</a></li>
+<li><a href="module-ui_resize_.html#~event:resizeend">module:ui/resize/.resizeend</a></li>
+<li><a href="module-ui_resize_.html#~event:resizestart">module:ui/resize/.resizestart</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrollx">module:ui/scrollbar/.scrollx</a></li>
+<li><a href="module-ui_scrollbar_.html#~event:scrolly">module:ui/scrollbar/.scrolly</a></li>
+<li><a href="module-ui_.html#~event:setoptions">module:ui/.setoptions</a></li>
+<li><a href="module-libs_queue.html#~event:shift">module:libs/queue.shift</a></li>
+<li><a href="module-libs_queue.html#~event:size">module:libs/queue.size</a></li>
+<li><a href="module-libs_animation.html#~event:start">module:libs/animation.start</a></li>
+<li><a href="module-libs_queue.html#~event:step">module:libs/queue.step</a></li>
+<li><a href="module-libs_queue.html#~event:stop">module:libs/queue.stop</a></li>
+<li><a href="module-ui_editor_.html#~event:submit">module:ui/editor/.submit</a></li>
+<li><a href="module-libs_scroll_.html#~event:top">module:libs/scroll/.top</a></li>
+<li><a href="module-libs_scroll_.html#~event:up">module:libs/scroll/.up</a></li>
+<li><a href="global.html#event:upload">null.upload</a></li>
+<li><a href="module-libs_validator.html#~event:validateallend">module:libs/validator.validateallend</a></li>
+<li><a href="module-libs_validator.html#~event:validateallstart">module:libs/validator.validateallstart</a></li>
+<li><a href="module-libs_validator.html#~event:validateend">module:libs/validator.validateend</a></li>
+<li><a href="module-libs_validator.html#~event:validateoneend">module:libs/validator.validateoneend</a></li>
+<li><a href="module-libs_validator.html#~event:validateonestart">module:libs/validator.validateonestart</a></li>
+<li><a href="module-libs_scroll_.html#~event:x">module:libs/scroll/.x</a></li>
+<li><a href="module-libs_scroll_.html#~event:y">module:libs/scroll/.y</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Globals<b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li class="nav-header">Methods</li>
+<li><a href="global.html#_bottom">_bottom</a></li>
+<li><a href="global.html#_data">_data</a></li>
+<li><a href="global.html#_device">_device</a></li>
+<li><a href="global.html#_dialog">_dialog</a></li>
+<li><a href="global.html#_geolocation">_geolocation</a></li>
+<li><a href="global.html#_location">_location</a></li>
+<li><a href="global.html#_media">_media</a></li>
+<li><a href="global.html#_navigation">_navigation</a></li>
+<li><a href="global.html#_share">_share</a></li>
+<li><a href="global.html#_user">_user</a></li>
+<li><a href="global.html#bottomApply">bottomApply</a></li>
+<li><a href="global.html#broken">broken</a></li>
+<li><a href="global.html#close">close</a></li>
+<li><a href="global.html#dataSend">dataSend</a></li>
+<li><a href="global.html#destroy">destroy</a></li>
+<li><a href="global.html#deviceNetwork">deviceNetwork</a></li>
+<li><a href="global.html#deviceSystem">deviceSystem</a></li>
+<li><a href="global.html#dialogLoadingClose">dialogLoadingClose</a></li>
+<li><a href="global.html#dialogLoadingOpen">dialogLoadingOpen</a></li>
+<li><a href="global.html#dialogTipsOpen">dialogTipsOpen</a></li>
+<li><a href="global.html#geolocationGet">geolocationGet</a></li>
+<li><a href="global.html#geolocationMap">geolocationMap</a></li>
+<li><a href="global.html#invoke">invoke</a></li>
+<li><a href="global.html#locationClose">locationClose</a></li>
+<li><a href="global.html#locationFinished">locationFinished</a></li>
+<li><a href="global.html#locationFullscreen">locationFullscreen</a></li>
+<li><a href="global.html#locationRedirect">locationRedirect</a></li>
+<li><a href="global.html#mediaImg">mediaImg</a></li>
+<li><a href="global.html#mediaInput">mediaInput</a></li>
+<li><a href="global.html#mediaPicture">mediaPicture</a></li>
+<li><a href="global.html#mediaUpload">mediaUpload</a></li>
+<li><a href="global.html#navigationShow">navigationShow</a></li>
+<li><a href="global.html#open">open</a></li>
+<li><a href="global.html#ready">ready</a></li>
+<li><a href="global.html#shareClose">shareClose</a></li>
+<li><a href="global.html#shareData">shareData</a></li>
+<li><a href="global.html#shareOpen">shareOpen</a></li>
+<li><a href="global.html#shareQQfriend">shareQQfriend</a></li>
+<li><a href="global.html#shareQQzone">shareQQzone</a></li>
+<li><a href="global.html#shareSMS">shareSMS</a></li>
+<li><a href="global.html#shareTimeline">shareTimeline</a></li>
+<li><a href="global.html#shareWeibo">shareWeibo</a></li>
+<li><a href="global.html#shareWeixin">shareWeixin</a></li>
+<li><a href="global.html#upload">upload</a></li>
+<li><a href="global.html#userGet">userGet</a></li>
+<li><a href="global.html#userLogin">userLogin</a></li>
+<li><a href="global.html#userLogout">userLogout</a></li>
+<li><a href="global.html#when">when</a></li>
+</ul>
+</li>
+</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Alien home</a></li>
+            </ul>
+	    </nav>
+  </div>
+</div>
+
+
+<div id="main">
+
+
+	
+
+	    <div class="main">
+	        <nav id="docs-sidebar">
+	            
+
+	            <ul class="nav sidebar-list">
+	                
+
+	                
+
+	                
+	                    <li class="sidebar-header">Events &times; 91</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:afterenter">afterenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeclose">beforeclose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeenter">beforeenter</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeleave">beforeleave</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeopen">beforeopen</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:beforeresize">beforeresize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:bottom">bottom</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:cancel">cancel</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:change">change</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:choose">choose</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clear">clear</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clip">clip</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipend">clipend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:clipstart">clipstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:close">close</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:done">done</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:down">down</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:drag">drag</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:end">end</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:error">error</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:esc">esc</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:getoptions">getoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hit">hit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:hitbg">hitbg</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:open">open</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pause">pause</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:pull">pull</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:push">push</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:ready">ready</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resize">resize</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizeend">resizeend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:resizestart">resizestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrollx">scrollx</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:scrolly">scrolly</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:setoptions">setoptions</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:shift">shift</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:size">size</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:start">start</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:step">step</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:stop">stop</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:submit">submit</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:top">top</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:up">up</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#event:upload">upload</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallend">validateallend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateallstart">validateallstart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateend">validateend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateoneend">validateoneend</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:validateonestart">validateonestart</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:x">x</a>
+    
+</li>
+
+	                    
+	                        
+
+<li class="">
+    
+        <a class="" href="#~event:y">y</a>
+    
+</li>
+
+	                    
+	                
+
+	                
+	            </ul>
+	        </nav>
+
+	        <section id="docs-content">
+	            <div class="content">
+		            <h1 class="page-title">Source: libs/validator.js</h1>
+
+		            
+
+
+    
+
+<pre class="prettyprint source"><code>/*!
+ * 表单验证基础
+ * @author ydr.me
+ * @create 2014-10-05 23:29
+ */
+
+
+define(function (require, exports, module) {
+    /**
+     * @module libs/validator
+     * @requires utils/class
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/howdo
+     */
+    'use strict';
+
+    var klass = require('../utils/class.js');
+    var dato = require('../utils/dato.js');
+    var string = require('../utils/string.js');
+    var typeis = require('../utils/typeis.js');
+    var howdo = require('../utils/howdo.js');
+    var Emitter = require('./emitter.js');
+    var types = 'string,number,email,url,boolean'.split(',');
+    var noop = function () {
+        // ignore
+    };
+    var udf;
+    var customRules = {};
+    var defaults = {
+        // true: 返回单个错误对象
+        // false: 返回错误对象组成的数组
+        // 浏览器端，默认为 false
+        // 服务器端，默认为 true
+        isBreakOnInvalid: false
+    };
+    var Validator = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
+
+            // 规则列表，有顺序之分
+            the._ruleList = [];
+            // 已经存在的验证规则
+            the._ruleNames = {};
+            the._customRules = {};
+            the.rules = {};
+            // 选项
+            the._options = dato.extend(true, {}, defaults, options);
+        },
+
+
+        /**
+         * 注册自定义的实例验证规则
+         * @param options {Object} 规则配置
+         * @param fn {Function} 规则方法
+         * @param [isOverride=false] 是否覆盖已有规则
+         *
+         * @example
+         * // 添加一个检查后缀的自定义规则
+         * validator.registerRule({
+         *     name: 'suffix',
+         *     type: 'array'
+         * }, function(suffix, val, next){
+         *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+         *     var boolean = suffix.indexOf(sf) > -1;
+         *
+         *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+         * });
+         */
+        registerRule: function (options, fn, isOverride) {
+            var the = this;
+
+            if (!the._customRules[options.name] || the._customRules[options.name] &amp;&amp; isOverride) {
+                the._customRules[options.name] = {
+                    name: options.name,
+                    type: options.type,
+                    fn: fn
+                };
+            }
+        },
+
+
+        /**
+         * 添加单个验证规则
+         * @param {Object}     rule 验证规则对象
+         * @param {String}     rule.name                数据字段名称【必须】
+         * @param {String}     rule.type                数据类型【必须】
+         * @param {String}     [rule.alias]             别称，否则在消息中字段名称以`name`输出
+         * @param {Function}   [rule.onbefore]          验证前置：数据验证之前的处理回调
+         * @param {Boolean}    [rule.exist=false]       验证前置：是否存在的时候才验证，默认false
+         * @param {Boolean}    [rule.trim=true]         验证前置：是否去除验证数据的左右空白，默认true
+         * @param {Boolean}    [rule.required]          验证规则：是否必填
+         * @param {Number}     [rule.length]            验证规则：指定字符串数据的字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minLength]         验证规则：指定字符串数据的最小字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxLength]         验证规则：指定字符串数据的最大字符长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.bytes]             验证规则：指定字符串数据的字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.minBytes]          验证规则：指定字符串数据的最小字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.maxBytes]          验证规则：指定字符串数据的最大字节长度，仅当为字符串类型（string/email/url）有效
+         * @param {Number}     [rule.min]               验证规则：指定数字数据的最小值，仅当为数值类型（number）有效
+         * @param {Number}     [rule.max]               验证规则：指定数字数据的最大值，仅当为数值类型（number）有效
+         * @param {RegExp}     [rule.regexp]            验证规则：正则表达式，仅当为字符串类型（string/email/url）有效
+         * @param {*}          [rule.equal]             验证规则：全等于指定值
+         * @param {Array}      [rule.inArray]           验证规则：用数组指定范围值
+         * @param {Function}   [rule.function]          验证规则：自定义验证函数，参数为`val`、`next`，可以是异步，最后执行`next(err);`即可
+         * @param {Function}   [rule.onafter]           验证后置：数据验证之后的处理回调
+         * @param {Object}     [rule.msg]               验证出错的消息
+         * @param {Boolean}    [isOverride=false]       是否覆盖已经存在的验证规则，默认false
+         *
+         * @example
+         * validator.pushRule({
+         *    // 字段名称，必须，唯一性
+         *    name: 'username',
+         *    // 数据类型，必须，为 string/email/url/number/boolean/array 之一
+         *    type: 'string',
+         *    // 别称，当没有填写自定义错误消息时
+         *    // 提示为 username不能为空
+         *    // 当前设置别名之后
+         *    // 提示为 用户名不能为空
+         *    alias: '用户名',
+         *
+         *    // 验证前置
+         *    // val 当前字段值
+         *    // data 所有数据
+         *    onbefore: function(val, data){
+         *        return val + 'abc';
+         *    },
+         *    exist: false,
+         *    trim: true,
+         *
+         *    // 验证规则
+         *    required: true,
+         *    length: 10,
+         *    minLength: 4,
+         *    maxLength: 12,
+         *    bytes: 10,
+         *    minBytes: 4,
+         *    maxBytes: 12,
+         *    min: 4,
+         *    max: 4,
+         *    regexp: /^[a-z]\w{3,11}$/,
+         *    equal: 'cloudcome',
+         *    inArray: ['cloudcome', 'yundanran'],
+         *    // val 当前字段值
+         *    // [data 所有数据] 可选
+         *    // next 执行下一步
+         *    function: function(val, next){
+         *        // 这里可以是异步的
+         *        // 比如远程校验可以写在这里
+         *        ajax.post('./validate.json', {
+         *            username: val
+         *        }).on('success', function(json){
+         *            if(json.code>0){
+         *                next();
+         *            }else{
+         *                next(new Error(json.msg));
+         *            }
+         *        }).on('error', function(){
+         *            next(new Error('网络连接错误，验证失败'));
+         *        });
+         *    },
+         *
+         *    // 验证消息
+         *    msg: {
+         *        required: '用户名不能为空',
+         *        length: '用户名长度必须为10'
+         *        // 未自定义的消息，以默认输出
+         *        // 每个验证规则都必须配备一个消息体，
+         *        // 除了自定义的`function`
+         *    },
+         *
+         *    // 验证后置
+         *    onafter: function(val){
+         *        return val + 'abc';
+         *    }
+         * });
+         */
+        pushRule: function (rule, isOverride) {
+            var the = this;
+            var pushFn = function (father) {
+                if (typeis.function(rule.onbefore)) {
+                    father.onbefores.push(rule.onbefore);
+                    rule.onbefore = udf;
+                }
+
+                if (typeis.function(rule.onafter)) {
+                    father.onafters.push(rule.onafter);
+                    rule.onafter = udf;
+                }
+
+                if (typeis.function(rule.function)) {
+                    father.functions.push(rule.function);
+                    rule.function = udf;
+                }
+            };
+            // 是否存在
+            var isExist = !!the._ruleNames[rule.name];
+
+            if (!isExist || isOverride) {
+                if (!rule.type || types.indexOf(rule.type) === -1) {
+                    throw '`rule.type` must be one of [' + types.join('/') + ']';
+                }
+
+                if (!rule.msg) {
+                    rule.msg = {};
+                }
+
+                if (!rule.alias) {
+                    rule.alias = rule.name;
+                }
+
+                rule.required = !!rule.required;
+
+                if (rule.exist === udf) {
+                    rule.exist = false;
+                }
+
+                rule.exist = !!rule.exist;
+
+                if (rule.trim === udf) {
+                    rule.trim = true;
+                }
+
+                rule.trim = !!rule.trim;
+
+                // 存在并且覆盖
+                if (isExist &amp;&amp; isOverride) {
+                    the._ruleList.forEach(function (existRule) {
+                        if (rule.name === existRule.name) {
+                            existRule.onbefores = existRule.onbefores || [];
+                            dato.extend(true, existRule, rule);
+                            the.rules[rule.name] = existRule;
+                        }
+                    });
+                }
+                // 不存在
+                else if (!isExist) {
+                    the._ruleList.push(rule);
+                    the._ruleNames[rule.name] = true;
+                    the.rules[rule.name] = rule;
+
+                    // 函数数组
+                    rule.onbefores = [];
+                    rule.onafters = [];
+                    rule.functions = [];
+
+                    pushFn(rule);
+                }
+            }
+            // 存在不覆盖
+            else if (isExist &amp;&amp; !isOverride) {
+                pushFn(the.rules[rule.name]);
+            }
+
+            return the;
+        },
+
+
+        /**
+         * 执行所有数据验证
+         * @param {Object} data 数据
+         * @param {Function} callback 回调
+         * @arguments  err 对象
+         */
+        validateAll: function (data, callback) {
+            var the = this;
+            var isBreakOnInvalid = the._options.isBreakOnInvalid;
+            var errList = [];
+
+            data = typeis(data) === 'object' ? data : {};
+            callback = typeis(callback) === 'function' ? callback : noop;
+
+            /**
+             * 所有字段验证开始
+             * @event validateallstart
+             */
+            the.emit('validateallstart');
+            howdo.each(the._ruleList, function (key, rule, next) {
+                the._validateOne(rule, data, function (err) {
+                    if (!isBreakOnInvalid) {
+                        errList.push(err);
+                    }
+
+                    if (!err || !isBreakOnInvalid) {
+                        return next();
+                    }
+
+                    next(err);
+                });
+            }).follow(function (err) {
+                var errs = null;
+
+                if (isBreakOnInvalid) {
+                    return callback.call(the, err, data);
+                }
+
+                dato.each(the._ruleList, function (index, rule) {
+                    if (errList[index]) {
+                        errs = errs || {};
+                        errs[rule.name] = errList[index];
+                    }
+                });
+
+                /**
+                 * 所有字段验证结束
+                 * @event validateallend
+                 * @param errs {Array} 错误消息数组
+                 * @param data {Object} 验证过滤后的数据
+                 */
+                the.emit('validateallend', errs, data);
+                callback.call(the, errs, data);
+            });
+        },
+
+
+        /**
+         * 只对当前一个数据验证
+         * @param {Object} data 数据
+         * @param {Function} callback 回调
+         * @arguments  err 对象
+         */
+        validateOne: function (data, callback) {
+            var the = this;
+            var findIndex = -1;
+            var name = Object.keys(data)[0];
+
+            callback = typeis(callback) === 'function' ? callback : noop;
+
+            if (name) {
+                /**
+                 * 单个字段验证开始
+                 * @event validateonestart
+                 * @param name {String} 字段名称
+                 */
+                the.emit('validateonestart', name);
+                dato.each(the._ruleList, function (index, rule) {
+                    if (rule.name === name) {
+                        findIndex = index;
+                        return false;
+                    }
+                });
+
+                if (findIndex > -1) {
+                    the._validateOne(the._ruleList[findIndex], data, function (err, data) {
+                        /**
+                         * 单个字段验证结束
+                         * @event validateoneend
+                         * @param name {String} 字段名称
+                         * @param error {Error} 错误消息
+                         * @param value {*} 字段值
+                         */
+                        the.emit('validateoneend', name, err, data[name]);
+                        callback.call(the, err, data[name], data);
+                    });
+                } else {
+                    /**
+                     * 单个字段验证结束
+                     * @event validateoneend
+                     * @param name {String} 字段名称
+                     * @param error {Error} 错误消息
+                     * @param value {*} 字段值
+                     */
+                    the.emit('validateoneend', name, null, data[name]);
+                    callback.call(the, null, data[name], data);
+                }
+            } else {
+                /**
+                 * 单个字段验证开始
+                 * @event validateonestart
+                 * @param name {String} 字段名称
+                 */
+                the.emit('validateonestart', name);
+
+                /**
+                 * 单个字段验证结束
+                 * @event validateoneend
+                 * @param name {String} 字段名称
+                 * @param error {Error} 错误消息
+                 * @param value {*} 字段值
+                 */
+                the.emit('validateoneend', name, null, data[name]);
+                callback.call(the, null, data[name], data);
+            }
+        },
+
+
+        /**
+         * 单个数据验证
+         * @param rule
+         * @param data
+         * @param callback
+         * @returns {*}
+         * @private
+         */
+        _validateOne: function (rule, data, callback) {
+            var the = this;
+            var val = data[rule.name];
+            var err;
+            var type;
+            var runCustom = function (next) {
+                var runCustomRules = function (customRules) {
+                    return function (callback) {
+                        howdo.each(customRules, function (ruleName, ruleInfo, next) {
+                            var _rule = rule[ruleName];
+
+                            if (typeis(_rule) !== ruleInfo.type) {
+                                return next();
+                            }
+
+                            ruleInfo.fn.call(rule, _rule, val, function (err) {
+                                if (!err) {
+                                    return next();
+                                }
+
+                                err = rule.msg[ruleName] ? new Error(rule.msg[ruleName]) : err;
+                                next(err);
+                            });
+                        }).follow(callback);
+                    };
+                };
+
+                howdo
+                    // 静态自定义验证规则
+                    .task(runCustomRules(customRules))
+                    // 实例自定义验证规则
+                    .task(runCustomRules(the._customRules))
+                    // 异步串行
+                    .follow(next);
+            };
+            var onover = function (err) {
+                var hasBreak = false;
+
+                // onafter
+                if (!err) {
+                    dato.each(rule.onafters, function (index, onafter) {
+                        var ret = onafter.call(rule, val, data);
+
+                        if (typeis.error(ret)) {
+                            // callback
+                            if (typeis.function(callback)) {
+                                callback.call(the, ret, data);
+                            }
+
+                            hasBreak = true;
+                            return false;
+                        }
+
+                        data[rule.name] = onafter.call(rule, ret, data);
+                    });
+                }
+
+                if (hasBreak) {
+                    return;
+                }
+
+                /**
+                 * 单个字段验证结束
+                 * @event validateend
+                 * @param name {String} 字段名称
+                 * @param data {Object} 验证过滤后的数据
+                 */
+                the.emit('validateend', rule.name, data);
+
+                // callback
+                if (typeis(callback) === 'function') {
+                    callback.call(the, err, data);
+                }
+            };
+
+            /**
+             * 单个字段验证开始
+             * @event validateend
+             * @param name {String} 字段名称
+             */
+            the.emit('validatestart', rule.name);
+
+            // onbefore
+            rule.onbefores.forEach(function (fn) {
+                data[rule.name] = val = fn.call(rule, val, data);
+            });
+
+            type = typeis(val);
+
+            // trim
+            if (type === 'string' &amp;&amp; rule.trim) {
+                data[rule.name] = val = String(val).trim();
+            }
+
+            // exist
+            var info = _getDataInfo(val);
+
+            // 是否存在
+            var isExist = !!info.stringLength || !!info.number || !!info.booleanLength;
+
+            // 需要验证 = 存在就验证 &amp;&amp; 存在 || 一直验证
+            var require2Exist2Validate = rule.exist &amp;&amp; isExist || !rule.exist;
+
+            if (require2Exist2Validate) {
+                // required
+                if (rule.required &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.required || rule.alias + '不能为空');
+
+                    if (!info.stringLength) {
+                        return onover(err);
+                    }
+                }
+
+                // type
+                err = new Error(rule.msg.type || rule.alias + '数据类型必须为' + rule.type);
+
+                switch (rule.type) {
+                    case 'string':
+                    case 'email':
+                    case 'url':
+                        if (type !== 'string') {
+                            return onover(err);
+                        }
+
+                        if (rule.type === 'email' &amp;&amp; !typeis.email(val)) {
+                            return onover(err);
+                        }
+
+                        if (rule.type === 'url' &amp;&amp; !typeis.url(val)) {
+                            return onover(err);
+                        }
+                        break;
+
+                    default:
+                        if (rule.type &amp;&amp; type !== rule.type) {
+                            return onover(err);
+                        }
+                }
+
+                // length
+                if (typeis.number(rule.length) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.length || rule.alias + '长度必须为' + rule.length + '字符');
+
+                    if (info.stringLength !== rule.length) {
+                        return onover(err);
+                    }
+                }
+
+                // bytes
+                if (typeis.number(rule.bytes) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.bytes || rule.alias + '长度必须为' + rule.bytes + '字节');
+
+                    if (info.stringBytes !== rule.bytes) {
+                        return onover(err);
+                    }
+                }
+
+                // minLength
+                if (typeis.number(rule.minLength) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.minLength || rule.alias + '长度不能少于' + rule.minLength + '字符');
+
+                    if (info.stringLength &lt; rule.minLength) {
+                        return onover(err);
+                    }
+                }
+
+                // minBytes
+                if (typeis.number(rule.minBytes) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.minBytes || rule.alias + '长度不能少于' + rule.minBytes + '字节');
+
+                    if (info.stringBytes &lt; rule.minBytes) {
+                        return onover(err);
+                    }
+                }
+
+                // maxLength
+                if (typeis.number(rule.maxLength) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.maxLength || rule.alias + '长度不能超过' + rule.maxLength + '字符');
+
+                    if (info.stringLength > rule.maxLength) {
+                        return onover(err);
+                    }
+                }
+
+                // maxBytes
+                if (typeis.number(rule.maxBytes) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.maxBytes || rule.alias + '长度不能超过' + rule.maxBytes + '字节');
+
+                    if (info.stringBytes > rule.maxBytes) {
+                        return onover(err);
+                    }
+                }
+
+                // inArray
+                if (typeis.array(rule.inArray)) {
+                    err = new Error(rule.msg.inArray || rule.alias + '必须是“' + rule.inArray.join('、') + '”其一');
+                    if (rule.inArray.indexOf(val) === -1) {
+                        return onover(err);
+                    }
+                }
+
+                // min
+                if (typeis.number(rule.min) &amp;&amp; type === 'number') {
+                    err = new Error(rule.msg.min || rule.alias + '不能小于' + rule.min);
+                    if (val &lt; rule.min) {
+                        return onover(err);
+                    }
+                }
+
+                // max
+                if (typeis.number(rule.max) &amp;&amp; type === 'number') {
+                    err = new Error(rule.msg.max || rule.alias + '不能大于' + rule.max);
+
+                    if (val > rule.max) {
+                        return onover(err);
+                    }
+                }
+
+                // regexp
+                if (typeis.regexp(rule.regexp) &amp;&amp; type === 'string') {
+                    err = new Error(rule.msg.regexp || rule.alias + '不符合规则');
+
+                    if (!rule.regexp.test(val)) {
+                        return onover(err);
+                    }
+                }
+
+                // equal
+                if (rule.equal !== undefined) {
+                    var msg = '';
+
+                    switch (typeis(rule.equal)) {
+                        case 'string':
+                        case 'email':
+                        case 'url':
+                            msg = rule.equal + '';
+                            break;
+
+                        case 'boolean':
+                            msg = rule.equal ? '真' : '假';
+                            break;
+
+                        case 'number':
+                            msg = '数值' + rule.equal;
+                            break;
+                    }
+
+                    err = new Error(rule.msg.equal || rule.alias + '必须是' + rule.equal);
+
+                    if (!_isEqual(val, rule.equal)) {
+                        return onover(err);
+                    }
+                }
+
+                runCustom(function (err) {
+                    if (err) {
+                        return onover(err);
+                    }
+
+                    // function
+                    howdo.each(rule.functions, function (index, fn, next) {
+                        var fnLen = fn.length;
+
+                        if (fnLen === 3) {
+                            fn.call(window, val, data, next);
+                        } else if (fnLen === 2) {
+                            fn.call(window, val, next);
+                        } else {
+                            next();
+                        }
+                    }).follow(onover);
+                });
+            } else {
+                onover();
+            }
+        }
+    });
+
+
+    /**
+     * 注册自定义的静态验证规则
+     * @param options {Object} 规则配置
+     * @param fn {Function} 规则方法
+     * @param [isOverride=false] 是否覆盖已有规则
+     *
+     * @example
+     * // 添加一个检查后缀的自定义规则
+     * Validator.registerRule({
+     *     name: 'suffix',
+     *     type: 'array'
+     * }, function(suffix, val, next){
+     *     var sf = (val.match(/\.[^.]*$/) || [''])[0];
+     *     var boolean = suffix.indexOf(sf) > -1;
+     *
+     *     next(boolean ? null : new Error(this.alias + '的文件后缀不正确'), val);
+     * });
+     */
+    Validator.registerRule = function (options, fn, isOverride) {
+        if (!customRules[options.name] || customRules[options.name] &amp;&amp; isOverride) {
+            customRules[options.name] = {
+                name: options.name,
+                type: options.type,
+                fn: fn
+            };
+        }
+    };
+
+    module.exports = Validator;
+
+
+    /**
+     * 获取数据信息
+     * @param {*} data
+     * @returns {Object}
+     * @private
+     */
+    function _getDataInfo(data) {
+        var type = typeis(data);
+        var ret = {};
+
+        switch (type) {
+            case 'string':
+                ret.stringLength = data.length;
+                ret.stringBytes = string.bytes(data);
+                break;
+
+            case 'number':
+                ret.number = data;
+                break;
+
+            case 'boolean':
+                ret.booleanLength = 1;
+                break;
+        }
+
+        return ret;
+
+    }
+
+
+    /**
+     * 判断两个数据是否相等
+     * @param data
+     * @param equal
+     * @returns {Boolean}
+     * @private
+     */
+    function _isEqual(data, equal) {
+        var type = typeis(data);
+        var compare;
+
+        switch (type) {
+            case 'string':
+            case 'number':
+                return data === equal;
+
+            case 'array':
+            case 'object':
+                compare = dato.compare(data, equal);
+                return compare ? !compare.diff.length : false;
+
+            case 'boolean':
+                return data === equal;
+        }
+    }
+});</code></pre>
+
+
+
+
+
+
+	            </div>
+	        </section>
+	    </div>
+
+    
+
+
+</div>
+
+<script src="/static/js/jquery.1.10.min.js"> </script>
+<script src="/static/js/prettify/prettify.js"> </script>
+<script src="/static/js/prettify/lang-css.js"> </script>
+<script> prettyPrint(); </script>
+<script src="/static/js/linenumber.js"> </script>
+<script src="/static/js/bootstrap.js"> </script>
+<script src="/static/js/script.js"> </script>
+
+</body>
+</html>
