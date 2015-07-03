@@ -169,7 +169,11 @@ define(function (require, exports, module) {
                     case 'file':
                         var files = $item.files;
 
-                        data[path] = isMultiple ? files : (files.length ? files[0] : null);
+                        if (isMultiple) {
+                            data[path] = files.length ? files : [];
+                        } else {
+                            data[path] = files.length ? files[0] : null;
+                        }
 
                         break;
 

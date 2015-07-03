@@ -18,11 +18,12 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var REG_NUMBERIC = /^[\d.]+$/;
 
+
     // 必填
     exports.required = function () {
         return function (value, done) {
             var boolean = typeis(value) === 'file' ? true :
-            (typeis.array(value) ? value : (value || '')).length > 0;
+            (_isMultiple(value) ? value : (value || '')).length > 0;
 
             done(boolean ? null : '${path}不能为空');
         };
@@ -103,7 +104,7 @@ define(function (require, exports, module) {
     exports.accept = function (ruleValue) {
         return function (files, done) {
             var invalidIndexs = [];
-            var isMultiple = typeis.array(files);
+            var isMultiple = _isMultiple(files);
 
             if (!isMultiple) {
                 files = [files];
@@ -116,8 +117,8 @@ define(function (require, exports, module) {
             });
 
             done(invalidIndexs.length ? '${path}' +
-            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '的文件类型不合法' : null);
+            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
+            '文件类型不合法' : null);
         };
     };
 
@@ -125,7 +126,7 @@ define(function (require, exports, module) {
     exports.minSize = function (ruleValue) {
         return function (files, done) {
             var invalidIndexs = [];
-            var isMultiple = typeis.array(files);
+            var isMultiple = _isMultiple(files);
 
             if (!isMultiple) {
                 files = [files];
@@ -138,8 +139,8 @@ define(function (require, exports, module) {
             });
 
             done(invalidIndexs.length ? '${path}' +
-            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '的文件大小不能小于' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
+            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
+            '文件大小不能小于' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
         };
     };
 
@@ -147,7 +148,7 @@ define(function (require, exports, module) {
     exports.maxSize = function (ruleValue) {
         return function (files, done) {
             var invalidIndexs = [];
-            var isMultiple = typeis.array(files);
+            var isMultiple = _isMultiple(files);
 
             if (!isMultiple) {
                 files = [files];
@@ -160,8 +161,17 @@ define(function (require, exports, module) {
             });
 
             done(invalidIndexs.length ? '${path}' +
-            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '的文件大小不能超过' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
+            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
+            '文件大小不能超过' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
         };
     };
+
+    /**
+     * 判断是否为多值类型
+     * @param obj
+     * @returns {boolean}
+     */
+    function _isMultiple(obj) {
+        return typeis.array(obj) || typeis(obj) === 'filelist';
+    }
 });
