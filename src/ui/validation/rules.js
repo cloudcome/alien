@@ -14,7 +14,10 @@ define(function (require, exports, module) {
 
     var typeis = require('../../utils/typeis.js');
     var number = require('../../utils/number.js');
+    var string = require('../../utils/string.js');
+    var dato = require('../../utils/dato.js');
     var REG_NUMBERIC = /^[\d.]+$/;
+    var REG_ACCEPT = /^(.*?)\/(.*)$/;
 
     // 最小长度
     exports.minLength = function (ruleValue) {
@@ -83,6 +86,33 @@ define(function (require, exports, module) {
             value = number.parseFloat(value);
             ruleValue = number.parseFloat(ruleValue);
             done(value <= ruleValue ? null : '${path}不能大于' + ruleValue);
+        };
+    };
+
+
+    // 允许
+    exports.accept = function (ruleValue) {
+        //var matches = ruleValue.match(REG_ACCEPT) || ['*','*'];
+        //var type = matches[0];
+        //var extname = matches[1];
+
+        return function (files, done) {
+            var invalidIndexs = [];
+            var isMultiple = typeis.array(files);
+
+            if (!isMultiple) {
+                files = [files];
+            }
+
+            dato.each(files, function (index, file) {
+                if (!string.glob(file.type, ruleValue, true)) {
+                    invalidIndexs.push(index + 1);
+                }
+            });
+
+            done(invalidIndexs.length ? '${path}' +
+            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
+            '文件类型不合法' : null);
         };
     };
 });

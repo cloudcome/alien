@@ -126,6 +126,7 @@ define(function (require, exports, module) {
                 var path = $item.name;
                 var type = the._getType($item);
                 var val = $item.value;
+                var isMultiple = $item.multiple;
 
                 switch (type) {
                     case 'checkbox':
@@ -138,8 +139,6 @@ define(function (require, exports, module) {
                         break;
 
                     case 'select':
-                        var isMultiple = $item.multiple;
-
                         if (isMultiple) {
                             data[path] = [];
                         }
@@ -167,6 +166,13 @@ define(function (require, exports, module) {
 
                         break;
 
+                    case 'file':
+                        var files = $item.files;
+
+                        data[path] = isMultiple ? files : files[0];
+
+                        break;
+
                     default :
                         data[path] = val;
                 }
@@ -188,7 +194,7 @@ define(function (require, exports, module) {
         addRule: function (path, rule, msg) {
             var the = this;
 
-            the._validation.addRule.apply(the, arguments);
+            the._validation.addRule.apply(the._validation, arguments);
 
             return the;
         },
@@ -266,12 +272,16 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'required');
             }
 
-            if ($item.min !== '' && !type.empty($item.min)) {
+            if ($item.min !== '' && !typeis.empty($item.min)) {
                 the._validation.addRule(path, the._getRule('min', $item.min));
             }
 
-            if ($item.max !== '' && !type.empty($item.max)) {
+            if ($item.max !== '' && !typeis.empty($item.max)) {
                 the._validation.addRule(path, the._getRule('max', $item.max));
+            }
+
+            if ($item.accept !== '' && !typeis.empty($item.accept)) {
+                the._validation.addRule(path, the._getRule('accept', $item.accept));
             }
 
             // @todo step

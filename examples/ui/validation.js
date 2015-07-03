@@ -16,6 +16,10 @@ define(function (require, exports, module) {
     var validation = new Validation('#form');
     var alert = require('../../src/widgets/alert.js');
 
+    //validation.addRule('age', function (value) {
+    //    return value > 20;
+    //}, '${path}怎么能小于20呢，呵呵');
+
     validation.on('error', function (err) {
         alert(err);
     });
