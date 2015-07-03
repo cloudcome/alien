@@ -43,19 +43,45 @@
     <!--<li>-->
         <!--<label for="password2">确认密码</label>：<input name="password2" type="password" required id="password2" data-validation="equal:password"/>-->
     <!--</li>-->
+    <!--<li>-->
+        <!--<label for="checkbox1">多选：</label>-->
+        <!--<label for="checkbox1"><input type="checkbox" name="checkbox" id="checkbox1" value="checkbox1" data-validation="required:,atLeast:2,atMost: 3"/>checkbox1</label>-->
+        <!--<label for="checkbox2"><input type="checkbox" name="checkbox" id="checkbox2" value="checkbox2"/>checkbox2</label>-->
+        <!--<label for="checkbox3"><input type="checkbox" name="checkbox" id="checkbox3" value="checkbox3"/>checkbox3</label>-->
+        <!--<label for="checkbox4"><input type="checkbox" name="checkbox" id="checkbox4" value="checkbox4"/>checkbox4</label>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<label for="radio1">单选：</label>-->
+        <!--<label for="radio1"><input type="radio" name="radio" id="radio1" value="radio1" data-validation="required"/>radio1</label>-->
+        <!--<label for="radio2"><input type="radio" name="radio" id="radio2" value="radio2"/>radio2</label>-->
+        <!--<label for="radio3"><input type="radio" name="radio" id="radio3" value="radio3"/>radio3</label>-->
+        <!--<label for="radio4"><input type="radio" name="radio" id="radio4" value="radio4"/>radio4</label>-->
+    <!--</li>-->
     <li>
-        <label for="checkbox1">多选：</label>
-        <label for="checkbox1"><input type="checkbox" name="checkbox" id="checkbox1" data-validation="required:,atLeast:2,atMost: 3"/>checkbox1</label>
-        <label for="checkbox2"><input type="checkbox" name="checkbox" id="checkbox2"/>checkbox2</label>
-        <label for="checkbox3"><input type="checkbox" name="checkbox" id="checkbox3"/>checkbox3</label>
-        <label for="checkbox4"><input type="checkbox" name="checkbox" id="checkbox4"/>checkbox4</label>
+        <label for="select1">下拉单选：</label>
+        <select name="select1" id="select1" required>
+            <option value="0">==请选择==</option>
+            <option value="1">北京</option>
+            <option value="2">杭州</option>
+            <option value="3">上海</option>
+            <option value="4">深圳</option>
+            <option value="5">成都</option>
+            <option value="6">广州</option>
+            <option value="7">香港</option>
+        </select>
     </li>
     <li>
-        <label for="radio1">单选：</label>
-        <label for="radio1"><input type="radio" name="radio" id="radio1"/>radio1</label>
-        <label for="radio2"><input type="radio" name="radio" id="radio2"/>radio2</label>
-        <label for="radio3"><input type="radio" name="radio" id="radio3"/>radio3</label>
-        <label for="radio4"><input type="radio" name="radio" id="radio4"/>radio4</label>
+        <label for="select1">下拉多选：</label>
+        <select name="select2" id="select2" multiple size="5">
+            <option value="0">==请选择==</option>
+            <option value="1">北京</option>
+            <option value="2">杭州</option>
+            <option value="3">上海</option>
+            <option value="4">深圳</option>
+            <option value="5">成都</option>
+            <option value="6">广州</option>
+            <option value="7">香港</option>
+        </select>
     </li>
     <li>
         <button class="form-submit" id="submit">提交</button>
