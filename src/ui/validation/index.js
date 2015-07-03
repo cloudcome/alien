@@ -123,11 +123,53 @@ define(function (require, exports, module) {
 
             dato.each(the._$items, function (i, $item) {
                 var path = $item.name;
+                var type = the._getType($item);
+                var val = $item.value;
 
-                data[path] = $item.value;
+                switch (type) {
+                    case 'checkbox':
+                    case 'select:multiple':
+                        data[path] = data[path] || [];
+
+                        if ($item.checked) {
+                            data[path].push(val);
+                        }
+
+                        break;
+
+                    case 'radio':
+                    case 'select':
+                        if ($item.checked) {
+                            data[path] = val;
+                        }
+
+                        break;
+
+                    default :
+                        data[path] = val;
+                }
+
+                // @todo select mutiple
+                // @todo input:file
             });
 
             return data;
+        },
+
+
+        /**
+         * 获取元素类型
+         * @param $item
+         * @returns {String}
+         * @private
+         */
+        _getType: function ($item) {
+            var tagName = $item.tagName.toLowerCase();
+            var multiple = $item.multiple;
+
+            var type = tagNameMap[tagName] ? tagName : $item.type;
+
+            return multiple ? type + ':multiple' : type;
         },
 
 
@@ -140,7 +182,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             event.on(the._$form, 'click', options.submitSelector, the._onsubmit = function () {
-                the._validation.validateAll(the.getData());
+                var data = the.getData();
+
+                console.log(data);
+                the._validation.validateAll(data);
             });
         },
 
@@ -171,8 +216,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var id = $item.id;
             var path = $item.name;
-            var tagName = $item.tagName.toLowerCase();
-            var type = tagNameMap[tagName] ? tagName : $item.type;
+            var type = the._getType($item);
             var validationStr = attribute.data($item, options.dataAttribute);
             var validationList = the._parseValidation(validationStr);
 
