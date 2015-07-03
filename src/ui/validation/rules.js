@@ -86,4 +86,20 @@ define(function (require, exports, module) {
         };
     };
 
+    // 步进值
+    exports.step = function (ruleValue) {
+        return function (value, done) {
+            value = value || '';
+
+            if (!REG_NUMBERIC.test(value)) {
+                return done('${path}必须为数值格式');
+            }
+
+            var min = 0;
+
+            value = number.parseFloat(value);
+            ruleValue = number.parseFloat(ruleValue);
+            done((value - min) % ruleValue === 0 ? null : '${path}步进值必须为' + ruleValue);
+        };
+    };
 });

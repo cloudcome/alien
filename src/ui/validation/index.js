@@ -33,6 +33,7 @@ define(function (require, exports, module) {
         textarea: 1,
         select: 1
     };
+    var html5Rules = ['required', 'min', 'max', 'step'];
     var REG_LABEL = /^([^:：]*)/;
     var defaults = {
         // true: 返回单个错误对象
@@ -249,8 +250,12 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'required');
             }
 
-            if ($item.min) {
-                //the._validation.addRule(path, );
+            if (!typeis.undefined($item.min)) {
+                the._validation.addRule(path, the._getRule('min', $item.min));
+            }
+
+            if (!typeis.undefined($item.max)) {
+                the._validation.addRule(path, the._getRule('max', $item.max));
             }
 
             switch (type) {

@@ -1,7 +1,7 @@
 define(function (require) {
     'use strict';
 
-    var event = require('/src/core/event/wheel.js');
+    var event = require('../../../src/core/event/wheel.js');
     var ret1 = document.getElementById('ret1');
     var ret2 = document.getElementById('ret2');
     var ret3 = document.getElementById('ret3');
