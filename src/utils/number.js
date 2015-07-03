@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     var REG_FORMAT = {
         3: /(\d)(?=(\d{3})+$)/g
     };
-    var abbrSuffix = 'kmbt';
+    var abbrSuffix = ['', 'k', 'm', 't'];
     var REG_BEGIN_0 = /^0+/;
 
 
@@ -109,11 +109,8 @@ define(function (require, exports, module) {
         var i = 0;
         var j = abbrSuffix.length;
 
-        for (; num >= step && i < j; i++) {
+        while (num >= step && ++i < j) {
             num = num / step;
-            if (num < step) {
-                break;
-            }
         }
 
         if (i === j) {

@@ -136,7 +136,7 @@ define(function (require, exports, module) {
 
             done(invalidIndexs.length ? '${path}' +
             (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '文件大小不能小于' + number.abbr(ruleValue).toUpperCase() + 'B' : null);
+            '文件大小不能小于' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
         };
     };
 
@@ -158,7 +158,7 @@ define(function (require, exports, module) {
 
             done(invalidIndexs.length ? '${path}' +
             (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '文件大小不能超过' + number.abbr(ruleValue).toUpperCase() + 'B' : null);
+            '文件大小不能超过' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
         };
     };
 });
