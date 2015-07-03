@@ -258,6 +258,10 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, the._getRule('max', $item.max));
             }
 
+            if (!typeis.undefined($item.step)) {
+                the._validation.addRule(path, the._getRule('step', $item.step));
+            }
+
             switch (type) {
                 case 'number':
                 case 'email':
@@ -314,7 +318,7 @@ define(function (require, exports, module) {
 
             // 1. 当前静态规则
             if ((rule = validationMap[ruleName])) {
-                return rule(validationVal);
+                return rule.call(this, validationVal);
             }
 
             // 2. 库的静态规则
