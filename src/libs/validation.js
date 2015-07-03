@@ -61,6 +61,16 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取字段别名
+         * @param path
+         * @returns {*}
+         */
+        getAlias: function (path) {
+            return this._aliasMap[path] || path;
+        },
+
+
+        /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
          * @param rule {String|Array|RegExp|Function} 验证规则，可以是静态规则，也可以添加规则
@@ -112,6 +122,20 @@ define(function (require, exports, module) {
             });
 
             return rules;
+        },
+
+
+        /**
+         * 返回待验证的数据
+         * @param [path] {String} 字段
+         * @returns {*}
+         */
+        getData: function (path) {
+            if (path) {
+                return this.data[path];
+            }
+
+            return this.data;
         },
 
 
