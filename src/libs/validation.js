@@ -45,7 +45,6 @@ define(function (require, exports, module) {
             the._aliasMap = {};
             the._validationMap = {};
             the._validateIndex = 0;
-            the._ignoreMap = {};
         },
 
 
@@ -57,7 +56,6 @@ define(function (require, exports, module) {
          */
         setAlias: function (path, alias) {
             this._aliasMap[path] = alias;
-
             return this;
         },
 
@@ -116,11 +114,11 @@ define(function (require, exports, module) {
         /**
          * 获取字段的规则
          * @param path {String}
-         * @returns {*}
+         * @returns {Array}
          */
         getRules: function (path) {
             var the = this;
-            var rules;
+            var rules = [];
 
             dato.each(the._validateList, function (i, validate) {
                 if (path === validate.path) {

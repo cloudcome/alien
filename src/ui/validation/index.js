@@ -96,6 +96,10 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 触发提交表单
+         * @returns {ValidationUI}
+         */
         submit: function () {
             var the = this;
 
@@ -127,6 +131,10 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
             var options = the._options;
