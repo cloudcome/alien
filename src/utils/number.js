@@ -88,6 +88,7 @@ define(function (require, exports, module) {
      * 数字缩写
      * @param num {Number} 数值
      * @param [fixedLength=0] {Number} 修正长度
+     * @param [step=1000] {Number} 步长
      * @returns {*}
      * @example
      * number.abbr(123456.789);
@@ -95,7 +96,7 @@ define(function (require, exports, module) {
      * number.abbr(123456.789, 2);
      * // => "123.46k"
      */
-    exports.abbr = function (num, fixedLength) {
+    exports.abbr = function (num, fixedLength, step) {
         if (num < 1) {
             return num;
         }
@@ -103,14 +104,14 @@ define(function (require, exports, module) {
         // 123.321 => 123
         num = exports.parseInt(num, 0);
         fixedLength = fixedLength || 0;
+        step = step || 1000;
 
         var i = 0;
         var j = abbrSuffix.length;
-        var pee = 1000;
 
-        for (; num >= pee && i < j; i++) {
-            num = num / pee;
-            if (num < pee) {
+        for (; num >= step && i < j; i++) {
+            num = num / step;
+            if (num < step) {
                 break;
             }
         }

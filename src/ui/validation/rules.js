@@ -90,12 +90,8 @@ define(function (require, exports, module) {
     };
 
 
-    // 允许
+    // 允许文件类型
     exports.accept = function (ruleValue) {
-        //var matches = ruleValue.match(REG_ACCEPT) || ['*','*'];
-        //var type = matches[0];
-        //var extname = matches[1];
-
         return function (files, done) {
             var invalidIndexs = [];
             var isMultiple = typeis.array(files);
@@ -113,6 +109,56 @@ define(function (require, exports, module) {
             done(invalidIndexs.length ? '${path}' +
             (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
             '文件类型不合法' : null);
+        };
+    };
+
+
+    function calSize(size){
+
+    }
+
+
+    // 最小文件容量
+    exports.minSize = function (ruleValue) {
+        return function (files, done) {
+            var invalidIndexs = [];
+            var isMultiple = typeis.array(files);
+
+            if (!isMultiple) {
+                files = [files];
+            }
+
+            dato.each(files, function (index, file) {
+                if (file && file.size && file.size < ruleValue) {
+                    invalidIndexs.push(index + 1);
+                }
+            });
+
+            done(invalidIndexs.length ? '${path}' +
+            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
+            '文件大小不能小于' + number.abbr(ruleValue).toUpperCase() + 'B' : null);
+        };
+    };
+
+    // 最大文件容量
+    exports.maxSize = function (ruleValue) {
+        return function (files, done) {
+            var invalidIndexs = [];
+            var isMultiple = typeis.array(files);
+
+            if (!isMultiple) {
+                files = [files];
+            }
+
+            dato.each(files, function (index, file) {
+                if (file && file.size && file.size > ruleValue) {
+                    invalidIndexs.push(index + 1);
+                }
+            });
+
+            done(invalidIndexs.length ? '${path}' +
+            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
+            '文件大小不能超过' + number.abbr(ruleValue).toUpperCase() + 'B' : null);
         };
     };
 });
