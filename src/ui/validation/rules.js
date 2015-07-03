@@ -37,4 +37,20 @@ define(function (require, exports, module) {
             done(value === this.getData(ruleValue) ? null : '${path}必须与' + this.getAlias(ruleValue) + '相同');
         };
     };
+
+    // 至少个
+    exports.atLeast = function (ruleValue) {
+        return function (value, done) {
+            value = value || [];
+            done(value.length >= ruleValue ? null : '${path}至少需要选择' + ruleValue + '项');
+        };
+    };
+
+    // 最多个
+    exports.atMost = function (ruleValue) {
+        return function (value, done) {
+            value = value || [];
+            done(value.length <= ruleValue ? null : '${path}最多只能选择' + ruleValue + '项');
+        };
+    };
 });
