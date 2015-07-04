@@ -98,6 +98,7 @@ define(function (require, exports, module) {
                     var nextIndex = index + 1;
 
                     the.values[index] = value;
+                    the._cleanValues(index + 1);
                     the.emit('change', index, value);
 
                     if (nextIndex < the._length) {
@@ -195,6 +196,22 @@ define(function (require, exports, module) {
 
 
         /**
+         * 清除当前及后续的值
+         * @param index
+         * @private
+         */
+        _cleanValues: function (index) {
+            var the = this;
+
+            dato.repeat(the._length, function (_index) {
+                if (_index >= index) {
+                    the.values[_index] = '';
+                }
+            });
+        },
+
+
+        /**
          * 渲染 select option
          * @param index
          * @param [list]
@@ -231,11 +248,7 @@ define(function (require, exports, module) {
             });
 
             if (selectedValue && !isFind) {
-                dato.repeat(the._length, function (_index) {
-                    if (_index >= index) {
-                        the.values[_index] = '';
-                    }
-                });
+                the._cleanValues(index);
             }
 
             var $select = the._$selects[index];
