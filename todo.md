@@ -6,4 +6,5 @@
 6、pagination 响应式
 7、datetime-picker 响应式
 8、tooltip 位置 √
-9、howdo 的 try、catch 接口
+9、howdo 的 try、catch 接口 √
+10、多个 select 联动

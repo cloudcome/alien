@@ -266,8 +266,8 @@ define(function (require, exports, module) {
      * @param {String} [options.type=json] 数据类型，默认 json
      * @param {String|Object} [options.query] URL querstring
      * @param {*} [options.body] 请求数据
-     * @param {Boolean} [options.isAsync] 是否异步，默认 true
-     * @param {Boolean} [options.isCache] 是否保留缓存，默认 false
+     * @param {Boolean} [options.async] 是否异步，默认 true
+     * @param {Boolean} [options.cache] 是否保留缓存，默认 false
      * @param {String} [options.username] 请求鉴权用户名
      * @param {String} [options.password] 请求鉴权密码
      * @param {String|null} [options.mimeType=null] 覆盖 MIME
@@ -284,7 +284,7 @@ define(function (require, exports, module) {
     /**
      * ajax GET 请求
      * @param url {String} 请求地址
-     * @param query {String|Object} 请求参数
+     * @param [query] {String|Object} 请求参数
      * @returns {*}
      */
     xhr.get = function (url, query) {

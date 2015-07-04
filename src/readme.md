@@ -1,4 +1,4 @@
-# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.4.6
+# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.5.0
 [![Build Status][travis-img]][travis-url] 
 
 一个为现代浏览器而生的前端解决方案。
@@ -23,7 +23,7 @@
 - 在线主页 <http://alien.ydr.me/>
 - 在线文档 <http://alien.ydr.me/docs/>
 - 在线演示 <http://alien.ydr.me/examples/>
-- 本地演示 使用 <https://www.npmjs.org/package/sts>，根目录执行`sts 18081`即可。
+- 本地演示 使用 <https://www.npmjs.com/package/sts>，根目录执行`sts 18081`即可。
 
 
 # 使用
