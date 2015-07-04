@@ -15,6 +15,10 @@ define(function (require, exports, module) {
     var Linkage = require('../../src/ui/linkage/index.js');
 
     new Linkage('#demo', {
-
+        urls: [
+            './linkage1.json',
+            './linkage2.json',
+            './linkage3.json'
+        ]
     });
 });
