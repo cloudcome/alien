@@ -42,8 +42,11 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
+            the._length = the._options.urls.length;
             the.values = [];
+            the._cache = {};
             the._initNode();
+            the._initEvent();
             // 初始加载第一级
             the.change(0);
         },
@@ -69,8 +72,39 @@ define(function (require, exports, module) {
         },
 
 
-        change: function (index, value) {
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
 
+            // 获取到了列表数据
+            the.on('list', the._renderList);
+        },
+
+
+        /**
+         * 改变级联选择
+         * @param index
+         * @param value
+         */
+        change: function (index, value) {
+            var the = this;
+
+            // index 及之后的 select 重置为空
+            dato.repeat(the._length, function (_index) {
+                if (index < _index) {
+                    return;
+                }
+
+                the.emit('list', _index);
+            });
+
+            the._getData(index);
+
+            return the;
         },
 
 
@@ -91,7 +125,7 @@ define(function (require, exports, module) {
 
             query[options.queryName] = index > 0 ? the.values[index - 1] : '';
             xhr.get(options.urls[index], query).on('success', function (list) {
-                the._renderOption(index, list);
+                the.emit('list', index, list);
             }).on('error', function (err) {
                 the.emit('error', err);
             });
@@ -101,17 +135,19 @@ define(function (require, exports, module) {
         /**
          * 渲染 select option
          * @param index
-         * @param list
+         * @param [list]
          * @returns {string}
          * @private
          */
-        _renderOption: function (index, list) {
+        _renderList: function (index, list) {
             var the = this;
             var options = the._options;
             var selectOptions = '';
 
+            list = list || [];
+
             if (options.placeholder && options.placeholder.text) {
-                list.push(options.placeholder);
+                list.unshift(options.placeholder);
             }
 
             dato.each(list, function (i, item) {
