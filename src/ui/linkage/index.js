@@ -29,6 +29,8 @@ define(function (require, exports, module) {
         valueName: 'value',
         // 请求数据的键名
         queryName: 'parent',
+        // 级联长度
+        length: 3,
         // 获取级联数据的 urls
         // 执行普通的 get 请求
         urls: [],
@@ -46,7 +48,7 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
-            the._length = the._options.urls.length;
+            the._length = the._options.urls.length || the._options.length;
             the.values = [];
             the._cache = {};
             the._initNode();
@@ -98,7 +100,6 @@ define(function (require, exports, module) {
                     var nextIndex = index + 1;
 
                     the.values[index] = value;
-                    the._cleanValues(index + 1);
                     the.emit('change', index, value);
 
                     if (nextIndex < the._length) {
@@ -260,6 +261,7 @@ define(function (require, exports, module) {
                 attribute.prop($select, 'disabled', true);
             }
 
+            event.dispatch($select, 'change');
             the.emit('afterrender', index);
         },
 
