@@ -84,7 +84,7 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
 
             // 获取到了列表数据
             the.on('list', the._renderList);
@@ -99,7 +99,7 @@ define(function (require, exports, module) {
                     the.emit('change', index, value);
 
                     if (nextIndex < the._length) {
-                        the.change(index + 1, value);
+                        the.change(index + 1);
                     }
                 });
             });
@@ -109,9 +109,8 @@ define(function (require, exports, module) {
         /**
          * 改变级联选择
          * @param index
-         * @param value
          */
-        change: function (index, value) {
+        change: function (index) {
             var the = this;
 
             // index 及之后的 select 重置为空
@@ -137,6 +136,13 @@ define(function (require, exports, module) {
         _getData: function (index) {
             var the = this;
             var options = the._options;
+            var value = the.values[index - 1];
+
+            // 未选择时，回到初始状态
+            if (index > 0 && !value) {
+                the.emit('list', index);
+                return;
+            }
 
             if (the.emit('beforedata', index) === false) {
                 return;
@@ -144,7 +150,7 @@ define(function (require, exports, module) {
 
             var query = {};
 
-            query[options.queryName] = index > 0 ? the.values[index - 1] : '';
+            query[options.queryName] = index > 0 ? value : '';
             xhr.get(options.urls[index], query).on('success', function (list) {
                 the.emit('list', index, list);
             }).on('error', function (err) {
@@ -178,7 +184,14 @@ define(function (require, exports, module) {
                 selectOptions += '<option value="' + value + '">' + text + '</option>';
             });
 
-            attribute.html(the._$selects[index], selectOptions);
+            var $select = the._$selects[index];
+
+            if (selectOptions) {
+                attribute.prop($select, 'disabled', false);
+                attribute.html($select, selectOptions);
+            } else {
+                attribute.prop($select, 'disabled', true);
+            }
         }
     });
 
