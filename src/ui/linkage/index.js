@@ -95,7 +95,7 @@ define(function (require, exports, module) {
 
             // index 及之后的 select 重置为空
             dato.repeat(the._length, function (_index) {
-                if (index < _index) {
+                if (_index < index) {
                     return;
                 }
 
