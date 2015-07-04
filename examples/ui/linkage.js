@@ -24,4 +24,8 @@ define(function (require, exports, module) {
     linkage.on('change', function () {
         console.log(this.values);
     });
+
+    linkage.setValues([2, 33, 222]);
+
+    window.linkage = linkage;
 });

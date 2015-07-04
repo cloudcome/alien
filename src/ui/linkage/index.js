@@ -13,6 +13,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var dato = require('../../utils/dato.js');
+    var howdo = require('../../utils/howdo.js');
+    var typeis = require('../../utils/typeis.js');
     var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -109,9 +111,12 @@ define(function (require, exports, module) {
         /**
          * 改变级联选择
          * @param index
+         * @param callback
+         * @returns {Linkage}
          */
-        change: function (index) {
+        change: function (index, callback) {
             var the = this;
+            var cb;
 
             // index 及之后的 select 重置为空
             dato.repeat(the._length, function (_index) {
@@ -119,10 +124,40 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                the.emit('list', _index);
+
+                if (_index > index) {
+                    the.values[_index] = '';
+                    the.emit('list', _index);
+                }
             });
 
             the._getData(index);
+            the.after('render', cb = function (_index) {
+                if (_index === index) {
+                    the.un('afterrender', cb);
+
+                    if (typeis.function(callback)) {
+                        callback.call(the);
+                    }
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 手动设置级联值
+         * @param values {Array} 手动值
+         * @returns {Linkage}
+         */
+        setValues: function (values) {
+            var the = this;
+
+            howdo.each(values, function (index, value, next) {
+                the.values[index] = value + '';
+                the.change(index, next);
+            }).follow();
 
             return the;
         },
@@ -171,18 +206,37 @@ define(function (require, exports, module) {
             var options = the._options;
             var selectOptions = '';
 
+            the.emit('beforerender', index);
             list = list || [];
 
             if (options.placeholder && options.placeholder.text) {
                 list.unshift(options.placeholder);
             }
 
+            var selectedValue = the.values[index];
+            var isFind = false;
+
             dato.each(list, function (i, item) {
                 var text = item[options.textName];
-                var value = item[options.valueName];
+                var value = item[options.valueName] + '';
+                var isSelected = selectedValue === value;
 
-                selectOptions += '<option value="' + value + '">' + text + '</option>';
+                if (isSelected) {
+                    isFind = true;
+                }
+
+                selectOptions += '<option value="' + value + '"' +
+                    (isSelected ? ' selected' : '') +
+                    '>' + text + '</option>';
             });
+
+            if (selectedValue && !isFind) {
+                dato.repeat(the._length, function (_index) {
+                    if (_index >= index) {
+                        the.values[_index] = '';
+                    }
+                });
+            }
 
             var $select = the._$selects[index];
 
@@ -192,6 +246,20 @@ define(function (require, exports, module) {
             } else {
                 attribute.prop($select, 'disabled', true);
             }
+
+            the.emit('afterrender', index);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            dato.repeat(the._length, function (index) {
+                event.un(the._$selects[index], 'change', the._onchange);
+            });
         }
     });
 
