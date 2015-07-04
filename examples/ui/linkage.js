@@ -25,7 +25,7 @@ define(function (require, exports, module) {
         console.log(index, this.values);
     });
 
-    //linkage.setValues([2, 22, 222]);
+    linkage.setValues([2, 22, 222]);
 
     window.linkage = linkage;
 });

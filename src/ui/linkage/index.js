@@ -120,19 +120,6 @@ define(function (require, exports, module) {
             var the = this;
             var cb;
 
-            // index 及之后的 select 重置为空
-            dato.repeat(the._length, function (_index) {
-                if (_index < index) {
-                    return;
-                }
-
-
-                if (_index > index) {
-                    the.values[_index] = '';
-                    the.emit('list', _index);
-                }
-            });
-
             the._getData(index);
             the.after('render', cb = function (_index) {
                 if (_index === index) {
