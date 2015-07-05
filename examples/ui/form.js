@@ -14,9 +14,9 @@ define(function (require, exports, module) {
 
     var Form = require('../../src/ui/form/index.js');
     var alert = require('../../src/widgets/alert.js');
-    //var form = new Form('#form');
-    //
-    //form.on('success', function () {
-    //    alert('验证成功');
-    //});
+    var form = new Form('#form');
+
+    form.on('success', function () {
+        alert('验证成功');
+    });
 });

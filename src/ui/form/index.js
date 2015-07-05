@@ -30,9 +30,11 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
+    var xhr = require('../../core/communication/xhr.js');
     var Validation = require('../validation/index.js');
     var Emitter = require('../../libs/emitter.js');
     var formButtonCanSubmit = false;
+    var win = window;
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -63,7 +65,8 @@ define(function (require, exports, module) {
         // 验证非法时，是否自动聚焦
         invalidAutoFocus: true,
         // 表单输入框验证事件
-        inputValidateEvent: 'input change'
+        inputValidateEvent: 'input change',
+        contentType: 'json'
     };
     var Form = ui.create({
         constructor: function ($form, options) {
@@ -102,13 +105,21 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化节点
+         * @private
+         */
         _initNode: function () {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
 
             if (the._isForm) {
                 the._xhrOptions = {
-                    url: the._$form.action
+                    url: the._$form.action,
+                    headers: {
+                        'content-type': the._$form.enctype
+                    },
+                    method: the._$form.method
                 };
             }
         },
@@ -145,7 +156,6 @@ define(function (require, exports, module) {
 
             var $firstInvalidInput = null;
 
-            Emitter.pipe(the._validation, the);
             the._validation
                 .on('valid', function ($input) {
                     the._setMsg($input);
@@ -157,6 +167,7 @@ define(function (require, exports, module) {
                         $firstInvalidInput = $input;
                     }
                 })
+                .on('success', the._submit.bind(the))
                 .on('error', function () {
                     controller.nextFrame(function () {
                         try {
@@ -166,8 +177,58 @@ define(function (require, exports, module) {
                             // ignore
                         }
                     });
-                })
-                .on('success')
+                });
+        },
+
+
+        /**
+         * 提交数据
+         * @private
+         */
+        _submit: function () {
+            var the = this;
+            var data = the._validation.getData();
+            var body;
+
+            switch (the._xhrOptions.headers['content-type']) {
+                case 'multipart/form-data':
+                    body = new win.FormData();
+                    dato.each(data, function (name, val) {
+                        body.append(name, val);
+                    });
+                    break;
+
+                case 'text/plain':
+                    body = [];
+                    dato.each(data, function (name, val) {
+                        body.push(name + '=' + val);
+                    });
+                    body = body.join('\n');
+                    break;
+
+                //case 'application/x-www-form-urlencoded':
+                default:
+                    body = _urlencode(data);
+            }
+
+            var options = {
+                url: the._xhrOptions.url,
+                method: the._xhrOptions.method.toLowerCase(),
+                headers: the._xhrOptions.headers
+            };
+
+            if (options.method === 'get') {
+                options.query = body;
+            } else {
+                options.body = body;
+            }
+
+            if (the._xhr) {
+                the._xhr.abort();
+            }
+
+            the._xhr = xhr.ajax(options);
+            Emitter.pipe(the._xhr, the);
         },
 
 
@@ -241,21 +302,21 @@ define(function (require, exports, module) {
      * @returns {string}
      * @private
      */
-    function _encode(str){
+    function _encode(str) {
         return encodeURIComponent(str);
     }
 
 
     /**
      * 请求数据 URL 编码
-     * @param body {Object}
+     * @param data {Object}
      * @returns {string}
      * @private
      */
-    function _urlencode(body) {
+    function _urlencode(data) {
         var list = [];
 
-        dato.each(body, function (key, val) {
+        dato.each(data, function (key, val) {
             list.push(_encode(key) + '=' + _encode(val));
         });
 
