@@ -19,23 +19,20 @@ define(function (require, exports, module) {
     var REG_NUMBERIC = /^[\d.]+$/;
 
     module.exports = function (Validation) {
-        Validation.addRule('number', function (val, done) {
-            done(/^\d+$/.test(val) ? null : '${path}必须是数字');
-        });
+        Validation.addRule('type', function (val, done, param0) {
+            switch (param0) {
+                case 'number':
+                    return done(/^\d+$/.test(val) ? null : '${path}必须是数字');
 
+                case 'mobile':
+                    return done(/^1\d{10}$/.test(val) ? null : '${path}必须是手机号');
 
-        Validation.addRule('mobile', function (val, done) {
-            done(/^1\d{10}$/.test(val) ? null : '${path}必须是手机号');
-        });
+                case 'email':
+                    return done(typeis.email(val) ? null : '${path}必须是邮箱');
 
-
-        Validation.addRule('email', function (val, done) {
-            done(typeis.email(val) ? null : '${path}必须是邮箱');
-        });
-
-
-        Validation.addRule('url', function (val, done) {
-            done(typeis.url(val) ? null : '${path}必须是 url 地址');
+                case 'url':
+                    return done(typeis.url(val) ? null : '${path}必须是 url 地址');
+            }
         });
 
 
@@ -47,24 +44,27 @@ define(function (require, exports, module) {
         });
 
 
-        Validation.addRule('minLength', function (val, done, param0) {
-            var isMultiple = _isMultiple(val);
-            var boolean = (isMultiple ? val : (val || '')).length >= param0;
+        var _createLength = function (type) {
+            var typeMap = {
+                0: ['至少需要', '少于'],
+                1: ['最多只能', '超过']
+            };
 
-            done(boolean ? null : '${path}' +
-                (isMultiple ? '至少需要选择' + param0 + '项' : '不能少于' + param0 + '个字符')
-            );
-        });
+            return function (val, done, param0) {
+                param0 = number.parseInt(param0);
 
+                var isMultiple = _isMultiple(val);
+                var length = (isMultiple ? val : (val || '')).length;
+                var boolean = type === 0 ? length >= param0 : length <= param0;
 
-        Validation.addRule('maxLength', function (val, done, param0) {
-            var isMultiple = _isMultiple(val);
-            var boolean = (isMultiple ? val : (val || '')).length >= param0;
+                done(boolean ? null : '${path}' +
+                    (isMultiple ? typeMap[type][0] + '选择' + param0 + '项' : '不能' + typeMap[type][1] + param0 + '个字符')
+                );
+            };
+        };
 
-            done(boolean ? null : '${path}' +
-                (isMultiple ? '最多只能选择' + param0 + '项' : '不能超过' + param0 + '个字符')
-            );
-        });
+        Validation.addRule('minLength', _createLength(0));
+        Validation.addRule('maxLength', _createLength(1));
 
 
         Validation.addRule('equal', function (val, done, param0) {

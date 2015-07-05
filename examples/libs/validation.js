@@ -33,7 +33,7 @@ define(function (require) {
     // 年龄
     v.setAlias('age', '年龄');
     //v.addRule('age', 'timeout');
-    v.addRule('age', 'number');
+    v.addRule('age', 'type', 'number');
     v.addRule('age', function (val, done) {
         setTimeout(function () {
             //done(Date.now() % 2 ? '该${path}不能在此注册' : null);

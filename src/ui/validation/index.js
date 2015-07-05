@@ -289,6 +289,7 @@ define(function (require, exports, module) {
             }
 
             // @todo step
+            // @todo pattern
             //if (!typeis.undefined($item.step)) {
             //    var step = $item.step;
             //
@@ -311,15 +312,18 @@ define(function (require, exports, module) {
 
             validationList.forEach(function (validation) {
                 var validationName = validation.name;
-                var validationVal = validation.value;
+                var validationVals = validation.values;
 
                 if (validationName === 'alias') {
-                    the._validation.setAlias(path, validationVal);
+                    the._validation.setAlias(path, validationVals.join(''));
                     hasAlias = true;
                     return;
                 }
 
-                the._validation.addRule(path, validationName, validationVal);
+                var args = [path, validationName];
+
+                args = args.concat(validationVals);
+                the._validation.addRule.apply(the._validation, args);
             });
 
             if (!hasAlias) {
@@ -334,28 +338,6 @@ define(function (require, exports, module) {
 
             if (!the._validation.getAlias(path)) {
                 the._validation.setAlias(path, $item.placeholder);
-            }
-        },
-
-
-        /**
-         * 获取验证规则
-         * @param ruleName
-         * @param validationVal
-         * @returns {*}
-         * @private
-         */
-        _getRule: function (ruleName, validationVal) {
-            var rule;
-
-            // 1. 当前静态规则
-            if ((rule = validationMap[ruleName])) {
-                return rule.call(this, validationVal);
-            }
-
-            // 2. 库的静态规则
-            if ((rule = Validation.getRule(ruleName))) {
-                return rule;
             }
         },
 
@@ -382,7 +364,7 @@ define(function (require, exports, module) {
 
                 list2.push({
                     name: temp[0].trim(),
-                    value: temp[1] ? temp[1].trim() : true
+                    values: temp[1] ? temp[1].trim().split('|') : true
                 });
             });
 
