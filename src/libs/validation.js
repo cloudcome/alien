@@ -91,10 +91,10 @@ define(function (require, exports, module) {
         /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
-         * @param nameOrFn {String|Function} 验证规则，可以是静态规则，也可以添加规则
+         * @param nameOrfn {String|Function} 验证规则，可以是静态规则，也可以添加规则
          * @returns {Validation}
          */
-        addRule: function (path, nameOrFn/*arguments*/) {
+        addRule: function (path, nameOrfn/*arguments*/) {
             var the = this;
             var args = allocation.args(arguments);
             var params = args.slice(2);
@@ -108,8 +108,8 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.string(nameOrFn)) {
-                var name = nameOrFn;
+            if (typeis.string(nameOrfn)) {
+                var name = nameOrfn;
 
                 if (!validationMap[name]) {
                     throw 'can not found `' + name + '` validation';
@@ -120,11 +120,11 @@ define(function (require, exports, module) {
                     params: params,
                     fn: validationMap[name]
                 });
-            } else if (typeis.function(nameOrFn)) {
+            } else if (typeis.function(nameOrfn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
-                    fn: nameOrFn
+                    fn: nameOrfn
                 });
             }
 

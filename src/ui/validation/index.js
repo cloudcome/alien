@@ -181,11 +181,10 @@ define(function (require, exports, module) {
         /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
-         * @param rule {String|Array|RegExp|Function} 验证规则，可以是静态规则，也可以添加规则
-         * @param [msg] {String} 验证失败消息
+         * @param nameOrfn {String|Function} 验证规则，可以是静态规则，也可以添加规则
          * @returns {ValidationUI}
          */
-        addRule: function (path, rule, msg) {
+        addRule: function (path, nameOrfn/*arguments*/) {
             var the = this;
 
             the._validation.addRule.apply(the._validation, arguments);
