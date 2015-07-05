@@ -40,6 +40,7 @@ define(function (require, exports, module) {
      */
     var validationMap = {};
     var namespace = 'alien-libs-validation';
+    var alienIndex = 0;
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -86,29 +87,13 @@ define(function (require, exports, module) {
         /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
-         * @param rule {String|Array|RegExp|Function} 验证规则，可以是静态规则，也可以添加规则
-         * @param [param] {*} 验证规则值
+         * @param name {String|Function} 验证规则，可以是静态规则，也可以添加规则
          * @returns {Validation}
          */
-        addRule: function (path, rule, param) {
+        addRule: function (path, name/*arguments*/) {
             var the = this;
             var args = allocation.args(arguments);
-
-            if (args.length === 2) {
-                param = true;
-            }
-
-
-            //if (typeis.string(rule)) {
-            //    rule = [rule];
-            //} else if (!typeis.array(rule)) {
-            //    var name = namespace + the._validateIndex++;
-            //    the._validationMap[name] = _fixValidationRule(rule, msg);
-            //    rule = [name];
-            //}
-            //
-
-
+            var params = args.slice(2);
             var index = the._validateIndexMap[path];
 
             if (typeis.undefined(index)) {
@@ -119,10 +104,23 @@ define(function (require, exports, module) {
                 });
             }
 
-            the._validateList[index].rules.push({
-                name: rule,
-                param: param
-            });
+            if (typeis.string(name)) {
+                if (!validationMap[name]) {
+                    throw 'can not found `' + name + '` validation';
+                }
+
+                the._validateList[index].rules.push({
+                    name: name,
+                    params: params,
+                    fn: validationMap[name]
+                });
+            } else if (typeis.function(name)) {
+                the._validateList[index].rules.push({
+                    name: namespace + alienIndex++,
+                    params: params,
+                    fn: name
+                });
+            }
 
             return the;
         },
@@ -313,7 +311,7 @@ define(function (require, exports, module) {
                     }
 
                     the.emit('validate', path, rule.name);
-                    fn.call(the, data[path], rule.param, next);
+                    fn.call(the, data[path], next, rule.param);
                 })
                 .try(function () {
                     /**
@@ -379,15 +377,19 @@ define(function (require, exports, module) {
     /**
      * 注册静态验证规则
      * @param name {String} 规则名称
-     * @param rule {Function|RegExp} 规则回调，如果是异步的话，否则可以直接 return boolean 值
-     * @param [msg] {String} 验证出错的消息，如果 callback 是函数的话，需要在内部传递
+     * @param fn {Function} 规则回调
+     *
+     * @example
+     * Validation.addRule('number', function (val, done, param0, param1, ...) {
+     *    done(/^\d+$/.test(val) ? null : '${path}必须是数字');
+     * });
      */
-    Validation.addRule = function (name, rule, msg) {
+    Validation.addRule = function (name, fn) {
         if (validationMap[name] && DEBUG) {
             console.warn('override `' + name + '` rule');
         }
 
-        validationMap[name] = _fixValidationRule(rule, msg);
+        validationMap[name] = fn;
     };
 
 
@@ -403,7 +405,7 @@ define(function (require, exports, module) {
     Validation.defaults = defaults;
 
     //Validation.addRule('number', /^\d+$/, '${path}必须是数字');
-    Validation.addRule('number', function (val, param, done) {
+    Validation.addRule('number', function (val, done, param) {
         done(/^\d+$/.test(val) ? null : '${path}必须是数字');
     });
 
