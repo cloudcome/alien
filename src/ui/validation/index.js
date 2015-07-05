@@ -84,6 +84,15 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 获取表单元素
+         * @returns {Array|*}
+         */
+        getItems: function () {
+            return this._$items;
+        },
+
+
 
         /**
          * 获取表单数据

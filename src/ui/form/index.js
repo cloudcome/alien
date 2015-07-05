@@ -61,6 +61,7 @@ define(function (require, exports, module) {
             the._isForm = the._$form.tagName === 'FORM';
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
+            the._msgMap = {};
             the._initEvent();
         },
 
@@ -88,9 +89,13 @@ define(function (require, exports, module) {
                 event.on(the._$form, 'click', options.formSubmitSelector, the.submit.bind(the));
             }
 
-            the._validation.on('error', function (err, $input) {
-                the._setMsg($input, err);
-            });
+            the._validation
+                .on('success', function () {
+                    the._setMsg();
+                })
+                .on('error', function (err, $input) {
+                    the._setMsg($input, err);
+                });
         },
 
 
@@ -114,7 +119,18 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var $item = selector.closest($input, options.formItemSelector)[0];
-            var $msg = selector.query(options.formMsgSelector, $item)[0];
+            var $msg = the._msgMap[$input.name];
+
+            if (!$msg) {
+                $msg = selector.query(options.formMsgSelector, $item)[0];
+
+                if (!$msg) {
+                    $msg = modification.create('div');
+                    modification.insert($msg, $item);
+                }
+
+                the._msgMap[$input.name] = $msg;
+            }
 
             if (err) {
                 attribute.removeClass($item, options.formItemSuccessClass);
