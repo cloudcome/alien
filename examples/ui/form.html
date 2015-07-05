@@ -18,12 +18,42 @@
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>form.html</title>
+    <style>
+        *{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .form-item{
+            margin-bottom: 20px;
+        }
+
+        .form-items{
+            padding: 0;
+            list-style: none;
+        }
+
+        input{
+            display: block;
+            width: 100%;
+            padding: 6px 10px;
+            border: 2px solid #ccc;
+        }
+
+        button{
+            padding: 8px 20px;
+            background: #47B;
+            border: 1px solid #3E72B6;
+            color: #FFF;
+        }
+    </style>
 </head>
 <body ontouchstart="">
 
 
-<form action="./form.html" id="form" method="get" enctype="application/x-www-form-urlencoded">
-    <ul>
+<form action="./form.html" id="form" method="get" enctype="application/x-www-form-urlencoded" class="form">
+    <ul class="form-items">
         <li class="form-item">
             <input type="text" name="username" id="username" placeholder="用户名" required/>
         </li>

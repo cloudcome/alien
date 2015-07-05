@@ -6,13 +6,13 @@
 
 
 /*============================================
- <form class="form">
- <ul class="form-list">
- <li class="form-item">
- <input/>
- <p class="form-msg"></p>
- </li>
- ============================================*/
+ = <form class="form">
+ =    <ul class="form-list">
+ =    <li class="form-item">
+ =        <input/>
+ =        <p class="form-msg"></p>
+ =    </li>
+ =============================================*/
 
 
 define(function (require, exports, module) {
@@ -48,8 +48,8 @@ define(function (require, exports, module) {
         // 验证的表单项目选择器
         itemSelector: 'input,select,textarea',
         formItemSelector: '.form-item',
-        formMsgSelector: '.form-msg',
         formSubmitSelector: '.form-submit',
+        formItemMsgClass: 'form-msg',
         formItemSuccessClass: 'has-success',
         formItemErrorClass: 'has-error'
     };
@@ -103,12 +103,10 @@ define(function (require, exports, module) {
             }
 
             the._validation
-                .on('success', function () {
-                    dato.each(the._validation.getItems(), function (index, $input) {
-                        the._setMsg($input);
-                    });
+                .on('valid', function ($input) {
+                    the._setMsg($input);
                 })
-                .on('error', function (err, $input) {
+                .on('invalid', function (err, $input) {
                     the._setMsg($input, err);
                 });
         },
@@ -137,10 +135,12 @@ define(function (require, exports, module) {
             var $msg = the._msgMap[$input.name];
 
             if (!$msg) {
-                $msg = selector.query(options.formMsgSelector, $item)[0];
+                $msg = selector.query('.' + options.formItemMsgClass, $item)[0];
 
                 if (!$msg) {
-                    $msg = modification.create('div');
+                    $msg = modification.create('div', {
+                        class: options.formItemMsgClass
+                    });
                     modification.insert($msg, $item);
                 }
 
