@@ -126,52 +126,9 @@ define(function (require, exports, module) {
         };
     };
 
-    // 最小文件容量
-    exports.minSize = function (ruleValue) {
-        return function (files, done) {
-            var invalidIndexs = [];
-            var isMultiple = _isMultiple(files);
+    exports.minSize = _createFileSize('<');
+    exports.maxSize = _createFileSize('>');
 
-            if (!isMultiple) {
-                files = [files];
-            }
-
-            dato.each(files, function (index, file) {
-                if (file && file.size && file.size < ruleValue) {
-                    invalidIndexs.push(index + 1);
-                }
-            });
-
-            done(invalidIndexs.length ? '${path}' +
-            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
-            '文件大小不能小于' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
-        };
-    };
-
-    // 最大文件容量
-    exports.maxSize = function (ruleValue) {
-        return function (files, done) {
-            var invalidIndexs = [];
-            var isMultiple = _isMultiple(files);
-
-            if (!isMultiple) {
-                files = [files];
-            }
-
-            dato.each(files, function (index, file) {
-                if (file && file.size && file.size > ruleValue) {
-                    invalidIndexs.push(index + 1);
-                }
-            });
-
-            done(invalidIndexs.length ? '${path}的' +
-            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-            '文件大小不能超过' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
-        };
-    };
-
-
-    // 图片的最小宽度
     exports.minWidth = _createImageSizeFn('宽度', '<');
     exports.maxWidth = _createImageSizeFn('宽度', '>');
     exports.minHeight = _createImageSizeFn('高度', '<');
@@ -187,6 +144,52 @@ define(function (require, exports, module) {
      */
     function _isMultiple(obj) {
         return typeis.array(obj) || typeis(obj) === 'filelist';
+    }
+
+
+    /**
+     * 创建资源尺寸匹配规则
+     * @param type
+     * @returns {Function}
+     * @private
+     */
+    function _createFileSize(type) {
+        var map = {
+            '>': '超过',
+            '<': '小于'
+        };
+        return function (ruleValue) {
+            return function (files, done) {
+                var invalidIndexs = [];
+                var isMultiple = _isMultiple(files);
+
+                if (!isMultiple) {
+                    files = [files];
+                }
+
+                dato.each(files, function (index, file) {
+                    switch (map[type]) {
+                        case '>':
+                            if (file.size > ruleValue) {
+                                invalidIndexs.push(index + 1);
+                            }
+
+                            break;
+
+                        case '<':
+                            if (file.size < ruleValue) {
+                                invalidIndexs.push(index + 1);
+                            }
+
+                            break;
+                    }
+                });
+
+                done(invalidIndexs.length ? '${path}的' +
+                (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
+                '文件大小不能' + map[type] + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
+            };
+        };
     }
 
 
@@ -249,13 +252,13 @@ define(function (require, exports, module) {
                         switch (type) {
                             case '<':
                                 if (width < ruleValue) {
-                                    invalidIndexs.push(index);
+                                    invalidIndexs.push(index + 1);
                                 }
                                 break;
 
                             case '>':
                                 if (width > ruleValue) {
-                                    invalidIndexs.push(index);
+                                    invalidIndexs.push(index + 1);
                                 }
                                 break;
                         }
@@ -281,7 +284,7 @@ define(function (require, exports, module) {
                                 part2 = '，';
                             }
 
-                            part2 += '第' + invalidIndexs.join('、') + '个图片' + side + '不能' + map[type] + ruleValue;
+                            part2 += '第' + invalidIndexs.join('、') + '张图片' + side + '不能' + map[type] + ruleValue + '像素';
                         }
                     } else {
                         if (errorIndexs.length) {
@@ -289,7 +292,7 @@ define(function (require, exports, module) {
                         }
 
                         if (invalidIndexs.length) {
-                            part2 = '图片' + side + '不能' + map[type] + ruleValue;
+                            part2 = '图片' + side + '不能' + map[type] + ruleValue + '像素';
                         }
                     }
 
