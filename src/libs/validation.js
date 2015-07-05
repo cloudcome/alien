@@ -50,6 +50,11 @@ define(function (require, exports, module) {
         defaultMsg: '${path}字段不合法'
     };
     var Validation = klass.extends(Emitter).create({
+        /**
+         * constructor
+         * @extends Emitter
+         * @param options
+         */
         constructor: function (options) {
             var the = this;
 

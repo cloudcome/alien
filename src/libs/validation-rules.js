@@ -8,6 +8,8 @@
 define(function (require, exports, module) {
     /**
      * @module libs/validation-rules
+     * @requires utils/typeis
+     * @requires utils/number
      */
 
     'use strict';

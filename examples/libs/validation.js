@@ -2,7 +2,10 @@ define(function (require) {
     'use strict';
 
     var Validation = require('../../src/libs/validation.js');
+    var rules = require('../../src/libs/validation-rules.js');
     var random = require('../../src/utils/random.js');
+
+    rules(Validation);
 
     //Validation.addRule('number', /^\d+$/, '${path}不是数字');
     //Validation.addRule('numerical', function (value) {
