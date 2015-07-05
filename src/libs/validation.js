@@ -25,6 +25,19 @@ define(function (require, exports, module) {
     var howdo = require('../utils/howdo.js');
     var string = require('../utils/string.js');
     var Emitter = require('./emitter.js');
+    /**
+     * @type {{}}
+     * @exmaple
+     * {
+     *     // val 值
+     *     // param 参数值
+     *     // done 验证结束回调
+     *     minLength: function (val, param, done) {
+     *        // done(null); done(null)表示没有错误
+     *        // done('${path}的长度不足${param}字符')
+     *     }
+     * }
+     */
     var validationMap = {};
     var namespace = 'alien-libs-validation';
     var defaults = {
@@ -41,7 +54,7 @@ define(function (require, exports, module) {
 
             the._options = dato.extend({}, defaults, options);
             the._validateList = [];
-            the._validateMap = {};
+            the._validateIndexMap = {};
             the._aliasMap = {};
             the._validationMap = {};
             the._validateIndex = 0;
@@ -74,31 +87,42 @@ define(function (require, exports, module) {
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
          * @param rule {String|Array|RegExp|Function} 验证规则，可以是静态规则，也可以添加规则
-         * @param [msg] {String} 验证失败消息
+         * @param [param] {*} 验证规则值
          * @returns {Validation}
          */
-        addRule: function (path, rule, msg) {
+        addRule: function (path, rule, param) {
             var the = this;
+            var args = allocation.args(arguments);
 
-            if (typeis.string(rule)) {
-                rule = [rule];
-            } else if (!typeis.array(rule)) {
-                var name = namespace + the._validateIndex++;
-                the._validationMap[name] = _fixValidationRule(rule, msg);
-                rule = [name];
+            if (args.length === 2) {
+                param = true;
             }
 
-            var index = the._validateMap[path];
+
+            //if (typeis.string(rule)) {
+            //    rule = [rule];
+            //} else if (!typeis.array(rule)) {
+            //    var name = namespace + the._validateIndex++;
+            //    the._validationMap[name] = _fixValidationRule(rule, msg);
+            //    rule = [name];
+            //}
+            //
+
+
+            var index = the._validateIndexMap[path];
 
             if (typeis.undefined(index)) {
-                the._validateMap[path] = the._validateList.length;
+                the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
-                    rules: rule
+                    rules: []
                 });
-            } else {
-                the._validateList[index].rules = the._validateList[index].rules.concat(rule);
             }
+
+            the._validateList[index].rules.push({
+                name: rule,
+                param: param
+            });
 
             return the;
         },
@@ -227,7 +251,7 @@ define(function (require, exports, module) {
                          * @event error
                          */
                         the.emit('error');
-                    }else{
+                    } else {
                         /**
                          * 验证成功
                          * @event success
