@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 多级数据联动
  * @author ydr.me
  * @create 2015-07-04 23:11
  */
@@ -7,7 +7,17 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/linkage/
+     * @requires utils/dato
+     * @requires utils/howdo
+     * @requires utils/typeis
+     * @requires utils/controller
+     * @requires ui/
+     * @requires core/dom/selector
+     * @requires core/dom/modification
+     * @requires core/dom/attribute
+     * @requires core/event/base
+     * @requires core/communication/xhr
      */
 
     'use strict';
