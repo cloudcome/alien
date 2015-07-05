@@ -31,6 +31,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../validation/index.js');
+    var Emitter = require('../../libs/emitter.js');
     var formButtonCanSubmit = false;
     var defaults = {
         // true: 返回单个错误对象
@@ -121,8 +122,8 @@ define(function (require, exports, module) {
 
             var $firstInvalidInput = null;
 
+            Emitter.pipe(the._validation, the);
             the._validation
-                .pipe(the)
                 .on('valid', function ($input) {
                     the._setMsg($input);
                 })

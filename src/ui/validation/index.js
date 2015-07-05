@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
+    var Emitter = require('../../libs/emitter.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
@@ -73,7 +74,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._validation = new Validation(the._options);
-            the._validation.pipe(the, ['!valid', '!invalid']);
+            Emitter.pipe(the._validation, the, ['!valid', '!invalid']);
             the._validation
                 .on('valid', function (path) {
                     the.emit('valid', the._pathMap[path]);

@@ -40,67 +40,69 @@ define(function (require, exports, module) {
     };
 
 
-    var Upload = klass.create(function (options) {
-        var the = this;
+    var Upload = klass.extends(Emitter).create({
+        constructor: function (options) {
+            var the = this;
 
-        options = dato.extend(true, {}, defaults, options);
+            options = dato.extend(true, {}, defaults, options);
 
-        if (!options.file) {
-            throw new Error('require param `file`');
-        }
+            if (!options.file) {
+                throw new Error('require param `file`');
+            }
 
-        var fileType = typeis(options.file);
-        var files;
-        var fd = new FormData();
-        var name = options.blobName;
-        var hasFile = false;
+            var fileType = typeis(options.file);
+            var files;
+            var fd = new FormData();
+            var name = options.blobName;
+            var hasFile = false;
 
-        switch (fileType) {
-            case 'element':
-                if (options.file.tagName !== 'INPUT' || options.file.type !== 'file') {
-                    throw new Error('element tag must be a input file');
-                }
-
-                name = options.file.name;
-                files = options.file.files || [];
-
-                if (files.length === 1) {
-                    if(options.filter(files[0])){
-                        fd.append(name, files[0]);
-                        hasFile = true;
+            switch (fileType) {
+                case 'element':
+                    if (options.file.tagName !== 'INPUT' || options.file.type !== 'file') {
+                        throw new Error('element tag must be a input file');
                     }
-                } else {
-                    dato.each(options.file.files, function (index, file) {
+
+                    name = options.file.name;
+                    files = options.file.files || [];
+
+                    if (files.length === 1) {
                         if(options.filter(files[0])){
-                            fd.append(name + '[]', file);
+                            fd.append(name, files[0]);
                             hasFile = true;
                         }
-                    });
-                }
+                    } else {
+                        dato.each(options.file.files, function (index, file) {
+                            if(options.filter(files[0])){
+                                fd.append(name + '[]', file);
+                                hasFile = true;
+                            }
+                        });
+                    }
 
-                if(!hasFile){
-                    return the.emit('error', new Error('no files can be upload'));
-                }
+                    if(!hasFile){
+                        return the.emit('error', new Error('no files can be upload'));
+                    }
 
-                break;
+                    break;
 
-            case 'blob':
-                if (!options.blobName) {
-                    throw new Error('require param `blobName`');
-                }
+                case 'blob':
+                    if (!options.blobName) {
+                        throw new Error('require param `blobName`');
+                    }
 
-                fd.append(name, options.file);
-                break;
+                    fd.append(name, options.file);
+                    break;
+            }
+
+            dato.each(options.body, function (key, val) {
+                fd.append(key, val);
+            });
+
+            options.body = fd;
+
+            Emitter.pipe(xhr, the);
         }
-
-        dato.each(options.body, function (key, val) {
-            fd.append(key, val);
-        });
-
-        options.body = fd;
-
-        xhr(options).pipe(the);
-    }, Emitter);
+    });
 
     module.exports = function(options){
         return new Upload(options);

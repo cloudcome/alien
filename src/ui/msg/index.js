@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/typeis
      * @requires libs/template
+     * @requires libs/emitter
      * @requires core/dom/selector
      * @requires core/dom/attribute
      * @requires core/dom/modification
@@ -29,6 +30,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var Template = require('../../libs/template.js');
+    var Emitter = require('../../libs/emitter.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -193,7 +195,7 @@ define(function (require, exports, module) {
             });
 
             // 传递部分 window 事件到 msg
-            the._window.pipe(the, ['!open', '!close']);
+            Emitter.pipe(the._window, the, ['!open', '!close']);
         },
 
 

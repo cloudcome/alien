@@ -19,6 +19,7 @@ define(function (require, exports, module) {
      * @requires core/dom/animation
      * @requires core/event/drag
      * @requires libs/template
+     * @requires libs/emitter
      * @requires ui/
      */
     'use strict';
@@ -36,6 +37,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/drag.js');
     require('../../core/event/touch.js');
     var Template = require('../../libs/template.js');
+    var Emitter = require('../../libs/emitter.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var tpl = new Template(template);
@@ -200,7 +202,7 @@ define(function (require, exports, module) {
             });
 
             // window 对象事件传递到 dialog
-            the._window.pipe(the);
+            Emitter.pipe(the._window, the);
         },
 
 
