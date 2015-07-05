@@ -292,16 +292,9 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'pattern', $item.pattern);
             }
 
-            // @todo step
-            //if (!typeis.undefined($item.step)) {
-            //    var step = $item.step;
-            //
-            //    if(typeis.undefined($item.min)){
-            //        throw 'the `min` attribute of element is not found';
-            //    }
-            //
-            //    //the._validation.addRule(path, the._getRule('step', $item.step));
-            //}
+            if ($item.step !== '' && !typeis.empty($item.step)) {
+                the._validation.addRule(path, 'step', $item.step);
+            }
 
             switch (type) {
                 case 'number':

@@ -73,29 +73,49 @@ define(function (require, exports, module) {
         });
 
 
-        Validation.addRule('min', function (val, done, param0) {
+        var _createNumber = function (type) {
+            var map = {
+                0: '小于',
+                1: '大于'
+            };
+
+            return function (val, done, param0) {
+                val = val || '';
+
+                if (!REG_NUMBERIC.test(val)) {
+                    return done('${path}必须为数值格式');
+                }
+
+                val = number.parseFloat(val);
+                param0 = number.parseFloat(param0);
+
+                var boolean = type === 0 ? val >= param0 : val <= param0;
+
+                done(boolean ? null : '${path}不能' + map[type] + param0);
+            };
+        };
+
+        Validation.addRule('min', _createNumber(0));
+        Validation.addRule('max', _createNumber(1));
+
+
+        Validation.addRule('step', function (val, done, param0) {
             val = val || '';
 
             if (!REG_NUMBERIC.test(val)) {
                 return done('${path}必须为数值格式');
             }
 
-            val = number.parseFloat(val);
-            param0 = number.parseFloat(param0);
-            done(val >= param0 ? null : '${path}不能小于' + param0);
-        });
+            var min = this.getRuleParams(this.path, 'min')[0];
 
+            val = number.parseInt(val, 0);
+            param0 = number.parseInt(param0, 0);
 
-        Validation.addRule('max', function (val, done, param0) {
-            val = val || '';
-
-            if (!REG_NUMBERIC.test(val)) {
-                return done('${path}必须为数值格式');
+            if (!param0) {
+                return done(null);
             }
 
-            val = number.parseFloat(val);
-            param0 = number.parseFloat(param0);
-            done(val <= param0 ? null : '${path}不能大于' + param0);
+            done((val - min) % param0 ? '${path}递增步进值必须是' + param0 + '，最小值为' + min : null);
         });
     };
 

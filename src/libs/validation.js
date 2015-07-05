@@ -159,6 +159,28 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取字段验证规则的参数
+         * @param path
+         * @param name
+         * @returns {*|Array}}
+         */
+        getRuleParams: function (path, name) {
+            var the = this;
+            var rules = the.getRules(path);
+            var rule;
+
+            dato.each(rules, function (index, _rule) {
+                if (_rule.name === name) {
+                    rule = _rule;
+                    return false;
+                }
+            });
+
+            return rule && rule.params;
+        },
+
+
+        /**
          * 返回待验证的数据
          * @param [path] {String} 字段
          * @returns {*}
@@ -319,6 +341,7 @@ define(function (require, exports, module) {
 
                     the.emit('validate', path, rule.name);
                     args = args.concat(rule.params);
+                    the.path = path;
                     rule.fn.apply(the, args);
                 })
                 .try(function () {
