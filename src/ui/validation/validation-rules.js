@@ -48,6 +48,15 @@ define(function (require, exports, module) {
         });
 
 
+        Validation.addRule('pattern', function (val, done, param0) {
+            val = val || '';
+
+            var reg = new RegExp(param0);
+
+            done(reg.test(val) ? null : '${path}不符合规则');
+        });
+
+
         /**
          * 创建资源尺寸匹配规则
          * @param type

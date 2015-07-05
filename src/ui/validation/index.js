@@ -288,8 +288,11 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'accept', $item.accept);
             }
 
+            if ($item.pattern !== '' && !typeis.empty($item.pattern)) {
+                the._validation.addRule(path, 'pattern', $item.pattern);
+            }
+
             // @todo step
-            // @todo pattern
             //if (!typeis.undefined($item.step)) {
             //    var step = $item.step;
             //
