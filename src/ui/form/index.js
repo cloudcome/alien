@@ -67,6 +67,19 @@ define(function (require, exports, module) {
 
 
         /**
+         * 更新表单信息
+         * @returns {Form}
+         */
+        update: function () {
+            var the = this;
+
+            the._validation.update();
+
+            return the;
+        },
+
+
+        /**
          * 初始化事件
          * @private
          */
@@ -91,7 +104,9 @@ define(function (require, exports, module) {
 
             the._validation
                 .on('success', function () {
-                    the._setMsg();
+                    dato.each(the._validation.getItems(), function (index, $input) {
+                        the._setMsg($input);
+                    });
                 })
                 .on('error', function (err, $input) {
                     the._setMsg($input, err);

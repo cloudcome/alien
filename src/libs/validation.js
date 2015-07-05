@@ -216,24 +216,23 @@ define(function (require, exports, module) {
                 .try(function () {
                     /**
                      * 验证成功
-                     * @event success
-                     * @param path {String} 字段
+                     * @event valid
                      */
-                    the.emit('success', path);
+                    the.emit('valid');
                 })
                 .catch(function (err) {
-                    err = new Error(string.assign(err || options.defaultMsg, {
-                        path: the._aliasMap[path] || path
-                    }));
-
                     if (options.breakOnInvalid) {
+                        err = new Error(string.assign(err || options.defaultMsg, {
+                            path: the._aliasMap[path] || path
+                        }));
+
                         /**
                          * 验证失败
-                         * @event error
+                         * @event invalid
                          * @param error {Object} 错误对象
                          * @param path {String} 字段
                          */
-                        the.emit('error', err, path);
+                        the.emit('invalid', err, path);
                     }
                 });
 
@@ -276,18 +275,40 @@ define(function (require, exports, module) {
                     the.emit('validate', path, ruleName);
                     rule.call(the, data[path], next);
                 })
+                .try(function () {
+                    /**
+                     * 验证成功
+                     * @event valid
+                     * @param path {String} 字段
+                     */
+                    the.emit('valid', path);
+
+                    if (typeis.function(callback)) {
+                        callback.apply(the);
+                    }
+                })
                 .catch(function (err) {
-                    if (!options.breakOnInvalid) {
+                    // 验证失败即断开
+                    if (options.breakOnInvalid) {
+                        if (typeis.function(callback)) {
+                            callback.apply(the, err);
+                        }
+                    }else{
                         err = new Error(string.assign(err || options.defaultMsg, {
                             path: the._aliasMap[path] || path
                         }));
+
                         /**
                          * 验证失败
-                         * @event error
+                         * @event invalid
                          * @param error {Object} 错误对象
                          * @param path {String} 字段
                          */
-                        the.emit('error', err, path);
+                        the.emit('invalid', err, path);
+
+                        if (typeis.function(callback)) {
+                            callback.apply(the);
+                        }
                     }
                 })
                 .follow(function () {
@@ -297,10 +318,6 @@ define(function (require, exports, module) {
                      * @param path {String} 字段
                      */
                     the.emit('aftervalidate', path);
-
-                    if (typeis.function(callback)) {
-                        callback.apply(the, arguments);
-                    }
                 });
         }
     });

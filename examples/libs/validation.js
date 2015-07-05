@@ -19,11 +19,11 @@ define(function (require) {
     var v = new Validation();
 
     var callback = function (path, ruleName) {
-        console.log('alienEmitter =>', this.alienEmitter.type, path ? path : '', ruleName ? ruleName : '');
+        console.log('alienEmitter =>', this.alienEmitter.type, path ? (path.message ? path.message : path) : '', ruleName ? ruleName : '');
     };
 
     v.before('validate', callback);
-    v.on('validate error success complete', callback);
+    v.on('validate invalid valid success erorr', callback);
     v.after('validate', callback);
 
     // 姓名
@@ -53,10 +53,10 @@ define(function (require) {
         age: 12
     });
 
-    // 验证
-    v.validateOne({
-        name: 'yundanran'
-    });
+    //// 验证
+    //v.validateOne({
+    //    name: 'yundanran'
+    //});
 
     //console.log(v.getRules('name'));
 });
