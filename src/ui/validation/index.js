@@ -17,6 +17,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
+    require('../../libs/validation-rules.js')(Validation);
     var Emitter = require('../../libs/emitter.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
@@ -272,19 +273,19 @@ define(function (require, exports, module) {
             // required => type => minLength => maxLength => pattern => data
 
             if ($item.required) {
-                the._validation.addRule(path, the._getRule('required'));
+                the._validation.addRule(path, 'required');
             }
 
             if ($item.min !== '' && !typeis.empty($item.min)) {
-                the._validation.addRule(path, the._getRule('min', $item.min));
+                the._validation.addRule(path, 'min', $item.min);
             }
 
             if ($item.max !== '' && !typeis.empty($item.max)) {
-                the._validation.addRule(path, the._getRule('max', $item.max));
+                the._validation.addRule(path, 'max', $item.max);
             }
 
             if ($item.accept !== '' && !typeis.empty($item.accept)) {
-                the._validation.addRule(path, the._getRule('accept', $item.accept));
+                the._validation.addRule(path, 'accept', $item.accept);
             }
 
             // @todo step
@@ -318,18 +319,7 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if (validationName === 'type') {
-                    the._validation.addRule(path, validationVal);
-                    return;
-                }
-
-                var rule;
-
-                if ((rule = the._getRule(validationName, validationVal))) {
-                    return the._validation.addRule(path, rule);
-                }
-
-                throw '`' + validationName + '` is not found';
+                the._validation.addRule(path, validationName, validationVal);
             });
 
             if (!hasAlias) {
@@ -413,7 +403,6 @@ define(function (require, exports, module) {
         validationMap[ruleName] = fn;
     };
 
-    dato.each(require('./rules.js'), ValidationUI.addRule);
     ValidationUI.defaults = defaults;
     module.exports = ValidationUI;
 });
