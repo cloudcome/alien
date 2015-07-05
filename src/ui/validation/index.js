@@ -49,7 +49,7 @@ define(function (require, exports, module) {
         // data 规则等于符
         dataEqual: ':',
         // 验证的表单项目选择器
-        itemSelector: 'input,select,textarea'
+        inputSelector: 'input,select,textarea'
     };
     //var typeRegExpMap = {
     //    number: /^\d+$/,
@@ -89,15 +89,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取表单元素
-         * @returns {Array|*}
-         */
-        getItems: function () {
-            return this._$items;
-        },
-
-
-        /**
          * 获取表单数据
          * @param [$ele] {Object} 指定元素
          * @returns {{}}
@@ -105,8 +96,7 @@ define(function (require, exports, module) {
         getData: function ($ele) {
             var the = this;
             var data = {};
-
-            var list = $ele ? [$ele] : the._$items;
+            var list = $ele ? [$ele] : the._$inputs;
 
             dato.each(list, function (i, $item) {
                 var path = $item.name;
@@ -237,8 +227,8 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._items = [];
-            the._$items = selector.query(options.itemSelector, the._$form);
-            dato.each(the._$items, function (i, $item) {
+            the._$inputs = selector.query(options.inputSelector, the._$form);
+            dato.each(the._$inputs, function (i, $item) {
                 var name = $item.name;
 
                 if (!the._pathMap[name]) {

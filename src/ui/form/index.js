@@ -46,12 +46,13 @@ define(function (require, exports, module) {
         // data 规则等于符
         dataEqual: ':',
         // 验证的表单项目选择器
-        itemSelector: 'input,select,textarea',
+        inputSelector: 'input,select,textarea',
         formItemSelector: '.form-item',
         formSubmitSelector: '.form-submit',
         formItemMsgClass: 'form-msg',
         formItemSuccessClass: 'has-success',
-        formItemErrorClass: 'has-error'
+        formItemErrorClass: 'has-error',
+        form: ''
     };
     var Form = ui.create({
         constructor: function ($form, options) {
