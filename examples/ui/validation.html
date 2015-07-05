@@ -35,8 +35,6 @@
 <body ontouchstart="">
 
 
-<button id="dispatch">触发提交</button>
-
 <ul id="form">
     <li>
         <label for="username">用户名</label>：<input name="username" type="text" required id="username" data-validation="minLength:3,maxLength:5"/>
@@ -96,11 +94,11 @@
     </li>
     <li>
         <label for="file">头像</label>
-        <input type="file" name="file" id="file" data-validation="required,accept:image/*,minSize:10,maxSize:20000"/>
+        <input type="file" name="file" id="file" data-validation="required,accept:image/*,minSize:10,maxSize:50000,minWidth:100,maxWidth:600,minHeight:100,maxHeight:600"/>
     </li>
     <li>
         <label for="file2">相册</label>
-        <input type="file" name="file2" id="file2" multiple data-validation="required,accept:image/*,minSize:10,maxSize:20000"/>
+        <input type="file" name="file2" id="file2" multiple data-validation="required,accept:image/*,minSize:10,maxSize:50000,minWidth:100,maxWidth:600,minHeight:100,maxHeight:600"/>
     </li>
     <li>
         <button class="form-submit" id="submit">提交</button>

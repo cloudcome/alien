@@ -21,15 +21,15 @@ define(function (require, exports, module) {
     }, '${path}怎么能小于20呢，呵呵，这个是实例脚本加进去的自定义验证');
 
     validation.on('error', function (err, $input) {
-        alert(err);
+        alert($input.name + ':' + err.message);
     });
 
     validation.on('success', function () {
+        alert(JSON.stringify(this.getData()));
         alert('验证通过');
-        console.log(this.getData());
     });
 
-    document.getElementById('dispatch').onclick = function () {
-        validation.submit();
+    document.getElementById('submit').onclick = function () {
+        validation.validate();
     };
 });

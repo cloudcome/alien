@@ -40,7 +40,7 @@ define(function (require, exports, module) {
         // false: 返回错误对象组成的数组
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
-        isBreakOnInvalid: typeis.window(window) ? false : true,
+        breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${path}字段不合法',
         // 规则的 data 属性
         dataAttribute: 'validation',
@@ -49,11 +49,7 @@ define(function (require, exports, module) {
         // data 规则等于符
         dataEqual: ':',
         // 验证的表单项目选择器
-        itemSelector: 'input,select,textarea',
-        // 提交按钮
-        submitSelector: '.form-submit',
-        // 验证事件
-        event: 'focusout change'
+        itemSelector: 'input,select,textarea'
     };
     //var typeRegExpMap = {
     //    number: /^\d+$/,
@@ -67,7 +63,6 @@ define(function (require, exports, module) {
             the._$form = selector.query($form)[0];
             the._pathMap = {};
             the.update();
-            the._initEvent();
         },
 
 
@@ -78,7 +73,6 @@ define(function (require, exports, module) {
         update: function () {
             var the = this;
 
-            the._$submit = selector.query(the._options.submitSelector, the._$form)[0];
             the._validation = new Validation(the._options);
             the._validation.pipe(the, ['!error']);
             the._validation.on('error', function (err, path) {
@@ -90,32 +84,19 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 触发提交表单
-         * @returns {ValidationUI}
-         */
-        submit: function () {
-            var the = this;
-
-            if (!the._$submit) {
-                throw 'submit button is not found';
-            }
-
-            event.dispatch(the._$submit, 'click');
-
-            return the;
-        },
-
 
         /**
          * 获取表单数据
+         * @param [$ele] {Object} 指定元素
          * @returns {{}}
          */
-        getData: function () {
+        getData: function ($ele) {
             var the = this;
             var data = {};
 
-            dato.each(the._$items, function (i, $item) {
+            var list = $ele ? [$ele] : the._$items;
+
+            dato.each(list, function (i, $item) {
                 var path = $item.name;
                 var type = the._getType($item);
                 var val = $item.value;
@@ -196,6 +177,33 @@ define(function (require, exports, module) {
 
 
         /**
+         * 单独验证某个输入对象
+         * @param [$ele] {Object} 输入对象，如果为空则验证全部
+         * @returns {ValidationUI}
+         */
+        validate: function ($ele) {
+            var the = this;
+            var data = the.getData($ele);
+
+            if ($ele) {
+                the._validation.validateOne(data);
+            } else {
+                the._validation.validateAll(data);
+            }
+
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            //
+        },
+
+
+        /**
          * 获取元素类型
          * @param $item
          * @returns {String}
@@ -205,22 +213,6 @@ define(function (require, exports, module) {
             var tagName = $item.tagName.toLowerCase();
 
             return tagNameMap[tagName] ? tagName : $item.type;
-        },
-
-
-        /**
-         * 初始化事件
-         * @private
-         */
-        _initEvent: function () {
-            var the = this;
-            var options = the._options;
-
-            event.on(the._$form, 'click', options.submitSelector, the._onsubmit = function () {
-                var data = the.getData();
-
-                the._validation.validateAll(data);
-            });
         },
 
 

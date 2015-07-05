@@ -16,7 +16,12 @@ define(function (require, exports, module) {
     var number = require('../../utils/number.js');
     var string = require('../../utils/string.js');
     var dato = require('../../utils/dato.js');
+    var howdo = require('../../utils/howdo.js');
+    var compatible = require('../../core/navigator/compatible.js');
+    var win = window;
+    var URL = compatible.html5('URL', win);
     var REG_NUMBERIC = /^[\d.]+$/;
+
 
     // 必填
     exports.required = function () {
@@ -159,11 +164,21 @@ define(function (require, exports, module) {
                 }
             });
 
-            done(invalidIndexs.length ? '${path}' +
-            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
+            done(invalidIndexs.length ? '${path}的' +
+            (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
             '文件大小不能超过' + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
         };
     };
+
+
+    // 图片的最小宽度
+    exports.minWidth = _createImageSizeFn('宽度', '<');
+    exports.maxWidth = _createImageSizeFn('宽度', '>');
+    exports.minHeight = _createImageSizeFn('高度', '<');
+    exports.maxHeight = _createImageSizeFn('高度', '>');
+
+    // ====================================================================================
+
 
     /**
      * 判断是否为多值类型
@@ -172,5 +187,115 @@ define(function (require, exports, module) {
      */
     function _isMultiple(obj) {
         return typeis.array(obj) || typeis(obj) === 'filelist';
+    }
+
+
+    /**
+     * 获取图片尺寸
+     * @param file
+     * @param callback
+     * @returns {*}
+     */
+    function _getImageSize(file, callback) {
+        var img = new Image();
+        var url = win[URL].createObjectURL(file);
+
+        if (img.complete) {
+            return callback(null, img);
+        }
+
+        img.onload = function () {
+            callback(null, img);
+        };
+        img.onerror = callback;
+        img.src = url;
+    }
+
+
+    /**
+     * 生成图片尺寸判断 fn
+     * @param side
+     * @param type
+     * @returns {Function}
+     * @private
+     */
+    function _createImageSizeFn(side, type) {
+        return function (ruleValue) {
+            return function (files, done) {
+                var errorIndexs = [];
+                var invalidIndexs = [];
+                var isMultiple = _isMultiple(files);
+
+                if (isMultiple) {
+                    files = dato.toArray(files);
+                } else {
+                    files = [files];
+                }
+
+                var map = {
+                    '<': '小于',
+                    '>': '大于'
+                };
+
+                howdo.each(files, function (index, file, done) {
+                    _getImageSize(file, function (err, img) {
+                        if (err) {
+                            errorIndexs.push(index);
+                            return done(err);
+                        }
+
+                        var width = img.width;
+
+                        switch (type) {
+                            case '<':
+                                if (width < ruleValue) {
+                                    invalidIndexs.push(index);
+                                }
+                                break;
+
+                            case '>':
+                                if (width > ruleValue) {
+                                    invalidIndexs.push(index);
+                                }
+                                break;
+                        }
+
+                        done();
+                    });
+                }).together(function () {
+                    if (!errorIndexs.length && !invalidIndexs.length) {
+                        return done(null);
+                    }
+
+                    var msg = '${path}的';
+                    var part1 = '';
+                    var part2 = '';
+
+                    if (isMultiple) {
+                        if (errorIndexs.length) {
+                            part1 = '第' + errorIndexs.join('、') + '个文件不是图片类型';
+                        }
+
+                        if (invalidIndexs.length) {
+                            if (part1) {
+                                part2 = '，';
+                            }
+
+                            part2 += '第' + invalidIndexs.join('、') + '个图片' + side + '不能' + map[type] + ruleValue;
+                        }
+                    } else {
+                        if (errorIndexs.length) {
+                            part1 = '文件不是图片类型';
+                        }
+
+                        if (invalidIndexs.length) {
+                            part2 = '图片' + side + '不能' + map[type] + ruleValue;
+                        }
+                    }
+
+                    done(msg + part1 + part2);
+                });
+            };
+        };
     }
 });
