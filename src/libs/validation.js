@@ -32,9 +32,9 @@ define(function (require, exports, module) {
      *     // val 值
      *     // param 参数值
      *     // done 验证结束回调
-     *     minLength: function (val, param, done) {
+     *     minLength: function (val, done, param0, param1, ...) {
      *        // done(null); done(null)表示没有错误
-     *        // done('${path}的长度不足${param}字符')
+     *        // done('${path}的长度不足${0}字符')
      *     }
      * }
      */
@@ -400,61 +400,7 @@ define(function (require, exports, module) {
         return name ? validationMap[name] : validationMap;
     };
 
+
     Validation.defaults = defaults;
-
-    Validation.addRule('number', function (val, done) {
-        done(/^\d+$/.test(val) ? null : '${path}必须是数字');
-    });
-
-    Validation.addRule('mobile', function (val, done) {
-        done(/^1\d{10}$/.test(val) ? null : '${path}必须是手机号');
-    });
-
-    Validation.addRule('email', function (val, done) {
-        done(typeis.email(val) ? null : '${path}必须是邮箱');
-    });
-
-    Validation.addRule('url', function (val, done) {
-        done(typeis.url(val) ? null : '${path}必须是 url 地址');
-    });
-
     module.exports = Validation;
-
-
-    /**
-     * 修正验证规则
-     * @param rule {RegExp|Function} 验证规则
-     * @param [msg] {String} 验证失败消息
-     * @returns {Function} 合法的验证规则
-     * @private
-     */
-    function _fixValidationRule(rule, msg) {
-        var callback;
-
-        // 布尔值
-        if (typeis.regexp(rule)) {
-            callback = function (value, done) {
-                if (typeis.empty(value)) {
-                    return done(msg);
-                }
-
-                done(rule.test(value) ? null : msg);
-            };
-        } else if (typeis.function(rule)) {
-            // 同步的
-            if (rule.length === 1) {
-                callback = function (value, done) {
-                    if (typeis.empty(value)) {
-                        return done(msg);
-                    }
-
-                    done(rule(value) ? null : msg);
-                };
-            } else {
-                callback = rule;
-            }
-        }
-
-        return callback;
-    }
 });

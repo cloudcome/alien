@@ -44,6 +44,7 @@ define(function (require) {
     v.setAlias('age', '年龄');
     //v.addRule('age', 'timeout');
     v.addRule('age', 'number');
+    v.addRule('age', 'mobile');
     //v.addRule('age', 'numerical');
     //v.addRule('age', 'timeout');
 
