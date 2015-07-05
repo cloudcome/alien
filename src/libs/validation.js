@@ -134,11 +134,16 @@ define(function (require, exports, module) {
 
         /**
          * 获取字段的规则
-         * @param path {String}
+         * @param [path] {String} 字段
          * @returns {Array}
          */
         getRules: function (path) {
             var the = this;
+
+            if (!path) {
+                return the._validateList;
+            }
+
             var rules = [];
 
             dato.each(the._validateList, function (i, validate) {
