@@ -51,12 +51,18 @@ define(function (require, exports, module) {
          */
         on: function (eventType, listener) {
             var the = this;
+            var args = allocation.args(arguments);
+
+            if (args.length === 1) {
+                listener = args[0];
+                eventType = null;
+            }
 
             if (!typeis.function(listener)) {
                 return the;
             }
 
-            if (arguments.length === 1) {
+            if (!eventType) {
                 the._emitterCallbacks.push(listener);
                 return the;
             }
@@ -155,19 +161,19 @@ define(function (require, exports, module) {
             var ret = true;
 
             _middleware(eventType, function (et) {
+                var time = Date.now();
+
+                dato.each(the._emitterCallbacks, function (index, callback) {
+                    the.alienEmitter = {
+                        type: et,
+                        timestamp: time,
+                        id: alienId++
+                    };
+
+                    callback.apply(the, emitArgs);
+                });
+
                 if (the._emitterListener[et]) {
-                    var time = Date.now();
-
-                    dato.each(the._emitterCallbacks, function (index, callback) {
-                        the.alienEmitter = {
-                            type: et,
-                            timestamp: time,
-                            id: alienId++
-                        };
-
-                        callback.apply(the, emitArgs);
-                    });
-
                     dato.each(the._emitterListener[et], function (index, listener) {
                         the.alienEmitter = {
                             type: et,
