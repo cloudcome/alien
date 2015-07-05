@@ -18,5 +18,7 @@ define(function (require, exports, module) {
 
     form.on('success', function () {
         alert('验证成功');
+    }).on('error', function (err) {
+        alert(err);
     });
 });

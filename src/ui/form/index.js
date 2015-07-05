@@ -158,6 +158,10 @@ define(function (require, exports, module) {
 
             the._validation
                 .on('valid', function ($input) {
+                    if($input === $firstInvalidInput){
+                        $firstInvalidInput = null;
+                    }
+
                     the._setMsg($input);
                 })
                 .on('invalid', function (err, $input) {
