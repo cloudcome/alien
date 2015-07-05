@@ -58,7 +58,6 @@ define(function (require, exports, module) {
             the._validateIndexMap = {};
             the._aliasMap = {};
             the._validationMap = {};
-            the._validateIndex = 0;
         },
 
 
@@ -304,14 +303,11 @@ define(function (require, exports, module) {
             howdo
                 // 遍历验证规则
                 .each(rules, function (j, rule, next) {
-                    var fn = the._validationMap[rule.name] || validationMap[rule.name];
-
-                    if (!fn) {
-                        throw 'rule `' + rule.name + '` is not found';
-                    }
+                    var args = [data[path], next];
 
                     the.emit('validate', path, rule.name);
-                    fn.call(the, data[path], next, rule.param);
+                    args = args.concat(rule.params);
+                    rule.fn.apply(the, args);
                 })
                 .try(function () {
                     /**
