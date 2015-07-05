@@ -90,13 +90,27 @@ define(function (require, exports, module) {
 
         /**
          * 获取表单数据
-         * @param [$ele] {Object} 指定元素
+         * @param [$input] {Object} 指定元素
          * @returns {{}}
          */
-        getData: function ($ele) {
+        getData: function ($input) {
             var the = this;
             var data = {};
-            var list = $ele ? [$ele] : the._$inputs;
+            var list = $input ? [] : the._$inputs;
+
+            if ($input) {
+                var inputType = the._getType($input);
+
+                switch (inputType) {
+                    case 'checkbox':
+                    case 'radio':
+                        list = selector.query('input[name="' + $input.name + '"]', the._$form);
+                        break;
+
+                    default :
+                        list = [$input];
+                }
+            }
 
             dato.each(list, function (i, $item) {
                 var path = $item.name;
