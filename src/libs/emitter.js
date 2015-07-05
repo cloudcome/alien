@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var alienId = 0;
 
 
-    module.exports = klass.create({
+    var Emitter = klass.create({
         /**
          * @constructor Emitter
          * @type {Function}
@@ -33,17 +33,17 @@ define(function (require, exports, module) {
 
             // 监听的事件 map
             the._emitterListener = {};
+            // 全局事件监听列表
+            the._emitterCallbacks = [];
             // 监听的事件长度
             the._emitterLimit = 999;
-            // 事件传输目标
-            the._emitterTargetList = [];
         },
         /**
          * 添加事件回调
          * @method on
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} listener 事件回调
-         * @returns {this}
+         * @returns {Emitter}
          *
          * @example
          * var emitter = new Emitter();
@@ -51,6 +51,14 @@ define(function (require, exports, module) {
          */
         on: function (eventType, listener) {
             var the = this;
+
+            if (!typeis.function(listener)) {
+                return the;
+            }
+
+            if (arguments.length === 1) {
+                the._emitterCallbacks.push(listener);
+            }
 
             _middleware(eventType, function (et) {
                 if (!the._emitterListener[et]) {
@@ -74,7 +82,7 @@ define(function (require, exports, module) {
          * 添加事件触发前事件
          * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
          * @param listener {Function} 事件回调
-         * @returns {this}
+         * @returns {Emitter}
          */
         before: function (eventType, listener) {
             return this.on('before' + eventType, listener);
@@ -85,7 +93,7 @@ define(function (require, exports, module) {
          * 添加事件触发后事件
          * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
          * @param listener {Function} 事件回调
-         * @returns {this}
+         * @returns {Emitter}
          */
         after: function (eventType, listener) {
             return this.on('after' + eventType, listener);
@@ -97,7 +105,7 @@ define(function (require, exports, module) {
          * @method un
          * @param {String} eventType 事件类型，多个事件类型使用空格分开
          * @param {Function} [listener] 事件回调，缺省时将移除该事件类型上的所有事件回调
-         * @returns {this}
+         * @returns {Emitter}
          *
          * @example
          * var emitter = new Emitter();
@@ -150,10 +158,6 @@ define(function (require, exports, module) {
             }
 
             _middleware(eventType, function (et) {
-                if (the._pipe(et, emitArgs) === false) {
-                    ret = false;
-                }
-
                 if (the._emitterListener[et]) {
                     var time = Date.now();
 
@@ -172,52 +176,16 @@ define(function (require, exports, module) {
             });
 
             return ret;
-        },
-
-
-        /**
-         * 将所有的事件派发到目标
-         * @param target {Object} 目标
-         * @param [emitters] {Array} 传递的事件数组，默认为全部，开头为“!”的将会被反选
-         * @returns {this}
-         */
-        pipe: function (target, emitters) {
-            var the = this;
-
-            the._emitterTargetList.push({
-                source: target,
-                emitters: typeis.array(emitters) ? emitters : []
-            });
-
-            return the;
-        },
-
-
-        /**
-         * 派发事件
-         * @param eventType
-         * @param args
-         * @private
-         */
-        _pipe: function (eventType, args) {
-            var ret = true;
-
-            dato.each(this._emitterTargetList, function (index, target) {
-                if (_matches(eventType, target.emitters)) {
-                    target.source.alienEmitter = {
-                        type: eventType,
-                        timestamp: Date.now(),
-                        id: alienId++
-                    };
-                    args.unshift(eventType);
-                    ret = target.source.emit.apply(target.source, args);
-                }
-            });
-
-            return ret;
         }
     });
 
+
+    Emitter.transport = function (from, to) {
+
+    };
+
+
+    module.exports = Emitter;
 
     /**
      * 中间件，处理事件分发
