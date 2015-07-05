@@ -47,61 +47,38 @@ define(function (require, exports, module) {
             '文件类型不合法' : null);
         });
 
-        //exports.minSize = _createFileSize('<');
-        //exports.maxSize = _createFileSize('>');
-        //exports.minWidth = _createImageSizeFn('宽度', '<');
-        //exports.maxWidth = _createImageSizeFn('宽度', '>');
-        //exports.minHeight = _createImageSizeFn('高度', '<');
-        //exports.maxHeight = _createImageSizeFn('高度', '>');
-    };
 
+        /**
+         * 创建资源尺寸匹配规则
+         * @param type
+         * @returns {Function}
+         * @private
+         */
+        var _createFileSize = function (type) {
+            var map = {
+                '>': '超过',
+                '<': '小于'
+            };
 
-    // ====================================================================================
-    // ====================================================================================
-    // ====================================================================================
-
-
-    /**
-     * 判断是否为多值类型
-     * @param obj
-     * @returns {boolean}
-     */
-    function _isMultiple(obj) {
-        return typeis.array(obj) || typeis(obj) === 'filelist';
-    }
-
-
-    /**
-     * 创建资源尺寸匹配规则
-     * @param type
-     * @returns {Function}
-     * @private
-     */
-    function _createFileSize(type) {
-        var map = {
-            '>': '超过',
-            '<': '小于'
-        };
-        return function (ruleValue) {
-            return function (files, done) {
+            return function (val, done, param0) {
                 var invalidIndexs = [];
-                var isMultiple = _isMultiple(files);
+                var isMultiple = _isMultiple(val);
 
                 if (!isMultiple) {
-                    files = [files];
+                    val = [val];
                 }
 
-                dato.each(files, function (index, file) {
+                dato.each(val, function (index, file) {
                     switch (map[type]) {
                         case '>':
-                            if (file.size > ruleValue) {
+                            if (file.size > param0) {
                                 invalidIndexs.push(index + 1);
                             }
 
                             break;
 
                         case '<':
-                            if (file.size < ruleValue) {
+                            if (file.size < param0) {
                                 invalidIndexs.push(index + 1);
                             }
 
@@ -111,60 +88,39 @@ define(function (require, exports, module) {
 
                 done(invalidIndexs.length ? '${path}的' +
                 (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
-                '文件大小不能' + map[type] + number.abbr(ruleValue, 0, 1024).toUpperCase() + 'B' : null);
+                '文件大小不能' + map[type] + number.abbr(param0, 0, 1024).toUpperCase() + 'B' : null);
             };
         };
-    }
+
+        Validation.addRule('minSize', _createFileSize('<'));
+        Validation.addRule('maxSize', _createFileSize('>'));
 
 
-    /**
-     * 获取图片尺寸
-     * @param file
-     * @param callback
-     * @returns {*}
-     */
-    function _getImageSize(file, callback) {
-        var img = new Image();
-        var url = win[URL].createObjectURL(file);
+        /**
+         * 生成图片尺寸判断 fn
+         * @param side
+         * @param type
+         * @returns {Function}
+         * @private
+         */
+        var _createImageSizeFn = function (side, type) {
+            var map = {
+                '<': '小于',
+                '>': '大于'
+            };
 
-        if (img.complete) {
-            return callback(null, img);
-        }
-
-        img.onload = function () {
-            callback(null, img);
-        };
-        img.onerror = callback;
-        img.src = url;
-    }
-
-
-    /**
-     * 生成图片尺寸判断 fn
-     * @param side
-     * @param type
-     * @returns {Function}
-     * @private
-     */
-    function _createImageSizeFn(side, type) {
-        return function (ruleValue) {
-            return function (files, done) {
+            return function (val, done, param0) {
                 var errorIndexs = [];
                 var invalidIndexs = [];
-                var isMultiple = _isMultiple(files);
+                var isMultiple = _isMultiple(val);
 
                 if (isMultiple) {
-                    files = dato.toArray(files);
+                    val = dato.toArray(val);
                 } else {
-                    files = [files];
+                    val = [val];
                 }
 
-                var map = {
-                    '<': '小于',
-                    '>': '大于'
-                };
-
-                howdo.each(files, function (index, file, done) {
+                howdo.each(val, function (index, file, done) {
                     _getImageSize(file, function (err, img) {
                         if (err) {
                             errorIndexs.push(index);
@@ -175,13 +131,13 @@ define(function (require, exports, module) {
 
                         switch (type) {
                             case '<':
-                                if (width < ruleValue) {
+                                if (width < param0) {
                                     invalidIndexs.push(index + 1);
                                 }
                                 break;
 
                             case '>':
-                                if (width > ruleValue) {
+                                if (width > param0) {
                                     invalidIndexs.push(index + 1);
                                 }
                                 break;
@@ -208,7 +164,7 @@ define(function (require, exports, module) {
                                 part2 = '，';
                             }
 
-                            part2 += '第' + invalidIndexs.join('、') + '张图片' + side + '不能' + map[type] + ruleValue + '像素';
+                            part2 += '第' + invalidIndexs.join('、') + '张图片' + side + '不能' + map[type] + param0 + '像素';
                         }
                     } else {
                         if (errorIndexs.length) {
@@ -216,7 +172,7 @@ define(function (require, exports, module) {
                         }
 
                         if (invalidIndexs.length) {
-                            part2 = '图片' + side + '不能' + map[type] + ruleValue + '像素';
+                            part2 = '图片' + side + '不能' + map[type] + param0 + '像素';
                         }
                     }
 
@@ -224,5 +180,43 @@ define(function (require, exports, module) {
                 });
             };
         };
+
+        Validation.addRule('minWidth', _createImageSizeFn('宽度', '<'));
+        Validation.addRule('maxWidth', _createImageSizeFn('宽度', '>'));
+        Validation.addRule('minHeight', _createImageSizeFn('高度', '<'));
+        Validation.addRule('maxHeight', _createImageSizeFn('高度', '>'));
+    };
+
+
+    // ====================================================================================
+    // ====================================================================================
+    // ====================================================================================
+
+
+    /**
+     * 判断是否为多值类型
+     * @param obj
+     * @returns {boolean}
+     */
+    function _isMultiple(obj) {
+        return typeis.array(obj) || typeis(obj) === 'filelist';
+    }
+
+
+    /**
+     * 获取图片尺寸
+     * @param file
+     * @param callback
+     * @returns {*}
+     */
+    function _getImageSize(file, callback) {
+        var img = new Image();
+        var url = win[URL].createObjectURL(file);
+
+        img.onload = function () {
+            callback(null, img);
+        };
+        img.onerror = callback;
+        img.src = url;
     }
 });
