@@ -66,20 +66,32 @@ define(function (require, exports, module) {
                     files = options.file.files || [];
 
                     if (files.length === 1) {
-                        if(options.filter(files[0])){
+                        /**
+                         * 文件过滤
+                         * @event filter
+                         * @param index {Number} 文件索引值
+                         * @param file {Object} 文件对象
+                         */
+                        if (the.emit('filter', 0, files[0]) !== false) {
                             fd.append(name, files[0]);
                             hasFile = true;
                         }
                     } else {
                         dato.each(options.file.files, function (index, file) {
-                            if(options.filter(files[0])){
+                            /**
+                             * 文件过滤
+                             * @event filter
+                             * @param index {Number} 文件索引值
+                             * @param file {Object} 文件对象
+                             */
+                            if (the.emit('filter', index, file) !== false) {
                                 fd.append(name + '[]', file);
                                 hasFile = true;
                             }
                         });
                     }
 
-                    if(!hasFile){
+                    if (!hasFile) {
                         return the.emit('error', new Error('no files can be upload'));
                     }
 
@@ -104,7 +116,7 @@ define(function (require, exports, module) {
         }
     });
 
-    module.exports = function(options){
+    module.exports = function (options) {
         return new Upload(options);
     };
     module.exports.defaults = defaults;
