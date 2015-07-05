@@ -67,7 +67,8 @@ define(function (require, exports, module) {
         invalidAutoFocus: true,
         // 表单输入框验证事件
         inputValidateEvent: 'input change',
-        contentType: 'json'
+        // 是否调试模式，调试模式则不会提交表单
+        debug: false
     };
     var Form = ui.create({
         constructor: function ($form, options) {
@@ -230,6 +231,19 @@ define(function (require, exports, module) {
 
             if (the._xhr) {
                 the._xhr.abort();
+            }
+
+            if (options.debug) {
+                return;
+            }
+
+            /**
+             * 请求之前
+             * @event beforerequest
+             * @param options {Object} 请求参数
+             */
+            if (the.emit('beforerequest', options) === false) {
+                return;
             }
 
             the._xhr = xhr.ajax(options);
