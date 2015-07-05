@@ -50,6 +50,7 @@ define(function (require, exports, module) {
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
             the._length = the._options.urls.length || the._options.length;
+            the._hasPlaceholder = the._options.placeholder && the._options.placeholder.text;
             the._values = [];
             the._cache = {};
             the._initNode();
@@ -178,8 +179,15 @@ define(function (require, exports, module) {
 
             // 未选择时，回到初始状态
             if (index > 0 && !value) {
-                the.emit('list', index);
-                return;
+                return the.emit('list', index);
+            }
+
+            if (index && the._cache[index - 1]) {
+                var cacheList = the._cache[index - 1][value];
+
+                if (cacheList) {
+                    return the.emit('list', index, cacheList.slice(the._hasPlaceholder ? 1 : 0));
+                }
             }
 
             if (the.emit('beforedata', index) === false) {
@@ -215,8 +223,8 @@ define(function (require, exports, module) {
 
         /**
          * 渲染 select option
-         * @param index
-         * @param [list]
+         * @param index {Number} 渲染的 select 索引值
+         * @param [list] {Array} 渲染的数据列表
          * @returns {string}
          * @private
          */
@@ -226,14 +234,24 @@ define(function (require, exports, module) {
             var selectOptions = '';
 
             the.emit('beforerender', index);
-            list = list || [];
-
-            if (options.placeholder && options.placeholder.text) {
-                list.unshift(options.placeholder);
-            }
 
             var selectedValue = the._values[index];
             var isFind = false;
+
+            if (list) {
+                if (index && options.cache) {
+                    var prevValue = the._values[index - 1];
+                    // 上一个选中的子级
+                    the._cache[index - 1] = the._cache[index - 1] || {};
+                    the._cache[index - 1][prevValue] = list;
+                }
+            } else {
+                list = [];
+            }
+
+            if (the._hasPlaceholder) {
+                list.unshift(options.placeholder);
+            }
 
             dato.each(list, function (i, item) {
                 var text = item[options.textName];
