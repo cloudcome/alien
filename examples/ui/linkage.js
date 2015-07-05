@@ -22,7 +22,7 @@ define(function (require, exports, module) {
     });
 
     linkage.on('change', function (index) {
-        console.log(index, this.values);
+        console.log(index, this.getValues());
     });
 
     linkage.setValues([2, 22, 222]);

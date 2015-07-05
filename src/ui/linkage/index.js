@@ -50,7 +50,7 @@ define(function (require, exports, module) {
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
             the._length = the._options.urls.length || the._options.length;
-            the.values = [];
+            the._values = [];
             the._cache = {};
             the._initNode();
             the._initEvent();
@@ -100,8 +100,9 @@ define(function (require, exports, module) {
                     var value = this.value;
                     var nextIndex = index + 1;
 
-                    the.values[index] = value;
+                    the._values[index] = value;
                     the.emit('change', index, value);
+                    the._cleanValues(nextIndex);
 
                     if (nextIndex < the._length) {
                         the.change(index + 1);
@@ -146,15 +147,22 @@ define(function (require, exports, module) {
 
             howdo.each(values, function (index, value, next) {
                 the._unDispathChange = true;
-                the.values[index] = value + '';
+                the._values[index] = value + '';
                 the.change(index, next);
             }).follow(function () {
-                controller.nextTick(function () {
-                    the._unDispathChange = false;
-                });
+                the._unDispathChange = false;
             });
 
             return the;
+        },
+
+
+        /**
+         * 获得当前选中的值
+         * @returns {Array}
+         */
+        getValues: function () {
+            return this._values;
         },
 
 
@@ -166,7 +174,7 @@ define(function (require, exports, module) {
         _getData: function (index) {
             var the = this;
             var options = the._options;
-            var value = the.values[index - 1];
+            var value = the._values[index - 1];
 
             // 未选择时，回到初始状态
             if (index > 0 && !value) {
@@ -199,7 +207,7 @@ define(function (require, exports, module) {
 
             dato.repeat(the._length, function (_index) {
                 if (_index >= index) {
-                    the.values[_index] = '';
+                    the._values[_index] = '';
                 }
             });
         },
@@ -224,7 +232,7 @@ define(function (require, exports, module) {
                 list.unshift(options.placeholder);
             }
 
-            var selectedValue = the.values[index];
+            var selectedValue = the._values[index];
             var isFind = false;
 
             dato.each(list, function (i, item) {
@@ -254,7 +262,7 @@ define(function (require, exports, module) {
                 attribute.prop($select, 'disabled', true);
             }
 
-            if(!the._unDispathChange){
+            if (!the._unDispathChange) {
                 event.dispatch($select, 'change');
             }
 
