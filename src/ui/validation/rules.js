@@ -7,7 +7,13 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/rules
+     * @module ui/validation/rules
+     * @requires utils/typeis
+     * @requires utils/number
+     * @requires utils/string
+     * @requires utils/dato
+     * @requires utils/howdo
+     * @requires core/navigator/compatible
      */
 
     'use strict';
