@@ -199,13 +199,18 @@ define(function (require, exports, module) {
                 xhr.withCredentials = true;
             }
 
-            var mime = contentTypeMap[options.type];
 
             if (options.mimeType) {
                 xhr.overrideMimeType(options.mimeType);
-            } else if (mime) {
-                // 复写 mime
-                xhr.overrideMimeType(mime);
+            }
+
+            var contentType = contentTypeMap[options.type];
+
+            if (contentType) {
+                // 复写 contentType
+                options.headers = {
+                    'content-type': contentType
+                };
             }
 
             // 当 body 为 FormData 时，删除 content-type header
