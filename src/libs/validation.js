@@ -86,10 +86,10 @@ define(function (require, exports, module) {
         /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
-         * @param name {String|Function} 验证规则，可以是静态规则，也可以添加规则
+         * @param nameOrFn {String|Function} 验证规则，可以是静态规则，也可以添加规则
          * @returns {Validation}
          */
-        addRule: function (path, name/*arguments*/) {
+        addRule: function (path, nameOrFn/*arguments*/) {
             var the = this;
             var args = allocation.args(arguments);
             var params = args.slice(2);
@@ -103,7 +103,9 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.string(name)) {
+            if (typeis.string(nameOrFn)) {
+                var name = nameOrFn;
+
                 if (!validationMap[name]) {
                     throw 'can not found `' + name + '` validation';
                 }
@@ -113,11 +115,11 @@ define(function (require, exports, module) {
                     params: params,
                     fn: validationMap[name]
                 });
-            } else if (typeis.function(name)) {
+            } else if (typeis.function(nameOrFn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
-                    fn: name
+                    fn: nameOrFn
                 });
             }
 
@@ -380,7 +382,7 @@ define(function (require, exports, module) {
      *    done(/^\d+$/.test(val) ? null : '${path}必须是数字');
      * });
      */
-    Validation.addRule = function (name, fn) {
+    Validation.addRule = function (name, fn/*arguments*/) {
         if (validationMap[name] && DEBUG) {
             console.warn('override `' + name + '` rule');
         }
@@ -400,20 +402,21 @@ define(function (require, exports, module) {
 
     Validation.defaults = defaults;
 
-    //Validation.addRule('number', /^\d+$/, '${path}必须是数字');
-    Validation.addRule('number', function (val, done, param) {
+    Validation.addRule('number', function (val, done) {
         done(/^\d+$/.test(val) ? null : '${path}必须是数字');
     });
 
-    //Validation.addRule('mobile', /^1\d{10}$/, '${path}必须是手机号');
-    //
-    //Validation.addRule('email', function (val) {
-    //    return typeis.email(val);
-    //}, '${path}必须是邮箱');
-    //
-    //Validation.addRule('url', function (val) {
-    //    return typeis.url(val);
-    //}, '${path}必须是 url 地址');
+    Validation.addRule('mobile', function (val, done) {
+        done(/^1\d{10}$/.test(val) ? null : '${path}必须是手机号');
+    });
+
+    Validation.addRule('email', function (val, done) {
+        done(typeis.email(val) ? null : '${path}必须是邮箱');
+    });
+
+    Validation.addRule('url', function (val, done) {
+        done(typeis.url(val) ? null : '${path}必须是 url 地址');
+    });
 
     module.exports = Validation;
 
