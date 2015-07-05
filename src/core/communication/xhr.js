@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     var contentTypeMap = {
         json: 'application/json',
         urlencoded: 'application/x-www-form-urlencoded',
-        formData: 'multipart/form-data',
+        //formData: 'multipart/form-data',
         text: 'plain',
         plain: 'plain'
     };
@@ -138,9 +138,6 @@ define(function (require, exports, module) {
                             oncallback(err, json);
                             break;
 
-                        case 'urlencoded':
-                            break;
-
                         default:
                             oncallback(null, responseText);
                     }
@@ -199,18 +196,13 @@ define(function (require, exports, module) {
                 xhr.withCredentials = true;
             }
 
+            var contentType = contentTypeMap[options.type];
 
             if (options.mimeType) {
                 xhr.overrideMimeType(options.mimeType);
-            }
-
-            var contentType = contentTypeMap[options.type];
-
-            if (contentType) {
-                // 复写 contentType
-                options.headers = {
-                    'content-type': contentType
-                };
+            } else if (contentType) {
+                // 复写响应 content-type
+                xhr.overrideMimeType(contentType);
             }
 
             // 当 body 为 FormData 时，删除 content-type header
