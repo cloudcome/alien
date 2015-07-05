@@ -19,6 +19,8 @@ define(function (require, exports, module) {
     // MutationObserver 给开发者们提供了一种能在某个范围内的 DOM 树发生变化时作出适当反应的能力.
     // 该 API 设计用来替换掉在 DOM3 事件规范中引入的 Mutation 事件.
     var MutationObserver = compatible.html5('MutationObserver', win);
+    var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
+    var cancelAnimationFrame = compatible.html5('cancelAnimationFrame', win);
 
     /**
      * 至少间隔一段时间执行
@@ -153,14 +155,12 @@ define(function (require, exports, module) {
     };
 
 
-
-
     /**
      * 下一步
      * @param callback {Function} 回调
      * @param [context=window] {Object} 上下文
      */
-    exports.nextTick = function (callback, context) {
+    exports.nextTick = function (callback, context/*arguments*/) {
         context = context || win;
 
         var args = [].slice.call(arguments, 2);
@@ -196,6 +196,41 @@ define(function (require, exports, module) {
         }
 
         setTimeout(fn, 0);
+    };
+
+
+    /**
+     * 下一帧
+     * @param callback {Function} 回调
+     * @param [context] {Object} 上下文
+     * @returns {Number} 帧ID
+     */
+    exports.nextFrame = function (callback, context/*argumnets*/) {
+        context = context || win;
+
+        var args = [].slice.call(arguments, 2);
+        var fn = exports.once(function () {
+            callback.apply(context, args);
+        });
+
+        if (requestAnimationFrame) {
+            return win[requestAnimationFrame](fn);
+        } else {
+            return win.setTimeout(fn, 16);
+        }
+    };
+
+
+    /**
+     * 清除下一帧回调
+     * @param frameId
+     */
+    exports.clearFrame = function (frameId) {
+        if (cancelAnimationFrame) {
+            win[cancelAnimationFrame](frameId);
+        } else {
+            win.clearTimeout(frameId);
+        }
     };
 
 

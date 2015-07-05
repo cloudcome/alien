@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var howdo = require('../../utils/howdo.js');
     var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -144,9 +145,14 @@ define(function (require, exports, module) {
             var the = this;
 
             howdo.each(values, function (index, value, next) {
+                the._unDispathChange = true;
                 the.values[index] = value + '';
                 the.change(index, next);
-            }).follow();
+            }).follow(function () {
+                controller.nextTick(function () {
+                    the._unDispathChange = false;
+                });
+            });
 
             return the;
         },
@@ -248,7 +254,10 @@ define(function (require, exports, module) {
                 attribute.prop($select, 'disabled', true);
             }
 
-            event.dispatch($select, 'change');
+            if(!the._unDispathChange){
+                event.dispatch($select, 'change');
+            }
+
             the.emit('afterrender', index);
         },
 
