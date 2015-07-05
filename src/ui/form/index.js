@@ -159,7 +159,7 @@ define(function (require, exports, module) {
 
             the._validation
                 .on('valid', function ($input) {
-                    if($input === $firstInvalidInput){
+                    if ($input === $firstInvalidInput) {
                         $firstInvalidInput = null;
                     }
 
@@ -248,6 +248,10 @@ define(function (require, exports, module) {
             var options = the._options;
             var $item = selector.closest($input, options.itemSelector)[0];
             var $msg = the._msgMap[$input.name];
+
+            if (!$item) {
+                return;
+            }
 
             if (!$msg) {
                 $msg = selector.query('.' + options.itemMsgClass, $item)[0];
