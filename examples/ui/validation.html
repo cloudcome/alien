@@ -23,8 +23,12 @@
             padding: 5px 10px;
         }
         
-        li{
+        #form li{
             margin-bottom: 20px;
+        }
+
+        #errors{
+            color: #fc323e;
         }
     </style>
 </head>
@@ -102,6 +106,8 @@
         <button class="form-submit" id="submit">提交</button>
     </li>
 </ul>
+
+<ul id="errors"></ul>
 
 <script src="/examples/coolie.min.js"
         data-config="./coolie-config.js"

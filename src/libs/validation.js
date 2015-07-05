@@ -150,7 +150,24 @@ define(function (require, exports, module) {
             var the = this;
             var rules = the.getRules(path);
 
-            the._validateOne(data, path, rules, callback);
+            /**
+             * 单个验证之前
+             * @event beforevalidateone
+             * @param path {String} 字段
+             */
+            the.emit('beforevalidateone', path);
+            the._validateOne(data, path, rules, function () {
+                /**
+                 * 单个验证之后
+                 * @event aftervalidateone
+                 * @param path {String} 字段
+                 */
+                the.emit('aftervalidateone', path);
+
+                if (typeis.function(callback)) {
+                    callback.apply(this, arguments);
+                }
+            });
 
             return the;
         },
@@ -173,14 +190,22 @@ define(function (require, exports, module) {
 
             the._isValidating = true;
             the.data = data;
-
+            /**
+             * 全部验证之前
+             * @event beforevalidateall
+             */
+            the.emit('beforevalidateall');
             var complete = function () {
                 if (typeis.function(callback)) {
                     callback.apply(the, arguments);
                 }
 
                 the._isValidating = false;
-                the.emit('complete');
+                /**
+                 * 全部验证之后
+                 * @event aftervalidateall
+                 */
+                the.emit('aftervalidateall');
             };
 
             var hd = howdo
@@ -189,7 +214,12 @@ define(function (require, exports, module) {
                     the._validateOne(data, path = item.path, item.rules, next);
                 })
                 .try(function () {
-                    the.emit('success');
+                    /**
+                     * 验证成功
+                     * @event success
+                     * @param path {String} 字段
+                     */
+                    the.emit('success', path);
                 })
                 .catch(function (err) {
                     err = new Error(string.assign(err || options.defaultMsg, {
@@ -197,6 +227,12 @@ define(function (require, exports, module) {
                     }));
 
                     if (options.isBreakOnInvalid) {
+                        /**
+                         * 验证失败
+                         * @event error
+                         * @param error {Object} 错误对象
+                         * @param path {String} 字段
+                         */
                         the.emit('error', err, path);
                     }
                 });
@@ -222,6 +258,11 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            /**
+             * 验证之前
+             * @event beforevalidate
+             * @param path {String} 字段
+             */
             the.emit('beforevalidate', path);
             howdo
                 // 遍历验证规则
@@ -235,18 +276,26 @@ define(function (require, exports, module) {
                     the.emit('validate', path, ruleName);
                     rule.call(the, data[path], next);
                 })
-                .try(function () {
-                    the.emit('aftervalidate', path);
-                })
                 .catch(function (err) {
                     if (!options.isBreakOnInvalid) {
                         err = new Error(string.assign(err || options.defaultMsg, {
                             path: the._aliasMap[path] || path
                         }));
+                        /**
+                         * 验证失败
+                         * @event error
+                         * @param error {Object} 错误对象
+                         * @param path {String} 字段
+                         */
                         the.emit('error', err, path);
                     }
                 })
                 .follow(function () {
+                    /**
+                     * 验证之后
+                     * @event aftervalidate
+                     * @param path {String} 字段
+                     */
                     the.emit('aftervalidate', path);
 
                     if (typeis.function(callback)) {
@@ -281,13 +330,6 @@ define(function (require, exports, module) {
     };
 
     Validation.defaults = defaults;
-
-    //Validation.addRule('required', function (value, done) {
-    //    var boolean = typeis(value) === 'file' ? true :
-    //    ( typeis.array(value) || typeis(value) === 'filelist' ? value : (value || '') ).length > 0;
-    //
-    //    done(boolean ? null : '${path}不能为空');
-    //});
 
     Validation.addRule('number', /^\d+$/, '${path}必须是数字');
 

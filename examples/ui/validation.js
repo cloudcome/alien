@@ -21,7 +21,9 @@ define(function (require, exports, module) {
     //}, '${path}怎么能小于20呢，呵呵');
 
     validation.on('error', function (err) {
-        alert(err);
+        var lis = '';
+
+
     });
 
     validation.on('success', function () {
