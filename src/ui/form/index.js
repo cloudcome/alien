@@ -74,6 +74,7 @@ define(function (require, exports, module) {
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
             the._msgMap = {};
+            the._initNode();
             the._initEvent();
         },
 
@@ -88,6 +89,28 @@ define(function (require, exports, module) {
             the._validation.update();
 
             return the;
+        },
+
+
+        /**
+         * 表单提交
+         */
+        submit: function () {
+            var the = this;
+
+            the._validation.validate();
+        },
+
+
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+
+            if(the._isForm){
+                the._xhrOptions = {
+                    url: the._$form.action
+                };
+            }
         },
 
 
@@ -114,7 +137,7 @@ define(function (require, exports, module) {
                 event.on(the._$form, 'click', options.submitSelector, the.submit.bind(the));
             }
 
-            if(options.inputValidateEvent){
+            if (options.inputValidateEvent) {
                 event.on(the._$form, options.inputValidateEvent, options.inputSelector, function () {
                     the._validation.validate(this);
                 });
@@ -144,16 +167,6 @@ define(function (require, exports, module) {
                         }
                     });
                 });
-        },
-
-
-        /**
-         * 表单提交
-         */
-        submit: function () {
-            var the = this;
-
-            the._validation.validate();
         },
 
 

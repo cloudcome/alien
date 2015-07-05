@@ -24,9 +24,15 @@ define(function (require, exports, module) {
     var urlUtils = require('../../utils/url.js');
     var qs = require('../../utils/querystring.js');
     var Emitter = require('../../libs/emitter.js');
-    var regCache = /\b_=[^&]*&?/;
-    var regEnd = /[?&]$/;
     var REG_DOMAIN = /^([\w-]+:)?\/\/([^\/]+)/;
+    var regProtocol = /^([\w-]+:)\/\//;
+    var contentTypeMap = {
+        json: 'application/json',
+        urlencoded: 'application/x-www-form-urlencoded',
+        formData: 'multipart/form-data',
+        text: 'plain',
+        plain: 'plain'
+    };
     var defaults = {
         // 请求地址
         url: location.href,
@@ -58,7 +64,6 @@ define(function (require, exports, module) {
         // 请求超时时间，15秒
         timeout: 150000
     };
-    var regProtocol = /^([\w-]+:)\/\//;
     var XHR = klass.extends(Emitter).create({
         constructor: function (options) {
             var the = this;
@@ -133,6 +138,9 @@ define(function (require, exports, module) {
                             oncallback(err, json);
                             break;
 
+                        case 'urlencoded':
+                            break;
+
                         default:
                             oncallback(null, responseText);
                     }
@@ -191,8 +199,13 @@ define(function (require, exports, module) {
                 xhr.withCredentials = true;
             }
 
+            var mime = contentTypeMap[options.type];
+
             if (options.mimeType) {
                 xhr.overrideMimeType(options.mimeType);
+            } else if (mime) {
+                // 复写 mime
+                xhr.overrideMimeType(mime);
             }
 
             // 当 body 为 FormData 时，删除 content-type header
@@ -321,7 +334,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _buildURL(options) {
-        var ret = urlUtils.parse( options.url);
+        var ret = urlUtils.parse(options.url);
         var query = options.query;
         var cacheKey = '_';
 
