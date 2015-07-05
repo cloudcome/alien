@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
+    var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../validation/index.js');
     var formButtonCanSubmit = false;
@@ -64,7 +65,6 @@ define(function (require, exports, module) {
         },
 
 
-
         /**
          * 初始化事件
          * @private
@@ -88,8 +88,8 @@ define(function (require, exports, module) {
                 event.on(the._$form, 'click', options.formSubmitSelector, the.submit.bind(the));
             }
 
-            the._validation.on('error', function () {
-
+            the._validation.on('error', function (err, $input) {
+                the._setMsg($input, err);
             });
         },
 
@@ -104,9 +104,27 @@ define(function (require, exports, module) {
         },
 
 
-        _setMsg: function ($input) {
+        /**
+         * 设置消息
+         * @param $input
+         * @param [err]
+         * @private
+         */
+        _setMsg: function ($input, err) {
             var the = this;
+            var options = the._options;
+            var $item = selector.closest($input, options.formItemSelector)[0];
+            var $msg = selector.query(options.formMsgSelector, $item)[0];
 
+            if (err) {
+                attribute.removeClass($item, options.formItemSuccessClass);
+                attribute.addClass($item, options.formItemErrorClass);
+            } else {
+                attribute.removeClass($item, options.formItemErrorClass);
+                attribute.addClass($item, options.formItemSuccessClass);
+            }
+
+            attribute.html($msg, err ? err.message : '');
         }
     });
 
