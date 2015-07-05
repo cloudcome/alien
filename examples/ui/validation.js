@@ -16,9 +16,9 @@ define(function (require, exports, module) {
     var validation = new Validation('#form');
     var alert = require('../../src/widgets/alert.js');
 
-    validation.addRule('age', function (value) {
-        return value > 20;
-    }, '${path}怎么能小于20呢，呵呵，这个是实例脚本加进去的自定义验证');
+    //validation.addRule('age', function (value) {
+    //    return value > 20;
+    //}, '${path}怎么能小于20呢，呵呵，这个是实例脚本加进去的自定义验证');
 
     validation.on('invalid', function (err, $input) {
         alert($input.name + ':' + err.message);
