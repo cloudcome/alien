@@ -74,10 +74,14 @@ define(function (require, exports, module) {
             var the = this;
 
             the._validation = new Validation(the._options);
-            the._validation.pipe(the, ['!error']);
-            the._validation.on('error', function (err, path) {
-                the.emit('error', err, the._pathMap[path]);
-            });
+            the._validation.pipe(the, ['!valid', '!invalid']);
+            the._validation
+                .on('valid', function (path) {
+                    the.emit('valid', the._pathMap[path]);
+                })
+                .on('invalid', function (err, path) {
+                    the.emit('invalid', err, the._pathMap[path]);
+                });
             the._parseItems();
 
             return the;
@@ -91,7 +95,6 @@ define(function (require, exports, module) {
         getItems: function () {
             return this._$items;
         },
-
 
 
         /**
