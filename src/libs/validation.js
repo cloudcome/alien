@@ -195,6 +195,7 @@ define(function (require, exports, module) {
              * @event beforevalidateall
              */
             the.emit('beforevalidateall');
+            var errorLength = 0;
             var complete = function () {
                 if (typeis.function(callback)) {
                     callback.apply(the, arguments);
@@ -211,14 +212,28 @@ define(function (require, exports, module) {
             var hd = howdo
                 // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
-                    the._validateOne(data, path = item.path, item.rules, next);
+                    the._validateOne(data, path = item.path, item.rules, function (err, hasError) {
+                        if (hasError) {
+                            errorLength++;
+                        }
+
+                        next(err);
+                    });
                 })
                 .try(function () {
-                    /**
-                     * 验证成功
-                     * @event valid
-                     */
-                    the.emit('valid');
+                    if (errorLength) {
+                        /**
+                         * 验证成功
+                         * @event error
+                         */
+                        the.emit('error');
+                    }else{
+                        /**
+                         * 验证成功
+                         * @event success
+                         */
+                        the.emit('success');
+                    }
                 })
                 .catch(function (err) {
                     if (options.breakOnInvalid) {
@@ -234,13 +249,14 @@ define(function (require, exports, module) {
                          */
                         the.emit('invalid', err, path);
                     }
-                });
 
-            if (options.breakOnInvalid) {
-                hd.follow(complete);
-            } else {
-                hd.together(complete);
-            }
+                    /**
+                     * 验证失败
+                     * @event error
+                     */
+                    the.emit('error');
+                })
+                .follow(complete);
 
             return the;
         },
@@ -283,17 +299,31 @@ define(function (require, exports, module) {
                      */
                     the.emit('valid', path);
 
+                    /**
+                     * 验证之后
+                     * @event aftervalidate
+                     * @param path {String} 字段
+                     */
+                    the.emit('aftervalidate', path);
+
                     if (typeis.function(callback)) {
-                        callback.apply(the);
+                        callback.call(the, null, false);
                     }
                 })
                 .catch(function (err) {
                     // 验证失败即断开
                     if (options.breakOnInvalid) {
+                        /**
+                         * 验证之后
+                         * @event aftervalidate
+                         * @param path {String} 字段
+                         */
+                        the.emit('aftervalidate', path);
+
                         if (typeis.function(callback)) {
-                            callback.apply(the, err);
+                            callback.call(the, err, true);
                         }
-                    }else{
+                    } else {
                         err = new Error(string.assign(err || options.defaultMsg, {
                             path: the._aliasMap[path] || path
                         }));
@@ -306,19 +336,19 @@ define(function (require, exports, module) {
                          */
                         the.emit('invalid', err, path);
 
+                        /**
+                         * 验证之后
+                         * @event aftervalidate
+                         * @param path {String} 字段
+                         */
+                        the.emit('aftervalidate', path);
+
                         if (typeis.function(callback)) {
-                            callback.apply(the);
+                            callback.call(the, null, true);
                         }
                     }
                 })
-                .follow(function () {
-                    /**
-                     * 验证之后
-                     * @event aftervalidate
-                     * @param path {String} 字段
-                     */
-                    the.emit('aftervalidate', path);
-                });
+                .follow();
         }
     });
 

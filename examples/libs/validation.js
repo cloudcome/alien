@@ -11,8 +11,8 @@ define(function (require) {
     Validation.addRule('timeout', function (value, done) {
         setTimeout(function () {
             //done(Date.now() % 2 ? '该${path}不能在此注册' : null);
-            done('该${path}不能在此注册');
-            //done(null);
+            //done('该${path}不能在此注册');
+            done(null);
         }, random.number(500, 2000));
     });
 
@@ -23,8 +23,8 @@ define(function (require) {
     };
 
     v.before('validate', callback);
-    v.on('validate invalid valid success erorr', callback);
     v.after('validate', callback);
+    v.on('validate invalid valid success error', callback);
 
     // 姓名
     v.setAlias('name', '姓名');
@@ -35,8 +35,8 @@ define(function (require) {
     v.addRule('name', function (value, done) {
         setTimeout(function () {
             //done(Date.now() % 2 ? '该${path}不能在此注册' : null);
-            done('该${path}已经重复了，换一个试试吧');
-            //done(null);
+            //done('该${path}已经重复了，换一个试试吧');
+            done(null);
         }, random.number(500, 2000));
     });
 
@@ -53,7 +53,7 @@ define(function (require) {
         age: 12
     });
 
-    //// 验证
+    // 验证
     //v.validateOne({
     //    name: 'yundanran'
     //});
