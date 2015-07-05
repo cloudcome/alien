@@ -28,38 +28,36 @@ define(function (require, exports, module) {
     var URL = compatible.html5('URL', win);
 
     module.exports = function (Validation) {
+        Validation.addRule('accept', function (val, done, param0) {
+            var invalidIndexs = [];
+            var isMultiple = _isMultiple(val);
 
+            if (!isMultiple) {
+                val = [val];
+            }
+
+            dato.each(val, function (index, file) {
+                if (file && file.type && !string.glob(file.type, param0, true)) {
+                    invalidIndexs.push(index + 1);
+                }
+            });
+
+            done(invalidIndexs.length ? '${path}' +
+            (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
+            '文件类型不合法' : null);
+        });
+
+        //exports.minSize = _createFileSize('<');
+        //exports.maxSize = _createFileSize('>');
+        //exports.minWidth = _createImageSizeFn('宽度', '<');
+        //exports.maxWidth = _createImageSizeFn('宽度', '>');
+        //exports.minHeight = _createImageSizeFn('高度', '<');
+        //exports.maxHeight = _createImageSizeFn('高度', '>');
     };
 
-    //// 允许文件类型
-    //exports.accept = function (ruleValue) {
-    //    return function (files, done) {
-    //        var invalidIndexs = [];
-    //        var isMultiple = _isMultiple(files);
-    //
-    //        if (!isMultiple) {
-    //            files = [files];
-    //        }
-    //
-    //        dato.each(files, function (index, file) {
-    //            if (file && file.type && !string.glob(file.type, ruleValue, true)) {
-    //                invalidIndexs.push(index + 1);
-    //            }
-    //        });
-    //
-    //        done(invalidIndexs.length ? '${path}' +
-    //        (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
-    //        '文件类型不合法' : null);
-    //    };
-    //};
 
-    //exports.minSize = _createFileSize('<');
-    //exports.maxSize = _createFileSize('>');
-    //exports.minWidth = _createImageSizeFn('宽度', '<');
-    //exports.maxWidth = _createImageSizeFn('宽度', '>');
-    //exports.minHeight = _createImageSizeFn('高度', '<');
-    //exports.maxHeight = _createImageSizeFn('高度', '>');
-
+    // ====================================================================================
+    // ====================================================================================
     // ====================================================================================
 
 
