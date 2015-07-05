@@ -20,10 +20,10 @@ define(function (require, exports, module) {
     //    return value > 20;
     //}, '${path}怎么能小于20呢，呵呵');
 
-    validation.on('error', function (err) {
+    validation.on('error', function (err, path) {
         var lis = '';
 
-
+        console.log(err, path);
     });
 
     validation.on('success', function () {

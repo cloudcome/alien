@@ -65,6 +65,7 @@ define(function (require, exports, module) {
 
             the._options = dato.extend({}, defaults, options);
             the._$form = selector.query($form)[0];
+            the._pathMap = {};
             the.update();
             the._initEvent();
         },
@@ -79,7 +80,10 @@ define(function (require, exports, module) {
 
             the._$submit = selector.query(the._options.submitSelector, the._$form)[0];
             the._validation = new Validation(the._options);
-            the._validation.pipe(the);
+            the._validation.pipe(the, ['!error']);
+            the._validation.on('error', function (err, path) {
+                the.emit('error', err, the._pathMap[path]);
+            });
             the._parseItems();
 
             return the;
@@ -227,15 +231,14 @@ define(function (require, exports, module) {
         _parseItems: function () {
             var the = this;
             var options = the._options;
-            var parseName = {};
 
             the._items = [];
             the._$items = selector.query(options.itemSelector, the._$form);
             dato.each(the._$items, function (i, $item) {
                 var name = $item.name;
 
-                if (!parseName[name]) {
-                    parseName[name] = 1;
+                if (!the._pathMap[name]) {
+                    the._pathMap[name] = $item;
                     the._parseRules($item);
                 }
             });
