@@ -66,7 +66,7 @@ define(function (require, exports, module) {
          * @returns {*}
          */
         getAlias: function (path) {
-            return this._aliasMap[path] || path;
+            return this._aliasMap[path];
         },
 
 

@@ -33,7 +33,6 @@ define(function (require, exports, module) {
         textarea: 1,
         select: 1
     };
-    var html5Rules = ['required', 'min', 'max', 'step'];
     var REG_LABEL = /^([^:：]*)/;
     var defaults = {
         // true: 返回单个错误对象
@@ -321,8 +320,14 @@ define(function (require, exports, module) {
                 var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
 
                 if ($label) {
-                    the._validation.setAlias(path, (attribute.text($label).match(REG_LABEL) || ['', ''])[1].trim());
+                    var alias = (attribute.text($label).match(REG_LABEL) || ['', ''])[1].trim();
+
+                    the._validation.setAlias(path, alias);
                 }
+            }
+
+            if (!the._validation.getAlias(path)) {
+                the._validation.setAlias(path, $item.placeholder);
             }
         },
 

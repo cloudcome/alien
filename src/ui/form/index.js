@@ -47,12 +47,22 @@ define(function (require, exports, module) {
         dataEqual: ':',
         // 验证的表单项目选择器
         inputSelector: 'input,select,textarea',
-        formItemSelector: '.form-item',
-        formSubmitSelector: '.form-submit',
-        formItemMsgClass: 'form-msg',
-        formItemSuccessClass: 'has-success',
-        formItemErrorClass: 'has-error',
-        form: ''
+        // 表单项目选择器
+        itemSelector: '.form-item',
+        // 表单提交选择器
+        submitSelector: '.form-submit',
+        // 验证消息类
+        itemMsgClass: 'form-msg',
+        // 验证合法时，添加的样式类
+        itemSuccessClass: 'has-success',
+        // 验证非法时，添加的样式类
+        itemErrorClass: 'has-error',
+        // 验证合法时，显示消息
+        validMsg: '填写合法',
+        // 验证非法时，是否自动聚焦
+        invalidAutoFocus: true,
+        // 表单输入框验证事件
+        inputValidateEvent: 'input change'
     };
     var Form = ui.create({
         constructor: function ($form, options) {
@@ -100,8 +110,16 @@ define(function (require, exports, module) {
                     the.submit();
                 });
             } else {
-                event.on(the._$form, 'click', options.formSubmitSelector, the.submit.bind(the));
+                event.on(the._$form, 'click', options.submitSelector, the.submit.bind(the));
             }
+
+            if(options.inputValidateEvent){
+                event.on(the._$form, options.inputValidateEvent, options.inputSelector, function () {
+                    the._validation.validate(this);
+                });
+            }
+
+            var $firstInvalidInput = null;
 
             the._validation
                 .on('valid', function ($input) {
@@ -109,6 +127,20 @@ define(function (require, exports, module) {
                 })
                 .on('invalid', function (err, $input) {
                     the._setMsg($input, err);
+
+                    if (!$firstInvalidInput) {
+                        $firstInvalidInput = $input;
+                    }
+                })
+                .on('error', function () {
+                    controller.nextFrame(function () {
+                        try {
+                            $firstInvalidInput.focus();
+                            $firstInvalidInput = null;
+                        } catch (err) {
+                            // ignore
+                        }
+                    });
                 });
         },
 
@@ -132,15 +164,15 @@ define(function (require, exports, module) {
         _setMsg: function ($input, err) {
             var the = this;
             var options = the._options;
-            var $item = selector.closest($input, options.formItemSelector)[0];
+            var $item = selector.closest($input, options.itemSelector)[0];
             var $msg = the._msgMap[$input.name];
 
             if (!$msg) {
-                $msg = selector.query('.' + options.formItemMsgClass, $item)[0];
+                $msg = selector.query('.' + options.itemMsgClass, $item)[0];
 
                 if (!$msg) {
                     $msg = modification.create('div', {
-                        class: options.formItemMsgClass
+                        class: options.itemMsgClass
                     });
                     modification.insert($msg, $item);
                 }
@@ -149,14 +181,14 @@ define(function (require, exports, module) {
             }
 
             if (err) {
-                attribute.removeClass($item, options.formItemSuccessClass);
-                attribute.addClass($item, options.formItemErrorClass);
+                attribute.removeClass($item, options.itemSuccessClass);
+                attribute.addClass($item, options.itemErrorClass);
             } else {
-                attribute.removeClass($item, options.formItemErrorClass);
-                attribute.addClass($item, options.formItemSuccessClass);
+                attribute.removeClass($item, options.itemErrorClass);
+                attribute.addClass($item, options.itemSuccessClass);
             }
 
-            attribute.html($msg, err ? err.message : '');
+            attribute.html($msg, err ? err.message : options.validMsg);
         }
     });
 
