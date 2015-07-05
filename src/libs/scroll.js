@@ -33,7 +33,6 @@ define(function (require, exports, module) {
     var doc = win.document;
     var $html = doc.documentElement;
     var $body = doc.body;
-    var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
     // 存储被监听滚动的元素
     var listenElements = [];
     var defaults = {};
@@ -256,7 +255,7 @@ define(function (require, exports, module) {
                 the._$container[alienKey + '-ret'] = {t: scrollTop, l: scrollLeft};
             });
 
-            win[requestAnimationFrame](the._onscroll, the);
+            controller.nextFrame(the._onscroll, the);
         },
 
 

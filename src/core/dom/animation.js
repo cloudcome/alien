@@ -65,7 +65,7 @@ define(function (require, exports, module) {
     var propKeyframesKey = 'keyframes-queue';
     var propScrollToKey = 'scrollto-queue';
     var win = window;
-    var requestAnimationFrame = compatible.html5('requestAnimationFrame', win);
+
     /**
      * 获取 prop
      * @param $ele
@@ -139,7 +139,7 @@ define(function (require, exports, module) {
                     transitionProperty: ''
                 });
                 event.un($ele, transitionendEventType, onend);
-                win[requestAnimationFrame](next);
+                controller.nextFrame(next);
             };
 
             event.on($ele, transitionendEventType, onend);
@@ -156,7 +156,7 @@ define(function (require, exports, module) {
                     });
                 });
             } else {
-                win[requestAnimationFrame](function () {
+                controller.nextFrame(function () {
                     attribute.css($ele, fixTo);
                     next();
                 });
@@ -247,12 +247,12 @@ define(function (require, exports, module) {
                     animationIterationCount: '',
                     animationDirection: ''
                 });
-                win[requestAnimationFrame](next);
+                controller.nextFrame(next);
             };
 
             var timeid = setTimeout(onend, options.duration + options.delay + 100);
             event.on($ele, animationendEventType, onend);
-            win[requestAnimationFrame](function () {
+            controller.nextFrame(function () {
                 attribute.css($ele, css);
             });
         };

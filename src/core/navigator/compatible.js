@@ -58,15 +58,6 @@ define(function (require, exports, module) {
 
         html5Key = find ? html5Key : undefined;
 
-        if (!html5Key && standard === 'requestAnimationFrame') {
-            html5Key = standard;
-            parent[standard] = function (callback) {
-                timeid = setTimeout(function () {
-                    callback();
-                }, 1000 / 60);
-            };
-        }
-
         return html5Key;
     };
 
