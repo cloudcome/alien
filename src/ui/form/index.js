@@ -106,7 +106,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if(the._isForm){
+            if (the._isForm) {
                 the._xhrOptions = {
                     url: the._$form.action
                 };
@@ -166,7 +166,8 @@ define(function (require, exports, module) {
                             // ignore
                         }
                     });
-                });
+                })
+                .on('success')
         },
 
 
@@ -231,5 +232,33 @@ define(function (require, exports, module) {
         controller.nextFrame(function () {
             modification.remove($form);
         });
+    }
+
+
+    /**
+     * URL 编码
+     * @param str {String}
+     * @returns {string}
+     * @private
+     */
+    function _encode(str){
+        return encodeURIComponent(str);
+    }
+
+
+    /**
+     * 请求数据 URL 编码
+     * @param body {Object}
+     * @returns {string}
+     * @private
+     */
+    function _urlencode(body) {
+        var list = [];
+
+        dato.each(body, function (key, val) {
+            list.push(_encode(key) + '=' + _encode(val));
+        });
+
+        return list.join('&');
     }
 });

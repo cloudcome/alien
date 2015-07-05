@@ -181,16 +181,17 @@ define(function (require, exports, module) {
         /**
          * 单独验证某个输入对象
          * @param [$ele] {Object} 输入对象，如果为空则验证全部
+         * @param [callback] {Function} 回调
          * @returns {ValidationUI}
          */
-        validate: function ($ele) {
+        validate: function ($ele, callback) {
             var the = this;
             var data = the.getData($ele);
 
             if ($ele) {
-                the._validation.validateOne(data);
+                the._validation.validateOne(data, callback);
             } else {
-                the._validation.validateAll(data);
+                the._validation.validateAll(data, callback);
             }
 
             return the;
