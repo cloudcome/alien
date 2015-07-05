@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');
     var typeis = require('../../utils/typeis.js');
+    var qs = require('../../utils/querystring.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -212,7 +213,7 @@ define(function (require, exports, module) {
 
                 //case 'application/x-www-form-urlencoded':
                 default:
-                    body = _urlencode(data);
+                    body = qs.stringify(data);
             }
 
             var options = {
@@ -278,6 +279,8 @@ define(function (require, exports, module) {
     module.exports = Form;
 
     // ==============================================================================
+    // ==============================================================================
+    // ==============================================================================
 
     /**
      * 检测 form button 是否支持 submit
@@ -297,33 +300,5 @@ define(function (require, exports, module) {
         controller.nextFrame(function () {
             modification.remove($form);
         });
-    }
-
-
-    /**
-     * URL 编码
-     * @param str {String}
-     * @returns {string}
-     * @private
-     */
-    function _encode(str) {
-        return encodeURIComponent(str);
-    }
-
-
-    /**
-     * 请求数据 URL 编码
-     * @param data {Object}
-     * @returns {string}
-     * @private
-     */
-    function _urlencode(data) {
-        var list = [];
-
-        dato.each(data, function (key, val) {
-            list.push(_encode(key) + '=' + _encode(val));
-        });
-
-        return list.join('&');
     }
 });
