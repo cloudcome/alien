@@ -63,10 +63,10 @@
 <form action="./form.html" id="form" method="get" enctype="application/x-www-form-urlencoded" class="form">
     <ul class="form-items">
         <li class="form-item">
-            <input type="text" name="username" id="username" placeholder="用户名" required/>
+            <input type="text" name="username" id="username" placeholder="用户名" required data-validation="minLength:3,maxLength:6"/>
         </li>
         <li class="form-item">
-            <input type="text" name="password" id="password" placeholder="密码" required/>
+            <input type="text" name="password" id="password" placeholder="密码" required data-validation="minLength:3,maxLength:6"/>
         </li>
         <li>
             <button type="submit">登录</button>

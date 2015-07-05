@@ -122,6 +122,7 @@ define(function (require, exports, module) {
             var $firstInvalidInput = null;
 
             the._validation
+                .pipe(the)
                 .on('valid', function ($input) {
                     the._setMsg($input);
                 })
