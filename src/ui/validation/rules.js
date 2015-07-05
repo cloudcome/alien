@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 规则
  * @author ydr.me
  * @create 2015-07-02 14:28
  */
@@ -108,7 +108,6 @@ define(function (require, exports, module) {
             done(value <= ruleValue ? null : '${path}不能大于' + ruleValue);
         };
     };
-
 
     // 允许文件类型
     exports.accept = function (ruleValue) {
