@@ -178,7 +178,7 @@ define(function (require, exports, module) {
         /**
          * 将所有的事件派发到目标
          * @param target {Object} 目标
-         * @param [emitters] {Array} 传递的事件数组，默认为全部
+         * @param [emitters] {Array} 传递的事件数组，默认为全部，开头为“!”的将会被反选
          * @returns {this}
          */
         pipe: function (target, emitters) {

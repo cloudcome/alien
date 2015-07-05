@@ -78,17 +78,6 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$submit = selector.query(the._options.submitSelector, the._$form)[0];
-
-            //if (!the._$submit) {
-            //    the._$submit = modification.create('button', {
-            //        type: 'submit',
-            //        style: {
-            //            display: 'none'
-            //        }
-            //    });
-            //    modification.insert(the._$submit, the._$form);
-            //}
-
             the._validation = new Validation(the._options);
             the._validation.pipe(the);
             the._parseItems();

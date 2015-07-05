@@ -32,7 +32,7 @@ define(function (require, exports, module) {
         // false: 返回错误对象组成的数组
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
-        isBreakOnInvalid: typeis.window(window) ? false : true,
+        breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${path}字段不合法'
     };
     var Validation = klass.extends(Emitter).create({
@@ -226,7 +226,7 @@ define(function (require, exports, module) {
                         path: the._aliasMap[path] || path
                     }));
 
-                    if (options.isBreakOnInvalid) {
+                    if (options.breakOnInvalid) {
                         /**
                          * 验证失败
                          * @event error
@@ -237,7 +237,7 @@ define(function (require, exports, module) {
                     }
                 });
 
-            if (options.isBreakOnInvalid) {
+            if (options.breakOnInvalid) {
                 hd.follow(complete);
             } else {
                 hd.together(complete);
@@ -277,7 +277,7 @@ define(function (require, exports, module) {
                     rule.call(the, data[path], next);
                 })
                 .catch(function (err) {
-                    if (!options.isBreakOnInvalid) {
+                    if (!options.breakOnInvalid) {
                         err = new Error(string.assign(err || options.defaultMsg, {
                             path: the._aliasMap[path] || path
                         }));
