@@ -34,7 +34,7 @@ define(function (require, exports, module) {
      *     // done 验证结束回调
      *     minLength: function (val, done, param0, param1, ...) {
      *        // done(null); done(null)表示没有错误
-     *        // done('${path}的长度不足${0}字符')
+     *        // done('${path}的长度不足xx字符')
      *     }
      * }
      */
