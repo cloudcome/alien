@@ -58,6 +58,7 @@ define(function (require, exports, module) {
 
             if (arguments.length === 1) {
                 the._emitterCallbacks.push(listener);
+                return the;
             }
 
             _middleware(eventType, function (et) {
@@ -153,13 +154,19 @@ define(function (require, exports, module) {
             var emitArgs = dato.toArray(arguments).slice(1);
             var ret = true;
 
-            if (!the._emitterListener) {
-                throw 'can not found emitterListener property';
-            }
-
             _middleware(eventType, function (et) {
                 if (the._emitterListener[et]) {
                     var time = Date.now();
+
+                    dato.each(the._emitterCallbacks, function (index, callback) {
+                        the.alienEmitter = {
+                            type: et,
+                            timestamp: time,
+                            id: alienId++
+                        };
+
+                        callback.apply(the, emitArgs);
+                    });
 
                     dato.each(the._emitterListener[et], function (index, listener) {
                         the.alienEmitter = {
@@ -180,8 +187,23 @@ define(function (require, exports, module) {
     });
 
 
-    Emitter.transport = function (from, to) {
+    /**
+     * 事件传输
+     * @param source {Object} 事件来源
+     * @param target {Object} 事件目的
+     * @param [types] {Array} 允许和禁止的事件类型
+     */
+    Emitter.pipe = function (source, target, types) {
+        source.on(function () {
+            var type = this.alienEmitter.type;
 
+            if (_matches(type, types)) {
+                var args = dato.toArray(arguments);
+
+                args.unshift(this.alienEmitter.type);
+                target.emit.apply(target, args);
+            }
+        });
     };
 
 
@@ -203,11 +225,13 @@ define(function (require, exports, module) {
     /**
      * 判断是否匹配
      * @param name {String} 待匹配字符串
-     * @param names {Array} 被匹配字符串数组
+     * @param [names] {Array} 被匹配字符串数组
      * @returns {boolean}
      * @private
      */
     function _matches(name, names) {
+        names = names || [];
+
         if (!names.length) {
             return true;
         }
