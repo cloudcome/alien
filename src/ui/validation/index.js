@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
     require('../../libs/validation-rules.js')(Validation);
+    require('./validation-rules.js')(Validation);
     var Emitter = require('../../libs/emitter.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
