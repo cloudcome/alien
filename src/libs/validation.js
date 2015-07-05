@@ -112,7 +112,7 @@ define(function (require, exports, module) {
             var index = the._validateIndexMap[path];
 
             if (typeis.undefined(index)) {
-                the._validateIndexMap[path] = the._validateList.length;
+                index = the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
                     rules: []
@@ -305,15 +305,15 @@ define(function (require, exports, module) {
             the.emit('beforevalidate', path);
             howdo
                 // 遍历验证规则
-                .each(rules, function (j, ruleName, next) {
-                    var rule = the._validationMap[ruleName] || validationMap[ruleName];
+                .each(rules, function (j, rule, next) {
+                    var fn = the._validationMap[rule.name] || validationMap[rule.name];
 
-                    if (!rule) {
-                        throw 'rule `' + ruleName + '` is not found';
+                    if (!fn) {
+                        throw 'rule `' + rule.name + '` is not found';
                     }
 
-                    the.emit('validate', path, ruleName);
-                    rule.call(the, data[path], next);
+                    the.emit('validate', path, rule.name);
+                    fn.call(the, data[path], rule.param, next);
                 })
                 .try(function () {
                     /**
@@ -402,17 +402,20 @@ define(function (require, exports, module) {
 
     Validation.defaults = defaults;
 
-    Validation.addRule('number', /^\d+$/, '${path}必须是数字');
+    //Validation.addRule('number', /^\d+$/, '${path}必须是数字');
+    Validation.addRule('number', function (val, param, done) {
+        done(/^\d+$/.test(val) ? null : '${path}必须是数字');
+    });
 
-    Validation.addRule('mobile', /^1\d{10}$/, '${path}必须是手机号');
-
-    Validation.addRule('email', function (val) {
-        return typeis.email(val);
-    }, '${path}必须是邮箱');
-
-    Validation.addRule('url', function (val) {
-        return typeis.url(val);
-    }, '${path}必须是 url 地址');
+    //Validation.addRule('mobile', /^1\d{10}$/, '${path}必须是手机号');
+    //
+    //Validation.addRule('email', function (val) {
+    //    return typeis.email(val);
+    //}, '${path}必须是邮箱');
+    //
+    //Validation.addRule('url', function (val) {
+    //    return typeis.url(val);
+    //}, '${path}必须是 url 地址');
 
     module.exports = Validation;
 
