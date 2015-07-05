@@ -64,7 +64,6 @@ define(function (require, exports, module) {
     var propTransitionKey = 'transition-queue';
     var propKeyframesKey = 'keyframes-queue';
     var propScrollToKey = 'scrollto-queue';
-    var win = window;
 
     /**
      * 获取 prop
@@ -147,7 +146,7 @@ define(function (require, exports, module) {
             var timeid = setTimeout(onend, options.duration + options.delay + 100);
 
             if (see.visibility($ele) === 'visible') {
-                win[requestAnimationFrame](function () {
+                controller.nextFrame(function () {
                     attribute.css($ele, {
                         transitionDuration: durationVal.join(','),
                         transitionDelay: delayVal.join(','),
@@ -169,7 +168,7 @@ define(function (require, exports, module) {
                 transitionProperty: ''
             });
 
-            win[requestAnimationFrame](function () {
+            controller.nextFrame(function () {
                 attribute.css($ele, to);
             });
         };
@@ -357,7 +356,7 @@ define(function (require, exports, module) {
                     return next();
                 }
 
-                win[requestAnimationFrame](function () {
+                controller.nextFrame(function () {
                     pastTime = Date.now() - beginTimestamp;
 
                     var easing = eeeing.get(options.easing);
