@@ -236,7 +236,6 @@ define(function (require, exports, module) {
             };
 
             var onend = function () {
-                clearTimeout(timeid);
                 event.un($ele, animationendEventType, onend);
                 attribute.css($ele, {
                     animationName: '',
@@ -249,7 +248,6 @@ define(function (require, exports, module) {
                 controller.nextFrame(next);
             };
 
-            var timeid = setTimeout(onend, options.duration + options.delay + 100);
             event.on($ele, animationendEventType, onend);
             controller.nextFrame(function () {
                 attribute.css($ele, css);
