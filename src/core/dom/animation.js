@@ -65,6 +65,7 @@ define(function (require, exports, module) {
     var propKeyframesKey = 'keyframes-queue';
     var propScrollToKey = 'scrollto-queue';
 
+
     /**
      * 获取 prop
      * @param $ele
@@ -225,6 +226,10 @@ define(function (require, exports, module) {
     // 帧动画
     var keyframes = function ($ele, name, options) {
         return function (next) {
+            if (options.count === -1) {
+                options.count = 'infinite';
+            }
+
             var easing = eeeing.get(options.easing).toCSS();
             var css = {
                 animationName: name,
@@ -271,7 +276,7 @@ define(function (require, exports, module) {
      * @param [options.delay=0] {Number} 开始动画延迟时间
      * @param [options.easing="in-out"] {String} 动画缓冲类型
      * @param [options.count=1] {Number} 动画次数
-     * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate
+     * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate、reverse、alternate-reverse
      * @param [callback] {Function} 帧动画动画运行完毕回调
      */
     exports.keyframes = function ($ele, name, options, callback) {

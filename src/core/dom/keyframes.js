@@ -16,6 +16,7 @@ define(function (require, exports, module) {
 
     var allocation = require('../../utils/allocation.js');
     var attribute = require('./attribute.js');
+    var selector = require('./selector.js');
     var modification = require('./modification.js');
     var typeis = require('./../../utils/typeis.js');
     var dato = require('./../../utils/dato.js');
@@ -27,6 +28,10 @@ define(function (require, exports, module) {
      * @type {{}}
      */
     var keyframesMap = {};
+    var $style = modification.create('style');
+    var head = selector.query('head')[0] || document.documentElement;
+
+    modification.insert($style, head);
 
 
     /**
@@ -76,7 +81,8 @@ define(function (require, exports, module) {
             style += '@' + prefix + 'keyframes ' + name + '{' + mainStyle + '}';
         });
 
-        keyframesMap[name] = modification.importStyle(style, keyframesMap[name], true);
+        keyframesMap[name] = style;
+        modification.importStyle(style, $style, true);
 
         return name;
     };
@@ -100,12 +106,6 @@ define(function (require, exports, module) {
      * @returns {String}
      */
     exports.getStyle = function (name) {
-        var $style = keyframesMap[name];
-
-        if (!$style) {
-            return '';
-        }
-
-        return $style.innerHTML;
+        return keyframesMap[name];
     };
 });
