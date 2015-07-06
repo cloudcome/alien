@@ -402,9 +402,10 @@ define(function (require, exports, module) {
             stopPropagation: 'isPropagationStopped'
         };
 
-        dato.each(eve, function (key, val) {
-            buildEve[key] = val;
-        });
+        // !! 这里必须用 for 循环来遍历 eve 的所有可读属性，包括静态和继承的 !!
+        for (var i in eve) {
+            buildEve[i] = eve[i];
+        }
 
         dato.each(eventMethods, function (key, val) {
             var eventMethod = eve[key];

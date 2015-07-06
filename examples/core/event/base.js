@@ -13,7 +13,7 @@ define(function (require) {
         console.log(eve);
 
         if(this.className === 'btn2'){
-            return !1;
+            return false;
         }
     });
 
@@ -28,7 +28,7 @@ define(function (require) {
         console.log(this);
         console.log(eve);
 
-        return !1;
+        return false;
     });
 
     event.once(btn3, 'click', function(eve){
