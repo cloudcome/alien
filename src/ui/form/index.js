@@ -78,6 +78,7 @@ define(function (require, exports, module) {
             the._isForm = the._$form.tagName === 'FORM';
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
+            Emitter.pipe(the._validation, the);
             the._msgMap = {};
             the._initNode();
             the._initEvent();
