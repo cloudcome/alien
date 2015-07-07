@@ -25,8 +25,12 @@
             box-sizing: border-box;
         }
 
+        #form{
+            margin-top: 500px;
+        }
+
         .form-item{
-            margin-bottom: 20px;
+            margin-bottom: 200px;
         }
 
         .form-items{
@@ -64,9 +68,11 @@
     <ul class="form-items">
         <li class="form-item">
             <input type="text" name="username" id="username" placeholder="用户名" required data-validation="minLength:3,maxLength:6"/>
+            <p class="form-msg"></p>
         </li>
         <li class="form-item">
             <input type="text" name="password" id="password" placeholder="密码" required data-validation="minLength:3,maxLength:6"/>
+            <p class="form-msg"></p>
         </li>
         <li class="form-item">
             <label for="checkbox1"><input type="checkbox" name="checkbox" id="checkbox1" value="1" data-validation="required,minLength:2,maxLength:3"/>checkbox1</label>
@@ -74,9 +80,11 @@
             <label for="checkbox3"><input type="checkbox" name="checkbox" id="checkbox3" value="3"/>checkbox3</label>
             <label for="checkbox4"><input type="checkbox" name="checkbox" id="checkbox4" value="4"/>checkbox4</label>
             <label for="checkbox5"><input type="checkbox" name="checkbox" id="checkbox5" value="5"/>checkbox5</label>
+            <p class="form-msg"></p>
         </li>
         <li>
             <button type="submit">登录</button>
+            <p class="form-msg"></p>
         </li>
     </ul>
 </form>

@@ -32,6 +32,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');
     var xhr = require('../../core/communication/xhr.js');
+    var animation = require('../../core/dom/animation.js');
     var Validation = require('../validation/index.js');
     var Emitter = require('../../libs/emitter.js');
     var formButtonCanSubmit = false;
@@ -69,7 +70,9 @@ define(function (require, exports, module) {
         // 表单输入框验证事件
         inputValidateEvent: 'input change',
         // 是否调试模式，调试模式则不会提交表单
-        debug: false
+        debug: false,
+        focusDuration: 345,
+        focusEasing: 'swing'
     };
     var Form = ui.create({
         constructor: function ($form, options) {
@@ -121,6 +124,30 @@ define(function (require, exports, module) {
             var the = this;
 
             the._validation.addRule.apply(the._validation, arguments);
+
+            return the;
+        },
+
+
+        /**
+         * 聚焦表单元素
+         * @param $ele {Object} 元素
+         */
+        focus: function ($ele) {
+            var the = this;
+            var options = the._options;
+
+            if($ele){
+                animation.scrollTo(window, {
+                    x: attribute.left($ele),
+                    y: attribute.top($ele)
+                }, {
+                    duration: options.focusDuration,
+                    easing: options.easing
+                }, function () {
+                    $ele.focus();
+                });
+            }
 
             return the;
         },
@@ -194,14 +221,7 @@ define(function (require, exports, module) {
                 })
                 .on('success', the._submit.bind(the))
                 .on('error', function () {
-                    controller.nextFrame(function () {
-                        try {
-                            $firstInvalidInput.focus();
-                            $firstInvalidInput = null;
-                        } catch (err) {
-                            // ignore
-                        }
-                    });
+                    the.focus($firstInvalidInput);
                 });
         },
 
