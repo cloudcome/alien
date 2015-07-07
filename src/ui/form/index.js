@@ -69,6 +69,7 @@ define(function (require, exports, module) {
         invalidAutoFocus: true,
         // 表单输入框验证事件
         inputValidateEvent: 'input change',
+        contentType: 'multipart/form-data',
         // 是否调试模式，调试模式则不会提交表单
         debug: false,
         focusDuration: 345,
@@ -159,7 +160,7 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            //var options = the._options;
+            var options = the._options;
 
             if (the._isForm) {
                 the._xhrOptions = {
@@ -173,7 +174,7 @@ define(function (require, exports, module) {
                 the._xhrOptions = {
                     url: location.href,
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': options.contentType
                     },
                     method: 'post'
                 };
