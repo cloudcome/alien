@@ -20,6 +20,13 @@ define(function (require, exports, module) {
 
     module.exports = function (Validation) {
         Validation.addRule('type', function (val, done, param0) {
+            var isRequired = this.getRuleParams(this.path, 'required');
+
+            // 非必填并且是空值
+            if (!isRequired && !val) {
+                return done(null);
+            }
+
             switch (param0) {
                 case 'number':
                     return done(/^\d+$/.test(val) ? null : '${path}必须是数字');
@@ -82,6 +89,13 @@ define(function (require, exports, module) {
             return function (val, done, param0) {
                 val = val || '';
 
+                var isRequired = this.getRuleParams(this.path, 'required');
+
+                // 非必填并且是空值
+                if (!isRequired && !val) {
+                    return done(null);
+                }
+
                 if (!REG_NUMBERIC.test(val)) {
                     return done('${path}必须为数值格式');
                 }
@@ -101,6 +115,13 @@ define(function (require, exports, module) {
 
         Validation.addRule('step', function (val, done, param0) {
             val = val || '';
+
+            var isRequired = this.getRuleParams(this.path, 'required');
+
+            // 非必填并且是空值
+            if (!isRequired && !val) {
+                return done(null);
+            }
 
             if (!REG_NUMBERIC.test(val)) {
                 return done('${path}必须为数值格式');

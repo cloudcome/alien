@@ -29,6 +29,13 @@ define(function (require, exports, module) {
 
     module.exports = function (Validation) {
         Validation.addRule('accept', function (val, done, param0) {
+            var isRequired = this.getRuleParams(this.path, 'required');
+
+            // 非必填并且是空值
+            if (!isRequired && (!val || !val.length)) {
+                return done(null);
+            }
+
             var invalidIndexs = [];
             var isMultiple = _isMultiple(val);
 
@@ -74,6 +81,13 @@ define(function (require, exports, module) {
                 var isMultiple = _isMultiple(val);
 
                 if (!isMultiple) {
+                    var isRequired = this.getRuleParams(this.path, 'required');
+
+                    // 单值类型 && 空值 && 可选
+                    if(!val && !isRequired){
+                        return done();
+                    }
+
                     val = [val];
                 }
 
@@ -126,6 +140,13 @@ define(function (require, exports, module) {
                 if (isMultiple) {
                     val = dato.toArray(val);
                 } else {
+                    var isRequired = this.getRuleParams(this.path, 'required');
+
+                    // 单值类型 && 空值 && 可选
+                    if(!val && !isRequired){
+                        return done();
+                    }
+
                     val = [val];
                 }
 
