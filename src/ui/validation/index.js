@@ -228,6 +228,19 @@ define(function (require, exports, module) {
         },
 
 
+        ///**
+        // * 获取字段的表单类型
+        // * @param path {String} 表单
+        // * @returns {String}
+        // */
+        //getType: function (path) {
+        //    var the = this;
+        //    var $ele = the._pathMap[path];
+        //
+        //    return $ele ? the._getType($ele) : 'unknow';
+        //},
+
+
         /**
          * 销毁实例
          */

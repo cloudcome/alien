@@ -245,7 +245,7 @@ define(function (require, exports, module) {
             var data = the._validation.getData();
             var body;
 
-            switch (the._xhrOptions.headers['content-type']) {
+            switch (the._xhrOptions.headers['content-type'] || options.contentType) {
                 case 'multipart/form-data':
                     if (the._isForm) {
                         body = new win.FormData(the._$form);

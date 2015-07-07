@@ -44,10 +44,11 @@ define(function (require, exports, module) {
 
 
         Validation.addRule('required', function (val, done) {
+            var isMultiple = _isMultiple(val);
             var boolean = typeis(val) === 'file' ? true :
-            (_isMultiple(val) ? val : (val || '')).length > 0;
+            (isMultiple ? val : (val || '')).length > 0;
 
-            done(boolean ? null : '${path}不能为空');
+            done(boolean ? null : isMultiple ? '请选择${path}' : '${path}不能为空');
         });
 
 
