@@ -77,7 +77,7 @@ define(function (require, exports, module) {
             the._options.buttons = the._options.buttons || [];
             the.id = alienIndex++;
             the._isReady = false;
-            msgMap[the.id] = the;
+            delete(msgMap[the.id]);
             the._init();
         },
 
