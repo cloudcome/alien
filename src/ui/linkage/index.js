@@ -187,16 +187,18 @@ define(function (require, exports, module) {
             var options = the._options;
             var value = the._values[index - 1];
 
+            the._currentIndex = index;
+
             // 未选择时，回到初始状态
             if (index > 0 && !value) {
-                return the.emit('list', index);
+                return the.emit('list');
             }
 
             if (index && the._cache[index - 1]) {
                 var cacheList = the._cache[index - 1][value];
 
                 if (cacheList) {
-                    return the.emit('list', index, cacheList.slice(the._hasPlaceholder ? 1 : 0));
+                    return the.emit('list', cacheList.slice(the._hasPlaceholder ? 1 : 0));
                 }
             }
 
@@ -208,7 +210,11 @@ define(function (require, exports, module) {
 
             query[options.queryName] = index > 0 ? value : '';
             xhr.get(options.urls[index], query).on('success', function (list) {
-                the.emit('list', index, list);
+                if (the.emit('afterdata', list) === false) {
+                    return;
+                }
+
+                the.emit('list', list);
             }).on('error', function (err) {
                 the.emit('error', err);
             });
@@ -233,15 +239,15 @@ define(function (require, exports, module) {
 
         /**
          * 渲染 select option
-         * @param index {Number} 渲染的 select 索引值
          * @param [list] {Array} 渲染的数据列表
          * @returns {string}
          * @private
          */
-        _renderList: function (index, list) {
+        _renderList: function (list) {
             var the = this;
             var options = the._options;
             var selectOptions = '';
+            var index = the._currentIndex;
 
             the.emit('beforerender', index);
 
