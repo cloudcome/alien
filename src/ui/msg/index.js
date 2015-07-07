@@ -41,7 +41,9 @@ define(function (require, exports, module) {
     var tpl = new Template(template);
     var alienIndex = 0;
     var alienClass = 'alien-ui-msg';
-    var $body = document.body;
+    var doc = document;
+    var $body = doc.body;
+    var maybeMobile = 'ontouchend' in doc;
     var defaults = {
         width: '33%',
         minWidth: 300,
@@ -56,14 +58,11 @@ define(function (require, exports, module) {
         canDrag: true,
         isModal: true,
         duration: 123,
-        easing: {
-            open: 'ease-out-back',
-            resize: 'ease-out-back',
-            close: 'ease-in-back'
-        },
+        easing: 'swig',
         timeout: 0,
         autoFocus: true
     };
+    var msgMap = {};
     var Msg = ui.create({
         constructor: function (options) {
             var the = this;
@@ -78,6 +77,7 @@ define(function (require, exports, module) {
             the._options.buttons = the._options.buttons || [];
             the.id = alienIndex++;
             the._isReady = false;
+            msgMap[the.id] = the;
             the._init();
         },
 
@@ -236,6 +236,19 @@ define(function (require, exports, module) {
 
 
         /**
+         * 调整位置
+         * @returns {Msg}
+         */
+        resize: function () {
+            var the = this;
+
+            the.resize();
+
+            return the;
+        },
+
+
+        /**
          * 销毁实例
          */
         destroy: function () {
@@ -248,10 +261,24 @@ define(function (require, exports, module) {
                 if (the._mask) {
                     the._mask.destroy();
                 }
+
+                msgMap[the.id] = null;
             });
         }
     });
+    var inputSelector = 'input,textarea,select';
 
+    event.on(doc, 'focusin', inputSelector, function () {
+        dato.each(msgMap, function (id, msg) {
+            msg.resize();
+        });
+    });
+
+    event.on(doc, 'focusout', inputSelector, function () {
+        dato.each(msgMap, function (id, msg) {
+            msg.resize();
+        });
+    });
 
     /**
      * 实例化一个 Msg 交互框

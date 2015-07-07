@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var ui = require('../ui/index.js');
     var Msg = require('../ui/msg/index.js');
     var dato = require('../utils/dato.js');
+    var event = require('../core/event/base.js');
     var defaults = {
         width: 'auto',
         minWidth: 100,
