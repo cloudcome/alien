@@ -246,10 +246,14 @@ define(function (require, exports, module) {
 
             switch (the._xhrOptions.headers['content-type']) {
                 case 'multipart/form-data':
-                    body = new win.FormData();
-                    dato.each(data, function (name, val) {
-                        body.append(name, val);
-                    });
+                    if (the._isForm) {
+                        body = new win.FormData(the._$form);
+                    } else {
+                        body = new win.FormData();
+                        dato.each(data, function (name, val) {
+                            body.append(name, val);
+                        });
+                    }
                     break;
 
                 case 'text/plain':
@@ -265,7 +269,7 @@ define(function (require, exports, module) {
                     break;
 
                 default :
-                    body = data;
+                    body = JSON.stringify(data);
             }
 
             var ajaxOptions = {
