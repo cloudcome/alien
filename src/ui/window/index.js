@@ -121,17 +121,10 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 获取对话框要显示的位置
-         * @returns {{}}
-         * @private
-         */
-        _getPos: function () {
+        _getSize: function () {
             var the = this;
             var options = the._options;
-            var winW = attribute.width(window);
-            var winH = attribute.height(window);
-            var pos = {};
+            var size = {};
             var pre = attribute.css(the._$window, ['width', 'height']);
             var hasMask = selector.closest(the._$window, '.' + alienBaseClass + '-mask')[0];
 
@@ -144,16 +137,16 @@ define(function (require, exports, module) {
                 position: hasMask ? 'absolute' : 'fixed',
                 scale: 1
             });
-            pos.width = attribute.outerWidth(the._$window);
-            pos.height = attribute.outerHeight(the._$window);
+            size.width = attribute.outerWidth(the._$window);
+            size.height = attribute.outerHeight(the._$window);
             attribute.css(the._$window);
 
             if (options.width === 'height' && options.height === 'width') {
-                pos.width = pos.height = Math.max(pos.width, pos.height);
+                size.width = size.height = Math.max(size.width, size.height);
             } else if (options.width === 'height') {
-                pos.width = pos.height;
+                size.width = size.height;
             } else if (options.height === 'width') {
-                pos.height = pos.width;
+                size.height = size.width;
             }
 
             if (!REG_AUTO_OR_100_PERCENT.test(options.width)) {
@@ -164,15 +157,32 @@ define(function (require, exports, module) {
                 attribute.css(the._$window, 'height', pre.height);
             }
 
+            the._size = size;
+            return size;
+        },
+
+
+        /**
+         * 获取对话框要显示的位置
+         * @returns {{}}
+         * @private
+         */
+        _getPos: function () {
+            var the = this;
+            var options = the._options;
+            var winW = attribute.width(window);
+            var winH = attribute.height(window);
+            var pos = {};
+
             if (options.left === 'center') {
-                pos.left = (winW - pos.width) / 2;
+                pos.left = (winW - the._size.width) / 2;
                 pos.left = pos.left < 0 ? 0 : pos.left;
             } else if (options.left !== null) {
                 pos.left = options.left;
             }
 
             if (options.top === 'center') {
-                pos.top = (winH - pos.height) * 2 / 5;
+                pos.top = (winH - the._size.height) * 2 / 5;
                 pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
             } else if (options.top !== null) {
                 pos.top = options.top;
@@ -234,6 +244,7 @@ define(function (require, exports, module) {
                     return;
                 }
 
+                the._getSize();
                 var to = the._getPos();
 
                 the.visible = true;
@@ -284,6 +295,7 @@ define(function (require, exports, module) {
 
             dato.extend(true, options, size);
 
+            the._getSize();
             var to = the._getPos();
 
             /**
@@ -302,8 +314,43 @@ define(function (require, exports, module) {
                  * 窗口大小改变之后
                  * @event resize
                  */
-                the.emit('resize');
+                the.emit('afterresize');
                 callback.call(the);
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 调整位置
+         */
+        position: function (callback) {
+            var the = this;
+            var options = the._options;
+            var to = the._getPos();
+
+            /**
+             * 窗口位置改变之前
+             * @event beforeresize
+             */
+            if (the.emit('beforeposition') === false) {
+                return the;
+            }
+
+            animation.transition(the._$window, to, {
+                duration: options.duration,
+                easing: options.easing.resize
+            }, function () {
+                /**
+                 * 窗口位置改变之后
+                 * @event resize
+                 */
+                the.emit('afterposition');
+
+                if(typeis.function){
+                    callback.call(the);
+                }
             });
 
             return the;

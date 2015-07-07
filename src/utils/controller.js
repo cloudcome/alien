@@ -40,12 +40,8 @@ define(function (require, exports, module) {
 
         wait = wait || 123;
 
-        if (typeis.undefined(isExecAtFirstTime)) {
-            isExecAtFirstTime = true;
-        }
-
         return function () {
-            if (isExecAtFirstTime && !hasExec) {
+            if (isExecAtFirstTime !== false && !hasExec) {
                 hasExec = true;
                 fn.apply(this, arguments);
             }
@@ -79,10 +75,6 @@ define(function (require, exports, module) {
 
         wait = wait || 123;
 
-        if (typeis.undefined(isExecAtFirstTime)) {
-            isExecAtFirstTime = true;
-        }
-
         return function () {
             var the = this;
             var args = arguments;
@@ -91,7 +83,7 @@ define(function (require, exports, module) {
                 clearTimeout(timer);
             }
 
-            if (isExecAtFirstTime && !hasExec) {
+            if (isExecAtFirstTime !== false && !hasExec) {
                 hasExec = true;
                 fn.apply(this, arguments);
             }
