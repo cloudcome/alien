@@ -57,7 +57,8 @@ define(function (require, exports, module) {
         breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${path}字段不合法',
         // 规则的 data 属性
-        dataAttribute: 'validation',
+        dataValidation: 'validation',
+        dataAlias: 'alias',
         // data 规则分隔符
         dataSep: ',',
         // data 规则等于符
@@ -280,7 +281,8 @@ define(function (require, exports, module) {
             var id = $item.id;
             var path = $item.name;
             var type = the._getType($item);
-            var validationStr = attribute.data($item, options.dataAttribute);
+            var validationStr = attribute.data($item, options.dataValidation);
+            var alias = attribute.data($item, options.dataAlias);
             var validationList = the._parseValidation(validationStr);
 
             // 规则顺序
@@ -318,17 +320,16 @@ define(function (require, exports, module) {
                     break;
             }
 
-            var hasAlias = false;
 
             validationList.forEach(function (validation) {
                 var validationName = validation.name;
                 var validationVals = validation.values;
-
-                if (validationName === 'alias') {
-                    the._validation.setAlias(path, validationVals.join(''));
-                    hasAlias = true;
-                    return;
-                }
+                //
+                //if (validationName === 'alias') {
+                //    the._validation.setAlias(path, validationVals.join(''));
+                //    hasAlias = true;
+                //    return;
+                //}
 
                 var args = [path, validationName];
 
@@ -336,9 +337,12 @@ define(function (require, exports, module) {
                 the._validation.addRule.apply(the._validation, args);
             });
 
-            var alias;
 
-            if (!hasAlias) {
+            if (alias) {
+                the._validation.setAlias(path, alias);
+            }
+
+            if (!alias) {
                 var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
 
                 if ($label) {
@@ -348,7 +352,7 @@ define(function (require, exports, module) {
                 }
             }
 
-            if (!the._validation.getAlias(path)) {
+            if (!alias && $item.placeholder) {
                 alias = ($item.placeholder.match(REG_ALIAS) || ['', ''])[1].trim();
 
                 if (alias) {
