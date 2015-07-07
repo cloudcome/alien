@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 表单
  * @author ydr.me
  * @create 2015-07-02 14:20
  */
@@ -7,7 +7,19 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/index
+     * @module ui/validation/
+     * @requires core/dom/selector
+     * @requires core/dom/attribute
+     * @requires core/dom/modification
+     * @requires core/event/touch
+     * @requires libs/validation
+     * @requires libs/validation-rules
+     * @requires ui/validation/validation-rules
+     * @requires libs/emitter
+     * @requires utils/dato
+     * @requires utils/typeis
+     * @requires utils/string
+     * @requires ui/
      */
 
     'use strict';
@@ -133,6 +145,8 @@ define(function (require, exports, module) {
                     case 'select':
                         if (isMultiple) {
                             data[path] = [];
+                        } else {
+                            data[path] = '';
                         }
 
                         dato.repeat($item.length, function (index) {
@@ -300,7 +314,7 @@ define(function (require, exports, module) {
                 case 'number':
                 case 'email':
                 case 'url':
-                    the._validation.addRule(path, type);
+                    the._validation.addRule(path, 'type', type);
                     break;
             }
 
