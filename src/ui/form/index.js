@@ -79,7 +79,7 @@ define(function (require, exports, module) {
             the._isForm = the._$form.tagName === 'FORM';
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
-            Emitter.pipe(the._validation, the);
+            Emitter.pipe(the._validation, the, ['!success', '!error']);
             the._msgMap = {};
             the._initNode();
             the._initEvent();
@@ -212,6 +212,7 @@ define(function (require, exports, module) {
          */
         _submit: function () {
             var the = this;
+            var options = the._options;
             var data = the._validation.getData();
             var body;
 
@@ -239,16 +240,16 @@ define(function (require, exports, module) {
                     body = data;
             }
 
-            var options = {
+            var ajaxOptions = {
                 url: the._xhrOptions.url,
                 method: the._xhrOptions.method.toLowerCase(),
                 headers: the._xhrOptions.headers
             };
 
-            if (options.method === 'get') {
-                options.query = body;
+            if (the._xhrOptions.method === 'get') {
+                ajaxOptions.query = body;
             } else {
-                options.body = body;
+                ajaxOptions.body = body;
             }
 
             if (the._xhr) {
@@ -256,6 +257,7 @@ define(function (require, exports, module) {
             }
 
             if (options.debug) {
+                console.log(ajaxOptions);
                 return;
             }
 
@@ -264,11 +266,11 @@ define(function (require, exports, module) {
              * @event beforerequest
              * @param options {Object} 请求参数
              */
-            if (the.emit('beforerequest', options) === false) {
+            if (the.emit('beforesubmit', ajaxOptions) === false) {
                 return;
             }
 
-            the._xhr = xhr.ajax(options);
+            the._xhr = xhr.ajax(ajaxOptions);
             Emitter.pipe(the._xhr, the);
         },
 
