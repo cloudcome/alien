@@ -302,7 +302,7 @@ define(function (require, exports, module) {
              * 窗口大小改变之前
              * @event beforeresize
              */
-            if (the.emit('beforeresize') === false) {
+            if (the.emit('beforeresize', the._size, to) === false) {
                 return the;
             }
 
@@ -334,7 +334,7 @@ define(function (require, exports, module) {
              * 窗口位置改变之前
              * @event beforeresize
              */
-            if (the.emit('beforeposition') === false) {
+            if (the.emit('beforeposition', to) === false) {
                 return the;
             }
 

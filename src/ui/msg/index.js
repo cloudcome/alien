@@ -44,8 +44,6 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-msg';
     var doc = document;
     var $body = doc.body;
-    var msgMap = {};
-    var maybeMobile = 'ontouchend' in doc;
     var defaults = {
         width: '33%',
         minWidth: 300,
@@ -78,7 +76,6 @@ define(function (require, exports, module) {
             the._options.buttons = the._options.buttons || [];
             the.id = alienIndex++;
             the._isReady = false;
-            msgMap[the.id] = the;
             the._init();
         },
 
@@ -276,22 +273,10 @@ define(function (require, exports, module) {
                 if (the._mask) {
                     the._mask.destroy();
                 }
-
-                msgMap[the.id] = null;
             });
         }
     });
 
-    if (maybeMobile) {
-        event.on(doc, 'focusin focusout', 'input,textarea,select', controller.debounce(function () {
-            console.log('deb');
-            dato.each(msgMap, function (id, msg) {
-                if (msg) {
-                    msg.position();
-                }
-            });
-        }));
-    }
 
     /**
      * 实例化一个 Msg 交互框

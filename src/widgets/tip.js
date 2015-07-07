@@ -15,7 +15,9 @@ define(function (require, exports, module) {
     var ui = require('../ui/index.js');
     var Msg = require('../ui/msg/index.js');
     var dato = require('../utils/dato.js');
+    var controller = require('../utils/controller.js');
     var event = require('../core/event/base.js');
+    var attribute = require('../core/dom/attribute.js');
     var defaults = {
         width: 'auto',
         minWidth: 100,
@@ -29,6 +31,7 @@ define(function (require, exports, module) {
         autoFocus: false
     };
     var lastMsg = null;
+    var maybeMobile = 'ontouchend' in document;
 
     module.exports = function (content, options) {
         options = dato.extend({}, defaults, options, {
@@ -45,6 +48,20 @@ define(function (require, exports, module) {
 
         return lastMsg;
     };
+
+    if (maybeMobile) {
+        event.on(document, 'focusin focusout', 'input,textarea,select', controller.debounce(function () {
+            if (lastMsg) {
+                var onposition;
+
+                lastMsg.before('position', onposition = function (to) {
+                    to.marginTop = attribute.scrollTop(window) / 2;
+                    lastMsg.un('beforeposition', onposition);
+                });
+                lastMsg.position();
+            }
+        }));
+    }
 
     ui.importStyle(require('./tip.css', 'css'));
 });
