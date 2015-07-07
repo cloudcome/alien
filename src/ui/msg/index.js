@@ -270,11 +270,11 @@ define(function (require, exports, module) {
 
     event.on(doc, 'focusin focusout', 'input,textarea,select', function () {
         dato.each(msgMap, function (id, msg) {
-            controller.nextFrame(function () {
+            controller.debounce(function () {
                 if (msg) {
                     msg.resize();
                 }
-            });
+            }, 234);
         });
     });
 
