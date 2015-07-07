@@ -295,12 +295,29 @@ define(function (require, exports, module) {
 
 
         /**
-         * 改变 dialog 尺寸
+         * 改变 dialog 尺寸及位置
          * @param [size] {Object} 尺寸
          * @param [callback] {Function} 回调
          */
         resize: function (size, callback) {
-            this._window.resize(size, callback);
+            var the = this;
+
+            the._window.resize(size, callback);
+
+            return the;
+        },
+
+
+        /**
+         * 改变 dialog 位置
+         * @param [callback] {Function} 回调
+         */
+        position: function (callback) {
+            var the = this;
+
+            the._window.position(callback);
+
+            return the;
         },
 
 

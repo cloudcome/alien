@@ -237,13 +237,27 @@ define(function (require, exports, module) {
 
 
         /**
-         * 调整位置
+         * 调整尺寸及位置
          * @returns {Msg}
          */
         resize: function () {
             var the = this;
 
             the._window.resize();
+
+            return the;
+        },
+
+
+
+        /**
+         * 调整位置
+         * @returns {Msg}
+         */
+        position: function () {
+            var the = this;
+
+            the._window.position();
 
             return the;
         },
