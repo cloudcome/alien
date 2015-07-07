@@ -242,7 +242,7 @@ define(function (require, exports, module) {
         resize: function () {
             var the = this;
 
-            the.resize();
+            the._window.resize();
 
             return the;
         },
