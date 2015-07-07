@@ -16,12 +16,14 @@ define(function (require, exports, module) {
     var Msg = require('../ui/msg/index.js');
     var dato = require('../utils/dato.js');
     var defaults = {
+        width: 'auto',
+        minWidth: 100,
         title: null,
         buttons: [],
         addClass: 'alien-widgets-tip',
         sureIndex: 0,
         isModal: false,
-        timeout: 3456,
+        timeout: 34560000,
         top: 100
     };
     var lastMsg = null;

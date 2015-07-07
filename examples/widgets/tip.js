@@ -16,6 +16,6 @@ define(function (require, exports, module) {
     var random = require('../../src/utils/random.js');
 
     document.getElementById('btn').onclick = function () {
-        tip(random.string(random.number(2, 100), 'aA0'));
+        tip(random.string(random.number(2, 5), 'aA0'));
     };
 });
