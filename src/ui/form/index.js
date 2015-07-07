@@ -44,7 +44,8 @@ define(function (require, exports, module) {
         breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${path}字段不合法',
         // 规则的 data 属性
-        dataAttribute: 'validation',
+        dataValidation: 'validation',
+        dataAlias: 'alias',
         // data 规则分隔符
         dataSep: ',',
         // data 规则等于符
