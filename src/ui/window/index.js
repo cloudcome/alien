@@ -348,7 +348,7 @@ define(function (require, exports, module) {
                  */
                 the.emit('afterposition');
 
-                if(typeis.function){
+                if (typeis.function) {
                     callback.call(the);
                 }
             });
