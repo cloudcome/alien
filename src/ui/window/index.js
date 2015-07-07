@@ -56,7 +56,9 @@ define(function (require, exports, module) {
         addClass: '',
         // 最小偏移量
         minOffset: 20,
-        autoResize: true
+        autoResize: true,
+        // 是否自动聚焦 window
+        autoFocus: true
     };
     var Window = ui.create({
         constructor: function ($content, options) {
@@ -210,8 +212,13 @@ define(function (require, exports, module) {
                  * @event open
                  */
                 the.emit('open');
-                the._$focus.focus();
-                the._$focus.blur();
+
+                if (options.autoFocus) {
+                    the._$focus.focus();
+                    controller.nextTick(function () {
+                        the._$focus.blur();
+                    });
+                }
 
                 if (typeis.function(callback)) {
                     callback.call(the);
