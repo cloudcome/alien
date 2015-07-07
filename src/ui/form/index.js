@@ -270,25 +270,22 @@ define(function (require, exports, module) {
                 return;
             }
 
-            if (!$msg) {
-                $msg = selector.query('.' + options.itemMsgClass, $item)[0];
-
-                if (!$msg) {
-                    $msg = modification.create('div', {
-                        class: options.itemMsgClass
-                    });
-                    modification.insert($msg, $item);
-                }
-
-                the._msgMap[$input.name] = $msg;
-            }
-
             if (err) {
                 attribute.removeClass($item, options.itemSuccessClass);
                 attribute.addClass($item, options.itemErrorClass);
             } else {
                 attribute.removeClass($item, options.itemErrorClass);
                 attribute.addClass($item, options.itemSuccessClass);
+            }
+
+            if (!$msg) {
+                $msg = selector.query('.' + options.itemMsgClass, $item)[0];
+
+                if (!$msg) {
+                    return;
+                }
+
+                the._msgMap[$input.name] = $msg;
             }
 
             attribute.html($msg, err ? err.message : options.validMsg);
