@@ -137,7 +137,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if($ele){
+            if ($ele) {
                 animation.scrollTo(window, {
                     x: attribute.left($ele),
                     y: attribute.top($ele)
@@ -168,6 +168,14 @@ define(function (require, exports, module) {
                         'content-type': the._$form.enctype
                     },
                     method: the._$form.method
+                };
+            } else {
+                the._xhrOptions = {
+                    url: location.href,
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'post'
                 };
             }
         },
