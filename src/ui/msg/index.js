@@ -29,6 +29,7 @@ define(function (require, exports, module) {
     var ui = require('../');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var controller = require('../../utils/controller.js');
     var Template = require('../../libs/template.js');
     var Emitter = require('../../libs/emitter.js');
     var selector = require('../../core/dom/selector.js');
@@ -269,7 +270,11 @@ define(function (require, exports, module) {
 
     event.on(doc, 'focusin focusout', 'input,textarea,select', function () {
         dato.each(msgMap, function (id, msg) {
-            msg.resize();
+            controller.nextFrame(function () {
+                if (msg) {
+                    msg.resize();
+                }
+            });
         });
     });
 
