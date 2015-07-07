@@ -100,7 +100,14 @@ define(function (require, exports, module) {
             });
 
             if (the._options.timeout) {
-                setTimeout(the.destroy.bind(the), the._options.timeout);
+                setTimeout(function () {
+                    /**
+                     * 消息框关闭之后
+                     * @event close
+                     */
+                    the.emit('close');
+                    the.destroy();
+                }, the._options.timeout);
             }
 
             return the;
