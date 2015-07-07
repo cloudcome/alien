@@ -35,7 +35,6 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var Validation = require('../validation/index.js');
     var Emitter = require('../../libs/emitter.js');
-    var formButtonCanSubmit = false;
     var win = window;
     var defaults = {
         // true: 返回单个错误对象
@@ -364,34 +363,5 @@ define(function (require, exports, module) {
     });
 
     Form.defaults = defaults;
-    _formButtonCanSubmit();
     module.exports = Form;
-
-    // ==============================================================================
-    // ==============================================================================
-    // ==============================================================================
-
-    /**
-     * 检测 form button 是否支持 submit
-     * @private
-     */
-    function _formButtonCanSubmit() {
-        var $form = modification.create('form', {
-            style: {
-                opacity: 0
-            }
-        });
-        var $button = modification.create('button');
-
-        modification.insert($button, $form);
-        modification.insert($form, document.body);
-        event.on($form, 'submit', function () {
-            formButtonCanSubmit = true;
-            return false;
-        });
-        event.dispatch($button, 'click');
-        controller.nextFrame(function () {
-            modification.remove($form);
-        });
-    }
 });
