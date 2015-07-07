@@ -212,9 +212,12 @@ define(function (require, exports, module) {
                     body = body.join('\n');
                     break;
 
-                //case 'application/x-www-form-urlencoded':
-                default:
+                case 'application/x-www-form-urlencoded':
                     body = qs.stringify(data);
+                    break;
+
+                default :
+                    body = data;
             }
 
             var options = {
