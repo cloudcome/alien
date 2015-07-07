@@ -286,9 +286,8 @@ define(function (require, exports, module) {
         event.on(doc, 'focusin focusout', 'input,textarea,select', controller.debounce(function () {
             console.log('deb');
             dato.each(msgMap, function (id, msg) {
-                console.log(msg);
                 if (msg) {
-                    msg.resize();
+                    msg.position();
                 }
             });
         }));
