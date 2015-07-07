@@ -155,6 +155,23 @@ define(function (require, exports, module) {
 
 
         /**
+         * 实例销毁
+         */
+        destroy: function () {
+            var the = this;
+            var options = the._options;
+
+            event.un(the._$form, 'click submit', the._onsubmit);
+
+            if (options.inputValidateEvent) {
+                event.un(the._$form, options.inputValidateEvent, the._onvalidate);
+            }
+
+            the._validation.destroy();
+        },
+
+
+        /**
          * 初始化节点
          * @private
          */
@@ -190,23 +207,23 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            the._onsubmit = function (eve) {
+                eve.preventDefault();
+                the.submit();
+            };
+
             if (the._isForm) {
                 var submitSelector = 'button[type="submit"],input[type="submit"]';
 
-                if (formButtonCanSubmit) {
-                    submitSelector += ',button';
-                }
+                event.on(the._$form, 'click', submitSelector, the._onsubmit.bind(the));
 
-                event.on(the._$form, 'click', submitSelector, function (eve) {
-                    eve.preventDefault();
-                    the.submit();
-                });
+                event.on(the._$form, 'submit', the._onsubmit.bind(the));
             } else {
-                event.on(the._$form, 'click', options.submitSelector, the.submit.bind(the));
+                event.on(the._$form, 'click', options.submitSelector, the._onsubmit.bind(the));
             }
 
             if (options.inputValidateEvent) {
-                event.on(the._$form, options.inputValidateEvent, options.inputSelector, function () {
+                event.on(the._$form, options.inputValidateEvent, options.inputSelector, the._onvalidate = function () {
                     the._validation.validate(this);
                 });
             }
@@ -359,7 +376,11 @@ define(function (require, exports, module) {
      * @private
      */
     function _formButtonCanSubmit() {
-        var $form = modification.create('form');
+        var $form = modification.create('form', {
+            style: {
+                opacity: 0
+            }
+        });
         var $button = modification.create('button');
 
         modification.insert($button, $form);
