@@ -266,15 +266,8 @@ define(function (require, exports, module) {
             });
         }
     });
-    var inputSelector = 'input,textarea,select';
 
-    event.on(doc, 'focusin', inputSelector, function () {
-        dato.each(msgMap, function (id, msg) {
-            msg.resize();
-        });
-    });
-
-    event.on(doc, 'focusout', inputSelector, function () {
+    event.on(doc, 'focusin focusout', 'input,textarea,select', function () {
         dato.each(msgMap, function (id, msg) {
             msg.resize();
         });
