@@ -24,7 +24,8 @@ define(function (require, exports, module) {
         sureIndex: 0,
         isModal: false,
         timeout: 3456,
-        top: 100
+        top: 100,
+        autoFocus: false
     };
     var lastMsg = null;
 

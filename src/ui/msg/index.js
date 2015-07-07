@@ -61,7 +61,8 @@ define(function (require, exports, module) {
             resize: 'ease-out-back',
             close: 'ease-in-back'
         },
-        timeout: 0
+        timeout: 0,
+        autoFocus: true
     };
     var Msg = ui.create({
         constructor: function (options) {
@@ -136,7 +137,8 @@ define(function (require, exports, module) {
                 top: options.top,
                 duration: options.duration,
                 easing: options.easing,
-                addClass: options.isModal ? '' : options.addClass
+                addClass: options.isModal ? '' : options.addClass,
+                autoFocus: options.autoFocus
             });
             the._$window = the._window.getNode();
 
