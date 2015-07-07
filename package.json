@@ -1,6 +1,6 @@
 {
   "name": "alien",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "private": true,
   "description": "一个为现代浏览器而生的脚本库集合，遵守AMDJS规范。",
   "scripts": {
