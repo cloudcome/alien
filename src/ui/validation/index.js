@@ -48,7 +48,7 @@ define(function (require, exports, module) {
         textarea: 1,
         select: 1
     };
-    var REG_LABEL = /^([^:：]*)/;
+    var REG_ALIAS = /^([^:：]*)/;
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
@@ -336,18 +336,24 @@ define(function (require, exports, module) {
                 the._validation.addRule.apply(the._validation, args);
             });
 
+            var alias;
+
             if (!hasAlias) {
                 var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
 
                 if ($label) {
-                    var alias = (attribute.text($label).match(REG_LABEL) || ['', ''])[1].trim();
+                    alias = (attribute.text($label).match(REG_ALIAS) || ['', ''])[1].trim();
 
                     the._validation.setAlias(path, alias);
                 }
             }
 
             if (!the._validation.getAlias(path)) {
-                the._validation.setAlias(path, $item.placeholder);
+                alias = ($item.placeholder.match(REG_ALIAS) || ['', ''])[1].trim();
+
+                if (alias) {
+                    the._validation.setAlias(path, alias);
+                }
             }
         },
 

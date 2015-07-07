@@ -23,7 +23,7 @@ define(function (require, exports, module) {
         addClass: 'alien-widgets-tip',
         sureIndex: 0,
         isModal: false,
-        timeout: 34560000,
+        timeout: 3456,
         top: 100
     };
     var lastMsg = null;
