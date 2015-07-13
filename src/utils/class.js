@@ -2,6 +2,7 @@
  * 类的创建与继承
  * @author ydr.me
  * @create 2014-10-04 15:09
+ * @compatible ie8
  */
 
 /*===============================
@@ -71,22 +72,12 @@ define(function (require, exports, module) {
      */
     var inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
-        //var F = function () {
-        //    // ignore
-        //};
-        //F.prototype = new superConstructor();
-        //constructor.prototype = new F;
-        constructor.prototype = Object.create(superConstructor.prototype, {
-            constructor: {
-                value: constructor,
-                // 是否可被枚举
-                enumerable: true,
-                // 是否可被重写
-                writable: true,
-                // 是否可被修改
-                configurable: true
-            }
-        });
+
+        var F = function () {
+            // ignore
+        };
+        F.prototype = new superConstructor();
+        constructor.prototype = new F;
 
         if (isCopyStatic) {
             dato.extend(true, constructor, superConstructor);
