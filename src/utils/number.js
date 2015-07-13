@@ -17,7 +17,9 @@ define(function (require, exports, module) {
     var REG_FORMAT = {
         3: /(\d)(?=(\d{3})+$)/g
     };
-    var abbrSuffix = ['', 'k', 'm', 't'];
+    // k,m,g,t,p
+    // @ref http://searchstorage.techtarget.com/definition/Kilo-mega-giga-tera-peta-and-all-that
+    var abbrSuffix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
     var REG_BEGIN_0 = /^0+/;
 
 

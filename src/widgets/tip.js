@@ -27,11 +27,10 @@ define(function (require, exports, module) {
         sureIndex: 0,
         isModal: false,
         timeout: 3456,
-        top: 100,
         autoFocus: false
     };
     var lastMsg = null;
-    var maybeMobile = 'ontouchend' in document;
+    //var maybeMobile = 'ontouchend' in document;
 
     module.exports = function (content, options) {
         options = dato.extend({}, defaults, options, {
@@ -49,19 +48,19 @@ define(function (require, exports, module) {
         return lastMsg;
     };
 
-    if (maybeMobile) {
-        event.on(document, 'focusin focusout', 'input,textarea,select', controller.debounce(function () {
-            if (lastMsg) {
-                var onposition;
-
-                lastMsg.before('position', onposition = function (to) {
-                    to.marginTop = attribute.scrollTop(window) / 2;
-                    lastMsg.un('beforeposition', onposition);
-                });
-                lastMsg.position();
-            }
-        }));
-    }
+    //if (maybeMobile) {
+    //    event.on(document, 'focusin focusout', 'input,textarea,select', controller.debounce(function () {
+    //        if (lastMsg) {
+    //            var onposition;
+    //
+    //            lastMsg.before('position', onposition = function (to) {
+    //                to.marginTop = attribute.scrollTop(window) / 2;
+    //                lastMsg.un('beforeposition', onposition);
+    //            });
+    //            lastMsg.position();
+    //        }
+    //    }, 345, false));
+    //}
 
     ui.importStyle(require('./tip.css', 'css'));
 });

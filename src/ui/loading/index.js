@@ -145,7 +145,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (options.isModal) {
-                the._mask = new Mask(the._$parent).open();
+                the._mask = new Mask(the._$parent);
             }
 
             options.list = new Array(options.style.count);
@@ -156,25 +156,10 @@ define(function (require, exports, module) {
             });
             the._$loading.innerHTML = tpl.render(options);
             modification.insert(the._$loading, body);
-            the.resize();
-
-            var fromStyle = {
-                visibility: '',
-                zIndex: ui.getZindex(),
-                opacity: 0,
-                scale: 0.5
-            };
-            var toStyle = {
-                opacity: 1,
-                scale: 1
-            };
-
-            attribute.css(the._$loading, fromStyle);
-            the.visible = true;
-            animation.transition(the._$loading, toStyle, the._transitionOptions = {
+            the._transitionOptions = {
                 duration: options.duration,
                 easing: options.easing
-            });
+            };
         },
 
 
@@ -190,8 +175,7 @@ define(function (require, exports, module) {
                 position: coverStyle.position,
                 backgroundColor: options.style.backgroundColor,
                 border: options.style.border,
-                color: options.style.color,
-                visibility: 'hidden'
+                color: options.style.color
             };
 
             attribute.css(the._$loading, loadingStyle);
@@ -247,6 +231,7 @@ define(function (require, exports, module) {
                 scale: 0.5,
                 zIndex: ui.getZindex()
             });
+            the.resize();
             animation.transition(the._$loading, {
                 opacity: 1,
                 scale: 1

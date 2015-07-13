@@ -60,7 +60,7 @@
             height: 1px;
         }
 
-        .demo{
+        .demo {
             width: 100px;
             height: 100px;
             margin: 20px;
@@ -81,35 +81,25 @@
 
 
 <script>
-    var color1 = function () {
-        var letters = '0123456789ABCDEF';
-        var ret = '#';
+var parse = function (querystring) {
+    var ret = {};
+    var reg = /([^&]*)=([^&]*)/g;
+    var matches;
 
-        for (var i = 0; i < 6; i++) {
-            ret += letters[Math.round(Math.random() * 15)];
+    while ((matches = reg.exec(querystring))) {
+        var key = matches[1];
+        var val = matches[2];
+        // 3. 如果是多值
+        if (ret[key]) {
+            ret[key] = Array.isArray(ret[key]) ? ret[key] : [ret[key]];
+            ret[key].push(val);
+        } else {
+            ret[key] = val;
         }
-
-        return ret;
-    };
-
-    var color2 = function () {
-        return '#' + Math.random().toString(16).substr(2, 6);
-    };
-
-    var color3 = function () {
-        return "#" + ("00000" + ((Math.random() * 0xffffff) >> 0).toString(16)).slice(-6);
-    };
-
-
-    for (var j = 0; j < 100; j++) {
-        var demo = document.createElement('div');
-        var color = color3();
-
-        demo.className = 'demo';
-        demo.style.background = color;
-        demo.innerHTML = color;
-        document.body.appendChild(demo);
     }
+
+    return ret;
+};
 </script>
 
 </body>

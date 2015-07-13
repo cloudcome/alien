@@ -55,7 +55,7 @@ define(function (require, exports, module) {
         // 表单项目选择器
         itemSelector: '.form-item',
         // 表单提交选择器
-        submitSelector: '.form-submit',
+        submitSelector: 'button[type="submit"],input[type="submit"]',
         // 验证消息类
         itemMsgClass: 'form-msg',
         // 验证合法时，添加的样式类
@@ -69,6 +69,10 @@ define(function (require, exports, module) {
         // 表单输入框验证事件
         inputValidateEvent: 'input change',
         contentType: 'multipart/form-data',
+        // 是否滚动到非法处
+        scrollToInvalid: true,
+        // 是否聚焦非法处，@todo 移动端有问题
+        focusOnInvalid: true,
         // 是否调试模式，调试模式则不会提交表单
         debug: false,
         focusDuration: 345,
@@ -138,15 +142,21 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if ($ele) {
-                animation.scrollTo(window, {
-                    x: attribute.left($ele),
-                    y: attribute.top($ele)
-                }, {
-                    duration: options.focusDuration,
-                    easing: options.easing
-                }, function () {
+                if (options.scrollToInvalid) {
+                    animation.scrollTo(window, {
+                        x: attribute.left($ele),
+                        y: attribute.top($ele)
+                    }, {
+                        duration: options.focusDuration,
+                        easing: options.easing
+                    }, function () {
+                        if (options.focusOnInvalid) {
+                            $ele.focus();
+                        }
+                    });
+                } else if (options.focusOnInvalid) {
                     $ele.focus();
-                });
+                }
             }
 
             return the;
@@ -212,10 +222,7 @@ define(function (require, exports, module) {
             };
 
             if (the._isForm) {
-                var submitSelector = 'button[type="submit"],input[type="submit"]';
-
-                event.on(the._$form, 'click', submitSelector, the._onsubmit.bind(the));
-
+                event.on(the._$form, 'click', options.submitSelector, the._onsubmit.bind(the));
                 event.on(the._$form, 'submit', the._onsubmit.bind(the));
             } else {
                 event.on(the._$form, 'click', options.submitSelector, the._onsubmit.bind(the));

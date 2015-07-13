@@ -108,6 +108,6 @@ define(function (require, exports) {
      * => '#ff00ff'
      */
     exports.color = function () {
-        return '#'+Math.random().toString(16).substr(-6);
+        return '#' + Math.random().toString(16).substr(-6);
     };
 });
