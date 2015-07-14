@@ -12,8 +12,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var udf = 'undefined';
-    var REG_URL = /^https?:\/\/(\w+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
-    var REG_EMAIL = /^\w+[-+.\w]*@([\w-]+\.)+[a-z]{2,5}$/i;
+    var REG_URL = /^https?:\/\/([a-z\d-]+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
+    var REG_EMAIL = /^\w+[-+.\w]*@([a-z\d-]+\.)+[a-z]{2,5}$/i;
     var REG_INVALID = /invalid/i;
     var REG_ELEMENT = /element/;
 

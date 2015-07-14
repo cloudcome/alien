@@ -85,10 +85,47 @@ define(function (require, exports, module) {
                 callback = args[0];
             }
 
-            var repeatQueue = [];
 
-            repeatQueue.length = number.parseInt(repeatTimes, 1);
             callback = typeis.function(callback) ? callback : noop;
+
+            var times = 0;
+            // 单次动画
+            var onstep = function (callback) {
+                times++;
+                howdo
+                    .each(the._queueList, function (j, queue, next) {
+                        var toType = typeis(queue.to);
+
+                        if (toType === 'string') {
+                            howdo.each(queue.$eles, function (k, $ele, done) {
+                                animation.keyframes($ele, queue.to, queue.options, done);
+                            }).together(function () {
+                                /**
+                                 * 动画发生变化时
+                                 * @event change
+                                 * @prarm index {Number} 动画索引
+                                 * @prarm times {Number} 动画重复次数
+                                 */
+                                the.emit('change', j, times + 1);
+                                next();
+                            });
+                        } else {
+                            howdo.each(queue.$eles, function (k, $ele, done) {
+                                animation.transition($ele, queue.to, queue.options, done);
+                            }).together(function () {
+                                /**
+                                 * 动画发生变化时
+                                 * @event change
+                                 * @prarm index {Number} 动画索引
+                                 * @prarm times {Number} 动画重复次数
+                                 */
+                                the.emit('change', j, times + 1);
+                                next();
+                            });
+                        }
+                    })
+                    .follow(callback);
+            };
 
             /**
              * 动画开始时
@@ -96,50 +133,27 @@ define(function (require, exports, module) {
              */
             the.emit('start');
 
-            howdo
-                .each(repeatQueue, function (i, u, next) {
-                    howdo
-                        .each(the._queueList, function (j, queue, next) {
-                            var toType = typeis(queue.to);
+            if (repeatTimes === -1) {
+                (function stepInStep() {
+                    onstep(stepInStep);
+                })();
+            } else {
+                var repeatQueue = [];
 
-                            if (toType === 'string') {
-                                howdo.each(queue.$eles, function (k, $ele, done) {
-                                    animation.keyframes($ele, queue.to, queue.options, done);
-                                }).together(function () {
-                                    /**
-                                     * 动画发生变化时
-                                     * @event change
-                                     * @prarm index {Number} 动画索引
-                                     * @prarm times {Number} 动画重复次数
-                                     */
-                                    the.emit('change', j, i + 1);
-                                    next();
-                                });
-                            } else {
-                                howdo.each(queue.$eles, function (k, $ele, done) {
-                                    animation.transition($ele, queue.to, queue.options, done);
-                                }).together(function () {
-                                    /**
-                                     * 动画发生变化时
-                                     * @event change
-                                     * @prarm index {Number} 动画索引
-                                     * @prarm times {Number} 动画重复次数
-                                     */
-                                    the.emit('change', j, i + 1);
-                                    next();
-                                });
-                            }
-                        })
-                        .follow(next);
-                })
-                .follow(function () {
-                    /**
-                     * 动画结束时
-                     * @event end
-                     */
-                    the.emit('end');
-                    callback.call(the);
-                });
+                repeatQueue.length = number.parseInt(repeatTimes, 1);
+                howdo
+                    .each(repeatQueue, function (i, u, next) {
+                        onstep(next);
+                    })
+                    .follow(function () {
+                        /**
+                         * 动画结束时
+                         * @event end
+                         */
+                        the.emit('end');
+                        callback.call(the);
+                    });
+            }
         }
     });
 
