@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/array.js');
     var specialKeys = {
         8: "backspace",
         9: "tab",

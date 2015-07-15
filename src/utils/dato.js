@@ -13,6 +13,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    require('../polyfill/array.js');
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap filelist'.split(' ');

@@ -20,6 +20,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../polyfill/array.js');
     var allocation = require('./allocation.js');
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');

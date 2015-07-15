@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/array.js');
     var allocation = require('../../utils/allocation.js');
     var attribute = require('./attribute.js');
     var selector = require('./selector.js');

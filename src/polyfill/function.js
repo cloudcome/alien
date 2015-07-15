@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * function polyfill
  * @author ydr.me
  * @create 2015-07-15 19:06
  */

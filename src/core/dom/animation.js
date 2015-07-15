@@ -23,7 +23,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var udf;
+    require('../../polyfill/array.js');
     var attribute = require('./attribute.js');
     var selector = require('./selector.js');
     var see = require('./see.js');
