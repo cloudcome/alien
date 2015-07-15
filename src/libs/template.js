@@ -94,13 +94,15 @@ define(function (require, exports, module) {
 
             the._placeholders = {};
 
-            template.replace(REG_IGNORE, function ($0, $1) {
+            var slices = template.replace(REG_IGNORE, function ($0, $1) {
                 var key = _generateKey();
 
                 the._placeholders[key] = $1;
 
                 return key;
-            }).split(openTag).forEach(function (value, times) {
+            }).split(openTag);
+
+            dato.each(slices, function (times, value) {
                 var array = value.split(closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
@@ -396,7 +398,7 @@ define(function (require, exports, module) {
             } else if (matches[3] && matches[3].slice(0, 1) === '|') {
                 filters = matches[3].split('|');
                 filters.shift();
-                filters.forEach(function (filter) {
+                dato.each(filters, function (index, filter) {
                     var matches = filter.match(REG_FILTER);
                     var args;
                     var name;

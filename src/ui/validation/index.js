@@ -334,7 +334,7 @@ define(function (require, exports, module) {
             }
 
 
-            validationList.forEach(function (validation) {
+            dato.each(validationList, function (index, validation) {
                 var validationName = validation.name;
                 var validationVals = validation.values;
                 //
@@ -392,7 +392,7 @@ define(function (require, exports, module) {
             var list1 = ruleString.split(options.dataSep);
             var list2 = [];
 
-            list1.forEach(function (item) {
+            dato.each(list1, function (index, item) {
                 var temp = item.split(options.dataEqual);
 
                 list2.push({

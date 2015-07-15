@@ -15,6 +15,7 @@ define(function (require, exports, module) {
 
     var qs = require('./querystring.js');
     var hb = require('./hashbang.js');
+    var dato = require('./dato.js');
     var keys = ['hash', 'host', 'hostname', 'href', 'pathname', 'port', 'protocol'];
     var REG_QUERY = /\?(.*?)(#|$)/;
     var link = document.createElement('a');
@@ -29,7 +30,7 @@ define(function (require, exports, module) {
 
         var ret = {};
 
-        keys.forEach(function (key) {
+        dato.each(keys, function (index, key) {
             ret[key] = link[key];
         });
 

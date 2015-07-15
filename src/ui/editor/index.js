@@ -519,7 +519,7 @@ define(function (require, exports, module) {
                 var reg = new RegExp(string.escapeRegExp(value), 'i');
 
                 the._searchLength++;
-                the._atList.forEach(function (item) {
+                dato.each(the._atList, function (index, item) {
                     if (reg.test(item.text)) {
                         searchList.push(item);
                     }

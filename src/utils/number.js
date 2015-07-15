@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var typeis = require('./typeis.js');
+    var dato = require('./dato.js');
     var REG_FORMAT = {
         3: /(\d)(?=(\d{3})+$)/g
     };
@@ -152,7 +153,7 @@ define(function (require, exports, module) {
         // 2. 遍历比较
         var ret = false;
 
-        long1List.forEach(function (number1, index) {
+        dato.each(long1List, function (index, number1) {
             var number2 = long2List[index];
 
             if (number1 > number2) {
