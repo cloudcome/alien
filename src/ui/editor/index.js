@@ -27,6 +27,7 @@ define(function (require, exports, module) {
      * @requires libs/template
      */
 
+    require('../../polyfill/function.js');
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
     var codeMirrorGoLineUp = CodeMirror.commands.goLineUp;
     var codeMirrorGoLineDown = CodeMirror.commands.goLineDown;

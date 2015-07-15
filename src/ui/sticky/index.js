@@ -16,7 +16,8 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var ui = require('../');
+    require('../../polyfill/function.js');
+    var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/touch.js');

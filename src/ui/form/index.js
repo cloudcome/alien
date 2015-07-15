@@ -22,6 +22,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    require('../../polyfill/function.js');
     var ui = require('../index.js');
     var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');

@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/function.js');
     var allocation = require('../../utils/allocation.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
