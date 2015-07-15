@@ -91,12 +91,12 @@ define(function (require, exports, module) {
                         }
                     });
                     the._lastMatchedRoute = matchKey;
-                    the._routerList[matchIndex][matchKey].forEach(function (callback) {
+                    dato.each(the._routerList[matchIndex][matchKey], function (index, callback) {
                         callback.call(the, matched, hashbang.parse(eve.newURL).query, msgs);
                     });
                 } else {
                     the._lastMatchedRoute = null;
-                    the._unMatchedCallbackList.forEach(function (callback) {
+                    dato.each(the._unMatchedCallbackList, function (index, callback) {
                         callback.call(the, {});
                     });
                 }

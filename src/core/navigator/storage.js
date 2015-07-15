@@ -70,8 +70,8 @@ define(function (require, exports, module) {
 
         key = typeis.array(key) ? key : [key];
 
-        key.forEach(function (ik) {
-            ls.removeItem(ik);
+        dato.each(key, function (index, key) {
+            ls.removeItem(key);
         });
     };
 });
