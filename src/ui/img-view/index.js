@@ -381,7 +381,7 @@ define(function (require, exports, module) {
         open: function (list, index) {
             var the = this;
 
-            list = list.map(function (item) {
+            list = dato.map(list, function (item) {
                 if (typeis.string(item)) {
                     return {
                         thumbnail: item,

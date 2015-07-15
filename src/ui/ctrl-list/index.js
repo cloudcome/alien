@@ -63,7 +63,7 @@ define(function (require, exports, module) {
             var the = this;
 
             list = list || [];
-            the._list = list.map(function (item) {
+            the._list = dato.map(list, function (item) {
                 if (typeis.string(item)) {
                     return {
                         text: item,

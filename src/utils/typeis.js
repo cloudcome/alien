@@ -16,6 +16,8 @@ define(function (require, exports, module) {
     var REG_EMAIL = /^\w+[-+.\w]*@([a-z\d-]+\.)+[a-z]{2,5}$/i;
     var REG_INVALID = /invalid/i;
     var REG_ELEMENT = /element/;
+    var supportGetPrototypeOf = typeof Object.getPrototypeOf === 'function';
+    var supportKeys = typeof Object.keys === 'function';
 
 
     /**
@@ -157,6 +159,18 @@ define(function (require, exports, module) {
         makeStatic(jud[i]);
     }
 
+
+    /**
+     * 获取对象的原型
+     * @param o
+     * @returns {*|Object|Function}
+     */
+    function getPrototypeOf(o) {
+        return supportGetPrototypeOf ?
+            Object.getPrototypeOf(o) :
+        o.__proto__ || o.constructor.prototype || Object.prototype;
+    }
+
     /**
      * 判断是否为纯对象
      * @param obj {*}
@@ -167,7 +181,30 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.plainObject = function (obj) {
-        return typeis(obj) === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
+        return typeis(obj) === 'object' && getPrototypeOf(obj) === Object.prototype;
+    };
+
+
+    /**
+     * 获取对象的键数组
+     * @param o
+     * @returns {Array}
+     */
+    var keys = function (o) {
+        if (supportKeys) {
+            return Object.keys(o);
+        }
+
+
+        var ret = [];
+
+        for (var key in o) {
+            if (o.hasOwnProperty(key)) {
+                ret.push(key);
+            }
+        }
+
+        return ret;
     };
 
 
@@ -181,7 +218,7 @@ define(function (require, exports, module) {
      * // => true
      */
     typeis.emptyObject = function (obj) {
-        return typeis.plainObject(obj) && Object.keys(obj).length === 0;
+        return typeis.plainObject(obj) && keys(obj).length === 0;
     };
 
 
