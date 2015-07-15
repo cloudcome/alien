@@ -67,7 +67,7 @@ define(function (require, exports, module) {
                 }
 
                 dato.each(the._routerList, function (index, routerConfig) {
-                    matchKey = Object.keys(routerConfig)[0];
+                    matchKey = dato.keys(routerConfig)[0];
                     matched = hashbang.matches(eve.newURL, matchKey, the._options);
                     matchIndex = index;
 

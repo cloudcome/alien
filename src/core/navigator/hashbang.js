@@ -204,7 +204,7 @@ define(function (require, exports) {
             var matchKey = '';
 
             dato.each(routerConfig, function (index, routerConfig) {
-                matchKey = Object.keys(routerConfig);
+                matchKey = dato.keys(routerConfig);
                 matched = hashbang.matches(eve.newURL, matchKey, options);
                 matchIndex = index;
 

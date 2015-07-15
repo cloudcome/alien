@@ -201,7 +201,7 @@ define(function (require, exports, module) {
          * @returns {Validation}
          */
         validateOne: function (data, callback) {
-            var path = Object.keys(data)[0];
+            var path = dato.keys(data)[0];
             var the = this;
             var rules = the.getRules(path);
 

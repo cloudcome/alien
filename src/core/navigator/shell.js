@@ -7,10 +7,12 @@
 
 define(function (require, exports, module) {
     /**
+     * @requires utils/dato
      * @module core/navigator/shell
      */
     'use strict';
 
+    var dato = require('../../utils/dato.js');
     var win = window;
     var nav = win.navigator;
     var doc = win.document;
@@ -175,7 +177,7 @@ define(function (require, exports, module) {
         }
 
         var _track = 'track' in document.createElement('track');
-        var webstoreKeysLength = win.chrome && win.chrome.webstore ? Object.keys(win.chrome.webstore).length : 0;
+        var webstoreKeysLength = win.chrome && win.chrome.webstore ? dato.keys(win.chrome.webstore).length : 0;
 
         // 搜狗浏览器
         if (_testExternal(/^sogou/i, 0)) {

@@ -484,7 +484,7 @@ define(function (require, exports, module) {
             .replace(REG_STRING_WRAP, '\\$1');
 
         dato.each(regLines, function (index, map) {
-            var key = Object.keys(map)[0];
+            var key = dato.keys(map)[0];
             var val = map[key];
 
             str = str.replace(val, '\\' + key);
