@@ -12,6 +12,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/object.js');
     var dato = require('../../utils/dato.js');
     var win = window;
     var nav = win.navigator;
@@ -177,7 +178,7 @@ define(function (require, exports, module) {
         }
 
         var _track = 'track' in document.createElement('track');
-        var webstoreKeysLength = win.chrome && win.chrome.webstore ? dato.keys(win.chrome.webstore).length : 0;
+        var webstoreKeysLength = win.chrome && win.chrome.webstore ? Object.keys(win.chrome.webstore).length : 0;
 
         // 搜狗浏览器
         if (_testExternal(/^sogou/i, 0)) {

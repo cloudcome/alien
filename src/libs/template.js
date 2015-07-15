@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../polyfill/object.js');
     require('../polyfill/date.js');
     require('../polyfill/string.js');
     var dato = require('../utils/dato.js');
@@ -486,7 +487,7 @@ define(function (require, exports, module) {
             .replace(REG_STRING_WRAP, '\\$1');
 
         dato.each(regLines, function (index, map) {
-            var key = dato.keys(map)[0];
+            var key = Object.keys(map)[0];
             var val = map[key];
 
             str = str.replace(val, '\\' + key);

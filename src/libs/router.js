@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../polyfill/object.js');
     require('../polyfill/date.js');
     var Emitter = require('./emitter.js');
     var event = require('../core/event/base.js');
@@ -68,7 +69,7 @@ define(function (require, exports, module) {
                 }
 
                 dato.each(the._routerList, function (index, routerConfig) {
-                    matchKey = dato.keys(routerConfig)[0];
+                    matchKey = Object.keys(routerConfig)[0];
                     matched = hashbang.matches(eve.newURL, matchKey, the._options);
                     matchIndex = index;
 

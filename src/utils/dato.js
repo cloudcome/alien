@@ -17,7 +17,6 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap filelist'.split(' ');
-    var supportKeys = typeis.function(Object.keys);
 
     /**
      * 遍历元素
@@ -54,28 +53,6 @@ define(function (require, exports, module) {
                 }
             }
         }
-    };
-
-
-    /**
-     * 获取对象的键数组
-     * @param obj {Object} 对象
-     * @returns {Array}
-     */
-    exports.keys = function (obj) {
-        if (supportKeys) {
-            return Object.keys(obj);
-        }
-
-        var ret = [];
-
-        for (var i in obj) {
-            if (obj.hasOwnProperty(i)) {
-                ret.push(i);
-            }
-        }
-
-        return ret;
     };
 
 

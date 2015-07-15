@@ -19,6 +19,7 @@ define(function (require, exports) {
      */
     'use strict';
 
+    require('../../polyfill/object.js');
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
@@ -204,7 +205,7 @@ define(function (require, exports) {
             var matchKey = '';
 
             dato.each(routerConfig, function (index, routerConfig) {
-                matchKey = dato.keys(routerConfig);
+                matchKey = Object.keys(routerConfig);
                 matched = hashbang.matches(eve.newURL, matchKey, options);
                 matchIndex = index;
 
