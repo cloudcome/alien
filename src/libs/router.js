@@ -18,6 +18,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../polyfill/date.js');
     var Emitter = require('./emitter.js');
     var event = require('../core/event/base.js');
     var klass = require('../utils/class.js');

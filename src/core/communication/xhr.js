@@ -17,6 +17,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/date.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');

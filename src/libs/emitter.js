@@ -15,6 +15,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../polyfill/date.js');
     require('../polyfill/string.js');
     var allocation = require('../utils/allocation.js');
     var dato = require('../utils/dato.js');
