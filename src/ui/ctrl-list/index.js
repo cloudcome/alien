@@ -21,6 +21,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    require('../../polyfill/array.js');
     var ui = require('../');
     var Popup = require('../popup/');
     var Template = require('../../libs/template.js');
@@ -63,7 +64,7 @@ define(function (require, exports, module) {
             var the = this;
 
             list = list || [];
-            the._list = dato.map(list, function (item) {
+            the._list = list.map(function (item) {
                 if (typeis.string(item)) {
                     return {
                         text: item,

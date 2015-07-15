@@ -24,6 +24,7 @@ define(function (require, exports, module) {
     'use strict';
 
 
+    require('../../polyfill/array.js');
     var ui = require('../');
     var Loading = require('../loading/index.js');
     var Mask = require('../mask/index.js');
@@ -381,7 +382,7 @@ define(function (require, exports, module) {
         open: function (list, index) {
             var the = this;
 
-            list = dato.map(list, function (item) {
+            list = list.map(function (item) {
                 if (typeis.string(item)) {
                     return {
                         thumbnail: item,

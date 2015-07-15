@@ -17,7 +17,6 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap filelist'.split(' ');
-    var supportMap = typeis.function(Array.prototype.map);
     var supportKeys = typeis.function(Object.keys);
 
     /**
@@ -55,27 +54,6 @@ define(function (require, exports, module) {
                 }
             }
         }
-    };
-
-
-    /**
-     * 数组 map
-     * @param list
-     * @param callback
-     * @returns {Array}
-     */
-    exports.map = function (list, callback) {
-        var list2 = [];
-
-        if (supportMap) {
-            return list.map(callback);
-        }
-
-        exports.each(list, function (index, item) {
-            list2.push(callback(item));
-        });
-
-        return list2;
     };
 
 
