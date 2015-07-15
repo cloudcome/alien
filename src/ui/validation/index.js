@@ -24,6 +24,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    require('../../polyfill/string.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');

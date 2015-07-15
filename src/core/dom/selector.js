@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      */
     'use strict';
 
+    require('../../polyfill/string.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var compatible = require('../navigator/compatible.js');
