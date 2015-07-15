@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var abc = require('./abc.js');
+    exports.rgba = function () {
 
-    module.exports = {};
+    };
 });

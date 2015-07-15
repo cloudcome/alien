@@ -60,7 +60,8 @@ define(function (require, exports, module) {
         duration: 123,
         easing: 'swig',
         timeout: 0,
-        autoFocus: true
+        autoFocus: true,
+        autoOpen: true
     };
     var Msg = ui.create({
         constructor: function (options) {
@@ -85,28 +86,8 @@ define(function (require, exports, module) {
             the._initNode();
             the._initEvent();
 
-            if (the._mask) {
-                the._mask.open();
-            }
-
-            the._window.open(function () {
-                the._isReady = true;
-                /**
-                 * 消息框打开之后
-                 * @event open
-                 */
-                the.emit('open');
-            });
-
-            if (the._options.timeout) {
-                setTimeout(function () {
-                    /**
-                     * 消息框关闭之后
-                     * @event close
-                     */
-                    the.emit('close');
-                    the.destroy();
-                }, the._options.timeout);
+            if (the._options.autoOpen) {
+                the.open();
             }
 
             return the;
@@ -145,7 +126,6 @@ define(function (require, exports, module) {
                 title: options.title,
                 canDrag: options.canDrag,
                 windowId: the._$window.id,
-                body: options.content,
                 buttons: options.buttons
             });
             var node = modification.parse(html)[0];
@@ -162,6 +142,7 @@ define(function (require, exports, module) {
             the._$close = nodes[2];
             the._$body = nodes[3];
             the._$buttons = nodes[4];
+            the._$body.innerHTML = options.content;
         },
 
         _initEvent: function () {
@@ -207,6 +188,40 @@ define(function (require, exports, module) {
 
 
         /**
+         * 打开对话框
+         */
+        open: function () {
+            var the = this;
+            var options = the._options;
+
+            if (the._mask) {
+                the._mask.open();
+            }
+
+            the._window.open(function () {
+                the._isReady = true;
+                /**
+                 * 消息框打开之后
+                 * @event open
+                 */
+                the.emit('open');
+            });
+
+            if (options.timeout) {
+                setTimeout(function () {
+                    /**
+                     * 消息框关闭之后
+                     * @event close
+                     */
+                    the.emit('close');
+                    the.destroy();
+                }, options.timeout);
+            }
+
+            return the;
+        },
+
+        /**
          * 设置 Msg 标题
          * @param title {String} 对话框标题
          */
@@ -234,6 +249,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取 body 节点
+         * @returns {*|Element}
+         */
+        getBodyNode: function () {
+            return this._$body;
+        },
+
+
+        /**
          * 调整尺寸及位置
          * @returns {Msg}
          */
@@ -246,7 +270,6 @@ define(function (require, exports, module) {
         },
 
 
-
         /**
          * 调整位置
          * @returns {Msg}
@@ -255,6 +278,21 @@ define(function (require, exports, module) {
             var the = this;
 
             the._window.position();
+
+            return the;
+        },
+
+
+        /**
+         * 关闭消息框
+         * @param callback
+         * @returns {Msg}
+         */
+        close: function (callback) {
+            var the = this;
+
+            the._mask.close();
+            the._window.close(callback);
 
             return the;
         },

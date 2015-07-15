@@ -149,7 +149,7 @@ define(function (require, exports, module) {
                 return val !== udf;
             };
 
-        keys.forEach(function (key) {
+        exports.each(keys, function (index, key) {
             if (filter(data[key])) {
                 data2[key] = data[key];
             }
