@@ -55,6 +55,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._$targets = selector.query(options.selector, the._$container);
+            the._onchange();
 
             return the;
         },
@@ -68,11 +69,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._isDoc = the._$container === win || the._$container === doc ||
-                the._$container === html || the._$container === body;
-            the.update();
-            the._scroll = new Scroll(the._$container);
-            the._scroll.on('x y', controller.debounce(function () {
+            the._onchange = function () {
                 if (!the.visible && !the._isDoc) {
                     return;
                 }
@@ -89,14 +86,19 @@ define(function (require, exports, module) {
                         }
                     }
                 });
-            }, options.wait)).on('enter', function () {
+            };
+            the._isDoc = the._$container === win || the._$container === doc ||
+                the._$container === html || the._$container === body;
+            the.update();
+            the._scroll = new Scroll(the._$container);
+            the._scroll.on('x y', controller.debounce(the._onchange, options.wait)).on('enter', function () {
                 the.visible = true;
             }).on('leave', function () {
                 the.visible = false;
             });
         },
 
-        destroy: function(){
+        destroy: function () {
 
         }
     });

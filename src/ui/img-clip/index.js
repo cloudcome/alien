@@ -22,7 +22,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/function.js');
     var ui = require('../');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');

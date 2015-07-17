@@ -11,7 +11,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../polyfill/object.js');
     var udf = 'undefined';
     var REG_URL = /^https?:\/\/([a-z\d-]+\.)+[a-z]{2,5}(\/|\/[\w#!:.?+=&%@!\-\/]+)?$/i;
     var REG_EMAIL = /^\w+[-+.\w]*@([a-z\d-]+\.)+[a-z]{2,5}$/i;
@@ -157,7 +156,6 @@ define(function (require, exports, module) {
     for (; i < jud.length; i++) {
         makeStatic(jud[i]);
     }
-
 
     /**
      * 判断是否为纯对象

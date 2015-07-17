@@ -24,11 +24,10 @@ define(function (require, exports, module) {
     'use strict';
 
 
-    require('../../polyfill/array.js');
     var ui = require('../');
-    var Loading = require('../loading/index.js');
-    var Mask = require('../mask/index.js');
-    var Window = require('../window/index.js');
+    var Loading = require('../loading/');
+    var Mask = require('../mask/');
+    var Window = require('../window/');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -40,7 +39,6 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
     var typeis = require('../../utils/typeis.js');
-    var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
     var arrowLeft = require('./arrow-left.png', 'image');
@@ -290,13 +288,13 @@ define(function (require, exports, module) {
             var html = '';
             var className = alienClass + '-nav-item';
 
-            dato.each(the._list, function (item, index) {
+            the._list.forEach(function (item, index) {
                 html += '<div class="' + className + '" data-index="' + index + '" style="background-image:url(' + item.thumbnail + ')"></div>';
             });
 
             the._$navList.innerHTML = html;
             the._$itemlist = selector.query('.' + className, the._$navList);
-            dato.each(the._$itemlist, function (index, $item) {
+            the._$itemlist.forEach(function ($item) {
                 attribute.style($item, the._options.thumbnailSize);
             });
             attribute.width(the._$navList, number.parseFloat(the._options.thumbnailSize.width) * the._list.length);

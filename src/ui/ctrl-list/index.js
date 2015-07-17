@@ -21,7 +21,6 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../../polyfill/array.js');
     var ui = require('../');
     var Popup = require('../popup/');
     var Template = require('../../libs/template.js');

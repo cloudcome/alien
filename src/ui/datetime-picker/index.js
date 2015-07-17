@@ -25,7 +25,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/function.js');
     var calendar = require('../../utils/calendar.js');
     var dato = require('../../utils/dato.js');
     var date = require('../../utils/date.js');

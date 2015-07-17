@@ -14,8 +14,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/string.js');
-    require('../../polyfill/array.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var domSelector = require('./selector.js');
@@ -292,11 +290,14 @@ define(function (require, exports, module) {
             selector = null;
         }
 
-        var $style = domSelector.query(selector)[0] || exports.create('style');
+        var $style = domSelector.query(selector)[0];
+
+        if (!$style) {
+            $style = exports.create('style');
+            exports.insert($style, head, 'beforeend');
+        }
 
         styleText = String(styleText);
-
-        this.insert($style, head, 'beforeend');
 
         // IE
         if ($style.styleSheet) {

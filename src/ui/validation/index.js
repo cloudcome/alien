@@ -24,7 +24,6 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../../polyfill/string.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -335,7 +334,7 @@ define(function (require, exports, module) {
             }
 
 
-            dato.each(validationList, function (index, validation) {
+            validationList.forEach(function (validation) {
                 var validationName = validation.name;
                 var validationVals = validation.values;
                 //
@@ -393,7 +392,7 @@ define(function (require, exports, module) {
             var list1 = ruleString.split(options.dataSep);
             var list2 = [];
 
-            dato.each(list1, function (index, item) {
+            list1.forEach(function (item) {
                 var temp = item.split(options.dataEqual);
 
                 list2.push({

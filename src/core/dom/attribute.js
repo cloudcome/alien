@@ -18,8 +18,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/string.js');
-    require('../../polyfill/array.js');
     var regHump = /-(\w)/g;
     var regSep = /^-+|-+$/g;
     var regSplit = /[A-Z]/g;

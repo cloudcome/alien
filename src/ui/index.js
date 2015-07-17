@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var zIndex = 999;
     var $style = modification.create('style');
 
+    modification.insert($style, document.head);
 
     /**
      * 使用 UI 基础类给各个 UI 组件来分配 z-index

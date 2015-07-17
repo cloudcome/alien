@@ -224,7 +224,7 @@ define(function (require, exports, module) {
 
                 // 存在并且覆盖
                 if (isExist && isOverride) {
-                    dato.each(the._ruleList, function (index, existRule) {
+                    the._ruleList.forEach(function (existRule) {
                         if (rule.name === existRule.name) {
                             existRule.onbefores = existRule.onbefores || [];
                             dato.extend(true, existRule, rule);
@@ -474,7 +474,7 @@ define(function (require, exports, module) {
             the.emit('validatestart', rule.name);
 
             // onbefore
-            dato.each(rule.onbefores, function (index, fn) {
+            rule.onbefores.forEach(function (fn) {
                 data[rule.name] = val = fn.call(rule, val, data);
             });
 

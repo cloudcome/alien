@@ -8,7 +8,6 @@
 define(function (require, exports, module) {
     'use strict';
 
-    require('../../polyfill/function.js');
     var ui = require('../');
     var compatible = require('../../core/navigator/compatible.js');
     var selector = require('../../core/dom/selector.js');

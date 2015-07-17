@@ -18,7 +18,6 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../polyfill/object.js');
     var klass = require('../utils/class.js');
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');

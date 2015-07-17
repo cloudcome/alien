@@ -12,7 +12,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/array.js');
     var selector = require('./selector.js');
     var hiddenTagList = 'script link head meta style'.split(' ');
     var alienKey = '-alien-core-dom-see-';

@@ -18,8 +18,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../polyfill/object.js');
-    require('../polyfill/date.js');
     var Emitter = require('./emitter.js');
     var event = require('../core/event/base.js');
     var klass = require('../utils/class.js');
@@ -93,12 +91,12 @@ define(function (require, exports, module) {
                         }
                     });
                     the._lastMatchedRoute = matchKey;
-                    dato.each(the._routerList[matchIndex][matchKey], function (index, callback) {
+                    the._routerList[matchIndex][matchKey].forEach(function (callback) {
                         callback.call(the, matched, hashbang.parse(eve.newURL).query, msgs);
                     });
                 } else {
                     the._lastMatchedRoute = null;
-                    dato.each(the._unMatchedCallbackList, function (index, callback) {
+                    the._unMatchedCallbackList.forEach(function (callback) {
                         callback.call(the, {});
                     });
                 }

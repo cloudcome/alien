@@ -16,7 +16,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../../polyfill/date.js');
     var dato = require('../../utils/dato.js');
     var klass = require('../../utils/class.js');
     var random = require('../../utils/random.js');

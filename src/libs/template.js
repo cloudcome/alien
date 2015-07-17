@@ -16,9 +16,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../polyfill/object.js');
-    require('../polyfill/date.js');
-    require('../polyfill/string.js');
     var dato = require('../utils/dato.js');
     var string = require('../utils/string.js');
     var typeis = require('../utils/typeis.js');
@@ -97,15 +94,13 @@ define(function (require, exports, module) {
 
             the._placeholders = {};
 
-            var slices = template.replace(REG_IGNORE, function ($0, $1) {
+            template.replace(REG_IGNORE, function ($0, $1) {
                 var key = _generateKey();
 
                 the._placeholders[key] = $1;
 
                 return key;
-            }).split(openTag);
-
-            dato.each(slices, function (times, value) {
+            }).split(openTag).forEach(function (value, times) {
                 var array = value.split(closeTag);
                 var $0 = array[0];
                 var $1 = array[1];
@@ -401,7 +396,7 @@ define(function (require, exports, module) {
             } else if (matches[3] && matches[3].slice(0, 1) === '|') {
                 filters = matches[3].split('|');
                 filters.shift();
-                dato.each(filters, function (index, filter) {
+                filters.forEach(function (filter) {
                     var matches = filter.match(REG_FILTER);
                     var args;
                     var name;

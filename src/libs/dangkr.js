@@ -121,7 +121,7 @@ define(function (require, exports, module) {
                  * @private
                  */
                 the._isAndroid = !!bridge.require;
-                the.isDangke = true;
+                the.isDangkr = true;
                 the.platform = the._isAndroid ? 'aos' : 'ios';
 
 
@@ -407,6 +407,20 @@ define(function (require, exports, module) {
          */
         navigationShow: function (data, callback) {
             return this._navigation('show', data || [], callback);
+        },
+
+
+        /**
+         * 改变导航栏标题
+         * @param [data] {String} 数据
+         * @param [callback] {Function} 回调
+         * @returns {*}
+         *
+         * @example
+         * .navigationTitle('动态页面标题');
+         */
+        navigationTitle: function (data, callback) {
+            return this._navigation('title', data || document.title, callback);
         },
 
 
@@ -891,7 +905,7 @@ define(function (require, exports, module) {
     });
 
     Dangke.tokenKey = '-dkToken-';
-    Dangke.isDangke = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
+    Dangke.isDangkr = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
     Dangke.defaults = defaults;
     Dangke.version = dkuaList[1] || '1.1.0';
     Dangke.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';

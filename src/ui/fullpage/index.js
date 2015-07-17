@@ -20,8 +20,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../../polyfill/function.js');
-    var ui = require('../index.js');
+    var ui = require('../');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var animation = require('../../core/dom/animation.js');

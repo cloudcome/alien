@@ -7,13 +7,10 @@
 
 define(function (require, exports, module) {
     /**
-     * @requires utils/dato
      * @module core/navigator/shell
      */
     'use strict';
 
-    require('../../polyfill/object.js');
-    var dato = require('../../utils/dato.js');
     var win = window;
     var nav = win.navigator;
     var doc = win.document;

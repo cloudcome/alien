@@ -27,8 +27,6 @@ define(function (require, exports, module) {
      * @requires libs/template
      */
 
-    require('../../polyfill/date.js');
-    require('../../polyfill/function.js');
     var CodeMirror = require('../../3rd/codemirror/mode/gfm.js');
     var codeMirrorGoLineUp = CodeMirror.commands.goLineUp;
     var codeMirrorGoLineDown = CodeMirror.commands.goLineDown;
@@ -521,7 +519,7 @@ define(function (require, exports, module) {
                 var reg = new RegExp(string.escapeRegExp(value), 'i');
 
                 the._searchLength++;
-                dato.each(the._atList, function (index, item) {
+                the._atList.forEach(function (item) {
                     if (reg.test(item.text)) {
                         searchList.push(item);
                     }

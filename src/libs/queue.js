@@ -19,7 +19,6 @@ define(function (require, exports, module) {
     };
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
-    var dato = require('../utils/dato.js');
     var Emitter = require('./emitter.js');
     var STATES = {
         ready: 1,
@@ -226,7 +225,7 @@ define(function (require, exports, module) {
             /**
              * 停止任务之前，需要依次执行之前注册的回调
              */
-            dato.each(the._queueList, function (index, item) {
+            the._queueList.forEach(function (item) {
                 item.c();
             });
 

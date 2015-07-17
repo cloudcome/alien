@@ -13,10 +13,10 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../polyfill/array.js');
     var typeis = require('./typeis.js');
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap filelist'.split(' ');
+
 
     /**
      * 遍历元素
@@ -149,7 +149,7 @@ define(function (require, exports, module) {
                 return val !== udf;
             };
 
-        exports.each(keys, function (index, key) {
+        keys.forEach(function (key) {
             if (filter(data[key])) {
                 data2[key] = data[key];
             }

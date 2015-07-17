@@ -19,7 +19,6 @@ define(function (require, exports) {
      */
     'use strict';
 
-    require('../../polyfill/object.js');
     var allocation = require('../../utils/allocation.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
@@ -66,7 +65,7 @@ define(function (require, exports) {
                 parse.query = dato.extend({}, parse.query, map);
             } else {
                 throw new Error('`key` must be a object or `key` must b a string, ' +
-                    '`val` must be a string/number/boolean');
+                '`val` must be a string/number/boolean');
             }
         } else {
             if (keyType === 'array') {
@@ -215,11 +214,11 @@ define(function (require, exports) {
             });
 
             if (matched && matchIndex > -1) {
-                var callbacks = typeis.array(routerConfig[matchIndex][matchKey]) ?
-                    routerConfig[matchIndex][matchKey] :
-                    [routerConfig[matchIndex][matchKey]];
+                var callbacks = typeis.array(routerConfig[matchIndex][matchKey])
+                    ? routerConfig[matchIndex][matchKey]
+                    : [routerConfig[matchIndex][matchKey]];
 
-                dato.each(callbacks, function (index, callback) {
+                callbacks.forEach(function (callback) {
                     callback(matched);
                 });
             }

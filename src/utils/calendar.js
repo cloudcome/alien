@@ -111,7 +111,7 @@ define(function (require, exports, module) {
         }
 
         var activeDateMap = {};
-        dato.each(options.activeDate, function (index, d) {
+        options.activeDate.forEach(function (d) {
             if (!d) {
                 return;
             }
@@ -130,7 +130,7 @@ define(function (require, exports, module) {
 
         var today = new Date();
 
-        dato.each(list, function (index, item) {
+        list.forEach(function (item) {
             item.id = _buildDateid(item);
             item.active = !!activeDateMap[item.id];
             item.today = item.year === today.getFullYear() && item.month === today.getMonth() && item.date === today.getDate();
