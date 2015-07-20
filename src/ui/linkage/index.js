@@ -156,6 +156,7 @@ define(function (require, exports, module) {
         setValues: function (values) {
             var the = this;
 
+            the._xhr.abort();
             howdo.each(values, function (index, value, next) {
                 the._unDispathChange = true;
                 the._values[index] = value + '';
@@ -209,7 +210,7 @@ define(function (require, exports, module) {
             var query = {};
 
             query[options.queryName] = index > 0 ? value : '';
-            xhr.get(options.urls[index], query).on('success', function (list) {
+            the._xhr = xhr.get(options.urls[index], query).on('success', function (list) {
                 if (the.emit('afterdata', list) === false) {
                     return;
                 }

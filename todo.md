@@ -11,4 +11,8 @@
 11、模拟 select
 12、模拟 radio
 13、模拟 checkbox
-14、ui/form
+14、libs/validation √
+15、ui/validation √
+16、ui/form 支持重写 type，如 type 是 url（键盘），但重写 type 为 text（新的验证规则）
+
+
