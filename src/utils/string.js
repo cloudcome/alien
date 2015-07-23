@@ -25,21 +25,24 @@ define(function (require, exports, module) {
         '&apos;': /'/g,
         '&#x2f;': /\//g
     };
-    var REG_HTML_CODE = /&#(x)?([\w\d]{0,5});/ig;
-    var unescapeHTMLMap = {
-        '&': /&amp;/g,
-        '<': /&lt;/g,
-        '>': /&gt;/g,
-        '"': /&quot;/g,
-        '\'': /&apos;/g,
-        '/': /&#x2f;/g
-    };
+    //var REG_HTML_CODE = /&#(x)?([\w\d]{0,5});/ig;
+    //var unescapeHTMLMap = {
+    //    '&': /&amp;/g,
+    //    '<': /&lt;/g,
+    //    '>': /&gt;/g,
+    //    '"': /&quot;/g,
+    //    '\'': /&apos;/g,
+    //    '/': /&#x2f;/g
+    //};
     var REG_REGESP = /[.*+?^=!:${}()|[\]\/\\-]/g;
     var REG_ASSIGN_VARIBLE = /\$\{([^{}]*?)}/g;
     var REG_SEPARATOR = /[-_ ]([a-z])/g;
     var REG_HUMP = /[A-Z]/g;
     var REG_STAR = /\\\*/g;
     var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
+    var p = document.createElement('p');
+
+    p.style.display = 'none';
 
     //var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     ///**
@@ -118,18 +121,23 @@ define(function (require, exports, module) {
      * 转换实体符为 HTML 字符串
      * @param str {String} entry 实体符
      * @returns {String}
+     * @link http://frontenddev.org/article/one-line-of-code-that-implement-unescape-html.html
      */
     exports.unescapeHTML = function (str) {
-        // 转换实体数字为实体字母
-        str = String(str).replace(REG_HTML_CODE, function (full, hex, code) {
-            return String.fromCharCode(parseInt(code, hex ? 16 : 10));
-        });
+        //// 转换实体数字为实体字母
+        //str = String(str).replace(REG_HTML_CODE, function (full, hex, code) {
+        //    return String.fromCharCode(parseInt(code, hex ? 16 : 10));
+        //});
+        //
+        //dato.each(unescapeHTMLMap, function (src, reg) {
+        //    str = str.replace(reg, src);
+        //});
+        //
+        //return str;
 
-        dato.each(unescapeHTMLMap, function (src, reg) {
-            str = str.replace(reg, src);
-        });
+        p.innerHTML = (str + '').replace(/</g, '&lt;');
 
-        return str;
+        return p.textContent || p.innerText || '';
     };
 
 

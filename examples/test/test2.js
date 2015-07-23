@@ -2,31 +2,21 @@
 
 
 /**
- * 解码 html 实体符 map
- * @type {Object}
- */
-var unescapeHTMLMap = {
-    '&': /&amp;/g,
-    '<': /&lt;/g,
-    '>': /&gt;/g,
-    '"': /&quot;/g,
-    '\'': /&apos;/g,
-    '/': /&#x2f;/g
-};
-/**
  * 解码 html 实体符
  * @param str {String} html 实体符
  * @returns {String}
  */
-var unescapeHTML = function (str) {
-    str = str.replace(/&#(x)?([\w\d]{0,5});/ig, function (full, hex, code) {
-        return String.fromCharCode(parseInt(code, hex ? 16 : 10));
-    });
+var unescapeHTML = (function (str) {
+    var p = document.createElement('p');
 
-    for (var src in unescapeHTMLMap) {
-        str = str.replace(unescapeHTMLMap[src], src);
-    }
+    p.style.display = 'none';
+    document.body.appendChild(p);
 
-    return str;
-};
+    return function (str) {
+        // 处理掉 < 符号，防止 html 标签（如：<a>）被过滤
+        p.innerHTML = str.replace(/</g, '&lt;');
+
+        return p.textContent || p.innerText || '';
+    };
+}());
 
