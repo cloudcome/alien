@@ -42,8 +42,6 @@ define(function (require, exports, module) {
     var REG_NOT_UTF16_SINGLE = /[^\x00-\xff]{2}/g;
     var p = document.createElement('p');
 
-    p.style.display = 'none';
-
     //var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     ///**
     // * base64 编码
