@@ -217,14 +217,23 @@ define(function (require, exports, module) {
         var $mediaData2 = $('#mediaData2');
         var mediaData2 = null;
 
-        $('#mediaInput').onclick = function () {
+        $('#mediaInput1').onclick = function () {
             dangkr.mediaInput({
                 placeholder: '测试输入占位符',
                 maxLength: 100
             }, function (err, json, res) {
-                //alert('media input callback: ' + JSON.stringify(json));
-                $mediaData1.value = json.value;
-                //throw JSON.stringify(res);
+                $mediaData1.value = JSON.stringify(json, null, 4);
+            });
+        };
+
+        $('#mediaInput2').onclick = function () {
+            dangkr.mediaInput({
+                placeholder: '测试输入占位符',
+                maxLength: 100,
+                atText: '@someone：',
+                atParent: 2
+            }, function (err, json, res) {
+                $mediaData1.value = JSON.stringify(json, null, 4);
             });
         };
 

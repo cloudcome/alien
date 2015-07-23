@@ -98,44 +98,7 @@ share.open
 share.close
 ```
 
-
-## 3.4、分享到朋友圈
-```
-share.timeline
-```
-
-
-## 3.5、分享到微信
-```
-share.weixin
-```
-
-
-## 3.6、分享到微博
-```
-share.weibo
-```
-
-
-## 3.7、分享到 QQ 好友
-```
-share.qqfriend
-```
-
-
-## 3.8、分享到 QQ 空间
-```
-share.qqzone
-```
-
-
-## 3.9、分享到短信
-```
-share.sms
-```
-
-
-# 4、地理位置
+# 4、地理位置【未实现】
 ## 4.1、获取当前地理、行政位置
 ```
 geolocation.get
@@ -284,8 +247,14 @@ media.input
 =>
 {
     placeholder: "输入框占位字符",
-    // 输入类型，为“text/tel/number/email/date/time/datetime”之一，
+    // 输入框内插入 @某某某：，如果用户删除到冒号，
+    // 则应在下一次立即删除全部字符，参考微信的 @ 功能
+    // 二次 @ 则需要删除上一次 @ 人，但不能删除内容
+    atText: "@某某某：",
+    // 并且该@对应的父级 ID 为 1，如果用户删除 @ 之后，返回应该是 0
+    atParent: 1,
     // 默认为“text”
+    // 输入类型，为“text/tel/number/email/date/time/datetime”之一，
     type: "text",
     // 最大长度，默认为-1，即不限制
     maxLength: -1
@@ -293,7 +262,8 @@ media.input
 
 =>
 {
-    value: "用户输入的文本"
+    value: "用户输入的文本",
+    atParent: 1
 }
 ```
 

@@ -25,7 +25,7 @@ define(function (require, exports, module) {
         '&apos;': /'/g,
         '&#x2f;': /\//g
     };
-    var REG_HTML_CODE = /&#(x)?([\w\d]{0,5});/i;
+    var REG_HTML_CODE = /&#(x)?([\w\d]{0,5});/ig;
     var unescapeHTMLMap = {
         '&': /&amp;/g,
         '<': /&lt;/g,
