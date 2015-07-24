@@ -359,6 +359,26 @@ define(function (require, exports, module) {
 
 
         /**
+         * 总是执行
+         * @param callback {Function} 事件回调
+         */
+        always: function (callback) {
+            var the = this;
+
+            if (typeis.function(callback)) {
+                if (the._hasReady || the._hasBroken) {
+                    callback.call(the);
+                } else {
+                    the._readyCallbacks.push(callback);
+                    the._brokenCallbacks.push(callback);
+                }
+            }
+
+            return the;
+        },
+
+
+        /**
          * 数据交互
          * @param method {String} 方法
          * @param [data] {Object} 数据
