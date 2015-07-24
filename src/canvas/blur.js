@@ -7,10 +7,16 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/blur
+     * @module canvas/blur
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';
+
+    var dato = require('../utils/dato.js');
+    var typeis = require('../utils/typeis.js');
+    var drawImg = require('./img.js');
 
     /*
      StackBlur - a fast almost Gaussian Blur For Canvas
@@ -558,76 +564,49 @@ define(function (require, exports, module) {
     }
 
 
-    var dato = require('../utils/dato.js');
-    var typeis = require('../utils/typeis.js');
+    // 配置
     var defaults = {
-        srcX: 0,
-        srcY: 0,
-        type: 'image/png',
-        quality: 1
+        radius: 10,
+        blurX: 0,
+        blurY: 0,
+        blurWidth: null,
+        blurHeight: null
     };
 
     /**
      * canvas 画布模糊
-     * @param imgURL {String} 图片路径
      * @param canvas {Object} 画布
      * @param options {Object} 配置
-     * @param options.radius {Number} 模糊度
-     * @param [blurAlphaChannel=false] {Boolean} alpha通道
+     * @param [options.radius=10] {Number} 模糊度
+     * @param [options.blurX] {Number} 模糊横坐标
+     * @param [options.blurY] {Number} 模糊纵坐标
+     * @param [options.blurWidth] {Number} 模糊宽度
+     * @param [options.blurHeight] {Number} 模糊高度
+     * @param [options.alpha=false] {Boolean} 是否模糊 alpha 通道
      */
-    module.exports = function (imgURL, canvas, options, blurAlphaChannel) {
-        options = dato.extend(!0, {}, defaults, options);
+    module.exports = function (canvas, options) {
+        options = dato.extend({}, defaults, options);
 
-        var img = new Image();
+        if (typeis.empty(options.blurX)) {
+            options.blurX = 0;
+        }
 
-        img.onload = function () {
-            var w = img.width;
-            var h = img.height;
+        if (typeis.empty(options.blurY)) {
+            options.blurY = 0;
+        }
 
-            canvas.width = w;
-            canvas.height = h;
+        if (typeis.empty(options.blurWidth)) {
+            options.blurWidth = canvas.width;
+        }
 
-            if (typeis.empty(options.srcWidth)) {
-                options.srcWidth = img.width;
-            }
+        if (typeis.empty(options.blurHeight)) {
+            options.blurHeight = canvas.height;
+        }
 
-            //if (options.srcWidth.indexOf('%')) {
-            //    options.srcWidth = number.parseFloat(options.srcWidth, 100) / 100 * img.width;
-            //}
-
-            if (typeis.empty(options.srcHeight)) {
-                options.srcHeight = img.height;
-            }
-
-            //if (options.srcHeight.indexOf('%')) {
-            //    options.srcHeight = number.parseFloat(options.srcHeight, 100) / 100 * img.height;
-            //}
-
-            if (typeis.empty(options.drawWidth)) {
-                options.drawWidth = img.width;
-            }
-
-            if (typeis.empty(options.drawHeight)) {
-                options.drawHeight = img.height;
-            }
-
-            var context = canvas.getContext('2d');
-
-            context.clearRect(0, 0, w, h);
-            // $img, options.srcX, options.srcY, options.srcWidth, options.srcHeight, 0, 0, options.drawWidth, options.drawHeight
-            context.drawImage(img, options.srcX, options.srcY, options.srcWidth, options.srcHeight, 0, 0, options.drawWidth, options.drawHeight);
-
-            if (isNaN(options.radius) || options.radius < 1) {
-                options.radius = 1;
-            }
-
-            if (blurAlphaChannel) {
-                stackBlurCanvasRGBA(canvas, 0, 0, w, h, options.radius);
-            } else {
-                stackBlurCanvasRGB(canvas, 0, 0, w, h, options.radius);
-            }
-        };
-
-        img.src = imgURL;
+        if (options.alpha) {
+            stackBlurCanvasRGBA(canvas, options.blurX, options.blurY, options.blurWidth, options.blurHeight, options.radius);
+        } else {
+            stackBlurCanvasRGB(canvas, options.blurX, options.blurY, options.blurWidth, options.blurHeight, options.radius);
+        }
     };
 });
