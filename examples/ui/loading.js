@@ -15,8 +15,13 @@ define(function (require, exports, module) {
 
     document.getElementById('btn1').onclick = function () {
         var ld = new Loading(window, {
-            isModal: true
+            isModal: true,
+            style: {
+                size: 100
+            }
         });
+
+        ld.open();
     };
 
     document.getElementById('btn2').onclick = function () {
@@ -24,6 +29,8 @@ define(function (require, exports, module) {
             isModal: false,
             text: '请稍后'
         });
+
+        ld.open();
     };
 
     var ld3;
@@ -31,6 +38,8 @@ define(function (require, exports, module) {
         ld3 = new Loading('#demo', {
             text: ''
         });
+
+        ld3.open();
     };
     document.getElementById('btn4').onclick = function () {
         if (ld3) {

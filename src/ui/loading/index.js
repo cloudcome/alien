@@ -1,59 +1,8 @@
 /*!
  * loading ui
- * @todo 目前使用 svg 来实现可定制的 loading，在 mac chrome 下，CPU 增高？？
  * @author ydr.me
  * @create 2015-05-15 10:19
  */
-
-
-/*************
- <div class="loader">Loading...</div>
-
- .loader {
-  margin: 6em auto;
-  font-size: 10px;
-  position: relative;
-  text-indent: -9999em;
-  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
-  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
-  border-left: 1.1em solid #ffffff;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation: load8 1.1s infinite linear;
-  animation: load8 1.1s infinite linear;
-}
- .loader,
- .loader:after {
-  border-radius: 50%;
-  width: 10em;
-  height: 10em;
-}
- @-webkit-keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
- @keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
- *************/
-
-
 
 define(function (require, exports, module) {
     /**
@@ -70,14 +19,16 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var ui = require('../');
+    var ui = require('../index.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
-    var Mask = require('../mask/');
+    var keyframes = require('../../core/dom/keyframes.js');
+    var Mask = require('../mask/index.js');
+    var Window = require('../window/index.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
     var Template = require('../../libs/template.js');
@@ -94,22 +45,24 @@ define(function (require, exports, module) {
     var defaults = {
         isModal: true,
         style: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            color: '#fff',
-            border: '0',
-            radius: 4,
-            offset: 22,
-            size: 65,
-            count: 12,
-            duration: 600,
-            width: 4,
-            height: 18
+            count: 10,
+            size: 50,
+            text: '加载中',
+            background: 'rgba(0,0,0,0.8)',
+            color: '#fff'
         },
-        text: '加载中',
         addClass: '',
-        duration: 123,
+        duration: 789,
         easing: 'in-out'
     };
+    var opacity = keyframes.create({
+        0: {
+            opacity: 1
+        },
+        1: {
+            opacity: 0
+        }
+    });
     var Loading = ui.create({
         /**
          * 生成一个 loading 实例
@@ -132,6 +85,7 @@ define(function (require, exports, module) {
             }
 
             the._options = dato.extend(true, {}, defaults, options);
+            the.id = alienId++;
             the._init();
         },
 
@@ -148,18 +102,50 @@ define(function (require, exports, module) {
                 the._mask = new Mask(the._$parent);
             }
 
-            options.list = new Array(options.style.count);
-
-            the._$loading = modification.create('div', {
-                class: alienClass + ' ' + options.addClass,
-                id: alienClass + '-' + alienId++
+            var html = tpl.render({
+                list: new Array(options.style.count),
+                id: the.id,
+                style: options.style
             });
-            the._$loading.innerHTML = tpl.render(options);
-            modification.insert(the._$loading, body);
-            the._transitionOptions = {
-                duration: options.duration,
-                easing: options.easing
-            };
+
+            modification.insert(html, body);
+            the._$loading = selector.query('#' + alienClass + '-' + the.id)[0];
+            var nodes = selector.query('.j-flag', the._$loading);
+            the._$shadow = nodes[0];
+            the._$text = nodes[1];
+            the._$items = selector.query('.' + alienClass + '-item');
+            the._window = new Window(the._$loading, {
+                width: options.style.size,
+                minWidth: 'none',
+                maxWidth: 'none'
+            });
+            var perRotate = 360 / options.style.count;
+            var perDelay = options.duration/options.style.count;
+            dato.each(the._$items, function (index, $item) {
+                attribute.css($item, {
+                    rotate: perRotate * index
+                });
+                var $circle = selector.children($item)[0];
+                attribute.css($circle, {
+                    background: options.style.color
+                });
+                animation.keyframes($item, opacity, {
+                    duration: options.duration,
+                    easing: options.easing,
+                    count: -1,
+                    delay: perDelay * index
+                });
+            });
+            attribute.css(the._$loading, {
+                background: options.style.background
+            });
+            attribute.css(the._$text, {
+                color: options.style.color
+            });
+            attribute.css(the._$shadow, {
+                width: options.style.size,
+                height: options.style.size
+            });
         },
 
 
@@ -169,39 +155,8 @@ define(function (require, exports, module) {
          */
         resize: function () {
             var the = this;
-            var options = the._options;
-            var coverStyle = Mask.getCoverSize(the._$parent);
-            var loadingStyle = {
-                position: coverStyle.position,
-                backgroundColor: options.style.backgroundColor,
-                border: options.style.border,
-                color: options.style.color
-            };
 
-            attribute.css(the._$loading, loadingStyle);
-
-            var width = attribute.outerWidth(the._$loading);
-            var height = attribute.outerHeight(the._$loading);
-            var maxSize = Math.max(width, height);
-
-            attribute.outerWidth(the._$loading, maxSize);
-            attribute.outerHeight(the._$loading, maxSize);
-
-            if (coverStyle.position === 'fixed') {
-                attribute.css(the._$loading, {
-                    top: '50%',
-                    left: '50%',
-                    translateX: '-50%',
-                    translateY: '-50%'
-                });
-            } else {
-                attribute.css(the._$loading, {
-                    left: coverStyle.left + coverStyle.width / 2 - maxSize / 2,
-                    top: coverStyle.top + coverStyle.height / 2 - maxSize / 2,
-                    translateX: 0,
-                    translateY: 0
-                });
-            }
+            the._window.resize();
 
             return the;
         },
@@ -215,28 +170,7 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
 
-            if (the.visible) {
-                return the;
-            }
-
-            the.visible = true;
-
-            if (the._mask) {
-                the._mask.open();
-            }
-
-            attribute.css(the._$loading, {
-                display: 'block',
-                opacity: 0,
-                scale: 0.5,
-                zIndex: ui.getZindex()
-            });
-            the.resize();
-            animation.transition(the._$loading, {
-                opacity: 1,
-                scale: 1
-            }, the._transitionOptions, callback);
-
+            the._window.open(callback);
             return the;
         },
 

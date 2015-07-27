@@ -1,15 +1,10 @@
-<svg width='{{style.size}}' height='{{style.size}}' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
-     preserveAspectRatio="xMidYMid" class="uil-default">
-    <rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect>
-
-    {{list list as index,item}}
-    <rect x='48' y='41' width="{{style.width}}" height="{{style.height}}" rx="{{style.radius}}" ry="{{style.radius}}" fill="{{style.color}}"
-          transform='rotate({{360 * index/list.length}} 50 50) translate(0 -{{style.offset}})'>
-        <animate attributeName='opacity' from='1' to='0'
-                 dur="{{style.duration}}ms" begin='{{style.duration * index/list.length}}ms' repeatCount='indefinite'/>
-    </rect>
-    {{/list}}
-</svg>
-{{if text}}
-<div class="alien-ui-loading-text">{{text}}</div>
-{{/if}}
+<div class="alien-ui-loading" id="alien-ui-loading-{{id}}">
+    <div class="alien-ui-loading-shadow j-flag">
+        {{list list as item}}
+        <div class="alien-ui-loading-item"><div class="alien-ui-loading-circle"></div></div>
+        {{/list}}
+    </div>
+    {{if style.text}}
+    <div class="alien-ui-loading-text j-flag">{{style.text}}</div>
+    {{/if}}
+</div>

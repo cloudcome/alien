@@ -207,6 +207,8 @@ user.get
     nickname: "昵称",
     avatar: "头像",
     phone: "用户手机"
+    city: "所在城市",
+    dkToken: "加密后的必要信息，用于前端与后端的用户验证"
 }
 
 // 未登录
@@ -224,9 +226,10 @@ user.login
     userId: "用户ID",
     userEmail: "用户邮箱",
     nickname: "昵称",
+    avatar: "头像",
     phone: "用户手机",
     city: "所在城市",
-    token: "加密后的必要信息，用于前端与后端的用户验证"
+    dkToken: "加密后的必要信息，用于前端与后端的用户验证"
 }
 ```
 
@@ -461,6 +464,7 @@ share.click
     type: "qq"
 }
 
+type值：
 {
     wxtimeline: "朋友圈",
     wxsession: "微信好友",
@@ -471,3 +475,13 @@ share.click
 }
 ```
 
+## 11.6 输入框提交
+```
+input.submit
+
+=> 
+{
+    value: "输入框的值",
+    atParent: "AT 的父级，由 media.input 传入"
+}
+```
