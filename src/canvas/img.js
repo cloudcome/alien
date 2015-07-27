@@ -18,12 +18,12 @@ define(function (require, exports, module) {
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
     var defaults = {
-        srcX: 0,
-        srcY: 0,
+        srcLeft: 0,
+        srcTop: 0,
         srcWidth: null,
         srcHeight: null,
-        drawX: 0,
-        drawY: 0,
+        drawLeft: 0,
+        drawTop: 0,
         drawWidth: null,
         drawHeight: null
     };
@@ -31,15 +31,15 @@ define(function (require, exports, module) {
 
     /**
      * 绘制图像
-     * @param img {Object} 图片对象，必须保证图片已经 onload 了
      * @param canvas {Object} 画布
+     * @param img {Object} 图片对象，必须保证图片已经 onload 了
      * @param [options] {Object} 配置
-     * @param [options.srcX] {Number} 源横坐标
-     * @param [options.srcY] {Number} 源纵坐标
+     * @param [options.srcLeft] {Number} 源横坐标
+     * @param [options.srcTop] {Number} 源纵坐标
      * @param [options.srcWidth] {Number} 源宽度
      * @param [options.srcHeight] {Number} 源高度
-     * @param [options.drawX] {Number} 绘制横坐标
-     * @param [options.drawY] {Number} 绘制纵坐标
+     * @param [options.drawLeft] {Number} 绘制横坐标
+     * @param [options.drawTop] {Number} 绘制纵坐标
      * @param [options.drawWidth] {Number} 绘制宽度
      * @param [options.drawHeight] {Number} 绘制高度
      */
@@ -56,24 +56,24 @@ define(function (require, exports, module) {
             options.srcHeight = img.height;
         }
 
-        if (typeis.empty(options.drawX)) {
-            options.drawX = 0;
+        if (typeis.empty(options.drawLeft)) {
+            options.drawLeft = 0;
         }
 
-        if (typeis.empty(options.drawY)) {
-            options.drawY = 0;
+        if (typeis.empty(options.drawTop)) {
+            options.drawTop = 0;
         }
 
         if (typeis.empty(options.drawWidth)) {
-            options.drawWidth = img.width;
+            options.drawWidth = options.srcWidth;
         }
 
         if (typeis.empty(options.drawHeight)) {
-            options.drawHeight = img.height;
+            options.drawHeight = options.srcHeight;
         }
 
         context.drawImage(img,
-            options.srcX, options.srcY, options.srcWidth, options.srcHeight,
-            options.drawX, options.drawY, options.drawWidth, options.drawHeight);
+            options.srcLeft, options.srcTop, options.srcWidth, options.srcHeight,
+            options.drawLeft, options.drawTop, options.drawWidth, options.drawHeight);
     };
 });

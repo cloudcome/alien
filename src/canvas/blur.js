@@ -567,8 +567,8 @@ define(function (require, exports, module) {
     // 配置
     var defaults = {
         radius: 10,
-        blurX: 0,
-        blurY: 0,
+        blurLeft: 0,
+        blurTop: 0,
         blurWidth: null,
         blurHeight: null
     };
@@ -578,8 +578,8 @@ define(function (require, exports, module) {
      * @param canvas {Object} 画布
      * @param options {Object} 配置
      * @param [options.radius=10] {Number} 模糊度
-     * @param [options.blurX] {Number} 模糊横坐标
-     * @param [options.blurY] {Number} 模糊纵坐标
+     * @param [options.blurLeft] {Number} 模糊横坐标
+     * @param [options.blurTop] {Number} 模糊纵坐标
      * @param [options.blurWidth] {Number} 模糊宽度
      * @param [options.blurHeight] {Number} 模糊高度
      * @param [options.alpha=false] {Boolean} 是否模糊 alpha 通道
@@ -587,12 +587,12 @@ define(function (require, exports, module) {
     module.exports = function (canvas, options) {
         options = dato.extend({}, defaults, options);
 
-        if (typeis.empty(options.blurX)) {
-            options.blurX = 0;
+        if (typeis.empty(options.blurLeft)) {
+            options.blurLeft = 0;
         }
 
-        if (typeis.empty(options.blurY)) {
-            options.blurY = 0;
+        if (typeis.empty(options.blurTop)) {
+            options.blurTop = 0;
         }
 
         if (typeis.empty(options.blurWidth)) {
@@ -604,9 +604,9 @@ define(function (require, exports, module) {
         }
 
         if (options.alpha) {
-            stackBlurCanvasRGBA(canvas, options.blurX, options.blurY, options.blurWidth, options.blurHeight, options.radius);
+            stackBlurCanvasRGBA(canvas, options.blurLeft, options.blurTop, options.blurWidth, options.blurHeight, options.radius);
         } else {
-            stackBlurCanvasRGB(canvas, options.blurX, options.blurY, options.blurWidth, options.blurHeight, options.radius);
+            stackBlurCanvasRGB(canvas, options.blurLeft, options.blurTop, options.blurWidth, options.blurHeight, options.radius);
         }
     };
 });

@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var ui = require('../');
+    var ui = require('../index.js');
     var compatible = require('../../core/navigator/compatible.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -16,7 +16,9 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
-    var canvas = require('../../utils/canvas.js');
+    var canvas = modification.create('canvas');
+    var canvasImg = require('../../canvas/img.js');
+    var canvasContent = require('../../canvas/content.js');
     var xhr = require('../../core/communication/xhr.js');
     var Dialog = require('../../ui/dialog/');
     var Imgclip = require('../../ui/img-clip/');
@@ -404,16 +406,16 @@ define(function (require, exports, module) {
         _toBlob: function (callback) {
             var the = this;
             var selection = the._selection;
-            var options = the._options;
 
-            canvas.imgToBlob(the._$img, {
-                srcX: selection.srcLeft,
-                srcY: selection.srcTop,
+            canvas.width = selection.srcWidth;
+            canvas.height = selection.srcHeight;
+            canvasImg(canvas, the._$img, {
+                srcLeft: selection.srcLeft,
+                srcTop: selection.srcTop,
                 srcWidth: selection.srcWidth,
-                srcHeight: selection.srcHeight,
-                drawWidth: options.minWidth,
-                drawHeight: options.minHeight
-            }, callback);
+                srcHeight: selection.srcHeight
+            });
+            canvasContent.toBlob(canvas, callback);
         },
 
 

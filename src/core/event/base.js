@@ -153,7 +153,7 @@ define(function (require, exports, module) {
 
     /**
      * 触发事件
-     * @param {HTMLElement|Node|EventTarget} ele 元素
+     * @param {Object} ele 元素
      * @param {Object|String} eventTypeOrEvent 事件类型或事件名称
      * @param {Object} [copyEvent] 需要复制的事件信息
      * @param {Object} [alienDetail] 事件细节，将会在事件上添加 alien 的细节，alienDetail（防止重复）

@@ -25,9 +25,9 @@ define(function (require, exports, module) {
         var height = 302;
 
         canvasImg(canvas, img2, {
-            srcX: (width - 100) / 2,
-            srcY: (height - 100) / 2,
-            srcWidth: 100,
+            srcX: 0,
+            srcY: 0,
+            srcWidth: 200,
             srcHeight: 200,
             drawX: 0,
             drawY: 0,
@@ -36,10 +36,10 @@ define(function (require, exports, module) {
         });
         canvasBlur(canvas, {
             radius: 20,
-            blurX: 10,
-            blurY: 10,
-            blurWidth: 100,
-            blurHeight: 100
+            blurX: 0,
+            blurY: 0,
+            blurWidth: 549/2,
+            blurHeight: 302/2
         });
     };
 });
