@@ -121,7 +121,11 @@ define(function (require, exports, module) {
         },
 
 
-        _getSize: function () {
+        /**
+         * 获得窗口的尺寸
+         * @returns {{}}
+         */
+        getSize: function () {
             var the = this;
             var options = the._options;
             var size = {};
@@ -157,7 +161,8 @@ define(function (require, exports, module) {
                 attribute.css(the._$window, 'height', pre.height);
             }
 
-            the._size = size;
+            the.size = size;
+
             return size;
         },
 
@@ -175,14 +180,14 @@ define(function (require, exports, module) {
             var pos = {};
 
             if (options.left === 'center') {
-                pos.left = (winW - the._size.width) / 2;
+                pos.left = (winW - the.size.width) / 2;
                 pos.left = pos.left < 0 ? 0 : pos.left;
             } else if (options.left !== null) {
                 pos.left = options.left;
             }
 
             if (options.top === 'center') {
-                pos.top = (winH - the._size.height) * 2 / 5;
+                pos.top = (winH - the.size.height) * 2 / 5;
                 pos.top = pos.top < options.minOffset ? options.minOffset : pos.top;
             } else if (options.top !== null) {
                 pos.top = options.top;
@@ -196,7 +201,7 @@ define(function (require, exports, module) {
                 pos.bottom = options.bottom;
             }
 
-            pos.width = the._size.width;
+            pos.width = the.size.width;
 
             return pos;
         },
@@ -238,15 +243,16 @@ define(function (require, exports, module) {
             };
 
             controller.nextTick(function () {
+                the.getSize();
+
                 /**
                  * 窗口打开之前
                  * @event beforeopen
                  */
-                if (the.emit('beforeopen') === false) {
+                if (the.emit('beforeopen', the.size) === false) {
                     return;
                 }
 
-                the._getSize();
                 var to = the._getPos();
 
                 the.visible = true;
@@ -297,14 +303,14 @@ define(function (require, exports, module) {
 
             dato.extend(true, options, size);
 
-            the._getSize();
+            the.getSize();
             var to = the._getPos();
 
             /**
              * 窗口大小改变之前
              * @event beforeresize
              */
-            if (the.emit('beforeresize', the._size, to) === false) {
+            if (the.emit('beforeresize', the.size, to) === false) {
                 return the;
             }
 

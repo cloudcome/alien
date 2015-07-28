@@ -48,7 +48,7 @@ define(function (require, exports, module) {
             // 扇叶数量
             count: 10,
             // 扇叶尺寸
-            size: 50,
+            size: 30,
             // 加载文字，为空时不显示
             text: '加载中',
             // 背景色
@@ -135,11 +135,21 @@ define(function (require, exports, module) {
             if (the._$parent !== win) {
                 var maskCover = Mask.getCoverSize(the._$parent);
 
-                windowOptions.top = maskCover.top;
-                windowOptions.left = maskCover.left;
+                windowOptions.left = maskCover.left + maskCover.width / 2;
+                windowOptions.top = maskCover.top + maskCover.height / 2;
             }
 
             the._window = new Window(the._$loading, windowOptions);
+            the._$window = the._window.getNode();
+            the._window.before('open', function (size) {
+                if (the._$parent !== win) {
+                    attribute.css(the._$window, {
+                        position: maskCover.position,
+                        marginLeft: -size.width / 2,
+                        marginTop: -size.height / 2
+                    });
+                }
+            });
         },
 
 
@@ -175,7 +185,8 @@ define(function (require, exports, module) {
                 color: options.style.color,
                 fontSize: options.style.fontSize,
                 margin: options.style.margin,
-                marginTop: 0
+                marginTop: 0,
+                display: options.style.text ? 'block' : 'none'
             });
             attribute.css(the._$shadow, {
                 width: options.style.size,
@@ -195,7 +206,12 @@ define(function (require, exports, module) {
         setText: function (text) {
             var the = this;
 
-            the._options.style.text = text;
+            the._options.style.text = the._$text.innerHTML = text;
+
+            attribute.css(the._$text, {
+                display: text ? 'block' : 'none'
+            });
+
             the.update();
             the._window.resize();
 
