@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires core/dom/modification
      * @requires core/dom/animation
      * @requires ui/mask/
+     * @requires ui/window/
      * @requires libs/template
      */
 
@@ -109,7 +110,7 @@ define(function (require, exports, module) {
             the._$shadow = nodes[0];
             the._$text = nodes[1];
             the._$items = selector.query('.' + alienClass + '-item');
-            the._mask = new Mask(win);
+            the._mask = options.modal ? new Mask(win) : null;
             the._window = new Window(the._$loading, {
                 width: 'height',
                 height: 'width',
@@ -142,7 +143,8 @@ define(function (require, exports, module) {
             });
             attribute.css(the._$shadow, {
                 width: options.style.size,
-                height: options.style.size
+                height: options.style.size,
+                marginBottom: options.style.text ? options.style.size / 30 : 10
             });
         },
 
@@ -168,6 +170,10 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
 
+            if (the._mask) {
+                the._mask.open();
+            }
+
             the._window.open(callback);
             return the;
         },
@@ -182,6 +188,11 @@ define(function (require, exports, module) {
             var the = this;
 
             the._window.close(callback);
+
+            if (the._mask) {
+                the._mask.close();
+            }
+
 
             return the;
         },

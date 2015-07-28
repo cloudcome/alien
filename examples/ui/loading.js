@@ -17,7 +17,20 @@ define(function (require, exports, module) {
         var ld = new Loading(window, {
             modal: true,
             style: {
-                size: 200
+                size: 30,
+                text: 'loading'
+            }
+        });
+
+        ld.open();
+    };
+
+    document.getElementById('btn2').onclick = function () {
+        var ld = new Loading(window, {
+            modal: true,
+            style: {
+                size: 30,
+                text: null
             }
         });
 
