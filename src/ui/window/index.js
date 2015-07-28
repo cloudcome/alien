@@ -196,6 +196,8 @@ define(function (require, exports, module) {
                 pos.bottom = options.bottom;
             }
 
+            pos.width = the._size.width;
+
             return pos;
         },
 

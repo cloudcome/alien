@@ -43,7 +43,7 @@ define(function (require, exports, module) {
     var alienClass = 'alien-ui-loading';
     var alienId = 0;
     var defaults = {
-        isModal: true,
+        modal: true,
         style: {
             count: 10,
             size: 50,
@@ -97,11 +97,6 @@ define(function (require, exports, module) {
         _init: function () {
             var the = this;
             var options = the._options;
-
-            if (options.isModal) {
-                the._mask = new Mask(the._$parent);
-            }
-
             var html = tpl.render({
                 list: new Array(options.style.count),
                 id: the.id,
@@ -114,13 +109,15 @@ define(function (require, exports, module) {
             the._$shadow = nodes[0];
             the._$text = nodes[1];
             the._$items = selector.query('.' + alienClass + '-item');
+            the._mask = new Mask(win);
             the._window = new Window(the._$loading, {
-                width: options.style.size,
+                width: 'height',
+                height: 'width',
                 minWidth: 'none',
                 maxWidth: 'none'
             });
             var perRotate = 360 / options.style.count;
-            var perDelay = options.duration/options.style.count;
+            var perDelay = options.duration / options.style.count;
             dato.each(the._$items, function (index, $item) {
                 attribute.css($item, {
                     rotate: perRotate * index
@@ -140,7 +137,8 @@ define(function (require, exports, module) {
                 background: options.style.background
             });
             attribute.css(the._$text, {
-                color: options.style.color
+                color: options.style.color,
+                fontSize: Math.max(options.style.size / 10, 12)
             });
             attribute.css(the._$shadow, {
                 width: options.style.size,
@@ -183,28 +181,7 @@ define(function (require, exports, module) {
         close: function (callback) {
             var the = this;
 
-            if (!the.visible) {
-                return the;
-            }
-
-            the.visible = false;
-
-            if (the._mask) {
-                the._mask.close();
-            }
-
-            animation.transition(the._$loading, {
-                opacity: 0,
-                scale: 0.5
-            }, the._transitionOptions, function () {
-                attribute.css(the._$loading, {
-                    display: 'none'
-                });
-
-                if (typeis.function(callback)) {
-                    callback();
-                }
-            });
+            the._window.close(callback);
 
             return the;
         },

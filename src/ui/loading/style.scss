@@ -1,7 +1,6 @@
 .alien-ui-loading {
   border-radius: 10%;
   text-align: center;
-  padding: 10px;
 
   &-shadow {
     display: inline-block;
@@ -14,6 +13,7 @@
     position: absolute;
     left: 0;
     top: 0;
+    opacity: 0;
   }
 
   &-circle {
@@ -29,6 +29,6 @@
   &-text {
     font-size: 14px;
     line-height: 1;
-    padding: 10px 0;
+    padding-top: 10px;
   }
 }
