@@ -275,7 +275,7 @@ define(function (require, exports, module) {
             dato.each(the._$inputs, function (i, $item) {
                 var name = $item.name;
 
-                if (!the._pathMap[name]) {
+                if (!the._pathMap[name] && !$item.hidden && !$item.disabled && !$item.readOnly) {
                     the._pathMap[name] = $item;
                     the._parseRules($item);
                 }
@@ -296,7 +296,8 @@ define(function (require, exports, module) {
             var type = the._getType($item);
             var validationStr = attribute.data($item, options.dataValidation);
             var alias = attribute.data($item, options.dataAlias);
-            var validationList = the._parseValidation(validationStr);
+            var validationInfo = the._parseValidation(validationStr);
+            var validationList = validationInfo.list;
 
             // 规则顺序
             // required => type => minLength => maxLength => pattern => data
@@ -325,14 +326,15 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'step', $item.step);
             }
 
-            switch (type) {
-                case 'number':
-                case 'email':
-                case 'url':
-                    the._validation.addRule(path, 'type', type);
-                    break;
+            if (!validationInfo.hasType) {
+                switch (type) {
+                    case 'number':
+                    case 'email':
+                    case 'url':
+                        the._validation.addRule(path, 'type', type);
+                        break;
+                }
             }
-
 
             validationList.forEach(function (validation) {
                 var validationName = validation.name;
@@ -391,17 +393,24 @@ define(function (require, exports, module) {
 
             var list1 = ruleString.split(options.dataSep);
             var list2 = [];
+            // 是否重写了 type
+            var hasType = false;
 
             list1.forEach(function (item) {
                 var temp = item.split(options.dataEqual);
+                var name = temp[0].trim();
 
+                hasType = name === 'type';
                 list2.push({
-                    name: temp[0].trim(),
+                    name: name,
                     values: temp[1] ? temp[1].trim().split('|') : true
                 });
             });
 
-            return list2;
+            return {
+                list: list2,
+                hasType: hasType
+            };
         }
     });
 

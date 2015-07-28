@@ -1,0 +1,57 @@
+.alien-ui-imgclip {
+  &,
+  & * {
+    position: absolute;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  &-bg {
+    display: none;
+    background: rgba(0, 0, 0, .5);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &-selection {
+    display: none;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  &-in {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px dashed #fff;
+    cursor: move;
+  }
+
+  &-selection {
+    > img {
+      top: 0;
+      left: 0;
+      border: 0;
+      border-radius: 0;
+      box-shadow: 0;
+      max-width: none;
+      max-height: none;
+    }
+
+    .alien-ui-resize {
+      cursor: move;
+    }
+  }
+}
+
+
+
