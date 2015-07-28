@@ -13,6 +13,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/dom/animation
+     * @requires core/dom/keyframes
      * @requires ui/mask/
      * @requires ui/window/
      * @requires libs/template
@@ -37,23 +38,33 @@ define(function (require, exports, module) {
     var doc = win.document;
     var html = doc.documentElement;
     var body = doc.body;
-    Template.config({
-        debug: true
-    });
     var tpl = new Template(template);
     var alienClass = 'alien-ui-loading';
     var alienId = 0;
     var defaults = {
+        // 是否模态
         modal: true,
         style: {
+            // 扇叶数量
             count: 10,
+            // 扇叶尺寸
             size: 50,
+            // 加载文字，为空时不显示
             text: '加载中',
+            // 背景色
             background: 'rgba(0,0,0,0.8)',
-            color: '#fff'
+            // 文本颜色，扇叶颜色
+            color: '#fff',
+            // 文本字体大小
+            fontSize: 14,
+            // 扇叶外边距
+            margin: 10
         },
+        // 添加的 class
         addClass: '',
+        // 动画时间
         duration: 789,
+        // 动画缓冲
         easing: 'in-out'
     };
     var opacity = keyframes.create({
@@ -88,6 +99,7 @@ define(function (require, exports, module) {
             the._options = dato.extend(true, {}, defaults, options);
             the.id = alienId++;
             the._init();
+            the.update();
         },
 
 
@@ -117,8 +129,19 @@ define(function (require, exports, module) {
                 minWidth: 'none',
                 maxWidth: 'none'
             });
+        },
+
+
+        /**
+         * 更新 loading 表现
+         * @returns {Loading}
+         */
+        update: function () {
+            var the = this;
+            var options = the._options;
             var perRotate = 360 / options.style.count;
             var perDelay = options.duration / options.style.count;
+
             dato.each(the._$items, function (index, $item) {
                 attribute.css($item, {
                     rotate: perRotate * index
@@ -139,13 +162,33 @@ define(function (require, exports, module) {
             });
             attribute.css(the._$text, {
                 color: options.style.color,
-                fontSize: Math.max(options.style.size / 10, 12)
+                fontSize: options.style.fontSize,
+                margin: options.style.margin,
+                marginTop: 0
             });
             attribute.css(the._$shadow, {
                 width: options.style.size,
                 height: options.style.size,
-                marginBottom: options.style.text ? options.style.size / 30 : 10
+                margin: options.style.margin
             });
+
+            return the;
+        },
+
+
+        /**
+         * 设置 loading 文本
+         * @param text {String} loading 文本
+         * @returns {Loading}
+         */
+        setText: function (text) {
+            var the = this;
+
+            the._options.style.text = text;
+            the.update();
+            the._window.resize();
+
+            return the;
         },
 
 
@@ -193,7 +236,6 @@ define(function (require, exports, module) {
                 the._mask.close();
             }
 
-
             return the;
         },
 
@@ -212,40 +254,16 @@ define(function (require, exports, module) {
         done: function (callback) {
             var the = this;
 
-            if (the._destory) {
-                return;
-            }
-
-            the._destory = true;
+            the._window.destroy(callback);
 
             if (the._mask) {
                 the._mask.destroy();
             }
-
-            var destory = function () {
-                the.visible = false;
-                modification.remove(the._$loading);
-
-                if (typeis.function(callback)) {
-                    callback();
-                }
-            };
-
-            if (the.visible) {
-                animation.transition(the._$loading, {
-                    opacity: 0,
-                    scale: 0.5
-                }, the._transitionOptions, destory);
-            } else {
-                destory();
-            }
         }
     });
+
+
     Loading.defaults = defaults;
     ui.importStyle(style);
-
-    /**
-     * 实例化一个 Loading
-     */
     module.exports = Loading;
 });
