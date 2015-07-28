@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     };
 
     document.getElementById('btn2').onclick = function () {
-        var ld = new Loading(window, {
+        var ld = new Loading('#div', {
             modal: true,
             style: {
                 size: 30,

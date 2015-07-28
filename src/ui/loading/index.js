@@ -127,7 +127,8 @@ define(function (require, exports, module) {
                 width: 'height',
                 height: 'width',
                 minWidth: 'none',
-                maxWidth: 'none'
+                maxWidth: 'none',
+                autoResize: the._$parent === win
             });
         },
 
