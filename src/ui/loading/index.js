@@ -123,13 +123,23 @@ define(function (require, exports, module) {
             the._$text = nodes[1];
             the._$items = selector.query('.' + alienClass + '-item');
             the._mask = options.modal ? new Mask(the._$parent) : null;
-            the._window = new Window(the._$loading, {
+            var windowOptions = {
                 width: 'height',
                 height: 'width',
                 minWidth: 'none',
                 maxWidth: 'none',
                 autoResize: the._$parent === win
-            });
+            };
+
+            // loading 父级是一个元素
+            if (the._$parent !== win) {
+                var maskCover = Mask.getCoverSize(the._$parent);
+
+                windowOptions.top = maskCover.top;
+                windowOptions.left = maskCover.left;
+            }
+
+            the._window = new Window(the._$loading, windowOptions);
         },
 
 
