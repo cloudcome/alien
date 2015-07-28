@@ -300,28 +300,28 @@ define(function (require, exports, module) {
     });
 
 
-    /**
-     * 获得当前页面的滚动条宽度
-     * @returns {number}
-     * @private
-     */
-    function _getScrollbarWidth() {
-        var $div = modification.create('div', {
-            style: {
-                position: 'absolute',
-                width: 100,
-                height: 100,
-                overflow: 'scroll'
-            }
-        });
-
-        modification.insert($div, document.body);
-
-        var width = $div.offsetWidth - $div.clientWidth;
-        modification.remove($div);
-
-        return width;
-    }
+    ///**
+    // * 获得当前页面的滚动条宽度
+    // * @returns {number}
+    // * @private
+    // */
+    //function _getScrollbarWidth() {
+    //    var $div = modification.create('div', {
+    //        style: {
+    //            position: 'absolute',
+    //            width: 100,
+    //            height: 100,
+    //            overflow: 'scroll'
+    //        }
+    //    });
+    //
+    //    modification.insert($div, document.body);
+    //
+    //    var width = $div.offsetWidth - $div.clientWidth;
+    //    modification.remove($div);
+    //
+    //    return width;
+    //}
 
 
     /**

@@ -122,7 +122,7 @@ define(function (require, exports, module) {
             the._$shadow = nodes[0];
             the._$text = nodes[1];
             the._$items = selector.query('.' + alienClass + '-item');
-            the._mask = options.modal ? new Mask(win) : null;
+            the._mask = options.modal ? new Mask(the._$parent) : null;
             the._window = new Window(the._$loading, {
                 width: 'height',
                 height: 'width',
