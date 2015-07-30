@@ -11,10 +11,10 @@
     right: 0;
     bottom: 0;
     width: 8px;
-    cursor: e-resize; }
+    cursor: ew-resize; }
   .alien-ui-resize-s {
     right: 0;
     bottom: 0;
     left: 0;
     height: 8px;
-    cursor: s-resize; }
+    cursor: ns-resize; }

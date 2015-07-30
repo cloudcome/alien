@@ -921,6 +921,17 @@ define(function (require, exports, module) {
          */
         bottomApply: function (data, callback) {
             return this._bottom('apply', data, callback);
+        },
+
+
+        /**
+         * 显示/隐藏底部输入框
+         * @param [data]
+         * @param [callback]
+         * @returns {*}
+         */
+        bottomInput: function (data, callback) {
+            return this._bottom('input', data, callback);
         }
     });
 

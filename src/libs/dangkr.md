@@ -412,13 +412,23 @@ dialog.tips.open
 
 
 # 10、底部
-## 10.1、打开加载框
+## 10.1、打开报名框
 ```
 bottom.apply
 
 {
     // 是否允许报名
     active: true,
+    // 是否隐藏
+    hidden: false
+}
+```
+
+## 10.2、打开输入框
+```
+bottom.input
+
+{
     // 是否隐藏
     hidden: false
 }
