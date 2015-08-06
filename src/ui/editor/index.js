@@ -148,6 +148,7 @@ define(function (require, exports, module) {
                 the._atList = [];
             }
 
+            the.destroyed = false;
             the._initEvent();
 
             if (the._options.canBackup) {

@@ -57,6 +57,7 @@ define(function (require, exports, module) {
             }
 
             the._$ele = $ele[0];
+            the.destroyed = false;
             the._options = dato.extend(!0, {}, defaults, options);
 
             if (the._$ele.complete) {

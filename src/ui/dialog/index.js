@@ -71,12 +71,8 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$content = selector.query($content)[0];
-            the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
-        _init: function () {
-            var the = this;
-            var options = the._options;
+            options = the._options = dato.extend(true, {}, defaults, options);
+            the.destroyed = false;
 
             if (options.isModal) {
                 the._mask = new Mask(win, {

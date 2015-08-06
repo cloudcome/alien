@@ -84,6 +84,7 @@ define(function (require, exports, module) {
 
             the._$form = selector.query($form)[0];
             the._isForm = the._$form.tagName === 'FORM';
+            the.destroyed = false;
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
             Emitter.pipe(the._validation, the, ['!success', '!error']);

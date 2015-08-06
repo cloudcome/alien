@@ -59,6 +59,7 @@ define(function (require, exports, module) {
             the._$container = selector.query($container)[0];
             the._options = dato.extend({}, defaults, options);
             the._$nav = selector.query(the._options.navSelector)[0];
+            the.destroyed = false;
             the._init();
         },
 
