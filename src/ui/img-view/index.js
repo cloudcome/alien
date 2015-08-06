@@ -64,16 +64,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-
+            the.destroyed = false;
             the._initData();
             the._initNode();
             the._initEvent();
