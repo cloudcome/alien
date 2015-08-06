@@ -43,7 +43,8 @@ define(function (require, exports, module) {
 
             the._$container = selector.query($container)[0];
             the._options = dato.extend({}, defaults, options);
-            the._init();
+            the.destroyed = false;
+            the._initEvent();
         },
 
 
@@ -65,7 +66,7 @@ define(function (require, exports, module) {
          * 初始化
          * @private
          */
-        _init: function () {
+        _initEvent: function () {
             var the = this;
             var options = the._options;
 
