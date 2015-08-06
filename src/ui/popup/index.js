@@ -71,16 +71,7 @@ define(function (require, exports, module) {
 
             the._$target = selector.query($target)[0];
             the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
-
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
+            the.destroyed = false;
             the._html = tpl.render({
                 id: the._id = alienId++
             });

@@ -25,18 +25,28 @@ define(function (require, exports, module) {
      * var Prettify = require('ui/prettify/');
      * var pf = new Prettify('pre');
      */
-    module.exports = ui.create(function ($pre) {
-        var the = this;
+    module.exports = ui.create({
+        constructor: function ($pre) {
+            var the = this;
 
-        the._options = {};
-        the._$pres = selector.query($pre);
-        attribute.addClass(the._$pres, 'prettyprint');
-        prettify.prettyPrint(function () {
-            /**
-             * 代码美化完毕后
-             * @event done
-             */
-            the.emit('done');
-        });
+            the._options = {};
+            the._$pres = selector.query($pre);
+            the.destroyed = false;
+            attribute.addClass(the._$pres, 'prettyprint');
+            prettify.prettyPrint(function () {
+                /**
+                 * 代码美化完毕后
+                 * @event done
+                 */
+                the.emit('done');
+            });
+        },
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            //
+        }
     });
 });
