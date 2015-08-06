@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 时间日历选择器
  * @author ydr.me
  * @create 2015-02-05 10:51
  */
@@ -74,19 +74,8 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$input = selector.query($input)[0];
-            the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
-
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-            var options = the._options;
-
+            options = the._options = dato.extend(true, {}, defaults, options);
+            the.destroyed = false;
             the._id = alienIndex++;
             the._lastChoose = {};
             // 选择的日期、时间
