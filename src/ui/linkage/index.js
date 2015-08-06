@@ -153,7 +153,7 @@ define(function (require, exports, module) {
          * @param values {Array} 手动值
          * @returns {Linkage}
          */
-        setValues: function (values) {
+        setValue: function (values) {
             var the = this;
 
             the._xhr.abort();
@@ -173,8 +173,18 @@ define(function (require, exports, module) {
          * 获得当前选中的值
          * @returns {Array}
          */
-        getValues: function () {
+        getValue: function () {
             return this._values;
+        },
+
+
+        /**
+         * 获取 select
+         * @param index {Number} 索引值
+         * @returns {*}
+         */
+        getSelect: function (index) {
+            return this._$selects[index];
         },
 
 

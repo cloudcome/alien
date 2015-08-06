@@ -23,9 +23,6 @@ define(function (require, exports, module) {
     var udf;
     //var warningPropertyList = 'emit on un _eventsPool _eventsLimit'.split(' ');
     var zIndex = 999;
-    var $style = modification.create('style');
-
-    modification.insert($style, document.head);
 
     /**
      * 使用 UI 基础类给各个 UI 组件来分配 z-index
@@ -108,6 +105,6 @@ define(function (require, exports, module) {
      * @param styleText {String}
      */
     exports.importStyle = function (styleText) {
-        modification.importStyle(styleText, $style, true);
+        modification.importStyle(styleText);
     };
 });

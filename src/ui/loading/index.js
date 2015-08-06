@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         modal: true,
         style: {
             // 扇叶数量
-            count: 10,
+            count: 9,
             // 扇叶尺寸
             size: 30,
             // 加载文字，为空时不显示

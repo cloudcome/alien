@@ -380,7 +380,7 @@ define(function (require, exports, module) {
         /**
          * 解析 data 验证规则
          * @param ruleString
-         * @returns {Array}
+         * @returns {Object}
          * @private
          */
         _parseValidation: function (ruleString) {
@@ -388,7 +388,10 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (!ruleString) {
-                return [];
+                return {
+                    list: [],
+                    hasType: false
+                };
             }
 
             var list1 = ruleString.split(options.dataSep);

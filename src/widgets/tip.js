@@ -7,7 +7,13 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/tip
+     * @module widgets/tip
+     * @requires ui/
+     * @requires ui/msg/
+     * @requires utils/dato
+     * @requires utils/controller
+     * @requires core/event/base
+     * @requires core/dom/attribute
      */
 
     'use strict';
