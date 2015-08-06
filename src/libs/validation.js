@@ -263,12 +263,17 @@ define(function (require, exports, module) {
                  */
                 the.emit('aftervalidateall');
             };
+            var firstInvlidPath = null;
 
-            var hd = howdo
+            howdo
                 // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
                     the._validateOne(data, path = item.path, item.rules, function (err, hasError) {
                         if (hasError) {
+                            if(!firstInvlidPath){
+                                firstInvlidPath = item.path;
+                            }
+
                             errorLength++;
                         }
 
@@ -281,7 +286,7 @@ define(function (require, exports, module) {
                          * 验证成功
                          * @event error
                          */
-                        the.emit('error');
+                        the.emit('error', firstInvlidPath);
                     } else {
                         /**
                          * 验证成功
@@ -309,7 +314,7 @@ define(function (require, exports, module) {
                      * 验证失败
                      * @event error
                      */
-                    the.emit('error');
+                    the.emit('error', path);
                 })
                 .follow(complete);
 
