@@ -50,7 +50,10 @@ define(function (require, exports, module) {
 
             the._list = list || [];
             the._options = dato.extend(true, {}, defaults, options);
-            the._init();
+            the.destroyed = false;
+            the._initNode();
+            the.update(the._list);
+            the._initEvent();
         },
 
 
@@ -148,18 +151,6 @@ define(function (require, exports, module) {
             return the;
         },
 
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-
-            the._initNode();
-            the.update(the._list);
-            the._initEvent();
-        },
 
 
         /**

@@ -55,20 +55,11 @@ define(function (require, exports, module) {
         constructor: function ($list, options) {
             var the = this;
 
-            the._options = dato.extend(true, {}, defaults, options);
+            options = the._options = dato.extend(true, {}, defaults, options);
             the._$list = selector.query($list)[0];
             the._$items = selector.query(the._options.itemSelector, the._$list);
             the._itemLength = the._$items.length;
-            the._init();
-        },
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-            var options = the._options;
-
+            the.destroyed = false;
             the._showIndex = options.index;
             the._direction = options.axis.indexOf('x') > -1 ? 'X' : 'Y';
             the._increase = options.axis.indexOf('-') > -1 ? -1 : 1;
@@ -77,12 +68,6 @@ define(function (require, exports, module) {
             the.resize(options);
             the._initEvent();
             the._autoPlay(options.isAutoPlay);
-
-            controller.nextTick(function () {
-                the.emit('change', the._showIndex);
-            });
-
-            return the;
         },
 
 
@@ -238,6 +223,10 @@ define(function (require, exports, module) {
                     attribute.removeClass(selector.siblings($activeItem), options.activeClass);
                     attribute.addClass($activeItem, options.activeClass);
                 }
+            });
+
+            controller.nextTick(function () {
+                the.emit('change', the._showIndex);
             });
         },
 

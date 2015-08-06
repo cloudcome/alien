@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 验证规则库
  * @author ydr.me
  * @create 2015-07-05 22:40
  */
@@ -48,7 +48,7 @@ define(function (require, exports, module) {
             var boolean = typeis(val) === 'file' ? true :
             (isMultiple ? val : (val || '')).length > 0;
 
-            done(boolean ? null : isMultiple ? '请选择${path}' : '${path}不能为空');
+            done(boolean ? null : '${path}不能为空');
         });
 
 

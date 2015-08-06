@@ -31,7 +31,6 @@ define(function (require, exports, module) {
     var Validation = require('../../libs/validation.js');
     require('../../libs/validation-rules.js')(Validation);
     require('./validation-rules.js')(Validation);
-    var Emitter = require('../../libs/emitter.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
@@ -89,13 +88,18 @@ define(function (require, exports, module) {
             var the = this;
 
             the._validation = new Validation(the._options);
-            Emitter.pipe(the._validation, the, ['!valid', '!invalid']);
             the._validation
                 .on('valid', function (path) {
                     the.emit('valid', the._pathMap[path]);
                 })
                 .on('invalid', function (err, path) {
                     the.emit('invalid', err, the._pathMap[path]);
+                })
+                .on('error', function (path) {
+                    the.emit('error', the._pathMap[path]);
+                })
+                .on('success', function () {
+                    the.emit('success');
                 });
             the._parseItems();
 
@@ -275,7 +279,7 @@ define(function (require, exports, module) {
             dato.each(the._$inputs, function (i, $item) {
                 var name = $item.name;
 
-                if (!the._pathMap[name] && !$item.hidden && !$item.disabled && !$item.readOnly) {
+                if (name && !the._pathMap[name] && !$item.hidden && !$item.disabled && !$item.readOnly) {
                     the._pathMap[name] = $item;
                     the._parseRules($item);
                 }
