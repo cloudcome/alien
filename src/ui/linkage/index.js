@@ -63,6 +63,7 @@ define(function (require, exports, module) {
             the._hasPlaceholder = the._options.placeholder && the._options.placeholder.text;
             the._values = [];
             the._cache = {};
+            the.destroyed = false;
             the._initNode();
             the._initEvent();
             // 初始加载第一级

@@ -76,11 +76,6 @@ define(function (require, exports, module) {
         }
     });
     var Loading = ui.create({
-        /**
-         * 生成一个 loading 实例
-         * @param $parent
-         * @param [options]
-         */
         constructor: function ($parent, options) {
             if (typeis.string(options)) {
                 options = {
@@ -97,6 +92,7 @@ define(function (require, exports, module) {
             }
 
             the._options = dato.extend(true, {}, defaults, options);
+            the.destroyed = false;
             the.id = alienId++;
             the._init();
             the.update();

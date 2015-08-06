@@ -48,16 +48,8 @@ define(function (require, exports, module) {
             the._$cover = selector.query($cover)[0];
             the._$cover = _isSimilar2Window(the._$cover) ? win : the._$cover;
             the._options = dato.extend(true, {}, defaults, options);
+            the.destroyed = false;
             the.visible = false;
-            the._init();
-        },
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-
             the._initNode();
             the._initEvent();
 

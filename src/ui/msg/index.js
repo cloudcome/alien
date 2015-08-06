@@ -77,12 +77,7 @@ define(function (require, exports, module) {
             the._options.buttons = the._options.buttons || [];
             the.id = alienIndex++;
             the._isReady = false;
-            the._init();
-        },
-
-        _init: function () {
-            var the = this;
-
+            the.destroyed = false;
             the._initNode();
             the._initEvent();
 
