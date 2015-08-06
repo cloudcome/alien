@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * qrcode
  * @author ydr.me
  * @create 2015-07-01 14:33
  */
@@ -50,6 +50,7 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
+            the.destroyed = false;
         },
 
         render: function (text) {

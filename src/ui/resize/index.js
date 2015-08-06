@@ -52,19 +52,9 @@ define(function (require, exports, module) {
             var the = this;
 
             $ele = selector.query($ele);
-
-            if (!$ele.length) {
-                throw 'instance element is empty';
-            }
-
             the._$ele = $ele[0];
             the._options = dato.extend(!0, {}, defaults, options);
-            the._init();
-        },
-        _init: function () {
-            var the = this;
-            var $ele = the._$ele;
-            var pos = attribute.css($ele, 'position');
+            var pos = attribute.css(the._$ele, 'position');
             var $wrap;
 
             the._id = alienIndex++;
@@ -74,15 +64,16 @@ define(function (require, exports, module) {
 
             // 必须先有定位属性
             if (pos === 'static') {
-                attribute.css($ele, 'position', 'relative');
+                attribute.css(the._$ele, 'position', 'relative');
             }
 
-            modification.insert($wrap, $ele, 'beforeend');
+            modification.insert($wrap, the._$ele, 'beforeend');
+            the.destroyed = false;
             the._$e = selector.query('.' + alienPrefix + '-e', $wrap)[0];
             the._$s = selector.query('.' + alienPrefix + '-s', $wrap)[0];
             the._size = {
-                width: attribute.innerWidth($ele),
-                height: attribute.innerHeight($ele)
+                width: attribute.innerWidth(the._$ele),
+                height: attribute.innerHeight(the._$ele)
             };
             the._disabled = false;
             the._on();
