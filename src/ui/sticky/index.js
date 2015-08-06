@@ -44,18 +44,9 @@ define(function (require, exports, module) {
                 selector.parent(the._$ele)[0] :
                 selector.query(the._options.containerSelector)[0];
             the._$scroller = selector.query(the._options.scrollerSelector)[0];
-
-            return the._init();
-        },
-
-
-        _init: function () {
-            var the = this;
-
+            the.destroyed = false;
             the._initNode();
             the._initEvent();
-
-            return the;
         },
 
 
