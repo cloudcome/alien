@@ -25,11 +25,7 @@ define(function (require, exports, module) {
             the._$parent = selector.query($parent)[0];
             the._$ele = selector.query($ele)[0];
             the._options = dato.extend(true, {}, defaults, options);
-            the._init();
-        },
-        _init: function () {
-            var the = this;
-
+            the.destroyed = false;
             the._initEvent();
         },
 

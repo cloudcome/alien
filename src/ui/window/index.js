@@ -65,19 +65,9 @@ define(function (require, exports, module) {
             var the = this;
 
             the._$content = selector.query($content)[0];
-            the._options = dato.extend(true, {}, defaults, options);
+            options = the._options = dato.extend(true, {}, defaults, options);
             the.visible = false;
-            the._init();
-        },
-
-        /**
-         * 初始化
-         * @returns {Window}
-         * @private
-         */
-        _init: function () {
-            var the = this;
-            var options = the._options;
+            the.destroyed = false;
             var $pos = modification.create('div');
             var setEasing = function (options) {
                 if (typeis.string(options.easing)) {
