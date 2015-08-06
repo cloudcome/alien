@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/drag.js');
     var alienIndex = 1;
-    var alienPrefix = 'alien-ui-resize';
+    var namespace = 'alien-ui-resize';
     var defaults = {
         minWidth: 0,
         minHeight: 0,
@@ -69,8 +69,8 @@ define(function (require, exports, module) {
 
             modification.insert($wrap, the._$ele, 'beforeend');
             the.destroyed = false;
-            the._$e = selector.query('.' + alienPrefix + '-e', $wrap)[0];
-            the._$s = selector.query('.' + alienPrefix + '-s', $wrap)[0];
+            the._$e = selector.query('.' + namespace + '-e', $wrap)[0];
+            the._$s = selector.query('.' + namespace + '-s', $wrap)[0];
             the._size = {
                 width: attribute.innerWidth(the._$ele),
                 height: attribute.innerHeight(the._$ele)
