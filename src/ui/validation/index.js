@@ -101,6 +101,12 @@ define(function (require, exports, module) {
                 })
                 .on('success', function () {
                     the.emit('success');
+                })
+                .before('validate', function (path) {
+                    the.emit('beforevalidate', the._pathMap[path]);
+                })
+                .after('validate', function (path) {
+                    the.emit('aftervalidate', the._pathMap[path]);
                 });
             the._parseItems();
 
@@ -277,6 +283,9 @@ define(function (require, exports, module) {
 
             the._items = [];
             the._$inputs = selector.query(options.inputSelector, the._$form);
+            the._$inputs = selector.filter(the._$inputs, function () {
+                return this.name;
+            });
             dato.each(the._$inputs, function (i, $item) {
                 var name = $item.name;
 
