@@ -74,6 +74,11 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             options.minWidth = options.minWidth * the._ratioWidth;
             options.maxWidth = options.maxWidth * the._ratioWidth;
             options.minHeight = options.minHeight * the._ratioHeight;

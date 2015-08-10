@@ -399,6 +399,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             event.un(the._$prev, 'click');
             event.un(the._$next, 'click');
             event.un(the._$navList, 'click');

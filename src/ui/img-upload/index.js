@@ -485,6 +485,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             event.un(the._$dialog, 'change');
             event.un(the._$cancel, 'click');
             event.un(the._$submit, 'click');
