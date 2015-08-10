@@ -170,8 +170,6 @@ define(function (require, exports, module) {
                 attributes: true
             });
             $link.setAttribute('a', String(Math.random()));
-
-            return;
         } else if ('VBArray' in win) {
             var $script = doc.createElement('script');
             // IE下这个通常只要 1 ms,而且没有副作用，不会发现请求
@@ -183,11 +181,9 @@ define(function (require, exports, module) {
             };
 
             $body.appendChild($script);
-
-            return;
+        } else {
+            setTimeout(fn, 0);
         }
-
-        setTimeout(fn, 0);
     };
 
 
