@@ -179,6 +179,7 @@ define(function (require, exports, module) {
 
             the.destroyed = true;
             the._window.destroy(callback);
+            modification.remove(the._$loading);
 
             if (the._mask) {
                 the._mask.destroy();
