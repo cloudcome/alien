@@ -824,6 +824,12 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
+
             if (the._adaptMobile) {
                 modification.unwrap(the._$ele, 'div');
             } else {
