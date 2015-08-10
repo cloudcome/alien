@@ -485,6 +485,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             the.close(function () {
                 modification.remove(the._$popup);
                 if (typeis.function(callback)) {

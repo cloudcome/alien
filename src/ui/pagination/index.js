@@ -121,6 +121,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             event.un(the._$ele, 'click', the._onpage);
             the._$ele.innerHTML = '';
         }

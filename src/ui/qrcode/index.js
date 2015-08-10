@@ -223,6 +223,16 @@ define(function (require, exports, module) {
             s.push('</table>');
 
             return s.join('');
+        },
+
+        destroy: function () {
+            var the = this;
+
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
         }
     });
 

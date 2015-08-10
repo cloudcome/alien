@@ -46,7 +46,13 @@ define(function (require, exports, module) {
          * 销毁实例
          */
         destroy: function () {
-            //
+            var the = this;
+
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
         }
     });
 });

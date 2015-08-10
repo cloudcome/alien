@@ -389,6 +389,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             event.un(the._$control0, 'dragstart drag dragend');
             event.un(the._$control1, 'dragstart drag dragend');
             the._$parent.innerHTML = '';
