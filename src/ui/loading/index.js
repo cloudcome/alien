@@ -173,6 +173,10 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
             the._window.destroy(callback);
 
             if (the._mask) {
