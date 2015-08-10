@@ -620,6 +620,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             // 清除拖拽
             var eve1 = 'dragsatrt drag dragend';
             event.un(the._$thumbX, eve1);
