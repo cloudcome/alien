@@ -68,7 +68,7 @@ define(function (require, exports, module) {
             the._$mask = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
                 style: style,
-                'class': alienClass
+                class: alienClass
             });
             attribute.addClass(the._$mask, options.addClass);
             modification.insert(the._$mask, body);

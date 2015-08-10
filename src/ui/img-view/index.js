@@ -260,11 +260,8 @@ define(function (require, exports, module) {
             attribute.css(the._$content, 'bottom', number.parseFloat(options.thumbnailSize.height));
 
             if (!the._loading) {
-                the._loading = new Loading(window, {
-                    style: {
-                        border: '1px solid #333'
-                    },
-                    isModal: false
+                the._loading = new Loading({
+                    modal: false
                 });
             }
         },
