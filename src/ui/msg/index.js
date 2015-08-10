@@ -299,6 +299,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             the._window.destroy(function () {
                 event.un(the._$close, 'click');
                 event.un(the._$buttons, 'click');
