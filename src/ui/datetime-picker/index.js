@@ -476,6 +476,12 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
+
             if (the._rHours) {
                 the._rHours.destroy();
             }
