@@ -344,6 +344,11 @@ define(function (require, exports, module) {
         destroy: function (callback) {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             the._window.destroy(function () {
                 modification.insert(the._$content, the._$pos, 'afterend');
                 modification.remove(the._$pos);
