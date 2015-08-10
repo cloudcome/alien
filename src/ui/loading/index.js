@@ -177,6 +177,7 @@ define(function (require, exports, module) {
                 return;
             }
 
+            the.destroyed = true;
             the._window.destroy(callback);
 
             if (the._mask) {

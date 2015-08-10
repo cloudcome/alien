@@ -458,6 +458,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             the.pause();
             event.un(the._$wrap, 'mouseenter mouseleave touch1start touch1move touch1end');
             modification.remove(the._$item0Clone);
