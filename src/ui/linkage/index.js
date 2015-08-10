@@ -322,6 +322,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             dato.repeat(the._length, function (index) {
                 event.un(the._$selects[index], 'change', the._onchange);
             });
