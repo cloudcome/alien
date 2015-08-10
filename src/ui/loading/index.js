@@ -94,11 +94,12 @@ define(function (require, exports, module) {
          */
         setText: function (text) {
             var the = this;
+            var options = the._options;
 
-            the._options.text = the._$text.innerHTML = text;
-
+            options.text = typeis.empty(text) ? '' : text;
+            the._$text.innerHTML = text;
             attribute.css(the._$text, {
-                display: text ? 'block' : 'none'
+                display: options.text ? 'block' : 'none'
             });
 
             the._window.resize();
