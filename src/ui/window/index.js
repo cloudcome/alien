@@ -477,6 +477,12 @@ define(function (require, exports, module) {
                 }
             };
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
+
             if (the.visible) {
                 the.close(destroy);
                 the.visible = false;

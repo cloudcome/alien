@@ -144,6 +144,11 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             // 卸载事件绑定
             event.un(the._$ele, the._options.eventType, the._ontrigger);
         }

@@ -103,6 +103,11 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
             event.un(doc, options.openEvent, the._onTooltip);
             event.un(doc, options.closeEvent, the._offTooltip);
             the._popup.destroy();

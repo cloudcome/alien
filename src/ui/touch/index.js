@@ -35,6 +35,16 @@ define(function (require, exports, module) {
             event.on(the._$parent, 'touch1start', function (eve) {
 
             });
+        },
+
+        destroy: function () {
+            var the = this;
+
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
         }
     });
     Touchpull.defaults = defaults;
