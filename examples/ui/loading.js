@@ -15,7 +15,8 @@ define(function (require, exports, module) {
 
     document.getElementById('btn1').onclick = function () {
         var ld = new Loading({
-            modal: true
+            modal: true,
+            text: '正在玩命的加载中'
         });
 
         ld.open();

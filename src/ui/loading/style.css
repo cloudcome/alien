@@ -8,6 +8,11 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
+  .alien-ui-loading-inner {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .alien-ui-loading-gif {
     display: inline-block;
     width: 30px;

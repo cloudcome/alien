@@ -75,7 +75,8 @@ define(function (require, exports, module) {
                 id: the.id
             }), body);
             the._$loading = selector.query('#' + namespace + '-' + the.id)[0];
-            var nodes = selector.children(the._$loading);
+            the._$inner = selector.children(the._$loading)[0];
+            var nodes = selector.children(the._$inner);
             the._$gif = nodes[0];
             the._$text = nodes[1];
             the._window = new Window(the._$loading, {

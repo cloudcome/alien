@@ -192,6 +192,7 @@ define(function (require, exports, module) {
             }
 
             pos.width = the.size.width;
+            pos.height = the.size.height;
 
             return pos;
         },

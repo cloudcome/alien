@@ -11,6 +11,13 @@
     box-sizing: border-box;
   }
 
+  &-inner {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
   &-gif {
     $size: 30px;
     display: inline-block;
