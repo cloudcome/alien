@@ -126,7 +126,7 @@ define(function (require, exports, module) {
                         top: attribute.top(dragfor),
                         zIndex: Math.pow(2, 53)
                     },
-                    class: className
+                    'class': className
                 });
                 modification.insert(clone, document.body, 'beforeend');
             }

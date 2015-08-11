@@ -380,7 +380,8 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                var ret = ele.dataset[string.humprize(key)];
+                var dataset = ele.dataset || {};
+                var ret = dataset[string.humprize(key)];
 
                 try {
                     ret = JSON.parse(ret);

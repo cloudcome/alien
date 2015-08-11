@@ -81,14 +81,14 @@ define(function (require, exports, module) {
             the.id = alienIndex;
             the._$window = modification.create('div', {
                 id: alienClass + '-' + alienIndex++,
-                class: alienClass,
+                'class': alienClass,
                 style: {
                     display: 'none',
                     position: 'absolute'
                 }
             });
             the._$focus = modification.create('input', {
-                class: alienClass + '-focus'
+                'class': alienClass + '-focus'
             });
             attribute.addClass(the._$window, options.addClass);
             modification.insert(the._$window, options.parentNode);

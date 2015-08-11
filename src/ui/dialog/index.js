@@ -239,7 +239,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var $iframe = modification.create('iframe', {
                 src: url,
-                class: alienClass + '-iframe',
+                'class': alienClass + '-iframe',
                 style: {
                     height: options.remoteHeight
                 }

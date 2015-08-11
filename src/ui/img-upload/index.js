@@ -119,7 +119,7 @@ define(function (require, exports, module) {
             var $newFile = modification.create('input', {
                 type: 'file',
                 accept: options.accept,
-                class: alienKey + '-file'
+                'class': alienKey + '-file'
             });
 
             modification.insert($newFile, the._$file, 'afterend');
