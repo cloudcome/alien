@@ -29,6 +29,7 @@
 * 9、对话框 `dialog`
 * 10、底部交互 `bottom`
 * 11、被动交互
+* 12、协议链接
 
 
 
@@ -495,3 +496,31 @@ input.submit
     atParent: "AT 的父级，由 media.input 传入"
 }
 ```
+
+
+# 12 协议链接
+```
+dangkr://
+```
+
+## 12.1 活动详情页
+```
+dangkr://activity/?id=123
+```
+
+## 12.2 个人主页
+```
+dangkr://user/?id=123&isLeader=true
+dangkr://user/?id=123
+```
+
+## 12.3 俱乐部主页
+```
+dangkr://club/?id=123
+```
+
+## 12.4 文章详情页
+```
+dangkr://article/?id=123
+```
+
