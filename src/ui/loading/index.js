@@ -179,8 +179,13 @@ define(function (require, exports, module) {
             }
 
             the.destroyed = true;
-            the._window.destroy(callback);
-            modification.remove(the._$loading);
+            the._window.destroy(function () {
+                modification.remove(the._$loading);
+
+                if (typeis.function(callback)) {
+                    callback();
+                }
+            });
 
             if (the._mask) {
                 the._mask.destroy();

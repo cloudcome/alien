@@ -58,14 +58,3 @@
     color: #fff;
     cursor: default;
 }
-
-@media (max-width: 640px) {
-    .alien-ui-pagination-item {
-        display: none;
-    }
-
-    .alien-ui-pagination-item:first-child,
-    .alien-ui-pagination-item:last-child {
-        display: block;
-    }
-}
