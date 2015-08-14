@@ -14,6 +14,7 @@
  *
  * @author ydr.me
  * @create 2015-03-10 17:29
+ * @fix 2015-08-14 15:40:39
  */
 
 // aos 和 ios 都已经在全局注入了相同的属性，并且都是同步的，因此可以不必等待 ready？
@@ -22,11 +23,12 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var klass = require('../utils/class.js');
-    var controller = require('../utils/controller.js');
-    var typeis = require('../utils/typeis.js');
-    var dato = require('../utils/dato.js');
-    var Emitter = require('./emitter.js');
+    var klass = require('./class.js');
+    var controller = require('./controller.js');
+    var allocation = require('./allocation.js');
+    var typeis = require('./typeis.js');
+    var dato = require('./dato.js');
+    var Emitter = require('../libs/emitter.js');
     var win = window;
     var noop = function () {
         // ignore
@@ -44,37 +46,30 @@ define(function (require, exports, module) {
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
     var dkuaList = (ua.match(REG_END) || ['', ''])[1].split('/');
     var namespace = 'WebViewJavascriptBridge';
+    var webViewJavascriptBridge = null;
+    //var singleInstance = null;
+    var hasReady = false;
+    var hasBroken = false;
+    var readyCallbackList = [];
+    var brokenCallbackList = [];
     var defaults = {
         shareData: {},
         timeout: 1000
     };
-    var Dangke = klass.extends(Emitter).create({
+    var Dangkr = klass.extends(Emitter).create({
         constructor: function (options) {
             var the = this;
 
             //the._namespace = 'WebViewJavascriptBridge';
             the._options = dato.extend(true, {}, defaults, options);
             the._shareData = the._options.shareData;
-            the._init();
-        },
-
-        /**
-         * 初始化
-         * @private
-         */
-        _init: function () {
-            var the = this;
-
-            the._readyCallbacks = [];
-            the._brokenCallbacks = [];
+            //the._readyCallbacks = [];
+            //the._brokenCallbacks = [];
             the._asyncCallbacks = {};
             the._andCallbacks = {};
-            the._hasReady = false;
             the._oneceCallbackList = ['media.input'];
             the._invokeList = [];
             the._initEvent();
-
-            return the;
         },
 
 
@@ -85,7 +80,7 @@ define(function (require, exports, module) {
          */
         _setDkToken: function (json) {
             json = json || {};
-            win[Dangke.tokenKey] = json.dkToken || '';
+            win[dangkr.tokenKey] = json.dkToken || '';
         },
 
 
@@ -98,12 +93,14 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var onready = function (bridge) {
-                if (the._hasReady) {
+                if (hasReady || hasBroken) {
                     return;
                 }
 
-                the._hasReady = true;
-                the.bridge = bridge;
+                hasReady = true;
+                //alert('dangkr ready');
+                webViewJavascriptBridge = bridge;
+
                 try {
                     bridge.init();
                 } catch (err) {
@@ -131,20 +128,21 @@ define(function (require, exports, module) {
                  * @param bridge {Object} jsbridge 对象
                  */
                 the.emit('ready', bridge);
-                the._readyCallbacks.forEach(function (callback) {
+                readyCallbackList.forEach(function (callback) {
                     callback.call(the);
                 });
             };
             var onbroken = function () {
-                if (the._hasBroken) {
+                if (hasReady || hasBroken) {
                     return;
                 }
 
-                the._hasBroken = true;
+                hasBroken = true;
+                //alert('dangkr broken');
                 the.isDangke = false;
                 the.platform = isIOS ? 'ios' : 'aos';
                 the.emit('broken');
-                the._brokenCallbacks.forEach(function (callback) {
+                brokenCallbackList.forEach(function (callback) {
                     callback.call(the);
                 });
             };
@@ -156,7 +154,7 @@ define(function (require, exports, module) {
                     return onbroken();
                 }
 
-                if (namespace in win && !the._hasReady) {
+                if (namespace in win && !hasReady) {
                     clearInterval(the._timeid);
                     onready(win[namespace]);
                 }
@@ -179,20 +177,21 @@ define(function (require, exports, module) {
         _onreceive: function (res, callback, emitName) {
             var the = this;
             var err = null;
-            var result = res.result;
+            var ret = res.result;
 
             // {code: 200, message: "", result: "..."}
+            //alert(emitName + ' => ' + JSON.stringify(res));
 
             if (res.code !== 200) {
                 err = new Error(res.message);
             }
 
-            callback(err, result, res);
+            callback(err, ret, res);
 
             /**
              * 调用事件
              */
-            the.emit(emitName, err, result, res);
+            the.emit(emitName, err, ret, res);
         },
 
 
@@ -204,17 +203,12 @@ define(function (require, exports, module) {
          */
         invoke: function (name, data, callback) {
             var the = this;
-            var bridge = the.bridge;
-            var args = arguments;
+            var args = allocation.args(arguments);
             var argL = args.length;
 
-            if (!bridge) {
+            if (!webViewJavascriptBridge) {
                 the._invokeList.push(args);
                 return the;
-            }
-
-            while (typeis.undefined(args[argL - 1])) {
-                argL -= 1;
             }
 
             // invoke(name, data, callback)
@@ -235,10 +229,10 @@ define(function (require, exports, module) {
                 the._onreceive.call(the, res, callback, name);
             };
 
-            if (bridge.callHandler) {
-                bridge.callHandler(name, data, oncallback);
-            } else if (bridge.require) {
-                var res = bridge.require(name, JSON.stringify({data: data}));
+            if (typeis.function(webViewJavascriptBridge.callHandler)) {
+                webViewJavascriptBridge.callHandler(name, data, oncallback);
+            } else if (webViewJavascriptBridge.require) {
+                var res = webViewJavascriptBridge.require(name, JSON.stringify({data: data}));
 
                 if (!typeis.object(res)) {
                     try {
@@ -277,8 +271,8 @@ define(function (require, exports, module) {
 
             callback = typeis.function(callback) ? callback : noop;
 
-            if (the.bridge && the.bridge.registerHandler) {
-                the.bridge.registerHandler(event, function (res) {
+            if (webViewJavascriptBridge && webViewJavascriptBridge.registerHandler) {
+                webViewJavascriptBridge.registerHandler(event, function (res) {
                     the._onreceive.call(the, res, callback, event);
                 });
             } else {
@@ -328,10 +322,10 @@ define(function (require, exports, module) {
             var the = this;
 
             if (typeis.function(callback)) {
-                if (the._hasReady) {
+                if (hasReady) {
                     callback.call(the);
                 } else {
-                    the._readyCallbacks.push(callback);
+                    readyCallbackList.push(callback);
                 }
             }
 
@@ -347,10 +341,10 @@ define(function (require, exports, module) {
             var the = this;
 
             if (typeis.function(callback)) {
-                if (the._hasBroken) {
+                if (hasBroken) {
                     callback.call(the);
                 } else {
-                    the._brokenCallbacks.push(callback);
+                    brokenCallbackList.push(callback);
                 }
             }
 
@@ -366,11 +360,11 @@ define(function (require, exports, module) {
             var the = this;
 
             if (typeis.function(callback)) {
-                if (the._hasReady || the._hasBroken) {
+                if (hasReady || hasBroken) {
                     callback.call(the);
-                } else {
-                    the._readyCallbacks.push(callback);
-                    the._brokenCallbacks.push(callback);
+                } else if (!hasReady && !hasBroken) {
+                    readyCallbackList.push(callback);
+                    brokenCallbackList.push(callback);
                 }
             }
 
@@ -426,6 +420,10 @@ define(function (require, exports, module) {
          * }]);
          */
         navigationShow: function (data, callback) {
+            if (typeis.object(data)) {
+                data = [data];
+            }
+
             return this._navigation('show', data || [], callback);
         },
 
@@ -934,12 +932,13 @@ define(function (require, exports, module) {
             return this._bottom('input', data, callback);
         }
     });
+    var dangkr = new Dangkr();
 
-    Dangke.tokenKey = '-dkToken-';
-    Dangke.isDangkr = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
-    Dangke.defaults = defaults;
-    Dangke.version = dkuaList[1] || '1.1.0';
-    Dangke.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';
-    Dangke.platform = isIOS ? 'ios' : 'aos';
-    module.exports = Dangke;
+    dangkr.tokenKey = '-dkToken-';
+    dangkr.isDangkr = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
+    dangkr.defaults = defaults;
+    dangkr.version = dkuaList[1] || '1.1.0';
+    dangkr.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';
+    dangkr.platform = isIOS ? 'ios' : 'aos';
+    module.exports = dangkr;
 });
