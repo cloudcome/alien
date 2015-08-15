@@ -331,7 +331,7 @@ define(function (require, exports, module) {
             });
 
             // 点击 document
-            event.on(doc, 'click', function (eve) {
+            event.on(doc, 'click', the._onclick = function (eve) {
                 if (!the._visible) {
                     return;
                 }
@@ -500,7 +500,7 @@ define(function (require, exports, module) {
             event.un(the._$list, 'click');
             event.un(the._$now, 'click');
             event.un(the._$sure, 'click');
-            event.un(doc, 'click');
+            event.un(doc, 'click', the._onclick);
             the._popup.destroy();
         }
     });

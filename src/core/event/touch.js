@@ -88,7 +88,7 @@ define(function (require, exports, module) {
      * @property inDbltap {Boolean} 是否在双触期间
      */
     var touch = {};
-    var lastTapDefaultPrevented = false;
+    //var lastTapDefaultPrevented = false;
 
     fastclick.attach(document.body);
     event.on(document, 'click', function (eve) {
@@ -247,7 +247,7 @@ define(function (require, exports, module) {
 
                     if (dispatchDbltap && dispatchDbltap.defaultPrevented === true) {
                         eve.preventDefault();
-                        lastTapDefaultPrevented = true;
+                        //lastTapDefaultPrevented = true;
                     }
                 });
             }
@@ -288,17 +288,17 @@ define(function (require, exports, module) {
     });
 
     event.on(document, touchcancel, _cancel);
-    //event.on(window, 'scroll', _cancel);
-    /**
-     * @see https://github.com/madrobby/zepto/pull/746
-     * 修正 tap 点透的 BUG，监听 click 捕获阶段，并停止事件传递
-     */
-    event.on(document, 'click', function (eve) {
-        if (lastTapDefaultPrevented) {
-            lastTapDefaultPrevented = false;
-            eve.stopPropagation();
-        }
-    }, true);
+    ////event.on(window, 'scroll', _cancel);
+    ///**
+    // * @see https://github.com/madrobby/zepto/pull/746
+    // * 修正 tap 点透的 BUG，监听 click 捕获阶段，并停止事件传递
+    // */
+    //event.on(document, 'click', function (eve) {
+    //    if (lastTapDefaultPrevented) {
+    //        lastTapDefaultPrevented = false;
+    //        eve.stopPropagation();
+    //    }
+    //}, true);
 
 
     /**
