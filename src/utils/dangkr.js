@@ -139,7 +139,6 @@ define(function (require, exports, module) {
 
                 hasBroken = true;
                 //alert('dangkr broken');
-                the.isDangke = false;
                 the.platform = isIOS ? 'ios' : 'aos';
                 the.emit('broken');
                 brokenCallbackList.forEach(function (callback) {
@@ -649,6 +648,12 @@ define(function (require, exports, module) {
          * @param [callback] {Function} 回调
          */
         locationRedirect: function (data, callback) {
+            if (data.type === 'user' && dangkr.version <= '1.3.0') {
+                data.type = 'captain';
+
+                return this._location('redirect', data, callback);
+            }
+
             return this._location('redirect', data, callback);
         },
 
