@@ -20,6 +20,34 @@
 // aos 和 ios 都已经在全局注入了相同的属性，并且都是同步的，因此可以不必等待 ready？
 // ios https://github.com/marcuswestin/WebViewJavascriptBridge/blob/master/WebViewJavascriptBridge/WebViewJavascriptBridge.js.txt
 
+// 【主动事件】
+// data.send    发送数据
+
+// data.send 发送数据包括
+// 喜欢了该活动
+//type: "love"
+//
+// 绑定了手机
+//type: 'bindPhone',
+//phone: '12312341234'
+
+
+// 【被动的事件】
+// club.follow    关注了俱乐部
+// bottom.apply   点击了报名按钮
+// bottom.respond 点击了咨询按钮
+// location.back  点击了返回按钮，只在 location.fullscreen 时回调
+// share.click    点击了分享按钮，type：分享类型
+// input.submit   输入框回车提交
+
+// share.click type 类型
+//wxtimeline: "朋友圈",
+//wxsession: "微信好友",
+//sms: "短信",
+//sina: "新浪微博",
+//qq: "QQ 好友",
+//qzone: "QQ 空间"
+
 define(function (require, exports, module) {
     'use strict';
 
@@ -183,6 +211,11 @@ define(function (require, exports, module) {
 
             if (res.code !== 200) {
                 err = new Error(res.message);
+            }
+
+            // 针对 AOS 进行单独处理
+            if (the._isAndroid && emitName === 'input.submit' && ret.atParent) {
+                ret.value = ret.value.replace(/^回复 .*?：/, '');
             }
 
             callback(err, ret, res);
@@ -789,6 +822,17 @@ define(function (require, exports, module) {
             var the = this;
             var event = 'media.input';
 
+            data = dato.extend({}, {
+                placeholder: '说点什么吧',
+                type: 'text',
+                atParent: 0,
+                maxLength: -1
+            }, data);
+
+            if (data.atParent) {
+                data.atText = data.placeholder;
+            }
+
             if (the._isAndroid) {
                 the.when(event, callback);
                 callback = null;
@@ -806,6 +850,10 @@ define(function (require, exports, module) {
          * @param [callback] {Function} 回调
          */
         mediaPicture: function (data, callback) {
+            data = dato.extend({}, {
+                list: [],
+                active: 0
+            }, data);
             return this._media('picture', data, callback);
         },
 
@@ -878,6 +926,10 @@ define(function (require, exports, module) {
          * @param [callback] {Function} 回调
          */
         dialogLoadingOpen: function (data, callback) {
+            data = dato.extend({}, {
+                modal: true,
+                text: '加载中'
+            }, data);
             return this._dialog('loading.open', data, callback);
         },
 
@@ -896,11 +948,17 @@ define(function (require, exports, module) {
          * 打开 tips
          * @param [data] {Object} 数据
          * @param [data.modal=true] {Boolean} 是否为模态,默认true
-         * @param [data.text="加载中"] {String} tips 文本
+         * @param [data.text="提示"] {String} tips 文本
          * @param [data.timeout=3] {Number} 超时时间,单位秒
          * @param [callback] {Function} 回调
          */
         dialogTipsOpen: function (data, callback) {
+            data = dato.extend({}, {
+                modal: true,
+                text: '提示',
+                timeout: 3
+            }, data);
+
             return this._dialog('tips.open', data, callback);
         },
 
@@ -923,6 +981,12 @@ define(function (require, exports, module) {
          * @returns {*}
          */
         bottomApply: function (data, callback) {
+            data = dato.extend({}, {
+                // 是否可报名
+                active: false,
+                // 是否隐藏
+                hidden: true
+            }, data);
             return this._bottom('apply', data, callback);
         },
 
@@ -934,6 +998,14 @@ define(function (require, exports, module) {
          * @returns {*}
          */
         bottomInput: function (data, callback) {
+            data = dato.extend({}, {
+                placeholder: '说点什么吧',
+                type: 'text',
+                atParent: 0,
+                maxLength: -1,
+                hidden: true
+            }, data);
+
             return this._bottom('input', data, callback);
         }
     });
