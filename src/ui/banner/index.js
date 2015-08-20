@@ -182,7 +182,7 @@ define(function (require, exports, module) {
 
                 if (!hasScroll) {
                     eve.preventDefault();
-                    sett['translate' + the._direction] = translate0 + (the._direction === 'X' ? changedX : changedY) + 'px';
+                    sett['translate' + the._direction] = translate0 + (the._direction === 'X' ? changedX : changedY);
                     attribute.css(the._$list, sett);
                 }
             });
@@ -238,6 +238,10 @@ define(function (require, exports, module) {
          */
         _autoPlay: function (boolean) {
             var the = this;
+
+            if (!the._options.isAutoPlay) {
+                return;
+            }
 
             if (boolean) {
                 the.play();
@@ -301,25 +305,26 @@ define(function (require, exports, module) {
             }
 
             the._offset = 0;
-            the._translate = the._itemLength > 2
-                ? -(the._direction === 'X' ? options.width : options.height) * (index + 1)
-                : 0;
-            animation.transition(the._$list, the._calTranslate(index + 1), {
-                duration: options.duration,
-                easing: options.easing
-            }, function () {
-                the._showIndex = index;
+            the._translate = the._itemLength > 1 ?
+            -(the._direction === 'X' ? options.width : options.height) * (index + 1) : 0;
+            controller.nextFrame(function () {
+                animation.transition(the._$list, the._calTranslate(index + 1), {
+                    duration: options.duration,
+                    easing: options.easing
+                }, function () {
+                    the._showIndex = index;
 
-                /**
-                 * banner 索引变化之后
-                 * @event change
-                 * @param index {Number} 索引
-                 */
-                the.emit('change', index);
+                    /**
+                     * banner 索引变化之后
+                     * @event change
+                     * @param index {Number} 索引
+                     */
+                    the.emit('change', index);
 
-                if (typeis.function(callback)) {
-                    callback.call(the);
-                }
+                    if (typeis.function(callback)) {
+                        callback.call(the);
+                    }
+                });
             });
         },
 

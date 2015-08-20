@@ -79,6 +79,10 @@ define(function (require, exports, module) {
             var the = this;
 
             event.on(the._$mask, 'click', function (eve) {
+                if (!selector.has(eve.target, this)) {
+                    return;
+                }
+
                 var $window = selector.closest(eve.target, '.alien-ui-window')[0];
 
                 if (!$window) {

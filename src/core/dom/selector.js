@@ -18,6 +18,7 @@ define(function (require, exports, module) {
 
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var random = require('../../utils/random.js');
     var compatible = require('../navigator/compatible.js');
     var matchesSelector = compatible.html5('matchesSelector', document.body);
     var win = window;
@@ -192,7 +193,7 @@ define(function (require, exports, module) {
     /**
      * 从元素本身开始获得最近匹配的祖先元素
      * @param {Object} ele 元素
-     * @param {String} selector 选择器
+     * @param {String|Object} selector 选择器
      * @returns {Array}
      *
      * @example
@@ -204,12 +205,22 @@ define(function (require, exports, module) {
             return [];
         }
 
-        while (typeis(ele) !== 'document' && typeis(ele) === 'element') {
-            if (exports.isMatched(ele, selector)) {
-                return dato.toArray(ele, true);
-            }
+        if (typeis.string(selector)) {
+            while (typeis(ele) !== 'document' && typeis(ele) === 'element') {
+                if (exports.isMatched(ele, selector)) {
+                    return dato.toArray(ele, true);
+                }
 
-            ele = exports.parent(ele)[0];
+                ele = exports.parent(ele)[0];
+            }
+        } else if (typeis.element(selector)) {
+            while (typeis(ele) !== 'document' && ele && ele !== selector) {
+                if (ele === selector) {
+                    return dato.toArray(ele, true);
+                }
+
+                ele = exports.parent(ele)[0];
+            }
         }
 
         return dato.toArray();
@@ -307,5 +318,30 @@ define(function (require, exports, module) {
         });
 
         return ret;
+    };
+
+
+    /**
+     * 判断上下文是否存在某元素
+     * @param ele {Element} 元素
+     * @param context {Object} 上下文
+     * @returns {boolean}
+     */
+    exports.has = function (ele, context) {
+        context = context || doc;
+
+        if (ele === context) {
+            return true;
+        }
+
+        var className = random.string(20) + Date.now();
+
+        ele.classList.add(className);
+
+        var list = exports.query('.' + className, context);
+
+        ele.classList.remove(className);
+
+        return list.length > 0;
     };
 });

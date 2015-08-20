@@ -68,7 +68,8 @@ define(function (require, exports, module) {
             options = the._options = dato.extend(true, {}, defaults, options);
             the.visible = false;
             the.destroyed = false;
-            var $pos = modification.create('div');
+            the._id = alienIndex++;
+            var $pos = modification.create('#comment', alienClass + '-' + the._id);
             var setEasing = function (options) {
                 if (typeis.string(options.easing)) {
                     var e = {};
@@ -78,9 +79,9 @@ define(function (require, exports, module) {
                 }
             };
 
-            the.id = alienIndex;
+
             the._$window = modification.create('div', {
-                id: alienClass + '-' + alienIndex++,
+                id: alienClass + '-' + the._id,
                 'class': alienClass,
                 style: {
                     display: 'none',

@@ -92,6 +92,7 @@ define(function (require, exports, module) {
                 easing: options.easing,
                 zIndex: options.zIndex
             });
+            the._id = alienIndex++;
             the._$window = the._window.getNode();
             the._initNode();
 
@@ -118,7 +119,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var html = tpl.render({
-                id: alienIndex++,
+                id: the._id,
                 windowId: the._$window.id,
                 title: options.title,
                 canDrag: options.canDrag,
@@ -126,7 +127,7 @@ define(function (require, exports, module) {
             });
             var node = modification.parse(html)[0];
             var nodes = selector.query('.j-flag', node);
-            var $pos = modification.create('div');
+            var $pos = modification.create('#comment', alienClass + '-' + the._id);
 
             the._$dialog = node;
             the._$header = nodes[0];
