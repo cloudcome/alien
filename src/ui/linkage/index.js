@@ -52,6 +52,10 @@ define(function (require, exports, module) {
             text: '请选择',
             value: ''
         },
+        // 隐藏空 select
+        hideEmpty: false,
+        // 不可用空 select
+        disabledEmpty: true,
         // 数据过滤器
         filter: null
     };
@@ -302,12 +306,26 @@ define(function (require, exports, module) {
             }
 
             var $select = the._$selects[index];
+            var hasNoValue = !list.length || the._hasPlaceholder && list.length === 1;
 
-            if (selectOptions) {
-                attribute.prop($select, 'disabled', false);
-                attribute.html($select, selectOptions);
+            if (hasNoValue) {
+                if (options.disabledEmpty) {
+                    attribute.prop($select, 'disabled', true);
+                }
+
+                if (options.hideEmpty) {
+                    attribute.css($select, 'display', 'none');
+                }
             } else {
-                attribute.prop($select, 'disabled', true);
+                if (options.disabledEmpty) {
+                    attribute.prop($select, 'disabled', false);
+                }
+
+                if (options.hideEmpty) {
+                    attribute.css($select, 'display', '');
+                }
+
+                attribute.html($select, selectOptions);
             }
 
             if (!the._unChangeNext) {
