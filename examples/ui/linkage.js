@@ -21,11 +21,11 @@ define(function (require, exports, module) {
         ]
     });
 
-    linkage.on('change', function (index) {
-        console.log(index, this.getValues());
+    linkage.on('change', function (index, value) {
+        console.log(index, value);
     });
 
-    linkage.setValues([2, 22, 222]);
+    linkage.setValue([2, 22, 222]);
 
     window.linkage = linkage;
 });

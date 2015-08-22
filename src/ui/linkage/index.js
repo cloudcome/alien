@@ -51,7 +51,9 @@ define(function (require, exports, module) {
         placeholder: {
             text: '请选择',
             value: ''
-        }
+        },
+        // 数据过滤器
+        filter: null
     };
     var Linkage = ui.create({
         constructor: function ($parent, options) {
@@ -61,8 +63,10 @@ define(function (require, exports, module) {
             the._options = dato.extend({}, defaults, options);
             the._length = the._options.urls.length || the._options.length;
             the._hasPlaceholder = the._options.placeholder && the._options.placeholder.text;
+            the._defaultVal = the._hasPlaceholder ? the._options.placeholder.value : '';
             the._values = [];
             the._cache = {};
+            the._changeIndex = -1;
             the.destroyed = false;
             the._initNode();
             the._initEvent();
@@ -104,20 +108,20 @@ define(function (require, exports, module) {
             //var options = the._options;
 
             // 获取到了列表数据
-            the.on('list', the._renderList);
-
             dato.repeat(the._length, function (index) {
                 event.on(the._$selects[index], 'change', the._onchange = function () {
-                    var index = this[namespace + 'index'];
-                    var value = this.value;
+                    var self = this;
+                    var index = self[namespace + 'index'];
+                    var value = self.value;
                     var nextIndex = index + 1;
 
                     the._values[index] = value;
+                    the._changeIndex = index;
                     the.emit('change', index, value);
-                    the._cleanValues(nextIndex);
 
                     if (nextIndex < the._length) {
-                        the.change(index + 1);
+                        the._cleanValues(nextIndex);
+                        the.change(nextIndex);
                     }
                 });
             });
@@ -132,12 +136,10 @@ define(function (require, exports, module) {
          */
         change: function (index, callback) {
             var the = this;
-            var cb;
 
-            the._getData(index);
-            the.after('render', cb = function (_index) {
-                if (_index === index) {
-                    the.un('afterrender', cb);
+            the._getData(index, function (err, list) {
+                if (!err) {
+                    the._renderList(index, list);
 
                     if (typeis.function(callback)) {
                         callback.call(the);
@@ -158,12 +160,12 @@ define(function (require, exports, module) {
             var the = this;
 
             the._xhr.abort();
+            the._unChangeNext = true;
             howdo.each(values, function (index, value, next) {
-                the._unDispathChange = true;
                 the._values[index] = value + '';
                 the.change(index, next);
             }).follow(function () {
-                the._unDispathChange = false;
+                the._unChangeNext = false;
             });
 
             return the;
@@ -192,43 +194,41 @@ define(function (require, exports, module) {
         /**
          * 获取级联数据
          * @param index {Number} 当前级联索引值
+         * @param callback {Function} 回调
          * @private
          */
-        _getData: function (index) {
+        _getData: function (index, callback) {
             var the = this;
             var options = the._options;
-            var value = the._values[index - 1];
+            var prevIndex = index - 1;
+            var prevValue = prevIndex > -1 ? the._values[prevIndex] : the._defaultVal;
 
-            the._currentIndex = index;
-
-            // 未选择时，回到初始状态
-            if (index > 0 && !value) {
-                return the.emit('list');
+            // 上一步没有值
+            if (index && !prevValue) {
+                the._values[index] = the._defaultVal;
+                return callback(null, []);
             }
 
-            if (index && the._cache[index - 1]) {
-                var cacheList = the._cache[index - 1][value];
+            // 有缓存值
+            if (index && the._cache[prevIndex]) {
+                var cacheList = the._cache[prevIndex][prevValue];
 
                 if (cacheList) {
-                    return the.emit('list', cacheList.slice(the._hasPlaceholder ? 1 : 0));
+                    return callback(null, cacheList.slice(the._hasPlaceholder ? 1 : 0));
                 }
             }
 
-            if (the.emit('beforedata', index) === false) {
-                return;
-            }
+            the.emit('beforedata', index);
 
             var query = {};
 
-            query[options.queryName] = index > 0 ? value : '';
+            query[options.queryName] = index > 0 ? prevValue : '';
             the._xhr = xhr.get(options.urls[index], query).on('success', function (list) {
-                if (the.emit('afterdata', list) === false) {
-                    return;
-                }
-
-                the.emit('list', list);
+                the.emit('afterdata', list);
+                callback(null, typeis.function(options.filter) ? options.filter(list) : list);
             }).on('error', function (err) {
                 the.emit('error', err);
+                callback(err);
             });
         },
 
@@ -240,10 +240,11 @@ define(function (require, exports, module) {
          */
         _cleanValues: function (index) {
             var the = this;
+            var options = the._options;
 
             dato.repeat(the._length, function (_index) {
                 if (_index >= index) {
-                    the._values[_index] = '';
+                    the._values[_index] = the._defaultVal;
                 }
             });
         },
@@ -251,15 +252,15 @@ define(function (require, exports, module) {
 
         /**
          * 渲染 select option
-         * @param [list] {Array} 渲染的数据列表
+         * @param index {Number} 渲染的 select 索引值
+         * @param list {Array} 渲染的数据列表
          * @returns {string}
          * @private
          */
-        _renderList: function (list) {
+        _renderList: function (index, list) {
             var the = this;
             var options = the._options;
             var selectOptions = '';
-            var index = the._currentIndex;
 
             the.emit('beforerender', index);
 
@@ -268,10 +269,11 @@ define(function (require, exports, module) {
 
             if (list) {
                 if (index && options.cache) {
-                    var prevValue = the._values[index - 1];
+                    var prevIndex = index - 1;
+                    var prevValue = the._values[prevIndex];
                     // 上一个选中的子级
-                    the._cache[index - 1] = the._cache[index - 1] || {};
-                    the._cache[index - 1][prevValue] = list;
+                    the._cache[prevIndex] = the._cache[prevIndex] || {};
+                    the._cache[prevIndex][prevValue] = list;
                 }
             } else {
                 list = [];
@@ -295,8 +297,8 @@ define(function (require, exports, module) {
                     '>' + text + '</option>';
             });
 
-            if (selectedValue && !isFind) {
-                the._cleanValues(index);
+            if (!isFind) {
+                the._values[index] = the._defaultVal;
             }
 
             var $select = the._$selects[index];
@@ -308,8 +310,14 @@ define(function (require, exports, module) {
                 attribute.prop($select, 'disabled', true);
             }
 
-            if (!the._unDispathChange) {
-                event.dispatch($select, 'change');
+            if (!the._unChangeNext) {
+                the.emit('change', index, selectedValue);
+
+                var nextIndex = index + 1;
+                if (nextIndex < the._length) {
+                    the._cleanValues(nextIndex);
+                    the.change(nextIndex);
+                }
             }
 
             the.emit('afterrender', index);
