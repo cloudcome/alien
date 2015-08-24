@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * tips
  * @author ydr.me
  * @create 2015-07-07 16:08
  */
@@ -7,7 +7,7 @@
 
 define(function (require, exports, module) {
     /**
-     * @module widgets/tip
+     * @module widgets/tips
      * @requires ui/
      * @requires ui/msg/
      * @requires utils/dato
