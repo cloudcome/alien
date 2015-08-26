@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     require('../../core/event/wheel.js');
+    var Touch = require('../../libs/touch.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
@@ -217,12 +218,13 @@ define(function (require, exports, module) {
                 the._translate();
             };
             var wheelState = 1;
+            the._touch = new Touch(doc);
 
-            event.on(doc, 'touch1start', the._ontouch1start = function () {
+            the._touch.on('touch1start', the._ontouch1start = function () {
                 return false;
             });
 
-            event.on(doc, 'swipe', the._onswipe = function (eve) {
+            the._touch.on('swipe', the._onswipe = function (eve) {
                 switch (eve.alienDetail.changedDirection) {
                     case 'up':
                         return ondown();
