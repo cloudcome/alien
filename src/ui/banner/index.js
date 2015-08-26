@@ -50,7 +50,8 @@ define(function (require, exports, module) {
         isLoop: true,
         navSelector: null,
         navGenerator: null,
-        activeClass: 'active'
+        activeClass: 'active',
+        preventDefault: true
     };
     var Banner = ui.create({
         constructor: function ($list, options) {
@@ -163,18 +164,18 @@ define(function (require, exports, module) {
             event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(the, true));
 
             the._touch = new Touch(the._$wrap, {
-                //preventDefault: true
+                preventDefault: options.preventDefault
             });
 
             // 触摸开始
-            the._touch.on('touch1start',function() {
+            the._touch.on('touch1start', function () {
                 hasScroll = false;
                 translate0 = the._translate;
                 the._autoPlay(false);
             });
 
             // 触摸过程
-            event.on(the._$wrap, 'touch1move', function (eve) {
+            the._touch.on('touch1move', function (eve) {
                 var deltaX = eve.alienDetail.deltaX;
                 var deltaY = eve.alienDetail.deltaY;
                 var changedX = eve.alienDetail.changedX;
@@ -193,7 +194,7 @@ define(function (require, exports, module) {
             });
 
             // 触摸结束
-            event.on(the._$wrap, 'touch1end', function (eve) {
+            the._touch.on('touch1end', function (eve) {
                 var deltaX = eve.alienDetail.deltaX;
                 var deltaY = eve.alienDetail.deltaY;
                 var changedX = eve.alienDetail.changedX;

@@ -128,6 +128,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var touch = the._touch;
+            var originalEvent = eve.originalEvent;
 
             if (options.preventDefault) {
                 eve.preventDefault();
@@ -149,11 +150,11 @@ define(function (require, exports, module) {
             // 触发 taphold
             the._cancelTaphold();
             the._tapholdTimeid = setTimeout(function () {
-                the.emit('taphold', dato.extend(eve, {
+                the.emit('taphold', dato.extend(originalEvent, {
                     alienDetail: touch
                 }));
             }, options.taphold.timeout);
-            the.emit('touch1start', dato.extend(eve, {
+            the.emit('touch1start', dato.extend(originalEvent, {
                 alienDetail: touch
             }));
         },
@@ -169,10 +170,15 @@ define(function (require, exports, module) {
             var options = the._options;
             var touch = the._touch;
 
+            if (!the._startEvent) {
+                return;
+            }
+
             if (options.preventDefault) {
                 eve.preventDefault();
             }
 
+            var originalEvent = eve.originalEvent;
             eve = the._getEvent(eve);
 
             if (!eve) {
@@ -195,7 +201,7 @@ define(function (require, exports, module) {
                 the._cancelTaphold();
             }
 
-            the.emit('touch1move', dato.extend(eve, {
+            the.emit('touch1move', dato.extend(originalEvent, {
                 alienDetail: touch
             }));
         },
@@ -211,17 +217,18 @@ define(function (require, exports, module) {
             var options = the._options;
             var touch = the._touch;
 
+            if (!the._startEvent) {
+                return;
+            }
+
             if (options.preventDefault) {
                 eve.preventDefault();
             }
 
+            var originalEvent = eve.originalEvent;
             eve = the._getEvent(eve, true);
 
             if (!eve) {
-                return;
-            }
-
-            if (!the._startEvent) {
                 return;
             }
 
@@ -259,13 +266,13 @@ define(function (require, exports, module) {
                 }
 
                 // 触发 tap
-                the.emit('tap', dato.extend(eve, {
+                the.emit('tap', dato.extend(originalEvent, {
                     alienDetail: touch
                 }));
 
                 // 触发 dbltap
                 if (touch.endTime - touch.lastTime < options.dbltap.timeout) {
-                    the.emit('dbltap', dato.extend(eve, {
+                    the.emit('dbltap', dato.extend(originalEvent, {
                         alienDetail: touch
                     }));
                 }
@@ -275,15 +282,15 @@ define(function (require, exports, module) {
             if (touch.changedDirection !== 'none' &&
                 touch.deltaX > options.swipe.x || touch.deltaY > options.swipe.y
             ) {
-                the.emit('swipe', dato.extend(eve, {
+                the.emit('swipe', dato.extend(originalEvent, {
                     alienDetail: touch
                 }));
-                the.emit('swipe' + touch.changedDirection, dato.extend(eve, {
+                the.emit('swipe' + touch.changedDirection, dato.extend(originalEvent, {
                     alienDetail: touch
                 }));
             }
 
-            the.emit('touch1end', dato.extend(eve, {
+            the.emit('touch1end', dato.extend(originalEvent, {
                 alienDetail: touch
             }));
             touch.lastTime = touch.endTime;
@@ -316,7 +323,7 @@ define(function (require, exports, module) {
             //    eve.preventDefault();
             //}
 
-            the.emit('touch1end', dato.extend(eve, {
+            the.emit('touch1end', dato.extend(eve.originalEvent, {
                 alienDetail: touch
             }));
 
