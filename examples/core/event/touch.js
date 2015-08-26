@@ -11,14 +11,21 @@ define(function (require) {
 
     require('/src/core/event/touch.js');
 
-    event.on(demo, 'tap', function (eve) {
-        ret1.innerHTML = 'demo tap ' + Date.now();
-        demo.style.display = 'none';
-        //eve.stopPropagation();
+    //event.on(demo, 'tap', function (eve) {
+    //    ret1.innerHTML = 'demo tap ' + Date.now();
+    //    demo.style.display = 'none';
+    //    //eve.stopPropagation();
+    //});
+
+    var time1 = 0;
+    event.on(demo, 'touchstart', function (eve) {
+        ret1.innerHTML = 'demo touchstart ' + Date.now();
+        time1 = Date.now();
+        console.log(eve);
     });
 
     event.on(demo, 'click', function (eve) {
-        ret2.innerHTML = 'demo click ' + Date.now();
+        ret2.innerHTML = 'demo click ' + (Date.now() - time1);
         console.log(eve);
     });
 

@@ -13,6 +13,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var selector = require('./selector.js');
+    var number = require('../../utils/number.js');
     var hiddenTagList = 'script link head meta style'.split(' ');
     var alienKey = '-alien-core-dom-see-';
     var win = window;
@@ -102,9 +103,10 @@ define(function (require, exports, module) {
      * 1.元素不可见：返回 false
      * 2.元素不在视口内：返回 false
      * @param $ele {HTMLElement|Node|EventTarget}
+     * @param [offset=0] {Number}
      * @returns {Boolean}
      */
-    exports.isInViewport = function ($ele) {
+    exports.isInViewport = function ($ele, offset) {
         if (!$ele || $ele.nodeType !== 1) {
             return false;
         }
@@ -114,12 +116,9 @@ define(function (require, exports, module) {
         }
 
         var bcr = $ele.getBoundingClientRect();
+        offset = number.parseFloat(offset, 0);
 
-        if (bcr.bottom < 0) {
-            return false;
-        }
-
-        return bcr.top < Math.max(window.innerHeight, document.documentElement.clientHeight);
+        return bcr.top - offset < Math.max(window.innerHeight, document.documentElement.clientHeight);
     };
 
 

@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     var defaults = {
         selector: 'img',
         data: 'original',
-        offset: 10,
+        offset: 100,
         wait: 123
     };
     var Lazyload = ui.create({
@@ -76,7 +76,7 @@ define(function (require, exports, module) {
                 }
 
                 dato.each(the._$targets, function (index, $target) {
-                    var isInViewport = see.isInViewport($target);
+                    var isInViewport = see.isInViewport($target, options.offset);
 
                     if (isInViewport && the.emit('match', $target) !== false) {
                         var original = attribute.data($target, options.data);
