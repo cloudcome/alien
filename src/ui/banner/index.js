@@ -27,6 +27,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
+    var Touch = require('../../libs/touch.js');
     var ui = require('../');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');
@@ -161,8 +162,12 @@ define(function (require, exports, module) {
             // 鼠标移开
             event.on(the._$wrap, 'mouseleave', the._autoPlay.bind(the, true));
 
+            the._touch = new Touch(the._$wrap, {
+                //preventDefault: true
+            });
+
             // 触摸开始
-            event.on(the._$wrap, 'touch1start', function (eve) {
+            the._touch.on('touch1start',function() {
                 hasScroll = false;
                 translate0 = the._translate;
                 the._autoPlay(false);

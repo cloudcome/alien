@@ -153,6 +153,9 @@ define(function (require, exports, module) {
                     alienDetail: touch
                 }));
             }, options.taphold.timeout);
+            the.emit('touch1start', dato.extend(eve, {
+                alienDetail: touch
+            }));
         },
 
 
@@ -280,6 +283,9 @@ define(function (require, exports, module) {
                 }));
             }
 
+            the.emit('touch1end', dato.extend(eve, {
+                alienDetail: touch
+            }));
             touch.lastTime = touch.endTime;
         },
 
