@@ -292,6 +292,24 @@ define(function (require, exports, module) {
 
 
     /**
+     * 设置元素可见
+     * @param $ele
+     */
+    exports.show = function ($ele) {
+        exports.css($ele, 'display', see.getDisplay($ele));
+    };
+
+
+    /**
+     * 设置元素不可见
+     * @param $ele
+     */
+    exports.hide = function ($ele) {
+        exports.css($ele, 'display', 'none');
+    };
+
+
+    /**
      * 设置、获取元素的滚动条高度
      * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [top] {Number} 高度
@@ -951,7 +969,6 @@ define(function (require, exports, module) {
             exports.css(ele, key, css + deleta);
         }
     }
-
 
 
     /**

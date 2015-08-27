@@ -55,6 +55,16 @@ define(function (require, exports, module) {
 
 
     /**
+     * 获取元素的默认 display
+     * @param $ele {Element} 元素
+     * @returns {String}
+     */
+    exports.getDisplay = function ($ele) {
+        return getDefaultDisplay($ele.tagName);
+    };
+
+
+    /**
      * 获得某元素的显示情况，可能值为 true、false
      * @param {HTMLElement|Node} $ele 元素
      * @param {Boolean} [isVisible] 是否可见
@@ -131,13 +141,14 @@ define(function (require, exports, module) {
      * @param doWhat {Function} 回调
      */
     exports.swap = function ($ele, doWhat) {
-        var ret = exports.visible($ele, true);
+        var list = exports.visible($ele, true);
+        var ret = doWhat($ele);
 
-        doWhat($ele);
-
-        dato.each(ret, function (index, item) {
+        dato.each(list, function (index, item) {
             setStyleDisplay(item.ele, item.display);
         });
+
+        return ret;
     };
 
 
@@ -154,7 +165,7 @@ define(function (require, exports, module) {
             return false;
         }
 
-        if (exports.visibility($ele) === 'hidden') {
+        if (!exports.visible($ele)) {
             return false;
         }
 
