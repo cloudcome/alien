@@ -146,7 +146,7 @@ define(function (require, exports, module) {
 
             var timeid = setTimeout(onend, options.duration + options.delay + 100);
 
-            if (see.visibility($ele) === 'visible') {
+            if (see.visible($ele)) {
                 controller.nextFrame(function () {
                     attribute.css($ele, {
                         transitionDuration: durationVal.join(','),
