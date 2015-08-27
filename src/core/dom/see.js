@@ -14,79 +14,105 @@ define(function (require, exports, module) {
 
     var selector = require('./selector.js');
     var number = require('../../utils/number.js');
-    var hiddenTagList = 'script link head meta style'.split(' ');
+    var dato = require('../../utils/dato.js');
     var alienKey = '-alien-core-dom-see-';
     var win = window;
     var doc = win.document;
     var html = doc.documentElement;
+    var $body = doc.body;
+    var tagDisplayMap = {};
+    var getCSSDisplay = function ($ele) {
+        return win.getComputedStyle($ele, null).getPropertyValue('display');
+    };
+    var getStyleDisplay = function ($ele) {
+        return $ele.style.display;
+    };
+    var setStyleDisplay = function ($ele, display) {
+        $ele.style.display = display;
+    };
+    /**
+     * 获取元素的默认 display
+     * @param tagname
+     * @returns {*}
+     */
+    var getDefaultDisplay = function (tagname) {
+        tagname = tagname.toLowerCase();
+
+        if (tagDisplayMap[tagname]) {
+            return tagDisplayMap[tagname];
+        }
+
+        var $ele = doc.createElement(tagname);
+
+        $body.appendChild($ele);
+
+        var ret = tagDisplayMap[tagname] = getCSSDisplay($ele);
+
+        $body.removeChild($ele);
+
+        return ret;
+    };
 
 
     /**
-     * 获得某元素的显示情况，可能值为`visible`或`hidden`
+     * 获得某元素的显示情况，可能值为 true、false
      * @param {HTMLElement|Node} $ele 元素
-     * @param {String} [changeVisibility] 设置状态值，`visible`或者`hidden`
-     * @returns {String|Array} 获取值为`visible`或`hidden`，设置时返回改变过的 dom 数组
+     * @param {Boolean} [isVisible] 是否可见
+     * @returns {Boolean|Array} 获取值为 true、false，设置时返回改变过的 dom 数组
      */
-    exports.visibility = function ($ele, changeVisibility) {
-        var nowVisibility;
+    exports.visible = function ($ele, isVisible) {
         var temp;
         var ret = [];
-        var key = 'display';
         var none = 'none';
         var block = 'block';
         var visible = 'visible';
         var hidden = 'hidden';
 
         if ($ele === win || $ele === doc || $ele === html || !$ele) {
-            return visible;
+            return true;
         }
 
-        $ele[alienKey + key] = _getDisplay($ele);
-
         // get
-        if (!changeVisibility) {
-            // 非 element
-            if (!$ele || $ele.nodeType !== 1) {
-                return hidden;
+        if (arguments.length === 1) {
+            if (
+                // 非 element
+            !$ele || $ele.nodeType !== 1 ||
+                // 本身就是隐藏的
+            getCSSDisplay($ele) === none
+            ) {
+                return false;
             }
 
-            // 隐藏 element
-            if (hiddenTagList.indexOf($ele.tagName.toLowerCase()) > -1) {
-                return hidden;
-            }
-
-            // 本身就是隐藏的
-            if (_getDisplay($ele) === none) {
-                return hidden;
-            }
-
+            // 逐层向父级遍历，如果有 none，则为 false
             while ((temp = selector.parent($ele)) && temp.length && temp[0] !== document) {
                 $ele = temp[0];
 
-                if (_getDisplay($ele) === none) {
-                    return hidden;
+                if (getCSSDisplay($ele) === none) {
+                    return false;
                 }
             }
 
-            return visible;
+            return true;
         }
 
         // set
-        nowVisibility = exports.visibility($ele);
+        var nowVisibility = exports.visible($ele);
 
-        if (nowVisibility === changeVisibility || !$ele || $ele.nodeType !== 1) {
+        if (nowVisibility === isVisible || !$ele || $ele.nodeType !== 1) {
             return ret;
         }
 
-        if (nowVisibility === visible) {
-            $ele[alienKey + key] = _getDisplay($ele);
-            $ele.style.display = none;
+        // 如果当前可见 => 设为不可见
+        if (nowVisibility === true) {
+            setStyleDisplay($ele, none);
         } else {
-            while ($ele !== document && exports.visibility($ele) !== changeVisibility) {
-                if (_getDisplay($ele) === none) {
-                    _setDisplay($ele, $ele[alienKey + key] !== none ? $ele[alienKey + key] : block);
-                    ret.push($ele);
-                }
+            while ($ele !== document && !exports.visible($ele)) {
+                ret.push({
+                    ele: $ele,
+                    display: getStyleDisplay($ele)
+                });
+
+                setStyleDisplay($ele, getDefaultDisplay($ele.tagName));
 
                 if ((temp = selector.parent($ele)) && temp.length) {
                     $ele = temp[0];
@@ -95,6 +121,23 @@ define(function (require, exports, module) {
         }
 
         return ret;
+    };
+
+
+    /**
+     * 设置元素可见并做完事情，然后回退
+     * 通常用于隐藏获取元素的尺寸等
+     * @param $ele {Element} 元素
+     * @param doWhat {Function} 回调
+     */
+    exports.swap = function ($ele, doWhat) {
+        var ret = exports.visible($ele, true);
+
+        doWhat($ele);
+
+        dato.each(ret, function (index, item) {
+            setStyleDisplay(item.ele, item.display);
+        });
     };
 
 
@@ -120,24 +163,4 @@ define(function (require, exports, module) {
 
         return bcr.top - offset < Math.max(window.innerHeight, document.documentElement.clientHeight);
     };
-
-
-    /**
-     * 获取元素的样式
-     * @param $ele
-     * @private
-     */
-    function _getDisplay($ele) {
-        return $ele && $ele.nodeType === 1 ? $ele.style.display : undefined;
-    }
-
-    /**
-     * 设置元素的样式
-     * @param $ele
-     * @param val
-     * @private
-     */
-    function _setDisplay($ele, val) {
-        $ele.style.display = val;
-    }
 });
