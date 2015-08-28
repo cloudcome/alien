@@ -4,6 +4,7 @@
  * @create 2014-09-30 17:22
  */
 
+// https://github.com/cloudcome/alien/issues/4
 
 define(function (require, exports, module) {
     /**
@@ -188,10 +189,9 @@ define(function (require, exports, module) {
         }
 
         // chrome
-        if (win.clientInformation && win.clientInformation.languages && win.clientInformation.languages.length > 2) {
+        if (win.clientInformation && win.clientInformation.permissions) {
             return 'chrome';
         }
-
 
         if (_track) {
             // 360极速浏览器
