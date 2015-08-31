@@ -34,7 +34,7 @@ define(function (require, exports, module) {
      * qs.get(['a', 'b']);
      */
     exports.get = function (key) {
-        var parse = qs.parse(location.search);
+        var parse = qs.parse(location.search.replace(/^\?/, ''));
         var ret;
         var keyType = typeis(key);
 
