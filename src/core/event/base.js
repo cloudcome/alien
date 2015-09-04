@@ -167,11 +167,11 @@ define(function (require, exports, module) {
      */
     exports.dispatch = function (ele, eventTypeOrEvent, copyEvent, alienDetail) {
         var et = typeis.string(eventTypeOrEvent) ?
-            this.create(eventTypeOrEvent) :
+            exports.create(eventTypeOrEvent) :
             eventTypeOrEvent;
 
         if (copyEvent) {
-            et = this.extend(et, copyEvent, alienDetail);
+            et = exports.extend(et, copyEvent, alienDetail);
         }
 
         try {
@@ -200,7 +200,7 @@ define(function (require, exports, module) {
      */
     exports.extend = function (createEvent, copyEvent, alienDetail) {
         if (typeis.string(createEvent)) {
-            createEvent = this.create(createEvent);
+            createEvent = exports.create(createEvent);
         }
 
         dato.each(mustEventProperties, function (index, prototype) {
