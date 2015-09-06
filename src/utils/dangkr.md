@@ -284,7 +284,7 @@ media.picture
 ```
 
 
-## 7.3、选择图片
+## 7.3、选择图片【未实现】
 ```
 media.img
 
@@ -300,7 +300,7 @@ media.img
 ```
 
 
-## 7.4、上传图片
+## 7.4、上传图片【未实现】
 ```
 media.upload
 
@@ -329,7 +329,7 @@ media.upload
 }
 ```
 
-## 7.5、复制文本
+## 7.5、复制文本【未实现】
 ```
 media.copy
 
@@ -340,8 +340,21 @@ media.copy
 ```
 
 
+## 7.6、聊天
+```
+media.chat
+
+{
+    // 对方 ID
+    userId: 123,
+    // 活动 ID
+    activityId: 456
+}
+```
+
+
 # 8、设备
-## 8.1、获取设备所连接的网络环境
+## 8.1、获取设备所连接的网络环境【未实现】
 ```
 device.network
 =>
@@ -353,7 +366,7 @@ device.network
 }
 ```
 
-## 8.2、获取设备系统信息
+## 8.2、获取设备系统信息【未实现】
 ```
 device.system
 =>
@@ -362,7 +375,7 @@ device.system
         name: "ios",
         version: "8.1.1"
     },
-    dangke: {
+    dangkr: {
         version: "1.0.0",
         id: "APP ID"
     },
@@ -510,7 +523,6 @@ dangkr://activity/?id=123
 
 ## 12.2 个人主页
 ```
-dangkr://user/?id=123&isLeader=true
 dangkr://user/?id=123
 ```
 
@@ -523,4 +535,3 @@ dangkr://club/?id=123
 ```
 dangkr://article/?id=123
 ```
-

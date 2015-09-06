@@ -877,6 +877,17 @@ define(function (require, exports, module) {
             return this._media('upload', data, callback);
         },
 
+        /**
+         * 聊天
+         * @param data {Object} 数据
+         * @param data.userId {Number} 对方用户ID
+         * @param [data.activityId] {Number} 活动ID
+         * @param [callback] {Function} 回调
+         */
+        mediaChat: function (data, callback) {
+            return this._media('chat', data, callback);
+        },
+
 
         /**
          * 设备的相关操作
