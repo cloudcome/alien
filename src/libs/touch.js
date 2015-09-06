@@ -94,6 +94,22 @@ define(function (require, exports, module) {
             }
         },
 
+
+        dispatch: function (type) {
+            var the = this;
+            var options = the._options;
+
+            switch(type){
+                case 'tap':
+                    event.dispatch(the._$ele, event.create('touchstart'));
+                    setTimeout(function () {
+                        event.dispatch(the._$ele, event.create('touchstart'));
+                    });
+                    break;
+            }
+        },
+
+
         /**
          * 获取第一个事件对象
          * @param eve
@@ -371,5 +387,6 @@ define(function (require, exports, module) {
     });
 
     Touch.defaults = defaults;
+
     module.exports = Touch;
 });
