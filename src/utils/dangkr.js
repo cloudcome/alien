@@ -877,6 +877,7 @@ define(function (require, exports, module) {
             return this._media('upload', data, callback);
         },
 
+
         /**
          * 聊天
          * @param data {Object} 数据
