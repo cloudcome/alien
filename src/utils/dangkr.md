@@ -347,7 +347,7 @@ media.chat
 {
     // 对方 ID
     userId: 123,
-    // 活动 ID
+    // 活动 ID，可选
     activityId: 456
 }
 ```
