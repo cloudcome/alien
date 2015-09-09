@@ -290,7 +290,7 @@ define(function (require, exports, module) {
             dato.each(list, function (i, item) {
                 var text = item[options.textName];
                 var value = item[options.valueName] + '';
-                var isSelected = selectedValue && selectedValue === value;
+                var isSelected = !!selectedValue && selectedValue === value;
 
                 if (isSelected) {
                     isFind = true;
