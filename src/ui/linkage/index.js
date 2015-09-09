@@ -272,7 +272,7 @@ define(function (require, exports, module) {
             var isFind = false;
 
             if (list) {
-                if (index && options.cache) {
+                if (index && options.cache && prevValue) {
                     var prevIndex = index - 1;
                     var prevValue = the._values[prevIndex];
                     // 上一个选中的子级
@@ -290,7 +290,7 @@ define(function (require, exports, module) {
             dato.each(list, function (i, item) {
                 var text = item[options.textName];
                 var value = item[options.valueName] + '';
-                var isSelected = selectedValue === value;
+                var isSelected = selectedValue && selectedValue === value;
 
                 if (isSelected) {
                     isFind = true;
@@ -324,9 +324,9 @@ define(function (require, exports, module) {
                 if (options.hideEmpty) {
                     attribute.css($select, 'display', '');
                 }
-
-                attribute.html($select, selectOptions);
             }
+
+            attribute.html($select, selectOptions);
 
             if (!the._unChangeNext) {
                 the.emit('change', index, selectedValue);
