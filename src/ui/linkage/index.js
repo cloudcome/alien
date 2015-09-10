@@ -327,10 +327,9 @@ define(function (require, exports, module) {
             }
 
             attribute.html($select, selectOptions);
+            the.emit('change', index, selectedValue);
 
             if (!the._unChangeNext) {
-                the.emit('change', index, selectedValue);
-
                 var nextIndex = index + 1;
                 if (nextIndex < the._length) {
                     the._cleanValues(nextIndex);
