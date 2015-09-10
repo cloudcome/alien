@@ -17,15 +17,38 @@ define(function (require, exports, module) {
     var allocation = require('./../../utils/allocation.js');
     var typeis = require('./../../utils/typeis.js');
     var dato = require('./../../utils/dato.js');
-    var gs = function () {
+    var gs = function (isJSON) {
+        var args = allocation.args(arguments);
+
+        args.shift();
         return allocation.getset({
             get: function (key) {
-                return ls.getItem(key);
+                var ret = ls.getItem(key);
+
+                if (!isJSON) {
+                    return ret;
+                }
+
+                try {
+                    ret = JSON.parse(ret);
+                } catch (err) {
+                    ret = {};
+                }
+
+                return ret;
             },
             set: function (key, val) {
+                if (isJSON && (typeis.object(val) || typeis.array(val))) {
+                    try {
+                        val = JSON.stringify(val);
+                    } catch (err) {
+                        val = '';
+                    }
+                }
+
                 ls.setItem(key, val);
             }
-        }, arguments);
+        }, args);
     };
 
 
@@ -38,7 +61,20 @@ define(function (require, exports, module) {
 
         key = args.length > 1 ? dato.toArray(args) : key;
 
-        return gs(key);
+        return gs(false, key);
+    };
+
+
+    /**
+     * 获取本地存储值
+     * @param key {String|Number|Array} 键或者键数组
+     */
+    exports.getJSON = function (key/*arguments*/) {
+        var args = allocation.args(arguments);
+
+        key = args.length > 1 ? dato.toArray(args) : key;
+
+        return gs(true, key);
     };
 
 
@@ -48,6 +84,22 @@ define(function (require, exports, module) {
      * @param [val] {String} 值
      */
     exports.set = function (key, val) {
+        var args = allocation.args(arguments);
+
+        args.unshift(false);
+        gs.apply(window, args);
+    };
+
+
+    /**
+     * 设置本地存储值
+     * @param key {String|Number|Object} 键或者键值对
+     * @param [val] {String} 值
+     */
+    exports.setJSON = function (key, val) {
+        var args = allocation.args(arguments);
+
+        args.unshift(true);
         gs.apply(window, arguments);
     };
 
