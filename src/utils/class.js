@@ -185,7 +185,7 @@ define(function (require, exports, module) {
      * @param isInheritStatic
      * @returns {Class}
      */
-    exports.extends = function (superConstructor, isInheritStatic) {
+    exports.extends = exports.inherit = function (superConstructor, isInheritStatic) {
         return new Class(null, superConstructor, isInheritStatic);
     };
 
