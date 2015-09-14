@@ -330,7 +330,7 @@ define(function (require, exports, module) {
             the.emit('change', index, selectedValue);
 
             if (!the._unChangeNext) {
-                var nextIndex = index + 1;
+                var  nextIndex = index + 1;
                 if (nextIndex < the._length) {
                     the._cleanValues(nextIndex);
                     the.change(nextIndex);
