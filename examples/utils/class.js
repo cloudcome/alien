@@ -4,10 +4,24 @@ define(function (require) {
     var klass = require('../../src/utils/class.js');
 
     // ============= Father =============
-    var Father = klass.create(function () {
+    var People = klass.create({
+        constructor: function () {
+            this.name = 'People';
+        },
+
+        say: function () {
+            alert(this.name);
+        }
+    });
+    People.type1 = 'People';
+    People.prototype.haha = 'haha';
+
+
+    // ============= Father =============
+    var Father = klass.extends(People).create(function () {
         this.name = 'Father';
     });
-    Father.type1 = 'Father';
+    Father.type2 = 'Father';
     Father.prototype.hehe = 'hehe';
 
 
@@ -18,8 +32,11 @@ define(function (require) {
         },
         heihei: 'heihei'
     });
-    Child.type2 = 'Child';
+    Child.type3 = 'Child';
 
+
+    window.People = People;
+    window.people = new People();
     window.Father = Father;
     window.father = new Father();
     window.Child = Child;

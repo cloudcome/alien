@@ -35,6 +35,10 @@ define(function (require, exports, module) {
                     ret = {};
                 }
 
+                if (isJSON) {
+                    ret = typeis.object(ret) || typeis.array(ret) ? ret : {};
+                }
+
                 return ret;
             },
             set: function (key, val) {
@@ -100,7 +104,7 @@ define(function (require, exports, module) {
         var args = allocation.args(arguments);
 
         args.unshift(true);
-        gs.apply(window, arguments);
+        gs.apply(window, args);
     };
 
 
