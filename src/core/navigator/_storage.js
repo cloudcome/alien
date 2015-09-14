@@ -112,7 +112,9 @@ define(function (require, exports, module) {
          * 本地存储长度
          * @returns {number}
          */
-        exports.length = storage.length;
+        exports.size = function () {
+            return storage.length;
+        };
 
 
         /**
