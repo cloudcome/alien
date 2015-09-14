@@ -65,39 +65,32 @@ phone: '12312341234'
 ```
 navigation.show
 [{
-    type: "report",
-    data: {}
-}, {
     type: "share",
-    data: {}
+    data: {
+        title: "分享的标题",
+        desc: "分享的描述",
+        link: "分享的链接",
+        img: "分享的图片",
+        type: "activity"、"article",【可选】
+        id: 活动ID、文章ID【可选】
+    }
+}, {
+    type: "report",
+    data: {
+        id: 活动ID、文章ID,
+        type: "activity"、"article"
+    }
 }]
 ```
 
 
 
 # 3、分享
-## 3.1、自定义分享数据【已废弃】
-```
-share.data
-
-{
-    title: "分享的标题",
-    desc: "分享的描述",
-    link: "分享的链接",
-    img: "分享的图片"
-}
-```
-
-## 3.2、打开分享窗口
+## 3.1、打开分享窗口
 ```
 share.open
 ```
 
-
-## 3.3、关闭分享窗口
-```
-share.close
-```
 
 # 4、地理位置【未实现】
 ## 4.1、获取当前地理、行政位置
@@ -169,7 +162,7 @@ location.redirect
 ```
 
 
-## 5.2、关闭当前页面
+## 5.2、关闭当前页面【未实现】
 ```
 // 关闭当前页面，清空历史记录，跳转到 APP 主页
 location.close
@@ -187,7 +180,7 @@ location.fullscreen
 ```
 
 
-## 5.3、web 页浏览完整
+## 5.3、web 页浏览完整【AOS专有】
 设置为 true 时，表示页面的终点，安卓手机点击物理键返回时将返回开始页面，对 iPhone 无效
 ```
 location.finished
@@ -347,6 +340,10 @@ media.chat
 {
     // 对方 ID
     userId: 123,
+    // 用户昵称
+    nickname: '昵称',
+    // 用户头衔
+    avatar: 'http://...',
     // 活动 ID，可选
     activityId: 456
 }
