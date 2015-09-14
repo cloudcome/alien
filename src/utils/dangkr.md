@@ -338,11 +338,11 @@ media.copy
 media.chat
 
 {
-    // 对方 ID
+    // 对方的用户 ID
     userId: 123,
-    // 用户昵称
+    // 对方的昵称
     nickname: '昵称',
-    // 用户头衔
+    // 对方的头像
     avatar: 'http://...',
     // 活动 ID，可选
     activityId: 456

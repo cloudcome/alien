@@ -436,6 +436,7 @@ define(function (require, exports, module) {
         },
 
 
+
         /**
          * 显示导航栏图标
          * @param [data] {Object} 数据
@@ -443,6 +444,18 @@ define(function (require, exports, module) {
          * @returns {*}
          *
          * @example
+         * type: "share"
+         * title: "分享的标题",
+         * desc: "分享的描述",
+         * link: "分享的链接",
+         * img: "分享的图片",
+         * type: "activity"、"article",【可选】
+         * id: 活动ID、文章ID【可选】
+         *
+         * type: "report"
+         * id: 活动ID、文章ID,
+         * type: "activity"、"article"
+         *
          * // type: back/share/report/done
          * .navigationShow([{
          *     type: "share",
@@ -882,6 +895,8 @@ define(function (require, exports, module) {
          * 聊天
          * @param data {Object} 数据
          * @param data.userId {Number} 对方用户ID
+         * @param data.nickname {Number} 对方昵称
+         * @param data.avatar {Number} 对方头像
          * @param [data.activityId] {Number} 活动ID
          * @param [callback] {Function} 回调
          */
