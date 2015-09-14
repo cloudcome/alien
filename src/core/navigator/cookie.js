@@ -29,7 +29,7 @@ define(function (require, exports) {
         // 是否加密cookie
         secure: false
     };
-    var cookie = function (key, val, options, isGet) {
+    var cookie = function (key, val, options) {
         var args = dato.toArray(arguments);
 
         options = dato.extend(true, {}, defaults, options);
