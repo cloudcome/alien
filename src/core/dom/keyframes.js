@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     var typeis = require('./../../utils/typeis.js');
     var dato = require('./../../utils/dato.js');
     var REG_NUM = /^(\d+?\.)?\d+$/;
+    var REG_SEP = /\s|,|\|/g;
     var VENDOR_PREFIX = ['-webkit-', '-moz-', '-ms-', ''];
     var alienIndex = 0;
     /**
@@ -51,28 +52,33 @@ define(function (require, exports, module) {
         var mainStyle = '';
 
         dato.each(keyframes, function (percent, properties) {
-            percent = REG_NUM.test(percent) ? percent * 100 + '%' : percent;
-            mainStyle += percent + '{';
+            var percentList = percent.split(REG_SEP);
 
-            var transformKey = '';
-            var transformVal = [];
+            dato.each(percentList, function (index, percent) {
+                percent = percent.trim();
+                percent = REG_NUM.test(percent) ? percent * 100 + '%' : percent;
+                mainStyle += percent + '{';
 
-            dato.each(properties, function (key, val) {
-                var fix = attribute.fixCss(key, val);
+                var transformKey = '';
+                var transformVal = [];
 
-                if (!fix.key) {
-                    return;
-                }
+                dato.each(properties, function (key, val) {
+                    var fix = attribute.fixCss(key, val);
 
-                if (fix.key.indexOf('transform') > -1) {
-                    transformKey = fix.key;
-                    transformVal.push(fix.val + (fix.imp ? ' !important' : ''));
-                } else {
-                    mainStyle += fix.key + ':' + fix.val + (fix.imp ? ' !important' : '') + ';';
-                }
+                    if (!fix.key) {
+                        return;
+                    }
+
+                    if (fix.key.indexOf('transform') > -1) {
+                        transformKey = fix.key;
+                        transformVal.push(fix.val + (fix.imp ? ' !important' : ''));
+                    } else {
+                        mainStyle += fix.key + ':' + fix.val + (fix.imp ? ' !important' : '') + ';';
+                    }
+                });
+
+                mainStyle += (transformVal.length ? transformKey + ':' + transformVal.join(' ') : '') + '}';
             });
-
-            mainStyle += (transformVal.length ? transformKey + ':' + transformVal.join(' ') : '') + '}';
         });
 
         var style = '';

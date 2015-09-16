@@ -23,12 +23,12 @@
 
  //【现在】
  var A = klass.create({
- constructor: function(){},
- abc: '123'
+     constructor: function(){},
+     abc: '123'
  });
  var B = klass.extends(A).create({
- constructor: function(){},
- def: '456'
+     constructor: function(){},
+     def: '456'
  });
  ===============================*/
 

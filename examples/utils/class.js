@@ -3,7 +3,7 @@ define(function (require) {
 
     var klass = require('../../src/utils/class.js');
 
-    // ============= Father =============
+    // ============= People =============
     var People = klass.create({
         constructor: function () {
             this.name = 'People';
@@ -13,6 +13,9 @@ define(function (require) {
             alert(this.name);
         }
     });
+    People.say = function () {
+        alert(this.name);
+    };
     People.type1 = 'People';
     People.prototype.haha = 'haha';
 

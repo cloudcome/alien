@@ -1,5 +1,5 @@
 /*!
- * data-traveller.js
+ * dato.js
  * @author ydr.me
  * 2014-09-14 17:26
  */
