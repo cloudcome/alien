@@ -12,8 +12,17 @@ define(function (require, exports, module) {
     'use strict';
 
     var tips = require('../../src/widgets/tips.js');
+    var controller = require('../../src/utils/controller.js');
 
     document.getElementById('btn').onclick = function () {
         tips('自定义消息');
+    };
+    document.getElementById('ipt').onkeydown = function (e) {
+        if(e.which === 13){
+            this.blur();
+            controller.nextFrame(function () {
+                tips('自定义消息');
+            });
+        }
     };
 });
