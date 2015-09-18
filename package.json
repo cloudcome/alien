@@ -7,7 +7,8 @@
     "docs": "rm -rf ./docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "docsw": "RD /S /Q .\\docs && node ./node_modules/jsdoc/jsdoc.js ./src/ -r -t ./templates/bs3/ -d ./docs/",
     "test": "node node_modules/.bin/gulp default",
-    "publish": "cp readme.md ./src & cp -r ./src ./release/alien && cd ./release/alien && zip -r ../alien.zip . && cd .. && rm -rf alien && alioss upload && rm -rf alien.zip"
+    "publish": "cp readme.md ./src & cp -r ./src ./release/alien && cd ./release/alien && zip -r ../alien.zip . && cd .. && rm -rf alien && alioss upload && rm -rf alien.zip",
+    "live": "browser-sync start --config bs-config.js"
   },
   "preferGlobal": false,
   "bin": {},

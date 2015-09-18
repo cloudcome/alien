@@ -57,6 +57,8 @@ define(function (require, exports, module) {
     var typeis = require('./typeis.js');
     var dato = require('./dato.js');
     var Emitter = require('../libs/emitter.js');
+    var modification = require('../core/dom/modification.js');
+    var event = require('../core/event/page.js');
     var win = window;
     var noop = function () {
         // ignore
@@ -82,7 +84,10 @@ define(function (require, exports, module) {
     var brokenCallbackList = [];
     var defaults = {
         shareData: {},
-        timeout: 1000
+        initTimeout: 1000,
+        openTimeout: 3456,
+        schema: 'dangkr:/',
+        downloadLink: 'http://www.dangkr.com/d.html'
     };
     var Dangkr = klass.extends(Emitter).create({
         constructor: function (options) {
@@ -176,7 +181,7 @@ define(function (require, exports, module) {
             var past = Date.now();
 
             the._timeid = setInterval(function () {
-                if (Date.now() - past > options.timeout) {
+                if (Date.now() - past > options.initTimeout) {
                     clearInterval(the._timeid);
                     return onbroken();
                 }
@@ -193,6 +198,53 @@ define(function (require, exports, module) {
             });
         },
 
+
+        /**
+         * 打开本地连接
+         * @param path {String} 本地连接，如“/user/?id=123”
+         * @returns {Dangkr}
+         */
+        open: function (path) {
+            var the = this;
+            var options = the._options;
+
+            if(the._opening){
+                the.emit('open');
+                return the;
+            }
+
+            the._opening = true;
+            var ifm = modification.create('iframe', {
+                src:options.schema + path,
+                style: {
+                    display: 'none'
+                }
+            });
+            var time = Date.now();
+            var onpagehide = function () {
+                clearTimeout(timeid);
+                the._opening = false;
+                modification.remove(ifm);
+                event.un(window, 'pagehide', onpagehide);
+                the.emit('afteropen');
+            };
+
+            var timeid = setTimeout(function () {
+                onpagehide();
+
+                // 时间差在 20ms 以内
+                if (Date.now() - time <= options.openTimeout + 20) {
+                    location.href = options.downloadLink;
+                }
+            }, options.openTimeout);
+
+            // 页面离开，表示已经唤起了
+            event.on(window, 'pagehide', onpagehide);
+            the.emit('beforeopen');
+            modification.insert(ifm, document.body);
+
+            return the;
+        },
 
         /**
          * 接收数据
@@ -434,7 +486,6 @@ define(function (require, exports, module) {
         _navigation: function (method, data, callback) {
             return this.invoke('navigation.' + method, data, callback);
         },
-
 
 
         /**

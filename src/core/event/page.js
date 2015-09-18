@@ -51,4 +51,6 @@ define(function (require, exports, module) {
             onshow(eve);
         }
     });
+
+    module.exports = event;
 });
