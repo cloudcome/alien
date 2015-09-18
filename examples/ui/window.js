@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     win1 = new Window('#demo', {
         addClass: 'hehhhhh',
         width: 300,
-        height: 200,
+        height: 200
         //    open: function ($window, to, onopen) {
         //        to.bottom = -to.height;
         //        attribute.css($window, to);

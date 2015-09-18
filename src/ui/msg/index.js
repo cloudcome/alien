@@ -56,7 +56,7 @@ define(function (require, exports, module) {
         addClass: '',
         buttons: null,
         canDrag: true,
-        isModal: true,
+        modal: true,
         duration: 123,
         easing: 'swig',
         timeout: 0,
@@ -93,7 +93,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if (options.isModal) {
+            if (options.modal) {
                 the._mask = new Mask(window, {
                     addClass: alienClass + '-bg ' + options.addClass
                 });
@@ -111,7 +111,7 @@ define(function (require, exports, module) {
                 top: options.top,
                 duration: options.duration,
                 easing: options.easing,
-                addClass: options.isModal ? '' : options.addClass,
+                addClass: options.modal ? '' : options.addClass,
                 autoFocus: options.autoFocus
             });
             the._$window = the._window.getNode();
@@ -316,23 +316,6 @@ define(function (require, exports, module) {
     });
 
 
-    /**
-     * 实例化一个 Msg 交互框
-     * @param [options] {Object} 配置
-     * @param [options.width=300] {Number} 宽度
-     * @param [options.height="auto"] {Number|String} 高度
-     * @param [options.left="center"] {Number|String} 左位移
-     * @param [options.top="center"] {Number|String} 上位移
-     * @param [options.title="提示"] {null|String} 标题，为 null 时不显示标题
-     * @param [options.content="提示"] {String} 内容
-     * @param [options.addClass=""] {String} 添加的类
-     * @param [options.buttons=null] {null|Array} 按钮数组，如["确定"]
-     * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
-     * @param [options.isModal=true] {Boolean} 是否为模态
-     * @param [options.duration=345] {Number} 动画时间
-     * @param [options.timeout=0] {Number} 大于0时，消息框停留时间，超时后自动消失
-     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
-     */
     module.exports = Msg;
     Msg.defaults = defaults;
     ui.importStyle(style);

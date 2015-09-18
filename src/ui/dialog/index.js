@@ -60,7 +60,7 @@ define(function (require, exports, module) {
             close: 'ease-in-back'
         },
         canDrag: true,
-        isModal: true,
+        modal: true,
         hideClose: false,
         remote: null,
         remoteHeight: 400,
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
             options = the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
 
-            if (options.isModal) {
+            if (options.modal) {
                 the._mask = new Mask(win, {
                     addClass: alienClass + '-bg ' + options.addClass,
                     zIndex: options.zIndex
@@ -83,7 +83,7 @@ define(function (require, exports, module) {
             }
 
             the._window = new Window(null, {
-                parentNode: options.isModal ? the._$mask : $body,
+                parentNode: options.modal ? the._$mask : $body,
                 width: options.width,
                 height: options.height,
                 left: options.left,
@@ -96,7 +96,7 @@ define(function (require, exports, module) {
             the._$window = the._window.getNode();
             the._initNode();
 
-            if (options.isModal) {
+            if (options.modal) {
                 the._scrollbar = new Scrollbar(the._$window);
             }
 
@@ -366,25 +366,6 @@ define(function (require, exports, module) {
     });
 
     Dialog.defaults = defaults;
-
-    /**
-     * 实例化一个对话框
-     * @param [options] {Object} 配置
-     * @param [options.width=600] {Number} 宽度
-     * @param [options.height="auto"] {Number|String} 高度
-     * @param [options.left="center"] {Number|String} 左位移
-     * @param [options.top="center"] {Number|String} 上位移
-     * @param [options.title="无标题对话框"] {null|String} 标题，为 null 时不显示标题
-     * @param [options.addClass=""] {String} 添加的 className
-     * @param [options.duration=456] {Number} 动画时间
-     * @param [options.easing="ease-in-out-back"] {String} 动画缓冲
-     * @param [options.canDrag=true] {Boolean} 是否可以被拖拽
-     * @param [options.isModal=true] {Boolean} 是否为模态
-     * @param [options.hideClose=false] {Boolean} 是否隐藏关闭按钮
-     * @param [options.remote=null] {null} 远程地址
-     * @param [options.remoteHeight=400] {null} 远程地址高度
-     * @param [options.zIndex=null] {null|Number} 消息框层级，为 null 时自动分配
-     */
     module.exports = Dialog;
     ui.importStyle(style);
 });

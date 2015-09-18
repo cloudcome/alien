@@ -79,13 +79,11 @@ define(function (require, exports, module) {
                 }
             };
 
-
             the._$window = modification.create('div', {
                 id: alienClass + '-' + the._id,
                 'class': alienClass,
                 style: {
-                    display: 'none',
-                    position: 'absolute'
+                    display: 'none'
                 }
             });
             the._$focus = modification.create('input', {

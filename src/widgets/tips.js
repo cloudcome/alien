@@ -32,7 +32,7 @@ define(function (require, exports, module) {
         buttons: [],
         addClass: '',
         sureIndex: 0,
-        isModal: false,
+        modal: false,
         timeout: 3456,
         autoFocus: false
     };
