@@ -24,7 +24,13 @@ define(function (require, exports, module) {
             args.shift();
             return allocation.getset({
                 get: function (key) {
-                    var ret = storage.getItem(key);
+                    var ret = null;
+
+                    try {
+                        ret = storage.getItem(key);
+                    } catch (err) {
+                        // ignore
+                    }
 
                     if (!isJSON) {
                         return ret;
@@ -51,7 +57,11 @@ define(function (require, exports, module) {
                         }
                     }
 
-                    storage.setItem(key, val);
+                    try {
+                        storage.setItem(key, val);
+                    } catch (err) {
+                        // ignore
+                    }
                 }
             }, args);
         };
