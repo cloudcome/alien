@@ -41,9 +41,9 @@ define(function (require, exports, module) {
     };
 
     event.on(win, 'pageshow focus', onshow);
-    event.on(doc, 'focusin', onshow);
+    //event.on(doc, 'focusin', onshow);
     event.on(win, 'pagehide blur', onhide);
-    event.on(doc, 'focusout', onhide);
+    //event.on(doc, 'focusout', onhide);
     event.on(doc, 'visibilitychange', function (eve) {
         if (doc.hidden) {
             onhide(eve);
