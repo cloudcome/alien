@@ -17,7 +17,8 @@ define(function (require, exports, module) {
     var string = require('../../utils/string.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
     // css3 比较特殊，某些实验性的属性需要带前缀，因此优先匹配私有前缀
-    var css3Prefixs = ['-webkit', '-moz', '-ms', ''];
+    var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
+    var REG_PREFIX = /^-/;
     var regCss3 = /^-(webkit|moz|ms|o)-/i;
     var p = document.createElement('p');
     var fixCss = {
@@ -63,31 +64,57 @@ define(function (require, exports, module) {
 
     /**
      * 获取有浏览器前缀的CSS3名称
-     * @param {String} standard 标准的CSS3属性
+     * @param {String} standardKey 标准的CSS3属性
+     * @param {String} [standardVal] 标准的CSS3属性值
      * @returns {String|null} 私有CSS3属性
      *
      * @example
      * compatible.css3('border-start');
      * // => "-webkit-border-start"
      */
-    exports.css3 = function (standard) {
+    exports.css3 = function (standardKey, standardVal) {
         var cssKey = null;
-        var find = false;
+        var cssVal = null;
+        var findKey = false;
+        var findVal = null;
 
-        standard = string.separatorize(standard.trim().replace(regCss3, ''));
+        standardKey = string.separatorize(standardKey.trim().replace(regCss3, ''));
 
         dato.each(css3Prefixs, function (index, prefix) {
-            cssKey = prefix ? prefix + '-' + standard : standard;
+            cssKey = prefix ? prefix + '-' + standardKey : standardKey;
 
             var testCssKey = fixCss[cssKey] ? fixCss[cssKey] : cssKey;
+            testCssKey = string.humprize(testCssKey);
 
-            if (string.humprize(testCssKey) in p.style) {
-                find = true;
-                return false;
+            if (testCssKey in p.style) {
+                findKey = true;
+
+                if (standardVal) {
+
+                    dato.each(css3Prefixs, function (index, prefix) {
+                        cssVal = prefix ? prefix + '-' + standardVal : standardVal;
+                        p.style[testCssKey] = cssVal;
+
+                        if (p.style[testCssKey].indexOf(standardVal) > -1) {
+                            findVal = cssVal;
+                            return false;
+                        }
+                    });
+
+                    if (findVal) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         });
 
-        return find ? cssKey : null;
+        if (standardVal) {
+            return findVal ? [cssKey, cssVal] : null;
+        }
+
+        return findKey ? cssKey : null;
     };
 
     /**
