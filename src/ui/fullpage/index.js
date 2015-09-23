@@ -26,7 +26,7 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
     require('../../core/event/wheel.js');
-    var Touch = require('../../libs/touch.js');
+    var Touch = require('../touch/index.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');

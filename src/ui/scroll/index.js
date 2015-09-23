@@ -19,16 +19,15 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var klass = require('../utils/class.js');
-    var dato = require('../utils/dato.js');
-    var controller = require('../utils/controller.js');
-    var selector = require('../core/dom/selector.js');
-    var attribute = require('../core/dom/attribute.js');
-    var see = require('../core/dom/see.js');
-    var event = require('../core/event/touch.js');
-    var compatible = require('../core/navigator/compatible.js');
-    var Emitter = require('./emitter.js');
-    var alienKey = '-alien-libs-scroll';
+    var ui = require('../index.js');
+    var dato = require('../../utils/dato.js');
+    var controller = require('../../utils/controller.js');
+    var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var see = require('../../core/dom/see.js');
+    var event = require('../../core/event/touch.js');
+    var compatible = require('../../core/navigator/compatible.js');
+    var alienKey = '-alien-ui-scroll';
     var win = window;
     var doc = win.document;
     var $html = doc.documentElement;
@@ -36,7 +35,7 @@ define(function (require, exports, module) {
     // 存储被监听滚动的元素
     var listenElements = [];
     var defaults = {};
-    var Scroll = klass.extends(Emitter).create({
+    var Scroll = ui.create({
         constructor: function ($container, options) {
             var the = this;
 
@@ -255,7 +254,7 @@ define(function (require, exports, module) {
                 the._$container[alienKey + '-ret'] = {t: scrollTop, l: scrollLeft};
             });
 
-            controller.nextFrame(the._onscroll, the);
+            controller.nextFrame(the._onscroll.bind(the));
         },
 
 

@@ -27,7 +27,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/touch.js');
-    var Touch = require('../../libs/touch.js');
+    var Touch = require('../touch/index.js');
     var ui = require('../');
     var dato = require('../../utils/dato.js');
     var number = require('../../utils/number.js');

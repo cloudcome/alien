@@ -150,16 +150,12 @@ define(function (require, exports, module) {
     /**
      * 下一步
      * @param callback {Function} 回调
-     * @param [context=window] {Object} 上下文
      */
-    exports.nextTick = function (callback, context/*arguments*/) {
-        context = context || win;
-
-        var args = [].slice.call(arguments, 2);
+    exports.nextTick = function (callback) {
         var $doc = document;
         var $body = $doc.body;
         var fn = exports.once(function () {
-            callback.apply(context, args);
+            callback();
         });
 
         // chrome18+, safari6+, firefox14+,ie11+,opera15
@@ -190,15 +186,11 @@ define(function (require, exports, module) {
     /**
      * 下一帧
      * @param callback {Function} 回调
-     * @param [context] {Object} 上下文
      * @returns {Number} 帧ID
      */
-    exports.nextFrame = function (callback, context/*argumnets*/) {
-        context = context || win;
-
-        var args = [].slice.call(arguments, 2);
+    exports.nextFrame = function (callback) {
         var fn = exports.once(function () {
-            callback.apply(context, args);
+            callback();
         });
 
         if (requestAnimationFrame) {
@@ -222,10 +214,67 @@ define(function (require, exports, module) {
     };
 
 
-    ///**
-    // * 不断轮询
-    // */
-    //exports.intervalTick = function () {
-    //
-    //};
+    /**
+     * 执行循环帧动画
+     * @param callback
+     * @returns {{id: number, toString: Function, valueOf: Function}}
+     */
+    exports.setIntervalFrame = function (callback) {
+        var ret = {
+            id: 0,
+            toString: function () {
+                return this.id;
+            },
+            valueOf: function () {
+                return this.id;
+            }
+        };
+        var _deep = function () {
+            ret.id = exports.nextFrame(function () {
+                if (callback.length) {
+                    callback(_deep);
+                } else {
+                    callback();
+                    _deep();
+                }
+            });
+        };
+
+        _deep();
+
+        return ret;
+    };
+
+
+    /**
+     * 清空循环帧动画
+     * @param frameId
+     */
+    exports.clearIntervalFrame = function (frameId) {
+        exports.clearFrame(frameId.id);
+    };
+
+
+    /**
+     * 计算当前的 fps
+     * @param callback
+     */
+    exports.fps = function (callback) {
+        var start = Date.now();
+        var fps = 0;
+
+        exports.setIntervalFrame(function () {
+            var end = Date.now();
+            fps++;
+
+            if (end - start >= 1000) {
+                if (typeis.function(callback)) {
+                    callback(fps);
+                }
+
+                start = end;
+                fps = 0;
+            }
+        });
+    };
 });

@@ -21,7 +21,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var controller = require('../../utils/controller.js');
     var ui = require('../');
-    var Scroll = require('../../libs/scroll.js');
+    var Scroll = require('../scroll/index.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var see = require('../../core/dom/see.js');

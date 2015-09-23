@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module utils/loader
      * @requires utils/typeis
+     * @requires utils/controller
      */
 
     'use strict';
@@ -17,8 +18,9 @@ define(function (require, exports, module) {
     var doc = document;
     var REG_LOAD_COMPLETE = /loaded|complete/;
     var typeis = require('./typeis.js');
+    var controller = require('./controller.js');
     var load = function (tagName, url, callback) {
-        var node = doc.createElement(tagName);
+        var node = tagName === 'img' ? new Image() : doc.createElement(tagName);
         var onready = function (eve) {
             var err = null;
 
@@ -27,9 +29,26 @@ define(function (require, exports, module) {
             }
 
             if (typeis.function(callback)) {
-                callback(err);
+                callback.call(node, err);
             }
         };
+
+        switch (tagName) {
+            case 'script':
+                node.async = true;
+                node.src = url;
+                break;
+
+            case 'link':
+                node.rel = 'stylesheet';
+                node.href = url;
+                break;
+
+            case 'img':
+                node.src = url;
+                break;
+        }
+
 
         if ('onload' in node) {
             node.onload = node.onerror = onready;
@@ -42,19 +61,16 @@ define(function (require, exports, module) {
             };
         }
 
-        switch (tagName) {
-            case 'script':
-                node.async = true;
-                node.src = url;
-                break;
-
-            case 'link':
-                node.rel = 'stylesheet';
-                node.href = url;
-                break;
+        if (tagName !== 'img') {
+            doc.body.appendChild(node);
         }
 
-        doc.body.appendChild(node);
+        if (tagName === 'img' && node.complete) {
+            controller.nextTick(function () {
+                onready();
+                node.onload = node.onerror = node.onreadystatechange = null;
+            });
+        }
     };
 
     /**
@@ -63,19 +79,6 @@ define(function (require, exports, module) {
      * @param [callback] {Function} 完毕回调
      */
     exports.js = function (url, callback) {
-        //var err = null;
-        //
-        //callback = typeis.function(callback) ? callback : noop;
-        //$.ajax({
-        //    dataType: 'script',
-        //    url: url
-        //}).done(function (data, textStatus, jqXHR) {
-        //    callback();
-        //}).fail(function (jqXHR, textStatus, errorThrown) {
-        //    err = new Error(errorThrown);
-        //    callback(err);
-        //});
-
         load('script', url, callback);
     };
 
@@ -87,5 +90,15 @@ define(function (require, exports, module) {
      */
     exports.css = function (url, callback) {
         load('link', url, callback);
+    };
+
+
+    /**
+     * 加载图片文件
+     * @param url {String} 图片文件
+     * @param [callback] {Function} 完毕回调
+     */
+    exports.img = function (url, callback) {
+        load('img', url, callback);
     };
 });

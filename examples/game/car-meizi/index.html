@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="screen-orientation" content="portrait"/>
+    <meta charset="utf-8">
+    <title>飙车追妹子</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div id="main">
+    <div id="guidePanel"></div>
+    <div id="gamePanel">
+        <div class="score-wrap">
+            <div class="heart"></div>
+            <span id="score">000000</span>
+        </div>
+
+        <canvas id="stage">
+            <span>Browser does not support the canvas.</span>
+        </canvas>
+    </div>
+
+    <div id="gameoverPanel"></div>
+
+    <div id="resultPanel">
+        <div class="weixin-share"></div>
+        <a href="javascript:void(0)" class="replay">再玩一次</a>
+
+        <div id="scoreBoard" class="panel">
+            <div class="rank">
+                <h4>追妹排行榜</h4>
+                <ul>
+                    <li class="gold">210</li>
+                    <li class="silver">190</li>
+                    <li class="bronze">189</li>
+                </ul>
+            </div>
+
+            <div class="score-result score-1">
+                <p class="tips">你木有追到一个妹纸哦~</p>
+                <a href="javascript:void(0)" class="share" data-desc="我开豪车一路狂飙，被妹纸们华丽丽的无视，心塞！">向基友们求人品！</a>
+            </div>
+            <div class="score-result score-2">
+                <p class="tips">矮油，成功追到<span>7</span>个妹纸</p>
+                <a href="javascript:void(0)" class="share" data-desc="喜讯：我开豪车成功追到{x}个妹纸！吼吼，请为我点赞！">向小伙伴炫耀！</a>
+            </div>
+            <div class="score-result score-3">
+                <p class="tips">哇噢，成功追到<span>20</span>个妹纸！<br>获得了一个爱心礼盒</p>
+                <a href="javascript:void(0)" class="lottery">打开礼盒</a>
+            </div>
+        </div>
+
+        <div id="prize" class="panel">
+            <div class="prize-default">
+                <img src="about:blank" class="random-prize"></img>
+                <a href="javascript:void(0)" class="share" data-desc="我开豪车搭{x}个妹纸回家~获赠平安符，好人一生平安|我开豪车搭{x}个妹纸回家~桃花运从天而降，再接再厉">向小伙伴炫耀！</a>
+            </div>
+            <div id="prizeResult" class="panel">
+                <div class="scroll-rst">
+                    <div class="prize-content">
+                        <p>恭喜您获得了（<span></span>）</p>
+                        <img src="about:blank">
+                        <div class="yards">兑奖码：<span></span></div>
+                    </div>
+                    <div class="intro">
+                        <h2>查看优惠码使用规则</h2>
+                        <div class="down"></div>
+                        <p>详细兑奖规则：</p>
+                        <ol>
+                            <li>请及时截屏保存兑奖码，由于误操作没有保存兑奖码，将无法兑奖。</li>
+                            <li>一个兑奖码仅限一人使用，转发多人无效。</li>
+                            <li>中国方程式大奖赛北京站 地址：北京金港赛车场，获得门票的幸运网友请在8月31日13：30前到赛场凭电子码兑票入场。</li>
+                            <li>获得赛道狂飙体验特权的幸运网友请在8月31日9：00前到赛场联系工作人员凭电子码兑票，体验时间3小时。</li>
+                            <li>赛车激情体验资格的幸运网友请在8月30日12：00前到赛场联系工作人员凭电子码兑票，体验时间1小时。</li>
+                            <li>赛场详细位置如图：</li>
+                        </ol>
+                        <img src="http://p2.qhimg.com/t01446f068c0ca06efa.png" class="map">
+                        <a href="javascript:void(0)" class="share"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://s9.qhimg.com/lib/jquery/1102.js"></script>
+<script src="js/Game.js"></script>
+<script src="js/resource.js"></script>
+<script src="js/weixin-api.js"></script>
+<script src="js/main.js"></script>
+<script src="js/iscroll.js"></script>
+</body>
+</html>

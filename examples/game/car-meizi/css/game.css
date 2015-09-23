@@ -1,0 +1,437 @@
+/*
+ build time: Sep 9th,2013 09:25
+ author: jiejie.zhuo
+ */
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #333;
+    font-family: "Microsoft YaHei", sans-serif, 'Microsoft Sans Serif', 'Microsoft JhengHei UI';
+    background-color: #555;
+}
+
+body > div:last-child {
+    display: none;
+}
+
+#main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#guidePanel {
+    background: rgba(0,0,0,0.6) url(http://p9.qhimg.com/t01355afa98af5c865a.png) center 75% no-repeat;
+    background-size: 219px 369px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    pointer-events: none;
+}
+#gamePanel {
+    display: table;
+    /*width: 480px;*/
+    width: 320px;
+    height: 568px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#gamePanel canvas {
+    z-index: 1000;
+    display: block;
+    /*position: absolute;*/
+    /*top: 0;*/
+    margin: 0 auto;
+}
+
+#gamePanel canvas.playing {
+    cursor: none;
+}
+
+/*@media screen and (max-width: 480px) {
+    #gamePanel, #container {
+        width: 100%;
+    }
+
+    #modal {
+        width: 94%;
+        top: 10px;
+        left: 3%;
+        margin: 0;
+    }
+}*/
+
+.score-wrap {
+    font-family: "Helvetica", "Microsoft YaHei", sans-serif;
+    font-style: italic;
+    width: 105px;
+    height: 32px;
+    background: url(http://p9.qhimg.com/t0180d607c54cbc42bb.png) no-repeat;
+    font-size: 17px;
+    z-index: 1005;
+    color: #FFF;
+    right: 20px;
+    top: 10px;
+    position: absolute;
+    background-size: 100%;
+    padding: 7px 10px;
+    text-align: right;
+    text-shadow: 1.5px 0 0 #613209, -1.5px 0 0 #613209, 0 1px 0 #613209, 0 -1.5px 0 #613209,
+                 1px 1px 0 #613209, -1px 1px 0 #613209, 1px -1px 0 #613209, -1px -1px 0 #613209;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: none;
+}
+
+.score-wrap div {
+    width: 26px;
+    height: 26px;
+    left: 2px;
+    top: 2px;
+    background: url(http://p2.qhimg.com/t0112104234e3d91aa4.png) no-repeat;
+    background-size: 100%;
+    z-index: 1009;
+    position: absolute;
+
+}
+
+div.hearthot {
+    -webkit-animation: fire .2s linear;
+    -o-animation: fire .2s linear;
+    animation: fire .2s linear;
+/*    -webkit-animation-iteration-count: 1;
+    -moz-animation-iteration-count: 1;
+    -o-animation-iteration-count: 1;
+    animation-iteration-count: 1;*/
+}
+
+@-webkit-keyframes fire {
+    0% {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(3.0);
+        -moz-transform: scale(3.0);
+        -ms-transform: scale(3.0);
+        -o-transform: scale(3.0);
+        transform: scale(3.0);
+        opacity: 0;
+    }
+}
+
+
+@keyframes fire {
+    0% {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+        transform: scale(1.1)
+    }
+
+    100% {
+        -webkit-transform: scale(1.0);
+        -moz-transform: scale(1.0);
+        -ms-transform: scale(1.0);
+        -o-transform: scale(1.0);
+        transform: scale(1.0)
+    }
+}
+
+#gameoverPanel {
+    display: none;
+    background: rgba(0,0,0,0.8) url(http://p3.qhimg.com/t015e721917cea64ad6.png) center no-repeat;
+    background-size: 230px 260px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+#resultPanel {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+#resultPanel .weixin-share {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, .8) url(http://p0.qhimg.com/t018a9077b24ae52c14.png) right top no-repeat;
+    background-size: 212px 196px;
+}
+
+#resultPanel .replay {
+    width: 79px;
+    height: 27px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: url(http://p4.qhimg.com/t0136f77295b99cb85d.png) 0 0 no-repeat;
+    background-size: 100%;
+    line-height: 20em;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#resultPanel .panel, #scoreBoard .score-result {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+#scoreBoard {
+    color:#ff8c00;
+    background: #ffde8d url(http://p6.qhimg.com/t01ba00a02f7055b8af.png) center 50px no-repeat;
+    background-size: 198px 34px;
+    text-align: center;
+}
+
+#scoreBoard .tips {
+    font-size: 22px;
+    line-height:2em;
+    margin: 100px auto 0;
+    font-weight: bold;
+    text-shadow: 3.5px 0 0 #FFF, -3.5px 0 0 #FFF, 0 3px 0 #FFF, 0 -2.5px 0 #FFF,
+                 3px 3px 0 #FFF, -3px 3px 0 #FFF, 3px -3px 0 #FFF, -3px -3px 0 #FFF;
+}
+
+#scoreBoard .rank {
+    position: absolute;
+    top: 150px;
+    padding: 5px;
+    background: rgba(255, 255, 255, .5);
+    width: 100%;
+    font-size: 16px;
+    color: #000;
+    z-index: 10;
+}
+
+#scoreBoard .rank h4, #scoreBoard .rank ul {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+#scoreBoard .rank ul {
+    width: 60px;
+    list-style-type: none;
+}
+#scoreBoard .rank ul li {
+    background: url(http://p8.qhimg.com/t01dfdd4ebdf81e3ac3.png) 0 1px no-repeat;
+    background-size: 15px;
+    padding-left: 20px;
+    text-align: left;
+    font-weight: bold;
+    height: 21px;
+    line-height: 21px;
+}
+
+#scoreBoard .rank ul li.silver {
+    background-position: 0 -20px;
+}
+#scoreBoard .rank ul li.bronze {
+    background-position: 0 -40px;
+}
+
+#scoreBoard .share {
+    display: block;
+    width: 196px;
+    height: 44px;
+    margin: 120px auto 0;
+    background: url(about:blank) 0 0 no-repeat;
+    background-size: 100%;
+    line-height: 20em;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#scoreBoard .score-1 {
+    background: url(http://p8.qhimg.com/t01e0bea40de12d9b5d.png) center bottom no-repeat;
+    background-size: 100%;
+}
+#scoreBoard .score-1 .share {
+    background-image: url(http://p3.qhimg.com/t0122df0668ea23d108.png);
+}
+
+#scoreBoard .score-2 {
+    background: url(http://p4.qhimg.com/t01646e943eb0e0677a.png) center bottom no-repeat;
+    background-size: 100%;
+}
+#scoreBoard .score-2 .share {
+    background-image: url(http://p6.qhimg.com/t010fc78fc89ac2944c.png);
+}
+
+#scoreBoard .score-3 {
+    background: url(http://p5.qhimg.com/t01864b45bea0350ab1.jpg) center no-repeat;
+    background-size: 100%;
+}
+#scoreBoard .score-3 .lottery {
+    position: absolute;
+    width: 196px;
+    height: 44px;
+    left: 50%;
+    bottom: 10%;
+    margin-left: -98px;
+    background: url(http://p2.qhimg.com/t01d27b5e468087f93c.png) 0 0 no-repeat;
+    background-size: 100%;
+    line-height: 20em;
+    overflow: hidden;
+}
+
+#scoreBoard .result {
+    font-size:1.2em;
+    line-height:1.2em;
+    margin: 20px auto;
+}
+
+#prize {
+    background: #ffa700 url(http://p3.qhimg.com/t013bab83179342c15c.png) center 10% no-repeat;
+    background-size: 261px 119px;
+}
+#prize .prize-default {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url(http://p7.qhimg.com/t01a5afc0eb8021fae3.png) center bottom no-repeat;
+    background-size: 320px 130px;
+}
+
+#prize .prize-default .random-prize {
+    width: 200px;
+    height: 191px;
+    display: block;
+    margin: 60% auto 0;
+}
+#prize .prize-default .share {
+    display: block;
+    width: 227px;
+    height: 69px;
+    margin: 20px auto 0;
+    background: url(http://p5.qhimg.com/t0171e1eb67be1e7baa.png) 0 0 no-repeat;
+    background-size: 100%;
+    line-height: 20em;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#prizeResult.panel {
+    overflow: hidden;
+    background: #AAA;
+}
+#prizeResult .scroll-rst {
+    background: #ffa700 url(http://p3.qhimg.com/t013bab83179342c15c.png) center 40px no-repeat;
+    background-size: 261px 119px;
+    width: 100%;
+}
+
+#prizeResult .prize-content {
+    padding-top: 160px;
+    height: 460px;
+    background: url(http://p7.qhimg.com/t01a5afc0eb8021fae3.png) 0 bottom no-repeat;
+    background-size: 320px 130px;
+}
+#prizeResult .prize-content p {
+    text-align: center;
+    font-size: 16px;
+    color: #FFF;
+    font-weight: bold;
+}
+#prizeResult .prize-content p span {
+    font-weight: normal;
+}
+#prizeResult .prize-content img {
+    display: block;
+    width: 163px;
+    height: 116px;
+    margin: 10px auto;
+}
+#prizeResult .prize-content .yards {
+    text-align: center;
+    font-size: 16px;
+    color: #FFF;
+    height: 24px;
+    line-height: 24px;
+}
+#prizeResult .prize-content .yards span {
+    margin: 0 5px;
+    background-color: #FFF;
+    border-radius: 12px;
+    padding: 0 10px;
+    color: #000;
+}
+#prizeResult .intro {
+    background: #FFF;
+    padding: 1px 35px 40px;
+}
+#prizeResult .intro h2 {
+    text-align: center;
+    color: #ff6900;
+    font-size: 20px;
+    margin: 18px 0;
+}
+#prizeResult .intro .down {
+    margin: 0 auto;
+    width: 24px;
+    height: 28px;
+    background: url(http://p9.qhimg.com/t0169b3b90636e8039f.png) no-repeat;
+    background-size: 100%;
+}
+#prizeResult .intro p, #prizeResult .intro ol, #prizeResult .intro li {
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    list-style-position: inside;
+}
+#prizeResult .intro .map {
+    display: block;
+    margin: 0 auto;
+    width: 256px;
+    height: 216px;
+}
+#prizeResult .intro .share {
+    display: block;
+    width: 227px;
+    height: 69px;
+    margin: 20px auto 0;
+    background: url(http://p5.qhimg.com/t0171e1eb67be1e7baa.png) 0 0 no-repeat;
+    background-size: 100%;
+    line-height: 20em;
+    overflow: hidden;
+}
