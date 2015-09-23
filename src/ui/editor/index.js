@@ -152,7 +152,7 @@ define(function (require, exports, module) {
             the._initEvent();
 
             if (the._options.canBackup) {
-                controller.nextTick(the._initValue, the);
+                controller.nextTick(the._initValue.bind(the));
             }
         },
 

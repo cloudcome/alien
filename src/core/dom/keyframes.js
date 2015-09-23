@@ -52,7 +52,7 @@ define(function (require, exports, module) {
         var mainStyle = '';
 
         dato.each(keyframes, function (percent, properties) {
-            var percentList = percent.split(REG_SEP);
+            var percentList = String(percent).split(REG_SEP);
 
             dato.each(percentList, function (index, percent) {
                 percent = percent.trim();

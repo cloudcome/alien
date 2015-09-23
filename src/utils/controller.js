@@ -147,15 +147,20 @@ define(function (require, exports, module) {
     };
 
 
+
     /**
      * 下一步
      * @param callback {Function} 回调
+     * @param [context=window] {Object} 上下文
      */
-    exports.nextTick = function (callback) {
+    exports.nextTick = function (callback, context/*arguments*/) {
+        context = context || win;
+
+        var args = [].slice.call(arguments, 2);
         var $doc = document;
         var $body = $doc.body;
         var fn = exports.once(function () {
-            callback();
+            callback.apply(context, args);
         });
 
         // chrome18+, safari6+, firefox14+,ie11+,opera15
@@ -186,11 +191,15 @@ define(function (require, exports, module) {
     /**
      * 下一帧
      * @param callback {Function} 回调
+     * @param [context] {Object} 上下文
      * @returns {Number} 帧ID
      */
-    exports.nextFrame = function (callback) {
+    exports.nextFrame = function (callback, context/*argumnets*/) {
+        context = context || win;
+
+        var args = [].slice.call(arguments, 2);
         var fn = exports.once(function () {
-            callback();
+            callback.apply(context, args);
         });
 
         if (requestAnimationFrame) {
