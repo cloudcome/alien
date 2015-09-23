@@ -62,9 +62,7 @@ define(function (require, exports, module) {
             $score.innerHTML = touchLength;
         });
 
-        controller.setIntervalFrame(function () {
-            women.draw();
-        });
+        women.start();
     };
 
     howdo.each(imgs, function (key, url, done) {

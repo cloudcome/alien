@@ -31,8 +31,8 @@ define(function (require, exports, module) {
             the._$canvas = selector.query($canvas)[0];
             the._img = img;
             options = the._options = dato.extend({}, defaults, options);
-            var imgWidth = the._img.width / 2;
-            var imgHeight = the._img.height / 2;
+            var imgWidth = the._img.width;
+            var imgHeight = the._img.height;
             the._pos = {
                 width: imgWidth,
                 height: imgHeight,
@@ -41,9 +41,7 @@ define(function (require, exports, module) {
             };
             attribute.attr(the._$canvas, the._pos);
             attribute.css(the._$canvas, the._pos);
-            canvasImg(the._$canvas, the._img, {
-                ratio: 2
-            });
+            canvasImg(the._$canvas, the._img);
             the._initEvent();
         },
 

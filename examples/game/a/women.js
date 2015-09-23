@@ -13,8 +13,8 @@ define(function (require, exports, module) {
     var klass = require('../../../src/utils/class.js');
     var dato = require('../../../src/utils/dato.js');
     var random = require('../../../src/utils/random.js');
+    var controller = require('../../../src/utils/controller.js');
     var Emitter = require('../../../src/libs/emitter.js');
-    var canvasImg = require('../../../src/canvas/img.js');
     var defaults = {
         // 单屏最大数量
         maxLength: 20,
@@ -38,7 +38,7 @@ define(function (require, exports, module) {
             the._canvasWidth = the._$canvas.width;
             the._canvasHeight = the._$canvas.height;
             the._img = img;
-            the._options = dato.extend({}, defaults, options);
+            options = the._options = dato.extend({}, defaults, options);
             the._man = {
                 width: 0,
                 height: 0,
@@ -46,9 +46,19 @@ define(function (require, exports, module) {
                 top: 0
             };
             the._women = [];
-            the._map = {};
             the._imgHeight = the._img.height;
-            the._ratio = 0;
+            the._speed = options.speed;
+        },
+
+
+        /**
+         * 清除整个画布
+         * @private
+         */
+        _clear: function () {
+            var the = this;
+
+            the._context.clearRect(0, 0, the._canvasWidth, the._canvasHeight);
         },
 
 
@@ -56,12 +66,15 @@ define(function (require, exports, module) {
          * 批量画
          * @returns {Women}
          */
-        draw: function () {
+        _draw: function () {
             var the = this;
             var options = the._options;
 
             if (the._can()) {
-                var woman = new Woman(the._$canvas, the._img, options);
+                var womanOptions = dato.extend({}, options, {
+                    speed: the._speed
+                });
+                var woman = new Woman(the._$canvas, the._img, womanOptions);
 
                 woman.__index = the._women.length;
                 woman.on('leave', function () {
@@ -70,7 +83,7 @@ define(function (require, exports, module) {
                 the._women.push(woman);
             }
 
-            the._context.clearRect(0, 0, the._canvasWidth, the._canvasHeight);
+            the._clear();
             the._women.forEach(function (woman) {
                 woman.draw();
             });
@@ -96,7 +109,7 @@ define(function (require, exports, module) {
 
             dato.each(the._women, function (index, woman) {
                 if (woman === _woman) {
-                    the._options.speed = woman.getSpeed();
+                    the._speed = woman.getSpeed();
                     woman.destroy();
                     the._women.splice(index, 1);
                     return false;
@@ -184,6 +197,55 @@ define(function (require, exports, module) {
             var the = this;
 
             dato.extend(the._man, posSize);
+
+            return the;
+        },
+
+
+        /**
+         * 开始动画
+         * @returns {Women}
+         */
+        start: function () {
+            var the = this;
+
+            the._frameId = controller.setIntervalFrame(function () {
+                the._draw();
+            });
+            console.log(the._frameId);
+
+            return the;
+        },
+
+
+        /**
+         * 暂停动画
+         * @returns {Women}
+         */
+        pause: function () {
+            var the = this;
+
+            controller.clearIntervalFrame(the._frameId);
+
+            return the;
+        },
+
+
+        /**
+         * 停止动画
+         * @returns {Women}
+         */
+        stop: function () {
+            var the = this;
+            var options = the._options;
+
+            the.pause();
+            the._women.forEach(function (woman) {
+                woman.destroy();
+            });
+            the._women = [];
+            the._speed = options.speed;
+            the._clear();
 
             return the;
         }

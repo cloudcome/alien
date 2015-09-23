@@ -31,8 +31,8 @@ define(function (require, exports, module) {
             the._$canvas = selector.query($canvas)[0];
             the._img = img;
             the._options = dato.extend({}, defaults, options);
-            the._imgWidth = the._img.width/2;
-            the._imgHeight = the._img.height/2;
+            the._imgWidth = the._img.width;
+            the._imgHeight = the._img.height;
             the._canvasWidth = the._$canvas.width;
             the._canvasHeight = the._$canvas.height;
             the._maxLeft = the._canvasWidth - the._imgWidth;
@@ -64,8 +64,7 @@ define(function (require, exports, module) {
             the._t++;
             canvasImg(the._$canvas, the._img, {
                 drawLeft: the._left,
-                drawTop: the._top,
-                ratio: 2
+                drawTop: the._top
             });
 
             if (the._top >= the._maxTop) {
