@@ -17,15 +17,26 @@ define(function (require, exports, module) {
     var canvasImg = require('../../../src/canvas/img.js');
     var defaults = {
         // 单屏最大数量
-        maxLength: 4,
+        maxLength: 20,
         // 最小间隔 px
-        minOffset: 100
+        minOffset: 30,
+        // 加速度
+        acc: 0.0005,
+        // 初始速度
+        speed: 1,
+        // 最大速度
+        maxSpeed: 20,
+        // 碰撞检测，顶部偏移
+        offsetTop: 10
     };
     var Women = klass.extends(Emitter).create({
         constructor: function ($canvas, img, options) {
             var the = this;
 
             the._$canvas = selector.query($canvas)[0];
+            the._context = the._$canvas.getContext('2d');
+            the._canvasWidth = the._$canvas.width;
+            the._canvasHeight = the._$canvas.height;
             the._img = img;
             the._options = dato.extend({}, defaults, options);
             the._man = {
@@ -37,6 +48,7 @@ define(function (require, exports, module) {
             the._women = [];
             the._map = {};
             the._imgHeight = the._img.height;
+            the._ratio = 0;
         },
 
 
@@ -53,32 +65,43 @@ define(function (require, exports, module) {
 
                 woman.__index = the._women.length;
                 woman.on('leave', function () {
-                    var _woman = this;
-
-                    dato.each(the._women, function (index, woman) {
-                        if (woman === _woman) {
-                            woman.destroy();
-                            the._women.splice(index, 1);
-                            return false;
-                        }
-                    });
+                    the._remove(this);
                 });
                 the._women.push(woman);
             }
 
+            the._context.clearRect(0, 0, the._canvasWidth, the._canvasHeight);
             the._women.forEach(function (woman) {
                 woman.draw();
             });
 
             dato.each(the._women, function (index, woman) {
-                if (!woman.__touched && the._isTouch(woman)) {
-                    woman.__touched = true;
+                if (the._isTouch(woman)) {
+                    the._remove(woman);
                     the.emit('touch');
                     return false;
                 }
             });
 
             return the;
+        },
+
+        /**
+         * 删除指定的 woman
+         * @param _woman
+         * @private
+         */
+        _remove: function (_woman) {
+            var the = this;
+
+            dato.each(the._women, function (index, woman) {
+                if (woman === _woman) {
+                    the._options.speed = woman.getSpeed();
+                    woman.destroy();
+                    the._women.splice(index, 1);
+                    return false;
+                }
+            });
         },
 
 
@@ -114,14 +137,22 @@ define(function (require, exports, module) {
          */
         _isTouch: function (woman) {
             var the = this;
+            var options = the._options;
             var pos1 = woman.getPosition();
+            var pos1Right = pos1.left + pos1.width;
             var pos2 = the._man;
+            var pos2Top = pos2.top + options.offsetTop;
+            var pos2Right = pos2.left + pos2.width;
 
             // 光线投影法
             //
             //        []
             // ----------------
-            return pos1.top + pos1.height > pos2.top && pos1.left > pos2.left && pos1.left < pos2.left + pos2.width;
+            return pos1.top + pos1.height > pos2Top &&
+                (
+                    pos1.left > pos2.left && pos1.left < pos2Right ||
+                    pos1Right > pos2.left && pos1Right < pos2Right
+                );
 
             // 中心连线法
             //var center1 = {

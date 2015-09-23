@@ -17,6 +17,12 @@ define(function (require, exports, module) {
     var Emitter = require('../../../src/libs/emitter.js');
     var canvasImg = require('../../../src/canvas/img.js');
     var defaults = {
+        // 加速度
+        acc: 0.0005,
+        // 初始速度
+        speed: 1,
+        // 最大速
+        maxSpeed: 60
     };
     var Woman = klass.extends(Emitter).create({
         constructor: function ($canvas, img, options) {
@@ -25,14 +31,16 @@ define(function (require, exports, module) {
             the._$canvas = selector.query($canvas)[0];
             the._img = img;
             the._options = dato.extend({}, defaults, options);
-            the._imgWidth = the._img.width;
-            the._imgHeight = the._img.height;
+            the._imgWidth = the._img.width/2;
+            the._imgHeight = the._img.height/2;
             the._canvasWidth = the._$canvas.width;
             the._canvasHeight = the._$canvas.height;
             the._maxLeft = the._canvasWidth - the._imgWidth;
             the._maxTop = the._canvasHeight;
             the._top = -the._imgHeight;
             the._left = random.number(0, the._maxLeft);
+            // 时间
+            the._t = 0;
         },
 
 
@@ -48,10 +56,16 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            the._top += 1;
+            if (options.speed < options.maxSpeed) {
+                options.speed += options.acc * the._t;
+            }
+
+            the._top = options.speed * the._t + options.acc * the._t / 2;
+            the._t++;
             canvasImg(the._$canvas, the._img, {
                 drawLeft: the._left,
-                drawTop: the._top
+                drawTop: the._top,
+                ratio: 2
             });
 
             if (the._top >= the._maxTop) {
@@ -75,6 +89,15 @@ define(function (require, exports, module) {
                 left: the._left,
                 top: the._top
             };
+        },
+
+
+        /**
+         * 获取当前速度
+         * @returns {number|*}
+         */
+        getSpeed: function () {
+            return this._options.speed;
         },
 
         destroy: function () {

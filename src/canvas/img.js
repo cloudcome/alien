@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     var dato = require('../utils/dato.js');
     var typeis = require('../utils/typeis.js');
     var defaults = {
+        ratio: 1,
         srcLeft: 0,
         srcTop: 0,
         srcWidth: null,
@@ -34,6 +35,7 @@ define(function (require, exports, module) {
      * @param canvas {Object} 画布
      * @param img {Object} 图片对象，必须保证图片已经 onload 了
      * @param [options] {Object} 配置
+     * @param [options.ratio=1] {Number} 图片倍数，默认单倍，视网膜屏幕下建议用双倍
      * @param [options.srcLeft] {Number} 源横坐标
      * @param [options.srcTop] {Number} 源纵坐标
      * @param [options.srcWidth] {Number} 源宽度
@@ -47,6 +49,7 @@ define(function (require, exports, module) {
         var context = canvas.getContext('2d');
 
         options = dato.extend({}, defaults, options);
+
 
         if (typeis.empty(options.srcWidth)) {
             options.srcWidth = img.width;
@@ -65,11 +68,11 @@ define(function (require, exports, module) {
         }
 
         if (typeis.empty(options.drawWidth)) {
-            options.drawWidth = options.srcWidth;
+            options.drawWidth = options.srcWidth / options.ratio;
         }
 
         if (typeis.empty(options.drawHeight)) {
-            options.drawHeight = options.srcHeight;
+            options.drawHeight = options.srcHeight / options.ratio;
         }
 
         context.drawImage(img,

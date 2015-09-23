@@ -15,22 +15,22 @@ define(function (require, exports, module) {
     var selector = require('../../../src/core/dom/selector.js');
     var attribute = require('../../../src/core/dom/attribute.js');
     var event = require('../../../src/core/event/touch.js');
-    var canvasImg = require('../../../src/canvas/img.js');
     var howdo = require('../../../src/utils/howdo.js');
     var loader = require('../../../src/utils/loader.js');
     var controller = require('../../../src/utils/controller.js');
     var random = require('../../../src/utils/random.js');
-    var tips = require('../../../src/widgets/tips.js');
+    //var tips = require('../../../src/widgets/tips.js');
+    var Man = require('./man.js');
     var Women = require('./women.js');
     var $canvas1 = selector.query('#canvas1')[0];
     var $canvas2 = selector.query('#canvas2')[0];
     var $fps = selector.query('#fps')[0];
+    var $score = selector.query('#score')[0];
     var winWidth = attribute.width(window);
     var winHeight = attribute.height(window);
     var canvasWidth = Math.min(winWidth, 320);
     var canvasHeight = winHeight;
-    var context1 = $canvas1.getContext('2d');
-    var context2 = $canvas2.getContext('2d');
+    var canvasLeft = (winWidth - canvasWidth) / 2;
     var imgs = {
         car: require('./img/car.png', 'image|url'),
         car2: require('./img/car_2.png', 'image|url'),
@@ -41,43 +41,29 @@ define(function (require, exports, module) {
             width: canvasWidth,
             height: canvasHeight
         });
-        attribute.attr($canvas2, {
-            width: canvasWidth,
-            height: canvasHeight
+        attribute.css($canvas1, {
+            left: canvasLeft
         });
 
-        var carImg = imgs.car;
-        var carWidth = carImg.width;
-        var carHeight = carImg.height;
-        var maxLeft = canvasWidth - carWidth;
-        var maxTop = canvasHeight - carHeight;
-        var left = random.number(0, maxLeft);
+        event.on(document, 'touchstart', function () {
+            return false;
+        });
+
         var women = new Women($canvas1, imgs.women);
         var touchLength = 0;
+        var man = new Man($canvas2, imgs.car, {});
+
+        man.on('change', function (pos) {
+            women.changeMan(pos);
+        });
 
         women.on('touch', function () {
             touchLength++;
-            tips('碰到了: ' + touchLength);
+            $score.innerHTML = touchLength;
         });
 
         controller.setIntervalFrame(function () {
-            context1.clearRect(0, 0, canvasWidth, canvasHeight);
-            context2.clearRect(0, 0, canvasWidth, canvasHeight);
-            var carImg = imgs.car;
-            var carWidth = carImg.width;
-            var carHeight = carImg.height;
-
             women.draw();
-            women.changeMan({
-                width: carWidth,
-                height: carHeight,
-                left: left,
-                top: maxTop
-            });
-            canvasImg($canvas2, imgs.car, {
-                drawLeft: left,
-                drawTop: maxTop
-            });
         });
     };
 

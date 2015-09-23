@@ -15,6 +15,7 @@ define(function (require, exports, module) {
     var klass = require('../../../src/utils/class.js');
     var dato = require('../../../src/utils/dato.js');
     var random = require('../../../src/utils/random.js');
+    var controller = require('../../../src/utils/controller.js');
     var Emitter = require('../../../src/libs/emitter.js');
     var canvasImg = require('../../../src/canvas/img.js');
     var defaults = {
@@ -29,15 +30,20 @@ define(function (require, exports, module) {
 
             the._$canvas = selector.query($canvas)[0];
             the._img = img;
-            the._options = dato.extend({}, defaults, options);
-            the._imgWidth = the._img.width;
-            the._imgHeight = the._img.height;
-            attribute.attr(the._$canvas, {
-                width: the._imgWidth,
-                height: the._imgHeight
+            options = the._options = dato.extend({}, defaults, options);
+            var imgWidth = the._img.width / 2;
+            var imgHeight = the._img.height / 2;
+            the._pos = {
+                width: imgWidth,
+                height: imgHeight,
+                left: (options.womenWidth - imgWidth) / 2,
+                top: attribute.height(window) - imgHeight
+            };
+            attribute.attr(the._$canvas, the._pos);
+            attribute.css(the._$canvas, the._pos);
+            canvasImg(the._$canvas, the._img, {
+                ratio: 2
             });
-            the._top = the._canvasHeight - the._imgHeight;
-            the._left = (the._canvasWidth - the._imgWidth) / 2;
             the._initEvent();
         },
 
@@ -45,18 +51,21 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var options = the._options;
+            var left1 = 0;
 
             the._touch = new Touch(the._$canvas);
-        },
+            the._touch.on('touch1start', function (eve) {
+                left1 = attribute.left(the._$canvas);
+            }).on('touch1move', function (eve) {
+                var detail = eve.alienDetail;
+                the._pos.left = left1 + detail.changedX;
 
+                attribute.css(the._$canvas, 'left', the._pos.left);
+                the.emit('change', the._pos);
+            });
 
-        _draw: function () {
-            var the = this;
-            var options = the._options;
-
-            canvasImg(the._$canvas, the._img, {
-                drawLeft: the._left,
-                drawTop: the._top
+            controller.nextTick(function () {
+                the.emit('change', the._pos);
             });
         }
     });

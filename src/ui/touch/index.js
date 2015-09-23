@@ -376,7 +376,7 @@ define(function (require, exports, module) {
          */
         _calDirection: function (touch) {
             if (touch.deltaX === 0 && touch.deltaY === 0) {
-                return 'none';touch
+                return 'none';
             }
 
             return touch.deltaX > touch.deltaY ?
