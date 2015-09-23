@@ -33,10 +33,11 @@ define(function (require, exports, module) {
             options = the._options = dato.extend({}, defaults, options);
             var imgWidth = the._img.width;
             var imgHeight = the._img.height;
+            the._offsetLeft = (attribute.width(window) - options.womenWidth) / 2;
             the._pos = {
                 width: imgWidth,
                 height: imgHeight,
-                left: (options.womenWidth - imgWidth) / 2,
+                left: the._offsetLeft + (options.womenWidth - imgWidth) / 2,
                 top: attribute.height(window) - imgHeight
             };
             attribute.attr(the._$canvas, the._pos);
@@ -59,12 +60,21 @@ define(function (require, exports, module) {
                 the._pos.left = left1 + detail.changedX;
 
                 attribute.css(the._$canvas, 'left', the._pos.left);
-                the.emit('change', the._pos);
+                the._change();
             });
 
             controller.nextTick(function () {
-                the.emit('change', the._pos);
+                the._change();
             });
+        },
+
+
+        _change: function () {
+            var the = this;
+            var pos = dato.extend({}, the._pos);
+
+            pos.left -= the._offsetLeft;
+            the.emit('change', pos);
         }
     });
 
