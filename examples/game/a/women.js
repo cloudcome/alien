@@ -152,20 +152,17 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var pos1 = woman.getPosition();
-            var pos1Right = pos1.left + pos1.width;
+            var pos1Center = pos1.left + pos1.width / 2;
             var pos2 = the._man;
             var pos2Top = pos2.top + options.offsetTop;
-            var pos2Right = pos2.left + pos2.width;
+            var pos2Center = pos2.left + pos2.width / 2;
+            var pos1pos2Center = pos1.width / 2 + pos2.width / 2;
 
-            // 光线投影法
+            // 中线距离法
             //
             //        []
             // ----------------
-            return pos1.top + pos1.height > pos2Top &&
-                (
-                    pos1.left > pos2.left && pos1.left < pos2Right ||
-                    pos1Right > pos2.left && pos1Right < pos2Right
-                );
+            return pos1.top + pos1.height > pos2Top && Math.abs(pos1Center - pos2Center) < pos1pos2Center;
 
             // 中心连线法
             //var center1 = {
