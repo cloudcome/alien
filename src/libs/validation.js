@@ -39,7 +39,7 @@ define(function (require, exports, module) {
      * }
      */
     var validationMap = {};
-    var namespace = 'alien-libs-validation';
+    var namespace = 'donkey-libs-validation';
     var alienIndex = 0;
     var defaults = {
         // true: 返回单个错误对象
@@ -47,9 +47,9 @@ define(function (require, exports, module) {
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
         breakOnInvalid: typeis.window(window) ? false : true,
-        defaultMsg: '${path}字段不合法'
+        defaultMsg: '${1}不合法'
     };
-    var Validation = klass.extends(Emitter).create({
+    var Validation = klass.extend(Emitter).create({
         /**
          * constructor
          * @extends Emitter
@@ -62,6 +62,7 @@ define(function (require, exports, module) {
             the._validateList = [];
             the._validateIndexMap = {};
             the._aliasMap = {};
+            the._msgMap = {};
             the._validationMap = {};
         },
 
@@ -89,6 +90,23 @@ define(function (require, exports, module) {
 
 
         /**
+         * 重设验证消息
+         * @param path
+         * @param ruleName
+         * @param msg
+         * @returns {Validation}
+         */
+        setMsg: function (path, ruleName, msg) {
+            var the = this;
+
+            the._msgMap[path] = the._msgMap[path] || {};
+            the._msgMap[path][ruleName] = msg;
+
+            return the;
+        },
+
+
+        /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
          * @param nameOrfn {String|Function} 验证规则，可以是静态规则，也可以添加规则
@@ -100,7 +118,7 @@ define(function (require, exports, module) {
             var params = args.slice(2);
             var index = the._validateIndexMap[path];
 
-            if (typeis.undefined(index)) {
+            if (typeis.isUndefined(index)) {
                 index = the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
@@ -108,7 +126,7 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.string(nameOrfn)) {
+            if (typeis.isString(nameOrfn)) {
                 var name = nameOrfn;
 
                 if (!validationMap[name]) {
@@ -120,7 +138,7 @@ define(function (require, exports, module) {
                     params: params,
                     fn: validationMap[name]
                 });
-            } else if (typeis.function(nameOrfn)) {
+            } else if (typeis.isFunction(nameOrfn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
@@ -195,7 +213,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 执行单部验证
+         * 执行单个验证
          * @param data {Object} 待验证的数据
          * @param [callback] {Function} 验证回调
          * @returns {Validation}
@@ -211,7 +229,7 @@ define(function (require, exports, module) {
              * @param path {String} 字段
              */
             the.emit('beforevalidateone', path);
-            the._validateOne(data, path, rules, function () {
+            the._validateOne(data, path, rules, function (err) {
                 /**
                  * 单个验证之后
                  * @event aftervalidateone
@@ -219,8 +237,8 @@ define(function (require, exports, module) {
                  */
                 the.emit('aftervalidateone', path);
 
-                if (typeis.function(callback)) {
-                    callback.apply(this, arguments);
+                if (typeis.isFunction(callback)) {
+                    callback.call(the, !err);
                 }
             });
 
@@ -251,42 +269,41 @@ define(function (require, exports, module) {
              */
             the.emit('beforevalidateall');
             var errorLength = 0;
-            var complete = function () {
-                if (typeis.function(callback)) {
-                    callback.apply(the, arguments);
-                }
-
-                the._isValidating = false;
-                /**
-                 * 全部验证之后
-                 * @event aftervalidateall
-                 */
-                the.emit('aftervalidateall');
-            };
+            var firstInvlidError = null;
             var firstInvlidPath = null;
 
             howdo
                 // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
-                    the._validateOne(data, path = item.path, item.rules, function (err, hasError) {
-                        if (hasError) {
-                            if(!firstInvlidPath){
+                    the._validateOne(data, path = item.path, item.rules, function (err) {
+                        if (err) {
+                            if (!firstInvlidPath) {
+                                firstInvlidError = err;
                                 firstInvlidPath = item.path;
                             }
 
                             errorLength++;
                         }
 
+                        // 有错误 && 失败不断开
+                        if (err && !options.breakOnInvalid) {
+                            err = null;
+                        }
+
                         next(err);
                     });
                 })
-                .try(function () {
+                .follow(function (err) {
+                    the._isValidating = false;
+
                     if (errorLength) {
                         /**
-                         * 验证成功
+                         * 验证失败
+                         * @param error {Object} 错误对象
+                         * @param path {String} 字段
                          * @event error
                          */
-                        the.emit('error', firstInvlidPath);
+                        the.emit('error', firstInvlidError, firstInvlidPath);
                     } else {
                         /**
                          * 验证成功
@@ -294,29 +311,15 @@ define(function (require, exports, module) {
                          */
                         the.emit('success');
                     }
-                })
-                .catch(function (err) {
-                    if (options.breakOnInvalid) {
-                        err = new Error(string.assign(err || options.defaultMsg, {
-                            path: the._aliasMap[path] || path
-                        }));
-
-                        /**
-                         * 验证失败
-                         * @event invalid
-                         * @param error {Object} 错误对象
-                         * @param path {String} 字段
-                         */
-                        the.emit('invalid', err, path);
-                    }
 
                     /**
-                     * 验证失败
-                     * @event error
+                     * 全部验证之后
+                     * @event aftervalidateall
                      */
-                    the.emit('error', path);
-                })
-                .follow(complete);
+                    the.emit('aftervalidateall');
+
+                    callback.call(the, !errorLength);
+                });
 
             return the;
         },
@@ -339,17 +342,20 @@ define(function (require, exports, module) {
              * @param path {String} 字段
              */
             the.emit('beforevalidate', path);
+            var currentRule;
             howdo
                 // 遍历验证规则
                 .each(rules, function (j, rule, next) {
                     var args = [data[path], next];
 
+                    currentRule = rule;
                     the.emit('validate', path, rule.name);
                     args = args.concat(rule.params);
                     the.path = path;
                     rule.fn.apply(the, args);
                 })
-                .try(function () {
+                .follow()
+                .done(function () {
                     /**
                      * 验证成功
                      * @event valid
@@ -364,49 +370,36 @@ define(function (require, exports, module) {
                      */
                     the.emit('aftervalidate', path);
 
-                    if (typeis.function(callback)) {
-                        callback.call(the, null, false);
+                    if (typeis.isFunction(callback)) {
+                        callback.call(the, null);
                     }
                 })
-                .catch(function (err) {
-                    // 验证失败即断开
-                    if (options.breakOnInvalid) {
-                        /**
-                         * 验证之后
-                         * @event aftervalidate
-                         * @param path {String} 字段
-                         */
-                        the.emit('aftervalidate', path);
+                .fail(function (err) {
+                    var overrideMsg = the._msgMap[path] && the._msgMap[path][currentRule.name];
+                    var args = [overrideMsg || err || options.defaultMsg, the.getAlias(path) || path];
 
-                        if (typeis.function(callback)) {
-                            callback.call(the, err, true);
-                        }
-                    } else {
-                        err = new Error(string.assign(err || options.defaultMsg, {
-                            path: the._aliasMap[path] || path
-                        }));
+                    args = args.concat(currentRule.params);
+                    err = new Error(string.assign.apply(string, args));
 
-                        /**
-                         * 验证失败
-                         * @event invalid
-                         * @param error {Object} 错误对象
-                         * @param path {String} 字段
-                         */
-                        the.emit('invalid', err, path);
+                    /**
+                     * 验证失败
+                     * @event invalid
+                     * @param error {Object} 错误对象
+                     * @param path {String} 字段
+                     */
+                    the.emit('invalid', err, path);
 
-                        /**
-                         * 验证之后
-                         * @event aftervalidate
-                         * @param path {String} 字段
-                         */
-                        the.emit('aftervalidate', path);
+                    /**
+                     * 验证之后
+                     * @event aftervalidate
+                     * @param path {String} 字段
+                     */
+                    the.emit('aftervalidate', path);
 
-                        if (typeis.function(callback)) {
-                            callback.call(the, null, true);
-                        }
+                    if (typeis.isFunction(callback)) {
+                        callback.call(the, err);
                     }
-                })
-                .follow();
+                });
         }
     });
 
