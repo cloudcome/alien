@@ -135,22 +135,23 @@ geolocation.map
 
 # 5、页面位置
 ## 5.1、跳转
-- 领队主页
-    - type: "captain"
-    - id: 123（领队 ID）
 - 俱乐部主页
     - type: "club"
     - id: 123（俱乐部 ID）
-- 个人主页
-    - type: "applyer"
+- 个人主页（包括普通和领队）
+    - type: "user"
     - id: 123（个人 ID）
+- 我的活动
+    - type: "myActivity"
 - 活动想去列表
     - type: "loveList"
     - id: 123（活动 ID）
 - 报名人列表页
     - type: "applyList"
     - id: 123（活动批次 ID）
-
+- 领队主页【废弃】
+    - type: "captain"
+    - id: 123（领队 ID）
 ```
 location.redirect
 
