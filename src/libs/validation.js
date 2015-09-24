@@ -118,7 +118,7 @@ define(function (require, exports, module) {
             var params = args.slice(2);
             var index = the._validateIndexMap[path];
 
-            if (typeis.isUndefined(index)) {
+            if (typeis.undefined(index)) {
                 index = the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.isString(nameOrfn)) {
+            if (typeis.string(nameOrfn)) {
                 var name = nameOrfn;
 
                 if (!validationMap[name]) {
@@ -138,7 +138,7 @@ define(function (require, exports, module) {
                     params: params,
                     fn: validationMap[name]
                 });
-            } else if (typeis.isFunction(nameOrfn)) {
+            } else if (typeis.function(nameOrfn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
@@ -237,7 +237,7 @@ define(function (require, exports, module) {
                  */
                 the.emit('aftervalidateone', path);
 
-                if (typeis.isFunction(callback)) {
+                if (typeis.function(callback)) {
                     callback.call(the, !err);
                 }
             });
@@ -370,7 +370,7 @@ define(function (require, exports, module) {
                      */
                     the.emit('aftervalidate', path);
 
-                    if (typeis.isFunction(callback)) {
+                    if (typeis.function(callback)) {
                         callback.call(the, null);
                     }
                 })
@@ -396,7 +396,7 @@ define(function (require, exports, module) {
                      */
                     the.emit('aftervalidate', path);
 
-                    if (typeis.isFunction(callback)) {
+                    if (typeis.function(callback)) {
                         callback.call(the, err);
                     }
                 });

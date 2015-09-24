@@ -243,7 +243,7 @@ define(function (require, exports, module) {
             var data;
             var args = allocation.args(arguments);
 
-            if (typeis.Function(args[0])) {
+            if (typeis.function(args[0])) {
                 callback = args[0];
                 $ele = null;
             }
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
             }
 
             // 多个字段
-            if (typeis.Array($ele)) {
+            if (typeis.array($ele)) {
                 var temp = [];
 
                 dato.each($ele, function (index, path) {
@@ -271,7 +271,7 @@ define(function (require, exports, module) {
 
             var pass = null;
             var oncomplete = function () {
-                if (typeis.Function(callback)) {
+                if (typeis.function(callback)) {
                     callback.call(the, pass);
                 }
             };

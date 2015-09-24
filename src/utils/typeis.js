@@ -208,7 +208,7 @@ define(function (require, exports, module) {
      * @returns {Boolean}
      */
     typeis.empty = function (obj) {
-        return typeof obj === udf || typeis.Null(obj);
+        return typeof obj === udf || typeis.null(obj);
     };
 
 

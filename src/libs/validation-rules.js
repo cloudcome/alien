@@ -172,6 +172,6 @@ define(function (require, exports, module) {
      * @returns {boolean}
      */
     function _isMultiple(obj) {
-        return typeis.isArray(obj) || typeis(obj) === 'filelist';
+        return typeis.array(obj) || typeis(obj) === 'filelist';
     }
 });
