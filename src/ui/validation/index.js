@@ -48,7 +48,6 @@ define(function (require, exports, module) {
     //         };
     //     };
     // }
-    var validationMap = {};
     var tagNameMap = {
         textarea: 1,
         select: 1
@@ -438,10 +437,10 @@ define(function (require, exports, module) {
             }
 
             if (!alias) {
-                var $label = selector.query('label[for="' + id + '"]', the._$form);
+                var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
 
-                if ($label.length) {
-                    alias = ($label.text().match(REG_ALIAS) || ['', ''])[1].trim();
+                if ($label) {
+                    alias = (attribute.text($label).match(REG_ALIAS) || ['', ''])[1].trim();
 
                     the._validation.setAlias(path, alias);
                 }
@@ -478,7 +477,7 @@ define(function (require, exports, module) {
 
                 list2.push({
                     key: temp[0].trim(),
-                    val: temp[1].trim()
+                    val: temp[1] ? temp[1].trim() : ''
                 });
             });
 

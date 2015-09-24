@@ -355,7 +355,7 @@ define(function (require, exports, module) {
                     rule.fn.apply(the, args);
                 })
                 .follow()
-                .done(function () {
+                .try(function () {
                     /**
                      * 验证成功
                      * @event valid
@@ -374,7 +374,7 @@ define(function (require, exports, module) {
                         callback.call(the, null);
                     }
                 })
-                .fail(function (err) {
+                .catch(function (err) {
                     var overrideMsg = the._msgMap[path] && the._msgMap[path][currentRule.name];
                     var args = [overrideMsg || err || options.defaultMsg, the.getAlias(path) || path];
 
