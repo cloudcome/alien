@@ -1,4 +1,4 @@
-# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.6.0
+# ![Alien](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20140914113127363721429460.png) v1.7.0
 [![Build Status][travis-img]][travis-url] 
 
 一个为现代浏览器而生的前端解决方案。
