@@ -198,6 +198,10 @@ define(function (require, exports, module) {
      * @param source {Object} 事件来源
      * @param target {Object} 事件目的
      * @param [types] {Array} 允许和禁止的事件类型
+     *
+     * @example
+     * name 与 ['name'] 匹配
+     * name 与 ['!name'] 不匹配
      */
     Emitter.pipe = function (source, target, types) {
         source.on(function () {
