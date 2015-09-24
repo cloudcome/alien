@@ -196,7 +196,7 @@ define(function (require, exports, module) {
     /**
      * 事件传输
      * @param source {Object} 事件来源
-     * @param target {Object} 事件目的
+     * @param target {Object} 事件目标
      * @param [types] {Array} 允许和禁止的事件类型
      *
      * @example
