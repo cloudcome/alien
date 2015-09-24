@@ -312,7 +312,7 @@ define(function (require, exports, module) {
         var ret = [];
 
         dato.each(nodeList, function (index, node) {
-            if (filter.call(node, index, node) === true) {
+            if (filter.call(node, index, node)) {
                 ret.push(node);
             }
         });
