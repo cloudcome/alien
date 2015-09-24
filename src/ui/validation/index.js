@@ -19,6 +19,9 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/string
+     * @requires utils/controller
+     * @requires utils/allocation
+     * @requires utils/howdo
      * @requires ui/
      */
 
@@ -34,6 +37,9 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
+    var controller = require('../../utils/controller.js');
+    var allocation = require('../../utils/allocation.js');
+    var howdo = require('../../utils/howdo.js');
     var ui = require('../');
     // {
     //     minLength: function(ruleValue){
@@ -54,29 +60,26 @@ define(function (require, exports, module) {
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
         breakOnInvalid: typeis.window(window) ? false : true,
-        defaultMsg: '${path}字段不合法',
+        defaultMsg: '${1}字段不合法',
         // 规则的 data 属性
         dataValidation: 'validation',
         dataAlias: 'alias',
+        dataMsg: 'msg',
         // data 规则分隔符
         dataSep: ',',
         // data 规则等于符
         dataEqual: ':',
+        // data 多值分隔符
+        dataVal: ':',
         // 验证的表单项目选择器
         inputSelector: 'input,select,textarea'
     };
-    //var typeRegExpMap = {
-    //    number: /^\d+$/,
-    //    url: ''
-    //};
     var ValidationUI = ui.create({
         constructor: function ($form, options) {
             var the = this;
 
             the._options = dato.extend({}, defaults, options);
             the._$form = selector.query($form)[0];
-            the._pathMap = {};
-            the.destroyed = false;
             the.update();
         },
 
@@ -88,6 +91,7 @@ define(function (require, exports, module) {
         update: function () {
             var the = this;
 
+            the._pathMap = {};
             the._validation = new Validation(the._options);
             the._validation
                 .on('valid', function (path) {
@@ -110,6 +114,10 @@ define(function (require, exports, module) {
                 });
             the._parseItems();
 
+            controller.nextTick(function () {
+                the.emit('update');
+            });
+
             return the;
         },
 
@@ -123,6 +131,7 @@ define(function (require, exports, module) {
             var the = this;
             var data = {};
             var list = $input ? [] : the._$inputs;
+
 
             if ($input) {
                 var inputType = the._getType($input);
@@ -138,17 +147,17 @@ define(function (require, exports, module) {
                 }
             }
 
-            dato.each(list, function (i, $item) {
-                var path = $item.name;
-                var type = the._getType($item);
-                var val = $item.value;
-                var isMultiple = $item.multiple;
+            dato.each(list, function (i, ele) {
+                var path = ele.name;
+                var type = the._getType(ele);
+                var val = ele.value;
+                var isMultiple = ele.multiple;
 
                 switch (type) {
                     case 'checkbox':
                         data[path] = data[path] || [];
 
-                        if ($item.checked && val) {
+                        if (ele.checked && val) {
                             data[path].push(val);
                         }
 
@@ -161,11 +170,11 @@ define(function (require, exports, module) {
                             data[path] = '';
                         }
 
-                        dato.repeat($item.length, function (index) {
-                            var $option = $item[index];
-                            var val = attribute.attr($option, 'value');
+                        dato.repeat(ele.length, function (index) {
+                            var eleOption = ele[index];
+                            var val = eleOption.value;
 
-                            if ($option.selected && val) {
+                            if (eleOption.selected && val) {
                                 if (isMultiple) {
                                     data[path].push(val);
                                 } else {
@@ -178,19 +187,21 @@ define(function (require, exports, module) {
                         break;
 
                     case 'radio':
-                        if ($item.checked) {
+                        if (ele.checked) {
                             data[path] = val;
                         }
 
                         break;
 
                     case 'file':
-                        var files = $item.files;
+                        var files = ele.files;
 
-                        if (isMultiple) {
+                        if (isMultiple && files) {
                             data[path] = files.length ? files : [];
-                        } else {
+                        } else if (files) {
                             data[path] = files.length ? files[0] : null;
+                        } else {
+                            data[path] = ele.value;
                         }
 
                         break;
@@ -220,19 +231,75 @@ define(function (require, exports, module) {
 
 
         /**
-         * 单独验证某个输入对象
-         * @param [$ele] {Object} 输入对象，如果为空则验证全部
+         * 单独验证某个/些字段
+         * @param [$ele] {Object|Array|String} 待验证的对象或字段，可以为多个对象，如果为空则验证全部
          * @param [callback] {Function} 回调
+         * @arguments [pass] {Boolean} 是否通过验证
          * @returns {ValidationUI}
          */
         validate: function ($ele, callback) {
             var the = this;
-            var data = the.getData($ele);
+            var options = the._options;
+            var data;
+            var args = allocation.args(arguments);
 
-            if ($ele) {
-                the._validation.validateOne(data, callback);
+            if (typeis.Function(args[0])) {
+                callback = args[0];
+                $ele = null;
+            }
+
+            // 单个字段
+            if (typeis.string($ele)) {
+                $ele = the._pathMap[$ele];
+            }
+
+            // 多个字段
+            if (typeis.Array($ele)) {
+                var temp = [];
+
+                dato.each($ele, function (index, path) {
+                    temp.push(the._pathMap[path]);
+                });
+
+                $ele = temp;
+            }
+
+            // 单个元素
+            if (typeis.element($ele)) {
+                $ele = [$ele];
+            }
+
+            var pass = null;
+            var oncomplete = function () {
+                if (typeis.Function(callback)) {
+                    callback.call(the, pass);
+                }
+            };
+
+            if ($ele && 'length' in $ele) {
+                howdo.each($ele, function (index, $ele, next) {
+                    data = the.getData($ele);
+                    the._validation.validateOne(data, function (_pass) {
+                        if (pass === null || _pass === false) {
+                            pass = _pass;
+                        }
+
+                        var err = !_pass;
+
+                        // 有错 && 失败继续
+                        if (err && !options.breakOnInvalid) {
+                            err = false;
+                        }
+
+                        next(err);
+                    });
+                }).follow(oncomplete);
             } else {
-                the._validation.validateAll(data, callback);
+                data = the.getData();
+                the._validation.validateAll(data, function (_pass) {
+                    pass = _pass;
+                    oncomplete();
+                });
             }
 
             return the;
@@ -299,45 +366,52 @@ define(function (require, exports, module) {
 
         /**
          * 解析项目规则
-         * @param $item {Object}
+         * @param eleInput {Object}
          * @private
          */
-        _parseRules: function ($item) {
+        _parseRules: function (eleInput) {
             var the = this;
             var options = the._options;
-            var id = $item.id;
-            var path = $item.name;
-            var type = the._getType($item);
-            var validationStr = attribute.data($item, options.dataValidation);
-            var alias = attribute.data($item, options.dataAlias);
+            var id = eleInput.id;
+            var path = eleInput.name;
+            var type = the._getType(eleInput);
+            var validationStr = attribute.data(eleInput, options.dataValidation);
+            var msgStr = attribute.data(eleInput, options.dataMsg);
+            var alias = attribute.data(eleInput, options.dataAlias);
             var validationInfo = the._parseValidation(validationStr);
             var validationList = validationInfo.list;
+            var msgList = the._parseDataStr(msgStr);
+
+            // 重写消息
+            dato.each(msgList, function (index, item) {
+                the._validation.setMsg(path, item.key, item.val);
+            });
 
             // 规则顺序
             // required => type => minLength => maxLength => pattern => data
 
-            if ($item.required) {
+            if (eleInput.required) {
                 the._validation.addRule(path, 'required');
             }
 
-            if ($item.min !== '' && !typeis.empty($item.min)) {
-                the._validation.addRule(path, 'min', $item.min);
+            if (eleInput.min !== '' && !typeis.empty(eleInput.min)) {
+                the._validation.addRule(path, 'min', eleInput.min);
             }
 
-            if ($item.max !== '' && !typeis.empty($item.max)) {
-                the._validation.addRule(path, 'max', $item.max);
+            if (eleInput.max !== '' && !typeis.empty(eleInput.max)) {
+                the._validation.addRule(path, 'max', eleInput.max);
             }
 
-            if ($item.accept !== '' && !typeis.empty($item.accept)) {
-                the._validation.addRule(path, 'accept', $item.accept);
+            if (eleInput.accept !== '' && !typeis.empty(eleInput.accept)) {
+                the._validation.addRule(path, 'accept', eleInput.accept);
             }
 
-            if ($item.pattern !== '' && !typeis.empty($item.pattern)) {
-                the._validation.addRule(path, 'pattern', $item.pattern);
+            if (eleInput.pattern !== '' && !typeis.empty(eleInput.pattern)) {
+                the._validation.addRule(path, 'pattern', eleInput.pattern);
             }
 
-            if ($item.step !== '' && !typeis.empty($item.step)) {
-                the._validation.addRule(path, 'step', $item.step);
+            if (eleInput.step !== '' && !typeis.empty(eleInput.step)) {
+                the._validation.addRule(path, 'step', eleInput.step);
             }
 
             if (!validationInfo.hasType) {
@@ -353,41 +427,62 @@ define(function (require, exports, module) {
             validationList.forEach(function (validation) {
                 var validationName = validation.name;
                 var validationVals = validation.values;
-                //
-                //if (validationName === 'alias') {
-                //    the._validation.setAlias(path, validationVals.join(''));
-                //    hasAlias = true;
-                //    return;
-                //}
-
                 var args = [path, validationName];
 
                 args = args.concat(validationVals);
                 the._validation.addRule.apply(the._validation, args);
             });
 
-
             if (alias) {
                 the._validation.setAlias(path, alias);
             }
 
             if (!alias) {
-                var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
+                var $label = selector.query('label[for="' + id + '"]', the._$form);
 
-                if ($label) {
-                    alias = (attribute.text($label).match(REG_ALIAS) || ['', ''])[1].trim();
+                if ($label.length) {
+                    alias = ($label.text().match(REG_ALIAS) || ['', ''])[1].trim();
 
                     the._validation.setAlias(path, alias);
                 }
             }
 
-            if (!alias && $item.placeholder) {
-                alias = ($item.placeholder.match(REG_ALIAS) || ['', ''])[1].trim();
+            if (!alias && eleInput.placeholder) {
+                alias = (eleInput.placeholder.match(REG_ALIAS) || ['', ''])[1].trim();
 
                 if (alias) {
                     the._validation.setAlias(path, alias);
                 }
             }
+        },
+
+
+        /**
+         * 解析 a:b,c:d
+         * @param str
+         * @returns {Array}
+         * @private
+         */
+        _parseDataStr: function (str) {
+            if (!str) {
+                return [];
+            }
+
+            var the = this;
+            var options = the._options;
+            var list1 = str.split(options.dataSep);
+            var list2 = [];
+
+            list1.forEach(function (item) {
+                var temp = item.split(options.dataEqual);
+
+                list2.push({
+                    key: temp[0].trim(),
+                    val: temp[1].trim()
+                });
+            });
+
+            return list2;
         },
 
 
@@ -400,27 +495,23 @@ define(function (require, exports, module) {
         _parseValidation: function (ruleString) {
             var the = this;
             var options = the._options;
+            var list = the._parseDataStr(ruleString);
+            var hasType = false;
 
-            if (!ruleString) {
+            if (!list.length) {
                 return {
                     list: [],
                     hasType: false
                 };
             }
 
-            var list1 = ruleString.split(options.dataSep);
             var list2 = [];
-            // 是否重写了 type
-            var hasType = false;
+            list.forEach(function (item) {
+                hasType = item.key === 'type';
 
-            list1.forEach(function (item) {
-                var temp = item.split(options.dataEqual);
-                var name = temp[0].trim();
-
-                hasType = name === 'type';
                 list2.push({
-                    name: name,
-                    values: temp[1] ? temp[1].trim().split('|') : true
+                    name: item.key,
+                    values: item.val ? item.val.split(options.dataVal) : true
                 });
             });
 
@@ -430,19 +521,6 @@ define(function (require, exports, module) {
             };
         }
     });
-
-    /**
-     * 添加静态的 ui 验证规则
-     * @param ruleName {String} 规则名称
-     * @param fn {Function} 返回包含生成规则的方法的高阶方法
-     */
-    ValidationUI.addRule = function (ruleName, fn) {
-        if (validationMap[ruleName] && DEBUG) {
-            console.warn('override rule of ' + ruleName);
-        }
-
-        validationMap[ruleName] = fn;
-    };
 
     ValidationUI.defaults = defaults;
     module.exports = ValidationUI;
