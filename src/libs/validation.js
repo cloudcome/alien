@@ -39,7 +39,7 @@ define(function (require, exports, module) {
      * }
      */
     var validationMap = {};
-    var namespace = 'donkey-libs-validation';
+    var namespace = 'alien-libs-validation';
     var alienIndex = 0;
     var defaults = {
         // true: 返回单个错误对象
