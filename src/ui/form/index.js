@@ -193,7 +193,7 @@ define(function (require, exports, module) {
                 the._xhrOptions = {
                     url: the._$form.action,
                     headers: {
-                        'content-type': the._$form.enctype
+                        'content-type': attribute.attr(the._$form, 'enctype')
                     },
                     method: the._$form.method
                 };
@@ -313,7 +313,7 @@ define(function (require, exports, module) {
              * @event beforerequest
              * @param options {Object} 请求参数
              */
-            if (the.emit('beforesubmit', ajaxOptions) === false) {
+            if (the.emit('beforesubmit', ajaxOptions, data) === false) {
                 return;
             }
 
