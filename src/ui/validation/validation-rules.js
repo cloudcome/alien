@@ -49,7 +49,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            done(invalidIndexs.length ? '${path}' +
+            done(invalidIndexs.length ? '${1}' +
             (isMultiple ? '的第' + (invalidIndexs.join('、')) + '个' : '的') +
             '文件类型不合法' : null);
         });
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 
             var reg = new RegExp(param0);
 
-            done(reg.test(val) ? null : '${path}不符合规则');
+            done(reg.test(val) ? null : '${1}不符合规则');
         });
 
 
@@ -109,7 +109,7 @@ define(function (require, exports, module) {
                     }
                 });
 
-                done(invalidIndexs.length ? '${path}的' +
+                done(invalidIndexs.length ? '${1}的' +
                 (isMultiple ? '第' + (invalidIndexs.join('、')) + '个' : '') +
                 '文件大小不能' + map[type] + number.abbr(param0, 0, 1024).toUpperCase() + 'B' : null);
             };
@@ -180,7 +180,7 @@ define(function (require, exports, module) {
                         return done(null);
                     }
 
-                    var msg = '${path}的';
+                    var msg = '${1}的';
                     var part1 = '';
                     var part2 = '';
 
