@@ -16,16 +16,13 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var string = require('../../utils/string.js');
     var html5Prefixs = ['', 'webkit', 'moz', 'ms', 'MS'];
-    // css3 比较特殊，某些实验性的属性需要带前缀，因此优先匹配私有前缀
     var css3Prefixs = ['', '-webkit', '-moz', '-ms'];
-    var REG_PREFIX = /^-/;
     var regCss3 = /^-(webkit|moz|ms|o)-/i;
     var p = document.createElement('p');
     var fixCss = {
         'float': 'cssFloat'
     };
     var regOn = /^on/;
-    var timeid = 0;
 
     /**
      * 获取有浏览器前缀的方法名称
