@@ -400,6 +400,7 @@ define(function (require, exports, module) {
 
                 var dataset = ele.dataset || {};
                 var ret = dataset[string.humprize(key)];
+                var ret2 = ret;
 
                 try {
                     ret = JSON.parse(ret);
@@ -413,7 +414,11 @@ define(function (require, exports, module) {
                     }
                 }
 
-                return ret;
+                if (typeis.object(ret) || typeis.array(ret)) {
+                    return ret;
+                }
+
+                return ret2;
             },
             set: function (ele, key, val) {
                 if (!typeis.element(ele)) {
