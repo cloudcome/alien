@@ -74,6 +74,7 @@ define(function (require, exports, module) {
     var ua = navigator.userAgent;
     var REG_END = /;([^;]*)$/;
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
+    var isDangkr = /\bdangk(e|r)\b/i.test(ua);
     var dkuaList = (ua.match(REG_END) || ['', ''])[1].split('/');
     var namespace = 'WebViewJavascriptBridge';
     var webViewJavascriptBridge = null;
@@ -151,7 +152,6 @@ define(function (require, exports, module) {
                  * @private
                  */
                 the._isAndroid = !!bridge.require;
-                the.isDangkr = true;
                 the.platform = the._isAndroid ? 'aos' : 'ios';
 
 
@@ -179,6 +179,10 @@ define(function (require, exports, module) {
                 });
             };
             var past = Date.now();
+
+            if(!isDangkr){
+                return controller.nextTick(onbroken);
+            }
 
             the._timeid = setInterval(function () {
                 if (Date.now() - past > options.initTimeout) {
@@ -1090,7 +1094,7 @@ define(function (require, exports, module) {
     var dangkr = new Dangkr();
 
     dangkr.tokenKey = '-dkToken-';
-    dangkr.isDangkr = /\bdangk(e|r)\b/i.test(ua) || namespace in win;
+    dangkr.isDangkr = isDangkr;
     dangkr.defaults = defaults;
     dangkr.version = dkuaList[1] || '1.1.0';
     dangkr.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';
