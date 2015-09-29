@@ -50,6 +50,75 @@ type: "love"
 // 绑定了手机
 type: 'bindPhone',
 phone: '12312341234'
+
+// 活动信息
+type: 'activity',
+activityId: 7483112,
+title: '活动标题',
+batch: {
+      activityId: 7483112
+      // 批次价格
+      amount: 1
+      // 批次报名人数
+      appliedPeoples: 0
+      // 批次开始时间
+      beginTime: 1436112000000
+      // 俱乐部 ID
+      clubId: 1021
+      // 活动结束时间
+      deadline: 1436198399999
+      // 报名结束时间
+      endTime: 1436198399999
+      // 批次 ID
+      id: 8500723
+      // 批次最大报名人数
+      maxPeoples: 0
+      // 批次支付类型
+      paymentCategory: 0
+      // 批次预付金额
+      prepaymentAmount: 0
+      // 批次状态
+      state: 4  
+},
+startAddress: '出发地',
+// 出发地列表
+startAddressList: null,
+destination: '目的地',
+cover: '活动封面'
+
+// 订单详情
+type: 'order'
+orderCode: '123',
+userInfo: {
+    userId: null,
+    userType: null,
+    nickname: "行者无疆",
+    userAvatar: "http://img.lv-guanjia.com/0/useravatar/2096/p/a/14e67c5f1eb/20150707170822675765892533",
+    sex: null
+},
+activity: {
+    clubId: null,
+    activityId: 7487719,
+    title: "【11月秋韵】雪山红叶摄影-金川-丹巴甲居-中路藏寨6日",
+    type: null,
+    spot: null,
+    cover: "http://image.lv-guanjia.com/1005/activity/2090/p/p/1500d5092db/2584a7a1abae5d24d4f9619b91fbfb3caff.jpg",
+    pictures: null,
+    beginTime: 1443497334895,
+    endTime: 1431184192553,
+    deadline: null,
+    days: null,
+    applicantPeoples: null,
+    maxPeoples: null,
+    startAddress: null,
+    destination: null,
+    amount: null,
+    activityStatus: null,
+    viewCount: null,
+    interestCount: null,
+    startAddressList: null
+},
+url: 'http://..../order/123/'
 ```
 
 
@@ -135,23 +204,22 @@ geolocation.map
 
 # 5、页面位置
 ## 5.1、跳转
+- 领队主页
+    - type: "captain"
+    - id: 123（领队 ID）
 - 俱乐部主页
     - type: "club"
     - id: 123（俱乐部 ID）
-- 个人主页（包括普通和领队）
-    - type: "user"
+- 个人主页
+    - type: "applyer"
     - id: 123（个人 ID）
-- 我的活动
-    - type: "myActivity"
 - 活动想去列表
     - type: "loveList"
     - id: 123（活动 ID）
 - 报名人列表页
     - type: "applyList"
     - id: 123（活动批次 ID）
-- 领队主页【废弃】
-    - type: "captain"
-    - id: 123（领队 ID）
+
 ```
 location.redirect
 

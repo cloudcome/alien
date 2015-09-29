@@ -173,7 +173,7 @@ define(function (require, exports, module) {
 
             // 单击序列
             event.on(the._$navList, 'click', '*', function () {
-                var index = attribute.data(this, 'index');
+                var index = attribute.data(this, 'index') * 1;
 
                 if (index === the._index) {
                     return;

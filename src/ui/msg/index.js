@@ -165,7 +165,7 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                var index = attribute.data(this, 'index');
+                var index = attribute.data(this, 'index') * 1;
 
                 /**
                  * 消息框被关闭后
