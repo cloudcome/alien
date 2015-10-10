@@ -16,13 +16,13 @@ define(function (require, exports, module) {
     var spa = new SPA();
 
     spa
-        .if('/page1/', function () {
-            return require.async('./pages/page1.js');
+        .if('/page1/', function (ready) {
+            return require.async('./pages/page1.js', ready);
         })
-        .if('/page2/', function () {
-            return require.async('./pages/page2.js');
+        .if('/page2/', function (ready) {
+            return require.async('./pages/page2.js', ready);
         })
-        .else(function () {
-            return require.async('./pages/404.js');
+        .else(function (ready) {
+            return require.async('./pages/404.js', ready);
         });
 });

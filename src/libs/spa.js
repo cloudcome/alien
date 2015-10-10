@@ -88,9 +88,7 @@ define(function (require, exports, module) {
         _exec: function (item) {
             item.app = item.app || item.callback();
 
-            if (typeis.function(item.app.enter)) {
-                item.app.enter();
-            }
+            console.log(item.app);
         },
 
 
@@ -120,7 +118,9 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            the._elseList.push(callback);
+            the._elseList.push({
+                callback: callback
+            });
 
             return the;
         }
