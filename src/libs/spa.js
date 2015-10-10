@@ -8,6 +8,13 @@
 define(function (require, exports, module) {
     /**
      * @module parent/spa
+     * @requires libs/emitter
+     * @requires core/event/base
+     * @requires utils/class
+     * @requires utils/typeis
+     * @requires utils/hashbang
+     * @requires utils/dato
+     * @requires utils/controller
      */
 
     'use strict';
@@ -24,7 +31,6 @@ define(function (require, exports, module) {
     var href = win.location.href;
     var alienIndex = 1;
     var defaults = {
-        //html5: true,
         root: '/',
         prefix: '!',
         autoLink: true,
@@ -43,6 +49,10 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
 
@@ -55,14 +65,14 @@ define(function (require, exports, module) {
                 dato.each(the._ifList, function (index, item) {
                     switch (item.type) {
                         case 'regexp':
-                            if (matches = parseRet.pathstring.match(item.route)) {
+                            if ((matches = parseRet.pathstring.match(item.route))) {
                                 find = item;
                                 return false;
                             }
                             break;
 
                         case 'string':
-                            if (matches = hashbang.matches(newURL, item.route)) {
+                            if ((matches = hashbang.matches(newURL, item.route, the._options))) {
                                 find = item;
                                 return false;
                             }
@@ -117,6 +127,12 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 匹配路由
+         * @param route {String/RegExp} 路由规则
+         * @param callback {Function} 回调
+         * @returns {SPA}
+         */
         if: function (route, callback) {
             var the = this;
             //var options = the._options;
@@ -135,6 +151,11 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 未匹配路由
+         * @param callback {Function} 回调
+         * @returns {SPA}
+         */
         else: function (callback) {
             var the = this;
             //var options = the._options;

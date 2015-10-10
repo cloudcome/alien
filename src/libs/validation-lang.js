@@ -8,13 +8,11 @@
 define(function (require, exports, module) {
     /**
      * @module libs/validation-lang
-     * @requires utils/string
      */
-
+1
     'use strict';
 
 
-    var string = require('../utils/string.js');
     var lang = {
         minLength: {
             input: '${1}不能少于${2}个字符',
