@@ -26,7 +26,9 @@ define(function (require, exports, module) {
         //html5: true,
         root: '/',
         prefix: '!',
-        autoLink: true
+        autoLink: true,
+        ignoreCase: false,
+        strict: false
     };
 
     var SPA = klass.extends(Emitter).create({
@@ -35,7 +37,8 @@ define(function (require, exports, module) {
 
             the._options = dato.extend({}, defaults, options);
             the._initEvent();
-            the._listenList = [];
+            the._ifList = [];
+            the._elseList = [];
         },
 
 
@@ -45,7 +48,31 @@ define(function (require, exports, module) {
             the._onchange = function (eve) {
                 var newURL = eve ? eve.newURL || href : href;
                 var parseRet = hashbang.parse(newURL);
+                var find = null;
 
+                dato.each(the._ifList, function (index, item) {
+                    switch (item.type) {
+                        case 'regexp':
+                            if (item.route.test(parseRet.pathstring)) {
+                                find = item;
+                                return false;
+                            }
+                            break;
+
+                        case 'string':
+                            if (hashbang.matches(newURL, item.route)) {
+                                find = item;
+                                return false;
+                            }
+                            break;
+                    }
+                });
+
+                if (find) {
+                    the._exec(find);
+                } else {
+                    the._elseList.forEach(the._exec);
+                }
             };
 
             event.on(win, 'hashchange', the._onchange);
@@ -53,11 +80,29 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 执行某个路由
+         * @param item
+         * @private
+         */
+        _exec: function (item) {
+            item.app = item.app || item.callback();
+
+            if (typeis.function(item.app.enter)) {
+                item.app.enter();
+            }
+        },
+
+
         if: function (route, callback) {
             var the = this;
             //var options = the._options;
 
-            the._listenList.push({
+            if (!typeis.function(callback)) {
+                return the;
+            }
+
+            the._ifList.push({
                 route: route,
                 type: typeis(route),
                 callback: callback
@@ -69,7 +114,13 @@ define(function (require, exports, module) {
 
         else: function (callback) {
             var the = this;
-            var options = the._options;
+            //var options = the._options;
+
+            if (!typeis.function(callback)) {
+                return the;
+            }
+
+            the._elseList.push(callback);
 
             return the;
         }
