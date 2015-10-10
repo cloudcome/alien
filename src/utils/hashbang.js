@@ -16,7 +16,6 @@ define(function (require, exports, module) {
      * @requires utils/dato
      * @requires utils/typeis
      * @requires utils/querystring
-     * @requires core/event/base
      */
     'use strict';
 
@@ -24,60 +23,19 @@ define(function (require, exports, module) {
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
     var qs = require('./querystring.js');
-    var event = require('../core/event/base.js');
     var regHash = /#.*$/;
     var regHashbang = /^#!\//;
     var regColon = /:(\w+\b)/g;
     var regStar = /\*/g;
-    var regAsk = /\?/g;
     var regEndSlash = /\/$/;
     var regSep = /\//g;
-    //var regOther = /[.+^=!${}()|[\]\\]/g;
-    var pathListenerMap = {};
-    var pathAllListener = [];
-    var queryListenerMap = {};
-    var queryAllListener = [];
     var matchesDefaults = {
-        // 是否忽略大小写，默认 true
-        isIgnoreCase: true,
-        // 是否忽略末尾斜杠，默认 true
-        isIgnoreEndSlash: true
+        // 是否忽略大小写，默认 false
+        ignoreCase: false,
+        // 是否严格模式，默认 false，即默认忽略末尾“/”
+        strict: false
     };
-    var hashchangeCallback = function (eve) {
-        var newObject = exports.parse(eve.newURL);
-        var oldObject = exports.parse(eve.oldURL);
-        var pathDifferentKeys = dato.compare(newObject.path || [], oldObject.path || []).diff;
-        var queryDifferentKeys = dato.compare(newObject.query || {}, oldObject.query || {}).diff;
-        var args = [eve, newObject, oldObject];
 
-        if (pathDifferentKeys.length) {
-            dato.each(pathAllListener, function (i, listener) {
-                listener.apply(window, args);
-            });
-        }
-
-        dato.each(pathDifferentKeys, function (i, key) {
-            if (pathListenerMap[key]) {
-                dato.each(pathListenerMap[key], function (j, listener) {
-                    listener.apply(window, args);
-                });
-            }
-        });
-
-        if (queryDifferentKeys.length) {
-            dato.each(queryAllListener, function (i, listener) {
-                listener.apply(window, args);
-            });
-        }
-
-        dato.each(queryDifferentKeys, function (i, key) {
-            if (queryListenerMap[key]) {
-                dato.each(queryListenerMap[key], function (j, listener) {
-                    listener.apply(window, args);
-                });
-            }
-        });
-    };
 
     /**
      * 解析 hashbang 字符串为对象
@@ -175,10 +133,10 @@ define(function (require, exports, module) {
     /**
      * 匹配 URL path 部分
      * @param {String} hashbangString hash 字符串
-     * @param {String} route 正怎字符串
+     * @param {String} routeRule 路由规则
      * @param {Object} [options] 参数配置
-     * @param {Object} [options.isIgnoreCase] 是否忽略大小写，默认 false
-     * @param {Object} [options.isIgnoreEndSlash] 是否忽略末尾斜杠，默认 true
+     * @param {Object} [options.ignoreCase] 是否忽略大小写，默认 false
+     * @param {Object} [options.strict] 是否忽略末尾斜杠，默认 true
      * @returns {*}
      *
      * @example
@@ -199,7 +157,7 @@ define(function (require, exports, module) {
      * hashbang.matches('#!/name/abc123/', '/id/:id/');
      * // => null
      */
-    exports.matches = function (hashbangString, route, options) {
+    exports.matches = function (hashbangString, routeRule, options) {
         // /id/:id/ => /id/abc123/   √
 
         options = dato.extend({}, matchesDefaults, options);
@@ -207,7 +165,7 @@ define(function (require, exports, module) {
         var temp;
         var keys = [0];
         var matched;
-        var routeSource = route;
+        var routeRuleOrigin = routeRule;
         var reg;
         var ret = null;
 
@@ -225,22 +183,22 @@ define(function (require, exports, module) {
             hashbangString = '/';
         }
 
-        if (options.isIgnoreEndSlash) {
-            route += regEndSlash.test(route) ? '?' : '/?';
+        if (options.strict) {
+            routeRule += regEndSlash.test(routeRule) ? '?' : '/?';
         }
 
-        route = route
-            .replace(regColon, (options.isIgnoreEndSlash ? '?' : '') + '([^/]+)')
+        routeRule = routeRule
+            .replace(regColon, (options.strict ? '?' : '') + '([^/]+)')
             .replace(regSep, '\\/')
             .replace(regStar, '.*');
 
         try {
-            reg = new RegExp('^' + route + '$', options.isIgnoreCase ? 'i' : '');
+            reg = new RegExp('^' + routeRule + '$', options.ignoreCase ? 'i' : '');
         } catch (err) {
             return ret;
         }
 
-        while ((matched = regColon.exec(routeSource)) !== null) {
+        while ((matched = regColon.exec(routeRuleOrigin)) !== null) {
             keys.push(matched[1]);
         }
 
@@ -261,157 +219,6 @@ define(function (require, exports, module) {
         return ret;
     };
 
-    /**
-     * 监听 hashbang
-     * @param {String} part 监听部分，可以为`query`或`path`
-     * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
-     * @param {Function} listener 监听回调
-     *
-     * @example
-     * // pathc
-     * hashbang.on('path', fn);
-     * hashbang.on('path', 0, fn);
-     *
-     * // query
-     * hashbang.on('query', fn);
-     * hashbang.on('query', 'abc', fn);
-     */
-    exports.on = function (part, key, listener) {
-        if (!_isSafePart(part)) {
-            throw new Error('hashbang `part` must be `path` or `query`');
-        }
-
-        var args = allocation.args(arguments);
-        var argL = args.length;
-        var listenerMap;
-
-        if (argL === 2) {
-            listener = args[1];
-
-            if (typeis(listener) === 'function') {
-                if (part === 'query') {
-                    queryAllListener.push(listener);
-                } else {
-                    pathAllListener.push(listener);
-                }
-            }
-        } else if (argL === 3) {
-            listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
-
-            if (typeis(key) !== 'array') {
-                key = [key];
-            }
-
-            dato.each(key, function (index, k) {
-                listenerMap[k] = listenerMap[k] || [];
-
-                if (typeis(listener) === 'function') {
-                    listenerMap[k].push(listener);
-                }
-            });
-        }
-    };
-
-
-    /**
-     * 主动触发 hashchange 回调，
-     * 但不能真实触发 window 的 hashchange 事件，
-     * 防止影响其他监听
-     * 通常用于页面初始化的时候触发，以匹配当前路由
-     */
-    exports.emit = function () {
-        hashchangeCallback({
-            newURL: location.href,
-            oldURL: ''
-        });
-    };
-
-
-    /**
-     * 移除监听 hashbang
-     * @param {String} part 监听部分，可以为`query`或`path`
-     * @param {String|Number|Array|Function} [key] 监听的键，`query`为字符串，`path`为数值，多个键使用数组表示
-     * @param {Function} [listener] 监听回调，回调为空表示删除该键的所有监听队列
-     *
-     * @example
-     * // path
-     * // 移除 path 0字段上的一个监听
-     * hashbang.un('path', 0, fn);
-     * // 移除 path 0字段上的所有监听
-     * hashbang.un('path', 0);
-     * // 移除 path 所有字段的一个监听
-     * hashbang.un('path', fn);
-     * // 移除 path 所有字段的所有监听
-     * hashbang.un('path');
-     *
-     * // query
-     * // 移除 query abc 键上的一个监听
-     * hashbang.un('query', 'abc', fn);
-     * // 移除 query abc 键上的所有监听
-     * hashbang.un('query', 'abc');
-     * // 移除 query 所有键上的一个监听
-     * hashbang.un('query', fn);
-     * // 移除 query 所有键上的所有监听
-     * hashbang.un('query');
-     */
-    exports.un = function (part, key, listener) {
-        if (!_isSafePart(part)) {
-            throw new Error('hashbang `part` must be `path` or `query`');
-        }
-
-        var args = allocation.args(arguments);
-        var argL = args.length;
-        var findIndex;
-        var arg1Type = typeis(args[1]);
-        var arg2Type = typeis(args[2]);
-        var listenerMap = part === 'query' ? queryListenerMap : pathListenerMap;
-
-        if (argL === 1) {
-            if (part === 'query') {
-                queryAllListener = [];
-            } else {
-                pathAllListener = [];
-            }
-        } else if (argL === 2 && arg1Type === 'function') {
-            listener = args[1];
-            listenerMap = part === 'query' ? queryAllListener : pathAllListener;
-
-            findIndex = listenerMap.indexOf(listener);
-
-            if (findIndex > -1) {
-                listenerMap.splice(findIndex, 1);
-            }
-        } else if (argL === 2 && (arg1Type === 'string' || arg1Type === 'array')) {
-            key = arg1Type === 'array' ? key : [key];
-
-            dato.each(key, function (index, k) {
-                listenerMap[k] = [];
-            });
-        } else if (argL === 3 && (arg1Type === 'string' || arg1Type === 'array') && arg2Type === 'function') {
-            key = arg1Type === 'array' ? key : [key];
-
-            dato.each(key, function (index, k) {
-                var findIndex = listenerMap.indexOf(listener);
-
-                if (findIndex > -1) {
-                    listenerMap[k].splice(findIndex, 1);
-                }
-            });
-        }
-    };
-
-    event.on(window, 'hashchange', hashchangeCallback);
-
-
-    /**
-     * 判断 hashbang 部分是否合法
-     * @param {*} part
-     * @returns {boolean}
-     * @private
-     */
-    function _isSafePart(part) {
-        return part === 'path' || part === 'query';
-    }
 
 
     /**
