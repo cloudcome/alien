@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     /**
      * @module libs/validation-lang
      */
-1
+
     'use strict';
 
 
