@@ -49,18 +49,19 @@ define(function (require, exports, module) {
                 var newURL = eve ? eve.newURL || href : href;
                 var parseRet = hashbang.parse(newURL);
                 var find = null;
+                var matches = null;
 
                 dato.each(the._ifList, function (index, item) {
                     switch (item.type) {
                         case 'regexp':
-                            if (item.route.test(parseRet.pathstring)) {
+                            if (matches = parseRet.pathstring.match(item.route)) {
                                 find = item;
                                 return false;
                             }
                             break;
 
                         case 'string':
-                            if (hashbang.matches(newURL, item.route)) {
+                            if (matches = hashbang.matches(newURL, item.route)) {
                                 find = item;
                                 return false;
                             }
@@ -69,9 +70,11 @@ define(function (require, exports, module) {
                 });
 
                 if (find) {
-                    the._exec(find);
+                    the._exec(find, matches);
                 } else {
-                    the._elseList.forEach(the._exec);
+                    the._elseList.forEach(function (item) {
+                        the._exec(item, matches);
+                    });
                 }
             };
 
@@ -83,12 +86,24 @@ define(function (require, exports, module) {
         /**
          * 执行某个路由
          * @param item
+         * @param matches
          * @private
          */
-        _exec: function (item) {
-            item.app = item.app || item.callback();
+        _exec: function (item, matches) {
+            var exec = function () {
+                if (typeis.function(item.app.enter)) {
+                    item.app.enter(matches);
+                }
+            };
 
-            console.log(item.app);
+            if (item.app) {
+                exec();
+            } else {
+                item.callback(function (exports) {
+                    item.app = exports;
+                    exec();
+                });
+            }
         },
 
 
