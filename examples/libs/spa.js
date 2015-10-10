@@ -6,10 +6,6 @@
 
 
 define(function (require, exports, module) {
-    /**
-     * @module parent/spa
-     */
-
     'use strict';
 
     var SPA = require('../../src/libs/spa.js');
@@ -17,12 +13,21 @@ define(function (require, exports, module) {
 
     spa
         .if('/page1/', function (ready) {
-            return require.async('./pages/page1.js', ready);
+            require.async('./pages/page1.js', ready);
         })
-        .if('/page2/', function (ready) {
-            return require.async('./pages/page2.js', ready);
+        .if('/page2/:pageId/', function (ready) {
+            require.async('./pages/page2.js', ready);
+        })
+        .if(/^\/page3\/(\d+)\/$/, function (ready) {
+            require.async('./pages/page3.js', ready);
         })
         .else(function (ready) {
-            return require.async('./pages/404.js', ready);
+            require.async('./pages/404.js', ready);
+        })
+        .before('enter', function (route) {
+            console.log(route);
+        })
+        .after('enter', function (route) {
+            console.log(route);
         });
 });

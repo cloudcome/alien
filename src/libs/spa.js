@@ -22,6 +22,7 @@ define(function (require, exports, module) {
 
     var win = window;
     var href = win.location.href;
+    var alienIndex = 1;
     var defaults = {
         //html5: true,
         root: '/',
@@ -90,9 +91,17 @@ define(function (require, exports, module) {
          * @private
          */
         _exec: function (item, matches) {
+            var the = this;
             var exec = function () {
+                if (the._lastItem && item.id && the._lastItem.id !== item.id) {
+                    if (typeis.function(the._lastItem.app.leave)) {
+                        the._lastItem.app.leave();
+                    }
+                }
+
                 if (typeis.function(item.app.enter)) {
                     item.app.enter(matches);
+                    the._lastItem = item;
                 }
             };
 
@@ -101,6 +110,7 @@ define(function (require, exports, module) {
             } else {
                 item.callback(function (exports) {
                     item.app = exports;
+                    item.id = alienIndex++;
                     exec();
                 });
             }
