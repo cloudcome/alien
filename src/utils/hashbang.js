@@ -43,7 +43,7 @@ define(function (require, exports, module) {
      * @param {String} hashbangString 原始字符串或URL
      * @param {String} [sep] query 部分分隔符，默认`&`
      * @param {String} [eq] query 部分等于符，默认`=`
-     * @returns {Object} 包含`path`和`query`两个字段
+     * @returns {Object} 包含`path`、`query`、`pathstring`、`querystring`四个字段
      *
      * @example
      * hashbang.parse('#!/a/b/c?a=1&b=2');
@@ -86,7 +86,9 @@ define(function (require, exports, module) {
 
         return {
             path: hashPathStack,
-            query: qs.parse(hashGroup[1], sep, eq)
+            query: qs.parse(hashGroup[1], sep, eq),
+            pathstring: hashGroup[0],
+            querystring: hashGroup[1]
         };
     };
 

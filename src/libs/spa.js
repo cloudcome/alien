@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     var controller = require('../utils/controller.js');
 
     var win = window;
+    var href = win.location.href;
     var defaults = {
         //html5: true,
         root: '/',
@@ -34,15 +35,43 @@ define(function (require, exports, module) {
 
             the._options = dato.extend({}, defaults, options);
             the._initEvent();
+            the._listenList = [];
         },
 
 
         _initEvent: function () {
             var the = this;
 
-            event.on(win, 'hashchange', the._onchange = function (eve) {
+            the._onchange = function (eve) {
+                var newURL = eve ? eve.newURL || href : href;
+                var parseRet = hashbang.parse(newURL);
 
+            };
+
+            event.on(win, 'hashchange', the._onchange);
+            controller.nextTick(the._onchange);
+        },
+
+
+        if: function (route, callback) {
+            var the = this;
+            //var options = the._options;
+
+            the._listenList.push({
+                route: route,
+                type: typeis(route),
+                callback: callback
             });
+
+            return the;
+        },
+
+
+        else: function (callback) {
+            var the = this;
+            var options = the._options;
+
+            return the;
         }
     });
 
