@@ -30,4 +30,12 @@ define(function (require, exports, module) {
         .after('enter', function (route) {
             console.log(route);
         });
+
+    document.getElementById('btn1').onclick = function () {
+        spa.redirect('/page1/', true);
+    };
+
+    document.getElementById('btn2').onclick = function () {
+        spa.redirect('/page1/', false);
+    };
 });

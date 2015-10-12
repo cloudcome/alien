@@ -85,40 +85,6 @@ startAddress: '出发地',
 startAddressList: null,
 destination: '目的地',
 cover: '活动封面'
-
-// 订单详情
-type: 'order'
-orderCode: '123',
-userInfo: {
-    userId: null,
-    userType: null,
-    nickname: "行者无疆",
-    userAvatar: "http://img.lv-guanjia.com/0/useravatar/2096/p/a/14e67c5f1eb/20150707170822675765892533",
-    sex: null
-},
-activity: {
-    clubId: null,
-    activityId: 7487719,
-    title: "【11月秋韵】雪山红叶摄影-金川-丹巴甲居-中路藏寨6日",
-    type: null,
-    spot: null,
-    cover: "http://image.lv-guanjia.com/1005/activity/2090/p/p/1500d5092db/2584a7a1abae5d24d4f9619b91fbfb3caff.jpg",
-    pictures: null,
-    beginTime: 1443497334895,
-    endTime: 1431184192553,
-    deadline: null,
-    days: null,
-    applicantPeoples: null,
-    maxPeoples: null,
-    startAddress: null,
-    destination: null,
-    amount: null,
-    activityStatus: null,
-    viewCount: null,
-    interestCount: null,
-    startAddressList: null
-},
-url: 'http://..../order/123/'
 ```
 
 
@@ -219,6 +185,9 @@ geolocation.map
 - 报名人列表页
     - type: "applyList"
     - id: 123（活动批次 ID）
+- 报名结果页
+    - type: "applyResult"
+    - orderCode: "123"
 
 ```
 location.redirect

@@ -169,6 +169,13 @@ define(function (require, exports, module) {
             });
 
             return the;
+        },
+
+
+        redirect: function (uri, isListen) {
+            var the = this;
+
+            return the;
         }
     });
 
