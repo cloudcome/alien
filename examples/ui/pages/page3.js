@@ -2,15 +2,19 @@ define(function (require, exports, module) {
     'use strict';
 
     exports.enter = function (spa, params, query) {
-        console.log('enter page3');
-        console.log('params ' + JSON.stringify(params));
-        console.log('query ' + JSON.stringify(query));
+        //console.log('enter page3');
+        //console.log('params ' + JSON.stringify(params));
+        //console.log('query ' + JSON.stringify(query));
+
+        spa.$view.innerHTML = 'enter page3 ' + Date.now();
     };
 
     exports.update = function (spa, params, query) {
-        console.log('update page3');
-        console.log('params ' + JSON.stringify(params));
-        console.log('query ' + JSON.stringify(query));
+        //console.log('update page3');
+        //console.log('params ' + JSON.stringify(params));
+        //console.log('query ' + JSON.stringify(query));
+
+        spa.$view.innerHTML = 'update page3 ' + Date.now();
     };
 
     exports.leave = function (spa, to) {

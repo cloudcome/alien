@@ -20,6 +20,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../index.js');
+    var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/base.js');
     var typeis = require('../../utils/typeis.js');
     var hashbang = require('../../utils/hashbang.js');
@@ -39,11 +41,20 @@ define(function (require, exports, module) {
             var the = this;
 
             the._options = dato.extend({}, defaults, options);
-            the._initEvent();
             the._ifList = [];
             the._elseList = [];
             the._listen = true;
             the._index = 0;
+            the.$view = selector.query($view)[0];
+            the._initNode();
+            the._initEvent();
+        },
+
+
+        _initNode: function () {
+            var the = this;
+
+            the.$style = modification.importStyle('');
         },
 
 

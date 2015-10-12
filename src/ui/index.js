@@ -101,10 +101,15 @@ define(function (require, exports, module) {
 
 
     /**
-     * 导入 UI 样式
-     * @param styleText {String}
+     * 添加 UI 样式
+     * @param {String} styleText 样式内容
+     * @param {String|HTMLElement|Node} [selector=null] 选择器
+     * @returns {HTMLStyleElement}
+     *
+     * @example
+     * ui.importStyle('body{padding: 10px;}');
      */
-    exports.importStyle = function (styleText) {
-        modification.importStyle(styleText);
+    exports.importStyle = function (styleText, selector) {
+        return modification.importStyle.apply(modification, arguments);
     };
 });
