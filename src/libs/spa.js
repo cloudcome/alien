@@ -46,6 +46,7 @@ define(function (require, exports, module) {
             the._initEvent();
             the._ifList = [];
             the._elseList = [];
+            the._listen = true;
             the._index = 0;
         },
 
@@ -58,6 +59,12 @@ define(function (require, exports, module) {
             var the = this;
 
             the._onchange = function (eve) {
+                // 跳过本次监听
+                if (!the._listen) {
+                    the._listen = true;
+                    return;
+                }
+
                 var newURL = eve ? eve.newURL || href : href;
                 var parseRet = hashbang.parse(newURL);
                 var find = null;
@@ -107,13 +114,13 @@ define(function (require, exports, module) {
             var isSameItem = the._lastItem && the._lastItem.index === item.index;
             var exec = function () {
                 if (the._lastItem && the._lastItem.index !== item.index) {
-                    the.emit('beforeleave', the._lastItem.index);
+                    the.emit('beforeleave', the._lastItem);
 
                     if (typeis.function(the._lastItem.app.leave)) {
                         the._lastItem.app.leave.call(the, parseRet.uri);
                     }
 
-                    the.emit('afterleave', the._lastItem.index);
+                    the.emit('afterleave', the._lastItem);
                 }
 
                 if (isSameItem) {
@@ -122,14 +129,14 @@ define(function (require, exports, module) {
                         the._lastItem = item;
                     }
 
-                    the.emit('afterupdate');
+                    the.emit('afterupdate', the._lastItem);
                 } else {
                     if (typeis.function(item.app.enter)) {
                         item.app.enter.call(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
-                    the.emit('afterenter');
+                    the.emit('afterenter', the._lastItem);
                 }
             };
 
@@ -194,6 +201,9 @@ define(function (require, exports, module) {
 
         redirect: function (uri, isListen) {
             var the = this;
+
+            location.hash = '#!' + uri;
+            the._listen = isListen !== false;
 
             return the;
         }

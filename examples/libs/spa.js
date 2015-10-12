@@ -24,12 +24,24 @@ define(function (require, exports, module) {
         .else(function (ready) {
             require.async('./pages/404.js', ready);
         })
-        .before('enter', function (route) {
-            console.log(route);
-        })
-        .after('enter', function (route) {
-            console.log(route);
-        });
+        //.before('leave', function (route) {
+        //    console.log(route);
+        //})
+        //.after('leave', function (route) {
+        //    console.log(route);
+        //})
+        //.before('enter', function (route) {
+        //    console.log(route);
+        //})
+        //.after('enter', function (route) {
+        //    console.log(route);
+        //})
+        //.before('update', function (route) {
+        //    console.log(route);
+        //})
+        //.after('update', function (route) {
+        //    console.log(route);
+        //});
 
     document.getElementById('btn1').onclick = function () {
         spa.redirect('/page1/', true);
