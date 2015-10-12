@@ -118,14 +118,14 @@ define(function (require, exports, module) {
 
                 if (isSameItem) {
                     if (typeis.function(item.app.update)) {
-                        item.app.update.call(the, matches);
+                        item.app.update.call(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
                     the.emit('afterupdate');
                 } else {
                     if (typeis.function(item.app.enter)) {
-                        item.app.enter.call(the, matches);
+                        item.app.enter.call(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
