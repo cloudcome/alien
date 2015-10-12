@@ -43,7 +43,7 @@ define(function (require, exports, module) {
      * @param {String} hashbangString 原始字符串或URL
      * @param {String} [sep] query 部分分隔符，默认`&`
      * @param {String} [eq] query 部分等于符，默认`=`
-     * @returns {Object} 包含`path`、`query`、`pathstring`、`querystring`四个字段
+     * @returns {Object} 解析结果
      *
      * @example
      * hashbang.parse('#!/a/b/c?a=1&b=2');
@@ -53,11 +53,14 @@ define(function (require, exports, module) {
      * //    query: {
      * //        a: "1",
      * //        b: "2"
-     * //    }
+     * //    },
+     * //    pathstring: '/a/b/c',
+     * //    querystring: 'a=1&b=2',
+     * //    uri: '/a/b/c?a=1&b=2'
      * // }
      */
     exports.parse = function (hashbangString, sep, eq) {
-        var dftRet = {path: [], query: {}};
+        var dftRet = {path: [], query: {}, pathstring: '', querystring: '', uri: ''};
 
         if (typeis(hashbangString) !== 'string') {
             return dftRet;
@@ -79,6 +82,7 @@ define(function (require, exports, module) {
 
         dato.each(hashGroup[0].split('/'), function (index, item) {
             item = _decode(item);
+
             if (item.length) {
                 hashPathStack.push(_decode(item));
             }
@@ -88,7 +92,8 @@ define(function (require, exports, module) {
             path: hashPathStack,
             query: qs.parse(hashGroup[1], sep, eq),
             pathstring: hashGroup[0],
-            querystring: hashGroup[1]
+            querystring: hashGroup[1],
+            uri: hashGroup[0] + (hashGroup[1] ? '?' : '') + (hashGroup[1] || '')
         };
     };
 
@@ -178,10 +183,10 @@ define(function (require, exports, module) {
         temp = hashbangString.split('#');
         temp.shift();
 
-        if(temp.length){
+        if (temp.length) {
             hashbangString = '#' + temp.join('');
             hashbangString = '/' + hashbangString.replace(regHashbang, '').split('?')[0];
-        }else{
+        } else {
             hashbangString = '/';
         }
 
@@ -220,7 +225,6 @@ define(function (require, exports, module) {
 
         return ret;
     };
-
 
 
     /**
