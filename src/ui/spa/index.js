@@ -8,9 +8,9 @@
 define(function (require, exports, module) {
     /**
      * @module parent/spa
-     * @requires libs/emitter
+     * @requires core/dom/selector
+     * @requires core/dom/modification
      * @requires core/event/base
-     * @requires utils/class
      * @requires utils/typeis
      * @requires utils/hashbang
      * @requires utils/dato
@@ -31,7 +31,6 @@ define(function (require, exports, module) {
     var win = window;
     var href = win.location.href;
     var defaults = {
-        autoLink: true,
         ignoreCase: false,
         strict: false
     };
@@ -54,7 +53,7 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
 
-            the.$style = modification.importStyle('');
+            the._$style = modification.importStyle('');
         },
 
 
@@ -147,7 +146,7 @@ define(function (require, exports, module) {
                 }
             };
 
-            the.emit(isSameItem ? 'beforeupdate' : 'beforeenter', item.index);
+            the.emit(isSameItem ? 'beforeupdate' : 'beforeenter', item);
 
             if (item.app) {
                 exec();
@@ -220,6 +219,17 @@ define(function (require, exports, module) {
             the._listen = isListen !== false;
 
             return the;
+        },
+
+
+        /**
+         * 导入 spa 样式
+         * @param styleString
+         */
+        style: function (styleString) {
+            var the = this;
+
+            ui.importStyle(styleString, the._$style);
         }
     });
 

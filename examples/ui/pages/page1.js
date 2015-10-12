@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     };
 
     exports.leave = function (spa, to) {
-        console.log('leave page1');
-        console.log('to ' + to);
+        //console.log('leave page1');
+        //console.log('to ' + to);
     };
 });

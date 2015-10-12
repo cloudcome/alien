@@ -190,7 +190,7 @@ define(function (require, exports, module) {
             hashbangString = '/';
         }
 
-        if (options.strict) {
+        if (!options.strict) {
             routeRule += regEndSlash.test(routeRule) ? '?' : '/?';
         }
 

@@ -9,7 +9,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var SPA = require('../../src/ui/spa/index.js');
-    var spa = new SPA();
+    var spa = new SPA('#view');
 
     spa
         .if('/page1/', function (ready) {
@@ -23,31 +23,31 @@ define(function (require, exports, module) {
         })
         .else(function (ready) {
             require.async('./pages/404.js', ready);
-        })
-        //.before('leave', function (route) {
-        //    console.log(route);
-        //})
-        //.after('leave', function (route) {
-        //    console.log(route);
-        //})
-        //.before('enter', function (route) {
-        //    console.log(route);
-        //})
-        //.after('enter', function (route) {
-        //    console.log(route);
-        //})
-        //.before('update', function (route) {
-        //    console.log(route);
-        //})
-        //.after('update', function (route) {
-        //    console.log(route);
-        //});
+        });
+    //.before('leave', function (route) {
+    //    console.log(route);
+    //})
+    //.after('leave', function (route) {
+    //    console.log(route);
+    //})
+    //.before('enter', function (route) {
+    //    console.log(route);
+    //})
+    //.after('enter', function (route) {
+    //    console.log(route);
+    //})
+    //.before('update', function (route) {
+    //    console.log(route);
+    //})
+    //.after('update', function (route) {
+    //    console.log(route);
+    //});
 
     document.getElementById('btn1').onclick = function () {
-        spa.redirect('/page1/', true);
+        spa.redirect('/page2/' + Date.now() + '/?c=' + Date.now(), true);
     };
 
     document.getElementById('btn2').onclick = function () {
-        spa.redirect('/page1/', false);
+        spa.redirect('/page2/' + Date.now() + '?c=' + Date.now(), false);
     };
 });

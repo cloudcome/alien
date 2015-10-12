@@ -24,7 +24,7 @@
             line-height: 2;
         }
 
-        #ret{
+        #view{
             background: #000;
             color: #fff;
             padding: 10px 15px;
@@ -35,17 +35,17 @@
 
 
 <ul>
-    <li><a href="#!/page1/">page1</a></li>
-    <li><a href="javascript:;" onclick="location.hash = '!/page2/'+Date.now() + '?a=' + Date.now();">#!/page2/[random]/</a></li>
+    <li><a href="javascript:;" onclick="location.hash = '!/page1?'+Date.now();">page1</a></li>
+    <li><a href="javascript:;" onclick="location.hash = '!/page2/'+Date.now() + '?a=' + Date.now();">#!/page2/[random]/</a> 会改变颜色</li>
     <li><a href="javascript:;" onclick="location.hash = '!/page3/'+Date.now() + '/?b=' + Date.now();">#!/page3/[random]/</a></li>
     <li><a href="javascript:;" onclick="location.hash = '!/'+Date.now() + '/';">random</a></li>
     <li>
-        <button id="btn1">跳转 /page1/ 并监听 hash 变化</button>
-        <button id="btn2">跳转 /page1/ 不监听 hash 变化</button>
+        <button id="btn1">跳转 /page2/ 并监听 hash 变化</button>
+        <button id="btn2">跳转 /page2/ 不监听 hash 变化</button>
     </li>
 </ul>
 
-<div id="ret">ready</div>
+<div id="view">ready</div>
 
 
 <script src="../coolie.min.js"
