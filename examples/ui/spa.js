@@ -8,7 +8,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var SPA = require('../../src/libs/spa.js');
+    var SPA = require('../../src/ui/spa/index.js');
     var spa = new SPA();
 
     spa

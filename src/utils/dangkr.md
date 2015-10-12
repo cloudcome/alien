@@ -55,7 +55,8 @@ phone: '12312341234'
 type: 'activity',
 activityId: 7483112,
 title: '活动标题',
-batch: {
+batchIndex: 0,
+batchList: [{
       activityId: 7483112
       // 批次价格
       amount: 1
@@ -79,7 +80,7 @@ batch: {
       prepaymentAmount: 0
       // 批次状态
       state: 4  
-},
+}],
 startAddress: '出发地',
 // 出发地列表
 startAddressList: null,

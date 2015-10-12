@@ -18,15 +18,15 @@ spa
     })
     .else(function (ready) {
         require.async('./pages/404.js', ready);
-    })
-    .before('enter', function (route) {
-        console.log(route);
-    })
-    .after('enter', function (route) {
-        console.log(route);
     });
 ```
 
-每一个`spa#app`都会调用`enter`（app 进入）和`leave`（app 离开）方法。
+每一个 page 都会安全执行以下方法
+
+- leave 离开本页面之前
+- enter 进入本页面之后
+- update 更新本页面之后
+
+
 
 

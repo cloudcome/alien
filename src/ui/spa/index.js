@@ -19,27 +19,23 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Emitter = require('./emitter.js');
-    var event = require('../core/event/base.js');
-    var klass = require('../utils/class.js');
-    var typeis = require('../utils/typeis.js');
-    var hashbang = require('../utils/hashbang.js');
-    var dato = require('../utils/dato.js');
-    var controller = require('../utils/controller.js');
+    var ui = require('../index.js');
+    var event = require('../../core/event/base.js');
+    var typeis = require('../../utils/typeis.js');
+    var hashbang = require('../../utils/hashbang.js');
+    var dato = require('../../utils/dato.js');
+    var controller = require('../../utils/controller.js');
 
     var win = window;
     var href = win.location.href;
-    var alienIndex = 1;
     var defaults = {
-        root: '/',
-        prefix: '!',
         autoLink: true,
         ignoreCase: false,
         strict: false
     };
 
-    var SPA = klass.extends(Emitter).create({
-        constructor: function (options) {
+    var SPA = ui.create({
+        constructor: function ($view, options) {
             var the = this;
 
             the._options = dato.extend({}, defaults, options);
@@ -207,6 +203,7 @@ define(function (require, exports, module) {
          */
         redirect: function (uri, isListen) {
             var the = this;
+            //var options = the._options;
 
             location.hash = '#!' + uri;
             the._listen = isListen !== false;
