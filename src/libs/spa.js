@@ -117,7 +117,7 @@ define(function (require, exports, module) {
                     the.emit('beforeleave', the._lastItem);
 
                     if (typeis.function(the._lastItem.app.leave)) {
-                        the._lastItem.app.leave.call(the, parseRet.uri);
+                        the._lastItem.app.leave(the, parseRet.uri);
                     }
 
                     the.emit('afterleave', the._lastItem);
@@ -125,14 +125,14 @@ define(function (require, exports, module) {
 
                 if (isSameItem) {
                     if (typeis.function(item.app.update)) {
-                        item.app.update.call(the, matches, parseRet.query);
+                        item.app.update(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
                     the.emit('afterupdate', the._lastItem);
                 } else {
                     if (typeis.function(item.app.enter)) {
-                        item.app.enter.call(the, matches, parseRet.query);
+                        item.app.enter(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
@@ -199,6 +199,12 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 路由跳转
+         * @param uri {String} 跳转的地址，不需要包含前缀
+         * @param [isListen=true] {Boolean} 是否监听本次跳转
+         * @returns {SPA}
+         */
         redirect: function (uri, isListen) {
             var the = this;
 
