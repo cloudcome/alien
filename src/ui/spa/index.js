@@ -97,7 +97,12 @@ define(function (require, exports, module) {
                 if (find) {
                     the._exec(find, matches, parseRet);
                 } else {
-                    the._lastItem = null;
+                    // 连续 404
+                    if (the._lastItem === false) {
+                        return;
+                    }
+
+                    the._lastItem = false;
                     the._elseList.forEach(function (item) {
                         the._exec(item, matches, parseRet);
                     });
