@@ -216,9 +216,14 @@ define(function (require, exports, module) {
         redirect: function (uri, isListen) {
             var the = this;
             //var options = the._options;
+            var to = '#!' + uri;
+
+            if (location.hash === to) {
+                return the;
+            }
 
             the._listen = isListen !== false;
-            location.hash = '#!' + uri;
+            location.hash = to;
 
             return the;
         },
