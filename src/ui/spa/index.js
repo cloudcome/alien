@@ -128,23 +128,23 @@ define(function (require, exports, module) {
                 if (the._lastItem && the._lastItem.index !== item.index) {
                     the.emit('beforeleave', the._lastItem, matches, parseRet.query);
 
-                    if (typeis.function(the._lastItem.app.leave)) {
-                        the._lastItem.app.leave(the, parseRet.uri);
+                    if (typeis.function(the._lastItem.exports.leave)) {
+                        the._lastItem.exports.leave(the, parseRet.uri);
                     }
 
                     the.emit('afterleave', the._lastItem, matches, parseRet.query);
                 }
 
                 if (isSameItem) {
-                    if (typeis.function(item.app.update)) {
-                        item.app.update(the, matches, parseRet.query);
+                    if (typeis.function(item.exports.update)) {
+                        item.exports.update(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
                     the.emit('afterupdate', item, matches, parseRet.query);
                 } else {
-                    if (typeis.function(item.app.enter)) {
-                        item.app.enter(the, matches, parseRet.query);
+                    if (typeis.function(item.exports.enter)) {
+                        item.exports.enter(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
@@ -154,12 +154,12 @@ define(function (require, exports, module) {
 
             the.emit(isSameItem ? 'beforeupdate' : 'beforeenter', item, matches, parseRet.query);
 
-            if (item.app) {
+            if (item.exports) {
                 exec();
             } else {
                 the.emit('beforeloading', item, matches, parseRet.query);
                 item.callback(function (exports) {
-                    item.app = exports;
+                    item.exports = exports;
                     the.emit('afterloading', item, matches, parseRet.query);
                     exec();
                 });
