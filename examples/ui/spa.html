@@ -24,6 +24,17 @@
             line-height: 2;
         }
 
+        #loading{
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: #000;
+            color: #eee;
+            padding: 5px 15px;
+            font-size: 12px;
+            line-height: 1;
+        }
+
         #view{
             background: #000;
             color: #fff;
@@ -33,6 +44,7 @@
 </head>
 <body ontouchstart="">
 
+<div id="loading">loading...</div>
 
 <ul>
     <li><a href="javascript:;" onclick="location.hash = '!/page1?'+Date.now();">page1</a></li>
@@ -48,7 +60,7 @@
 <div id="view">ready</div>
 
 
-<script src="../coolie.min.js"
+<script src="/examples/coolie.min.js"
         data-config="./coolie-config.js"
         data-main="./ui/spa.js"></script>
 
