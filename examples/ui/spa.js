@@ -23,25 +23,25 @@ define(function (require, exports, module) {
         })
         .else(function (ready) {
             require.async('./pages/404.js', ready);
+        })
+        .before('leave', function (lastRoute, params, query) {
+            console.log(this.alienEmitter.type, arguments);
+        })
+        .after('leave', function (lastRoute, params, query) {
+            console.log(this.alienEmitter.type, route);
+        })
+        .before('enter', function (route) {
+            console.log(this.alienEmitter.type, route);
+        })
+        .after('enter', function (params, query) {
+            console.log(this.alienEmitter.type, params);
+        })
+        .before('update', function (params, query) {
+            console.log(this.alienEmitter.type, params);
+        })
+        .after('update', function (route) {
+            console.log(this.alienEmitter.type, route);
         });
-    //.before('leave', function (route) {
-    //    console.log(route);
-    //})
-    //.after('leave', function (route) {
-    //    console.log(route);
-    //})
-    //.before('enter', function (route) {
-    //    console.log(route);
-    //})
-    //.after('enter', function (route) {
-    //    console.log(route);
-    //})
-    //.before('update', function (route) {
-    //    console.log(route);
-    //})
-    //.after('update', function (route) {
-    //    console.log(route);
-    //});
 
     document.getElementById('btn1').onclick = function () {
         spa.redirect('/page2/' + Date.now() + '/?c=' + Date.now(), true);

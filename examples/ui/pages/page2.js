@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         //console.log('query ' + JSON.stringify(query));
 
         if (query.a % 2) {
-            return spa.redirect('/page2?b=hehe', false);
+            return spa.redirect('/page1?b=hehe');
         }
 
         spa.$view.innerHTML = 'update page2 ' + Date.now();

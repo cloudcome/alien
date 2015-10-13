@@ -95,10 +95,10 @@ define(function (require, exports, module) {
                 });
 
                 if (find) {
-                    the._exec(find, parseRet, matches);
+                    the._exec(find, matches, parseRet);
                 } else {
                     the._elseList.forEach(function (item) {
-                        the._exec(item, parseRet, matches);
+                        the._exec(item, matches, parseRet);
                     });
                 }
             };
@@ -111,22 +111,22 @@ define(function (require, exports, module) {
         /**
          * 执行某个路由
          * @param item
-         * @param parseRet
          * @param matches
+         * @param parseRet
          * @private
          */
-        _exec: function (item, parseRet, matches) {
+        _exec: function (item, matches, parseRet) {
             var the = this;
             var isSameItem = the._lastItem && the._lastItem.index === item.index;
             var exec = function () {
                 if (the._lastItem && the._lastItem.index !== item.index) {
-                    the.emit('beforeleave', the._lastItem);
+                    the.emit('beforeleave', the._lastItem, matches, parseRet.query);
 
                     if (typeis.function(the._lastItem.app.leave)) {
                         the._lastItem.app.leave(the, parseRet.uri);
                     }
 
-                    the.emit('afterleave', the._lastItem);
+                    the.emit('afterleave', the._lastItem, matches, parseRet.query);
                 }
 
                 if (isSameItem) {
@@ -135,24 +135,26 @@ define(function (require, exports, module) {
                         the._lastItem = item;
                     }
 
-                    the.emit('afterupdate', the._lastItem);
+                    the.emit('afterupdate', item, matches, parseRet.query);
                 } else {
                     if (typeis.function(item.app.enter)) {
                         item.app.enter(the, matches, parseRet.query);
                         the._lastItem = item;
                     }
 
-                    the.emit('afterenter', the._lastItem);
+                    the.emit('afterenter', item, matches, parseRet.query);
                 }
             };
 
-            the.emit(isSameItem ? 'beforeupdate' : 'beforeenter', item);
+            the.emit(isSameItem ? 'beforeupdate' : 'beforeenter', item, matches, parseRet.query);
 
             if (item.app) {
                 exec();
             } else {
+                the.emit('beforeloading', item, matches, parseRet.query);
                 item.callback(function (exports) {
                     item.app = exports;
+                    the.emit('afterloading', item, matches, parseRet.query);
                     exec();
                 });
             }
