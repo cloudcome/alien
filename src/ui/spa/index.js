@@ -217,8 +217,8 @@ define(function (require, exports, module) {
             var the = this;
             //var options = the._options;
 
-            location.hash = '#!' + uri;
             the._listen = isListen !== false;
+            location.hash = '#!' + uri;
 
             return the;
         },
