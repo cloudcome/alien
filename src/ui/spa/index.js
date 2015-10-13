@@ -97,6 +97,7 @@ define(function (require, exports, module) {
                 if (find) {
                     the._exec(find, matches, parseRet);
                 } else {
+                    the._lastItem = null;
                     the._elseList.forEach(function (item) {
                         the._exec(item, matches, parseRet);
                     });
