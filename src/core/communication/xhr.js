@@ -146,19 +146,19 @@ define(function (require, exports, module) {
                 }
             };
 
-            xhr.onabort = function () {
-                var err = new Error('transmission has aborted');
-
-                err.type = 'abort';
-                oncallback(err);
-            };
-
-            xhr.ontimeout = function () {
-                var err = new Error('transmission has timeout');
-
-                err.type = 'timeout';
-                oncallback(err);
-            };
+            //xhr.onabort = function () {
+            //    var err = new Error('transmission has aborted');
+            //
+            //    err.type = 'abort';
+            //    oncallback(err);
+            //};
+            //
+            //xhr.ontimeout = function () {
+            //    var err = new Error('transmission has timeout');
+            //
+            //    err.type = 'timeout';
+            //    oncallback(err);
+            //};
 
             xhr.onerror = oncallback;
 
