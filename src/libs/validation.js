@@ -223,6 +223,7 @@ define(function (require, exports, module) {
             var the = this;
             var rules = the.getRules(path);
 
+            the.data = data;
             /**
              * 单个验证之前
              * @event beforevalidateone
