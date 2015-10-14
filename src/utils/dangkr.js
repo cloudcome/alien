@@ -180,7 +180,7 @@ define(function (require, exports, module) {
             };
             var past = Date.now();
 
-            if(!isDangkr){
+            if (!isDangkr) {
                 return controller.nextTick(onbroken);
             }
 
@@ -212,14 +212,14 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            if(the._opening){
+            if (the._opening) {
                 the.emit('open');
                 return the;
             }
 
             the._opening = true;
             var ifm = modification.create('iframe', {
-                src:options.schema + path,
+                src: options.schema + path,
                 style: {
                     display: 'none'
                 }
