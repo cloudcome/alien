@@ -1,7 +1,8 @@
-/*!
+/**
  * 表单验证
  * @author ydr.me
  * @create 2015-07-01 16:57
+ * @update 2015-10-19 11:44:25
  */
 
 
@@ -39,7 +40,7 @@ define(function (require, exports, module) {
      * }
      */
     var validationMap = {};
-    var namespace = 'alien-libs-validation';
+    var namespace = 'donkey-libs-validation';
     var alienIndex = 0;
     var defaults = {
         // true: 返回单个错误对象
@@ -49,7 +50,7 @@ define(function (require, exports, module) {
         breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${1}不合法'
     };
-    var Validation = klass.extends(Emitter).create({
+    var Validation = klass.extend(Emitter).create({
         /**
          * constructor
          * @extends Emitter
@@ -118,7 +119,7 @@ define(function (require, exports, module) {
             var params = args.slice(2);
             var index = the._validateIndexMap[path];
 
-            if (typeis.undefined(index)) {
+            if (typeis.isUndefined(index)) {
                 index = the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
@@ -126,7 +127,7 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.string(nameOrfn)) {
+            if (typeis.isString(nameOrfn)) {
                 var name = nameOrfn;
 
                 if (!validationMap[name]) {
@@ -138,7 +139,7 @@ define(function (require, exports, module) {
                     params: params,
                     fn: validationMap[name]
                 });
-            } else if (typeis.function(nameOrfn)) {
+            } else if (typeis.isFunction(nameOrfn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
@@ -178,8 +179,8 @@ define(function (require, exports, module) {
 
         /**
          * 获取字段验证规则的参数
-         * @param path
-         * @param name
+         * @param path {String} 字段
+         * @param name {String} 规则名称
          * @returns {*|Array}}
          */
         getRuleParams: function (path, name) {
@@ -213,6 +214,21 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置待验证的数据
+         * @param path {String} 数据字段
+         * @param val {*} 数据值
+         * @returns {Validation}
+         */
+        setData: function (path, val) {
+            var the = this;
+
+            the.data[path] = val;
+
+            return the;
+        },
+
+
+        /**
          * 执行单个验证
          * @param data {Object} 待验证的数据
          * @param [callback] {Function} 验证回调
@@ -224,13 +240,14 @@ define(function (require, exports, module) {
             var rules = the.getRules(path);
 
             the.data = data;
+
             /**
              * 单个验证之前
              * @event beforevalidateone
              * @param path {String} 字段
              */
             the.emit('beforevalidateone', path);
-            the._validateOne(data, path, rules, function (err) {
+            the._validateOne(path, rules, function (err) {
                 /**
                  * 单个验证之后
                  * @event aftervalidateone
@@ -238,7 +255,7 @@ define(function (require, exports, module) {
                  */
                 the.emit('aftervalidateone', path);
 
-                if (typeis.function(callback)) {
+                if (typeis.isFunction(callback)) {
                     callback.call(the, !err);
                 }
             });
@@ -276,7 +293,7 @@ define(function (require, exports, module) {
             howdo
                 // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
-                    the._validateOne(data, path = item.path, item.rules, function (err) {
+                    the._validateOne(path = item.path, item.rules, function (err) {
                         if (err) {
                             if (!firstInvlidPath) {
                                 firstInvlidError = err;
@@ -327,15 +344,15 @@ define(function (require, exports, module) {
 
         /**
          * 表单验证
-         * @param data {Object} 验证数据
          * @param path {String} 字段
          * @param rules {Array} 验证规则
          * @param callback {Function} 验证回调
          * @private
          */
-        _validateOne: function (data, path, rules, callback) {
+        _validateOne: function (path, rules, callback) {
             var the = this;
             var options = the._options;
+            var data = the.data;
 
             /**
              * 验证之前
@@ -356,7 +373,7 @@ define(function (require, exports, module) {
                     rule.fn.apply(the, args);
                 })
                 .follow()
-                .try(function () {
+                .done(function () {
                     /**
                      * 验证成功
                      * @event valid
@@ -371,11 +388,11 @@ define(function (require, exports, module) {
                      */
                     the.emit('aftervalidate', path);
 
-                    if (typeis.function(callback)) {
+                    if (typeis.isFunction(callback)) {
                         callback.call(the, null);
                     }
                 })
-                .catch(function (err) {
+                .fail(function (err) {
                     var overrideMsg = the._msgMap[path] && the._msgMap[path][currentRule.name];
                     var args = [overrideMsg || err || options.defaultMsg, the.getAlias(path) || path];
 
@@ -397,7 +414,7 @@ define(function (require, exports, module) {
                      */
                     the.emit('aftervalidate', path);
 
-                    if (typeis.function(callback)) {
+                    if (typeis.isFunction(callback)) {
                         callback.call(the, err);
                     }
                 });

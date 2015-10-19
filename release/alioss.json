@@ -1,13 +1,13 @@
 {
-    "accessKeyId": "yHB6upZj7OtPa1k2",
-    "accessKeySecret": "neiGkc55FJY0X0Q7cL7gL5pA3RlYvk",
-    "bucket": "s-ydr-me",
-    "host": "oss-cn-hangzhou.aliyuncs.com",
-    "cacheControl": "max-age=315360000",
-    "upload": [
-        "./alien.zip"
-    ],
-    "src": "./",
-    "dest": "/p/j/",
-    "parallel": 10
+  "accessKeyId": "yHB6upZj7OtPa1k2",
+  "accessKeySecret": "neiGkc55FJY0X0Q7cL7gL5pA3RlYvk",
+  "bucket": "s-ydr-me",
+  "host": "oss-cn-hangzhou.aliyuncs.com",
+  "cacheControl": "max-age=315360000",
+  "upload": [
+    "./alien.zip"
+  ],
+  "src": "./",
+  "dest": "/p/j/",
+  "parallel": 10
 }

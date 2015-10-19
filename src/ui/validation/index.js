@@ -216,6 +216,21 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置值
+         * @param ele {String|Object} 待验证的元素
+         * @param val {*} 验证值
+         * @returns {ValidationUI}
+         */
+        setData: function (ele, val) {
+            var the = this;
+
+            the._validation.setData(typeis.string(ele) ? ele : ele.name, val);
+
+            return the;
+        },
+
+
+        /**
          * 注册验证规则，按顺序执行验证
          * @param path {String} 字段
          * @param nameOrfn {String|Function} 验证规则，可以是静态规则，也可以添加规则
@@ -398,28 +413,33 @@ define(function (require, exports, module) {
             // 规则顺序
             // required => type => minLength => maxLength => pattern => data
 
-            if (eleInput.required) {
+            if (attribute.attr(eleInput, 'required')) {
                 the._validation.addRule(path, 'required');
             }
 
-            if (eleInput.min !== '' && !typeis.empty(eleInput.min)) {
-                the._validation.addRule(path, 'min', eleInput.min);
+            var min = attribute.attr(eleInput, 'min');
+            if (min !== '' && !typeis.empty(min)) {
+                the._validation.addRule(path, 'min', min);
             }
 
-            if (eleInput.max !== '' && !typeis.empty(eleInput.max)) {
-                the._validation.addRule(path, 'max', eleInput.max);
+            var max = attribute.attr(eleInput, 'min');
+            if (max !== '' && !typeis.empty(max)) {
+                the._validation.addRule(path, 'max', max);
             }
 
-            if (eleInput.accept !== '' && !typeis.empty(eleInput.accept)) {
-                the._validation.addRule(path, 'accept', eleInput.accept);
+            var accept = $(eleInput).attr('accept');
+            if (accept !== '' && !typeis.empty(accept)) {
+                the._validation.addRule(path, 'accept', accept);
             }
 
-            if (eleInput.pattern !== '' && !typeis.empty(eleInput.pattern)) {
-                the._validation.addRule(path, 'pattern', eleInput.pattern);
+            var pattern = attribute.attr(eleInput, 'pattern');
+            if (pattern !== '' && !typeis.empty(pattern)) {
+                the._validation.addRule(path, 'pattern', pattern);
             }
 
-            if (eleInput.step !== '' && !typeis.empty(eleInput.step)) {
-                the._validation.addRule(path, 'step', eleInput.step);
+            var step = attribute.attr(eleInput, 'step');
+            if (step !== '' && !typeis.empty(step)) {
+                the._validation.addRule(path, 'step', step);
             }
 
             if (!validationInfo.hasType) {
