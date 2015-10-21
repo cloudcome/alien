@@ -117,6 +117,7 @@ define(function (require, exports, module) {
 
         var ret = Object.prototype.toString.call(object).slice(8, -1).toLowerCase();
 
+        // android 5.0+ element 对象的 toString 不为 [Object HTMLElement...]
         if (object.nodeType === 1 && object.nodeName) {
             //console.log(object instanceof HTMLElement);
             return 'element';
