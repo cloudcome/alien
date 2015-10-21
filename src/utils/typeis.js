@@ -113,16 +113,15 @@ define(function (require, exports, module) {
             return 'document';
         } else if (object === null) {
             return 'null';
+        } else if (object !== object) {
+            return 'nan';
         }
 
         var ret = Object.prototype.toString.call(object).slice(8, -1).toLowerCase();
 
         // android 5.0+ element 对象的 toString 不为 [Object HTMLElement...]
         if (object.nodeType === 1 && object.nodeName) {
-            //console.log(object instanceof HTMLElement);
             return 'element';
-        } else if (isNaN(object) && ret === 'number') {
-            return 'nan';
         }
 
         return ret;
