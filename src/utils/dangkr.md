@@ -52,40 +52,34 @@ type: 'bindPhone',
 phone: '12312341234'
 
 // 活动信息
-type: 'activity',
-activityId: 7483112,
-title: '活动标题',
-batchIndex: 0,
-batchList: [{
-      activityId: 7483112
-      // 批次价格
-      amount: 1
-      // 批次报名人数
-      appliedPeoples: 0
-      // 批次开始时间
-      beginTime: 1436112000000
-      // 俱乐部 ID
-      clubId: 1021
-      // 活动结束时间
-      deadline: 1436198399999
-      // 报名结束时间
-      endTime: 1436198399999
-      // 批次 ID
-      id: 8500723
-      // 批次最大报名人数
-      maxPeoples: 0
-      // 批次支付类型
-      paymentCategory: 0
-      // 批次预付金额
-      prepaymentAmount: 0
-      // 批次状态
-      state: 4  
-}],
-startAddress: '出发地',
-// 出发地列表
-startAddressList: null,
-destination: '目的地',
-cover: '活动封面'
+"type": "activity",
+"activityId": "7472937",
+"title": "【单身狂欢】你过来，我有个恋爱想跟你谈一下",
+"batchIndex": 0,
+"batchList": [
+    {
+        "id": 8474361,
+        "activityId": 7472937,
+        "beginTime": 1447171200000,
+        "endTime": 1447343999999,
+        "deadline": 1446998399999,
+        "paymentCategory": 0,
+        "amount": 280,
+        "prepaymentAmount": 0,
+        "appliedPeoples": 16,
+        "maxPeoples": 0,
+        "remainingPeoples": null,
+        "clubId": 1005,
+        "state": 1,
+        "waitPayOrder": false,
+        "male": 0.5,
+        "female": 0.5
+    }
+],
+"startAddress": "杭州武林广场",
+"startAddressList": [],
+"destination": "临安 浙西天池",
+"cover": "活动封面"
 ```
 
 
