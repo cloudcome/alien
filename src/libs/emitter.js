@@ -37,6 +37,7 @@ define(function (require, exports, module) {
             the._emitterCallbacks = [];
             // 监听的事件长度
             the._emitterLimit = 999;
+            the.className = 'emitter';
         },
         /**
          * 添加事件回调

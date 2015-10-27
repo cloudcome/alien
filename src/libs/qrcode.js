@@ -1179,6 +1179,7 @@ define(function (require, exports, module) {
         constructor: function () {
             this.buffer = [];
             this.length = 0;
+            this.className = 'qrcode';
         },
         get: function (index) {
             var bufIndex = Math.floor(index / 8);

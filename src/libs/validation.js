@@ -65,6 +65,7 @@ define(function (require, exports, module) {
             the._aliasMap = {};
             the._msgMap = {};
             the._validationMap = {};
+            the.className = 'validation';
         },
 
 

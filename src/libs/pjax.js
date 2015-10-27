@@ -56,6 +56,7 @@ define(function (require, exports, module) {
 
             the.$container = the.$container[0];
             the._options = dato.extend(true, {}, defaults, options);
+            the.className = 'pjax';
             the._init();
         },
         /**

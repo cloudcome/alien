@@ -50,6 +50,8 @@ define(function (require, exports, module) {
              * @private
              */
             the._queueIndex = 0;
+
+            the.className = 'animation';
         },
         /**
          * 追加动画

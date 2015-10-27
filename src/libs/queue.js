@@ -34,6 +34,7 @@ define(function (require, exports, module) {
             the.id = index++;
             the._queueList = [];
             the.state = STATES.ready;
+            the.className = 'queue';
             the._initEvent();
         },
         /**

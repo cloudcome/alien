@@ -45,6 +45,7 @@ define(function (require, exports, module) {
             }, config);
             wx.config(the._config);
             the._shareData = shareData;
+            the.className = 'weixin';
             the._init();
         },
         _init: function () {

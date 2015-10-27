@@ -57,6 +57,7 @@ define(function (require, exports, module) {
         constructor: function (template, options) {
             this._options = dato.extend(true, {}, configs, options);
             this._init(String(template));
+            this.className = 'template';
         },
 
         /**

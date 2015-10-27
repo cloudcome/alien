@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var Pagination = klass.create({
         constructor: function (options) {
             this._options = dato.extend(!0, {}, defaults, options);
+            this.className = 'pagination';
         },
 
         /**

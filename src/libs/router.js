@@ -45,6 +45,7 @@ define(function (require, exports, module) {
             //the._isIgnoreHashChange = false;
             //the._hashchangeTimes = 0;
             //the._ignoreHashchangeTimes = -1;
+            the.className = 'router';
             the._initEvent();
         },
         /**
