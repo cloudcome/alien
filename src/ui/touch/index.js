@@ -59,6 +59,7 @@ define(function (require, exports, module) {
             the._$ele = selector.query($ele)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._touch = {};
+            the.className = 'touch';
             the._initEvent();
         },
 

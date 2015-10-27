@@ -49,6 +49,7 @@ define(function (require, exports, module) {
 
             options = the._options = dato.extend({}, defaults, options);
             the.destroyed = false;
+            the.className = 'tooltip';
             the._popup = new Popup(null, {
                 position: 'top',
                 addClass: alienClass + '-popup',

@@ -79,6 +79,7 @@ define(function (require, exports, module) {
 
             the._options = dato.extend({}, defaults, options);
             the._$form = selector.query($form)[0];
+            the.className = 'validation';
             the.update();
         },
 

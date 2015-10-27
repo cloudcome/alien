@@ -45,6 +45,7 @@ define(function (require, exports, module) {
                 selector.query(the._options.containerSelector)[0];
             the._$scroller = selector.query(the._options.scrollerSelector)[0];
             the.destroyed = false;
+            the.className = 'sticky';
             the._initNode();
             the._initEvent();
         },

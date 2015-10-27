@@ -45,6 +45,7 @@ define(function (require, exports, module) {
             the._listen = true;
             the._index = 0;
             the.$view = selector.query($view)[0];
+            the.className = 'spa';
             the._initNode();
             the._initEvent();
         },

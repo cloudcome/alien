@@ -42,6 +42,7 @@ define(function (require, exports, module) {
             the._$ele = the._$ele[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._index = the._options.index;
+            the.className = 'tab';
             the._initEvent();
         },
 
