@@ -55,6 +55,7 @@ define(function (require, exports, module) {
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'range';
             the._initData();
             the._initNode();
             the._initEvent();

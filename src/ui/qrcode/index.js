@@ -50,6 +50,7 @@ define(function (require, exports, module) {
 
             the._$parent = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
+            the.className = 'qrcode';
             the.destroyed = false;
         },
 

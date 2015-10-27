@@ -76,6 +76,7 @@ define(function (require, exports, module) {
             the._options = dato.extend(true, {}, defaults, options);
             the._options.buttons = the._options.buttons || [];
             the.id = alienIndex++;
+            the.className = 'msg';
             the._isReady = false;
             the.destroyed = false;
             the._initNode();

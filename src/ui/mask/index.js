@@ -50,6 +50,7 @@ define(function (require, exports, module) {
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
             the.visible = false;
+            the.className = 'mask';
             the._initNode();
             the._initEvent();
 

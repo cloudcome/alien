@@ -44,6 +44,7 @@ define(function (require, exports, module) {
             the._$container = selector.query($container)[0];
             the._options = dato.extend({}, defaults, options);
             the.destroyed = false;
+            the.className = 'lazyload';
             the._initEvent();
         },
 

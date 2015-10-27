@@ -32,6 +32,7 @@ define(function (require, exports, module) {
             the._options = {};
             the._$pres = selector.query($pre);
             the.destroyed = false;
+            the.className = 'prettify';
             attribute.addClass(the._$pres, 'prettyprint');
             prettify.prettyPrint(function () {
                 /**

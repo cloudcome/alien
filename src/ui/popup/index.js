@@ -72,6 +72,7 @@ define(function (require, exports, module) {
             the._$target = selector.query($target)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'popup';
             the._html = tpl.render({
                 id: the._id = alienId++
             });

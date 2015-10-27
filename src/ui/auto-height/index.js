@@ -86,6 +86,7 @@ define(function (require, exports, module) {
             the._$ele = the._$ele[0];
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'auto-height';
             attribute.addClass(the._$ele, alienClass);
             the._initSize();
             the._initEvent();

@@ -58,6 +58,7 @@ define(function (require, exports, module) {
 
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'loading';
             the.id = alienId++;
             the._initNode();
         },

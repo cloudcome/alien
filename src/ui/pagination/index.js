@@ -53,6 +53,7 @@ define(function (require, exports, module) {
             the._$ele = the._$ele[0];
             the._options = dato.extend(!0, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'pagination';
             attribute.addClass(the._$ele, the._options.addClass);
             the._initEvent();
             the.render();

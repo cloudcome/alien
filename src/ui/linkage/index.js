@@ -72,6 +72,7 @@ define(function (require, exports, module) {
             the._cache = {};
             the._changeIndex = -1;
             the.destroyed = false;
+            the.className = 'linkage';
             the._initNode();
             the._initEvent();
             // 初始加载第一级

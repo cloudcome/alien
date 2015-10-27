@@ -54,6 +54,7 @@ define(function (require, exports, module) {
             $ele = selector.query($ele);
             the._$ele = $ele[0];
             the._options = dato.extend(!0, {}, defaults, options);
+            the.className = 'resize';
             var pos = attribute.css(the._$ele, 'position');
             var $wrap;
 

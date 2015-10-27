@@ -87,6 +87,7 @@ define(function (require, exports, module) {
             the.destroyed = false;
             the._options = dato.extend({}, defaults, options);
             the._validation = new Validation(the._$form, the._options);
+            the.className = 'form';
             Emitter.pipe(the._validation, the, ['!success', '!error']);
             the._msgMap = {};
             the._initNode();

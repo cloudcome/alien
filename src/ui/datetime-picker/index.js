@@ -84,6 +84,7 @@ define(function (require, exports, module) {
             the._hasHour = REG_HOUR.test(options.format);
             the._hasMinute = REG_MINUTE.test(options.format);
             the._hasSecond = REG_SECOND.test(options.format);
+            the.className = 'datetime-picker';
             the._initNode();
             the._initEvent();
         },

@@ -53,6 +53,7 @@ define(function (require, exports, module) {
             the.destroyed = false;
             the._isChoosed = false;
             the._isReady = false;
+            the.className = 'img-upload';
             the._initNode();
             the._applyOptions();
             the._initEvent();

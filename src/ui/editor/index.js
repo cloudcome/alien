@@ -98,6 +98,7 @@ define(function (require, exports, module) {
             the._id = alienIndex++;
             the._$ele = selector.query($ele)[0];
             the._options = dato.extend({}, defaults, options);
+            the.className = 'editor';
             the._calStoreId();
 
             if (isMobile && the._options.isAdaptMobile) {

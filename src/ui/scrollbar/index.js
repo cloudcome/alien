@@ -77,6 +77,7 @@ define(function (require, exports, module) {
             the._$ele = the._$ele[0];
             options = the._options = dato.extend(!0, {}, defaults, options);
             the._id = alienIndex++;
+            the.className = 'scrollbar';
             var scrollbarData = {
                 id: the._id,
                 isPlaceholderScroll: isPlaceholderScroll

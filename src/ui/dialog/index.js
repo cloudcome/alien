@@ -73,6 +73,7 @@ define(function (require, exports, module) {
             the._$content = selector.query($content)[0];
             options = the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'dialog';
 
             if (options.modal) {
                 the._mask = new Mask(win, {

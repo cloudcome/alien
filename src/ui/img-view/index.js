@@ -65,6 +65,7 @@ define(function (require, exports, module) {
 
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'img-view';
             the._initData();
             the._initNode();
             the._initEvent();

@@ -66,6 +66,7 @@ define(function (require, exports, module) {
             the._direction = options.axis.indexOf('x') > -1 ? 'X' : 'Y';
             the._increase = options.axis.indexOf('-') > -1 ? -1 : 1;
             the._offset = 0;
+            the.className = 'banner';
             the._initNode();
             the.resize(options);
             the._initEvent();

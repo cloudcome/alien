@@ -51,6 +51,7 @@ define(function (require, exports, module) {
             the._list = list || [];
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
+            the.className = 'ctrl-list';
             the._initNode();
             the.update(the._list);
             the._initEvent();

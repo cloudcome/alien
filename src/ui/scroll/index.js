@@ -53,6 +53,7 @@ define(function (require, exports, module) {
             }
 
             the._options = dato.extend(true, {}, defaults, options);
+            the.className = 'scroll';
             the._init();
         },
 

@@ -61,6 +61,7 @@ define(function (require, exports, module) {
             the._options = dato.extend({}, defaults, options);
             the._$nav = selector.query(the._options.navSelector)[0];
             the.destroyed = false;
+            the.className = 'fullpage';
             the._init();
         },
 
