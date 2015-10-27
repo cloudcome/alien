@@ -72,13 +72,6 @@ define(function (require, exports, module) {
      */
     var inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
-
-        //var F = function () {
-        //    // ignore
-        //};
-        //F.prototype = new superConstructor();
-        //constructor.prototype = new F;
-
         constructor.prototype = Object.create(superConstructor.prototype);
 
         if (isCopyStatic) {
