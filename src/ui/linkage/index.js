@@ -218,7 +218,7 @@ define(function (require, exports, module) {
                 var cacheList = the._cache[prevIndex][prevValue];
 
                 if (cacheList) {
-                    return callback(null, cacheList.slice(the._hasPlaceholder ? 1 : 0));
+                    return callback(null, cacheList);
                 }
             }
 
@@ -272,12 +272,15 @@ define(function (require, exports, module) {
             var isFind = false;
 
             if (list) {
-                if (index && options.cache && prevValue) {
+                if (index && options.cache) {
                     var prevIndex = index - 1;
                     var prevValue = the._values[prevIndex];
-                    // 上一个选中的子级
-                    the._cache[prevIndex] = the._cache[prevIndex] || {};
-                    the._cache[prevIndex][prevValue] = list;
+
+                    if(prevValue){
+                        // 上一个选中的子级
+                        the._cache[prevIndex] = the._cache[prevIndex] || {};
+                        the._cache[prevIndex][prevValue] = list;
+                    }
                 }
             } else {
                 list = [];
