@@ -69,7 +69,8 @@ define(function (require, exports, module) {
             the._hasPlaceholder = the._options.placeholder && the._options.placeholder.text;
             the._defaultVal = the._hasPlaceholder ? the._options.placeholder.value : '';
             the._values = [];
-            the._cache = {};
+            // 缓存，支持重写
+            the.cache = {};
             the._changeIndex = -1;
             the.destroyed = false;
             the.className = 'linkage';
@@ -215,11 +216,11 @@ define(function (require, exports, module) {
             }
 
             // 有缓存值
-            if (index && the._cache[prevIndex]) {
-                var cacheList = the._cache[prevIndex][prevValue];
+            if (index && the.cache[prevIndex]) {
+                var cacheList = the.cache[prevIndex][prevValue];
 
                 if (cacheList) {
-                    return callback(null, cacheList);
+                    return callback(null, cacheList.slice(the._hasPlaceholder ? 1 : 0));
                 }
             }
 
@@ -279,8 +280,8 @@ define(function (require, exports, module) {
 
                     if(prevValue){
                         // 上一个选中的子级
-                        the._cache[prevIndex] = the._cache[prevIndex] || {};
-                        the._cache[prevIndex][prevValue] = list;
+                        the.cache[prevIndex] = the.cache[prevIndex] || {};
+                        the.cache[prevIndex][prevValue] = list;
                     }
                 }
             } else {
