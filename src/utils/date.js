@@ -341,6 +341,7 @@ define(function (require, exports, module) {
 
     /**
      * 计算某年某月某日是当年的第几周
+     * @todo 通过事件差来计算
      * @param {Number} year 年
      * @param {Number} month 月
      * @param {Number} date 日
