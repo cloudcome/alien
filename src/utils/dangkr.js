@@ -69,8 +69,8 @@ define(function (require, exports, module) {
         1: 'wap',
         2: 'wifi'
     };
-    // IOS: systemName/%@; systemVersion/%@; deviceVersion/%@; dangkr/1.1.5/%@
-    // AOS: navigator.userAgent + "; dangkr/1.1.5/1"
+    // IOS: systemName/%@; systemVersion/%@; deviceVersion/%@; dangkr/1.1.5/%@; deviceId/%@
+    // AOS: navigator.userAgent + "; dangkr/1.1.5/1; deviceId/123"
     var ua = navigator.userAgent;
     var REG_END = /;([^;]*)$/;
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
