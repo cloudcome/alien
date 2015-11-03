@@ -618,7 +618,8 @@ ua 字符串格式为：
 // AOS: 原有 UA + 附加 UA
 // IOS: 附加 UA
 ```
-附加 UA 格式为为
+附加 UA 格式为为（为了显示，做折行处理）
 ```
-"systemName/{系统名称，如 ios、aos}; systemVersion/{系统版本，如 9.1、5.1} deviceVersion/{设备版本}，如 iPhone 5s，xiaomi 4s}; dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
+"systemName/{系统名称，如 ios、aos}; systemVersion/{系统版本，如 9.1、5.1} deviceVersion/{设备版本}，
+如 iPhone 5s，xiaomi 4s}; dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
 ```
