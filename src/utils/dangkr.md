@@ -55,7 +55,7 @@ phone: '12312341234'
 "type": "activity",
 "activityId": "7472937",
 "title": "【单身狂欢】你过来，我有个恋爱想跟你谈一下",
-"batchIndex": 0,
+"cover": "活动封面""batchIndex": 0,
 "batchList": [
     {
         "id": 8474361,
@@ -85,8 +85,7 @@ phone: '12312341234'
     provinceName: '浙江省',
     cityName: '杭州市',
     address: '地址'
-},
-"cover": "活动封面"
+}
 ```
 
 
