@@ -71,14 +71,21 @@ phone: '12312341234'
         "remainingPeoples": null,
         "clubId": 1005,
         "state": 1,
-        "waitPayOrder": false,
-        "male": 0.5,
-        "female": 0.5
+        "waitPayOrder": false
     }
 ],
-"startAddress": "杭州武林广场",
-"startAddressList": [],
-"destination": "临安 浙西天池",
+"startAddressList": [{
+     countryName: '中国',
+     provinceName: '浙江省',
+     cityName: '杭州市',
+     address: '地址'
+ }],
+"destination": {
+    countryName: '中国',
+    provinceName: '浙江省',
+    cityName: '杭州市',
+    address: '地址'
+},
 "cover": "活动封面"
 ```
 
@@ -119,6 +126,15 @@ navigation.show
 ## 3.1、打开分享窗口
 ```
 share.open
+
+data: {
+     title: "分享的标题",
+     desc: "分享的描述",
+     link: "分享的链接",
+     img: "分享的图片",
+     type: "activity"、"article",【可选】
+     id: 活动ID、文章ID【可选】
+}
 ```
 
 
@@ -165,14 +181,11 @@ geolocation.map
 
 # 5、页面位置
 ## 5.1、跳转
-- 领队主页
-    - type: "captain"
-    - id: 123（领队 ID）
 - 俱乐部主页
     - type: "club"
     - id: 123（俱乐部 ID）
 - 个人主页
-    - type: "applyer"
+    - type: "user"
     - id: 123（个人 ID）
 - 活动想去列表
     - type: "loveList"
