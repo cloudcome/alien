@@ -80,7 +80,7 @@ phone: '12312341234'
      cityName: '杭州市',
      address: '地址'
  }],
-"destination": {
+"destinationAddress": {
     countryName: '中国',
     provinceName: '浙江省',
     cityName: '杭州市',
