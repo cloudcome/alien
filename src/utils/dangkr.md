@@ -615,9 +615,10 @@ dangkr://article/?id=123
 # ua
 ua 字符串格式为：
 ```
-// 原有ua + "dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
-AOS：原有ua + "systemName/aos; systemVersion/5.0; deviceVersion/xiaomi 4s; dangkr/2.0.0/1; deviceId/123456"
-// "systemName/{系统名称，如 ios}; systemVersion/{系统版本，如 9.1}; 
-// deviceVersion/{设备版本，如 iPhone 5s}; dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
-IOS："systemName/ios; systemVersion/9.1; deviceVersion/iPhone 5s; dangkr/1.1.5/2; deviceId/123456"
+// AOS: 原有 UA + 附加 UA
+// IOS: 附加 UA
+```
+附加 UA 格式为为
+```
+"systemName/{系统名称，如 ios、aos}; systemVersion/{系统版本，如 9.1、5.1} deviceVersion/{设备版本}，如 iPhone 5s，xiaomi 4s}; dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
 ```
