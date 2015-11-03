@@ -63,7 +63,7 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var netMap = {
+    var networkMap = {
         '-1': 'unknow',
         0: 'none',
         1: 'wap',
@@ -1093,11 +1093,26 @@ define(function (require, exports, module) {
     });
     var dangkr = new Dangkr();
 
+    /**
+     * 获取 ua 信息
+     * @param name
+     * @param dft
+     * @returns {*}
+     */
+    var getInfoFromUA = function (name, dft) {
+        var reg = new RegExp(name + '\\/([^;]+)');
+
+        return (ua.match(reg) || ['', dft])[1];
+    };
+
     dangkr.tokenKey = '-dkToken-';
     dangkr.isDangkr = isDangkr;
     dangkr.defaults = defaults;
     dangkr.version = dkuaList[1] || '1.1.0';
-    dangkr.network = dkuaList[2] ? netMap[dkuaList[2]] : 'unknow';
-    dangkr.platform = isIOS ? 'ios' : 'aos';
+    dangkr.network = dkuaList[2] ? networkMap[dkuaList[2]] : 'unknow';
+    dangkr.systemName = getInfoFromUA('systemName', 'aos');
+    dangkr.systemVersion = getInfoFromUA('systemVersion', 'aos');
+    dangkr.deviceVersion = getInfoFromUA('deviceVersion', 'aos');
+    dangkr.deviceId = getInfoFromUA('deviceId', 'aos');
     module.exports = dangkr;
 });

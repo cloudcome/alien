@@ -378,7 +378,52 @@ media.chat
     // 对方的头像
     avatar: 'http://...',
     // 活动 ID，可选
-    activityId: 456
+    activityId: 456,
+    // 活动信息
+    activity: {
+        activityId: 456,
+        title: '活动标题',
+        // 活动封面
+        cover: '...',
+        // 开始地址
+        startAddress: '浙江省 嘉兴市 1111111111',
+        // 目的地
+        destination: '浙江省 嘉兴市 1111111111',
+        // 领队ID
+        captainId: 2096,
+        // 领队昵称
+        captainNickname: '行者无疆',
+        // 领队头像
+        captainAvatar: '...',
+        // 活动类型
+        types: ['垂钓']
+        // 活动亮点
+        spot: '。。。',
+        // 活动价格
+        amount: 100,
+        // 定金价格
+        prepaymentAmount: 0
+    },
+    // 当前批次信息
+    batch: {
+        // 批次ID
+        id: 123,
+        beginTime: 1443110400000,
+        endTime: 1443455999999,
+        deadTime: 1443455999999,
+        // 支付类型:1=在线全额，2=在线预付，0=线下支付
+        paymentCategory: 0,
+        // 价格
+        amount: 0,
+        // 预支付价格
+        prepaymentAmount: 0,
+        appliedPeoples: 0,
+        maxPeoples: 10.
+        remainingPeoples: 9,
+        clubdId: 1021,
+        state: 4,
+        waitPayOrder: false
+    }
 }
 ```
 
@@ -564,4 +609,15 @@ dangkr://club/?id=123
 ## 12.4 文章详情页
 ```
 dangkr://article/?id=123
+```
+
+
+# ua
+ua 字符串格式为：
+```
+// 原有ua + "dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
+AOS：原有ua + "systemName/aos; systemVersion/5.0; deviceVersion/xiaomi 4s; dangkr/2.0.0/1; deviceId/123456"
+// "systemName/{系统名称，如 ios}; systemVersion/{系统版本，如 9.1}; 
+// deviceVersion/{设备版本，如 iPhone 5s}; dangkr/{荡客版本}/{网络类型}; deviceId/{设备ID}"
+IOS："systemName/ios; systemVersion/9.1; deviceVersion/iPhone 5s; dangkr/1.1.5/2; deviceId/123456"
 ```
