@@ -56,6 +56,38 @@ phone: '12312341234'
 "activityId": "7472937",
 "title": "【单身狂欢】你过来，我有个恋爱想跟你谈一下",
 "cover": "活动封面""batchIndex": 0,
+"activity": {
+activityId: 456,
+    title: '活动标题',
+    // 活动封面
+    cover: '...',
+    // 开始地址
+    startAddress: '浙江省 嘉兴市 1111111111',
+    // 目的地
+    destination: '浙江省 嘉兴市 1111111111',
+    // 领队ID
+    captainId: 2096,
+    // 领队昵称
+    captainNickname: '行者无疆',
+    // 领队头像
+    captainAvatar: '...',
+    // 活动类型
+    types: ['垂钓']
+    // 活动亮点
+    spot: '。。。',
+    // 活动价格
+    amount: 100,
+    // 定金价格
+    prepaymentAmount: 0,
+    applyConfig: {
+        needEmergencyContact: false
+        needGender: true
+        needIdentification: false
+        needMobile: true
+        needNickname: true
+        needRealName: false
+    }
+},
 "batchList": [
     {
         "id": 8474361,
@@ -414,7 +446,15 @@ media.chat
         // 活动价格
         amount: 100,
         // 定金价格
-        prepaymentAmount: 0
+        prepaymentAmount: 0,
+        applyConfig: {
+           needEmergencyContact: false
+           needGender: true
+           needIdentification: false
+           needMobile: true
+           needNickname: true
+           needRealName: false
+        }
     },
     // 当前批次信息
     batch: {
