@@ -56,8 +56,8 @@ phone: '12312341234'
 "activityId": "7472937",
 "title": "【单身狂欢】你过来，我有个恋爱想跟你谈一下",
 "cover": "活动封面""batchIndex": 0,
-"activity": {
 activityId: 456,
+"activity": {
     title: '活动标题',
     // 活动封面
     cover: '...',
