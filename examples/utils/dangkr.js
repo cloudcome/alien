@@ -118,28 +118,11 @@ define(function (require, exports, module) {
 
     app.geolocation = function () {
         var $geolocationData1 = $('#geolocationData1');
-        var $geolocationData2 = $('#geolocationData2');
-        var $geolocationData3 = $('#geolocationData3');
 
         $('#geolocationGet').onclick = function () {
             dangkr.geolocationGet(function (err, json) {
                 $geolocationData1.value = JSON.stringify(json, null, 4);
-                $geolocationData2.value = JSON.stringify({
-                    longitude: json.longitude,
-                    latitude: json.latitude
-                }, null, 4);
-                $geolocationData3.value = JSON.stringify({
-                    address: json.address
-                }, null, 4);
             });
-        };
-
-        $('#geolocationMap1').onclick = function () {
-            dangkr.geolocationMap(toJSON($geolocationData2.value));
-        };
-
-        $('#geolocationMap2').onclick = function () {
-            dangkr.geolocationMap(toJSON($geolocationData3.value));
         };
     };
 
