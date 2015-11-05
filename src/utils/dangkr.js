@@ -927,22 +927,11 @@ define(function (require, exports, module) {
 
 
         /**
-         * 选择图片
-         * @param [data] {Object} 数据
-         * @param [callback] {Function} 回调
-         */
-        mediaImg: function (data, callback) {
-            return this._media('img', data, callback);
-        },
-
-
-        /**
          * 上传图片
-         * @param [data] {Object} 数据
          * @param [callback] {Function} 回调
          */
-        mediaUpload: function (data, callback) {
-            return this._media('upload', data, callback);
+        mediaUpload: function (callback) {
+            return this._media('upload', callback);
         },
 
 
