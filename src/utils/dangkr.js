@@ -101,7 +101,7 @@ define(function (require, exports, module) {
             //the._brokenCallbacks = [];
             the._asyncCallbacks = {};
             the._andCallbacks = {};
-            the._oneceCallbackList = ['media.input'];
+            the._oneceCallbackList = ['media.input', 'media.upload'];
             the._invokeList = [];
             the._initEvent();
         },

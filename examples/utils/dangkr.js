@@ -256,43 +256,8 @@ define(function (require, exports, module) {
             });
         };
 
-        $('#mediaImg').onclick = function () {
-            dangkr.mediaImg({
-                limit: 1
-            }, function (err, json) {
-                var src = json.list[0];
-
-                $mediaData2.innerHTML = '<img src="' + src + '">';
-                mediaData2 = src;
-            });
-        };
-
         $('#mediaUpload1').onclick = function () {
-            if (!mediaData2) {
-                return alert('请先选择图片再上传');
-            }
-
-            dangkr.mediaUpload({
-                src: mediaData2,
-                maxSize: 100 * 1024
-            }, function (err, json) {
-                if (err) {
-                    return alert('上传失败');
-                }
-
-                alert('上传成功：\n' + json.url);
-            });
-        };
-
-        $('#mediaUpload2').onclick = function () {
-            if (!mediaData2) {
-                return alert('请先选择图片再上传');
-            }
-
-            dangkr.mediaUpload({
-                width: 100,
-                height: 100
-            }, function (err, json) {
+            dangkr.mediaUpload(function (err, json) {
                 if (err) {
                     return alert('上传失败');
                 }
