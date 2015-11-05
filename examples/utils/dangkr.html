@@ -76,6 +76,7 @@
 </head>
 <body>
 
+
 <section>
     <h1>0、ready 之后后弹出对话框</h1>
     <h2><script>document.write(navigator.userAgent)</script></h2>
@@ -87,7 +88,6 @@
     <input type="text" id="dataValue" placeholder="待发送的数据"/>
     <button id="dataSend">发送数据</button>
 </section>
-
 
 <section>
     <h1>2、导航栏 navigation</h1>
@@ -123,9 +123,10 @@
     <h1>5、页面位置 location</h1>
     <button id="locationRedirect1">跳转到领队（id=123）详情</button>
     <button id="locationRedirect2">跳转到俱乐部（id=123）详情</button>
-    <button id="locationRedirect3">跳转到我的活动（id=123）详情</button>
+    <button id="locationRedirect3">跳转到我的活动</button>
     <button id="locationRedirect4">跳转到个人（id=123）详情</button>
     <button id="locationRedirect5">跳转到报名人列表（id=123）</button>
+    <button id="locationRedirect6">跳转到报名结果页（id=123）</button>
 </section>
 
 
@@ -179,7 +180,8 @@
 
 <script coolie src="/examples/coolie.min.js"
         data-config="./coolie-config.js"
-        data-main="./libs/dangkr.js"></script>
+        data-main="./utils/dangkr.js"></script>
+
 
 
 </body>

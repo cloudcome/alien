@@ -531,14 +531,25 @@ define(function (require, exports, module) {
         /**
          * 改变导航栏标题
          * @param [data] {String} 数据
-         * @param [callback] {Function} 回调
          * @returns {*}
          *
          * @example
          * .navigationTitle('动态页面标题');
          */
-        navigationTitle: function (data, callback) {
-            return this._navigation('title', data || document.title, callback);
+        navigationTitle: function (data) {
+            document.title = data || document.title;
+
+            var iframe = modification.create('iframe', {
+                src: '/favicon.ico'
+            });
+
+            iframe.onload = iframe.onerror = function () {
+                controller.nextFrame(function () {
+                    modification.remove(iframe);
+                    iframe = null;
+                });
+            };
+            modification.insert(iframe, document.body);
         },
 
 

@@ -144,8 +144,7 @@ define(function (require, exports, module) {
 
         $('#locationRedirect3').onclick = function () {
             dangkr.locationRedirect({
-                type: 'myActivity',
-                id: '123'
+                type: 'myActivity'
             });
         };
 
@@ -347,18 +346,16 @@ define(function (require, exports, module) {
     };
 
 
-    dangkr.ready(function () {
-        app.data();
-        app.navigation();
-        app.share();
-        app.geolocation();
-        app.location();
-        app.user();
-        app.media();
-        app.device();
-        app.dialog();
-        app.bottom();
-    });
+    app.data();
+    app.navigation();
+    app.share();
+    app.geolocation();
+    app.location();
+    app.user();
+    app.media();
+    app.device();
+    app.dialog();
+    app.bottom();
 
     function toJSON(value) {
         return JSON.parse(value.replace(/\n/g, ''));
