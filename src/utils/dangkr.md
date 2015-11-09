@@ -357,14 +357,19 @@ media.picture
 ## 7.3、上传图片【1.7实现】
 ```
 media.upload
+<=
+{
+    // 是否压缩原图，默认压缩
+    minify: true
+}
+
+上传过程中，显示 loading，结束后隐藏 loading，上传失败显示错误消息
 IOS 直接回调
 AOS 发送 media.upload 事件
 
 =>
 {
-    url: "http://img......",
-    width: 100,
-    height: 100
+    url: "http://img......"
 }
 ```
 
