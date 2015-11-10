@@ -72,10 +72,10 @@ define(function (require, exports, module) {
     // IOS: systemName/%@; systemVersion/%@; deviceVersion/%@; dangkr/1.1.5/%@; deviceId/%@
     // AOS: navigator.userAgent + "; dangkr/1.1.5/1; deviceId/123"
     var ua = navigator.userAgent;
-    var REG_END = /;([^;]*)$/;
+    var REG_DANGKR = /dangk(?:e|r)\/([\d.]+)\/(\d)/;
     var isIOS = /iphone|ipad|ipod/i.test(navigator.appVersion || ua);
     var isDangkr = /\bdangk(e|r)\b/i.test(ua);
-    var dkuaList = (ua.match(REG_END) || ['', ''])[1].split('/');
+    var dkuaList = ua.match(REG_DANGKR) || ['', '1.0.0', '-1'];
     var namespace = 'WebViewJavascriptBridge';
     var webViewJavascriptBridge = null;
     //var singleInstance = null;
@@ -1126,8 +1126,8 @@ define(function (require, exports, module) {
     dangkr.tokenKey = '-dkToken-';
     dangkr.isDangkr = isDangkr;
     dangkr.defaults = defaults;
-    dangkr.version = dkuaList[1] || '1.1.0';
-    dangkr.network = dkuaList[2] ? networkMap[dkuaList[2]] : 'unknow';
+    dangkr.version = dkuaList[1];
+    dangkr.network = networkMap[dkuaList[2]];
     dangkr.systemName = getInfoFromUA('systemName', 'aos');
     dangkr.systemVersion = getInfoFromUA('systemVersion', 'aos');
     dangkr.deviceVersion = getInfoFromUA('deviceVersion', 'aos');
