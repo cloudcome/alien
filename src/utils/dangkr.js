@@ -733,7 +733,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取详细地理位置信息，包括经纬度、行政位置、国家、省份、城市
+         * 获取详细地理位置信息，包括经纬度、城市
          * @param [callback] {Function} 回调
          */
         geolocationGet: function (callback) {

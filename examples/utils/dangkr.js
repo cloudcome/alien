@@ -17,6 +17,16 @@ define(function (require, exports, module) {
 
     dangkr.ready(function () {
         alert('jsbridge has ready');
+
+        $('#invokeUnknow').onclick = function () {
+            dangkr.invoke('balabala', function (err) {
+                if (err) {
+                    return alert(err.message);
+                }
+
+                alert('正确调用');
+            });
+        };
     });
 
 
@@ -253,7 +263,7 @@ define(function (require, exports, module) {
         $('#mediaUpload2').onclick = function () {
             dangkr.mediaUpload({
                 minify: false
-            },function (err, json) {
+            }, function (err, json) {
                 if (err) {
                     return alert(err.message || '上传失败');
                 }
