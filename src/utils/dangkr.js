@@ -939,10 +939,28 @@ define(function (require, exports, module) {
 
         /**
          * 上传图片
+         * @param [data] {Object} 数据
          * @param [callback] {Function} 回调
          */
-        mediaUpload: function (callback) {
-            return this._media('upload', callback);
+        mediaUpload: function (data, callback) {
+            var the = this;
+            var args = allocation.args(arguments);
+
+            if (args.length === 1) {
+                callback = args[0];
+                data = {
+                    minify: true
+                };
+            }
+
+            var event = 'media.upload';
+
+            if (the._isAndroid) {
+                the.when(event, callback);
+                callback = null;
+            }
+
+            return this._media('upload', data, callback);
         },
 
 

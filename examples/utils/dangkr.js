@@ -238,13 +238,27 @@ define(function (require, exports, module) {
             });
         };
 
+        var $mediaUploadImg = $('#mediaUploadImg');
+
         $('#mediaUpload1').onclick = function () {
             dangkr.mediaUpload(function (err, json) {
                 if (err) {
-                    return alert('上传失败');
+                    return alert(err.message || '上传失败');
                 }
 
-                alert('上传成功：\n' + json.url);
+                $mediaUploadImg.src = json.url;
+            });
+        };
+
+        $('#mediaUpload2').onclick = function () {
+            dangkr.mediaUpload({
+                minify: false
+            },function (err, json) {
+                if (err) {
+                    return alert(err.message || '上传失败');
+                }
+
+                $mediaUploadImg.src = json.url;
             });
         };
     };
