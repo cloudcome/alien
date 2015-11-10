@@ -15,8 +15,9 @@ define(function (require) {
     var d3 = new Dialog(null, {
         remote: 'http://wap.baidu.com/'
     });
-
-    window.d1 = d1;
+    var d4 = new Dialog({
+        template: '<h1>template</h1>'
+    });
 
     document.getElementById('open1').onclick = function () {
         d1.open();
@@ -36,5 +37,9 @@ define(function (require) {
 
     document.getElementById('open3').onclick = function () {
         d3.open();
+    };
+
+    document.getElementById('open4').onclick = function () {
+        d4.open();
     };
 });

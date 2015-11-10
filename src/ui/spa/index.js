@@ -124,9 +124,9 @@ define(function (require, exports, module) {
          */
         _exec: function (item, matches, parseRet) {
             var the = this;
-            var isSameItem = the._lastItem && the._lastItem.index === item.index;
+            var isSameItem = the._lastItem === item;
             var exec = function () {
-                if (the._lastItem && the._lastItem.index !== item.index) {
+                if (the._lastItem && the._lastItem !== item) {
                     the.emit('beforeleave', the._lastItem, matches, parseRet.query);
 
                     if (typeis.function(the._lastItem.exports.leave)) {

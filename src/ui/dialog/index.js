@@ -29,6 +29,7 @@ define(function (require, exports, module) {
     var Scrollbar = require('../scrollbar/');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var allocation = require('../../utils/allocation.js');
     var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -52,6 +53,7 @@ define(function (require, exports, module) {
         left: 'center',
         top: 'center',
         title: '无标题对话框',
+        template: '',
         addClass: '',
         duration: 234,
         easing: {
@@ -69,9 +71,24 @@ define(function (require, exports, module) {
     var Dialog = ui.create({
         constructor: function ($content, options) {
             var the = this;
+            var args = allocation.args(arguments);
+
+            // new Dailog(null, options);
+            // new Dailog(options);
+            // new Dailog();
+            if (args.length === 0 || typeis.null(args[0]) || typeis.object(args[0])) {
+                options = args[0];
+                $content = null;
+            }
+
+            options = the._options = dato.extend(true, {}, defaults, options);
+
+            if (!$content) {
+                $content = modification.create('div');
+                modification.insert($content, $body);
+            }
 
             the._$content = selector.query($content)[0];
-            options = the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
             the.className = 'dialog';
 
