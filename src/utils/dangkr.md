@@ -177,16 +177,7 @@ geolocation.get
 {
     longitude: "经度",
     latitude: "纬度",
-    altitude: "高度",
-    accuracy: "经纬精度",
-    altitudeAccuracy: "高度精度",
-    heading: "角度",
-    speed: "速度",
-    country: "国家",
-    city: "城市",
-    region: "区县",
-    street: "街道",
-    address: "详细地址"
+    city: "城市"
 }
 ```
 
