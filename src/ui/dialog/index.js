@@ -85,6 +85,7 @@ define(function (require, exports, module) {
 
             if (!$content) {
                 $content = modification.create('div');
+                $content.innerHTML = options.template;
                 modification.insert($content, $body);
             }
 
