@@ -65,7 +65,9 @@ define(function (require, exports, module) {
         };
 
         $('#navigationHide').onclick = function () {
-            dangkr.navigationShow([]);
+            dangkr.navigationShow([{
+                type: 'back'
+            }]);
         };
 
         $('#navigationTitle').onclick = function () {
@@ -154,13 +156,14 @@ define(function (require, exports, module) {
 
         $('#locationRedirect3').onclick = function () {
             dangkr.locationRedirect({
-                type: 'myActivity'
+                type: 'myActivity',
+                id: '123'
             });
         };
 
         $('#locationRedirect4').onclick = function () {
             dangkr.locationRedirect({
-                type: 'applyer',
+                type: 'user',
                 id: '123'
             });
         };
@@ -279,15 +282,16 @@ define(function (require, exports, module) {
         var $deviceData2 = $('#deviceData2');
 
         $('#deviceNetwork').onclick = function () {
-            dangkr.deviceNetwork(function (err, json) {
-                $deviceData1.value = JSON.stringify(json, null, 4);
-            });
+            $deviceData1.value = dangkr.network;
         };
 
         $('#deviceSystem').onclick = function () {
-            dangkr.deviceSystem(function (err, json) {
-                $deviceData2.value = JSON.stringify(json, null, 4);
-            });
+            $deviceData2.value = JSON.stringify({
+                systemName: dangkr.systemName,
+                systemVersion: dangkr.systemVersion,
+                deviceVersion: dangkr.deviceVersion,
+                deviceId: dangkr.deviceId
+            }, null, 4);
         };
     };
 
@@ -296,27 +300,27 @@ define(function (require, exports, module) {
         var timeid1;
         var timeid2;
 
-        $('#dialogLoading1').onclick = function () {
-            dangkr.dialogLoadingOpen({
-                modal: true,
-                text: '测试中'
-            });
-
-            timeid1 = setTimeout(function () {
-                dangkr.dialogLoadingClose();
-            }, 5000);
-        };
-
-        $('#dialogLoading2').onclick = function () {
-            dangkr.dialogLoadingOpen({
-                modal: false,
-                text: '比较长的loading，非模态测试中'
-            });
-
-            timeid2 = setTimeout(function () {
-                dangkr.dialogLoadingClose();
-            }, 5000);
-        };
+        //$('#dialogLoading1').onclick = function () {
+        //    dangkr.dialogLoadingOpen({
+        //        modal: true,
+        //        text: '测试中'
+        //    });
+        //
+        //    timeid1 = setTimeout(function () {
+        //        dangkr.dialogLoadingClose();
+        //    }, 5000);
+        //};
+        //
+        //$('#dialogLoading2').onclick = function () {
+        //    dangkr.dialogLoadingOpen({
+        //        modal: false,
+        //        text: '比较长的loading，非模态测试中'
+        //    });
+        //
+        //    timeid2 = setTimeout(function () {
+        //        dangkr.dialogLoadingClose();
+        //    }, 5000);
+        //};
 
         $('#dialogTips1').onclick = function () {
             dangkr.dialogTipsOpen({
@@ -359,6 +363,20 @@ define(function (require, exports, module) {
             dangkr.bottomApply({
                 // 是否允许报名
                 active: true,
+                // 是否隐藏
+                hidden: true
+            });
+        };
+
+        $('#bottomInput1').onclick = function () {
+            dangkr.bottomInput({
+                // 是否隐藏
+                hidden: false
+            });
+        };
+
+        $('#bottomInput2').onclick = function () {
+            dangkr.bottomInput({
                 // 是否隐藏
                 hidden: true
             });

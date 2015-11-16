@@ -990,24 +990,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 获取设备所连接的网络
-         * @param [callback] {Function} 回调
-         */
-        deviceNetwork: function (callback) {
-            return this._device('network', callback);
-        },
-
-
-        /**
-         * 获取设备的系统信息
-         * @param [callback] {Function} 回调
-         */
-        deviceSystem: function (callback) {
-            return this._device('system', callback);
-        },
-
-
-        /**
          * 对话框的相关操作
          * @param method {String} 方法
          * @param [data] {Object} 数据

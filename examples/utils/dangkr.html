@@ -81,6 +81,7 @@
     <h1>0、ready 之后后弹出对话框</h1>
     <h2><script>document.write(navigator.userAgent)</script></h2>
     <button id="invokeUnknow">调用不存在的方法</button>
+    <a href="javascript:location.reload(true)">重新载入当前页面</a>
 </section>
 
 
@@ -89,6 +90,7 @@
     <input type="text" id="dataValue" placeholder="待发送的数据"/>
     <button id="dataSend">发送数据</button>
 </section>
+
 
 <section>
     <h1>2、导航栏 navigation</h1>
@@ -124,10 +126,9 @@
     <h1>5、页面位置 location</h1>
     <button id="locationRedirect1">跳转到领队（id=123）详情</button>
     <button id="locationRedirect2">跳转到俱乐部（id=123）详情</button>
-    <button id="locationRedirect3">跳转到我的活动</button>
+    <button id="locationRedirect3">跳转到我的活动（id=123）</button>
     <button id="locationRedirect4">跳转到个人（id=123）详情</button>
     <button id="locationRedirect5">跳转到报名人列表（id=123）</button>
-    <button id="locationRedirect6">跳转到报名结果页（id=123）</button>
 </section>
 
 
@@ -167,8 +168,8 @@
 
 <section>
     <h1>9、对话框 dialog</h1>
-    <button id="dialogLoading1">打开模态 loading，5秒后关闭</button>
-    <button id="dialogLoading2">打开非模态 loading，5秒后关闭</button>
+    <!--<button id="dialogLoading1">打开模态 loading，5秒后关闭</button>-->
+    <!--<button id="dialogLoading2">打开非模态 loading，5秒后关闭</button>-->
     <button id="dialogTips1">打开模态 tips，3秒后关闭</button>
     <button id="dialogTips2">打开非模态 tips，5秒后关闭</button>
 </section>
@@ -178,8 +179,11 @@
     <h1>9、底部 bottom</h1>
     <button id="bottomApply1">显示报名+咨询按钮[允许报名]</button>
     <button id="bottomApply2">显示报名+咨询按钮[不允许报名]</button>
-    <button id="bottomApply3">显示报名+咨询按钮[隐藏]</button>
+    <button id="bottomApply3">隐藏报名+咨询按钮</button>
+    <button id="bottomInput1">显示输入框</button>
+    <button id="bottomInput2">隐藏输入框</button>
 </section>
+
 
 
 <script coolie src="/examples/coolie.min.js"
