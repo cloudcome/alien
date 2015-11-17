@@ -86,7 +86,7 @@ define(function (require, exports, module) {
                     the.emit('change', page);
 
                     if (options.auto) {
-                        this.render({
+                        the.render({
                             page: page
                         });
                     }
