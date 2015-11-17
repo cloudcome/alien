@@ -73,14 +73,6 @@ define(function (require, exports, module) {
 
             event.on(the._$ele, 'click', '.' + normalClass, the._onpage = function () {
                 var page = attribute.data(this, 'page');
-
-                if (options.auto) {
-                    var $sibligns = selector.siblings(this);
-
-                    attribute.removeClass($sibligns, namespace + '-active');
-                    attribute.addClass(this, namespace + '-active');
-                }
-
                 page = number.parseInt(page, 1);
 
                 if (page !== the._options.page) {
@@ -92,6 +84,12 @@ define(function (require, exports, module) {
                      * @param page {Number} 变化后的页码
                      */
                     the.emit('change', page);
+
+                    if (options.auto) {
+                        this.render({
+                            page: page
+                        });
+                    }
                 }
             });
         },
