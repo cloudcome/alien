@@ -310,7 +310,7 @@ define(function (require, exports, module) {
 
 
     /**
-     * 设置、获取元素的滚动条高度
+     * 设置、获取元素的滚动条上边距
      * @param ele {HTMLElement|Node|Window|Document|Object} 元素
      * @param [top] {Number} 高度
      * @returns {number|undefined}
@@ -364,6 +364,36 @@ define(function (require, exports, module) {
         } else {
             ele.scrollLeft = left;
         }
+    };
+
+
+    /**
+     * 设置、获取元素的滚动高度
+     * @param ele {HTMLElement|Node|Window|Document|Object} 元素
+     * @returns {number|undefined}
+     *
+     * @example
+     * // get
+     * attribute.scrollHeight(ele);
+     */
+    exports.scrollHeight = function (ele) {
+        ele = selector.query(ele)[0];
+        return _isDispute(ele) ? Math.max(body.scrollHeight, html.scrollHeight) : ele.scrollHeight;
+    };
+
+
+    /**
+     * 设置、获取元素的滚动宽度
+     * @param ele {HTMLElement|Node|Window|Document|Object} 元素
+     * @returns {number|undefined}
+     *
+     * @example
+     * // get
+     * attribute.scrollWidth(ele);
+     */
+    exports.scrollWidth = function (ele) {
+        ele = selector.query(ele)[0];
+        return _isDispute(ele) ? Math.max(body.scrollWidth, html.scrollWidth) : ele.scrollWidth;
     };
 
 

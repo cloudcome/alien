@@ -39,7 +39,9 @@ define(function (require, exports, module) {
         addClass: '',
         duration: 234,
         style: {},
-        easing: 'ease-in-out-circ'
+        easing: 'ease-in-out-circ',
+        // 是否固定窗口
+        fixed: true
     };
     var Mask = ui.create({
         constructor: function ($cover, options) {
@@ -107,6 +109,7 @@ define(function (require, exports, module) {
                 return the;
             }
 
+            var options = the._options;
             var pos = Mask.getCoverSize(the._$cover);
 
             pos.display = 'block';
@@ -123,7 +126,10 @@ define(function (require, exports, module) {
             if (the._$cover === win) {
                 maskWindowLength++;
                 maskWindowList.push(the);
-                //attribute.addClass([html, body], alienClass + '-overflow');
+
+                if (options.fixed && attribute.height(body) > attribute.height(win)) {
+                    attribute.addClass(body, alienClass + '-overflow');
+                }
             }
 
             return the;
@@ -193,9 +199,9 @@ define(function (require, exports, module) {
                 maskWindowList.splice(findIndex, 1);
             }
 
-            //if (!maskWindowLength) {
-            //    attribute.removeClass([html, body], alienClass + '-overflow');
-            //}
+            if (!maskWindowLength) {
+                attribute.removeClass(body, alienClass + '-overflow');
+            }
 
             return the;
         },
@@ -272,26 +278,18 @@ define(function (require, exports, module) {
      * 获得当前最顶层覆盖 window 的 mask
      * @returns {*}
      */
-    Mask.getTopMask = function () {
+    Mask.getTopWindowMask = function () {
         return maskWindowList[maskWindowLength - 1];
     };
 
-    /**
-     * 构造一个 mask
-     * @param $cover {Object} 欲覆盖的节点
-     * @param [options] {Object} 配置
-     * @param [options.addClass=""] {String} 添加的 className，默认为空
-     * @param [options.duration=234] {Number} resize 时的动画时间
-     * @param [options.easing="ease-in-out-circ"] {Number} resize 时的动画缓冲
-     */
     module.exports = Mask;
-    //style += '.' + alienClass + '-overflow{margin-right:' + _getScrollbarWidth() + 'px !important;}';
+    style += '.' + alienClass + '-overflow{padding-right:' + _getScrollbarWidth() + 'px !important;}';
     ui.importStyle(style);
     event.on(document, 'keyup', function (eve) {
         var mask;
 
         if (eve.which === 27 && Mask.maskWindowList.length) {
-            mask = Mask.getTopMask();
+            mask = Mask.getTopWindowMask();
 
             /**
              * 当前遮罩被按 ESC 后
@@ -302,29 +300,28 @@ define(function (require, exports, module) {
     });
 
 
-    ///**
-    // * 获得当前页面的滚动条宽度
-    // * @returns {number}
-    // * @private
-    // */
-    //function _getScrollbarWidth() {
-    //    var $div = modification.create('div', {
-    //        style: {
-    //            position: 'absolute',
-    //            width: 100,
-    //            height: 100,
-    //            overflow: 'scroll'
-    //        }
-    //    });
-    //
-    //    modification.insert($div, document.body);
-    //
-    //    var width = $div.offsetWidth - $div.clientWidth;
-    //    modification.remove($div);
-    //
-    //    return width;
-    //}
+    /**
+     * 获得当前页面的滚动条宽度
+     * @returns {number}
+     * @private
+     */
+    function _getScrollbarWidth() {
+        var divWidth = 100;
+        var $div = modification.create('div', {
+            style: {
+                position: 'absolute',
+                width: divWidth,
+                height: 100,
+                overflow: 'scroll'
+            }
+        });
 
+        modification.insert($div, document.body);
+        var width = divWidth - $div.clientWidth;
+        modification.remove($div);
+
+        return width;
+    }
 
     /**
      * 是否与 window 同等对待
