@@ -23,7 +23,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    var udf;
     var attribute = require('./attribute.js');
     var selector = require('./selector.js');
     var see = require('./see.js');
@@ -181,10 +180,13 @@ define(function (require, exports, module) {
 
     /**
      * css3 transition 动画
-     * @param $ele
-     * @param to
-     * @param options
-     * @param callback
+     * @param $ele {HTMLElement|String} 元素
+     * @param to {Object} 动画终点样式
+     * @param options {Object} 配置
+     * @param [options.duration=567] {Number} 动画时间
+     * @param [options.delay=0] {Number} 开始动画延迟时间
+     * @param [options.easing="in-out"] {String} 动画缓冲类型
+     * @param [callback] {Function} 回调
      */
     exports.transition = function ($ele, to, options, callback) {
         var args = allocation.args(arguments);
@@ -251,7 +253,7 @@ define(function (require, exports, module) {
             };
 
             event.on($ele, animationendEventType, onend);
-            exports.clearAnimation($ele);
+            exports.clear($ele);
             controller.nextFrame(function () {
                 attribute.css($ele, css);
             });
@@ -280,7 +282,7 @@ define(function (require, exports, module) {
      * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate、reverse、alternate-reverse
      * @param [options.playState="running"] {String} 动画状态，默认运动
      * @param [options.fillMode="forwards"] {String} 动画结束，默认指向最后一帧
-     * @param [callback] {Function} 帧动画动画运行完毕回调
+     * @param [callback] {Function} 全部次数帧动画运行完毕回调
      */
     exports.keyframes = function ($ele, name, options, callback) {
         var args = allocation.args(arguments);
@@ -323,10 +325,10 @@ define(function (require, exports, module) {
 
 
     /**
-     * 清除帧动画
+     * 清除动画
      * @param $ele {Object|String} DOM 元素
      */
-    exports.clearAnimation = function ($ele) {
+    exports.clear = function ($ele) {
         $ele = selector.query($ele)[0];
         attribute.css($ele, {
             animationName: '',

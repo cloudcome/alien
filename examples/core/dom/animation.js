@@ -45,7 +45,8 @@ define(function (require) {
     document.getElementById('keyframes').onclick = function () {
         animation.keyframes('#demo', test, {
             duration: 3000,
-            delay: 0
+            delay: 0,
+            count: 2
         }, function () {
             ret.innerHTML = 'keyframes 结束' + Date.now();
         });
