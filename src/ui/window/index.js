@@ -29,7 +29,6 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var style = require('./style.css', 'css');
     var ui = require('../');
-
     var REG_AUTO_OR_100_PERCENT = /auto|100%/i;
     var alienIndex = 0;
     var alienBaseClass = 'alien-ui';
@@ -37,7 +36,6 @@ define(function (require, exports, module) {
     var noop = function () {
         // ignore
     };
-    var $html = document.documentElement;
     var $body = document.body;
     var defaults = {
         parentNode: $body,
@@ -60,9 +58,7 @@ define(function (require, exports, module) {
         minOffset: 20,
         autoResize: true,
         // 是否自动聚焦 window
-        autoFocus: true,
-        // 是否固定窗口
-        fixed: true
+        autoFocus: true
     };
     var Window = ui.create({
         constructor: function ($content, options) {
@@ -208,7 +204,6 @@ define(function (require, exports, module) {
          */
         open: function (callback) {
             var the = this;
-            var options = the._options;
 
             if (the.visible) {
                 return the;
@@ -216,13 +211,6 @@ define(function (require, exports, module) {
 
             if (the._$content) {
                 attribute.css(the._$content, 'display', 'block');
-            }
-
-            if (options.fixed) {
-                the._htmlOv = attribute.css($html, 'overflow');
-                the._bodyOv = attribute.css($body, 'overflow');
-                attribute.css($html, 'overflow', 'hidden');
-                attribute.css($body, 'overflow', 'hidden');
             }
 
             var options = the._options;
