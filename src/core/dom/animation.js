@@ -161,7 +161,7 @@ define(function (require, exports, module) {
 
             exports.clearTransition($ele);
             controller.nextFrame(function () {
-                attribute.css($ele, fixTo);
+                attribute.css($ele, to);
             });
         };
     };

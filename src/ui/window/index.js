@@ -220,6 +220,7 @@ define(function (require, exports, module) {
                  * @event open
                  */
                 the.emit('open');
+                the.emit('afteropen');
 
                 if (options.autoFocus) {
                     the._$focus.focus();
@@ -251,13 +252,13 @@ define(function (require, exports, module) {
                     opacity: 0,
                     zIndex: ui.getZindex(),
                     scale: 0.9,
-                    translateY: '6%'
+                    marginTop: options.minOffset
                 });
                 attribute.css(the._$window, to);
                 animation.transition(the._$window, {
                     scale: 1,
                     opacity: 1,
-                    translateY: 0
+                    marginTop: 0
                 }, {
                     duration: options.duration,
                     easing: options.easing.open
@@ -379,7 +380,7 @@ define(function (require, exports, module) {
 
                 attribute.css(the._$window, {
                     display: 'none',
-                    translateY: 0
+                    marginTop: 0
                 });
 
                 callback.call(the);
@@ -398,7 +399,7 @@ define(function (require, exports, module) {
                 animation.transition(the._$window, {
                     scale: 0.9,
                     opacity: 0,
-                    translateY: '-6%'
+                    marginTop: options.minOffset
                 }, {
                     direction: 'reverse',
                     duration: options.duration,
