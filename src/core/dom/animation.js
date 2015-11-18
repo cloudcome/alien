@@ -134,12 +134,7 @@ define(function (require, exports, module) {
 
             var onend = function () {
                 clearTimeout(timeid);
-                attribute.css($ele, {
-                    transitionDuration: '',
-                    transitionDelay: '',
-                    transitionTimingFunction: '',
-                    transitionProperty: ''
-                });
+                exports.clearTransition($ele);
                 event.un($ele, transitionendEventType, onend);
                 controller.nextFrame(next);
             };
@@ -164,15 +159,9 @@ define(function (require, exports, module) {
                 });
             }
 
-            attribute.css($ele, {
-                transitionDuration: '',
-                transitionDelay: '',
-                transitionTimingFunction: '',
-                transitionProperty: ''
-            });
-
+            exports.clearTransition($ele);
             controller.nextFrame(function () {
-                attribute.css($ele, to);
+                attribute.css($ele, fixTo);
             });
         };
     };
@@ -253,7 +242,7 @@ define(function (require, exports, module) {
             };
 
             event.on($ele, animationendEventType, onend);
-            exports.clear($ele);
+            exports.clearAnimation($ele);
             controller.nextFrame(function () {
                 attribute.css($ele, css);
             });
@@ -325,10 +314,26 @@ define(function (require, exports, module) {
 
 
     /**
+     * 清除过渡
+     * @param $ele {Object|String} DOM 元素
+     */
+    exports.clearTransition = function ($ele) {
+        $ele = selector.query($ele)[0];
+        attribute.css($ele, {
+            transitionDuration: '',
+            transitionDelay: '',
+            transitionTimingFunction: '',
+            transitionProperty: ''
+        });
+    };
+
+
+
+    /**
      * 清除动画
      * @param $ele {Object|String} DOM 元素
      */
-    exports.clear = function ($ele) {
+    exports.clearAnimation = function ($ele) {
         $ele = selector.query($ele)[0];
         attribute.css($ele, {
             animationName: '',

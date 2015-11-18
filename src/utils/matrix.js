@@ -750,8 +750,10 @@ define(function (require, exports, module) {
     module.exports = function (transform) {
         var m = new Matrix();
         var ret = '';
+        var length = 0;
 
         dato.each(transform, function (key, val) {
+            length++;
             switch (key) {
                 case 'translate':
                     m = m.translate(val, val);
@@ -801,6 +803,11 @@ define(function (require, exports, module) {
             }
         });
 
-        return ret || m.toCSS();
+        // 只有一个不规则
+        if (length === 1 && ret) {
+            return ret;
+        }
+
+        return m.toCSS();
     };
 });
