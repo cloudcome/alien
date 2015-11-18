@@ -804,7 +804,7 @@ define(function (require, exports, module) {
         });
 
         // 只有一个不规则
-        if (length === 1 && ret) {
+        if (!length || length === 1 && ret) {
             return ret;
         }
 
