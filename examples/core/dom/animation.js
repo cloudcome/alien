@@ -6,20 +6,24 @@ define(function (require) {
     var keyframes = require('/src/core/dom/keyframes.js');
     var test = keyframes.create({
         0: {
-            scale: 0.8,
-            translateX: -10
+            scale: 1,
+            translateX: 0,
+            rotate: 0
         },
         0.3: {
             scale: 1.2,
-            translateX: 60
+            translateX: 60,
+            rotate: 30
         },
         0.6: {
             scale: 0.9,
-            translateX: -30
+            translateX: -30,
+            rotate: 60
         },
         1: {
             scale: 1,
-            translateX: 20
+            translateX: 20,
+            rotate: 90
         }
     });
 
@@ -27,14 +31,14 @@ define(function (require) {
 
     document.getElementById('transition').onclick = function () {
         animation.transition('#demo', {
-            width: 500,
-            height: 500,
+            width: 200,
+            height: 200,
             transform: 'scale(1)'
         }, {
             duration: 3000,
             delay: 0
         }, function () {
-            ret.innerHTML = '运行结束' + Date.now();
+            ret.innerHTML = 'transition 结束' + Date.now();
         });
     };
 
@@ -43,9 +47,13 @@ define(function (require) {
             duration: 3000,
             delay: 0
         }, function () {
-            ret.innerHTML = '运行结束' + Date.now();
+            ret.innerHTML = 'keyframes 结束' + Date.now();
         });
     };
+
+    //document.getElementById('keyframes2').onclick = function () {
+    //    animation.pauseAnimation('#demo');
+    //};
 
     document.getElementById('scrollTo').onclick = function () {
         animation.scrollTo(window, {

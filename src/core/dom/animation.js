@@ -47,7 +47,10 @@ define(function (require, exports, module) {
         duration: 567,
         delay: 0,
         count: 1,
-        direction: 'normal'
+        direction: 'normal',
+        playState: 'running',
+        // none/forwards/backwards/both
+        fillMode: 'forwards'
     };
     //var css = 'transition-property';
     //var transitionendEventPrefix = compatible.css3(css).replace(css, '').replace(/-/g, '');
@@ -237,23 +240,18 @@ define(function (require, exports, module) {
                 animationTimingFunction: easing,
                 animationDelay: options.delay + 'ms',
                 animationIterationCount: options.count,
-                animationDirection: options.direction
+                animationDirection: options.direction,
+                animationPlayState: options.playState,
+                animationFillMode: options.fillMode
             };
 
             var onend = function () {
                 event.un($ele, animationendEventType, onend);
-                attribute.css($ele, {
-                    animationName: '',
-                    animationDuration: '',
-                    animationTimingFunction: '',
-                    animationDelay: '',
-                    animationIterationCount: '',
-                    animationDirection: ''
-                });
                 controller.nextFrame(next);
             };
 
             event.on($ele, animationendEventType, onend);
+            exports.clearAnimation($ele);
             controller.nextFrame(function () {
                 attribute.css($ele, css);
             });
@@ -261,12 +259,15 @@ define(function (require, exports, module) {
     };
 
 
+    // @link http://www.w3school.com.cn/css3/css3_animation.asp
     // animation-name	规定需要绑定到选择器的 keyframe 名称。。
     // animation-duration	规定完成动画所花费的时间，以秒或毫秒计。
     // animation-timing-function	规定动画的速度曲线。
     // animation-delay	规定在动画开始之前的延迟。
     // animation-iteration-count	规定动画应该播放的次数。
     // animation-direction	规定是否应该轮流反向播放动画。
+    // animation-play-state 规定动画是否正在运行或暂停。默认是 "running"。
+    // animation-fill-mode	规定对象动画时间之外的状态。
     /**
      * 运行一段帧动画，并监听帧动画回调
      * @param $ele {HTMLElement|String} 元素
@@ -277,6 +278,8 @@ define(function (require, exports, module) {
      * @param [options.easing="in-out"] {String} 动画缓冲类型
      * @param [options.count=1] {Number} 动画次数
      * @param [options.direction="normal"] {String} 动画方向，可选 normal、alternate、reverse、alternate-reverse
+     * @param [options.playState="running"] {String} 动画状态，默认运动
+     * @param [options.fillMode="forwards"] {String} 动画结束，默认指向最后一帧
      * @param [callback] {Function} 帧动画动画运行完毕回调
      */
     exports.keyframes = function ($ele, name, options, callback) {
@@ -317,6 +320,44 @@ define(function (require, exports, module) {
         queue.push(keyframes($ele, name, options), callback);
         queue.begin();
     };
+
+
+    /**
+     * 清除帧动画
+     * @param $ele {Object|String} DOM 元素
+     */
+    exports.clearAnimation = function ($ele) {
+        $ele = selector.query($ele)[0];
+        attribute.css($ele, {
+            animationName: '',
+            animationDuration: '',
+            animationTimingFunction: '',
+            animationDelay: '',
+            animationIterationCount: '',
+            animationDirection: '',
+            animationPlayState: '',
+            animationFillMode: ''
+        });
+    };
+
+    ///**
+    // * 暂停帧动画
+    // * @param $ele {Object|String} DOM 元素
+    // */
+    //exports.pauseAnimation = function ($ele) {
+    //    $ele = selector.query($ele)[0];
+    //    var queue = getProp($ele, propKeyframesKey);
+    //
+    //    if (!queue) {
+    //        setProp($ele, propKeyframesKey, queue = new Queue());
+    //    }
+    //
+    //    queue.clear();
+    //    attribute.css($ele, {
+    //        animationPlayState: 'paused',
+    //        animationFillMode: 'forward'
+    //    });
+    //};
 
 
     // 平滑滚动
