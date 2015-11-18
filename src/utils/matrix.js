@@ -63,21 +63,21 @@ define(function (require, exports, module) {
          * @param {Matrix} cm - child matrix to apply concatenation to
          * @returns {Matrix}
          */
-        concat: function(cm) {
+        concat: function (cm) {
             return this.clone()._t(cm.a, cm.b, cm.c, cm.d, cm.e, cm.f);
         },
 
         /**
          * Flips the horizontal values.
          */
-        flipX: function() {
+        flipX: function () {
             return this._t(-1, 0, 0, 1, 0, 0);
         },
 
         /**
          * Flips the vertical values.
          */
-        flipY: function() {
+        flipY: function () {
             return this._t(1, 0, 0, -1, 0, 0);
         },
 
@@ -91,7 +91,7 @@ define(function (require, exports, module) {
          * @param {number} y - vector end point for y (start = 0)
          * @returns {{x: number, y: number}}
          */
-        reflectVector: function(x, y) {
+        reflectVector: function (x, y) {
 
             var v = this.applyToPoint(0, 1),
                 d = 2 * (v.x * x + v.y * y);
@@ -99,13 +99,13 @@ define(function (require, exports, module) {
             x -= d * v.x;
             y -= d * v.y;
 
-            return {x:x, y:y};
+            return {x: x, y: y};
         },
 
         /**
          * Short-hand to reset current matrix to an identity matrix.
          */
-        reset: function() {
+        reset: function () {
             return this.setTransform(1, 0, 0, 1, 0, 0);
         },
 
@@ -113,7 +113,7 @@ define(function (require, exports, module) {
          * Rotates current matrix accumulative by angle.
          * @param {number} angle - angle in radians
          */
-        rotate: function(angle) {
+        rotate: function (angle) {
             var cos = Math.cos(angle),
                 sin = Math.sin(angle);
             return this._t(cos, sin, -sin, cos, 0, 0);
@@ -126,7 +126,7 @@ define(function (require, exports, module) {
          * @param y
          * @returns {*}
          */
-        rotateFromVector: function(x, y) {
+        rotateFromVector: function (x, y) {
             return this.rotate(Math.atan2(y, x));
         },
 
@@ -134,7 +134,7 @@ define(function (require, exports, module) {
          * Helper method to make a rotation based on an angle in degrees.
          * @param {number} angle - angle in degrees
          */
-        rotateDeg: function(angle) {
+        rotateDeg: function (angle) {
             return this.rotate(angle * Math.PI / 180);
         },
 
@@ -142,7 +142,7 @@ define(function (require, exports, module) {
          * Scales current matrix uniformly and accumulative.
          * @param {number} f - scale factor for both x and y (1 does nothing)
          */
-        scaleU: function(f) {
+        scaleU: function (f) {
             return this._t(f, 0, 0, f, 0, 0);
         },
 
@@ -151,7 +151,7 @@ define(function (require, exports, module) {
          * @param {number} sx - scale factor x (1 does nothing)
          * @param {number} sy - scale factor y (1 does nothing)
          */
-        scale: function(sx, sy) {
+        scale: function (sx, sy) {
             return this._t(sx, 0, 0, sy, 0, 0);
         },
 
@@ -159,7 +159,7 @@ define(function (require, exports, module) {
          * Scales current matrix on x axis accumulative.
          * @param {number} sx - scale factor x (1 does nothing)
          */
-        scaleX: function(sx) {
+        scaleX: function (sx) {
             return this._t(sx, 0, 0, 1, 0, 0);
         },
 
@@ -167,7 +167,7 @@ define(function (require, exports, module) {
          * Scales current matrix on y axis accumulative.
          * @param {number} sy - scale factor y (1 does nothing)
          */
-        scaleY: function(sy) {
+        scaleY: function (sy) {
             return this._t(1, 0, 0, sy, 0, 0);
         },
 
@@ -176,7 +176,7 @@ define(function (require, exports, module) {
          * @param {number} sx - amount of shear for x
          * @param {number} sy - amount of shear for y
          */
-        shear: function(sx, sy) {
+        shear: function (sx, sy) {
             return this._t(1, sy, sx, 1, 0, 0);
         },
 
@@ -184,7 +184,7 @@ define(function (require, exports, module) {
          * Apply shear for x to the current matrix accumulative.
          * @param {number} sx - amount of shear for x
          */
-        shearX: function(sx) {
+        shearX: function (sx) {
             return this._t(1, 0, sx, 1, 0, 0);
         },
 
@@ -192,7 +192,7 @@ define(function (require, exports, module) {
          * Apply shear for y to the current matrix accumulative.
          * @param {number} sy - amount of shear for y
          */
-        shearY: function(sy) {
+        shearY: function (sy) {
             return this._t(1, sy, 0, 1, 0, 0);
         },
 
@@ -201,7 +201,7 @@ define(function (require, exports, module) {
          * @param {number} ax - angle of skew for x
          * @param {number} ay - angle of skew for y
          */
-        skew: function(ax, ay) {
+        skew: function (ax, ay) {
             return this.shear(Math.tan(ax), Math.tan(ay));
         },
 
@@ -209,7 +209,7 @@ define(function (require, exports, module) {
          * Apply skew for x to the current matrix accumulative.
          * @param {number} ax - angle of skew for x
          */
-        skewX: function(ax) {
+        skewX: function (ax) {
             return this.shearX(Math.tan(ax));
         },
 
@@ -217,7 +217,7 @@ define(function (require, exports, module) {
          * Apply skew for y to the current matrix accumulative.
          * @param {number} ay - angle of skew for y
          */
-        skewY: function(ay) {
+        skewY: function (ay) {
             return this.shearY(Math.tan(ay));
         },
 
@@ -230,7 +230,7 @@ define(function (require, exports, module) {
          * @param {number} e - translate x
          * @param {number} f - translate y
          */
-        setTransform: function(a, b, c, d, e, f) {
+        setTransform: function (a, b, c, d, e, f) {
             var me = this;
             me.a = a;
             me.b = b;
@@ -246,7 +246,7 @@ define(function (require, exports, module) {
          * @param {number} tx - translation for x
          * @param {number} ty - translation for y
          */
-        translate: function(tx, ty) {
+        translate: function (tx, ty) {
             return this._t(1, 0, 0, 1, tx, ty);
         },
 
@@ -254,7 +254,7 @@ define(function (require, exports, module) {
          * Translate current matrix on x axis accumulative.
          * @param {number} tx - translation for x
          */
-        translateX: function(tx) {
+        translateX: function (tx) {
             return this._t(1, 0, 0, 1, tx, 0);
         },
 
@@ -262,7 +262,7 @@ define(function (require, exports, module) {
          * Translate current matrix on y axis accumulative.
          * @param {number} ty - translation for y
          */
-        translateY: function(ty) {
+        translateY: function (ty) {
             return this._t(1, 0, 0, 1, 0, ty);
         },
 
@@ -275,7 +275,7 @@ define(function (require, exports, module) {
          * @param {number} e2 - translate x
          * @param {number} f2 - translate y
          */
-        transform: function(a2, b2, c2, d2, e2, f2) {
+        transform: function (a2, b2, c2, d2, e2, f2) {
 
             var me = this,
                 a1 = me.a,
@@ -305,7 +305,7 @@ define(function (require, exports, module) {
          * @param {Matrix} m - matrix to divide on (divisor)
          * @returns {Matrix}
          */
-        divide: function(m) {
+        divide: function (m) {
 
             if (!m.isInvertible())
                 throw "Input matrix is not invertible";
@@ -320,7 +320,7 @@ define(function (require, exports, module) {
          * @param {number} d - divisor (can not be 0)
          * @returns {Matrix}
          */
-        divideScalar: function(d) {
+        divideScalar: function (d) {
 
             var me = this;
             me.a /= d;
@@ -339,7 +339,7 @@ define(function (require, exports, module) {
          * Context from parent matrix is not applied to the returned matrix.
          * @returns {Matrix}
          */
-        inverse: function() {
+        inverse: function () {
 
             if (this.isIdentity()) {
                 return new Matrix();
@@ -385,7 +385,7 @@ define(function (require, exports, module) {
          * @param {CanvasRenderingContext2D} [context] - optional context to affect
          * @returns {Matrix} - new instance with the interpolated result
          */
-        interpolate: function(m2, t, context) {
+        interpolate: function (m2, t, context) {
 
             var me = this,
                 m = context ? new Matrix(context) : new Matrix();
@@ -416,7 +416,7 @@ define(function (require, exports, module) {
          * @param {CanvasRenderingContext2D} [context] - optional context to affect
          * @returns {Matrix} - new instance with the interpolated result
          */
-        interpolateAnim: function(m2, t, context) {
+        interpolateAnim: function (m2, t, context) {
 
             var me = this,
                 m = context ? new Matrix(context) : new Matrix(),
@@ -449,7 +449,7 @@ define(function (require, exports, module) {
          * @param {boolean} [useLU=false] - set to true to use LU rather than QR algorithm
          * @returns {*} - an object containing current decomposed values (rotate, skew, scale, translate)
          */
-        decompose: function(useLU) {
+        decompose: function (useLU) {
 
             var me = this,
                 a = me.a,
@@ -462,51 +462,51 @@ define(function (require, exports, module) {
                 pi = Math.PI,
 
                 translate = {x: me.e, y: me.f},
-                rotation  = 0,
-                scale     = {x: 1, y: 1},
-                skew      = {x: 0, y: 0},
+                rotation = 0,
+                scale = {x: 1, y: 1},
+                skew = {x: 0, y: 0},
 
                 determ = a * d - b * c;	// determinant(), skip DRY here...
 
             if (useLU) {
                 if (a) {
-                    skew = {x:atan(c/a), y:atan(b/a)};
-                    scale = {x:a, y:determ/a};
+                    skew = {x: atan(c / a), y: atan(b / a)};
+                    scale = {x: a, y: determ / a};
                 }
                 else if (b) {
                     rotation = pi * 0.5;
-                    scale = {x:b, y:determ/b};
-                    skew.x = atan(d/b);
+                    scale = {x: b, y: determ / b};
+                    skew.x = atan(d / b);
                 }
                 else { // a = b = 0
-                    scale = {x:c, y:d};
+                    scale = {x: c, y: d};
                     skew.x = pi * 0.25;
                 }
             }
             else {
                 // Apply the QR-like decomposition.
                 if (a || b) {
-                    var r = sqrt(a*a + b*b);
-                    rotation = b > 0 ? acos(a/r) : -acos(a/r);
-                    scale = {x:r, y:determ/r};
-                    skew.x = atan((a*c + b*d) / (r*r));
+                    var r = sqrt(a * a + b * b);
+                    rotation = b > 0 ? acos(a / r) : -acos(a / r);
+                    scale = {x: r, y: determ / r};
+                    skew.x = atan((a * c + b * d) / (r * r));
                 }
                 else if (c || d) {
-                    var s = sqrt(c*c + d*d);
-                    rotation = pi * 0.5 - (d > 0 ? acos(-c/s) : -acos(c/s));
-                    scale = {x:determ/s, y:s};
-                    skew.y = atan((a*c + b*d) / (s*s));
+                    var s = sqrt(c * c + d * d);
+                    rotation = pi * 0.5 - (d > 0 ? acos(-c / s) : -acos(c / s));
+                    scale = {x: determ / s, y: s};
+                    skew.y = atan((a * c + b * d) / (s * s));
                 }
                 else { // a = b = c = d = 0
-                    scale = {x:0, y:0};		// = invalid matrix
+                    scale = {x: 0, y: 0};		// = invalid matrix
                 }
             }
 
             return {
-                scale    : scale,
+                scale: scale,
                 translate: translate,
-                rotation : rotation,
-                skew     : skew
+                rotation: rotation,
+                skew: skew
             };
         },
 
@@ -514,7 +514,7 @@ define(function (require, exports, module) {
          * Returns the determinant of the current matrix.
          * @returns {number}
          */
-        determinant : function() {
+        determinant: function () {
             return this.a * this.d - this.b * this.c;
         },
 
@@ -526,7 +526,7 @@ define(function (require, exports, module) {
          * @param {number} y - value for y
          * @returns {{x: number, y: number}} A new transformed point object
          */
-        applyToPoint: function(x, y) {
+        applyToPoint: function (x, y) {
 
             var me = this;
 
@@ -554,7 +554,7 @@ define(function (require, exports, module) {
          * @param {Array} points - array with point objects or pairs
          * @returns {Array} A new array with transformed points
          */
-        applyToArray: function(points) {
+        applyToArray: function (points) {
 
             var i = 0, p, l,
                 mxPoints = [];
@@ -563,13 +563,13 @@ define(function (require, exports, module) {
 
                 l = points.length;
 
-                while(i < l) {
+                while (i < l) {
                     p = this.applyToPoint(points[i++], points[i++]);
                     mxPoints.push(p.x, p.y);
                 }
             }
             else {
-                for(; p = points[i]; i++) {
+                for (; p = points[i]; i++) {
                     mxPoints.push(this.applyToPoint(p.x, p.y));
                 }
             }
@@ -587,14 +587,14 @@ define(function (require, exports, module) {
          * @param {boolean} [use64=false] - use Float64Array instead of Float32Array
          * @returns {*} A new typed array with transformed points
          */
-        applyToTypedArray: function(points, use64) {
+        applyToTypedArray: function (points, use64) {
 
             var i = 0, p,
                 l = points.length,
                 mxPoints = use64 ? new Float64Array(l) : new Float32Array(l);
 
-            while(i < l) {
-                p = this.applyToPoint(points[i], points[i+1]);
+            while (i < l) {
+                p = this.applyToPoint(points[i], points[i + 1]);
                 mxPoints[i++] = p.x;
                 mxPoints[i++] = p.y;
             }
@@ -608,7 +608,7 @@ define(function (require, exports, module) {
          * the same context.
          * @param {CanvasRenderingContext2D} context
          */
-        applyToContext: function(context) {
+        applyToContext: function (context) {
             var me = this;
             context.setTransform(me.a, me.b, me.c, me.d, me.e, me.f);
             return me;
@@ -618,7 +618,7 @@ define(function (require, exports, module) {
          * Returns true if matrix is an identity matrix (no transforms applied).
          * @returns {boolean} True if identity (not transformed)
          */
-        isIdentity: function() {
+        isIdentity: function () {
             var me = this;
             return (me._q(me.a, 1) &&
             me._q(me.b, 0) &&
@@ -632,14 +632,14 @@ define(function (require, exports, module) {
          * Returns true if matrix is invertible
          * @returns {boolean}
          */
-        isInvertible: function() {
+        isInvertible: function () {
             return !this._q(this.determinant(), 0)
         },
 
         /**
          * Test if matrix is valid.
          */
-        isValid : function() {
+        isValid: function () {
             return !this._q(this.a * this.d, 0);
         },
 
@@ -648,7 +648,7 @@ define(function (require, exports, module) {
          * @param {boolean} [noContext=false] don't clone context reference if true
          * @returns {Matrix}
          */
-        clone : function(noContext) {
+        clone: function (noContext) {
             var me = this,
                 m = new Matrix();
             m.a = me.a;
@@ -668,7 +668,7 @@ define(function (require, exports, module) {
          * @param {Matrix} m - matrix to compare this matrix with
          * @returns {boolean}
          */
-        isEqual: function(m) {
+        isEqual: function (m) {
 
             var me = this,
                 q = me._q;
@@ -685,7 +685,7 @@ define(function (require, exports, module) {
          * Returns an array with current matrix values.
          * @returns {Array}
          */
-        toArray: function() {
+        toArray: function () {
             var me = this;
             return [me.a, me.b, me.c, me.d, me.e, me.f];
         },
@@ -694,7 +694,7 @@ define(function (require, exports, module) {
          * Generates a string that can be used with CSS `transform:`.
          * @returns {string}
          */
-        toCSS: function() {
+        toCSS: function () {
             return "matrix(" + this.toArray() + ")";
         },
 
@@ -702,7 +702,7 @@ define(function (require, exports, module) {
          * Returns a JSON compatible string of current matrix.
          * @returns {string}
          */
-        toJSON: function() {
+        toJSON: function () {
             var me = this;
             return '{"a":' + me.a + ',"b":' + me.b + ',"c":' + me.c + ',"d":' + me.d + ',"e":' + me.e + ',"f":' + me.f + '}';
         },
@@ -711,7 +711,7 @@ define(function (require, exports, module) {
          * Returns a string with current matrix as comma-separated list.
          * @returns {string}
          */
-        toString: function() {
+        toString: function () {
             return "" + this.toArray();
         },
 
@@ -722,7 +722,7 @@ define(function (require, exports, module) {
          * @returns {boolean}
          * @private
          */
-        _q: function(f1, f2) {
+        _q: function (f1, f2) {
             return Math.abs(f1 - f2) < 1e-14;
         },
 
@@ -730,7 +730,7 @@ define(function (require, exports, module) {
          * Apply current absolute matrix to context if defined, to sync it.
          * @private
          */
-        _x: function() {
+        _x: function () {
             var me = this;
             if (me.context)
                 me.context.setTransform(me.a, me.b, me.c, me.d, me.e, me.f);
@@ -747,11 +747,12 @@ define(function (require, exports, module) {
      * @param transform {Object} 变换
      * @returns {String}
      */
-    module.exports = function(transform){
+    module.exports = function (transform) {
         var m = new Matrix();
+        var ret = '';
 
         dato.each(transform, function (key, val) {
-            switch(key){
+            switch (key) {
                 case 'translate':
                     m = m.translate(val, val);
                     break;
@@ -791,9 +792,15 @@ define(function (require, exports, module) {
                 case 'rotate':
                     m = m.rotateDeg(val);
                     break;
+
+                // 不符合矩阵计算规则
+                // 原样返回第一个值
+                default:
+                    ret = val;
+                    return false;
             }
         });
 
-        return m.toCSS();
+        return ret || m.toCSS();
     };
 });
