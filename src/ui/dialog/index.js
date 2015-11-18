@@ -10,7 +10,6 @@ define(function (require, exports, module) {
      * @module ui/dialog/
      * @requires ui/mask/
      * @requires ui/window/
-     * @requires ui/scrollbar/
      * @requires utils/dato
      * @requires utils/typeis
      * @requires core/dom/selector
@@ -26,7 +25,6 @@ define(function (require, exports, module) {
 
     var Mask = require('../mask/');
     var Window = require('../window/');
-    var Scrollbar = require('../scrollbar/');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var allocation = require('../../utils/allocation.js');
@@ -114,11 +112,6 @@ define(function (require, exports, module) {
             the._id = alienIndex++;
             the._$window = the._window.getNode();
             the._initNode();
-
-            if (options.modal) {
-                the._scrollbar = new Scrollbar(the._$window);
-            }
-
             the._initEvent();
 
             if (options.remote) {
@@ -202,13 +195,9 @@ define(function (require, exports, module) {
             }
 
             // 对话框打开
-            the._window.on('open', function () {
-                if (the._scrollbar) {
-                    the._scrollbar.resize();
-                }
-
+            the._window.after('open', function () {
                 the._isReady = true;
-            }).on('close', function () {
+            }).after('close', function () {
                 the._isReady = false;
             });
 

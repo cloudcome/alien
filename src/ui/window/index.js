@@ -219,7 +219,6 @@ define(function (require, exports, module) {
                  * 窗口打开之后
                  * @event open
                  */
-                the.emit('open');
                 the.emit('afteropen');
 
                 if (options.autoFocus) {
@@ -376,7 +375,7 @@ define(function (require, exports, module) {
                  * 窗口关闭之后
                  * @event close
                  */
-                the.emit('close');
+                the.emit('afterclose');
 
                 attribute.css(the._$window, {
                     display: 'none',
