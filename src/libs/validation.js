@@ -50,7 +50,7 @@ define(function (require, exports, module) {
         breakOnInvalid: typeis.window(window) ? false : true,
         defaultMsg: '${1}不合法'
     };
-    var Validation = klass.extend(Emitter).create({
+    var Validation = klass.extends(Emitter).create({
         /**
          * constructor
          * @extends Emitter

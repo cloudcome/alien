@@ -64,7 +64,7 @@ define(function (require, exports, module) {
      *     this.sth = 123;
      * };
      *
-     * klass.inherit(Child, Father);
+     * inherit(Child, Father);
      *
      * // 这里开始写子类的原型方法
      * Child.prototype.fn = fn;
@@ -183,7 +183,7 @@ define(function (require, exports, module) {
      * @param isInheritStatic
      * @returns {Class}
      */
-    exports.extends = exports.inherit = function (superConstructor, isInheritStatic) {
+    exports.extends = function (superConstructor, isInheritStatic) {
         return new Class(null, superConstructor, isInheritStatic);
     };
 
