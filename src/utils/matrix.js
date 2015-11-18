@@ -791,7 +791,6 @@ define(function (require, exports, module) {
                 case 'rotate':
                     m = m.rotateDeg(val);
                     break;
-
             }
         });
 

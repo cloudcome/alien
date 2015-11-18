@@ -1057,6 +1057,10 @@ define(function (require, exports, module) {
     function _calEleTransform(ele) {
         var trans = ele[alienKey + 'transform'] = ele[alienKey + 'transform'] || {};
 
+        if (typeis.string(trans)) {
+            return trans;
+        }
+
         return matrix(trans);
     }
 });
