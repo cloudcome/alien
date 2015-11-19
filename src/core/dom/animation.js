@@ -238,6 +238,7 @@ define(function (require, exports, module) {
 
             var onend = function () {
                 event.un($ele, animationendEventType, onend);
+                exports.clearAnimation($ele);
                 controller.nextFrame(next);
             };
 

@@ -31,6 +31,10 @@ define(function (require, exports, module) {
         });
     };
 
+    document.getElementById('btn4').onclick = function () {
+        win1.shake();
+    };
+
     win1 = new Window('#demo', {
         addClass: 'hehhhhh',
         width: 300
