@@ -199,9 +199,9 @@ define(function (require, exports, module) {
             }
 
             // 对话框打开
-            the._window.after('open', function () {
+            the._window.on('open', function () {
                 the._isReady = true;
-            }).after('close', function () {
+            }).on('close', function () {
                 the._isReady = false;
             });
 
