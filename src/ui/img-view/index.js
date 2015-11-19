@@ -133,12 +133,12 @@ define(function (require, exports, module) {
             var the = this;
 
             // 打开
-            the._window.on('open', function () {
+            the._window.after('open', function () {
                 the._renderContent();
                 the._renderNav();
                 the._show();
                 the.emit('open');
-            }).on('close', function () {
+            }).after('close', function () {
                 the._opened = false;
                 the.emit('close');
             });
