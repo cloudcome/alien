@@ -62,8 +62,11 @@ define(function (require, exports, module) {
         canDrag: true,
         modal: true,
         hideClose: false,
+        // 远程地址
         remote: null,
+        // iframe 高度
         remoteHeight: 400,
+        // 默认自动分配
         zIndex: null
     };
     var Dialog = ui.create({
@@ -75,7 +78,7 @@ define(function (require, exports, module) {
             // new Dailog(options);
             // new Dailog();
             if (args.length === 0 || typeis.null(args[0]) || typeis.object(args[0])) {
-                options = args[0];
+                options = args[args.length - 1];
                 $content = null;
             }
 
@@ -83,8 +86,13 @@ define(function (require, exports, module) {
 
             if (!$content) {
                 $content = modification.create('div');
-                $content.innerHTML = options.template;
                 modification.insert($content, $body);
+            }
+
+            if (options.remote) {
+                the.setRemote(options.remote);
+            } else if (options.template) {
+                the._$content.innerHTML = options.template;
             }
 
             the._$content = selector.query($content)[0];
@@ -113,11 +121,6 @@ define(function (require, exports, module) {
             the._$window = the._window.getNode();
             the._initNode();
             the._initEvent();
-
-            if (options.remote) {
-                the.setRemote(options.remote);
-            }
-
             the._isReady = false;
             return the;
         },
