@@ -26,8 +26,8 @@ define(function (require, exports, module) {
 
     document.getElementById('btn3').onclick = function () {
         win1.resize({
-            width: random.number(50, 300),
-            height: random.number(50, 300)
+            width: random.number(200, 900),
+            height: 'auto'
         });
     };
 
