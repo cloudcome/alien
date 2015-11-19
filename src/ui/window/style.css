@@ -1,5 +1,6 @@
 .alien-ui-window > * {
-  position: relative; }
+  position: relative;
+  height: 100%; }
 
 .alien-ui-window-focus {
   position: absolute !important;

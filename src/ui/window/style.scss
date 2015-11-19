@@ -1,6 +1,7 @@
 .alien-ui-window{
   & > *{
     position: relative;
+    height: 100%;
   }
 
   &-focus{
