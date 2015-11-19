@@ -1,14 +1,17 @@
 .alien-ui-dialog {
+  &-bg {
+    background: rgba(255, 255, 255, .3);
+  }
+
   box-shadow: 0 0 20px #A0A0A0;
   overflow: hidden;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   background: #fff;
-  border-radius: 6px 6px 0 0; }
-  .alien-ui-dialog-bg {
-    background: rgba(255, 255, 255, 0.3); }
-  .alien-ui-dialog-header {
+  border-radius: 6px 6px 0 0;
+
+  &-header {
     position: relative;
     font-weight: normal;
     overflow: hidden;
@@ -16,8 +19,10 @@
     background: -webkit-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
     background: -o-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
     background: -ms-linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
-    background: linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%); }
-  .alien-ui-dialog-title {
+    background: linear-gradient(0deg, #FFFFFF 0, #EEEEEE 100%);
+  }
+
+  &-title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -26,8 +31,10 @@
     text-align: center;
     line-height: 12px;
     cursor: move;
-    color: #444; }
-  .alien-ui-dialog-close {
+    color: #444;
+  }
+
+  &-close {
     position: absolute;
     top: 0;
     right: 0;
@@ -37,24 +44,33 @@
     text-align: center;
     cursor: pointer;
     font: normal normal normal 30px/32px Arial;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s; }
-    .alien-ui-dialog-close:hover {
+    -webkit-transition: all .2s;
+    transition: all .2s;
+
+    &:hover {
       -webkit-transform: rotate(90deg);
       transform: rotate(90deg);
-      color: #555; }
-  .alien-ui-dialog-body {
+      color: #555;
+    }
+  }
+
+  &-body {
     position: relative;
     padding: 20px;
     overflow: auto;
     height: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .alien-ui-dialog-iframe {
+    box-sizing: border-box;
+  }
+
+  &-iframe {
     display: block;
     background: #fff;
     border: 0;
     margin: 0;
     padding: 0;
-    width: 100%; }
+    width: 100%;
+  }
+}
+
