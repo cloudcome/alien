@@ -33,16 +33,6 @@ define(function (require, exports, module) {
 
     win1 = new Window('#demo', {
         addClass: 'hehhhhh',
-        width: 300,
-        height: 3000
-        //    open: function ($window, to, onopen) {
-        //        to.bottom = -to.height;
-        //        attribute.css($window, to);
-        //        animation.animate($window, {
-        //            bottom: 0
-        //        }, {
-        //            duration: 456
-        //        }, onopen);
-        //    }
+        width: 300
     });
 });
