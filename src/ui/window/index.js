@@ -143,19 +143,14 @@ define(function (require, exports, module) {
 
             if (options.width === 'height' && options.height === 'width') {
                 size.width = size.height = Math.max(size.width, size.height);
+                size.type = 1;
             } else if (options.width === 'height') {
                 size.width = size.height;
+                size.type = 2;
             } else if (options.height === 'width') {
                 size.height = size.width;
+                size.type = 3;
             }
-
-            //if (!REG_AUTO_OR_100_PERCENT.test(options.width)) {
-            //    attribute.css(the._$window, 'width', pre.width);
-            //}
-            //
-            //if (!REG_AUTO_OR_100_PERCENT.test(options.height)) {
-            //    attribute.css(the._$window, 'height', pre.height);
-            //}
 
             the.size = size;
 
@@ -196,9 +191,6 @@ define(function (require, exports, module) {
             if (options.bottom !== null) {
                 pos.bottom = options.bottom;
             }
-
-            //pos.width = the.size.width;
-            //pos.height = the.size.height;
 
             return pos;
         },
@@ -251,6 +243,22 @@ define(function (require, exports, module) {
                 }
 
                 var to = the._getPos();
+
+                switch (the.size.type) {
+                    case 1:
+                        to.width = the.size.width;
+                        to.height = the.size.height;
+                        break;
+
+                    case 2:
+                        to.width = the.size.width;
+                        break;
+
+                    case 3:
+                        to.height = the.size.height;
+                        break;
+                }
+
 
                 the.visible = true;
                 dato.extend(to, {
