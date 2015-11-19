@@ -85,14 +85,10 @@ define(function (require, exports, module) {
             options = the._options = dato.extend(true, {}, defaults, options);
 
             if (!$content) {
-                $content = modification.create('div');
+                $content = modification.create('div', {
+                    id: alienClass + '-content-' + alienIndex
+                });
                 modification.insert($content, $body);
-            }
-
-            if (options.remote) {
-                the.setRemote(options.remote);
-            } else if (options.template) {
-                the._$content.innerHTML = options.template;
             }
 
             the._$content = selector.query($content)[0];
@@ -121,6 +117,11 @@ define(function (require, exports, module) {
             the._$window = the._window.getNode();
             the._initNode();
             the._initEvent();
+
+            if (options.template) {
+                the._$content.innerHTML = options.template;
+            }
+
             the._isReady = false;
             return the;
         },
@@ -248,6 +249,11 @@ define(function (require, exports, module) {
          */
         setRemote: function (url) {
             var the = this;
+
+            if (url === the._lastRemote) {
+                return the;
+            }
+
             var options = the._options;
             var $iframe = modification.create('iframe', {
                 src: url,
@@ -257,6 +263,7 @@ define(function (require, exports, module) {
                 }
             });
 
+            the._lastRemote = url;
             the._$body.innerHTML = '';
             $iframe.onload = function () {
                 $iframe.onload = null;
@@ -267,7 +274,7 @@ define(function (require, exports, module) {
                 $iframe.onerror = null;
                 the.resize();
             };
-            modification.insert($iframe, the._$body, 'beforeend');
+            modification.insert($iframe, the._$body);
 
             return the;
         },
@@ -291,9 +298,14 @@ define(function (require, exports, module) {
          */
         open: function (callback) {
             var the = this;
+            var options = the._options;
 
             if (the._mask) {
                 the._mask.open();
+            }
+
+            if (options.remote) {
+                the.setRemote(options.remote);
             }
 
             the._window.open(callback);

@@ -5,12 +5,11 @@ define(function (require) {
     var d1 = new Dialog('#demo1');
     var d2 = new Dialog('#demo2', {
         width: 350,
-        height: 500,
         top: 0,
         title: null,
         wrap: false,
         canDrag: false,
-        isModal: false
+        modal: false
     });
     var d3 = new Dialog(null, {
         remote: 'http://wap.baidu.com/'
