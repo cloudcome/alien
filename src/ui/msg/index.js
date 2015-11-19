@@ -45,9 +45,7 @@ define(function (require, exports, module) {
     var doc = document;
     var $body = doc.body;
     var defaults = {
-        width: '33%',
-        minWidth: 300,
-        maxWidth: 900,
+        width: 300,
         height: 'auto',
         left: 'center',
         top: 'center',
