@@ -19,7 +19,6 @@ define(function (require, exports) {
 
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
-    var regSp = /\+/g;
     //var REG_SPLIT = /[\?#]/g;
 
 
@@ -104,7 +103,7 @@ define(function (require, exports) {
 
         dato.each(arr, function (index, item) {
             var temp = item.split(eq);
-            var key = _decode(temp[0].replace(regSp, ' '));
+            var key = _decode(temp[0]);
             var val = _decode(temp.slice(1).join(''));
 
             if (key.length) {
