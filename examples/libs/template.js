@@ -22,13 +22,17 @@ define(function (require) {
         },
         bio: undefined
     };
-    var t = new Template($textarea.value);
+    var t = new Template($textarea.value, {
+        debug: true
+    });
 
     $render.innerHTML = t.render(dd);
     $data.innerHTML = JSON.stringify(dd, null, 4);
 
     $btn.onclick = function () {
-        var t = new Template($textarea.value);
+        var t = new Template($textarea.value, {
+            debug: true
+        });
         $render.innerHTML = t.render(dd);
         $data.innerHTML = JSON.stringify(dd, null, 4);
     };
