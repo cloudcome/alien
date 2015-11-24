@@ -1,4 +1,4 @@
-/*!
+/**
  * 数字相关
  * @author ydr.me
  * @create 2015-05-11 13:54
@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var typeis = require('./typeis.js');
+    var dato = require('./dato.js');
     var REG_FORMAT = {
         3: /(\d)(?=(\d{3})+$)/g
     };
@@ -21,7 +22,12 @@ define(function (require, exports, module) {
     // @ref http://searchstorage.techtarget.com/definition/Kilo-mega-giga-tera-peta-and-all-that
     var abbrSuffix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
     var REG_BEGIN_0 = /^0+/;
+    var str62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var map62 = {};
 
+    dato.repeat(62, function (index) {
+        map62[str62[index]] = index;
+    });
 
     /**
      * 整数化
@@ -123,45 +129,89 @@ define(function (require, exports, module) {
     };
 
 
+    ///**
+    // * 比较两个长整型数值
+    // * @param long1 {String|Number} 长整型数值字符串1
+    // * @param long2 {String|Number} 长整型数值字符串2
+    // * @param [operator=">"] {String} 比较操作符，默认比较 long1 > long2
+    // * @returns {*}
+    // * @example
+    // * number.than('9999999999999999999999999999999999999999', '9999999999999999999999999999999999999998');
+    // * // => true
+    // */
+    //exports.than = function (long1, long2, operator) {
+    //    operator = operator || '>';
+    //    long1 = String(long1).replace(REG_BEGIN_0, '');
+    //    long2 = String(long2).replace(REG_BEGIN_0, '');
+    //
+    //    // 1. 比较长度
+    //    if (long1.length > long2.length) {
+    //        return operator === '>';
+    //    } else if (long1.length < long2.length) {
+    //        return operator === '<';
+    //    }
+    //
+    //    // 15位是安全值
+    //    var long1List = exports.format(long1, ',', 15).split(',');
+    //    var long2List = exports.format(long2, ',', 15).split(',');
+    //
+    //    // 2. 遍历比较
+    //    var ret = false;
+    //
+    //    long1List.forEach(function (number1, index) {
+    //        var number2 = long2List[index];
+    //
+    //        if (number1 > number2) {
+    //            ret = operator === '>';
+    //            return false;
+    //        } else if (number1 < number2) {
+    //            ret = operator === '<';
+    //            return false;
+    //        }
+    //    });
+    //
+    //    return ret;
+    //};
+
+
     /**
-     * 比较两个长整型数值
-     * @param long1 {String|Number} 长整型数值字符串1
-     * @param long2 {String|Number} 长整型数值字符串2
-     * @param [operator=">"] {String} 比较操作符，默认比较 long1 > long2
-     * @returns {*}
-     * @example
-     * number.than('9999999999999999999999999999999999999999', '9999999999999999999999999999999999999998');
-     * // => true
+     * 获取六十二进制数值
+     * @param number10
+     * @returns {String}
      */
-    exports.than = function (long1, long2, operator) {
-        operator = operator || '>';
-        long1 = String(long1).replace(REG_BEGIN_0, '');
-        long2 = String(long2).replace(REG_BEGIN_0, '');
+    exports.to62 = function (number10) {
+        var ret = [];
 
-        // 1. 比较长度
-        if (long1.length > long2.length) {
-            return operator === '>';
-        } else if (long1.length < long2.length) {
-            return operator === '<';
-        }
+        var _cal = function () {
+            var y = number10 % 62;
 
-        // 15位是安全值
-        var long1List = exports.format(long1, ',', 15).split(',');
-        var long2List = exports.format(long2, ',', 15).split(',');
+            number10 = exports.parseInt(number10 / 62);
+            ret.unshift(str62[y]);
 
-        // 2. 遍历比较
-        var ret = false;
-
-        long1List.forEach(function (number1, index) {
-            var number2 = long2List[index];
-
-            if (number1 > number2) {
-                ret = operator === '>';
-                return false;
-            } else if (number1 < number2) {
-                ret = operator === '<';
-                return false;
+            if (number10) {
+                _cal();
             }
+        };
+
+        _cal();
+        return ret.join('');
+    };
+
+
+    /**
+     * 六十二进制转换为十进制
+     * @param number62
+     * @returns {number}
+     */
+    exports.from62 = function (number62) {
+        var ret = 0;
+        var len = number62.length;
+
+        dato.repeat(len, function (index) {
+            var pos62 = number62[index];
+            var pos10 = map62[pos62];
+
+            ret += pos10 * Math.pow(62, len - index - 1);
         });
 
         return ret;
