@@ -569,8 +569,7 @@ define(function (require, exports, module) {
 
         code = code
             .replace(REG_LINES, '')
-            .replace(REG_SPACES, ' ')
-            .trim();
+            .replace(REG_SPACES, ' ');
 
 
         dato.each(preMap, function (key, val) {
