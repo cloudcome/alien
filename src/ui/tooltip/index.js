@@ -47,55 +47,70 @@ define(function (require, exports, module) {
         constructor: function (options) {
             var the = this;
 
-            options = the._options = dato.extend({}, defaults, options);
+            the._options = dato.extend({}, defaults, options);
             the.destroyed = false;
             the.className = 'tooltip';
-            the._popup = new Popup(null, {
-                position: 'top',
-                addClass: alienClass + '-popup',
-                arrowSize: 5,
-                offset: {
-                    left: 5,
-                    top: 5
-                },
-                style: {
-                    maxWidth: 300
-                }
-            });
-            the._$lastEle = null;
-            the._timeid = 0;
+            the._initEvent();
+        },
+
+
+        _initEvent: function () {
+            var the = this;
+            var options = the._options;
+            var popupKey = alienClass + '-popup';
+            var timeIdKey = alienClass + '-timeid';
+            var lastEle = null;
 
             event.on(doc, options.openEvent, options.selector, the._onTooltip = function () {
-                var $ele = this;
-                var content = attribute.data($ele, options.data) || attribute.text($ele);
+                var ele = this;
+                var content = attribute.data(ele, options.data) || attribute.attr(ele, 'alt') || attribute.text(ele);
+                var popup;
 
-                clearTimeout(the._timeid);
-
-                if (the._$lastEle === $ele) {
-                    return;
+                // 上次和本次是同一个
+                if (lastEle === ele) {
+                    popup = ele[popupKey];
+                    clearTimeout(ele[timeIdKey]);
+                    ele[timeIdKey] = 0;
+                }
+                // 上次和本次不是同一个
+                else {
+                    lastEle = ele;
                 }
 
-                var onpop = function () {
-                    the._popup.setContent(content).open($ele, function () {
-                        the._$lastEle = $ele;
+                if (!popup) {
+                    popup = ele[popupKey] = new Popup(ele, {
+                        position: 'top',
+                        addClass: alienClass,
+                        arrowSize: 5,
+                        offset: {
+                            left: 5,
+                            top: 5
+                        },
+                        style: {
+                            maxWidth: 300
+                        }
                     });
-                };
-
-                if (the._popup.visible) {
-                    the._popup.close(onpop);
-                } else {
-                    onpop();
                 }
+
+                popup.setContent(content).open();
             });
 
             event.on(doc, options.closeEvent, options.selector, the._offTooltip = function () {
-                the._timeid = setTimeout(function () {
-                    the._popup.close();
-                    the._$lastEle = null;
-                }, options.timeout);
+                var ele = this;
+
+                // 如果未计时
+                if (!ele[timeIdKey]) {
+                    ele[timeIdKey] = setTimeout(function () {
+                        ele[timeIdKey] = 0;
+
+                        if (ele[popupKey]) {
+                            ele[popupKey].destroy();
+                            ele[popupKey] = null;
+                        }
+                    }, options.timeout);
+                }
             });
         },
-
 
         /**
          * 销毁实例

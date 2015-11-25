@@ -55,7 +55,7 @@ define(function (require, exports, module) {
 
     /**
      * 设置、获取元素的属性
-     * @param {HTMLElement|Node} ele 元素
+     * @param {Object} ele 元素
      * @param {String/Object/Array} key 特征键、键值对、键数组
      * @param {String} [val] 特征值
      * @returns {*}

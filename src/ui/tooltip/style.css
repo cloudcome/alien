@@ -1,15 +1,15 @@
-.alien-ui-tooltip-popup {
+.alien-ui-tooltip {
   background: #000;
   color: #FFF;
   border: 0;
   border-radius: 3px; }
-  .alien-ui-tooltip-popup .alien-ui-popup-arrow:before, .alien-ui-tooltip-popup .alien-ui-popup-arrow:after {
+  .alien-ui-tooltip .alien-ui-popup-arrow:after {
     border: 5px solid transparent; }
-  .alien-ui-tooltip-popup .alien-ui-popup-arrow:before {
+  .alien-ui-tooltip .alien-ui-popup-arrow:before {
     display: none; }
-  .alien-ui-tooltip-popup .alien-ui-popup-arrow-bottom:after {
+  .alien-ui-tooltip .alien-ui-popup-arrow:after {
     border-top-color: #000; }
-  .alien-ui-tooltip-popup .alien-ui-popup-content {
+  .alien-ui-tooltip .alien-ui-popup-content {
     padding: 5px 10px;
     font-size: 13px;
     line-height: 20px; }

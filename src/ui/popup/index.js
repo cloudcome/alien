@@ -127,6 +127,7 @@ define(function (require, exports, module) {
             var the = this;
 
             if (the.visible) {
+                attribute.css(the._$popup, 'zIndex', ui.getZindex());
                 return the;
             }
 

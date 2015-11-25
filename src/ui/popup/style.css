@@ -62,3 +62,5 @@
       .alien-ui-popup-arrow-left:after {
         left: 0;
         border-right-color: #fff; }
+  .alien-ui-popup-content {
+    padding: 6px; }
