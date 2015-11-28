@@ -26,6 +26,7 @@ define(function (require, exports, module) {
     var howdo = require('../utils/howdo.js');
     var string = require('../utils/string.js');
     var Emitter = require('./emitter.js');
+
     /**
      * @type {{}}
      * @exmaple
@@ -40,22 +41,17 @@ define(function (require, exports, module) {
      * }
      */
     var validationMap = {};
-    var namespace = 'donkey-libs-validation';
+    var namespace = 'alien-libs-validation';
     var alienIndex = 0;
     var defaults = {
         // true: 返回单个错误对象
         // false: 返回错误对象组成的数组
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
-        breakOnInvalid: typeis.window(window) ? false : true,
+        breakOnInvalid: typeof window === 'undefined',
         defaultMsg: '${1}不合法'
     };
     var Validation = klass.extends(Emitter).create({
-        /**
-         * constructor
-         * @extends Emitter
-         * @param options
-         */
         constructor: function (options) {
             var the = this;
 
@@ -72,12 +68,19 @@ define(function (require, exports, module) {
         /**
          * 为路径设置别名
          * @param path {String} 字段
-         * @param alias {String} 别名
+         * @param [alias] {String} 别名
          * @returns {Validation}
          */
         setAlias: function (path, alias) {
-            this._aliasMap[path] = alias;
-            return this;
+            var the = this;
+
+            if (typeis(path) === 'object') {
+                dato.extend(the._aliasMap, path);
+                return the;
+            }
+
+            the._aliasMap[path] = alias;
+            return the;
         },
 
 
@@ -120,7 +123,7 @@ define(function (require, exports, module) {
             var params = args.slice(2);
             var index = the._validateIndexMap[path];
 
-            if (typeis.isUndefined(index)) {
+            if (typeis.undefined(index)) {
                 index = the._validateIndexMap[path] = the._validateList.length;
                 the._validateList.push({
                     path: path,
@@ -128,7 +131,7 @@ define(function (require, exports, module) {
                 });
             }
 
-            if (typeis.isString(nameOrfn)) {
+            if (typeis.string(nameOrfn)) {
                 var name = nameOrfn;
 
                 if (!validationMap[name]) {
@@ -138,13 +141,15 @@ define(function (require, exports, module) {
                 the._validateList[index].rules.push({
                     name: name,
                     params: params,
-                    fn: validationMap[name]
+                    fn: validationMap[name],
+                    id: random.guid()
                 });
-            } else if (typeis.isFunction(nameOrfn)) {
+            } else if (typeis.function(nameOrfn)) {
                 the._validateList[index].rules.push({
                     name: namespace + alienIndex++,
                     params: params,
-                    fn: nameOrfn
+                    fn: nameOrfn,
+                    id: random.guid()
                 });
             }
 
@@ -244,20 +249,20 @@ define(function (require, exports, module) {
 
             /**
              * 单个验证之前
-             * @event beforevalidateone
+             * @event beforeValidateOne
              * @param path {String} 字段
              */
-            the.emit('beforevalidateone', path);
+            the.emit('beforeValidateOne', path);
             the._validateOne(path, rules, function (err) {
                 /**
                  * 单个验证之后
-                 * @event aftervalidateone
+                 * @event afterValidateOne
                  * @param path {String} 字段
                  */
-                the.emit('aftervalidateone', path);
+                the.emit('afterValidateOne', path);
 
-                if (typeis.isFunction(callback)) {
-                    callback.call(the, !err);
+                if (typeis.function(callback)) {
+                    callback.call(the, err);
                 }
             });
 
@@ -266,12 +271,12 @@ define(function (require, exports, module) {
 
 
         /**
-         * 执行全部验证
+         * 执行部分验证
          * @param data {Object} 待验证的数据
          * @param [callback] {Function} 验证回调
          * @returns {Validation}
          */
-        validateAll: function (data, callback) {
+        validateSome: function (data, callback) {
             var the = this;
             var options = the._options;
             var path = '';
@@ -283,17 +288,21 @@ define(function (require, exports, module) {
             the._isValidating = true;
             the.data = data;
             /**
-             * 全部验证之前
-             * @event beforevalidateall
+             * 部分验证之前
+             * @event beforeValidateSome
              */
-            the.emit('beforevalidateall');
+            the.emit('beforeValidateSome');
             var errorLength = 0;
             var firstInvlidError = null;
             var firstInvlidPath = null;
 
             howdo
-                // 遍历验证顺序
+            // 遍历验证顺序
                 .each(the._validateList, function (i, item, next) {
+                    if (!(item.path in data)) {
+                        return next();
+                    }
+
                     the._validateOne(path = item.path, item.rules, function (err) {
                         if (err) {
                             if (!firstInvlidPath) {
@@ -335,9 +344,88 @@ define(function (require, exports, module) {
                      * 全部验证之后
                      * @event aftervalidateall
                      */
-                    the.emit('aftervalidateall');
+                    the.emit('afterValidateSome');
 
-                    callback.call(the, !errorLength);
+                    callback.call(the, firstInvlidError, firstInvlidPath);
+                });
+
+            return the;
+        },
+
+
+        /**
+         * 执行全部验证
+         * @param data {Object} 待验证的数据
+         * @param [callback] {Function} 验证回调
+         * @returns {Validation}
+         */
+        validateAll: function (data, callback) {
+            var the = this;
+            var options = the._options;
+            var path = '';
+
+            if (the._isValidating) {
+                return the;
+            }
+
+            the._isValidating = true;
+            the.data = data;
+            /**
+             * 全部验证之前
+             * @event beforeValidateAll
+             */
+            the.emit('beforeValidateAll');
+            var errorLength = 0;
+            var firstInvlidError = null;
+            var firstInvlidPath = null;
+
+            howdo
+            // 遍历验证顺序
+                .each(the._validateList, function (i, item, next) {
+                    the._validateOne(path = item.path, item.rules, function (err) {
+                        if (err) {
+                            if (!firstInvlidPath) {
+                                firstInvlidError = err;
+                                firstInvlidPath = item.path;
+                            }
+
+                            errorLength++;
+                        }
+
+                        // 有错误 && 失败不断开
+                        if (err && !options.breakOnInvalid) {
+                            err = null;
+                        }
+
+                        next(err);
+                    });
+                })
+                .follow(function (err) {
+                    the._isValidating = false;
+
+                    if (errorLength) {
+                        /**
+                         * 验证失败
+                         * @param error {Object} 错误对象
+                         * @param path {String} 字段
+                         * @event error
+                         */
+                        the.emit('error', firstInvlidError, firstInvlidPath);
+                    } else {
+                        /**
+                         * 验证成功
+                         * @event success
+                         */
+                        the.emit('success');
+                    }
+
+                    /**
+                     * 全部验证之后
+                     * @event afterValidateAll
+                     */
+                    the.emit('afterValidateAll');
+
+                    callback.call(the, firstInvlidError, firstInvlidPath);
                 });
 
             return the;
@@ -357,13 +445,13 @@ define(function (require, exports, module) {
 
             /**
              * 验证之前
-             * @event beforevalidate
+             * @event beforeValidate
              * @param path {String} 字段
              */
-            the.emit('beforevalidate', path);
+            the.emit('beforeValidate', path);
             var currentRule;
             howdo
-                // 遍历验证规则
+            // 遍历验证规则
                 .each(rules, function (j, rule, next) {
                     var args = [data[path], next];
 
@@ -374,7 +462,7 @@ define(function (require, exports, module) {
                     rule.fn.apply(the, args);
                 })
                 .follow()
-                .done(function () {
+                .try(function () {
                     /**
                      * 验证成功
                      * @event valid
@@ -384,21 +472,22 @@ define(function (require, exports, module) {
 
                     /**
                      * 验证之后
-                     * @event aftervalidate
+                     * @event afterValidate
                      * @param path {String} 字段
                      */
-                    the.emit('aftervalidate', path);
+                    the.emit('afterValidate', path);
 
-                    if (typeis.isFunction(callback)) {
+                    if (typeis.function(callback)) {
                         callback.call(the, null);
                     }
                 })
-                .fail(function (err) {
+                .catch(function (err) {
                     var overrideMsg = the._msgMap[path] && the._msgMap[path][currentRule.name];
                     var args = [overrideMsg || err || options.defaultMsg, the.getAlias(path) || path];
 
                     args = args.concat(currentRule.params);
-                    err = new Error(string.assign.apply(string, args));
+                    err = new TypeError(string.assign.apply(string, args));
+                    err.id = currentRule.id;
 
                     /**
                      * 验证失败
@@ -410,12 +499,12 @@ define(function (require, exports, module) {
 
                     /**
                      * 验证之后
-                     * @event aftervalidate
+                     * @event afterValidate
                      * @param path {String} 字段
                      */
-                    the.emit('aftervalidate', path);
+                    the.emit('afterValidate', path);
 
-                    if (typeis.isFunction(callback)) {
+                    if (typeis.function(callback)) {
                         callback.call(the, err);
                     }
                 });
@@ -429,14 +518,10 @@ define(function (require, exports, module) {
      *
      * @example
      * Validation.addRule('number', function (val, done, param0, param1, ...) {
-     *    done(/^\d+$/.test(val) ? null : '${path}必须是数字');
-     * });
+ *    done(/^\d+$/.test(val) ? null : '${path}必须是数字');
+ * });
      */
     Validation.addRule = function (name, fn/*arguments*/) {
-        if (validationMap[name] && DEBUG) {
-            console.warn('override `' + name + '` rule');
-        }
-
         validationMap[name] = fn;
     };
 
@@ -450,7 +535,7 @@ define(function (require, exports, module) {
         return name ? validationMap[name] : validationMap;
     };
 
-
+    require('./_validation-rules.js')(Validation);
     Validation.defaults = defaults;
     module.exports = Validation;
 });

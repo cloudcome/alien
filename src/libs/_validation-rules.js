@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     var typeis = require('../utils/typeis.js');
     var number = require('../utils/number.js');
     var string = require('../utils/string.js');
-    var lang = require('./validation-lang.js');
+    var lang = require('./_validation-lang.js');
     var REG_NUMBERIC = /^-?[\d.]+$/;
 
     module.exports = function (Validation) {

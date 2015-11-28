@@ -8,25 +8,29 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var control = require('/src/utils/control.js');
+    var controller = require('/src/utils/controller.js');
 
-    window.addEventListener('scroll', control.throttle(function () {
+    window.addEventListener('scroll', controller.throttle(function () {
         console.log('throttle onsrcoll', Date.now());
     }, 1000));
 
-    window.addEventListener('scroll', control.debounce(function () {
+    window.addEventListener('scroll', controller.debounce(function () {
         console.log('debounce onsrcoll', Date.now());
     }, 1000));
 
-    document.addEventListener('click', control.once(function () {
+    document.addEventListener('click', controller.once(function () {
         alert('I am once');
     }));
 
-    document.addEventListener('click', control.toggle(function () {
+    document.addEventListener('click', controller.toggle(function () {
         alert('呵呵');
     }, function () {
         alert('哈哈');
     }, function () {
         alert('嘿嘿');
     }));
+
+    controller.fps(function (fps) {
+        console.log(fps);
+    });
 });

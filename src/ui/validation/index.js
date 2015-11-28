@@ -32,7 +32,6 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var event = require('../../core/event/touch.js');
     var Validation = require('../../libs/validation.js');
-    require('../../libs/validation-rules.js')(Validation);
     require('./validation-rules.js')(Validation);
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
