@@ -100,8 +100,8 @@ define(function (require, exports, module) {
                 .on('invalid', function (err, path) {
                     the.emit('invalid', err, the._pathMap[path]);
                 })
-                .on('error', function (path) {
-                    the.emit('error', the._pathMap[path]);
+                .on('error', function (err, path) {
+                    the.emit('error', err, the._pathMap[path]);
                 })
                 .on('success', function () {
                     the.emit('success');
