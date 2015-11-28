@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires utils/allocation
      * @requires utils/howdo
      * @requires utils/string
+     * @requires utils/random
      * @requires libs/emitter
      */
 
@@ -25,6 +26,7 @@ define(function (require, exports, module) {
     var allocation = require('../utils/allocation.js');
     var howdo = require('../utils/howdo.js');
     var string = require('../utils/string.js');
+    var random = require('../utils/random.js');
     var Emitter = require('./emitter.js');
 
     /**
