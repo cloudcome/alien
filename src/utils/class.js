@@ -44,6 +44,8 @@ define(function (require, exports, module) {
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
 
+    var classId = 0;
+
     /**
      * 单继承
      * @param {Function} constructor 子类
@@ -116,6 +118,7 @@ define(function (require, exports, module) {
                 superConstructor.apply(the, args);
             }
 
+            the.classId = classId++;
             con.apply(the, args);
         };
 
