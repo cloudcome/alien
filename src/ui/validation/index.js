@@ -103,13 +103,10 @@ define(function (require, exports, module) {
                 .on('error', function (err, path) {
                     the.emit('error', err, the._pathMap[path]);
                 })
-                .on('success', function () {
-                    the.emit('success');
-                })
                 .before('validate', function (path) {
                     the.emit('beforevalidate', the._pathMap[path]);
                 })
-                .after('validate', function (path) {
+                .on('validate', function (path) {
                     the.emit('aftervalidate', the._pathMap[path]);
                 });
             the._parseItems();
@@ -131,7 +128,6 @@ define(function (require, exports, module) {
             var the = this;
             var data = {};
             var list = $input ? [] : the._$inputs;
-
 
             if ($input) {
                 var inputType = the._getType($input);
@@ -211,7 +207,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            return data;
+            return dato.extend(data, the._validation.data);
         },
 
 
