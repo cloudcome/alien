@@ -207,7 +207,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            return dato.extend(data, the._validation.data);
+            return data;
         },
 
 
