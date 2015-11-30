@@ -258,10 +258,10 @@ define(function (require, exports, module) {
             the._validateOne(path, rules, function (err) {
                 /**
                  * 单个验证之后
-                 * @event afterValidateOne
+                 * @event validateOne
                  * @param path {String} 字段
                  */
-                the.emit('afterValidateOne', path);
+                the.emit('validateOne', path);
 
                 if (typeis.function(callback)) {
                     callback.call(the, err);
@@ -334,19 +334,13 @@ define(function (require, exports, module) {
                          * @event error
                          */
                         the.emit('error', firstInvlidError, firstInvlidPath);
-                    } else {
-                        /**
-                         * 验证成功
-                         * @event success
-                         */
-                        the.emit('success');
                     }
 
                     /**
                      * 全部验证之后
-                     * @event aftervalidateall
+                     * @event validateall
                      */
-                    the.emit('afterValidateSome');
+                    the.emit('validateSome');
 
                     callback.call(the, firstInvlidError, firstInvlidPath);
                 });
@@ -413,19 +407,13 @@ define(function (require, exports, module) {
                          * @event error
                          */
                         the.emit('error', firstInvlidError, firstInvlidPath);
-                    } else {
-                        /**
-                         * 验证成功
-                         * @event success
-                         */
-                        the.emit('success');
                     }
 
                     /**
                      * 全部验证之后
-                     * @event afterValidateAll
+                     * @event validateAll
                      */
-                    the.emit('afterValidateAll');
+                    the.emit('validateAll');
 
                     callback.call(the, firstInvlidError, firstInvlidPath);
                 });
@@ -474,10 +462,10 @@ define(function (require, exports, module) {
 
                     /**
                      * 验证之后
-                     * @event afterValidate
+                     * @event validate
                      * @param path {String} 字段
                      */
-                    the.emit('afterValidate', path);
+                    the.emit('validate', path);
 
                     if (typeis.function(callback)) {
                         callback.call(the, null);
@@ -501,10 +489,10 @@ define(function (require, exports, module) {
 
                     /**
                      * 验证之后
-                     * @event afterValidate
+                     * @event validate
                      * @param path {String} 字段
                      */
-                    the.emit('afterValidate', path);
+                    the.emit('validate', path);
 
                     if (typeis.function(callback)) {
                         callback.call(the, err);
