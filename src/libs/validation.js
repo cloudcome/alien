@@ -407,6 +407,12 @@ define(function (require, exports, module) {
                          * @event error
                          */
                         the.emit('error', firstInvlidError, firstInvlidPath);
+                    } else {
+                        /**
+                         * 验证成功
+                         * @event success
+                         */
+                        the.emit('success');
                     }
 
                     /**
