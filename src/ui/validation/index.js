@@ -107,7 +107,7 @@ define(function (require, exports, module) {
                     the.emit('beforevalidate', the._pathMap[path]);
                 })
                 .on('validate', function (path) {
-                    the.emit('aftervalidate', the._pathMap[path]);
+                    the.emit('validate', the._pathMap[path]);
                 });
             the._parseItems();
 
