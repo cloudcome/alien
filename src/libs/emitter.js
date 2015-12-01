@@ -93,10 +93,11 @@ define(function (require, exports, module) {
          * @returns {Emitter}
          */
         before: function (eventType, listener) {
-            eventType = eventType.replace(/^\w/, function (word) {
+            var eventType2 = eventType.replace(/^\w/, function (word) {
                 return word.toUpperCase();
             });
-            return this.on('before' + eventType, listener);
+            var before = 'before';
+            return this.on(before + eventType + ' ' + before + eventType2, listener);
         },
 
 
@@ -107,10 +108,11 @@ define(function (require, exports, module) {
          * @returns {Emitter}
          */
         after: function (eventType, listener) {
-            eventType = eventType.replace(/^\w/, function (word) {
+            var eventType2 = eventType.replace(/^\w/, function (word) {
                 return word.toUpperCase();
             });
-            return this.on('after' + eventType, listener);
+            var after = 'after';
+            return this.on(after + eventType + ' ' + after + eventType2, listener);
         },
 
 
