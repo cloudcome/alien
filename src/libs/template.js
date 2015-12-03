@@ -539,8 +539,6 @@ define(function (require, exports, module) {
         }
     });
 
-    Template.prototype.addFilter = Template.prototype.filter;
-
 
     /**
      * 生成随机 42 位的 KEY
