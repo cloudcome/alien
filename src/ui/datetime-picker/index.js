@@ -186,10 +186,10 @@ define(function (require, exports, module) {
                 });
             }
 
-            for (i = 1, j = 13; i < j; i++) {
+            for (i = options.range[0].getMonth(), j = options.range[1].getMonth(); i <= j; i++) {
                 data.months.push({
-                    value: i - 1,
-                    text: i + options.lang.month
+                    value: i,
+                    text: i + 1 + options.lang.month
                 });
             }
 
