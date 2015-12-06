@@ -110,7 +110,7 @@ define(function (require, exports, module) {
         prototypes.constructor = null;
 
         var superConstructorIsAFn = typeis.function(superConstructor);
-        var c = function () {
+        var Class = function () {
             var the = this;
             var args = arguments;
 
@@ -118,16 +118,16 @@ define(function (require, exports, module) {
                 superConstructor.apply(the, args);
             }
 
-            the.classId = classId++;
+            the.__classId__ = classId++;
             con.apply(the, args);
         };
 
         if (superConstructorIsAFn) {
-            inherit(c, superConstructor, isInheritStatic);
+            inherit(Class, superConstructor, isInheritStatic);
         }
 
         dato.each(prototypes, function (key, val) {
-            c.prototype[key] = val;
+            Class.prototype[key] = val;
         });
 
         /**
@@ -135,15 +135,15 @@ define(function (require, exports, module) {
          * @type {Function}
          * @private
          */
-        c.prototype.__constructor__ = con;
+        Class.prototype.__constructor__ = con;
 
         /**
          * 输出的 constructor
          * @type {Function}
          */
-        c.prototype.constructor = c;
+        Class.prototype.constructor = Class;
 
-        return c;
+        return Class;
     };
 
 
