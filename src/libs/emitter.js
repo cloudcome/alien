@@ -88,23 +88,31 @@ define(function (require, exports, module) {
 
         /**
          * 添加事件触发前事件
-         * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
+         * @param eventType {String} 事件，只有 emit beforeSomeEvent 的事件才可以被监听
          * @param listener {Function} 事件回调
          * @returns {Emitter}
          */
         before: function (eventType, listener) {
-            return this.on('before' + eventType, listener);
+            var eventType2 = eventType.replace(/^\w/, function (word) {
+                return word.toUpperCase();
+            });
+            var before = 'before';
+            return this.on(before + eventType + ' ' + before + eventType2, listener);
         },
 
 
         /**
          * 添加事件触发后事件
-         * @param eventType {String} 事件，只有 emit beforesomeevent 的事件才可以被监听
+         * @param eventType {String} 事件，只有 emit afterSomeEvent 的事件才可以被监听
          * @param listener {Function} 事件回调
          * @returns {Emitter}
          */
         after: function (eventType, listener) {
-            return this.on('after' + eventType, listener);
+            var eventType2 = eventType.replace(/^\w/, function (word) {
+                return word.toUpperCase();
+            });
+            var after = 'after';
+            return this.on(after + eventType + ' ' + after + eventType2, listener);
         },
 
 

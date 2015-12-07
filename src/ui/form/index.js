@@ -114,7 +114,9 @@ define(function (require, exports, module) {
         submit: function () {
             var the = this;
 
-            the._validation.validate();
+            the._validation.validate(function () {
+                the._submit();
+            });
 
             return the;
         },
@@ -243,7 +245,6 @@ define(function (require, exports, module) {
                 .on('invalid', function (err, $input) {
                     the._setMsg($input, err);
                 })
-                .on('success', the._submit.bind(the))
                 .on('error', function ($input) {
                     the.focus($input);
                 });
