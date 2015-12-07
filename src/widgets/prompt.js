@@ -55,7 +55,7 @@ define(function (require, exports, module) {
                 'class="' + options.input.className + '" ' +
                 'placeholder="' + options.input.placeholder + '" ' +
                 'value="' + defaultValue + '"' +
-                'maxLength="' + options.input.maxLength + '"' +
+                (options.input.maxLength ? 'maxLength="' + options.input.maxLength + '"' : '') +
                 'id="' + alienClass + alienIndex + '">' +
                 (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '') + '</div>';
 

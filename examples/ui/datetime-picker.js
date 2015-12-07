@@ -12,6 +12,7 @@ define(function (require, exports, module) {
 
     new DatetimePicker('#text1');
     new DatetimePicker('#text2', {
-        format: 'YYYY-MM-DD HH:mm:ss'
+        format: 'YYYY-MM-DD HH:mm:ss',
+        range: [new Date(2014, 11), new Date(2015, 11)]
     });
 });

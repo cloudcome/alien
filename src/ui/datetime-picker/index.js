@@ -186,10 +186,10 @@ define(function (require, exports, module) {
                 });
             }
 
-            for (i = options.range[0].getMonth(), j = options.range[1].getMonth(); i <= j; i++) {
+            for (i = 1, j = 13; i < j; i++) {
                 data.months.push({
-                    value: i,
-                    text: i + 1 + options.lang.month
+                    value: i - 1,
+                    text: i + options.lang.month
                 });
             }
 
@@ -287,6 +287,14 @@ define(function (require, exports, module) {
                 var d = attribute.data(this, 'date');
 
                 if (y < options.range[0].getFullYear() || y > options.range[1].getFullYear()) {
+                    return;
+                }
+
+                if (m < options.range[0].getMonth() || m > options.range[1].getMonth()) {
+                    return;
+                }
+
+                if (d < options.range[0].getDate() || d > options.range[1].getDate()) {
                     return;
                 }
 
