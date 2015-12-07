@@ -32,7 +32,8 @@ define(function (require, exports, module) {
             tagName: 'input',
             type: 'text',
             className: '',
-            placeholder: '请输入'
+            placeholder: '请输入',
+            maxLength: null
         }
     };
     var Confirm = ui.create({
@@ -54,6 +55,7 @@ define(function (require, exports, module) {
                 'class="' + options.input.className + '" ' +
                 'placeholder="' + options.input.placeholder + '" ' +
                 'value="' + defaultValue + '"' +
+                'maxLength="' + options.input.maxLength + '"' +
                 'id="' + alienClass + alienIndex + '">' +
                 (options.input.tagName === 'textarea' ? defaultValue + '</textarea>' : '') + '</div>';
 
