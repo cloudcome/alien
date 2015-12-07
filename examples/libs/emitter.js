@@ -4,16 +4,29 @@ define(function (require) {
     var Emitter = require('../../src/libs/emitter.js');
     var emitter = new Emitter();
 
-    emitter.on('hi', function (data) {
-        alert('hi ' + (data || 'who??'));
-        return !1;
+    var klass = require('../../src/utils/class.js');
+
+    var Father = klass.extends(Emitter).create(function () {
+
     });
 
-    setTimeout(function () {
-        console.log(emitter.emit('hi'));
-    }, 1000);
+    var Child = klass.extends(Father).create(function () {
 
-    setTimeout(function () {
-        console.log(emitter.emit('hi', '云淡然'));
-    }, 2000);
+    });
+
+    var child = new Child();
+    var father = new Father();
+
+    //emitter.on('hi', function (data) {
+    //    alert('hi ' + (data || 'who??'));
+    //    return !1;
+    //});
+    //
+    //setTimeout(function () {
+    //    console.log(emitter.emit('hi'));
+    //}, 1000);
+    //
+    //setTimeout(function () {
+    //    console.log(emitter.emit('hi', '云淡然'));
+    //}, 2000);
 });
