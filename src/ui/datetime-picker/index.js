@@ -294,10 +294,6 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if (d < options.range[0].getDate() || d > options.range[1].getDate()) {
-                    return;
-                }
-
                 if (y === the._choose.year && m === the._choose.month && d === the._choose.date) {
                     return;
                 }
