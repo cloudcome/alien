@@ -45,6 +45,7 @@ define(function (require, exports, module) {
             }, config);
             wx.config(the._config);
             the._shareData = shareData;
+            shareData.imgUrl = shareData.imgUrl || shareData.img;
             the.className = 'weixin';
             the._init();
         },
@@ -94,7 +95,7 @@ define(function (require, exports, module) {
                     the.emit('trigger', errMsg);
                 }
             };
-            var shareData = dato.extend({}, the._shareData, callbacks);
+            var shareData = dato.extend(the._shareData, callbacks);
 
             wx.ready(function () {
                 the.emit('ready');
