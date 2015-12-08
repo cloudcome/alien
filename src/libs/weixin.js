@@ -1,5 +1,5 @@
-/*!
- * 微信
+/**
+ * 微信 js sdk
  * @author ydr.me
  * @create 2015-02-13 16:57
  */
@@ -48,6 +48,19 @@ define(function (require, exports, module) {
             the.className = 'weixin';
             the._init();
         },
+
+        /**
+         * 设置分享数据
+         * @param shareData
+         * @returns {exports}
+         */
+        shareData: function (shareData) {
+            var the = this;
+
+            dato.extend(the._shareData, shareData);
+            return the;
+        },
+
         _init: function () {
             var the = this;
 
@@ -117,7 +130,7 @@ define(function (require, exports, module) {
                 WeixinJSBridge.on('menu:share:appmessage', function (argv) {
                     WeixinJSBridge.invoke('sendAppMessage', {
                         "appid": the._config.appId,
-                        "img_url": shareData.imgUrl,
+                        "img_url": shareData.img,
                         "link": shareData.link,
                         "desc": shareData.desc,
                         "title": shareData.title
@@ -129,7 +142,7 @@ define(function (require, exports, module) {
                 //绑定‘分享到朋友圈’按钮
                 WeixinJSBridge.on('menu:share:timeline', function (argv) {
                     WeixinJSBridge.invoke('shareTimeline', {
-                        "img_url": shareData.imgUrl,
+                        "img_url": shareData.img,
                         "link": shareData.link,
                         "desc": shareData.desc,
                         "title": shareData.title
