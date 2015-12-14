@@ -42,7 +42,7 @@ define(function (require, exports, module) {
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
         breakOnInvalid: typeis.window(window) ? false : true,
-        defaultMsg: '${path}字段不合法',
+        defaultMsg: '${path}不合法',
         // 规则的 data 属性
         dataValidation: 'validation',
         dataAlias: 'alias',
