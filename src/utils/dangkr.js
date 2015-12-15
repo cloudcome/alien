@@ -1106,13 +1106,13 @@ define(function (require, exports, module) {
     };
 
     dangkr.tokenKey = '-dkToken-';
-    dangkr.isDangkr = isDangkr;
+    dangkr.is = dangkr.isDangkr = isDangkr;
     dangkr.defaults = defaults;
     dangkr.version = dkuaList[1];
     dangkr.network = networkMap[dkuaList[2]];
     dangkr.systemName = getInfoFromUA('systemName', 'aos');
-    dangkr.systemVersion = getInfoFromUA('systemVersion', 'aos');
-    dangkr.deviceVersion = getInfoFromUA('deviceVersion', 'aos');
-    dangkr.deviceId = getInfoFromUA('deviceId', 'aos');
+    dangkr.systemVersion = getInfoFromUA('systemVersion', '0');
+    dangkr.deviceVersion = getInfoFromUA('deviceVersion', '0');
+    dangkr.deviceId = getInfoFromUA('deviceId', '');
     module.exports = dangkr;
 });

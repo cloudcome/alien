@@ -317,7 +317,7 @@ define(function (require, exports, module) {
 
     weixin.wx = wx;
     weixin.is = !!uaMicroMessenger[0];
-    weixin.version = uaMicroMessenger[1];
+    weixin.version = uaMicroMessenger[1] || '0.0.0';
     weixin.netWork = uaNetType[1];
     weixin.language = uaLanguage[1];
     module.exports = weixin;
