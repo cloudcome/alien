@@ -14,6 +14,13 @@ define(function (require, exports, module) {
 
     var weixin = require('../../src/utils/weixin.js');
 
+    document.write(navigator.userAgent);
+
+    alert(weixin.is);
+    alert(weixin.version);
+    alert(weixin.netWork);
+    alert(weixin.language);
+
     weixin.config({
         appid: '123'
     }).ready(function () {

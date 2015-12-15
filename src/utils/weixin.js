@@ -16,14 +16,23 @@ define(function (require, exports, module) {
     var klass = require('./class.js');
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
+    var string = require('./string.js');
     var controller = require('./controller.js');
     var Emitter = require('../libs/emitter.js');
 
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
     var namespace = 'WeixinJSBridge';
+    // Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75
+    // MicroMessenger/6.3.8 NetType/WIFI Language/zh_CN
     var ua = navigator.userAgent;
-    var weixinUA = ua.match(/m/);
+    var parseUA = function (type) {
+        var reg = new RegExp(string.escapeRegExp(type) + '\/([^ ]*)', 'i');
 
+        return ua.match(reg) || ['', ''];
+    };
+    var uaMicroMessenger = parseUA('MicroMessenger');
+    var uaNetType = parseUA('NetType');
+    var uaLanguage = parseUA('Language');
     var Weixin = klass.extends(Emitter).create({
         constructor: function () {
             var the = this;
@@ -171,11 +180,19 @@ define(function (require, exports, module) {
 
 
             // 分享到 QQ 好友
-            wx.onMenuShareQQ(shareData);
+            try {
+                wx.onMenuShareQQ(shareData);
+            } catch (err) {
+                // ignore
+            }
 
 
             // 分享到 QQ 空间
-            wx.onMenuShareQZone(shareData);
+            try {
+                wx.onMenuShareQZone(shareData);
+            } catch (err) {
+                // ignore
+            }
 
 
             // 分享到腾讯微博
@@ -299,5 +316,9 @@ define(function (require, exports, module) {
     var weixin = new Weixin();
 
     weixin.wx = wx;
+    weixin.is = !!uaMicroMessenger[0];
+    weixin.version = uaMicroMessenger[1];
+    weixin.netWork = uaNetType[1];
+    weixin.language = uaLanguage[1];
     module.exports = weixin;
 });
