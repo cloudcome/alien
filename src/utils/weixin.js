@@ -146,30 +146,6 @@ define(function (require, exports, module) {
 
                 readyTodo();
 
-                //绑定‘分享给朋友’按钮
-                WeixinJSBridge.on('menu:share:appmessage', function (argv) {
-                    WeixinJSBridge.invoke('sendAppMessage', {
-                        appid: the._config.appId,
-                        img_url: shareData.imgUrl,
-                        link: shareData.link,
-                        desc: shareData.desc,
-                        title: shareData.title
-                    }, function (res) {
-                        the.emit('complete', res);
-                    });
-                });
-
-                //绑定‘分享到朋友圈’按钮
-                WeixinJSBridge.on('menu:share:timeline', function (argv) {
-                    WeixinJSBridge.invoke('shareTimeline', {
-                        img_url: shareData.imgUrl,
-                        link: shareData.link,
-                        desc: shareData.desc,
-                        title: shareData.title
-                    }, function (res) {
-                        the.emit('complete', res);
-                    });
-                });
 
                 //绑定‘分享到微博’按钮
                 WeixinJSBridge.on('menu:share:weibo', function (argv) {
@@ -223,15 +199,22 @@ define(function (require, exports, module) {
         shareTimeline: function (callback) {
             var the = this;
             var shareData = the._shareData;
+            var WeixinJSBridge = window[namespace];
 
             try {
-                WeixinJSBridge.invoke('shareTimeline', {
-                    appid: the._config.appId,
-                    img_url: shareData.img,
-                    link: shareData.link,
-                    desc: shareData.desc,
-                    title: shareData.title
-                }, callback);
+                if (WeixinJSBridge) {
+                    //绑定‘分享到朋友圈’按钮
+                    WeixinJSBridge.on('menu:share:timeline', function (argv) {
+                        WeixinJSBridge.invoke('shareTimeline', {
+                            img_url: shareData.imgUrl,
+                            link: shareData.link,
+                            desc: shareData.desc,
+                            title: shareData.title
+                        }, function (res) {
+                            the.emit('complete', res);
+                        });
+                    });
+                }
             } catch (err) {
                 // ignore
             }
@@ -258,15 +241,21 @@ define(function (require, exports, module) {
         shareFriend: function (callback) {
             var the = this;
             var shareData = the._shareData;
+            var WeixinJSBridge = window[namespace];
 
             try {
-                WeixinJSBridge.invoke('sendAppMessage', {
-                    appid: the._config.appId,
-                    img_url: shareData.img,
-                    link: shareData.link,
-                    desc: shareData.desc,
-                    title: shareData.title
-                }, callback);
+                if (WeixinJSBridge) {
+                    //绑定‘分享给朋友’按钮
+                    WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+                        WeixinJSBridge.invoke('sendAppMessage', {
+                            appid: the._config.appId,
+                            img_url: shareData.imgUrl,
+                            link: shareData.link,
+                            desc: shareData.desc,
+                            title: shareData.title
+                        }, callback);
+                    });
+                }
             } catch (err) {
                 // ignore
             }
@@ -331,6 +320,31 @@ define(function (require, exports, module) {
                     // 用户取消分享后执行的回调函数
                 }
             });
+
+            return the;
+        },
+
+
+        /**
+         * 分享到QQ微博
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        shareQQweibo: function (callback) {
+            var the = this;
+            var shareData = the._shareData;
+
+            wx.onMenuShareWeibo({
+                title: shareData.title, // 分享标题
+                desc: shareData.desc, // 分享描述
+                link: shareData.link, // 分享链接
+                imgUrl: shareData.img, // 分享图标
+                success: callback,
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
 
             return the;
         }
