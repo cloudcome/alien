@@ -12,7 +12,13 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var abc = require('./abc.js');
+    var weixin = require('../../src/utils/weixin.js');
 
-    module.exports = {};
+    weixin.ready(function () {
+        for (var key in window.WeixinJSBridge) {
+            document.write('<br>' + key + ' = ' + window[key]);
+        }
+    }).broken(function () {
+        alert('微信初始化失败');
+    });
 });

@@ -15,15 +15,23 @@ define(function (require, exports, module) {
     var wx = require('../3rd/weixin.js');
     var klass = require('./class.js');
     var dato = require('./dato.js');
+    var typeis = require('./typeis.js');
+    var controller = require('./controller.js');
     var Emitter = require('../libs/emitter.js');
+
     var jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'hideOptionMenu', 'showOptionMenu', 'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem', 'showAllNonBaseMenuItem', 'closeWindow', 'scanQRCode', 'chooseWXPay', 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard'];
+    var namespace = 'WeixinJSBridge';
+
     var Weixin = klass.extends(Emitter).create({
-        constructor: function (config, shareData) {
+        constructor: function () {
             var the = this;
 
-            the._shareData = {};
-            shareData.imgUrl = shareData.imgUrl || shareData.img;
             the.className = 'weixin';
+            the._readyCallbacks = [];
+            the._brokenCallbacks = [];
+            the._config = {};
+            the._shareData = {};
+            the._hasReady = false;
             the._initEvent();
         },
 
@@ -42,13 +50,15 @@ define(function (require, exports, module) {
             var the = this;
 
             config.timestamp = config.timestamp || config.timeStamp;
-            the._config = dato.extend({
-                jsApiList: jsApiList
+            dato.extend(the._config, {
+                jsApiList: jsApiList,
+                debug: !!DEBUG
             }, config);
             wx.config(the._config);
 
             return the;
         },
+
 
         /**
          * 设置分享数据
@@ -62,6 +72,7 @@ define(function (require, exports, module) {
         shareData: function (shareData) {
             var the = this;
 
+            shareData.img = shareData.img || shareData.imgUrl;
             dato.extend(the._shareData, shareData);
             return the;
         },
@@ -93,45 +104,56 @@ define(function (require, exports, module) {
                 }
             };
             var shareData = dato.extend(the._shareData, callbacks);
+            var WeixinJSBridge = window[namespace];
+            var readyTodo = function () {
+                the._hasReady = true;
+                dato.each(the._readyCallbacks, function (index, callback) {
+                    callback();
+                });
 
-            wx.ready(function () {
                 the.emit('ready');
+            };
 
-                // 分享到朋友圈
-                wx.onMenuShareTimeline(shareData);
+            // 新接口
+            wx.ready(function () {
+                //// 分享到朋友圈
+                //wx.onMenuShareTimeline(shareData);
+                //
+                //// 分享给好友
+                //wx.onMenuShareAppMessage(shareData);
+                //
+                //// 分享到 QQ
+                //wx.onMenuShareQQ(shareData);
+                //
+                //// 分享到腾讯微博
+                //wx.onMenuShareWeibo(shareData);
 
-                // 分享给好友
-                wx.onMenuShareAppMessage(shareData);
-
-                // 分享到 QQ
-                wx.onMenuShareQQ(shareData);
-
-                // 分享到腾讯微博
-                wx.onMenuShareWeibo(shareData);
+                readyTodo();
             });
 
             wx.error(function (res) {
+                dato.each(the._brokenCallbacks, function (index, callback) {
+                    callback(res);
+                });
                 the.emit('error', res);
             });
 
             // 旧接口
             document.addEventListener('WeixinJSBridgeReady', function () {
-                var WeixinJSBridge = window.WeixinJSBridge;
-
                 if (!WeixinJSBridge) {
                     return;
                 }
 
-                the.emit('ready');
+                readyTodo();
 
                 //绑定‘分享给朋友’按钮
                 WeixinJSBridge.on('menu:share:appmessage', function (argv) {
                     WeixinJSBridge.invoke('sendAppMessage', {
-                        "appid": the._config.appId,
-                        "img_url": shareData.img,
-                        "link": shareData.link,
-                        "desc": shareData.desc,
-                        "title": shareData.title
+                        appid: the._config.appId,
+                        img_url: shareData.imgUrl,
+                        link: shareData.link,
+                        desc: shareData.desc,
+                        title: shareData.title
                     }, function (res) {
                         the.emit('complete', res);
                     });
@@ -140,10 +162,10 @@ define(function (require, exports, module) {
                 //绑定‘分享到朋友圈’按钮
                 WeixinJSBridge.on('menu:share:timeline', function (argv) {
                     WeixinJSBridge.invoke('shareTimeline', {
-                        "img_url": shareData.img,
-                        "link": shareData.link,
-                        "desc": shareData.desc,
-                        "title": shareData.title
+                        img_url: shareData.imgUrl,
+                        link: shareData.link,
+                        desc: shareData.desc,
+                        title: shareData.title
                     }, function (res) {
                         the.emit('complete', res);
                     });
@@ -152,13 +174,165 @@ define(function (require, exports, module) {
                 //绑定‘分享到微博’按钮
                 WeixinJSBridge.on('menu:share:weibo', function (argv) {
                     WeixinJSBridge.invoke('shareWeibo', {
-                        "content": shareData.desc,
-                        "url": shareData.link
+                        content: shareData.desc,
+                        url: shareData.link
                     }, function (res) {
                         the.emit('complete', res);
                     });
                 });
             });
+        },
+
+
+        /**
+         * 准备好后回调
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        ready: function (callback) {
+            var the = this;
+
+            if (typeis.Function(callback)) {
+                the._readyCallbacks.push(callback);
+            }
+
+            return the;
+        },
+
+        /**
+         * 失败后回调
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        broken: function (callback) {
+            var the = this;
+
+            if (typeis.Function(callback)) {
+                the._brokenCallbacks.push(callback);
+            }
+
+            return the;
+        },
+
+
+        /**
+         * 分享到朋友圈
+         * @param callback
+         * @returns {Weixin}
+         */
+        shareTimeline: function (callback) {
+            var the = this;
+            var shareData = the._shareData;
+
+            try {
+                WeixinJSBridge.invoke('shareTimeline', {
+                    appid: the._config.appId,
+                    img_url: shareData.img,
+                    link: shareData.link,
+                    desc: shareData.desc,
+                    title: shareData.title
+                }, callback);
+            } catch (err) {
+                // ignore
+            }
+
+            wx.onMenuShareTimeline({
+                title: shareData.title, // 分享标题
+                link: shareData.link, // 分享链接
+                imgUrl: shareData.img, // 分享图标
+                success: callback,
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 分享给好友
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        shareFriend: function (callback) {
+            var the = this;
+            var shareData = the._shareData;
+
+            try {
+                WeixinJSBridge.invoke('sendAppMessage', {
+                    appid: the._config.appId,
+                    img_url: shareData.img,
+                    link: shareData.link,
+                    desc: shareData.desc,
+                    title: shareData.title
+                }, callback);
+            } catch (err) {
+                // ignore
+            }
+
+            wx.onMenuShareTimeline({
+                title: shareData.title, // 分享标题
+                desc: shareData.desc, // 分享描述
+                link: shareData.link, // 分享链接
+                imgUrl: shareData.img, // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: callback,
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 分享到QQ
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        shareQQ: function (callback) {
+            var the = this;
+            var shareData = the._shareData;
+
+            wx.onMenuShareQQ({
+                title: shareData.title, // 分享标题
+                desc: shareData.desc, // 分享描述
+                link: shareData.link, // 分享链接
+                imgUrl: shareData.img, // 分享图标
+                success: callback,
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            return the;
+        },
+
+
+        /**
+         * 分享到QQ空间
+         * @param [callback]
+         * @returns {Weixin}
+         */
+        shareQZone: function (callback) {
+            var the = this;
+            var shareData = the._shareData;
+
+            wx.onMenuShareQZone({
+                title: shareData.title, // 分享标题
+                desc: shareData.desc, // 分享描述
+                link: shareData.link, // 分享链接
+                imgUrl: shareData.img, // 分享图标
+                success: callback,
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            return the;
         }
     });
 
