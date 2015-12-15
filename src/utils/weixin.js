@@ -49,12 +49,30 @@ define(function (require, exports, module) {
         config: function (config) {
             var the = this;
 
+            config.appId = config.appId || config.appid;
             config.timestamp = config.timestamp || config.timeStamp;
             dato.extend(the._config, {
                 jsApiList: jsApiList,
                 debug: !!DEBUG
             }, config);
             wx.config(the._config);
+
+            // 新接口
+            wx.ready(the._ready.bind(the));
+
+            wx.error(function (res) {
+                if (the._hasReady || the._hasBroken) {
+                    return;
+                }
+
+                the._hasBroken = true;
+                controller.nextTick(function () {
+                    dato.each(the._brokenCallbacks, function (index, callback) {
+                        callback(res);
+                    });
+                    the.emit('error', res);
+                });
+            });
 
             return the;
         },
@@ -78,85 +96,48 @@ define(function (require, exports, module) {
         },
 
 
-        _initEvent: function () {
-            var the = this;
-
-            // success：接口调用成功时执行的回调函数。
-            // fail：接口调用失败时执行的回调函数。
-            // complete：接口调用完成时执行的回调函数，无论成功或失败都会执行。
-            // cancel：用户点击取消时的回调函数，仅部分有用户取消操作的api才会用到。
-            // trigger: 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口。
-            var callbacks = {
-                success: function (errMsg) {
-                    the.emit('success', errMsg);
-                },
-                fail: function (errMsg) {
-                    the.emit('error', errMsg);
-                },
-                complete: function (errMsg) {
-                    the.emit('complete', errMsg);
-                },
-                cancel: function (errMsg) {
-                    the.emit('cancel', errMsg);
-                },
-                trigger: function (errMsg) {
-                    the.emit('trigger', errMsg);
-                }
-            };
-            var shareData = dato.extend(the._shareData, callbacks);
-            var WeixinJSBridge = window[namespace];
-            var readyTodo = function () {
-                the._hasReady = true;
-                dato.each(the._readyCallbacks, function (index, callback) {
-                    callback();
-                });
-
-                the.emit('ready');
-            };
-
-            // 新接口
-            wx.ready(function () {
-                //// 分享到朋友圈
-                //wx.onMenuShareTimeline(shareData);
-                //
-                //// 分享给好友
-                //wx.onMenuShareAppMessage(shareData);
-                //
-                //// 分享到 QQ
-                //wx.onMenuShareQQ(shareData);
-                //
-                //// 分享到腾讯微博
-                //wx.onMenuShareWeibo(shareData);
-
-                readyTodo();
-            });
-
-            wx.error(function (res) {
-                dato.each(the._brokenCallbacks, function (index, callback) {
-                    callback(res);
-                });
-                the.emit('error', res);
-            });
-
-            // 旧接口
-            document.addEventListener('WeixinJSBridgeReady', function () {
-                if (!WeixinJSBridge) {
+        /**
+         * callback 封装
+         * @param callback
+         * @returns {*}
+         * @private
+         */
+        _callback: function (callback) {
+            return function (res) {
+                if (!typeis.Function(callback)) {
                     return;
                 }
 
-                readyTodo();
+                if (!res.errMsg || /:ok$/i.test(res.errMsg)) {
+                    return callback();
+                }
 
+                callback(new Error(res.errMsg));
+            };
+        },
 
-                //绑定‘分享到微博’按钮
-                WeixinJSBridge.on('menu:share:weibo', function (argv) {
-                    WeixinJSBridge.invoke('shareWeibo', {
-                        content: shareData.desc,
-                        url: shareData.link
-                    }, function (res) {
-                        the.emit('complete', res);
-                    });
+        _ready: function () {
+            var the = this;
+
+            if (the._hasReady || the._hasBroken) {
+                return;
+            }
+
+            the._hasReady = true;
+            controller.nextTick(function () {
+                dato.each(the._readyCallbacks, function (index, callback) {
+                    callback();
                 });
+                the.emit('ready');
             });
+        },
+
+
+        _initEvent: function () {
+            var the = this;
+
+            // 旧接口
+            document.addEventListener('WeixinJSBridgeReady', the._ready.bind(the));
         },
 
 
@@ -204,30 +185,24 @@ define(function (require, exports, module) {
             try {
                 if (WeixinJSBridge) {
                     //绑定‘分享到朋友圈’按钮
-                    WeixinJSBridge.on('menu:share:timeline', function (argv) {
+                    WeixinJSBridge.on('menu:share:timeline', function () {
                         WeixinJSBridge.invoke('shareTimeline', {
                             img_url: shareData.imgUrl,
                             link: shareData.link,
                             desc: shareData.desc,
                             title: shareData.title
-                        }, function (res) {
-                            the.emit('complete', res);
-                        });
+                        }, the._callback(callback));
                     });
                 }
             } catch (err) {
-                // ignore
+                wx.onMenuShareTimeline({
+                    title: shareData.title, // 分享标题
+                    link: shareData.link, // 分享链接
+                    imgUrl: shareData.img, // 分享图标
+                    success: the._callback(callback),
+                    cancel: the._callback(callback)
+                });
             }
-
-            wx.onMenuShareTimeline({
-                title: shareData.title, // 分享标题
-                link: shareData.link, // 分享链接
-                imgUrl: shareData.img, // 分享图标
-                success: callback,
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
-            });
 
             return the;
         },
@@ -253,25 +228,21 @@ define(function (require, exports, module) {
                             link: shareData.link,
                             desc: shareData.desc,
                             title: shareData.title
-                        }, callback);
+                        }, the._callback(callback));
                     });
                 }
             } catch (err) {
-                // ignore
+                wx.onMenuShareTimeline({
+                    title: shareData.title, // 分享标题
+                    desc: shareData.desc, // 分享描述
+                    link: shareData.link, // 分享链接
+                    imgUrl: shareData.img, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: the._callback(callback),
+                    cancel: the._callback(callback)
+                });
             }
-
-            wx.onMenuShareTimeline({
-                title: shareData.title, // 分享标题
-                desc: shareData.desc, // 分享描述
-                link: shareData.link, // 分享链接
-                imgUrl: shareData.img, // 分享图标
-                type: '', // 分享类型,music、video或link，不填默认为link
-                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                success: callback,
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
-            });
 
             return the;
         },
@@ -291,10 +262,8 @@ define(function (require, exports, module) {
                 desc: shareData.desc, // 分享描述
                 link: shareData.link, // 分享链接
                 imgUrl: shareData.img, // 分享图标
-                success: callback,
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
+                success: the._callback(callback),
+                cancel: the._callback(callback)
             });
 
             return the;
@@ -315,10 +284,8 @@ define(function (require, exports, module) {
                 desc: shareData.desc, // 分享描述
                 link: shareData.link, // 分享链接
                 imgUrl: shareData.img, // 分享图标
-                success: callback,
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
+                success: the._callback(callback),
+                cancel: the._callback(callback)
             });
 
             return the;
@@ -333,18 +300,52 @@ define(function (require, exports, module) {
         shareQQweibo: function (callback) {
             var the = this;
             var shareData = the._shareData;
+            var WeixinJSBridge = window[namespace];
 
-            wx.onMenuShareWeibo({
-                title: shareData.title, // 分享标题
-                desc: shareData.desc, // 分享描述
-                link: shareData.link, // 分享链接
-                imgUrl: shareData.img, // 分享图标
-                success: callback,
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
+            try {
+                if (WeixinJSBridge) {
+                    //绑定‘分享到微博’按钮
+                    WeixinJSBridge.on('menu:share:weibo', function (argv) {
+                        WeixinJSBridge.invoke('shareWeibo', {
+                            content: shareData.desc,
+                            url: shareData.link
+                        }, the._callback(callback));
+                    });
                 }
-            });
+            } catch (err) {
+                wx.onMenuShareWeibo({
+                    title: shareData.title, // 分享标题
+                    desc: shareData.desc, // 分享描述
+                    link: shareData.link, // 分享链接
+                    imgUrl: shareData.img, // 分享图标
+                    success: the._callback(callback),
+                    cancel: the._callback(callback)
+                });
+            }
 
+            return the;
+        },
+
+
+        /**
+         * 微信支付
+         * @param signature {Object} 签名信息
+         * @param signature.timestamp {Number} 支付签名时间戳
+         * @param signature.nonceStr {String} 支付签名随机串，不长于 32 位
+         * @param signature.package {String} 统一支付接口返回的prepay_id参数值
+         * @param [signature.signType="MD5"] {String} 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+         * @param signature.paySign {String} 支付签名
+         * @param [callback] {Function} 回调
+         * @returns {Weixin}
+         */
+        pay: function (signature, callback) {
+            var the = this;
+
+            signature.success = the._callback(callback);
+            signature.cancel = the._callback(callback);
+            signature.timestamp = signature.timestamp || signature.timeStamp;
+            signature.signType = signature.signType || 'MD5';
+            wx.chooseWXPay(signature);
 
             return the;
         }
@@ -352,6 +353,6 @@ define(function (require, exports, module) {
 
     var weixin = new Weixin();
 
-    weixin.original = wx;
+    weixin.wx = wx;
     module.exports = weixin;
 });

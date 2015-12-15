@@ -14,11 +14,22 @@ define(function (require, exports, module) {
 
     var weixin = require('../../src/utils/weixin.js');
 
-    weixin.ready(function () {
-        for (var key in window.WeixinJSBridge) {
-            document.write('<br>' + key + ' = ' + window[key]);
-        }
+    weixin.config({
+        appid: '123'
+    }).ready(function () {
+        alert('微信初始化成功');
+        //for (var key in window.WeixinJSBridge) {
+        //    document.write('<br>' + key + ' = ' + window[key]);
+        //}
     }).broken(function () {
         alert('微信初始化失败');
     });
+
+    //weixin.wx.ready(function () {
+    //    alert('ready');
+    //});
+    //
+    //weixin.wx.error(function () {
+    //    alert('error');
+    //});
 });
