@@ -69,21 +69,8 @@ define(function (require, exports, module) {
             wx.config(the._configs);
 
             // 新接口
-            wx.ready(the._ready.bind(the));
-
-            wx.error(function (res) {
-                if (the._hasReady || the._hasBroken) {
-                    return;
-                }
-
-                the._hasBroken = true;
-                controller.nextTick(function () {
-                    dato.each(the._brokenCallbacks, function (index, callback) {
-                        callback(res);
-                    });
-                    the.emit('error', res);
-                });
-            });
+            wx.ready(the._onready.bind(the));
+            wx.error(the._onbroken.bind(the));
 
             return the;
         },
@@ -127,8 +114,19 @@ define(function (require, exports, module) {
             };
         },
 
-        _ready: function () {
+
+        /**
+         * 准备完回调
+         * @returns {*}
+         * @private
+         */
+        _onready: function () {
             var the = this;
+
+            // 非微信直接到 error
+            if (!uaMicroMessenger[0]) {
+                return the._onbroken();
+            }
 
             if (the._hasReady || the._hasBroken) {
                 return;
@@ -218,11 +216,31 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 失败后回调
+         * @private
+         */
+        _onbroken: function () {
+            var the = this;
+
+            if (the._hasReady || the._hasBroken) {
+                return;
+            }
+
+            the._hasBroken = true;
+            controller.nextTick(function () {
+                dato.each(the._brokenCallbacks, function (index, callback) {
+                    callback();
+                });
+                the.emit('error');
+            });
+        },
+
         _initEvent: function () {
             var the = this;
 
             // 旧接口
-            document.addEventListener('WeixinJSBridgeReady', the._ready.bind(the));
+            document.addEventListener('WeixinJSBridgeReady', the._onready.bind(the));
         },
 
 

@@ -15,19 +15,18 @@ define(function (require, exports, module) {
     var weixin = require('../../src/utils/weixin.js');
 
     document.write(navigator.userAgent);
-
-    alert(weixin.is);
-    alert(weixin.version);
-    alert(weixin.netWork);
-    alert(weixin.language);
+    document.write('<br>' + weixin.is);
+    document.write('<br>' + weixin.version);
+    document.write('<br>' + weixin.netWork);
+    document.write('<br>' + weixin.language);
 
     weixin.config({
         appid: '123'
     }).ready(function () {
         alert('微信初始化成功');
-        //for (var key in window.WeixinJSBridge) {
-        //    document.write('<br>' + key + ' = ' + window[key]);
-        //}
+        for (var key in window.WeixinJSBridge) {
+            document.write('<br>' + key + ' = ' + window[key]);
+        }
     }).broken(function () {
         alert('微信初始化失败');
     });
