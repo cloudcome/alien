@@ -171,7 +171,7 @@ define(function (require, exports, module) {
      * css3 transition 动画
      * @param $ele {HTMLElement|String} 元素
      * @param to {Object} 动画终点样式
-     * @param options {Object} 配置
+     * @param [options] {Object} 配置
      * @param [options.duration=567] {Number} 动画时间
      * @param [options.delay=0] {Number} 开始动画延迟时间
      * @param [options.easing="in-out"] {String} 动画缓冲类型
