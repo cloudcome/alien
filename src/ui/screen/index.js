@@ -29,6 +29,11 @@ define(function (require, exports, module) {
     var animation = require('../../core/dom/animation.js');
     var attribute = require('../../core/dom/attribute.js');
 
+    var win = window;
+    var doc = win.document;
+    var html = doc.documentElement;
+    var body = doc.body;
+    var namespace = 'alien-ui-screen';
     var defaults = {
         // 默认模态
         modal: true,
@@ -63,6 +68,7 @@ define(function (require, exports, module) {
             the._$content = selector.query($content)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._initNode();
+            the._initEvent();
         },
 
 
@@ -86,6 +92,22 @@ define(function (require, exports, module) {
 
             attribute.addClass(the._$parent, options.addClass);
             modification.insert(the._$parent, document.body);
+        },
+
+
+        /**
+         * 初始化事件
+         * @private
+         */
+        _initEvent: function () {
+            var the = this;
+            var className = namespace + '-overflow';
+
+            the.before('open', function () {
+                attribute.addClass([html, body], className);
+            }).on('close', function () {
+                attribute.removeClass([html, body], className);
+            });
         },
 
 
