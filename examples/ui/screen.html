@@ -19,25 +19,29 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>screen.html</title>
     <style>
-        .screen{
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .screen {
             background: #f0ad4e;
         }
 
-        .placeholder{
+        .placeholder {
             height: 800px;
             background: #eee;
             margin-bottom: 20px;
         }
 
-        #demo2{
+        .demo {
             background: #fff;
         }
 
-        button{
+        button {
             display: block;
             padding: 20px 40px;
             font-size: 20px;
-            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -46,20 +50,36 @@
 
 <button id="open">打开全屏 screen</button>
 <button id="open2">打开小屏 screen</button>
+<button id="open3">打开左半屏 screen</button>
 
-<div id="demo">
+<div id="demo" class="demo">
     <div class="placeholder">placeholder</div>
     <div class="placeholder">placeholder</div>
     我要全屏弹出显示
     <button id="close">关闭</button>
 </div>
 
-<div id="demo2">
+<div id="demo2" class="demo">
     <p>底部小部分</p>
     <p>底部小部分</p>
     <p>底部小部分</p>
     <p>底部小部分</p>
-    <p><button id="close2">关闭</button></p>
+    <p>
+        <button id="close2">关闭</button>
+    </p>
+</div>
+
+
+<div id="demo3" class="demo">
+    <p>左边弹出来的哦</p>
+    <p>左边弹出来的哦</p>
+    <div class="placeholder">placeholder</div>
+    <div class="placeholder">placeholder</div>
+    <p>左边弹出来的哦</p>
+    <p>左边弹出来的哦</p>
+    <p>
+        <button id="close3">关闭</button>
+    </p>
 </div>
 
 <div class="placeholder">placeholder</div>

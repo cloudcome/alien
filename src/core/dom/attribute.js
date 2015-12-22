@@ -269,7 +269,11 @@ define(function (require, exports, module) {
 
                 var fix = exports.fixCss(key, val);
 
-                if (fix.key && REG_TRANSFORM_KEY.test(fix.key)) {
+                if (!fix.key) {
+                    return;
+                }
+
+                if (REG_TRANSFORM_KEY.test(fix.key)) {
                     transformKey = fix.key;
                     _setEleTransform(ele, key, val);
 

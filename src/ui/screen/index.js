@@ -41,8 +41,6 @@ define(function (require, exports, module) {
     var defaults = {
         // 默认模态
         modal: true,
-        // 默认向上弹出
-        direction: 'top',
         // 初始位置
         style: {
             position: 'fixed',
@@ -52,7 +50,7 @@ define(function (require, exports, module) {
             left: 0,
             overflow: 'auto',
             overflowScrolling: 'touch',
-            translateY: '100%'
+            transform: 'translate3d(0, 100%, 0)'
         },
         maskStyle: {
             background: 'rgba(0,0,0,0.3)'
@@ -160,13 +158,9 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
             var options = the._options;
-            var to = {};
-
-            if (options.direction === 'top' || options.direction === 'bottom') {
-                to.translateY = 0;
-            } else {
-                to.translateX = 0;
-            }
+            var to = {
+                transform: 'translate3d(0, 0, 0)'
+            };
 
             the.emit('beforeopen');
 
