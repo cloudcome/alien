@@ -142,7 +142,9 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
             var options = the._options;
-            var to = {};
+            var to = {
+                zIndex: ui.getZindex()
+            };
 
             if (options.direction === 'top' || options.direction === 'bottom') {
                 to.translateY = 0;
