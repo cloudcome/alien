@@ -136,9 +136,10 @@ define(function (require, exports, module) {
 
         /**
          * 打开屏幕
+         * @param [callback] {Function} 屏幕打开后回调
          * @returns {Screen}
          */
-        open: function () {
+        open: function (callback) {
             var the = this;
             var options = the._options;
             var to = {};
@@ -155,6 +156,9 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('open');
+                if (typeis.Function(callback)) {
+                    callback.call(the);
+                }
             });
 
             return the;
@@ -163,9 +167,10 @@ define(function (require, exports, module) {
 
         /**
          * 关闭屏幕
+         * @param [callback] {Function} 屏幕关闭后回调
          * @returns {Screen}
          */
-        close: function () {
+        close: function (callback) {
             var the = this;
             var options = the._options;
 
@@ -175,6 +180,9 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('close');
+                if (typeis.Function(callback)) {
+                    callback.call(the);
+                }
             });
 
             return the;
