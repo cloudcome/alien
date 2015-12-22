@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var allocation = require('../../utils/allocation.js');
+    var controller = require('../../utils/controller.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
@@ -59,8 +60,7 @@ define(function (require, exports, module) {
         easing: 'in-out',
         duration: 345,
         template: null,
-        addClass: '',
-        mask: true
+        addClass: ''
     };
     var Screen = ui.create({
         constructor: function ($content, options) {
@@ -87,9 +87,12 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._mask = new Mask({
-                style: options.maskStyle
-            });
+            if (options.modal) {
+                the._mask = new Mask({
+                    style: options.maskStyle
+                });
+            }
+
             the._$screen = modification.create('div', {
                 style: options.style
             });
@@ -103,6 +106,7 @@ define(function (require, exports, module) {
             }
 
             attribute.addClass(the._$screen, options.addClass);
+            attribute.hide(the._$screen);
             modification.insert(the._$screen, document.body);
         },
 
@@ -165,7 +169,12 @@ define(function (require, exports, module) {
             }
 
             the.emit('beforeopen');
-            the._mask.open();
+
+            if (the._mask) {
+                the._mask.open();
+            }
+
+            attribute.show(the._$screen, 'block');
             to.zIndex = ui.getZindex();
             animation.transition(the._$screen, to, {
                 duration: options.duration,
@@ -196,7 +205,13 @@ define(function (require, exports, module) {
                 easing: options.easing
             }, function () {
                 the.emit('close');
-                the._mask.close();
+
+                if (the._mask) {
+                    the._mask.close();
+                }
+
+                attribute.hide(the._$screen);
+
                 if (typeis.Function(callback)) {
                     callback.call(the);
                 }

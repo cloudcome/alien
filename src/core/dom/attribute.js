@@ -294,9 +294,10 @@ define(function (require, exports, module) {
     /**
      * 设置元素可见
      * @param $ele
+     * @param [display]
      */
-    exports.show = function ($ele) {
-        exports.css($ele, 'display', see.getDisplay($ele));
+    exports.show = function ($ele, display) {
+        exports.css($ele, 'display', display || see.getDisplay($ele));
     };
 
 
