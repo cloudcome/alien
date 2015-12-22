@@ -53,6 +53,9 @@ define(function (require, exports, module) {
             overflowScrolling: 'touch',
             translateY: '100%'
         },
+        maskStyle: {
+            backgroud: 'rgba(0,0,0,0.3)'
+        },
         easing: 'in-out',
         duration: 345,
         template: null,
@@ -84,6 +87,9 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
+            the._mask = new Mask({
+                style: options.maskStyle
+            });
             the._$screen = modification.create('div', {
                 style: options.style
             });
@@ -98,7 +104,6 @@ define(function (require, exports, module) {
 
             attribute.addClass(the._$screen, options.addClass);
             modification.insert(the._$screen, document.body);
-            the._mask = new Mask();
         },
 
 
@@ -151,9 +156,7 @@ define(function (require, exports, module) {
         open: function (callback) {
             var the = this;
             var options = the._options;
-            var to = {
-                zIndex: ui.getZindex()
-            };
+            var to = {};
 
             if (options.direction === 'top' || options.direction === 'bottom') {
                 to.translateY = 0;
@@ -163,6 +166,7 @@ define(function (require, exports, module) {
 
             the.emit('beforeopen');
             the._mask.open();
+            to.zIndex = ui.getZindex();
             animation.transition(the._$screen, to, {
                 duration: options.duration,
                 easing: options.easing

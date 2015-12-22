@@ -20,6 +20,7 @@ define(function (require, exports, module) {
 
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
+    var allocation = require('../../utils/allocation.js');
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
@@ -46,6 +47,12 @@ define(function (require, exports, module) {
     var Mask = ui.create({
         constructor: function ($cover, options) {
             var the = this;
+            var args = allocation.args(arguments);
+
+            if (typeis.plainObject(args[0])) {
+                options = args[0];
+                $cover = win;
+            }
 
             the._$cover = selector.query($cover)[0];
             the._$cover = _isSimilar2Window(the._$cover) ? win : the._$cover;
