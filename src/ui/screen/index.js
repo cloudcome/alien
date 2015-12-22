@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var attribute = require('../../core/dom/attribute.js');
+    var style = require('./style.css', 'css');
 
     var win = window;
     var doc = win.document;
@@ -180,6 +181,7 @@ define(function (require, exports, module) {
         }
     });
 
+    ui.importStyle(style);
     Screen.defaults = defaults;
     module.exports = Screen;
 });
