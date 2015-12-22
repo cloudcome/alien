@@ -58,7 +58,8 @@ define(function (require, exports, module) {
         easing: 'in-out',
         duration: 345,
         template: null,
-        addClass: ''
+        addClass: '',
+        autoClose: true
     };
     var Screen = ui.create({
         constructor: function ($content, options) {
@@ -125,6 +126,12 @@ define(function (require, exports, module) {
             }).on('close', function () {
                 attribute.removeClass([html, body], className);
             });
+
+            if (the._mask && options.autoClose) {
+                the._mask.on('hit', function () {
+                    the.close();
+                });
+            }
         },
 
 
