@@ -104,7 +104,10 @@ define(function (require, exports, module) {
                         if (key === 'style') {
                             dato.each(val, function (k, v) {
                                 var fix = attribute.fixCss(k, v);
-                                styles.push(fix.key + ':' + fix.val);
+
+                                if (fix.key) {
+                                    styles.push(fix.key + ':' + fix.val);
+                                }
                             });
 
                             val = styles.join(';');

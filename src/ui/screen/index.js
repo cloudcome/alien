@@ -54,7 +54,7 @@ define(function (require, exports, module) {
             translateY: '100%'
         },
         maskStyle: {
-            backgroud: 'rgba(0,0,0,0.3)'
+            background: 'rgba(0,0,0,0.3)'
         },
         easing: 'in-out',
         duration: 345,
