@@ -69,7 +69,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             if (options.modal) {
-                the._mask = new Mask(the._$parent);
+                the._mask = new Mask(the._$screen);
             }
 
             modification.insert(tpl.render({

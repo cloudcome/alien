@@ -52,7 +52,7 @@ define(function (require, exports, module) {
         constructor: function ($parent, options) {
             var the = this;
 
-            the._$parent = selector.query($parent)[0];
+            the._$screen = selector.query($parent)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
             the.className = 'range';
@@ -84,7 +84,7 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._maxInner = attribute.innerWidth(the._$parent);
+            the._maxInner = attribute.innerWidth(the._$screen);
 
             var scale = the._maxInner / the._steps;
 
@@ -109,9 +109,9 @@ define(function (require, exports, module) {
             };
 
             data.list = new Array(the._steps);
-            the._$parent.innerHTML = tpl.render(data);
+            the._$screen.innerHTML = tpl.render(data);
 
-            var nodes = selector.query('.j-flag', the._$parent);
+            var nodes = selector.query('.j-flag', the._$screen);
 
             the._$inner = nodes[0];
             the._$scale = nodes[1];
@@ -397,7 +397,7 @@ define(function (require, exports, module) {
             the.destroyed = true;
             event.un(the._$control0, 'dragstart drag dragend');
             event.un(the._$control1, 'dragstart drag dragend');
-            the._$parent.innerHTML = '';
+            the._$screen.innerHTML = '';
         }
     });
 

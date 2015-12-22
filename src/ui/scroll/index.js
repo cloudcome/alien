@@ -42,13 +42,13 @@ define(function (require, exports, module) {
             // 容器
             the._$container = selector.query($container)[0];
             // 父级
-            the._$parent = the._$container;
+            the._$screen = the._$container;
             // 相对
             the._$offset = the._$container;
 
             if (the._$container === win || the._$container === doc || the._$container === $html || the._$container === $body) {
                 the._$container = doc;
-                the._$parent = win;
+                the._$screen = win;
                 the._$offset = $body;
             }
 
@@ -70,8 +70,8 @@ define(function (require, exports, module) {
                 var scrollLeft = attribute.scrollLeft(the._$container);
                 var top = isListenDoc ? 0 : attribute.top(the._$container);
                 var left = isListenDoc ? 0 : attribute.left(the._$container);
-                var innerHeight = attribute.innerHeight(the._$parent);
-                var innerWidth = attribute.innerWidth(the._$parent);
+                var innerHeight = attribute.innerHeight(the._$screen);
+                var innerWidth = attribute.innerWidth(the._$screen);
                 var scrollHeight = the._$offset.scrollHeight;
                 var scrollWidth = the._$offset.scrollWidth;
                 var ret = {

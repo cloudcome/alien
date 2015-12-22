@@ -21,6 +21,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var ui = require('../index.js');
+    var Mask = require('../mask/index.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var allocation = require('../../utils/allocation.js');
@@ -35,6 +36,7 @@ define(function (require, exports, module) {
     var html = doc.documentElement;
     var body = doc.body;
     var namespace = 'alien-ui-screen';
+    var alienIndex = 0;
     var defaults = {
         // 默认模态
         modal: true,
@@ -54,7 +56,8 @@ define(function (require, exports, module) {
         easing: 'in-out',
         duration: 345,
         template: null,
-        addClass: ''
+        addClass: '',
+        mask: true
     };
     var Screen = ui.create({
         constructor: function ($content, options) {
@@ -81,18 +84,21 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
 
-            the._$parent = modification.create('div', {
+            the._$screen = modification.create('div', {
                 style: options.style
             });
 
             if (the._$content) {
-                modification.insert(the._$content, the._$parent);
+                var $flag = the._$flag = modification.create('#comment', namespace + '-' + alienIndex++);
+                modification.insert($flag, the._$content, 'afterend');
+                modification.insert(the._$content, the._$screen);
             } else if (options.template) {
                 the.html(options.template);
             }
 
-            attribute.addClass(the._$parent, options.addClass);
-            modification.insert(the._$parent, document.body);
+            attribute.addClass(the._$screen, options.addClass);
+            modification.insert(the._$screen, document.body);
+            the._mask = new Mask();
         },
 
 
@@ -102,10 +108,13 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            var options = the._options;
             var className = namespace + '-overflow';
 
             the.before('open', function () {
-                attribute.addClass([html, body], className);
+                if (options.modal) {
+                    attribute.addClass([html, body], className);
+                }
             }).on('close', function () {
                 attribute.removeClass([html, body], className);
             });
@@ -120,7 +129,7 @@ define(function (require, exports, module) {
         html: function (html) {
             var the = this;
 
-            the._$parent.innerHTML = html;
+            the._$screen.innerHTML = html;
             return the;
         },
 
@@ -130,7 +139,7 @@ define(function (require, exports, module) {
          * @returns {Node|*}
          */
         getNode: function () {
-            return this._$parent;
+            return this._$screen;
         },
 
 
@@ -153,7 +162,8 @@ define(function (require, exports, module) {
             }
 
             the.emit('beforeopen');
-            animation.transition(the._$parent, to, {
+            the._mask.open();
+            animation.transition(the._$screen, to, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
@@ -177,17 +187,43 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the.emit('beforeclose');
-            animation.transition(the._$parent, options.style, {
+            animation.transition(the._$screen, options.style, {
                 duration: options.duration,
                 easing: options.easing
             }, function () {
                 the.emit('close');
+                the._mask.close();
                 if (typeis.Function(callback)) {
                     callback.call(the);
                 }
             });
 
             return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            if (the.destroyed) {
+                return;
+            }
+
+            the.destroyed = true;
+
+            if (the._mask) {
+                the._mask.destroy();
+            }
+
+            if (the._$content) {
+                modification.insert(the._$content, the._$flag, 'beforebegin');
+                modification.remove(the._$flag);
+            }
+
+            modification.remove(the._$screen);
         }
     });
 

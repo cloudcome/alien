@@ -48,7 +48,7 @@ define(function (require, exports, module) {
         constructor: function ($parent, options) {
             var the = this;
 
-            the._$parent = selector.query($parent)[0];
+            the._$screen = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
             the.className = 'qrcode';
             the.destroyed = false;
@@ -84,12 +84,12 @@ define(function (require, exports, module) {
                 $ret = the['_render' + typeIndex]();
             }
 
-            the._$parent.innerHTML = '';
+            the._$screen.innerHTML = '';
 
             if (typeis.string($ret)) {
-                the._$parent.innerHTML = $ret;
+                the._$screen.innerHTML = $ret;
             } else {
-                modification.insert($ret, the._$parent);
+                modification.insert($ret, the._$screen);
             }
         },
 

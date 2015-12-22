@@ -115,7 +115,7 @@ define(function (require, exports, module) {
                 the._$trackY = $trackY;
                 the._$thumbX = $thumbX;
                 the._$thumbY = $thumbY;
-                the._$parent = $parent;
+                the._$screen = $parent;
                 the._$body = $body;
                 the._$scroll = isTextarea ? $ele : $body;
                 the._isTextarea = isTextarea;
@@ -168,7 +168,7 @@ define(function (require, exports, module) {
         _calScrollSize: function () {
             var the = this;
             var $scroll = the._$scroll;
-            var $parent = the._$parent;
+            var $parent = the._$screen;
 
             // 当前滚动条值
             the._scrollLeft = $scroll.scrollLeft;
@@ -306,7 +306,7 @@ define(function (require, exports, module) {
             var options = the._options;
             var $scroll = the._$scroll;
             var $thumb = options.axis === 'y' ? the._$thumbY : the._$thumbX;
-            var $parent = the._$parent;
+            var $parent = the._$screen;
             var key = options.axis === 'y' ? 'Top' : 'Left';
             var x0;
             var left0;
@@ -638,8 +638,8 @@ define(function (require, exports, module) {
 
             // 清除监听
             event.un(the._$ele, updateEvent);
-            event.un(the._$parent, 'wheelstart');
-            event.un(the._$parent, 'wheelchange');
+            event.un(the._$screen, 'wheelstart');
+            event.un(the._$screen, 'wheelchange');
             event.un(document, 'wheelend', the._onwheelend);
             event.un(the._$ele, 'scroll', the._onscroll);
             event.un(the._$ele, 'input', the._oninput);

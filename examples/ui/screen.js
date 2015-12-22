@@ -19,11 +19,25 @@ define(function (require, exports, module) {
         sc.open();
     };
 
+    document.getElementById('open2').onclick = function () {
+        sc2.open();
+    };
+
     document.getElementById('close').onclick = function () {
         sc.close();
     };
 
+    document.getElementById('close2').onclick = function () {
+        sc2.close();
+    };
+
     var sc = new Screen('#demo', {
         addClass: 'screen'
+    });
+    var sc2 = new Screen('#demo2', {
+        modal: true,
+        style: {
+            top: 'auto'
+        }
     });
 });

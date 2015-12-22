@@ -1,4 +1,4 @@
-/*!
+/**
  * 遮罩
  * @author ydr.me
  * @create 2015-01-11 13:06
@@ -128,7 +128,7 @@ define(function (require, exports, module) {
                 maskWindowList.push(the);
 
                 if (options.fixed && attribute.height(body) > attribute.height(win)) {
-                    attribute.addClass(body, alienClass + '-overflow');
+                    attribute.addClass([html, body], alienClass + '-overflow');
                 }
             }
 
@@ -200,7 +200,7 @@ define(function (require, exports, module) {
             }
 
             if (!maskWindowLength) {
-                attribute.removeClass(body, alienClass + '-overflow');
+                attribute.removeClass([html, body], alienClass + '-overflow');
             }
 
             return the;
@@ -330,7 +330,7 @@ define(function (require, exports, module) {
      * @private
      */
     function _isSimilar2Window($ele) {
-        return $ele === win || $ele === doc ||
+        return !$ele || $ele === win || $ele === doc ||
             $ele === html || $ele === body || !$ele;
     }
 });

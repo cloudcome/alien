@@ -63,7 +63,7 @@ define(function (require, exports, module) {
         constructor: function ($parent, options) {
             var the = this;
 
-            the._$parent = selector.query($parent)[0];
+            the._$screen = selector.query($parent)[0];
             the._options = dato.extend({}, defaults, options);
             the._length = the._options.urls.length || the._options.length;
             the._hasPlaceholder = the._options.placeholder && the._options.placeholder.text;
@@ -93,10 +93,10 @@ define(function (require, exports, module) {
 
             if (options.selectSelectors.length) {
                 dato.each(options.selectSelectors, function (index, sel) {
-                    the._$selects.push(selector.query(sel, the._$parent)[0]);
+                    the._$selects.push(selector.query(sel, the._$screen)[0]);
                 });
             } else {
-                the._$selects = selector.query('select', the._$parent);
+                the._$selects = selector.query('select', the._$screen);
             }
 
             dato.repeat(the._length, function (index) {
