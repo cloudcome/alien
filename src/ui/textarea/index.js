@@ -68,6 +68,16 @@ define(function (require, exports, module) {
 
                 the._set(selection[0], selection[1], this.value);
             }));
+
+            the.bind('return', function () {
+                var lines = the.getLines();
+                var line = lines[0];
+
+                if (line) {
+
+                    return false;
+                }
+            });
         },
 
 
@@ -125,13 +135,12 @@ define(function (require, exports, module) {
             var value = $textarea.value;
             var options = the._options;
             var tabSize = options.tabSize;
-            var regTab = new RegExp('^\\s{' + tabSize + '}');
             var tabLineLength = 0;
             var isTabFirstLine = false;
 
             dato.each(lines, function (index, item) {
                 // has tab
-                if (regTab.test(item.text)) {
+                if (the._getIndentTimes(item.text)) {
                     if (!isTabFirstLine) {
                         isTabFirstLine = index === 0;
                     }
@@ -150,6 +159,27 @@ define(function (require, exports, module) {
             the._set(start, end, value);
 
             return the;
+        },
+
+
+        /**
+         * 获取文本的缩进次数
+         * @param text {String} 文本
+         * @returns {Number}
+         */
+        _getIndentTimes: function (text) {
+            var the = this;
+            var options = the._options;
+            var tabSize = options.tabSize;
+            var regTab = new RegExp('^\\s{' + tabSize + '}');
+            var times = 0;
+
+            while (regTab.test.test(text)) {
+                text = text.replace(regTab, '');
+                times++;
+            }
+
+            return times;
         },
 
 
