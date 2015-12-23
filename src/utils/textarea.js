@@ -111,7 +111,7 @@ define(function (require, exports, module) {
         node.value = left + text + right;
 
         if (select) {
-            exports.setSelection(node, position, position + text.length);
+            exports.setSelection(node, start, start + text.length);
         }
     };
 });
