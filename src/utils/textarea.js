@@ -14,40 +14,66 @@ define(function (require, exports, module) {
 
     var allocation = require('./allocation.js');
     var typeis = require('./typeis.js');
+    var controller = require('./controller.js');
 
-
-    var $textarea = document.createElement('textarea');
+    var doc = document;
+    var $textarea = doc.createElement('textarea');
+    var supportSetSelectionRange = 'setSelectionRange' in $textarea;
+    $textarea = null;
 
 
     /**
-     * 设置选区
-     * @link https://github.com/bh-lay/Selection/blob/master/asset/selection.js
-     * @type {Function}
+     * 获取当前文本输入框选区
+     * @link https://github.com/kof/field-selection/blob/master/lib/field-selection.js#L45
+     * @param node {Object} 元素
+     * @returns {[Number, Number]}
      */
-    var setSelection = $textarea.setSelectionRange ? function (node, start, len) {
-        setTimeout(function () {
-            node.focus();
-            node.setSelectionRange(start, start + len);
-        });
-    } : function (node, start, len) {
-        node.focus();
-        var strLen = node.value.length;
-        var rng = node.createTextRange();
-        rng.moveStart('character', start);
-        rng.moveEnd('character', start + len - strLen);
-        rng.select();
+    exports.getSelection = function (node) {
+        if (supportSetSelectionRange) {
+            return [node.selectionStart, node.selectionEnd];
+        }
+
+        var range = doc.selection.createRange();
+
+        if (!range) {
+            return [0, 0];
+        }
+
+        var textRange = node.createTextRange();
+        var dTextRange = textRange.duplicate();
+
+        textRange.moveToBookmark(range.getBookmark());
+        dTextRange.setEndPoint('EndToStart', textRange);
+
+        var start = dTextRange.text.length;
+        var end = dTextRange.text.length + range.text.length;
+
+        return [start, end];
     };
 
 
     /**
-     * 获取
+     * 设置选区
+     * @param node {Object} 输入元素
+     * @param start {Number} 起始位置
+     * @param [end=start] {Number} 终点位置
      */
-    exports.getSelection = function (node) {
-        if ($textarea.selectionStart) {
-            return [node.selectionStart, node.selectionEnd];
-        }
+    exports.setSelection = function (node, start, end) {
+        end = end || start;
 
+        controller.nextFrame(function () {
+            if (supportSetSelectionRange) {
+                node.setSelectionRange(start, end);
+                return;
+            }
 
+            node.focus();
+            var textRange = node.createTextRange();
+            textRange.collapse(true);
+            textRange.moveStart('character', start);
+            textRange.moveEnd('character', end - start);
+            textRange.select();
+        });
     };
 
 
@@ -74,5 +100,9 @@ define(function (require, exports, module) {
         var right = value.slice(position);
 
         node.value = left + text + right;
+
+        if (select) {
+            exports.setSelection(node, position, position + text.length);
+        }
     };
 });

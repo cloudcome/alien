@@ -15,11 +15,19 @@ define(function (require, exports, module) {
     var textarea = require('../../src/utils/textarea.js');
     var $textarea = document.getElementById('textarea');
 
-    document.getElementById('position1').onclick = function () {
-        console.log(textarea.getPosition($textarea));
+    document.getElementById('getSelection').onclick = function () {
+        console.log(textarea.getSelection($textarea));
+    };
+
+    document.getElementById('setSelection').onclick = function () {
+        var length = $textarea.value.length;
+        var middle = length / 2;
+
+        textarea.setSelection($textarea, middle - 1, middle + 1);
     };
 
     document.getElementById('insert1').onclick = function () {
-        textarea.insert($textarea, '[' + Date.now() + ']');
+        var current = textarea.getSelection($textarea)[0];
+        textarea.insert($textarea, '[' + Date.now() + ']', current, true);
     };
 });
