@@ -39,15 +39,36 @@ define(function (require, exports, module) {
     };
 
 
+    /**
+     * 获取
+     */
+    exports.getSelection = function (node) {
+        if ($textarea.selectionStart) {
+            return [node.selectionStart, node.selectionEnd];
+        }
+
+
+    };
+
+
+    /**
+     * 插入文本
+     * @param node {Object} textarea 元素
+     * @param text {String} 文本
+     * @param [position=0] {Number} 位置
+     * @param [select=false] {Boolean} 是否选中刚插入的文本
+     */
     exports.insert = function (node, text, position, select) {
         var args = allocation.args(arguments);
 
-        if(args.length === 3 && typeis.Boolean(args[2])){
+        if (args.length === 3 && typeis.Boolean(args[2])) {
             select = args[2];
             position = 0;
         }
 
         position = position || 0;
+        text = String(text);
+
         var value = node.value;
         var left = value.slice(0, position);
         var right = value.slice(position);

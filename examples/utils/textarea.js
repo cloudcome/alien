@@ -15,7 +15,11 @@ define(function (require, exports, module) {
     var textarea = require('../../src/utils/textarea.js');
     var $textarea = document.getElementById('textarea');
 
+    document.getElementById('position1').onclick = function () {
+        console.log(textarea.getPosition($textarea));
+    };
+
     document.getElementById('insert1').onclick = function () {
-        textarea.insert($textarea, Date.now());
+        textarea.insert($textarea, '[' + Date.now() + ']');
     };
 });
