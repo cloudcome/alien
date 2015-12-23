@@ -320,12 +320,22 @@ define(function (require, exports, module) {
             signature.timeStamp = signature.timestamp = signature.timestamp || signature.timeStamp;
             signature.signType = signature.signType || 'MD5';
 
-            try {
-                signature.complete = the._callback(callback);
-                wx.chooseWXPay(signature);
-            } catch (err) {
-                WeixinJSBridge.invoke('getBrandWCPayRequest', signature, the._callback(callback));
-            }
+            the.support('chooseWXPay', function (support) {
+                if (!support) {
+                    return callback(new Error('当前微信客户端不支持微信支付，请升级微信到最新版本再试一次'));
+                }
+
+                try {
+                    signature.complete = the._callback(callback);
+                    wx.chooseWXPay(signature);
+                } catch (err) {
+                    try {
+                        WeixinJSBridge.invoke('getBrandWCPayRequest', signature, the._callback(callback));
+                    } catch (err) {
+                        callback(new Error('微信客户端错误'));
+                    }
+                }
+            });
 
             return the;
         }
