@@ -14,5 +14,7 @@ define(function (require, exports, module) {
 
     var Textarea = require('../../src/ui/textarea/index.js');
 
-    new Textarea('#textarea');
+    var ta = new Textarea('#textarea');
+
+    window.ta = ta;
 });
