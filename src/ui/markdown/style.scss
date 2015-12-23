@@ -1,0 +1,58 @@
+.alien-ui-markdown {
+  position: relative;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #888;
+
+  &, * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  &-fullscreen {
+
+  }
+
+  &-header {
+    display: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &-body,
+  &-input,
+  &-output {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &-input {
+    padding: 5px;
+
+    textarea {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      resize: none;
+      font: 16px/20px 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, 'Hiragino Sans GB', sans-serif;
+      color: #333;
+    }
+  }
+
+  &-output {
+    display: none;
+  }
+
+  &-footer {
+    display: none;
+    border-top: 1px solid #ccc;
+  }
+}
+
+
