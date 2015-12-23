@@ -89,18 +89,24 @@ define(function (require, exports, module) {
      */
     exports.insert = function (node, text, position, select) {
         var args = allocation.args(arguments);
+        var selection = exports.getSelection(node);
+        var start = selection[0];
+        var end = selection[1];
 
         if (args.length === 3 && typeis.Boolean(args[2])) {
             select = args[2];
-            position = 0;
         }
 
-        position = position || 0;
+        if (typeis.Number(position)) {
+            start = position;
+            end = position;
+        }
+
         text = String(text);
 
         var value = node.value;
-        var left = value.slice(0, position);
-        var right = value.slice(position);
+        var left = value.slice(0, start);
+        var right = value.slice(end);
 
         node.value = left + text + right;
 

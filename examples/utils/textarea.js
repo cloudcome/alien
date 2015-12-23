@@ -27,7 +27,6 @@ define(function (require, exports, module) {
     };
 
     document.getElementById('insert1').onclick = function () {
-        var current = textarea.getSelection($textarea)[0];
-        textarea.insert($textarea, '[' + Date.now() + ']', current, true);
+        textarea.insert($textarea, '[' + Date.now() + ']', true);
     };
 });
