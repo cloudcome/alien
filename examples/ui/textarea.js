@@ -17,4 +17,8 @@ define(function (require, exports, module) {
     var ta = new Textarea('#textarea');
 
     window.ta = ta;
+
+    ta.on('change', function (info) {
+        console.log(info);
+    });
 });

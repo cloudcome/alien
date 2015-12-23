@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * textarea utils
  * @author ydr.me
  * @create 2015-12-23 16:40
  */
@@ -7,7 +7,10 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/textarea
+     * @module utils/textarea
+     * @reuqires utils/allocation
+     * @reuqires utils/typeis
+     * @reuqires utils/controller
      */
 
     'use strict';
