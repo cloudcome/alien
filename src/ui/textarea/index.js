@@ -70,13 +70,8 @@ define(function (require, exports, module) {
             }));
 
             the.bind('return', function () {
-                var lines = the.getLines();
-                var line = lines[0];
-
-                if (line) {
-
-                    return false;
-                }
+                the.holdIndent();
+                return false;
             });
         },
 
@@ -163,6 +158,60 @@ define(function (require, exports, module) {
 
 
         /**
+         * 保持缩进
+         * @return {Textarea}
+         */
+        holdIndent: function () {
+            var the = this;
+            var $textarea = the._$textarea;
+            var options = the._options;
+            var selection = the.getSelection();
+            var start = selection[0];
+            var lines = the.getLines();
+            var indentTimes = the._getIndentTimes(lines[0].text);
+            var insertValue = '\n';
+
+            if (indentTimes) {
+                var tabSize = options.tabSize;
+                var tabValue = new Array(tabSize + 1).join(' ');
+                insertValue += new Array(indentTimes + 1).join(tabValue);
+                start += tabSize * indentTimes;
+            }
+
+            start += 1;
+            textarea.insert($textarea, insertValue, false);
+            the._set(start, start, $textarea.value);
+            return the;
+        },
+
+
+        /**
+         * 插入
+         * @param text {String} 文本
+         * @param select {Boolean} 是否选中插入文本
+         * @returns {Textarea}
+         */
+        insert: function (text, select) {
+            var the = this;
+            textarea.insert(the._$textarea, text, select);
+            return the;
+        },
+
+
+        ///**
+        // * 替换
+        // * @param text {String} 文本
+        // * @param select {Boolean} 是否选中插入文本
+        // * @returns {Textarea}
+        // */
+        //replace: function (before, after, select) {
+        //    var the = this;
+        //    textarea.insert(the._$textarea, text, select);
+        //    return the;
+        //},
+
+
+        /**
          * 获取文本的缩进次数
          * @param text {String} 文本
          * @returns {Number}
@@ -174,7 +223,7 @@ define(function (require, exports, module) {
             var regTab = new RegExp('^\\s{' + tabSize + '}');
             var times = 0;
 
-            while (regTab.test.test(text)) {
+            while (regTab.test(text)) {
                 text = text.replace(regTab, '');
                 times++;
             }
