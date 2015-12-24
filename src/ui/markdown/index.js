@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * ui markdown
  * @author ydr.me
  * @create 2015-12-23 14:38
  */
@@ -10,6 +10,7 @@ define(function (require, exports, module) {
 
     var marked = require('../../3rd/marked.js');
     var ui = require('../index.js');
+    var Textarea = require('../textarea/index.js');
     var dato = require('../../utils/dato.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -39,7 +40,8 @@ define(function (require, exports, module) {
             height: 400
         },
         headers: [],
-        footers: []
+        footers: [],
+        tabSize: 4
     };
     var Markdown = ui.create({
         constructor: function ($textarea, options) {
@@ -74,6 +76,13 @@ define(function (require, exports, module) {
             the._$output = nodes[2];
             the._$footer = nodes[3];
             modification.insert(the._$textarea, the._$input);
+            the._textarea = new Textarea(the._$textarea, {
+                tabSize: options.tabSize
+            });
+        },
+
+        _initEvent: function () {
+
         }
     });
 

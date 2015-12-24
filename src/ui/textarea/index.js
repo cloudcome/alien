@@ -19,11 +19,14 @@ define(function (require, exports, module) {
 
     var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
+    var attribute = require('../../core/dom/attribute.js');
+    var localStorage = require('../../core/navigator/local-storage.js');
     var event = require('../../core/event/hotkey.js');
     var textarea = require('../../utils/textarea.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
 
+    var namespace = 'alien-ui-textarea';
     var defaults = {
         tabSize: 4,
         historyLength: 99
@@ -37,7 +40,26 @@ define(function (require, exports, module) {
             the._options = dato.extend({}, defaults, options);
             the._stack = [];
             the._set(0, 0, the._$textarea.value);
+            the._id = namespace + the._genId(the._$textarea);
             the._initEvent();
+        },
+
+
+        /**
+         * 生成 ID
+         * @param $textarea
+         * @returns {string}
+         * @private
+         */
+        _genId: function ($textarea) {
+            var id = attribute.attr($textarea, 'id');
+            var className = attribute.attr($textarea, 'class');
+            var name = attribute.attr($textarea, 'name');
+            var tagName = $textarea.tagName;
+            var parentTagName = selector.parent($textarea)[0].tagName;
+
+            return '-/' + encodeURIComponent(location.href) + '/#' +
+                id + '.' + className + '<' + parentTagName + '><' + tagName + '>' + name;
         },
 
 
@@ -375,6 +397,8 @@ define(function (require, exports, module) {
             while (the._stack.length > the._options.historyLength) {
                 the._stack.pop();
             }
+
+            localStorage.setJSON(the._id, item);
         },
 
 
@@ -401,6 +425,7 @@ define(function (require, exports, module) {
             var $textarea = the._$textarea;
             $textarea.value = point.value;
             textarea.setSelection($textarea, point.start, point.end);
+            localStorage.setJSON(the._id, point);
         }
     });
 
