@@ -6,12 +6,7 @@
 
 
 define(function (require, exports, module) {
-    /**
-     * @module libs/validation-lang
-     */
-
     'use strict';
-
 
     var lang = {
         minLength: {
@@ -25,11 +20,12 @@ define(function (require, exports, module) {
         least: '${1}至少需要选择${2}项',
         most: '${1}最多只能选择${2}项',
         type: {
+            array: '${1}必须是数组格式',
             number: '${1}必须是数值格式',
             integer: '${1}必须是整数',
             mobile: '${1}必须是手机号',
             email: '${1}必须是邮箱格式',
-            url: '${1}必须是网址'
+            url: '${1}必须是网址格式'
         },
         required: '${1}不能为空',
         equal: '${1}必须与${2}相同',

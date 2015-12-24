@@ -1,5 +1,5 @@
-/*!
- * 表单
+/**
+ * ui 表单验证
  * @author ydr.me
  * @create 2015-07-02 14:20
  */
@@ -20,8 +20,6 @@ define(function (require, exports, module) {
      * @requires utils/typeis
      * @requires utils/string
      * @requires utils/controller
-     * @requires utils/allocation
-     * @requires utils/howdo
      * @requires ui/
      */
 
@@ -36,9 +34,9 @@ define(function (require, exports, module) {
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var string = require('../../utils/string.js');
-    var controller = require('../../utils/controller.js');
-    var allocation = require('../../utils/allocation.js');
     var howdo = require('../../utils/howdo.js');
+    var allocation = require('../../utils/allocation.js');
+    var controller = require('../../utils/controller.js');
     var ui = require('../');
     // {
     //     minLength: function(ruleValue){
@@ -58,7 +56,7 @@ define(function (require, exports, module) {
         // 浏览器端，默认为 false
         // 服务器端，默认为 true
         breakOnInvalid: typeis.window(window) ? false : true,
-        defaultMsg: '${1}字段不合法',
+        defaultMsg: '${1}不合法',
         // 规则的 data 属性
         dataValidation: 'validation',
         dataAlias: 'alias',
@@ -68,7 +66,7 @@ define(function (require, exports, module) {
         // data 规则等于符
         dataEqual: ':',
         // data 多值分隔符
-        dataVal: ':',
+        dataVal: '|',
         // 验证的表单项目选择器
         inputSelector: 'input,select,textarea'
     };
@@ -100,9 +98,6 @@ define(function (require, exports, module) {
                 .on('invalid', function (err, path) {
                     the.emit('invalid', err, the._pathMap[path]);
                 })
-                .on('error', function (err, path) {
-                    the.emit('error', err, the._pathMap[path]);
-                })
                 .before('validate', function (path) {
                     the.emit('beforevalidate', the._pathMap[path]);
                 })
@@ -120,26 +115,74 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取纯数据
+         * @param [path] {String|Object|Array} 字段或元素
+         * @returns {*}
+         */
+        getData: function (path) {
+            if (path) {
+                if (typeis.Element(path)) {
+                    path = path.name;
+                } else if ('length' in path) {
+                    var _temp = [];
+                    dato.each(path, function (index, item) {
+                        if (typeis.Element(item)) {
+                            _temp.push(item.name);
+                        } else if (typeis.String(item)) {
+                            _temp.push(item);
+                        }
+                    });
+                    path = _temp;
+                }
+            }
+
+            var the = this;
+            var data = the._validation.getData();
+
+            // after validation
+            if (data) {
+                return the._validation.getData(path);
+            }
+
+            // before validation
+            return the.getFormData(path);
+        },
+
+
+        /**
          * 获取表单数据
-         * @param [$input] {Object} 指定元素
+         * @param [ele] {Object|String|Array} 指定元素或者字段
          * @returns {{}}
          */
-        getData: function ($input) {
+        getFormData: function (ele) {
             var the = this;
             var data = {};
-            var list = $input ? [] : the._$inputs;
 
-            if ($input) {
-                var inputType = the._getType($input);
+            var list = ele ? [] : the._$inputs;
 
-                switch (inputType) {
-                    case 'checkbox':
-                    case 'radio':
-                        list = selector.query('input[name="' + $input.name + '"]', the._$form);
-                        break;
+            if (ele) {
+                if (typeis.String(ele)) {
+                    ele = the._pathMap[ele];
+                } else if ('length' in ele) {
+                    dato.each(ele, function (index, item) {
+                        if (typeis.Element(item)) {
+                            list.push(item);
+                        } else if (typeis.String(item)) {
+                            list.push(the._pathMap[item]);
+                        }
+                    });
+                } else if (typeis.Element(ele)) {
+                    var inputType = the._getType(ele);
 
-                    default :
-                        list = [$input];
+                    switch (inputType) {
+                        case 'checkbox':
+                        case 'radio':
+                            list = selector.query('input[name="' + ele.name + '"]', the._$form);
+                            break;
+
+                        default :
+                            list = [ele];
+                    }
                 }
             }
 
@@ -243,82 +286,30 @@ define(function (require, exports, module) {
 
         /**
          * 单独验证某个/些字段
-         * @param [$ele] {Object|Array|String} 待验证的对象或字段，可以为多个对象，如果为空则验证全部
+         * @param [ele] {Object|Array|String} 待验证的对象或字段，可以为多个对象，如果为空则验证全部
          * @param [callback] {Function} 回调
-         * @arguments [pass] {Boolean} 是否通过验证
          * @returns {ValidationUI}
          */
-        validate: function ($ele, callback) {
+        validate: function (ele, callback) {
             var the = this;
-            var options = the._options;
-            var data;
             var args = allocation.args(arguments);
 
-            if (typeis.function(args[0])) {
+            if (typeis.Function(args[0])) {
                 callback = args[0];
-                $ele = null;
+                ele = null;
             }
 
-            // 单个字段
-            if (typeis.string($ele)) {
-                $ele = the._pathMap[$ele];
-            }
-
-            // 多个字段
-            if (typeis.array($ele)) {
-                var temp = [];
-
-                dato.each($ele, function (index, path) {
-                    temp.push(the._pathMap[path]);
-                });
-
-                $ele = temp;
-            }
-
-            // 单个元素
-            if (typeis.element($ele)) {
-                $ele = [$ele];
-            }
-
-            var pass = null;
-            var oncomplete = function () {
-                if (typeis.function(callback)) {
-                    callback.call(the, pass);
+            var data = the.getFormData(ele);
+            var oncomplete = function (err) {
+                if (typeis.Function(callback)) {
+                    callback(err);
                 }
             };
 
-            if ($ele && 'length' in $ele) {
-                howdo.each($ele, function (index, $ele, next) {
-                    var path = $ele.name;
-                    var equalPath = the._equalMap[path];
-                    var select = [path];
-
-                    if (equalPath) {
-                        select.push(equalPath);
-                    }
-
-                    data = dato.select(the.getData(), select);
-                    the._validation.validateOne(data, function (_pass) {
-                        if (pass === null || _pass === false) {
-                            pass = _pass;
-                        }
-
-                        var err = !_pass;
-
-                        // 有错 && 失败继续
-                        if (err && !options.breakOnInvalid) {
-                            err = false;
-                        }
-
-                        next(err);
-                    });
-                }).follow(oncomplete);
+            if (ele) {
+                the._validation.validateSome(data, oncomplete);
             } else {
-                data = the.getData();
-                the._validation.validateAll(data, function (_pass) {
-                    pass = _pass;
-                    oncomplete();
-                });
+                the._validation.validateAll(data, oncomplete);
             }
 
             return the;
@@ -348,14 +339,14 @@ define(function (require, exports, module) {
 
         /**
          * 获取元素类型
-         * @param $item
+         * @param node
          * @returns {String}
          * @private
          */
-        _getType: function ($item) {
-            var tagName = $item.tagName.toLowerCase();
+        _getType: function (node) {
+            var tagName = node.tagName.toLowerCase();
 
-            return tagNameMap[tagName] ? tagName : $item.type;
+            return tagNameMap[tagName] ? tagName : node.type;
         },
 
 
@@ -368,16 +359,16 @@ define(function (require, exports, module) {
             var options = the._options;
 
             the._items = [];
-            the._$inputs = selector.query(options.inputSelector, the._$form);
-            the._$inputs = selector.filter(the._$inputs, function () {
-                return this.name;
+            var $inputs = selector.query(options.inputSelector, the._$form);
+            the._$inputs = selector.filter($inputs, function () {
+                return this.name && !this.disabled;
             });
-            dato.each(the._$inputs, function (i, $item) {
-                var name = $item.name;
+            dato.each(the._$inputs, function (i, eleInput) {
+                var name = eleInput.name;
 
-                if (name && !the._pathMap[name] && !$item.hidden && !$item.disabled && !$item.readOnly) {
-                    the._pathMap[name] = $item;
-                    the._parseRules($item);
+                if (!the._pathMap[name] && !eleInput.hidden && !eleInput.disabled && !eleInput.readOnly) {
+                    the._pathMap[name] = eleInput;
+                    the._parseRules(eleInput);
                 }
             });
         },
@@ -423,7 +414,7 @@ define(function (require, exports, module) {
                 the._validation.addRule(path, 'max', max);
             }
 
-            var accept = $(eleInput).attr('accept');
+            var accept = attribute.attr(eleInput, 'accept');
             if (accept !== '' && !typeis.empty(accept)) {
                 the._validation.addRule(path, 'accept', accept);
             }
@@ -469,7 +460,8 @@ define(function (require, exports, module) {
                 var $label = selector.query('label[for="' + id + '"]', the._$form)[0];
 
                 if ($label) {
-                    alias = (attribute.text($label).match(REG_ALIAS) || ['', ''])[1].trim();
+                    var text = attribute.text($label);
+                    alias = (text.match(REG_ALIAS) || ['', ''])[1].trim();
 
                     the._validation.setAlias(path, alias);
                 }
@@ -515,7 +507,7 @@ define(function (require, exports, module) {
 
 
         /**
-         * 解析 data 验证规则
+         * 解析 data-validation
          * @param ruleString
          * @returns {Object}
          * @private
