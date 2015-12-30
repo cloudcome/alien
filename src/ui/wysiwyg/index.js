@@ -805,7 +805,7 @@ define(function (require, exports, module) {
         /**
          * 替换块级标签
          * @param tagName
-         * @param attributes
+         * @param [attributes]
          * @returns {Wysiwyg}
          */
         replace: function (tagName, attributes) {
@@ -815,6 +815,7 @@ define(function (require, exports, module) {
 
             if (blockEle) {
                 the._saveRange();
+                attributes = attributes || {};
                 attributes.id = attributes.id || genId();
                 modification.replace(blockEle, tagName, attributes);
                 the._restoreRange();
@@ -836,13 +837,13 @@ define(function (require, exports, module) {
             var html = '<' + tagName + ' id="' + id + '">';
 
             the.insertHTML(html);
-            var ele = $('#' + id)[0];
+            var ele = selector.query('#' + id)[0];
 
             if (!ele) {
                 return the;
             }
 
-            $(ele).attr(attributes || {});
+            attribute.attr(ele, attributes);
         },
 
 
