@@ -66,20 +66,14 @@ define(function (require, exports, module) {
      *     this.sth = 123;
      * };
      *
-     * inherit(Child, Father);
+     * klass.inherit(Child, Father);
      *
      * // 这里开始写子类的原型方法
      * Child.prototype.fn = fn;
      */
     var inherit = function (constructor, superConstructor, isCopyStatic) {
         constructor.super_ = superConstructor;
-
-        if (Object.setPrototypeOf) {
-            // https://github.com/nodejs/node/blob/master/lib/util.js#L764
-            Object.setPrototypeOf(constructor.prototype, superConstructor.prototype);
-        } else {
-            constructor.prototype = Object.create(superConstructor.prototype);
-        }
+        constructor.prototype = Object.create(superConstructor.prototype);
 
         if (isCopyStatic) {
             dato.extend(true, constructor, superConstructor);
@@ -95,13 +89,13 @@ define(function (require, exports, module) {
      * @returns {Function}
      */
     var create = function (prototypes, superConstructor, isInheritStatic) {
-        if (typeis.function(prototypes)) {
+        if (typeis.isFunction(prototypes)) {
             prototypes = {
                 constructor: prototypes
             };
         }
 
-        if (!typeis.function(prototypes.constructor)) {
+        if (!typeis.isFunction(prototypes.constructor)) {
             throw Error('propertypes.constructor must be a function');
         }
 
@@ -109,7 +103,7 @@ define(function (require, exports, module) {
 
         prototypes.constructor = null;
 
-        var superConstructorIsAFn = typeis.function(superConstructor);
+        var superConstructorIsAFn = typeis.isFunction(superConstructor);
         var Class = function () {
             var the = this;
             var args = arguments;
@@ -182,11 +176,12 @@ define(function (require, exports, module) {
 
     /**
      * 类的继承，参考了 es6 的 class 表现
+     * 因为 extends 是关键字，在 IE 下会报错，修改为 extend、inherit
      * @param superConstructor
      * @param isInheritStatic
      * @returns {Class}
      */
-    exports.extends = function (superConstructor, isInheritStatic) {
+    exports.extend = exports.inherit = function (superConstructor, isInheritStatic) {
         return new Class(null, superConstructor, isInheritStatic);
     };
 
@@ -209,8 +204,8 @@ define(function (require, exports, module) {
      * });
      *
      * // 3. 创建一个子类
-     * var C = klass.extends(B).create(fn);
-     * var D = klass.extends(C).create({
+     * var C = klass.extend(B).create(fn);
+     * var D = klass.extend(C).create({
      *     constructor: fn,
      *     ...
      * });
@@ -225,4 +220,84 @@ define(function (require, exports, module) {
 
         return new Class(prototypes, superConstructor, isInheritStatic).create();
     };
+
+
+    /**
+     * 原型转让，将父级的原型复制到子类，
+     * 比如写好的一个 Dialog 类有 A、B、C 三个原型方法，
+     * 而写好的一个子类 ProductDialog，与 Dialog 的构造参数不一致，无法直接继承，
+     * 那么就可以使用原型过渡，子类的 ProductDialog 原本没有 A、B、C 三个实例方法，
+     * 只是在内部实例化了一个 Dialog 实例 dialog，那么就可以将 dialog 的原型方法复制到 ProductDialog 实例上
+     * 即：`class.transfer(Dialog, ProductDialog, 'dialog')`
+     * 结果是：将 Dialog 的原型通过 dialog 实例转让给 ProductDialog
+     *
+     * @param parentClass {Function|Object} 父级构造函数
+     * @param childClass {Function} 子级构造函数
+     * @param parentInstanceNameInChild {String} 父级实例在子类的名称
+     * @param [filter] {Array} 允许和禁止的公共方法名称
+     *
+     * @example
+     * name 与 ['name'] 匹配
+     * name 与 ['!name'] 不匹配
+     */
+    exports.transfer = function (parentClass, childClass, parentInstanceNameInChild, filter) {
+        dato.each(parentClass.prototype, function (property) {
+            if (!childClass.prototype[property] && _matches(property, filter)) {
+                childClass.prototype[property] = function () {
+                    var the = this;
+                    var ret = the[parentInstanceNameInChild][property].apply(the[parentInstanceNameInChild], arguments);
+                    return ret instanceof parentClass ? the : ret;
+                };
+            }
+        });
+    };
+
+
+    var REG_PRIVATE = /^_/;
+
+    /**
+     * 判断是否匹配
+     * @param name {String} 待匹配字符串
+     * @param [names] {Array} 被匹配字符串数组
+     * @returns {boolean}
+     * @private
+     */
+    function _matches(name, names) {
+        names = names || [];
+
+        if (REG_PRIVATE.test(name)) {
+            return false;
+        }
+
+        if (!names.length) {
+            return true;
+        }
+
+        var matched = true;
+
+        dato.each(names, function (index, _name) {
+            var flag = _name[0];
+
+            // !name
+            if (flag === '!') {
+                matched = true;
+
+                if (name === _name.slice(1)) {
+                    matched = false;
+                    return false;
+                }
+            }
+            // name
+            else {
+                matched = false;
+
+                if (name === _name) {
+                    matched = true;
+                    return false;
+                }
+            }
+        });
+
+        return matched;
+    }
 });
