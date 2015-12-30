@@ -232,7 +232,6 @@ define(function (require, exports, module) {
                 event.un(window, 'pagehide', onpagehide);
                 the.emit('afteropen');
             };
-
             var timeid = setTimeout(function () {
                 onpagehide();
 
