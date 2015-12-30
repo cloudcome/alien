@@ -223,7 +223,7 @@ define(function (require, exports, module) {
                     }
                     // /list
                     else if ($0 === '/list') {
-                        output.push('}, this);\n' + _var + '+=' + $1 + ';');
+                        output.push('});\n' + _var + '+=' + $1 + ';');
                     }
                     // var
                     else if (the._hasPrefix($0, 'var')) {
