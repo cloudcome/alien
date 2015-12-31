@@ -189,7 +189,7 @@ define(function (require, exports, module) {
             });
 
             the._buttons = buttons;
-            var eEditor = modification.parse(html)[0];
+            var eEditor = the._eEditor = modification.parse(html)[0];
 
             modification.insert(eEditor, the._eTextarea, 'afterend');
             attribute.addClass(eEditor, options.addClass);
@@ -316,6 +316,21 @@ define(function (require, exports, module) {
                     modification.remove(node);
                 }
             }, true);
+        },
+
+
+        /**
+         * 设置 HTML
+         * @param html
+         * @returns {Editor}
+         */
+        setHTML: function (html) {
+            var the = this;
+
+            the._placeholder = false;
+            the._wysiwyg.setHTML(html);
+
+            return the;
         },
 
 

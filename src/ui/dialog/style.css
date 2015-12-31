@@ -45,7 +45,7 @@
       color: #555; }
   .alien-ui-dialog-body {
     position: relative;
-    padding: 20px;
+    padding: 15px;
     overflow: auto;
     height: 100%;
     -webkit-box-sizing: border-box;
