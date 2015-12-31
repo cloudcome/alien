@@ -116,6 +116,7 @@ define(function (require, exports, module) {
         }
     });
 
+    klass.transfer(xhr.constructor, Upload, '_xhr');
     module.exports = function (options) {
         return new Upload(options);
     };
