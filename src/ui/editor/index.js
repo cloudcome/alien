@@ -28,12 +28,16 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
+    var compatible = require('../../core/navigator/compatible.js');
     var event = require('../../core/event/base.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
-    var icons = require('./icons-2x.png', 'image');
+    var icons2x = require('./icons@2x.png', 'image');
+    var icons1x = require('./icons@1x.png', 'image');
+    var supportBackgroundSize = compatible.css3('background-size');
+    var devicePixelRatio = compatible.html5('devicePixelRatio', window);
 
     var namespace = 'donkey-ui-editor';
     var donkeyIndex = 0;
@@ -398,9 +402,10 @@ define(function (require, exports, module) {
     Editor.action('image', require('./_actions/image/index.js'));
 
     // style
-    style += '.' + namespace + '-icon::after{' +
-        /**/'background-image:url(' + icons + ');' +
-        /**/'-webkit-background-size:url(' + icons + ');' +
+    style += '.' + namespace + '-icon:after{' +
+            /**/'background-image: url(' + (supportBackgroundSize && devicePixelRatio > 1 ? icons2x : icons1x) + ');' +
+            /**/'-webkit-background-size: 200px 40px;' +
+            /**/'background-size: 200px 40px;' +
         '}';
     ui.importStyle(style);
 
