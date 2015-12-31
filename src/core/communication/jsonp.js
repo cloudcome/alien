@@ -60,7 +60,9 @@ define(function (require, exports, module) {
 
         if (options.type === 'function') {
             window[name] = function (dt) {
+                the.emit('complete', null, dt);
                 the.emit('success', dt);
+                the.emit('finish', null, dt);
                 delete(window[name]);
                 modification.remove($script);
             };
@@ -69,13 +71,17 @@ define(function (require, exports, module) {
         }
 
         $script.onerror = function (err) {
+            the.emit('complete', err);
             the.emit('error', err);
+            the.emit('finish', err);
             modification.remove($script);
         };
 
         $script.onload = function () {
             if (options.type === 'var') {
+                the.emit('complete', null, window[name]);
                 the.emit('success', window[name]);
+                the.emit('finish', null, window[name]);
                 window[name] = null;
                 modification.remove($script);
             }
