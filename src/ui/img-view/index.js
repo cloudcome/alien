@@ -1,4 +1,4 @@
-/*!
+/**
  * 图片查看器
  * @author ydr.me
  * @create 2015-01-04 21:43
@@ -41,6 +41,7 @@ define(function (require, exports, module) {
     var typeis = require('../../utils/typeis.js');
     var controller = require('../../utils/controller.js');
     var howdo = require('../../utils/howdo.js');
+    var loader = require('../../utils/loader.js');
     var arrowLeft = require('./arrow-left.png', 'image');
     var arrowRight = require('./arrow-right.png', 'image');
     var tpl = new Template(template);
@@ -223,30 +224,44 @@ define(function (require, exports, module) {
          * @private
          */
         _load: function (src, callback) {
-            var img = new Image();
+            //var img = new Image();
             var index = this._index;
 
-            img.src = src;
-            callback = callback || noop;
+            loader.img(src, function (err) {
+                if (err) {
+                    return callback(err);
+                }
 
-            if (img.complete) {
-                callback(null, {
+                callback(err, {
                     index: index,
                     src: src,
-                    width: img.width,
-                    height: img.height
+                    width: this.width,
+                    height: this.height
                 });
-            } else {
-                img.onload = function () {
-                    callback(null, {
-                        index: index,
-                        src: src,
-                        width: img.width,
-                        height: img.height
-                    });
-                };
-                img.onerror = callback;
-            }
+            });
+
+            //
+            //img.src = src;
+            //callback = callback || noop;
+            //
+            //if (img.complete) {
+            //    callback(null, {
+            //        index: index,
+            //        src: src,
+            //        width: img.width,
+            //        height: img.height
+            //    });
+            //} else {
+            //    img.onload = function () {
+            //        callback(null, {
+            //            index: index,
+            //            src: src,
+            //            width: img.width,
+            //            height: img.height
+            //        });
+            //    };
+            //    img.onerror = callback;
+            //}
         },
 
 
