@@ -52,8 +52,6 @@ define(function (require, exports, module) {
         },
 
 
-
-
         _IEtrailingDIV: function () {
             var the = this;
             var node_wysiwyg = the._eWysiwyg;
@@ -785,7 +783,7 @@ define(function (require, exports, module) {
 
             if (collapsed) {
                 if (tagName === 'A') {
-                    attribute.html(eLink, attributes.href);
+                    attribute.html(eLink, attributes.title || attributes.href);
                 }
 
                 rng = rangy.createRange();

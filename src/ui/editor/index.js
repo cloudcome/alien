@@ -33,7 +33,7 @@ define(function (require, exports, module) {
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
-    var icons = require('./icons.png', 'image');
+    var icons = require('./icons-2x.png', 'image');
 
     var namespace = 'donkey-ui-editor';
     var donkeyIndex = 0;
@@ -398,7 +398,10 @@ define(function (require, exports, module) {
     Editor.action('image', require('./_actions/image/index.js'));
 
     // style
-    style += '.' + namespace + '-icon::after{background-image:url(' + icons + ')}';
+    style += '.' + namespace + '-icon::after{' +
+        /**/'background-image:url(' + icons + ');' +
+        /**/'-webkit-background-size:url(' + icons + ');' +
+        '}';
     ui.importStyle(style);
 
     // exports

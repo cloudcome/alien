@@ -41,6 +41,8 @@ $height: 30px;
       left: 50%;
       margin-top: -10px;
       margin-left: -10px;
+      -webkit-background-size: 400px 80px;
+      background-size: 400px 80px;
     }
 
     &-bold:after {
