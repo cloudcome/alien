@@ -1,0 +1,27 @@
+.donkey-ui-editor_dialog{
+  &-action {
+    border-top: 1px solid #EAEAEA;
+    padding-top: 10px;
+    margin-left: -15px;
+    margin-right: -15px;
+    text-align: center;
+    background: #F9F9F9;
+    margin-bottom: -15px;
+    padding-bottom: 15px;
+  }
+
+  &-btn {
+    display: inline-block;
+    border: 1px solid #ddd;
+    padding: 6px 18px;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 20px;
+
+    &:hover {
+      background: #ECECEC;
+    }
+  }
+}
+

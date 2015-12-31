@@ -1,112 +1,91 @@
-.alien-ui-editor > textarea {
-  display: block !important;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-  border: 2px solid #CCC;
-  border-radius: 4px;
-  padding: 10px; }
-
-.alien-ui-editor-fullscreen,
-.alien-ui-editor-preview,
-.alien-ui-editor-fullscreen .alien-ui-editor-input,
-.alien-ui-editor-preview .alien-ui-editor-input,
-.alien-ui-editor-output,
-.alien-ui-editor-preview .cm-s-fed {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-.alien-ui-editor-fullscreen,
-.alien-ui-editor-preview {
-  position: fixed; }
-
-.alien-ui-editor-fullscreen {
-  background: #EEE;
-  overflow: auto; }
-  .alien-ui-editor-fullscreen .alien-ui-editor-input {
-    width: 100%;
-    min-width: 100px;
-    max-width: 900px;
-    left: 50%;
-    bottom: auto;
-    transform: translateX(-50%);
-    height: auto;
-    margin: 40px 0 90px; }
-
-.alien-ui-editor-output {
-  display: none;
-  position: absolute;
-  left: 50%;
-  overflow: auto;
-  padding: 20px;
-  border-left: 2px solid #ccc; }
-
-.alien-ui-editor-preview {
-  background: #FCFAF2;
-  overflow: hidden; }
-  .alien-ui-editor-preview .alien-ui-editor-input {
-    right: 50%; }
-  .alien-ui-editor-preview .cm-s-fed {
-    border: 0;
-    border-radius: 0;
-    padding: 20px; }
-  .alien-ui-editor-preview .alien-ui-editor-output {
-    display: block; }
-
-.alien-ui-editor-upload {
-  text-align: center; }
-  .alien-ui-editor-upload * {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box; }
-  .alien-ui-editor-upload-preview {
+.donkey-ui-editor {
+  position: relative;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 4px #eee;
+  border-radius: 3px; }
+  .donkey-ui-editor-header {
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px #eee;
+    background: #FBFBFB;
+    padding: 5px; }
+  .donkey-ui-editor-icon {
+    position: relative;
     display: inline-block;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
     vertical-align: middle;
-    border: 4px solid #ddd; }
-    .alien-ui-editor-upload-preview img {
-      vertical-align: middle;
-      width: auto;
-      height: auto;
-      max-width: 100px;
-      max-height: 100px; }
-
-.alien-ui-editor-inner {
-  position: relative; }
-
-.alien-ui-editor-textarea {
-  overflow: hidden;
-  resize: none;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
-.alien-ui-editor-at {
-  display: none;
-  position: absolute;
-  min-width: 100px;
-  border: 1px solid #CCC;
-  background: #FFF;
-  max-height: 200px;
-  overflow: auto;
-  box-shadow: 2px 2px 5px #C8C8C8;
-  border-radius: 4px; }
-  .alien-ui-editor-at-item {
-    line-height: 16px;
-    padding: 5px;
-    font-size: 13px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    cursor: default;
-    color: #666; }
-    .alien-ui-editor-at-item-hover {
-      background: #57B3F8;
-      color: #FFF; }
+    width: 30px;
+    height: 30px;
+    border: 0;
+    cursor: pointer; }
+    .donkey-ui-editor-icon:hover {
+      background: #eee; }
+    .donkey-ui-editor-icon-active,
+    .donkey-ui-editor-icon-active:hover {
+      background: #ddd; }
+    .donkey-ui-editor-icon:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-top: -10px;
+      margin-left: -10px; }
+    .donkey-ui-editor-icon-bold:after {
+      background-position: 0 0; }
+    .donkey-ui-editor-icon-italic:after {
+      background-position: 0 -20px; }
+    .donkey-ui-editor-icon-underline:after {
+      background-position: 0 -40px; }
+    .donkey-ui-editor-icon-forecolor:after {
+      background-position: 0 -60px; }
+    .donkey-ui-editor-icon-backcolor:after {
+      background-position: 0 -80px; }
+    .donkey-ui-editor-icon-heading:after {
+      background-position: 0 -100px; }
+    .donkey-ui-editor-icon-justifyleft:after {
+      background-position: 0 -120px; }
+    .donkey-ui-editor-icon-justifycenter:after {
+      background-position: 0 -140px; }
+    .donkey-ui-editor-icon-justifyright:after {
+      background-position: 0 -160px; }
+    .donkey-ui-editor-icon-justifyfull:after {
+      background-position: 0 -180px; }
+    .donkey-ui-editor-icon-orderlist:after {
+      background-position: 0 -200px; }
+    .donkey-ui-editor-icon-unorderlist:after {
+      background-position: 0 -220px; }
+    .donkey-ui-editor-icon-link:after {
+      background-position: 0 -240px; }
+    .donkey-ui-editor-icon-unlink:after {
+      background-position: 0 -260px; }
+    .donkey-ui-editor-icon-line:after {
+      background-position: 0 -280px; }
+    .donkey-ui-editor-icon-image:after {
+      background-position: 0 -300px; }
+    .donkey-ui-editor-icon-video:after {
+      background-position: 0 -320px; }
+    .donkey-ui-editor-icon-quote:after {
+      background-position: 0 -340px; }
+    .donkey-ui-editor-icon-undo:after {
+      background-position: 0 -360px; }
+    .donkey-ui-editor-icon-redo:after {
+      background-position: 0 -380px; }
+    .donkey-ui-editor-icon-format:after {
+      background-position: 0 -400px; }
+    .donkey-ui-editor-icon-clean:after {
+      background-position: 0 -420px; }
+  .donkey-ui-editor-separator {
+    display: inline-block;
+    margin: 0 4px;
+    border-right: 1px solid #efefef;
+    border-left: 1px solid #fff;
+    height: 30px;
+    vertical-align: middle; }
+  .donkey-ui-editor-body {
+    overflow: auto; }
+  .donkey-ui-editor-content {
+    outline: none;
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    padding: 6px; }

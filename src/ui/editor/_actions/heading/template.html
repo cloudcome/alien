@@ -1,0 +1,9 @@
+<div class="donkey-ui-editor_action-heading">
+    {{list headings as index,item}}
+    {{if index}}
+    <div class="donkey-ui-editor_action-heading-item" data-index="{{index}}"><h{{index}}>{{=item}}</h{{index}}></div>
+    {{else}}
+    <div class="donkey-ui-editor_action-heading-item" data-index="{{index}}"><p>{{=item}}</p></div>
+    {{/if}}
+    {{/list}}
+</div>

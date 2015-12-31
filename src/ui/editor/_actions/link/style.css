@@ -1,0 +1,19 @@
+.donkey-ui-editor_action-link {
+  font-size: 14px; }
+  .donkey-ui-editor_action-link-item {
+    position: relative;
+    padding-left: 75px;
+    line-height: 30px;
+    margin-bottom: 10px; }
+  .donkey-ui-editor_action-link-key {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .donkey-ui-editor_action-link-ipt {
+    display: block;
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 6px; }
+    .donkey-ui-editor_action-link-ipt:focus {
+      border-color: #03A9F4;
+      outline: 0; }
