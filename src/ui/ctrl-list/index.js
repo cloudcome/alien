@@ -93,7 +93,7 @@ define(function (require, exports, module) {
                 list: the._list,
                 id: alienIndex++
             }));
-            the._$items = selector.query('.' + alienClass + '-item', the._$popup);
+            the._eItems = selector.query('.' + alienClass + '-item', the._$popup);
 
             return the;
         },
@@ -181,10 +181,10 @@ define(function (require, exports, module) {
             var the = this;
             var activeClass = alienClass + '-item-active';
             var activeIndex = function (isKeyboard) {
-                var $item = the._$items[the._index];
+                var $item = the._eItems[the._index];
                 the._value = attribute.data($item, 'value');
                 the._text = $item.innerText;
-                attribute.removeClass(the._$items, activeClass);
+                attribute.removeClass(the._eItems, activeClass);
                 attribute.addClass($item, activeClass);
 
                 if (isKeyboard) {

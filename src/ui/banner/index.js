@@ -59,8 +59,8 @@ define(function (require, exports, module) {
 
             options = the._options = dato.extend(true, {}, defaults, options);
             the._$list = selector.query($list)[0];
-            the._$items = selector.query(the._options.itemSelector, the._$list);
-            the._itemLength = the._$items.length;
+            the._eItems = selector.query(the._options.itemSelector, the._$list);
+            the._itemLength = the._eItems.length;
             the.destroyed = false;
             the._showIndex = options.index;
             the._direction = options.axis.indexOf('x') > -1 ? 'X' : 'Y';
@@ -118,8 +118,8 @@ define(function (require, exports, module) {
          */
         _initNode: function () {
             var the = this;
-            var $item0 = the._$items[0];
-            var $item_ = the._$items[the._itemLength - 1];
+            var $item0 = the._eItems[0];
+            var $item_ = the._eItems[the._itemLength - 1];
             var options = the._options;
             var html = '';
             var $item0Clone = $item0.cloneNode(true);
@@ -139,7 +139,7 @@ define(function (require, exports, module) {
             the._$item_Clone = $item_Clone;
 
             if (the._$navParent && typeis.function(options.navGenerator)) {
-                dato.each(the._$items, function (index) {
+                dato.each(the._eItems, function (index) {
                     html += options.navGenerator.call(the, index, the._itemLength);
                 });
                 the._$navParent.innerHTML = html;

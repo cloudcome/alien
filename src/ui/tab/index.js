@@ -1,4 +1,4 @@
-/*!
+/**
  * 选项卡
  * @author ydr.me
  * @create 2014-11-20 23:00
@@ -27,23 +27,36 @@ define(function (require, exports, module) {
         index: 0,
         eventType: 'click',
         activeClass: 'active',
-        tabSelector: 'a'
+        itemSelector: 'li',
+        triggerSelector: 'a'
     };
     var Tab = ui.create({
-        constructor: function ($ele, options) {
+        constructor: function (eTab, options) {
             var the = this;
 
-            the._$ele = selector.query($ele);
-
-            if (!the._$ele.length) {
-                throw new Error('instance element is empty');
-            }
-
-            the._$ele = the._$ele[0];
+            the._eTab = selector.query(eTab)[0];
+            the.className = 'tab';
             the._options = dato.extend(true, {}, defaults, options);
             the._index = the._options.index;
-            the.className = 'tab';
+            the.update();
             the._initEvent();
+        },
+
+
+        /**
+         * 更新节点信息
+         */
+        update: function () {
+            var the = this;
+            var options = the._options;
+
+            the._eItems = selector.query(options.itemSelector, the._eTab);
+
+            if (!the._eItems.length) {
+                the._index = -1;
+            }
+
+            return the;
         },
 
 
@@ -59,7 +72,7 @@ define(function (require, exports, module) {
             // 主线程执行完毕再执行这里
             // 此时，实例化已经完成，就能够读取实例上添加的属性了
             controller.nextTick(the._getActive, the);
-            event.on(the._$ele, options.eventType, options.tabSelector, the._ontrigger.bind(the));
+            event.on(the._eTab, options.eventType, options.triggerSelector, the._ontrigger.bind(the));
         },
 
 
@@ -70,10 +83,9 @@ define(function (require, exports, module) {
         change: function (index) {
             var the = this;
             var options = the._options;
-            var $ele = selector.query(options.tabSelector, the._$ele)[index];
 
             the._ontrigger({
-                target: $ele
+                target: selector.query(options.triggerSelector, the._eTab)[index]
             });
         },
 
@@ -84,22 +96,26 @@ define(function (require, exports, module) {
          */
         _getActive: function () {
             var the = this;
-            var $activeTab = selector.children(the._$ele)[the._index];
-            var $active = selector.query('a', $activeTab)[0];
-            var $activeContent = selector.query(attribute.attr($active, 'href'));
 
-            $activeContent = $activeContent.length ? $activeContent[0] : null;
-            the._toggleClass($activeTab);
-            the._toggleClass($activeContent);
+            if (!the._eItems.length) {
+                return;
+            }
+
+            var options = the._options;
+            var eActive = selector.query(options.triggerSelector, the._eItems[the._index])[0];
+            var eActiveContent = selector.query(attribute.attr(eActive, 'href'))[0];
+
+            the._toggleClass(the._eItems[the._index]);
+            the._toggleClass(eActiveContent);
 
             /**
              * Tab 索引发生变化后
              * @event change
              * @param index {Number} 变化后的索引
-             * @param $activeTab {HTMLElement} 被激活的 tab 标签
-             * @param $activeContent {HTMLElement} 被激活的 tab 内容
+             * @param eActiveTab {HTMLElement} 被激活的 tab 标签
+             * @param eActiveContent {HTMLElement} 被激活的 tab 内容
              */
-            the.emit('change', the._index, $activeTab, $activeContent);
+            the.emit('change', the._index, the._eItems[the._index], eActiveContent);
         },
 
 
@@ -109,13 +125,18 @@ define(function (require, exports, module) {
          */
         _ontrigger: function (eve) {
             var the = this;
-            var $li = selector.closest(eve.target, 'li');
-            var triggerIndex = selector.index($li[0]);
+            var options = the._options;
+            var eTarget = selector.query(eve.target)[0];
+            var eItem = selector.closest(eTarget, options.itemSelector)[0];
 
-            try {
+            if (!eItem) {
+                return;
+            }
+
+            var triggerIndex = selector.index(eItem);
+
+            if (eve.preventDefault) {
                 eve.preventDefault();
-            } catch (err) {
-                // ignore
             }
 
             if (triggerIndex !== the._index) {
@@ -127,15 +148,15 @@ define(function (require, exports, module) {
 
         /**
          * 批量切换 className
-         * @param $active
+         * @param eActive
          * @private
          */
-        _toggleClass: function ($active) {
-            var $siblings = selector.siblings($active);
+        _toggleClass: function (eActive) {
+            var eSiblings = selector.siblings(eActive);
             var className = this._options.activeClass;
 
-            attribute.addClass($active, className);
-            attribute.removeClass($siblings, className);
+            attribute.addClass(eActive, className);
+            attribute.removeClass(eSiblings, className);
         },
 
 
@@ -145,13 +166,8 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            if (the.destroyed) {
-                return;
-            }
-
-            the.destroyed = true;
             // 卸载事件绑定
-            event.un(the._$ele, the._options.eventType, the._ontrigger);
+            event.un(the._eTab, the._options.eventType, the._ontrigger);
         }
     });
     Tab.defaults = defaults;
@@ -165,7 +181,7 @@ define(function (require, exports, module) {
      *
      * @example
      * var tab = new Tab('#tab');
-     * tab.on('chnage', function(index, $tab, $content){
+     * tab.on('chnage', function(index, eActiveTab, eActiveContent){
      *     // do what
      * });
      */

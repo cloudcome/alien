@@ -163,7 +163,7 @@ define(function (require, exports, module) {
          * @returns {*|node}
          */
         getNode: function () {
-            return this._$dialog;
+            return this._$body;
         },
 
 
