@@ -1,49 +1,24 @@
+/**
+ * 文件描述
+ * @author ydr.me
+ * @create 2015-12-24 11:52
+ */
+
+
 define(function (require, exports, module) {
+    /**
+     * @module parent/editor
+     */
+
     'use strict';
 
     var Editor = require('../../src/ui/editor/index.js');
-    var xhr = require('../../src/core/communication/xhr.js');
-    var random = require('../../src/utils/random.js');
-    var dato = require('../../src/utils/dato.js');
-    var editor = new Editor('#editor', {
-        uploadCallback: function (list, progress, done) {
-            var fd = new FormData();
 
-            list.forEach(function (item) {
-                fd.append('img[]', item.file);
-            });
+    var ed = window.ed = new Editor('#textarea');
 
-            xhr.get('./upload.json', fd).on('success', function (json) {
-                setTimeout(function () {
-                    done(null, json);
-                }, 2000);
-            }).on('error', function (err) {
-                setTimeout(function () {
-                    done(err);
-                }, 2000);
-            }).on('progress', function (eve) {
-                progress(eve.alienDetail.percent);
-            });
-        }
-    });
-
-    var list = [];
-
-    dato.repeat(random.number(20, 30), function () {
-        var str = random.string(random.number(2, 10), 'aA');
-        list.push({
-            value: str,
-            text: str
+    ed.on('upload', function (eve, file, done) {
+        setTimeout(function () {
+            done('http://p18.qhimg.com/t0144d6a0802f22be4f.jpg');
         });
     });
-
-    editor.setAtList(list);
-
-    editor.on('submit', function (val) {
-        alert(val);
-    });
-
-    document.getElementById('btn').onclick = function () {
-        alert(editor.getValue());
-    };
 });

@@ -14,6 +14,8 @@ define(function (require, exports, module) {
     'use strict';
 
     var typeis = require('./typeis.js');
+
+    var w = window;
     var udf;
     var canListTypeArr = 'array object nodelist htmlcollection arguments namednodemap filelist'.split(' ');
 

@@ -89,13 +89,13 @@ define(function (require, exports, module) {
      * @returns {Function}
      */
     var create = function (prototypes, superConstructor, isInheritStatic) {
-        if (typeis.isFunction(prototypes)) {
+        if (typeis.Function(prototypes)) {
             prototypes = {
                 constructor: prototypes
             };
         }
 
-        if (!typeis.isFunction(prototypes.constructor)) {
+        if (!typeis.Function(prototypes.constructor)) {
             throw Error('propertypes.constructor must be a function');
         }
 
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
 
         prototypes.constructor = null;
 
-        var superConstructorIsAFn = typeis.isFunction(superConstructor);
+        var superConstructorIsAFn = typeis.Function(superConstructor);
         var Class = function () {
             var the = this;
             var args = arguments;
@@ -181,7 +181,7 @@ define(function (require, exports, module) {
      * @param isInheritStatic
      * @returns {Class}
      */
-    exports.extend = exports.inherit = function (superConstructor, isInheritStatic) {
+    exports['extends'] = exports.extend = function (superConstructor, isInheritStatic) {
         return new Class(null, superConstructor, isInheritStatic);
     };
 
