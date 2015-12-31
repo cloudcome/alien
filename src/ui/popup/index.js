@@ -1,4 +1,4 @@
-/*!
+/**
  * 弹出层
  * @author ydr.me
  * @create 2015-05-16 11:36
@@ -114,6 +114,16 @@ define(function (require, exports, module) {
 
 
         /**
+         * 设置 html
+         * @param html
+         * @returns {Popup}
+         */
+        html: function (html) {
+            return this.setContent(html);
+        },
+
+
+        /**
          * 打开弹出层
          * @param [position] {Object} 指定位置或者元素
          * @param [position.width] {Number} 指定位置
@@ -147,7 +157,7 @@ define(function (require, exports, module) {
 
             if (typeis.element(args[0])) {
                 $target2 = args[0];
-            }else if (typeis.object(args[0])) {
+            } else if (typeis.object(args[0])) {
                 the._target = args[0];
             } else {
                 callback = args[0];
