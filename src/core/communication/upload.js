@@ -111,8 +111,8 @@ define(function (require, exports, module) {
             });
 
             options.body = fd;
-
-            Emitter.pipe(xhr, the);
+            the._xhr = xhr(options);
+            Emitter.pipe(the._xhr, the);
         }
     });
 
