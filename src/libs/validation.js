@@ -277,9 +277,10 @@ define(function (require, exports, module) {
                 return the;
             }
 
-            if (!typeis.Array(args[1]) && !typeis.String(args[1])) {
+            // validateSome(data, callback)
+            if(!typeis.String(args[1]) && !typeis.Array(args[1])){
+                paths = Object.keys(data);
                 callback = args[1];
-                paths = Object.keys[data];
             }
 
             paths = typeis.String(paths) ? [paths] : paths;
