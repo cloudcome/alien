@@ -277,10 +277,6 @@ define(function (require, exports, module) {
                 the._wysiwyg.select(this);
             });
 
-            event.on(the._eContent, 'enter', function () {
-                the._wysiwyg.insertHTML('');
-            });
-
             the._wysiwyg.on('selectionChange contentChange', function () {
                 if (the._placeholder) {
                     the._placeholder = false;
