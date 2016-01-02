@@ -174,14 +174,16 @@ define(function (require, exports, module) {
             et = exports.extend(et, copyEvent, alienDetail);
         }
 
+        var ret;
+
         try {
             // 同时触发相同的原生事件会报错
-            ele.dispatchEvent(et);
+            ret = ele.dispatchEvent(et);
         } catch (err) {
             // ignore
         }
 
-        return et;
+        return ret;
     };
 
 

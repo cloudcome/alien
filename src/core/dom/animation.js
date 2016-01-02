@@ -54,8 +54,6 @@ define(function (require, exports, module) {
     //var css = 'transition-property';
     //var transitionendEventPrefix = compatible.css3(css).replace(css, '').replace(/-/g, '');
     //var transitionendEventType = transitionendEventPrefix ? transitionendEventPrefix + 'TransitionEnd' : 'transitionend';
-    //var animationendEventType = compatible.html5('onanimationend', window, true);
-    //var animationiterationEventType = compatible.html5('onanimationiteration', window, true);
     var animationendEventType = 'webkitAnimationEnd oanimationend msAnimationEnd mozAnimationEnd animationend';
     //var animationiterationEventType = 'webkitAnimationIteration oAnimationIteration msAnimationIteration mozAnimationIteration animationiteration';
     var transitionendEventType = 'webkitTransitionEnd oTransitionEnd msTransitionEnd mozTransitionEnd transitionend';

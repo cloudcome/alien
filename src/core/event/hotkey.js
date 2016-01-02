@@ -10,14 +10,19 @@ define(function (require, exports, module) {
      * @module core/event/hotkey
      * @requires core/event/base
      * @requires utils/dato
+     * @requires utils/typeis
      */
     'use strict';
+
+    var event = require('./base.js');
+    var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
 
     var specialKeys = {
         8: "backspace",
         9: "tab",
-        10: "return",
-        13: "return",
+        10: ["return", 'enter'],
+        13: ["return", 'enter'],
         16: "shift",
         17: "ctrl",
         18: "alt",
@@ -80,63 +85,54 @@ define(function (require, exports, module) {
         221: "]",
         222: "'"
     };
-    var shiftNums = {
-        "`": "~",
-        "1": "!",
-        "2": "@",
-        "3": "#",
-        "4": "$",
-        "5": "%",
-        "6": "^",
-        "7": "&",
-        "8": "*",
-        "9": "(",
-        "0": ")",
-        "-": "_",
-        "=": "+",
-        ";": ": ",
-        "'": "\"",
-        ",": "<",
-        ".": ">",
-        "/": "?",
-        "\\": "|"
-    };
+    //var shiftNums = {
+    //    "`": "~",
+    //    "1": "!",
+    //    "2": "@",
+    //    "3": "#",
+    //    "4": "$",
+    //    "5": "%",
+    //    "6": "^",
+    //    "7": "&",
+    //    "8": "*",
+    //    "9": "(",
+    //    "0": ")",
+    //    "-": "_",
+    //    "=": "+",
+    //    ";": ": ",
+    //    "'": "\"",
+    //    ",": "<",
+    //    ".": ">",
+    //    "/": "?",
+    //    "\\": "|"
+    //};
     var secondaryKeys = ['ctrl', 'alt', 'meta', 'shift'];
     var secondaryAlias = ['ctrl', 'alt', 'cmd', 'shift'];
-    var event = require('./base.js');
-    var dato = require('../../utils/dato.js');
 
     event.on(document, 'keydown', function (eve) {
         var which = eve.which;
         var specialKey = specialKeys[which];
         var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
         var eventType = '';
+        var characters = typeis.Array(character) ? character : [character];
 
-        //console.log(which);
-        //console.log(specialKey);
-        //console.log(character);
+        dato.each(characters, function (index, character) {
+            if (secondaryAlias.indexOf(character) > -1) {
+                return;
+            }
 
-        if (secondaryAlias.indexOf(character) > -1) {
-            return;
-        }
+            dato.each(secondaryKeys, function (index, secondaryKey) {
+                if (eve[secondaryKey + 'Key'] && specialKey !== secondaryKey) {
+                    eventType += secondaryAlias[index] + '+';
+                }
+            });
 
-        dato.each(secondaryKeys, function (index, secondaryKey) {
-            if (eve[secondaryKey + 'Key'] && specialKey !== secondaryKey) {
-                eventType += secondaryAlias[index] + '+';
+            var ret = event.dispatch(eve.target, eventType + character, eve);
+
+            if (ret.defaultPrevented) {
+                eve.preventDefault();
             }
         });
-
-        var ret = event.dispatch(eve.target, eventType + character, eve);
-
-        // 已经冒泡了
-        //if(ret.bubbles){
-        //
-        //}
-
-        // 已经阻止默认事件
-        if (ret && ret.defaultPrevented === true) {
-            eve.preventDefault();
-        }
     }, false);
 
     module.exports = event;

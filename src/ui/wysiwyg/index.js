@@ -12,7 +12,9 @@ define(function (require, exports, module) {
     var w = window;
     var d = document;
     var ui = require('../index.js');
+    var allocation = require('../../utils/allocation.js');
     var controller = require('../../utils/controller.js');
+    var typeis = require('../../utils/typeis.js');
     var dato = require('../../utils/dato.js');
     var random = require('../../utils/random.js');
     var event = require('../../core/event/base.js');
@@ -20,6 +22,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var rangy = require('../../3rd/rangy/core.js');
+    window.rangy = rangy;
     require('../../3rd/rangy/save-restore-selection.js')(rangy);
 
     var REG_BLOCK_TAG = /^h[1-6]|div|p$/i;
@@ -826,10 +829,12 @@ define(function (require, exports, module) {
         /**
          * 插入元素
          * @param tagName
-         * @param attributes
+         * @param [attributes]
+         * @param [focus]
          * @returns {Wysiwyg}
          */
-        insert: function (tagName, attributes) {
+        insert: function (tagName, attributes, focus) {
+            var args = allocation.args(arguments);
             var the = this;
             var id = genId();
             var html = '<' + tagName + ' id="' + id + '">';
@@ -839,6 +844,26 @@ define(function (require, exports, module) {
 
             if (!ele) {
                 return the;
+            }
+
+            var lastArg = args[args.length - 1];
+
+            if (typeis.Boolean(lastArg)) {
+                focus = lastArg;
+                attributes = {};
+            }
+
+            // focus
+            if (focus !== false) {
+                var sel = rangy.getSelection();
+                var rng = rangy.createRange();
+
+                rng.setStart(ele, 0);
+                rng.setEnd(ele, 0);
+                rng.collapse();
+                sel.setSingleRange(rng);
+                the.saveSelection();
+                the.emit('selectionChange');
             }
 
             attribute.attr(ele, attributes);

@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var compatible = require('../../core/navigator/compatible.js');
-    var event = require('../../core/event/base.js');
+    var event = require('../../core/event/hotkey.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
@@ -37,7 +37,8 @@ define(function (require, exports, module) {
     var icons2x = require('./icons@2x.png', 'image');
     var icons1x = require('./icons@1x.png', 'image');
     var supportBackgroundSize = compatible.css3('background-size');
-    var devicePixelRatio = compatible.html5('devicePixelRatio', window);
+    var devicePixelRatio = window[compatible.html5('devicePixelRatio', window)];
+    var willBackgroundSize = supportBackgroundSize && devicePixelRatio > 1;
 
     var namespace = 'donkey-ui-editor';
     var donkeyIndex = 0;
@@ -132,7 +133,7 @@ define(function (require, exports, module) {
             'link', 'unlink', '|',
             'line', 'image'
         ],
-        placeholder: '输入，从这里开始',
+        placeholder: '<p style="color:#888">输入，从这里开始</p>',
         addClass: '',
         whiteList: [
             'p', 'div', 'hr', 'ul', 'ol', 'li', 'pre',
@@ -274,6 +275,10 @@ define(function (require, exports, module) {
             // 选中图片
             event.on(the._eContent, 'click', 'img', the._onclick2 = function (eve) {
                 the._wysiwyg.select(this);
+            });
+
+            event.on(the._eContent, 'enter', function () {
+                the._wysiwyg.insertHTML('');
             });
 
             the._wysiwyg.on('selectionChange contentChange', function () {
@@ -418,9 +423,9 @@ define(function (require, exports, module) {
 
     // style
     style += '.' + namespace + '-icon:after{' +
-            /**/'background-image: url(' + (supportBackgroundSize && devicePixelRatio > 1 ? icons2x : icons1x) + ');' +
-            /**/'-webkit-background-size: 200px 40px;' +
-            /**/'background-size: 200px 40px;' +
+            /**/'background-image: url(' + (willBackgroundSize ? icons2x : icons1x) + ');' +
+            /**/(willBackgroundSize ? '-webkit-background-size: 200px 40px;' : '') +
+            /**/(willBackgroundSize ? 'background-size: 200px 40px;' : '') +
         '}';
     ui.importStyle(style);
 
