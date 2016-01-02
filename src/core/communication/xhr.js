@@ -77,8 +77,8 @@ define(function (require, exports, module) {
                 options.headers = {};
             }
 
-            if (!options.headers['x-request-with'] && !hasCrossDomain) {
-                options.headers['x-request-with'] = 'XMLHttpRequest';
+            if (!options.headers['x-requested-with'] && !hasCrossDomain) {
+                options.headers['x-requested-with'] = 'XMLHttpRequest';
             }
 
             options.method = options.method.toUpperCase();
