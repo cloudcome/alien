@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2016-01-04 11:14
+ -->
+<html lang="zh-Hans" data-dpr="1">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/src/flexible.js"></script>
+    <script src="./grid.js"></script>
+    <title>test.html</title>
+    <link rel="stylesheet" href="./flexible2.css">
+</head>
+<body ontouchstart="">
+
+<button onclick="location.reload(true)">刷新</button>
+
+<hr>
+
+<ul class="list" id="list1"></ul>
+
+<hr>
+
+<ul class="list" id="list2"></ul>
+
+<script>
+    var eList1 = document.getElementById('list1');
+    var eList2 = document.getElementById('list2');
+    var length = 4;
+    var start = 0;
+    var html = '';
+    while (start++ < length) {
+        html += '<li>' + start + '</li>';
+    }
+    eList1.innerHTML = html;
+    eList2.innerHTML = html;
+
+    makeGrid(eList1, {
+        columns: 3,
+        itemWidth: 100
+    });
+    makeGrid(eList2, {
+        columns: 3,
+        itemWidth: 100,
+        itemAside: true
+    });
+</script>
+
+</body>
+</html>

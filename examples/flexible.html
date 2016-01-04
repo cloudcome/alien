@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2016-01-04 11:14
+ -->
+<html lang="zh-Hans" data-dpr="1">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="云淡然;http://ydr.me">
+    <meta name="keywords" content="关键词1,关键词2">
+    <meta name="description" content="描述语句">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <script src="/src/flexible.js"></script>
+    <title>test.html</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            position: absolute;
+            top: 300px;
+            right: 5px;
+            z-index: 9;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            border-bottom: 1px solid #c9302c;
+            color: #0c8235;
+            background: #F2C61F;
+        }
+
+        .line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 10px;
+        }
+
+        #out {
+            position: relative;
+            top: 40px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+<button onclick="location.reload(true)">刷新</button>
+
+<a href="#" id="test">测A</a>
+<div class="line" id="line"></div>
+
+<div id="out"></div>
+
+<script>
+    var height = 100;
+    var fontSize = 100;
+    var lineHeight = 100 / 90;
+    var eTest = document.getElementById('test');
+    var eLine = document.getElementById('line');
+
+    flexible.onchange(function () {
+        eTest.style.fontSize = flexible.px2rem(fontSize) + 'rem';
+        eTest.style.height = flexible.px2rem(height) + 'rem';
+        eTest.style.lineHeight = height / fontSize;
+        eLine.style.top = flexible.px2rem(height) + 'rem';
+
+        document.getElementById('out').innerHTML = 'height=' + eTest.offsetHeight + 'px/' + height + 'px' +
+                '<br>font-size=' + getComputedStyle(eTest).getPropertyValue('font-size') + '/' + fontSize + 'px'
+                + '<br>line-height=' + getComputedStyle(eTest).getPropertyValue('line-height') + '/' + lineHeight
+                + '<br>html font-size=' + getComputedStyle(document.documentElement).getPropertyValue('font-size')
+                + '<br>font-family=' + getComputedStyle(eTest).getPropertyValue('font-family')
+                + '<br>scale=' + flexible.scale
+                + '<br>dpr=' + flexible.dpr
+                + '<br>rem=' + flexible.rem;
+    });
+</script>
+
+</body>
+</html>

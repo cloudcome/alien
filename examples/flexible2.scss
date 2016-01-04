@@ -1,0 +1,35 @@
+@import "../src/flexible";
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+hr {
+  color: #999;
+  margin: 10px 0;
+}
+
+.list {
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  li {
+    //float: left;
+    background: #0076FF;
+    color: #fff;
+    //margin-left: px2rem(9px);
+    //width: px2rem(151px);
+    height: 100px;
+    margin-bottom: px2rem(20);
+  }
+}

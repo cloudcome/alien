@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+hr {
+  color: #999;
+  margin: 10px 0; }
+
+.list:after {
+  content: "";
+  display: table; }
+
+.list li {
+  background: #0076FF;
+  color: #fff;
+  height: 100px;
+  margin-bottom: 0.3125rem; }
