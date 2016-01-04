@@ -7,6 +7,7 @@
     var docHead = doc.head;
     var viewportMeta = doc.querySelector('meta[name="viewport"]');
     var dpr = docEl.dataset.dpr;
+    var maxWidth = docEl.dataset.maxWidth || 999999;
     var tid;
     var changedCallbackList = [];
 
@@ -39,7 +40,7 @@
     docEl.classList.add('dpr-' + dpr);
 
     var render = function () {
-        var width = window.innerWidth;
+        var width = Math.min(window.innerWidth, maxWidth);
         var rem = width * dpr / 10;
 
         docEl.style.fontSize = rem + 'px';
