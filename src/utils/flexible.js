@@ -7,7 +7,6 @@
     var docHead = doc.head;
     var viewportMeta = doc.querySelector('meta[name="viewport"]');
     var dpr = docEl.dataset.dpr;
-    var scale = 0;
     var tid;
     var changedCallbackList = [];
 
@@ -16,9 +15,6 @@
     }
 
     var flexible = win.flexible = {};
-    var isString = function (obj) {
-        return typeof (obj) === 'string';
-    };
 
     if (!dpr) {
         var devicePixelRatio = win.devicePixelRatio || 1;
@@ -32,7 +28,7 @@
         }
     }
 
-    scale = 1 / dpr;
+    var scale = 1 / dpr;
     flexible.dpr = dpr;
     flexible.scale = scale;
 
