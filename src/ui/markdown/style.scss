@@ -72,6 +72,16 @@
     border-top: 1px solid #eee;
     font-size: 12px;
     text-align: right;
+    color: #888;
+  }
+
+  &-help {
+    margin-left: 20px;
+    cursor: pointer;
+
+    &:hover {
+      color: #666;
+    }
   }
 }
 

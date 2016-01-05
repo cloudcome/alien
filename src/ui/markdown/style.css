@@ -54,4 +54,10 @@
     padding: 10px;
     border-top: 1px solid #eee;
     font-size: 12px;
-    text-align: right; }
+    text-align: right;
+    color: #888; }
+  .alien-ui-markdown-help {
+    margin-left: 20px;
+    cursor: pointer; }
+    .alien-ui-markdown-help:hover {
+      color: #666; }

@@ -82,6 +82,8 @@ define(function (require, exports, module) {
             the._eInput = nodes[1];
             the._eOutput = nodes[2];
             the._eFooter = nodes[3];
+            the._eWords = nodes[4];
+            the._eHelp = nodes[5];
             modification.insert(the._eTextarea, the._eInput);
             the._textarea = new Textarea(the._eTextarea, {
                 tabSize: options.tabSize
