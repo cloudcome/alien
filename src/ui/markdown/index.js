@@ -77,6 +77,7 @@ define(function (require, exports, module) {
             var $flag = the._eFlag = modification.create('#comment', namespace + '-' + the._index);
 
             attribute.css(node, options.style);
+            attribute.prop(the._eTextarea, 'spellcheck', false);
             modification.insert($flag, the._eTextarea, 'afterend');
             modification.insert(node, $flag, 'afterend');
             var nodes = selector.query('.j-flag', node);
