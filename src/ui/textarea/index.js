@@ -117,6 +117,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 返回输入框的值
+         * @returns {String}
+         */
+        getValue: function () {
+            return this._eTextarea.value;
+        },
+
+
+        /**
          * 增加缩进
          * @returns {Textarea}
          */

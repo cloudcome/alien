@@ -11,6 +11,7 @@ define(function (require, exports, module) {
     var marked = require('../../3rd/marked.js');
     var ui = require('../index.js');
     var Textarea = require('../textarea/index.js');
+    var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
@@ -23,6 +24,7 @@ define(function (require, exports, module) {
 
     var namespace = 'alien-ui-markdown';
     var alienIndex = 0;
+    var markedRender = new marked.Renderer();
     var defaults = {
         marked: {
             highlight: null,
@@ -99,13 +101,14 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            the._textarea.on('change', function () {
-                if(!the._live){
+            the._textarea.on('change', controller.debounce(function () {
+                if (!the._live) {
                     return;
                 }
 
-
-            });
+                var html = marked(the._textarea.getValue(), {renderer: markedRender});
+                the._eOutput.innerHTML = html;
+            }));
         }
     });
 
