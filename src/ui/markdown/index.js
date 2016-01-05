@@ -98,6 +98,14 @@ define(function (require, exports, module) {
                 the._live = !the._live;
                 return false;
             });
+
+            the._textarea.on('change', function () {
+                if(!the._live){
+                    return;
+                }
+
+
+            });
         }
     });
 
