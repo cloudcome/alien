@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 事件对象解析工具
  * @author ydr.me
  * @create 2016-01-05 16:10
  */
@@ -7,7 +7,9 @@
 
 define(function (require, exports, module) {
     /**
-     * @module parent/event
+     * @module utils/event
+     * @requires utils/dato
+     * @requires utils/typeis
      */
 
     'use strict';
