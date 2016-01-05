@@ -97,7 +97,7 @@ define(function (require, exports, module) {
             });
 
             if (the._$content) {
-                var $flag = the._$flag = modification.create('#comment', namespace + '-' + alienIndex++);
+                var $flag = the._eFlag = modification.create('#comment', namespace + '-' + alienIndex++);
                 modification.insert($flag, the._$content, 'afterend');
                 modification.insert(the._$content, the._$screen);
             } else if (options.template) {
@@ -239,8 +239,8 @@ define(function (require, exports, module) {
             }
 
             if (the._$content) {
-                modification.insert(the._$content, the._$flag, 'beforebegin');
-                modification.remove(the._$flag);
+                modification.insert(the._$content, the._eFlag, 'beforebegin');
+                modification.remove(the._eFlag);
             }
 
             modification.remove(the._$screen);

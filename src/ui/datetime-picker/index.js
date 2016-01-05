@@ -73,7 +73,7 @@ define(function (require, exports, module) {
         constructor: function ($input, options) {
             var the = this;
 
-            the._$input = selector.query($input)[0];
+            the._eInput = selector.query($input)[0];
             options = the._options = dato.extend(true, {}, defaults, options);
             the.destroyed = false;
             the._id = alienIndex++;
@@ -97,8 +97,8 @@ define(function (require, exports, module) {
         _initNode: function () {
             var the = this;
 
-            the._date = date.parse(the._$input.value);
-            the._popup = new Popup(the._$input, {
+            the._date = date.parse(the._eInput.value);
+            the._popup = new Popup(the._eInput, {
                 addClass: alienClass + '-popup',
                 priority: 'side'
             });
@@ -266,7 +266,7 @@ define(function (require, exports, module) {
             var options = the._options;
 
             // 打开日历
-            event.on(the._$input, 'focus', the.open.bind(the));
+            event.on(the._eInput, 'focus', the.open.bind(the));
 
             // 改变年月
             event.on(the._$year, 'change', the._onchangeyear = function () {
@@ -328,7 +328,7 @@ define(function (require, exports, module) {
 
             // 点击确定
             event.on(the._$sure, 'click', function () {
-                the._$input.value = date.format(options.format, the._date);
+                the._eInput.value = date.format(options.format, the._date);
                 the.close();
                 the.emit('sure', the._date);
 
@@ -343,7 +343,7 @@ define(function (require, exports, module) {
 
                 var $target = eve.target;
 
-                if ($target === the._$input || selector.closest($target, '.' + alienClass)[0]) {
+                if ($target === the._eInput || selector.closest($target, '.' + alienClass)[0]) {
                     return;
                 }
 
@@ -405,7 +405,7 @@ define(function (require, exports, module) {
          */
         open: function () {
             var the = this;
-            var value = the._$input.value;
+            var value = the._eInput.value;
 
             the._date = date.parse(value);
             the._render();
@@ -501,7 +501,7 @@ define(function (require, exports, module) {
 
             event.un(the._$year, 'change');
             event.un(the._$month, 'change');
-            event.un(the._$input, 'focus', the.open);
+            event.un(the._eInput, 'focus', the.open);
             event.un(the._$list, 'click');
             event.un(the._$now, 'click');
             event.un(the._$sure, 'click');

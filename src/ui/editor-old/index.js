@@ -126,15 +126,15 @@ define(function (require, exports, module) {
                 });
                 the._$wrapper = the._editor.getWrapperElement();
                 the._$scroller = the._editor.getScrollerElement();
-                the._$textarea = the._editor.display.input.textarea;
+                the._eTextarea = the._editor.display.input.textarea;
                 the._$code = selector.query('.CodeMirror-code', the._$scroller)[0];
-                the._$input = modification.wrap(the._$wrapper, '<div class="' + alienClass + '-input"/>')[0];
-                the._$editor = modification.wrap(the._$input, '<div class="' + alienClass + '"/>')[0];
+                the._eInput = modification.wrap(the._$wrapper, '<div class="' + alienClass + '-input"/>')[0];
+                the._$editor = modification.wrap(the._eInput, '<div class="' + alienClass + '"/>')[0];
                 the._$editor.id = alienClass + '-' + the._id;
-                the._$output = modification.create('div', {
+                the._eOutput = modification.create('div', {
                     'class': alienClass + '-output ' + options.previewClass
                 });
-                modification.insert(the._$output, the._$editor);
+                modification.insert(the._eOutput, the._$editor);
                 attribute.addClass(the._$editor, alienClass + ' ' + the._options.addClass);
                 attribute.css(the._$scroller, 'min-height', the._options.minHeight);
                 the._ctrlList = new CtrlList([], {
@@ -445,7 +445,7 @@ define(function (require, exports, module) {
                 });
             };
             var syncMarked = function () {
-                the._$output.innerHTML = marked(the._$ele.value, {renderer: markedRender});
+                the._eOutput.innerHTML = marked(the._$ele.value, {renderer: markedRender});
             };
 
             // `code`
@@ -505,12 +505,12 @@ define(function (require, exports, module) {
             });
 
             // 退格
-            event.on(the._$textarea, 'backspace', function () {
+            event.on(the._eTextarea, 'backspace', function () {
                 the._ctrlList.close();
             });
 
             // 监听输入
-            event.on(the._$textarea, 'input', function () {
+            event.on(the._eTextarea, 'input', function () {
                 var value = this.value;
 
                 if (!value) {
@@ -579,7 +579,7 @@ define(function (require, exports, module) {
 
             // 同步滚动
             event.on(the._$scroller, 'scroll', the._onscroll = function () {
-                the._$output.scrollTop = (the._$output.scrollHeight - the._$output.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
+                the._eOutput.scrollTop = (the._eOutput.scrollHeight - the._eOutput.offsetHeight) * the._$scroller.scrollTop / (the._$scroller.scrollHeight - the._$scroller.offsetHeight);
             });
 
             // cursor

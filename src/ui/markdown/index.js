@@ -47,10 +47,11 @@ define(function (require, exports, module) {
         constructor: function ($textarea, options) {
             var the = this;
 
-            the._$textarea = selector.query($textarea)[0];
+            the._eTextarea = selector.query($textarea)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._index = alienIndex++;
             the._initNode();
+            the._initEvent();
         },
 
 
@@ -64,25 +65,31 @@ define(function (require, exports, module) {
             var html = tpl.render({
                 index: the._index
             });
-            var node = the._$markdown = modification.parse(html)[0];
-            var $flag = the._$flag = modification.create('#comment', namespace + '-' + the._index);
+            var node = the._eMarkdown = modification.parse(html)[0];
+            var $flag = the._eFlag = modification.create('#comment', namespace + '-' + the._index);
 
             attribute.css(node, options.style);
-            modification.insert($flag, the._$textarea, 'afterend');
+            modification.insert($flag, the._eTextarea, 'afterend');
             modification.insert(node, $flag, 'afterend');
             var nodes = selector.query('.j-flag', node);
-            the._$header = nodes[0];
-            the._$input = nodes[1];
-            the._$output = nodes[2];
-            the._$footer = nodes[3];
-            modification.insert(the._$textarea, the._$input);
-            the._textarea = new Textarea(the._$textarea, {
+            the._eHeader = nodes[0];
+            the._eInput = nodes[1];
+            the._eOutput = nodes[2];
+            the._eFooter = nodes[3];
+            modification.insert(the._eTextarea, the._eInput);
+            the._textarea = new Textarea(the._eTextarea, {
                 tabSize: options.tabSize
             });
         },
 
         _initEvent: function () {
+            var the = this;
 
+            // fullscreen
+            the._textarea.bind('ctrl+F12 cmd+F12', function () {
+                attribute.addClass(the._eMarkdown, namespace + '-fullscreen');
+                attribute.css(the._eMarkdown, 'zIndex', ui.getZindex());
+            });
         }
     });
 

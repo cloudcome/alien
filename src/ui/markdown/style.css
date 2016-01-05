@@ -4,10 +4,15 @@
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 0 10px #888; }
-  .alien-ui-markdown, .alien-ui-markdown * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
+  .alien-ui-markdown-fullscreen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0; }
   .alien-ui-markdown-header {
     display: none;
     border-bottom: 1px solid #ccc; }
@@ -27,9 +32,7 @@
       height: 100%;
       border: 0;
       outline: 0;
-      resize: none;
-      font: 16px/20px "Helvetica Neue", Arial, "Liberation Sans", FreeSans, "Hiragino Sans GB", sans-serif;
-      color: #333; }
+      resize: none; }
   .alien-ui-markdown-output {
     display: none; }
   .alien-ui-markdown-footer {

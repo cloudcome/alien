@@ -63,11 +63,11 @@ define(function (require, exports, module) {
 
             the._id = alienIndex++;
             the.prompt = new Msg(options).on('open', function () {
-                the._$input = selector.query('#' + alienClass + the._id)[0];
-                the._$input.select();
-                the._$input.focus();
+                the._eInput = selector.query('#' + alienClass + the._id)[0];
+                the._eInput.select();
+                the._eInput.focus();
             }).on('close', function (index) {
-                the.emit(options.sureIndex === index ? 'sure' : 'cancel', the._$input.value);
+                the.emit(options.sureIndex === index ? 'sure' : 'cancel', the._eInput.value);
 
                 return index !== options.sureIndex;
             });

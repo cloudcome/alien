@@ -131,7 +131,7 @@ define(function (require, exports, module) {
                 height: options.height
             });
             the._$msg = node;
-            the._$header = nodes[0];
+            the._eHeader = nodes[0];
             the._$title = nodes[1];
             the._$close = nodes[2];
             the._$body = nodes[3];

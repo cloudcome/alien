@@ -36,11 +36,11 @@ define(function (require, exports, module) {
         constructor: function ($textarea, options) {
             var the = this;
 
-            the._$textarea = selector.query($textarea)[0];
+            the._eTextarea = selector.query($textarea)[0];
             the._options = dato.extend({}, defaults, options);
             the._stack = [];
-            the._set(0, 0, the._$textarea.value);
-            the._id = namespace + the._genId(the._$textarea);
+            the._set(0, 0, the._eTextarea.value);
+            the._id = namespace + the._genId(the._eTextarea);
             the._initEvent();
         },
 
@@ -111,7 +111,7 @@ define(function (require, exports, module) {
          */
         bind: function (eventType, callback) {
             var the = this;
-            event.on(the._$textarea, eventType, callback);
+            event.on(the._eTextarea, eventType, callback);
             return the;
         },
 
@@ -124,7 +124,7 @@ define(function (require, exports, module) {
             var the = this;
             var selection = the.getSelection();
             var lines = the.getLines();
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             var value = $textarea.value;
             var options = the._options;
             var tabSize = options.tabSize;
@@ -153,7 +153,7 @@ define(function (require, exports, module) {
             var the = this;
             var selection = the.getSelection();
             var lines = the.getLines();
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             var value = $textarea.value;
             var options = the._options;
             var tabSize = options.tabSize;
@@ -190,7 +190,7 @@ define(function (require, exports, module) {
          */
         holdIndent: function () {
             var the = this;
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             var options = the._options;
             var selection = the.getSelection();
             var start = selection[0];
@@ -220,7 +220,7 @@ define(function (require, exports, module) {
          */
         insert: function (text, select) {
             var the = this;
-            textarea.insert(the._$textarea, text, select);
+            textarea.insert(the._eTextarea, text, select);
             return the;
         },
 
@@ -235,7 +235,7 @@ define(function (require, exports, module) {
         wrap: function (before, after, select) {
             var the = this;
             var selection = the.getSelection();
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             var value = $textarea.value;
             var text = value.slice(selection[0], selection[1]);
 
@@ -273,7 +273,7 @@ define(function (require, exports, module) {
          */
         getLines: function (start, end) {
             var the = this;
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             var selection = the.getSelection();
             start = start || selection[0];
             end = end || selection[1];
@@ -323,7 +323,7 @@ define(function (require, exports, module) {
          * @returns {Number|Number[]}
          */
         getSelection: function () {
-            return textarea.getSelection(this._$textarea);
+            return textarea.getSelection(this._eTextarea);
         },
 
 
@@ -336,7 +336,7 @@ define(function (require, exports, module) {
         setSelection: function (start, end) {
             var the = this;
 
-            textarea.setSelection(the._$textarea, start, end);
+            textarea.setSelection(the._eTextarea, start, end);
 
             return the;
         },
@@ -349,7 +349,7 @@ define(function (require, exports, module) {
         focus: function () {
             var the = this;
 
-            the._$textarea.focus();
+            the._eTextarea.focus();
 
             return the;
         },
@@ -362,7 +362,7 @@ define(function (require, exports, module) {
         blur: function () {
             var the = this;
 
-            the._$textarea.blur();
+            the._eTextarea.blur();
 
             return the;
         },
@@ -377,7 +377,7 @@ define(function (require, exports, module) {
          */
         _set: function (start, end, value) {
             var the = this;
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
 
             if (the._stackIndex > 1) {
                 the._stack.splice(0, the._stackIndex - 1);
@@ -422,7 +422,7 @@ define(function (require, exports, module) {
             }
 
             var point = the._stack[the._stackIndex];
-            var $textarea = the._$textarea;
+            var $textarea = the._eTextarea;
             $textarea.value = point.value;
             textarea.setSelection($textarea, point.start, point.end);
             localStorage.setJSON(the._id, point);
