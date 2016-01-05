@@ -39,6 +39,11 @@
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 1;
+  }
+
+  &-body {
+    bottom: 30px;
   }
 
   &-input {
@@ -68,11 +73,13 @@
     right: 0;
     bottom: 0;
     background: #F3F3F3;
-    padding: 10px;
     border-top: 1px solid #eee;
     font-size: 12px;
     text-align: right;
     color: #888;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
   }
 
   &-help {
@@ -82,6 +89,31 @@
     &:hover {
       color: #666;
     }
+  }
+
+  &-tips {
+    position: absolute;
+    background: #ffc;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    min-width: 320px;
+    font-size: 14px;
+  }
+
+  &-line {
+    line-height: 1;
+    padding: 10px;
+  }
+
+  &-kbd {
+    background: #000;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 0 2px;
   }
 }
 

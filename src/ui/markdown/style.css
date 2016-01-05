@@ -29,7 +29,10 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0; }
+    left: 0;
+    z-index: 1; }
+  .alien-ui-markdown-body {
+    bottom: 30px; }
   .alien-ui-markdown-input {
     padding: 10px; }
     .alien-ui-markdown-input textarea {
@@ -51,13 +54,34 @@
     right: 0;
     bottom: 0;
     background: #F3F3F3;
-    padding: 10px;
     border-top: 1px solid #eee;
     font-size: 12px;
     text-align: right;
-    color: #888; }
+    color: #888;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px; }
   .alien-ui-markdown-help {
     margin-left: 20px;
     cursor: pointer; }
     .alien-ui-markdown-help:hover {
       color: #666; }
+  .alien-ui-markdown-tips {
+    position: absolute;
+    background: #ffc;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    min-width: 320px;
+    font-size: 14px; }
+  .alien-ui-markdown-line {
+    line-height: 1;
+    padding: 10px; }
+  .alien-ui-markdown-kbd {
+    background: #000;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 0 2px; }
