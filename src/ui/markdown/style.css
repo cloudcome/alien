@@ -13,6 +13,11 @@
     border-radius: 0;
     box-shadow: none;
     border: 0; }
+  .alien-ui-markdown-fullscreen .alien-ui-markdown-input {
+    width: 50%;
+    border-right: 1px solid #ccc; }
+  .alien-ui-markdown-fullscreen .alien-ui-markdown-output {
+    display: block; }
   .alien-ui-markdown-header {
     display: none;
     border-bottom: 1px solid #ccc; }
@@ -34,7 +39,8 @@
       outline: 0;
       resize: none; }
   .alien-ui-markdown-output {
-    display: none; }
+    display: none;
+    left: 50%; }
   .alien-ui-markdown-footer {
     display: none;
     border-top: 1px solid #ccc; }

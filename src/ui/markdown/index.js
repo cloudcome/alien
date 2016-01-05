@@ -86,9 +86,17 @@ define(function (require, exports, module) {
             var the = this;
 
             // fullscreen
-            the._textarea.bind('ctrl+F12 cmd+F12', function () {
-                attribute.addClass(the._eMarkdown, namespace + '-fullscreen');
-                attribute.css(the._eMarkdown, 'zIndex', ui.getZindex());
+            the._live = false;
+            the._textarea.bind('ctrl+f12 cmd+f12', function () {
+                var className = namespace + '-fullscreen';
+                if (the._live) {
+                    attribute.removeClass(the._eMarkdown, className);
+                } else {
+                    attribute.addClass(the._eMarkdown, className);
+                    attribute.css(the._eMarkdown, 'zIndex', ui.getZindex());
+                }
+                the._live = !the._live;
+                return false;
             });
         }
     });

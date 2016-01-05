@@ -16,6 +16,15 @@
     border: 0;
   }
 
+  &-fullscreen &-input {
+    width: 50%;
+    border-right: 1px solid #ccc;
+  }
+
+  &-fullscreen &-output {
+    display: block;
+  }
+
   &-header {
     display: none;
     border-bottom: 1px solid #ccc;
@@ -46,6 +55,7 @@
 
   &-output {
     display: none;
+    left: 50%;
   }
 
   &-footer {
