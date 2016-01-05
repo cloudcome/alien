@@ -92,6 +92,7 @@ define(function (require, exports, module) {
         var selection = exports.getSelection(node);
         var start = selection[0];
         var end = selection[1];
+        var value = node.value;
 
         if (args.length === 3 && typeis.Boolean(args[2])) {
             select = args[2];
@@ -104,14 +105,19 @@ define(function (require, exports, module) {
 
         text = String(text);
 
-        var value = node.value;
         var left = value.slice(0, start);
         var right = value.slice(end);
 
-        node.value = left + text + right;
+        node.value = value = left + text + right;
 
         if (select) {
-            exports.setSelection(node, start, start + text.length);
+            exports.setSelection(node, start, end = start + text.length);
         }
+
+        return {
+            start: start,
+            end: end,
+            value: value
+        };
     };
 });

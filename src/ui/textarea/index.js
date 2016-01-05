@@ -229,7 +229,8 @@ define(function (require, exports, module) {
          */
         insert: function (text, select) {
             var the = this;
-            textarea.insert(the._eTextarea, text, select);
+            var ret = textarea.insert(the._eTextarea, text, select);
+            the._set(ret.start, ret.end, ret.value);
             return the;
         },
 
@@ -247,14 +248,16 @@ define(function (require, exports, module) {
             var $textarea = the._eTextarea;
             var value = $textarea.value;
             var text = value.slice(selection[0], selection[1]);
+            value = before + text + after;
 
             if (text) {
-                textarea.insert($textarea, before + text + after, select);
+                the.insert(value, select);
             } else {
                 var sel = textarea.getSelection($textarea);
                 var start = sel[0] + before.length;
-                textarea.insert($textarea, before + text + after, false);
+                textarea.insert($textarea, value, false);
                 textarea.setSelection($textarea, start);
+                the._set(start, start, $textarea.value);
             }
 
             return the;

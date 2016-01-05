@@ -87,6 +87,12 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
 
+            var render = controller.debounce(function () {
+                the._eOutput.innerHTML = marked(the._textarea.getValue(), {
+                    renderer: markedRender
+                });
+            });
+
             // fullscreen
             the._live = false;
             the._textarea.bind('ctrl+f12 cmd+f12', function () {
@@ -96,6 +102,7 @@ define(function (require, exports, module) {
                 } else {
                     attribute.addClass(the._eMarkdown, className);
                     attribute.css(the._eMarkdown, 'zIndex', ui.getZindex());
+                    render();
                 }
                 the._live = !the._live;
                 return false;
@@ -107,15 +114,13 @@ define(function (require, exports, module) {
             });
 
             // live
-            the._textarea.on('change', controller.debounce(function () {
+            the._textarea.on('change', function () {
                 if (!the._live) {
                     return;
                 }
 
-                the._eOutput.innerHTML = marked(the._textarea.getValue(), {
-                    renderer: markedRender
-                });
-            }));
+                render();
+            });
         }
     });
 
