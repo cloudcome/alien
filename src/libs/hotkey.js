@@ -117,7 +117,6 @@ define(function (require, exports, module) {
 
                 var ret = the.emit(eventType + character, eve);
 
-                console.log(ret);
                 if (ret === false) {
                     try {
                         eve.preventDefault();

@@ -14,6 +14,7 @@ define(function (require, exports, module) {
     var ui = require('../index.js');
     var Textarea = require('../textarea/index.js');
     var controller = require('../../utils/controller.js');
+    var number = require('../../utils/number.js');
     var dato = require('../../utils/dato.js');
     var typeis = require('../../utils/typeis.js');
     var eventParser = require('../../utils/event.js');
@@ -31,6 +32,8 @@ define(function (require, exports, module) {
     var markedRender = new marked.Renderer();
     markedRender.image = require('./_marked-render-image.js');
     markedRender.table = require('./_marked-render-table.js');
+    var REG_ORDER = /^\s*([1-9]\d*)\. /;
+    var REG_UNORDER = /^\s*([-+*]) /;
     var defaults = {
         marked: {
             highlight: null,
@@ -217,10 +220,27 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            the._textarea.bind('enter', function (e) {
-                var lines = the._textarea.getLines();
+            the._textarea.bind('enter', function () {
+                var nowLine0 = the._textarea.getLines()[0];
+                var prevSel = the._textarea.getSelection();
+                // 减去当前行的空白，定位到上一行末尾
+                var prevLines = the._textarea.getLines(prevSel[0] - 1 - nowLine0.text.length);
+                var prevLine0 = prevLines[0];
+                var prevText0 = prevLine0.text;
+                var match;
 
-                console.log(lines);
+                // order list
+                if ((match = prevText0.match(REG_ORDER))) {
+                    var nextOrder = number.parseInt(match[1]) + 1;
+                    the._textarea.insert(nextOrder + '. ', false);
+                }
+                // unorder list
+                else if ((match = prevText0.match(REG_UNORDER))) {
+                    var nextUnorder = match[1];
+                    the._textarea.insert(nextUnorder + ' ', false);
+                }
+
+                console.log(prevLines);
                 return false;
             });
 
