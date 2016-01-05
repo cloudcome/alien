@@ -49,7 +49,8 @@ define(function (require, exports, module) {
         },
         headers: [],
         footers: [],
-        tabSize: 4
+        tabSize: 4,
+        prevClassName: ''
     };
     var Markdown = ui.create({
         constructor: function ($textarea, options) {
@@ -71,7 +72,8 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var html = tpl.render({
-                index: the._index
+                index: the._index,
+                prevClassName: options.prevClassName
             });
             var node = the._eMarkdown = modification.parse(html)[0];
             var $flag = the._eFlag = modification.create('#comment', namespace + '-' + the._index);
@@ -198,8 +200,14 @@ define(function (require, exports, module) {
             });
 
             // -----
-            the._textarea.bind('ctrl+- cmd+-', function () {
-                the._textarea.insert('\n\n-----\n\n');
+            the._textarea.bind('ctrl+r cmd+r', function () {
+                the._textarea.insert('\n\n-----\n\n', false);
+                return false;
+            });
+
+            // [](link)
+            the._textarea.bind('ctrl+l cmd+l', function () {
+                the._textarea.wrap('[link description](', ')', true);
                 return false;
             });
 
