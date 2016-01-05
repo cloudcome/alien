@@ -100,19 +100,80 @@ define(function (require, exports, module) {
                     renderer: markedRender
                 });
             });
+            // 全屏
+            var fullscreen = false;
+            // 写作模式
+            var writen = false;
+            // 预览模式
+            var live = false;
+            // 切换全屏模式
+            var toggleFullscreen = function (boolean) {
+                var className = namespace + '-fullscreen';
+
+                if (boolean) {
+                    attribute.addClass(the._eMarkdown, className);
+                } else {
+                    attribute.removeClass(the._eMarkdown, className);
+                }
+
+                fullscreen = boolean;
+            };
+            // 切换写作模式
+            var toggleWriten = function (boolean) {
+                var className = namespace + '-writen';
+
+                if (boolean) {
+                    attribute.addClass(the._eMarkdown, className);
+                } else {
+                    attribute.removeClass(the._eMarkdown, className);
+                }
+
+                writen = boolean;
+            };
+            // 切换预览模式
+            var toggleLive = function (boolean) {
+                var className = namespace + '-live';
+
+                if (boolean) {
+                    attribute.addClass(the._eMarkdown, className);
+                } else {
+                    attribute.removeClass(the._eMarkdown, className);
+                }
+
+                live = boolean;
+            };
 
             // fullscreen
-            the._live = false;
-            the._textarea.bind('ctrl+f12 cmd+f12', function () {
-                var className = namespace + '-fullscreen';
-                if (the._live) {
-                    attribute.removeClass(the._eMarkdown, className);
+            the._textarea.bind('ctrl+f11 cmd+f11', function () {
+                if (fullscreen) {
+                    if (live) {
+                        toggleLive(false);
+                        toggleWriten(true);
+                    } else {
+                        toggleFullscreen(false);
+                        toggleWriten(false);
+                    }
                 } else {
-                    attribute.addClass(the._eMarkdown, className);
-                    attribute.css(the._eMarkdown, 'zIndex', ui.getZindex());
-                    render();
+                    toggleFullscreen(true);
+                    toggleWriten(true);
                 }
-                the._live = !the._live;
+                return false;
+            });
+
+            // live
+            the._textarea.bind('ctrl+f12 cmd+f12', function () {
+                if (fullscreen) {
+                    if (writen) {
+                        toggleWriten(false);
+                        toggleLive(true);
+                    } else {
+                        toggleFullscreen(false);
+                        toggleLive(false);
+                    }
+                } else {
+                    toggleFullscreen(true);
+                    toggleLive(true);
+                }
                 return false;
             });
 
@@ -135,7 +196,7 @@ define(function (require, exports, module) {
             });
 
             // -----
-            the._textarea.bind('ctrl+h cmd+h', function () {
+            the._textarea.bind('ctrl+- cmd+-', function () {
                 the._textarea.insert('\n\n-----\n\n');
                 return false;
             });
@@ -149,7 +210,7 @@ define(function (require, exports, module) {
             // live
             the._textarea.on('change', function () {
                 the._eCount.innerHTML = this.getValue().length;
-                if (!the._live) {
+                if (!live) {
                     return;
                 }
 
@@ -158,7 +219,7 @@ define(function (require, exports, module) {
 
             // scroll
             event.on(eTextarea, 'scroll', controller.throttle(function () {
-                if (!the._live) {
+                if (!live) {
                     return;
                 }
 
