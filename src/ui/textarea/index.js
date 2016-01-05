@@ -95,6 +95,14 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            // soft enter
+            the.bind('shift+enter', function () {
+                var start = the._eTextarea.value.length + 1;
+                textarea.insert(the._eTextarea, '\n', [start]);
+                the._set(start, start);
+                return false;
+            });
+
             the.bind('input', controller.debounce(function () {
                 var selection = the.getSelection();
 
@@ -400,7 +408,7 @@ define(function (require, exports, module) {
          * 入栈
          * @param start
          * @param end
-         * @param value
+         * @param [value]
          * @private
          */
         _set: function (start, end, value) {
@@ -412,7 +420,13 @@ define(function (require, exports, module) {
             }
 
             the._stackIndex = 0;
-            $textarea.value = value;
+
+            if (arguments.length === 3) {
+                $textarea.value = value;
+            } else {
+                value = $textarea.value;
+            }
+
             var item = {
                 start: start,
                 end: end,

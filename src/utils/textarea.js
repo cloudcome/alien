@@ -152,6 +152,8 @@ define(function (require, exports, module) {
                 break;
         }
 
+        insertPosition[1] = insertPosition[1] || insertPosition[0];
+        focusRelativePostion[1] = focusRelativePostion[1] || focusRelativePostion[0];
         var left = value.slice(0, insertPosition[0]);
         var right = value.slice(insertPosition[1]);
         var focusStart = insertPosition[0] + focusRelativePostion[0];

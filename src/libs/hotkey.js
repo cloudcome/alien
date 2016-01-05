@@ -92,6 +92,17 @@ define(function (require, exports, module) {
     };
     var secondaryKeys = ['ctrl', 'alt', 'meta', 'shift'];
     var secondaryAlias = ['ctrl', 'alt', 'cmd', 'shift'];
+
+    //var combinateDecorationKeys = function (decorationKeys, character) {
+    //    var length = decorationKeys.length;
+    //    var ret = [];
+    //
+    //    // 从数组中排除某项循环取
+    //    var each = function (skipIndex) {
+    //
+    //    };
+    //};
+
     var defaults = {};
     var Hotkey = klass.extend(Emitter).create(function (ele, options) {
         var the = this;
@@ -101,7 +112,6 @@ define(function (require, exports, module) {
             var which = eve.which;
             var specialKey = specialKeys[which];
             var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
-            var eventType = '';
             var characters = typeis.Array(character) ? character : [character];
 
             dato.each(characters, function (index, character) {
@@ -109,13 +119,18 @@ define(function (require, exports, module) {
                     return;
                 }
 
+                var decorationKeys = [];
                 dato.each(secondaryKeys, function (index, secondaryKey) {
-                    if (eve[secondaryKey + 'Key'] && specialKey !== secondaryKey) {
-                        eventType += secondaryAlias[index] + '+';
+                    if (eve[secondaryKey + 'Key']) {
+                        decorationKeys.push(secondaryKey);
                     }
                 });
 
-                var ret = the.emit(eventType + character, eve);
+                if (decorationKeys.length) {
+                    decorationKeys.push('');
+                }
+
+                var ret = the.emit(decorationKeys.join('+') + character, eve);
 
                 if (ret === false) {
                     try {
