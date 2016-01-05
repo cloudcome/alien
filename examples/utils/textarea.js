@@ -29,4 +29,26 @@ define(function (require, exports, module) {
     document.getElementById('insert1').onclick = function () {
         textarea.insert($textarea, '[' + Date.now() + ']', true);
     };
+
+    document.getElementById('insert2').onclick = function () {
+        textarea.insert($textarea, '[' + Date.now() + ']', true, false);
+    };
+
+    document.getElementById('insert3').onclick = function () {
+        textarea.insert($textarea, '[' + Date.now() + ']', true, [2, 4]);
+    };
+
+    document.getElementById('insert4').onclick = function () {
+        textarea.insert($textarea, '[' + Date.now() + ']', [2, 4]);
+    };
+
+    document.getElementById('insert5').onclick = function () {
+        textarea.insert($textarea, '[' + Date.now() + ']', [2, 4], false);
+    };
+
+    document.getElementById('insert6').onclick = function () {
+        textarea.insert($textarea, '[' + Date.now() + ']', [2, 4], [2, 4]);
+    };
+
+    window.textarea = textarea;
 });

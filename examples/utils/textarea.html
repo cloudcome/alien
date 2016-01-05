@@ -40,7 +40,7 @@
 </head>
 <body ontouchstart="">
 
-<textarea rows="30" id="textarea">var a = 1;
+<textarea rows="10" id="textarea">var a = 1;
 var b = 22;
 var c = 333;
 var d = 4444;
@@ -48,7 +48,12 @@ var d = 4444;
 
 <button id="getSelection">获取当前光标位置</button>
 <button id="setSelection">设置当前光标位置到文本中间</button>
-<button id="insert1">在当前位置插入当前时间</button>
+<button id="insert1">在当前位置插入当前时间并选中</button>
+<button id="insert2">在当前位置插入当前时间并定位到末尾</button>
+<button id="insert3">在当前位置插入当前时间并定位到相对[2,4]</button>
+<button id="insert4">在[2,4]位置插入当前时间并选中</button>
+<button id="insert5">在[2,4]位置插入当前时间并定位到末尾</button>
+<button id="insert6">在[2,4]位置插入当前时间并定位到相对[2,4]</button>
 
 <script src="/examples/coolie.min.js"
 data-config="coolie-config.js"
