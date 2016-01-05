@@ -23,6 +23,9 @@ define(function (require, exports, module) {
     var typeis = require('../utils/typeis.js');
     var event = require('../core/event/base.js');
 
+    // ⌘（command）、⌥（option）、⇧（shift）、
+    // ⇪（caps lock）、⌃（control）、↩（return）、
+    // ⌅（enter）、⎋（esc）
     var specialKeys = {
         8: 'backspace',
         9: 'tab',
@@ -30,7 +33,7 @@ define(function (require, exports, module) {
         13: ['return', 'enter'],
         16: 'shift',
         17: 'ctrl',
-        18: ['alt', 'option'],
+        18: 'alt',
         19: 'pause',
         20: 'capslock',
         27: 'esc',
@@ -49,20 +52,20 @@ define(function (require, exports, module) {
         61: '=',
         91: 'cmd',
         96: '0',
-        97: ['1', '!'],
-        98: ['2', '@'],
-        99: ['3', '#'],
-        100: ['4', '$'],
-        101: ['5', '%'],
-        102: ['6', '^'],
-        103: ['7', '&'],
-        104: ['8', '*'],
-        105: ['9', '('],
+        97: '1',
+        98: '2',
+        99: '3',
+        100: '4',
+        101: '5',
+        102: '6',
+        103: '7',
+        104: '8',
+        105: '9',
         106: '*',
-        107: ['+', '='],
-        109: ['-', '_'],
-        110: ['.', '>'],
-        111: ['/', '?'],
+        107: '+',
+        109: '-',
+        110: '.',
+        111: '/',
         112: 'f1',
         113: 'f2',
         114: 'f3',
@@ -78,30 +81,24 @@ define(function (require, exports, module) {
         144: 'numlock',
         145: 'scroll',
         173: '-',
-        186: [';', ':'],
+        186: ';',
         187: '=',
-        188: [',', '<'],
+        188: ',',
         189: '-',
         190: '.',
         191: '/',
-        192: ['`', '~'],
-        219: ['[', '{'],
-        220: ['\\', '|'],
-        221: [']', '}'],
-        222: ['\'', '"']
+        192: '`',
+        219: '[',
+        220: '\\',
+        221: ']',
+        222: '\''
     };
-    var secondaryKeys = ['ctrl', 'alt', 'meta', 'shift'];
-    var secondaryAlias = ['ctrl', 'alt', 'cmd', 'shift'];
-
-    //var combinateDecorationKeys = function (decorationKeys, character) {
-    //    var length = decorationKeys.length;
-    //    var ret = [];
-    //
-    //    // 从数组中排除某项循环取
-    //    var each = function (skipIndex) {
-    //
-    //    };
-    //};
+    var decorationKeyMap = {
+        ctrl: 'ctrl',
+        alt: 'alt',
+        meta: 'cmd',
+        shift: 'shift'
+    };
 
     var defaults = {};
     var Hotkey = klass.extend(Emitter).create(function (ele, options) {
@@ -113,24 +110,28 @@ define(function (require, exports, module) {
             var specialKey = specialKeys[which];
             var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
             var characters = typeis.Array(character) ? character : [character];
+            var charactersMap = {};
 
             dato.each(characters, function (index, character) {
-                if (secondaryAlias.indexOf(character) > -1) {
-                    return;
-                }
+                charactersMap[character] = 1;
+            });
 
-                var decorationKeys = [];
-                dato.each(secondaryKeys, function (index, secondaryKey) {
-                    if (eve[secondaryKey + 'Key']) {
-                        decorationKeys.push(secondaryKey);
+            dato.each(characters, function (index, character) {
+                var decoratedKeys = [];
+
+                dato.each(decorationKeyMap, function (decorationKey, aliasKey) {
+                    if (eve[decorationKey + 'Key'] && !charactersMap[decorationKey] && !charactersMap[aliasKey]) {
+                        decoratedKeys.push(aliasKey);
                     }
                 });
 
-                if (decorationKeys.length) {
-                    decorationKeys.push('');
+                if (decoratedKeys.length) {
+                    decoratedKeys.push('');
                 }
 
-                var ret = the.emit(decorationKeys.join('+') + character, eve);
+                var eventType = decoratedKeys.join('+') + character;
+                console.log(eventType);
+                var ret = the.emit(eventType, eve);
 
                 if (ret === false) {
                     try {

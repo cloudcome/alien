@@ -103,7 +103,7 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            the.bind('input', controller.debounce(function () {
+            event.on(the._eTextarea, 'input', controller.debounce(function () {
                 var selection = the.getSelection();
 
                 the._set(selection[0], selection[1], this.value);
