@@ -206,7 +206,7 @@ define(function (require, exports, module) {
             });
 
             // -----
-            the._textarea.bind('ctrl+r cmd+r', function () {
+            the._textarea.bind(ctrl + '+r', function () {
                 the._textarea.insert('\n\n-----\n\n', false);
                 return false;
             });
