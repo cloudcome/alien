@@ -240,7 +240,6 @@ define(function (require, exports, module) {
                     the._textarea.insert(nextUnorder + ' ', false);
                 }
 
-                console.log(prevLines);
                 return false;
             });
 
