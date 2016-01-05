@@ -185,13 +185,13 @@ define(function (require, exports, module) {
 
             // upload
             event.on(eTextarea, 'paste drop', function (eve) {
-                var img = eventParser(eve, this)[0];
+                var img = eventParser.parseFiles(eve, this)[0];
 
                 if (!img) {
-                    return false;
+                    return;
                 }
 
-                the.editor.emit('upload', eve, img, onUploadSuccess);
+                the.emit('upload', eve, img, onUploadSuccess);
             });
         }
     });
