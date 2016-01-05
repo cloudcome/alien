@@ -242,13 +242,14 @@ define(function (require, exports, module) {
                 }
 
                 if (img && img.url) {
+                    var alt = img.title || 'img description';
                     var text = '!['.concat(
-                        img.title || '',
+                        alt,
                         '](',
                         img.url,
                         img.width ? ' =' + img.width + 'x' + img.height : '',
                         ')');
-                    the._textarea.insert(text);
+                    the._textarea.insert(text, [2, alt.length + 2]);
                 }
             };
 

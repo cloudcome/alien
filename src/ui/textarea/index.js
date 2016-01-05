@@ -226,12 +226,14 @@ define(function (require, exports, module) {
         /**
          * 插入
          * @param text {String} 文本
-         * @param [select] {Boolean} 是否选中插入文本
+         * @param [focusRelativePostion] {Array|Boolean} 插入后光标的位置，默认为当前光标所在位置
+         * true：选中插入的文本
+         * false：定位到文本末尾
          * @returns {Textarea}
          */
-        insert: function (text, select) {
+        insert: function (text, focusRelativePostion) {
             var the = this;
-            var ret = textarea.insert(the._eTextarea, text, select);
+            var ret = textarea.insert(the._eTextarea, text, true, focusRelativePostion);
             the._set(ret.start, ret.end, ret.value);
             return the;
         },

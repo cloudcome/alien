@@ -97,8 +97,10 @@ define(function (require, exports, module) {
      * 插入文本
      * @param node {Object} textarea 元素
      * @param text {String} 文本
-     * @param [insertPosition] {Array|Boolean} 插入的开始位置，默认为当前光标所在位置，为 true 表示当前位置
-     * @param [focusRelativePostion] {Array|Boolean} 插入的结束位置，默认为当前光标所在位置
+     * @param [insertPosition] {Array|Boolean} 插入前的位置，默认为当前光标所在位置，为 true 表示当前位置
+     * @param [focusRelativePostion] {Array|Boolean} 插入后光标的位置，默认为当前光标所在位置
+     * true：选中插入的文本
+     * false：定位到文本末尾
      * @returns {{start: Number, end: Number, value: String}}
      */
     exports.insert = function (node, text, insertPosition, focusRelativePostion) {
