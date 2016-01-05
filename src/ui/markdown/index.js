@@ -115,14 +115,26 @@ define(function (require, exports, module) {
             });
 
             // **bold**
-            the._textarea.bind('B', function () {
+            the._textarea.bind('ctrl+b cmd+b', function () {
                 the._textarea.wrap('**', '**', true);
                 return false;
             });
 
             // **italic**
-            the._textarea.bind('I', function () {
+            the._textarea.bind('ctrl+i cmd+i', function () {
                 the._textarea.wrap('*', '*', true);
+                return false;
+            });
+
+            // -----
+            the._textarea.bind('ctrl+h cmd+h', function () {
+                the._textarea.insert('-----');
+                return false;
+            });
+
+            // \n```\nblock code\n```\n
+            the._textarea.bind('ctrl+k cmd+k', function () {
+                the._textarea.wrap('\n```', '```\n', true);
                 return false;
             });
 

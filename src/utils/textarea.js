@@ -112,6 +112,8 @@ define(function (require, exports, module) {
 
         if (select) {
             exports.setSelection(node, start, end = start + text.length);
+        } else {
+            exports.setSelection(node, start = start + text.length, end = start);
         }
 
         return {

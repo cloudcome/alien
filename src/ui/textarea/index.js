@@ -224,7 +224,7 @@ define(function (require, exports, module) {
         /**
          * 插入
          * @param text {String} 文本
-         * @param select {Boolean} 是否选中插入文本
+         * @param [select] {Boolean} 是否选中插入文本
          * @returns {Textarea}
          */
         insert: function (text, select) {
