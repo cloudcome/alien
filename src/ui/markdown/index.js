@@ -128,13 +128,13 @@ define(function (require, exports, module) {
 
             // -----
             the._textarea.bind('ctrl+h cmd+h', function () {
-                the._textarea.insert('-----');
+                the._textarea.insert('\n\n-----\n\n');
                 return false;
             });
 
             // \n```\nblock code\n```\n
             the._textarea.bind('ctrl+k cmd+k', function () {
-                the._textarea.wrap('\n```', '```\n', true);
+                the._textarea.wrap('\n```\n', '\n```\n\n', true);
                 return false;
             });
 
@@ -146,6 +146,19 @@ define(function (require, exports, module) {
 
                 render();
             });
+
+            // scroll
+            event.on(the._eTextarea, 'scroll', controller.throttle(function () {
+                if (!the._live) {
+                    return;
+                }
+
+                var inputScrollTop = attribute.scrollTop(the._eTextarea);
+                var inputScrollHeight = attribute.scrollHeight(the._eTextarea);
+                var inputScrollRate = inputScrollTop / inputScrollHeight;
+                var outputScrollHeight = attribute.scrollHeight(the._eOutput);
+                the._eOutput.scrollTop = outputScrollHeight * inputScrollRate;
+            }));
         }
     });
 
