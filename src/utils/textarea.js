@@ -153,7 +153,7 @@ define(function (require, exports, module) {
         var left = value.slice(0, insertPosition[0]);
         var right = value.slice(insertPosition[1]);
         var focusStart = insertPosition[0] + focusRelativePostion[0];
-        var focusEnd = insertPosition[1] + focusRelativePostion[1];
+        var focusEnd = insertPosition[0] + focusRelativePostion[1];
 
         node.value = value = left + text + right;
         exports.setSelection(node, focusStart, focusEnd);
