@@ -16,10 +16,9 @@
     <meta name="keywords" content="关键词1,关键词2">
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <script src="/src/flexible.js"></script>
-    <script src="./grid.js"></script>
+    <script src="/src/utils/flexible.js"></script>
     <title>test.html</title>
-    <link rel="stylesheet" href="./flexible2.css">
+    <link rel="stylesheet" href="./grid.css">
 </head>
 <body ontouchstart="">
 
@@ -33,28 +32,10 @@
 
 <ul class="list" id="list2"></ul>
 
-<script>
-    var eList1 = document.getElementById('list1');
-    var eList2 = document.getElementById('list2');
-    var length = 4;
-    var start = 0;
-    var html = '';
-    while (start++ < length) {
-        html += '<li>' + start + '</li>';
-    }
-    eList1.innerHTML = html;
-    eList2.innerHTML = html;
 
-    makeGrid(eList1, {
-        columns: 3,
-        itemWidth: 100
-    });
-    makeGrid(eList2, {
-        columns: 3,
-        itemWidth: 100,
-        itemAside: true
-    });
-</script>
+<script src="/examples/coolie.min.js"
+data-config="coolie-config.js"
+data-main="core/dom/grid.js"></script>
 
 </body>
 </html>
