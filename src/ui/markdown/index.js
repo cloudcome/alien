@@ -217,13 +217,10 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            event.on(the._eTextarea, 'keydown', function (e) {
-                if (e.which === 13) {
-                    var lines = the._textarea.getLines();
+            the._textarea.bind('enter', function (e) {
+                var lines = the._textarea.getLines();
 
-                    console.log(lines);
-                    return false;
-                }
+                return false;
             });
 
             // live

@@ -115,7 +115,15 @@ define(function (require, exports, module) {
                     }
                 });
 
-                the.emit(eventType + character, eve);
+                if (the.emit(eventType + character, eve) === false) {
+                    try {
+                        eve.preventDefault();
+                        eve.stopPropagation();
+                        eve.stopImmediatePropagation();
+                    } catch (err) {
+                        // ignore
+                    }
+                }
             });
         });
     });
