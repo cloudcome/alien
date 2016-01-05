@@ -136,6 +136,7 @@ define(function (require, exports, module) {
 
                 if (boolean) {
                     attribute.addClass(the._eMarkdown, className);
+                    render();
                 } else {
                     attribute.removeClass(the._eMarkdown, className);
                 }

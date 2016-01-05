@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module ui/textarea
      * @requires core/dom/selector
      * @requires core/event/hotkey
+     * @requires utils/allocation
      * @requires utils/textarea
      * @requires utils/controller
      * @requires utils/dato
@@ -22,6 +23,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var localStorage = require('../../core/navigator/local-storage.js');
     var event = require('../../core/event/hotkey.js');
+    var allocation = require('../../utils/allocation.js');
     var textarea = require('../../utils/textarea.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
@@ -350,13 +352,14 @@ define(function (require, exports, module) {
         /**
          * 设置选区
          * @param start
-         * @param end
+         * @param [end]
          * @returns {Textarea}
          */
         setSelection: function (start, end) {
             var the = this;
+            var ret = textarea.setSelection(the._eTextarea, start, end);
 
-            textarea.setSelection(the._eTextarea, start, end);
+            the._set(ret.start, ret.end, ret.value);
 
             return the;
         },

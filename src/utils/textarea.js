@@ -60,9 +60,14 @@ define(function (require, exports, module) {
      * @param node {Object} 输入元素
      * @param start {Number} 起始位置
      * @param [end=start] {Number} 终点位置
+     * @returns {{start: Number, end: Number, value: String}}
      */
     exports.setSelection = function (node, start, end) {
-        end = end || start;
+        var args = allocation.args(arguments);
+
+        if (args.length === 1) {
+            end = start;
+        }
 
         controller.nextFrame(function () {
             if (supportSetSelectionRange) {
@@ -77,6 +82,12 @@ define(function (require, exports, module) {
             textRange.moveEnd('character', end - start);
             textRange.select();
         });
+
+        return {
+            start: start,
+            end: end,
+            value: node.value
+        };
     };
 
 
@@ -86,6 +97,7 @@ define(function (require, exports, module) {
      * @param text {String} 文本
      * @param [position=0] {Number} 位置
      * @param [select=false] {Boolean} 是否选中刚插入的文本
+     * @returns {{start: Number, end: Number, value: String}}
      */
     exports.insert = function (node, text, position, select) {
         var args = allocation.args(arguments);
