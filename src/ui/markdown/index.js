@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var Template = require('../../libs/template.js');
+    var Hotkey = require('../../libs/hotkey.js');
     var template = require('template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
@@ -150,8 +151,10 @@ define(function (require, exports, module) {
                 live = boolean;
             };
 
+            var ctrl = Hotkey.MAC_OS ? 'cmd' : 'ctrl';
+
             // fullscreen
-            the._textarea.bind('ctrl+f11 cmd+f11', function () {
+            the._textarea.bind(ctrl + '+f11', function () {
                 if (fullscreen) {
                     if (live) {
                         toggleLive(false);
@@ -168,7 +171,7 @@ define(function (require, exports, module) {
             });
 
             // live
-            the._textarea.bind('ctrl+f12 cmd+f12', function () {
+            the._textarea.bind(ctrl + '+f12', function () {
                 if (fullscreen) {
                     if (writen) {
                         toggleWriten(false);
@@ -191,13 +194,13 @@ define(function (require, exports, module) {
             });
 
             // **bold**
-            the._textarea.bind('ctrl+b cmd+b', function () {
+            the._textarea.bind(ctrl + '+b', function () {
                 the._textarea.wrap('**', '**', true);
                 return false;
             });
 
             // **italic**
-            the._textarea.bind('ctrl+i cmd+i', function () {
+            the._textarea.bind(ctrl + '+i', function () {
                 the._textarea.wrap('*', '*', true);
                 return false;
             });
@@ -209,13 +212,13 @@ define(function (require, exports, module) {
             });
 
             // [](link)
-            the._textarea.bind('ctrl+l cmd+l', function () {
+            the._textarea.bind(ctrl + '+l', function () {
                 the._textarea.wrap('[link description](', ')', true);
                 return false;
             });
 
             // \n```\nblock code\n```\n
-            the._textarea.bind('ctrl+k cmd+k', function () {
+            the._textarea.bind(ctrl + '+k', function () {
                 the._textarea.wrap('\n```\n', '\n```\n\n', true);
                 return false;
             });

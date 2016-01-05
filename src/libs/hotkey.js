@@ -148,4 +148,5 @@ define(function (require, exports, module) {
 
     Hotkey.defaults = defaults;
     module.exports = Hotkey;
+    Hotkey.MAC_OS = /Mac OS/i.test(navigator.userAgent);
 });
