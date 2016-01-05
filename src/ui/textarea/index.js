@@ -14,6 +14,7 @@ define(function (require, exports, module) {
      * @requires utils/textarea
      * @requires utils/controller
      * @requires utils/dato
+     * @requires libs/hotkey
      */
 
     'use strict';
@@ -22,11 +23,12 @@ define(function (require, exports, module) {
     var selector = require('../../core/dom/selector.js');
     var attribute = require('../../core/dom/attribute.js');
     var localStorage = require('../../core/navigator/local-storage.js');
-    var event = require('../../core/event/hotkey.js');
+    var event = require('../../core/event/base.js');
     var allocation = require('../../utils/allocation.js');
     var textarea = require('../../utils/textarea.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
+    var Hotkey = require('../../libs/hotkey.js');
 
     var namespace = 'alien-ui-textarea';
     var defaults = {
@@ -39,6 +41,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._eTextarea = selector.query($textarea)[0];
+            the._hotkey = new Hotkey(the._eTextarea);
             the._options = dato.extend({}, defaults, options);
             the._stack = [];
             the._set(0, 0, the._eTextarea.value);
@@ -113,7 +116,7 @@ define(function (require, exports, module) {
          */
         bind: function (eventType, callback) {
             var the = this;
-            event.on(the._eTextarea, eventType, callback);
+            the._hotkey.on(eventType, callback);
             return the;
         },
 
