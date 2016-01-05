@@ -92,14 +92,16 @@
   }
 
   &-tips {
+    display: none;
     position: absolute;
     background: #ffc;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px;
     min-width: 320px;
     font-size: 14px;
+    border: 1px solid #F3F3BE;
+    border-radius: 3px;
   }
 
   &-line {
@@ -108,6 +110,7 @@
   }
 
   &-kbd {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     background: #000;
     color: #fff;
     padding: 2px 4px;

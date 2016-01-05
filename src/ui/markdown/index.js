@@ -8,6 +8,8 @@
 define(function (require, exports, module) {
     'use strict';
 
+    var w = window;
+    var d = w.document;
     var marked = require('../../3rd/marked.js');
     var ui = require('../index.js');
     var Textarea = require('../textarea/index.js');
@@ -146,7 +148,7 @@ define(function (require, exports, module) {
 
             // live
             the._textarea.on('change', function () {
-                the._eCount.innerHTML = the.getValue().length;
+                the._eCount.innerHTML = this.getValue().length;
                 if (!the._live) {
                     return;
                 }
@@ -201,7 +203,18 @@ define(function (require, exports, module) {
 
             // show help
             event.on(the._eHelp, 'click', function () {
+                attribute.css(the._eTips, 'zIndex', ui.getZindex());
+                attribute.show(the._eTips, 'block');
+                return false;
+            });
 
+            // stop propagation
+            event.on(the._eTips, 'click', function (eve) {
+                eve.stopPropagation();
+            });
+
+            event.on(d, 'click esc', function () {
+                attribute.hide(the._eTips);
             });
         }
     });
