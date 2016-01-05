@@ -129,8 +129,14 @@ define(function (require, exports, module) {
 
             var ret = event.dispatch(eve.target, eventType + character, eve);
 
-            if (ret.defaultPrevented) {
-                eve.preventDefault();
+            if (ret === false) {
+                try {
+                    eve.preventDefault();
+                    eve.stopPropagation();
+                    eve.stopImmediatePropagation();
+                } catch (err) {
+                    // ignore
+                }
             }
         });
     }, false);
