@@ -11,6 +11,7 @@ define(function (require, exports, module) {
      * @reuqires utils/allocation
      * @reuqires utils/typeis
      * @reuqires utils/controller
+     * @reuqires utils/number
      */
 
     'use strict';
@@ -18,6 +19,7 @@ define(function (require, exports, module) {
     var allocation = require('./allocation.js');
     var typeis = require('./typeis.js');
     var controller = require('./controller.js');
+    var number = require('./number.js');
 
     var doc = document;
     var $textarea = doc.createElement('textarea');
@@ -95,42 +97,70 @@ define(function (require, exports, module) {
      * 插入文本
      * @param node {Object} textarea 元素
      * @param text {String} 文本
-     * @param [position=0] {Number} 位置
-     * @param [select=false] {Boolean} 是否选中刚插入的文本
+     * @param [insertPosition] {Array|Boolean} 插入的开始位置，默认为当前光标所在位置，为 true 表示当前位置
+     * @param [focusRelativePostion] {Array|Boolean} 插入的结束位置，默认为当前光标所在位置
      * @returns {{start: Number, end: Number, value: String}}
      */
-    exports.insert = function (node, text, position, select) {
+    exports.insert = function (node, text, insertPosition, focusRelativePostion) {
         var args = allocation.args(arguments);
         var selection = exports.getSelection(node);
+        text = String(text);
         var start = selection[0];
         var end = selection[1];
         var value = node.value;
+        var textLength = text.length;
 
-        if (args.length === 3 && typeis.Boolean(args[2])) {
-            select = args[2];
+        switch (args.length) {
+            // insert(node, text);
+            case 2:
+                insertPosition = [start, end];
+                focusRelativePostion = [0, textLength];
+                break;
+            case 3:
+                // insert(node, text, true);
+                if (args[2] === true) {
+                    insertPosition = [start, end];
+                }
+                // insert(node, text, false);
+                else if (args[2] === false) {
+                    insertPosition = [start + textLength, start + textLength];
+                }
+
+                focusRelativePostion = [0, textLength];
+                break;
+            //
+            case 4:
+                // insert(node, text, true);
+                if (args[2] === true) {
+                    insertPosition = [start, end];
+                }
+                // insert(node, text, false);
+                else if (args[2] === false) {
+                    insertPosition = [start + textLength, start + textLength];
+                }
+
+                // insert(node, text, what, true);
+                if (args[3] === true) {
+                    focusRelativePostion = [0, textLength];
+                }
+                // insert(node, text, what, false);
+                else if (args[3] === false) {
+                    focusRelativePostion = [textLength, textLength];
+                }
+                break;
         }
 
-        if (typeis.Number(position)) {
-            start = position;
-            end = position;
-        }
-
-        text = String(text);
-
-        var left = value.slice(0, start);
-        var right = value.slice(end);
+        var left = value.slice(0, insertPosition[0]);
+        var right = value.slice(insertPosition[1]);
+        var focusStart = insertPosition[0] + focusRelativePostion[0];
+        var focusEnd = insertPosition[1] + focusRelativePostion[1];
 
         node.value = value = left + text + right;
-
-        if (select) {
-            exports.setSelection(node, start, end = start + text.length);
-        } else {
-            exports.setSelection(node, start = start + text.length, end = start);
-        }
+        exports.setSelection(node, focusStart, focusEnd);
 
         return {
-            start: start,
-            end: end,
+            start: focusStart,
+            end: focusEnd,
             value: value
         };
     };
