@@ -109,7 +109,7 @@ define(function (require, exports, module) {
     var secondaryKeys = ['ctrl', 'alt', 'meta', 'shift'];
     var secondaryAlias = ['ctrl', 'alt', 'cmd', 'shift'];
 
-    event.on(document, 'keydown', function (eve) {
+    var onKeyDown = function (eve) {
         var which = eve.which;
         var specialKey = specialKeys[which];
         var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
@@ -139,7 +139,54 @@ define(function (require, exports, module) {
                 }
             }
         });
-    }, false);
+    };
+
+    event.on(document, 'keydown', onKeyDown);
+
+    event.hotkey = function (ele) {
+        var callbacks = {};
+
+        event.on(ele, 'keydown', function (eve) {
+            var which = eve.which;
+            var specialKey = specialKeys[which];
+            var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
+            var eventType = '';
+            var characters = typeis.Array(character) ? character : [character];
+
+            dato.each(characters, function (index, character) {
+                if (secondaryAlias.indexOf(character) > -1) {
+                    return;
+                }
+
+                dato.each(secondaryKeys, function (index, secondaryKey) {
+                    if (eve[secondaryKey + 'Key'] && specialKey !== secondaryKey) {
+                        eventType += secondaryAlias[index] + '+';
+                    }
+                });
+
+                var ret = event.dispatch(eve.target, eventType + character, eve);
+
+                if (ret === false) {
+                    try {
+                        eve.preventDefault();
+                        eve.stopPropagation();
+                        eve.stopImmediatePropagation();
+                    } catch (err) {
+                        // ignore
+                    }
+                }
+            });
+        });
+
+        return {
+            on: function (eventType, callback) {
+                callbacks[eventType] = callbacks[eventType] || [];
+                if(typeis.Function(callback)){
+                    callbacks[eventType].push(callback);
+                }
+            }
+        };
+    };
 
     module.exports = event;
 });

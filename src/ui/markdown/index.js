@@ -217,6 +217,15 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            event.on(the._eTextarea, 'keydown', function (e) {
+                if (e.which === 13) {
+                    var lines = the._textarea.getLines();
+
+                    console.log(lines);
+                    return false;
+                }
+            });
+
             // live
             the._textarea.on('change', function () {
                 the._eCount.innerHTML = this.getValue().length;
