@@ -220,6 +220,7 @@ define(function (require, exports, module) {
             the._textarea.bind('enter', function (e) {
                 var lines = the._textarea.getLines();
 
+                console.log(lines);
                 return false;
             });
 

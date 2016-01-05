@@ -115,7 +115,10 @@ define(function (require, exports, module) {
                     }
                 });
 
-                if (the.emit(eventType + character, eve) === false) {
+                var ret = the.emit(eventType + character, eve);
+
+                console.log(ret);
+                if (ret === false) {
                     try {
                         eve.preventDefault();
                         eve.stopPropagation();
