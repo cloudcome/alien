@@ -14,11 +14,12 @@
     box-shadow: none;
     border: 0;
     height: auto !important; }
-  .alien-ui-markdown-fullscreen .alien-ui-markdown-input {
-    width: 50%;
-    border-right: 1px solid #ccc; }
-  .alien-ui-markdown-fullscreen .alien-ui-markdown-output {
-    display: block; }
+  .alien-ui-markdown-live .alien-ui-markdown-input {
+    width: 50%; }
+  .alien-ui-markdown-live .alien-ui-markdown-output {
+    display: block;
+    left: 50%;
+    border-left: 1px solid #ccc; }
   .alien-ui-markdown-header {
     display: none;
     border-bottom: 1px solid #ccc; }
@@ -45,7 +46,6 @@
       font: normal 16px/20px Menlo, Monaco, Consolas, "Courier New", monospace; }
   .alien-ui-markdown-output {
     display: none;
-    left: 50%;
     padding: 10px;
     overflow: auto; }
   .alien-ui-markdown-footer {

@@ -17,13 +17,14 @@
     height: auto !important;
   }
 
-  &-fullscreen &-input {
+  &-live &-input {
     width: 50%;
-    border-right: 1px solid #ccc;
   }
 
-  &-fullscreen &-output {
+  &-live &-output {
     display: block;
+    left: 50%;
+    border-left: 1px solid #ccc;
   }
 
   &-header {
@@ -62,7 +63,6 @@
 
   &-output {
     display: none;
-    left: 50%;
     padding: 10px;
     overflow: auto;
   }
