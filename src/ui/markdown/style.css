@@ -31,7 +31,7 @@
     bottom: 0;
     left: 0; }
   .alien-ui-markdown-input {
-    padding: 5px; }
+    padding: 10px; }
     .alien-ui-markdown-input textarea {
       display: block;
       width: 100%;
@@ -43,7 +43,7 @@
   .alien-ui-markdown-output {
     display: none;
     left: 50%;
-    padding: 5px;
+    padding: 10px;
     overflow: auto; }
   .alien-ui-markdown-footer {
     display: none;

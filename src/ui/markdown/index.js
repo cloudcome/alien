@@ -101,13 +101,15 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            // live
             the._textarea.on('change', controller.debounce(function () {
                 if (!the._live) {
                     return;
                 }
 
-                var html = marked(the._textarea.getValue(), {renderer: markedRender});
-                the._eOutput.innerHTML = html;
+                the._eOutput.innerHTML = marked(the._textarea.getValue(), {
+                    renderer: markedRender
+                });
             }));
         }
     });
