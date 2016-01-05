@@ -63,8 +63,15 @@
   }
 
   &-footer {
-    display: none;
-    border-top: 1px solid #ccc;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #F3F3F3;
+    padding: 10px;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    text-align: right;
   }
 }
 
