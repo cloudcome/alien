@@ -13,6 +13,8 @@ define(function (require, exports, module) {
     var Textarea = require('../textarea/index.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
+    var typeis = require('../../utils/typeis.js');
+    var eventParser = require('../../utils/event.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -86,7 +88,7 @@ define(function (require, exports, module) {
 
         _initEvent: function () {
             var the = this;
-
+            var eTextarea = the._eTextarea;
             var render = controller.debounce(function () {
                 the._eOutput.innerHTML = marked(the._textarea.getValue(), {
                     renderer: markedRender
@@ -148,17 +150,49 @@ define(function (require, exports, module) {
             });
 
             // scroll
-            event.on(the._eTextarea, 'scroll', controller.throttle(function () {
+            event.on(eTextarea, 'scroll', controller.throttle(function () {
                 if (!the._live) {
                     return;
                 }
 
-                var inputScrollTop = attribute.scrollTop(the._eTextarea);
-                var inputScrollHeight = attribute.scrollHeight(the._eTextarea);
+                var inputScrollTop = attribute.scrollTop(eTextarea);
+                var inputScrollHeight = attribute.scrollHeight(eTextarea);
                 var inputScrollRate = inputScrollTop / inputScrollHeight;
                 var outputScrollHeight = attribute.scrollHeight(the._eOutput);
                 the._eOutput.scrollTop = outputScrollHeight * inputScrollRate;
             }));
+
+            // drag
+            event.on(eTextarea, 'dragenter dragover', function () {
+                return false;
+            });
+
+            var onUploadSuccess = function (img) {
+                if (typeis.String(img)) {
+                    img = {url: img};
+                }
+
+                if (img && img.url) {
+                    var text = '!['.concat(
+                        img.title || '',
+                        '](',
+                        img.url,
+                        img.width ? ' ' + img.width + 'x' + img.height : '',
+                        ')');
+                    the._textarea.insert(text);
+                }
+            };
+
+            // upload
+            event.on(eTextarea, 'paste drop', function (eve) {
+                var img = eventParser(eve, this)[0];
+
+                if (!img) {
+                    return false;
+                }
+
+                the.editor.emit('upload', eve, img, onUploadSuccess);
+            });
         }
     });
 
