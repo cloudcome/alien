@@ -46,7 +46,6 @@ define(function (require, exports, module) {
             the._stack = [];
             the._set(0, 0, the._eTextarea.value);
             the._id = namespace + the._genId(the._eTextarea);
-            the._indentPrefx = '';
             the._initEvent();
         },
 
@@ -200,20 +199,6 @@ define(function (require, exports, module) {
 
 
         /**
-         * 设置缩进前缀字符
-         * @param prefix
-         * @returns {Textarea}
-         */
-        setIndentPrefix: function (prefix) {
-            var the = this;
-
-            the._indentPrefx = prefix || '';
-
-            return the;
-        },
-
-
-        /**
          * 保持缩进
          * @return {Textarea}
          */
@@ -226,7 +211,6 @@ define(function (require, exports, module) {
             var lines = the.getLines();
             var indentTimes = the._getIndentTimes(lines[0].text);
             var insertValue = '\n';
-            var prefix = the._indentPrefx;
 
             if (indentTimes) {
                 var tabSize = options.tabSize;
@@ -236,8 +220,8 @@ define(function (require, exports, module) {
             }
 
             start += 1;
-            textarea.insert($textarea, insertValue + prefix, false);
-            the._set(start, start + prefix.length, $textarea.value);
+            textarea.insert($textarea, insertValue, false);
+            the._set(start, start, $textarea.value);
             return the;
         },
 
