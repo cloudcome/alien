@@ -82,7 +82,7 @@ define(function (require, exports, module) {
             the._eInput = nodes[1];
             the._eOutput = nodes[2];
             the._eFooter = nodes[3];
-            the._eWords = nodes[4];
+            the._eCount = nodes[4];
             the._eHelp = nodes[5];
             modification.insert(the._eTextarea, the._eInput);
             the._textarea = new Textarea(the._eTextarea, {
@@ -146,6 +146,7 @@ define(function (require, exports, module) {
 
             // live
             the._textarea.on('change', function () {
+                the._eCount.innerHTML = the.getValue().length;
                 if (!the._live) {
                     return;
                 }
@@ -196,6 +197,11 @@ define(function (require, exports, module) {
                 }
 
                 the.emit('upload', eve, img, onUploadSuccess);
+            });
+
+            // show help
+            event.on(the._eHelp, 'click', function () {
+
             });
         }
     });
