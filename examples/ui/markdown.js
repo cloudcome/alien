@@ -21,7 +21,8 @@ define(function (require, exports, module) {
             done({
                 url: 'http://p18.qhimg.com/t0144d6a0802f22be4f.jpg',
                 width: 480,
-                height: 360
+                height: 360,
+                title: 'a handsome cat'
             });
         });
     });

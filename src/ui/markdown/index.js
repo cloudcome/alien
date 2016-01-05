@@ -27,6 +27,8 @@ define(function (require, exports, module) {
     var namespace = 'alien-ui-markdown';
     var alienIndex = 0;
     var markedRender = new marked.Renderer();
+    markedRender.image = require('./_marked-render-image.js');
+    markedRender.table = require('./_marked-render-table.js');
     var defaults = {
         marked: {
             highlight: null,
@@ -177,7 +179,7 @@ define(function (require, exports, module) {
                         img.title || '',
                         '](',
                         img.url,
-                        img.width ? ' ' + img.width + 'x' + img.height : '',
+                        img.width ? ' =' + img.width + 'x' + img.height : '',
                         ')');
                     the._textarea.insert(text);
                 }
