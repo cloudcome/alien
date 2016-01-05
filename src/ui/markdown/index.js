@@ -108,8 +108,21 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            // `code`
             the._textarea.bind('`', function () {
                 the._textarea.wrap('`', '`', true);
+                return false;
+            });
+
+            // **bold**
+            the._textarea.bind('B', function () {
+                the._textarea.wrap('**', '**', true);
+                return false;
+            });
+
+            // **italic**
+            the._textarea.bind('I', function () {
+                the._textarea.wrap('*', '*', true);
                 return false;
             });
 
