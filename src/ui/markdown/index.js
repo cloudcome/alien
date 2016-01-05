@@ -101,6 +101,11 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            the._textarea.bind('`', function () {
+                the._textarea.wrap('`', '`', true);
+                return false;
+            });
+
             // live
             the._textarea.on('change', controller.debounce(function () {
                 if (!the._live) {

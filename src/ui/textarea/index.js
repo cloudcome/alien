@@ -238,7 +238,7 @@ define(function (require, exports, module) {
          * 包裹
          * @param before {String} 前置文本
          * @param after {String} 后置文本
-         * @param select {Boolean} 是否选中插入文本
+         * @param [select] {Boolean} 是否选中插入文本
          * @returns {Textarea}
          */
         wrap: function (before, after, select) {
@@ -248,7 +248,15 @@ define(function (require, exports, module) {
             var value = $textarea.value;
             var text = value.slice(selection[0], selection[1]);
 
-            textarea.insert($textarea, before + text + after, select);
+            if (text) {
+                textarea.insert($textarea, before + text + after, select);
+            } else {
+                var sel = textarea.getSelection($textarea);
+                var start = sel[0] + before.length;
+                textarea.insert($textarea, before + text + after, false);
+                textarea.setSelection($textarea, start);
+            }
+
             return the;
         },
 
