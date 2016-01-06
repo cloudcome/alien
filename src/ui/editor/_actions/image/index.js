@@ -16,6 +16,7 @@ define(function (require, exports, module) {
     var Tab = require('../../../tab/index.js');
     var klass = require('../../../../utils/class.js');
     var dato = require('../../../../utils/dato.js');
+    var eventParser = require('../../../../utils/event.js');
     var event = require('../../../../core/event/base.js');
     var selector = require('../../../../core/dom/selector.js');
     var modification = require('../../../../core/dom/modification.js');
@@ -136,35 +137,18 @@ define(function (require, exports, module) {
             /**
              * 解析事件对象并上传
              * @param eve
-             * @param items
              */
-            var parseEventAndUpload = function (eve, items) {
-                var file = null;
-                dato.each(items, function (index, item) {
-                    if (RE_IMG_TYPE.test(item.type) && item.kind === 'file') {
-                        file = item.getAsFile();
+            var parseEventAndUpload = function (eve) {
+                var files = eventParser.parseFiles(eve, this);
 
-                        if (file && file.size > 0) {
-                            return false;
-                        }
-                    }
-                });
-
-                if (file) {
+                if (files.length) {
                     eve.preventDefault();
-                    the.editor.emit('upload', eve, file, onUploadSuccess);
+                    the.editor.emit('upload', eve, files[0], onUploadSuccess);
                 }
             };
 
-            event.on(d, 'drop', function (eve) {
-                eve = eve.originalEvent || eve;
-                parseEventAndUpload(eve, eve.dataTransfer && eve.dataTransfer.items);
-            });
-
-            event.on(d, 'paste', function (eve) {
-                eve = eve.originalEvent || eve;
-                parseEventAndUpload(eve, eve.clipboardData && eve.clipboardData.items);
-            });
+            event.on(d, 'drop', parseEventAndUpload);
+            event.on(d, 'paste', parseEventAndUpload);
         },
 
 
