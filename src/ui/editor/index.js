@@ -29,7 +29,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var compatible = require('../../core/navigator/compatible.js');
-    var event = require('../../core/event/hotkey.js');
+    var event = require('../../core/event/base.js');
     var Template = require('../../libs/Template.js');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);

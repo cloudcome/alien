@@ -16,6 +16,7 @@ define(function (require, exports, module) {
      * @requires core/dom/attribute
      * @requires core/dom/modification
      * @requires core/event/base
+     * @requires libs/hotkey
      * @requires libs/template
      * @requires utils/dato
      * @requires utils/number
@@ -32,7 +33,8 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
-    var event = require('../../core/event/hotkey.js');
+    var event = require('../../core/event/base.js');
+    var Hotkey = require('../../libs/hotkey.js');
     var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');
@@ -132,6 +134,7 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            the._hotkey = new Hotkey(document);
 
             // 打开
             the._window.on('open', function () {
@@ -159,7 +162,7 @@ define(function (require, exports, module) {
                     the._show();
                 }
             });
-            event.on(doc, 'left', the._onprev);
+            the._hotkey.on('left', the._onprev);
 
             // 下一张
             event.on(the._$next, 'click', the._onnext = function () {
@@ -171,7 +174,7 @@ define(function (require, exports, module) {
                     the._show();
                 }
             });
-            event.on(doc, 'right', the._onnext);
+            the._hotkey.on('right', the._onnext);
 
             // 单击序列
             event.on(the._$navList, 'click', '*', function () {
@@ -199,7 +202,7 @@ define(function (require, exports, module) {
                     the._renderContent();
                 });
             });
-            event.on(doc, 'esc', the._onclose);
+            the._hotkey.on('esc', the._onclose);
         },
 
 

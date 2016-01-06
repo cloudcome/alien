@@ -10,6 +10,7 @@ define(function (require, exports, module) {
      * @module ui/ctrl-list/
      * @requires ui/
      * @requires ui/popup/
+     * @requires libs/hotkey
      * @requires libs/template
      * @requires core/event/hotkey
      * @requires core/dom/selector
@@ -23,11 +24,12 @@ define(function (require, exports, module) {
 
     var ui = require('../');
     var Popup = require('../popup/');
+    var Hotkey = require('../../libs/hotkey.js');
     var Template = require('../../libs/template.js');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');
     var tpl = new Template(template);
-    var event = require('../../core/event/hotkey.js');
+    var event = require('../../core/event/base.js');
     var selector = require('../../core/dom/selector.js');
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
@@ -221,6 +223,8 @@ define(function (require, exports, module) {
                 the.close();
             };
 
+            the._hotkey = new Hotkey(doc);
+
             // 悬浮高亮
             event.on(the._$popup, 'mouseover', '.' + alienClass + '-item', the._onhover = function () {
                 the._index = attribute.data(this, 'index') * 1;
@@ -231,7 +235,7 @@ define(function (require, exports, module) {
             event.on(the._$popup, 'click', '.' + alienClass + '-item', the._onsure);
 
             // 上移
-            event.on(doc, 'up', the._onup = function () {
+            the._hotkey.on('up', the._onup = function () {
                 if (!the.visible || the._index === 0) {
                     return;
                 }
@@ -241,7 +245,7 @@ define(function (require, exports, module) {
             });
 
             // 下移
-            event.on(doc, 'down', the._ondown = function () {
+            the._hotkey.on('down', the._ondown = function () {
                 if (!the.visible || the._index === the._length - 1) {
                     return;
                 }
@@ -251,10 +255,10 @@ define(function (require, exports, module) {
             });
 
             // esc
-            event.on(doc, 'esc', the._onclose);
+            the._hotkey.on('esc', the._onclose);
 
             // return
-            event.on(doc, 'return', the._onsure);
+            the._hotkey.on('return', the._onsure);
 
             // 单击其他地方
             event.on(doc, 'click', the._onclose);
