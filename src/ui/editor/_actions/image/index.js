@@ -85,6 +85,9 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var canListenDragAndDropAndPaste = false;
+            var eDialog = the._eDialog;
+            var eContent = the._eEditorContent = the.editor.getContentNode();
+            var eMask = the._eDialogMask = the._dialog.getMask().getNode();
             var onUploadSuccess = function (url) {
                 if (url) {
                     the.editor.insert('image', {
@@ -109,7 +112,7 @@ define(function (require, exports, module) {
                 }
             };
 
-            event.on(the._eDialog, 'change', '.' + the._fileClass, the._onchange = parseEventAndUpload);
+            event.on(eDialog, 'change', '.' + the._fileClass, the._onchange = parseEventAndUpload);
 
             the._dialog
                 .before('open', function () {
@@ -135,12 +138,18 @@ define(function (require, exports, module) {
                     the._dialog.close();
                 });
 
-            event.on(d, 'dragenter dragover', function () {
+            event.on(d, 'dragenter dragover', the._ondrag = function () {
                 return false;
             });
 
-            event.on(d, 'drop', parseEventAndUpload);
-            event.on(d, 'paste', parseEventAndUpload);
+
+
+            //event.on(eMask, 'drop', parseEventAndUpload);
+            event.on(eDialog, 'drop', parseEventAndUpload);
+            event.on(eContent, 'drop', parseEventAndUpload);
+            //event.on(eMask, 'paste', parseEventAndUpload);
+            event.on(eDialog, 'paste', parseEventAndUpload);
+            event.on(eContent, 'paste', parseEventAndUpload);
         },
 
 
@@ -169,7 +178,10 @@ define(function (require, exports, module) {
         destroy: function () {
             var the = this;
 
-            event.un(the._eDialog, 'change', the._onchange);
+            event.un(d, 'dragenter dragover', the._ondrag);
+            event.un(the._eDialog, 'change drop paste', the._onchange);
+            event.un(the._eDialogMask, 'drop paste', the._onchange);
+            event.un(the._eEditorContent, 'drop paste', the._onchange);
             the._dialog.destroy();
         }
     });

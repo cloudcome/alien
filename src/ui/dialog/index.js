@@ -168,6 +168,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取遮罩对象
+         * @returns {Mask|exports|module.exports|*}
+         */
+        getMask: function () {
+            return this._mask;
+        },
+
+
+        /**
          * 初始化事件
          * @private
          */

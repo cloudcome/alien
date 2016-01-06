@@ -233,6 +233,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取内容节点
+         * @returns {*}
+         */
+        getContentNode: function () {
+            return this._eContent;
+        },
+
+
+        /**
          * 初始化事件
          * @private
          */
