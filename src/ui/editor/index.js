@@ -181,6 +181,12 @@ define(function (require, exports, module) {
                 if (item) {
                     item.name = button;
                     buttons.push(item);
+
+                    if (actions[item.command]) {
+                        the._commands[item.command] = new actions[item.command](the, {
+                            type: item.type
+                        });
+                    }
                 }
             });
 
@@ -191,7 +197,6 @@ define(function (require, exports, module) {
 
             the._buttons = buttons;
             var eEditor = the._eEditor = modification.parse(html)[0];
-
             modification.insert(eEditor, the._eTextarea, 'afterend');
             attribute.addClass(eEditor, options.addClass);
             var eIcons = selector.query('.' + namespace + '-icon', eEditor);
@@ -229,6 +234,14 @@ define(function (require, exports, module) {
                     textAlign: 'center'
                 }
             });
+
+            dato.each(buttons, function (index, item) {
+                if (actions[item.command]) {
+                    the._commands[item.command] = new actions[item.command](the, {
+                        type: item.type
+                    });
+                }
+            });
         },
 
 
@@ -261,11 +274,7 @@ define(function (require, exports, module) {
                 }
 
                 var action = command + type;
-                if (action && actions[command]) {
-                    the._commands[action] = the._commands[action] || new actions[command](the, {
-                            type: type
-                        });
-
+                if (action && actions[command] && the._commands[action]) {
                     // open popup
                     if (the._commands[action].open) {
                         the._commands[action].open(this);
