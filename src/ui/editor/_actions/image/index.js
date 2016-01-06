@@ -86,7 +86,7 @@ define(function (require, exports, module) {
             var the = this;
             var canListenDragAndDropAndPaste = false;
             var eDialog = the._eDialog;
-            var eContent = the._eEditorContent = the.editor.getContentNode();
+            var eEditor = the._eEditor = the.editor.getNode();
             var eMask = the._eDialogMask = the._dialog.getMask().getNode();
             var onUploadSuccess = function (url) {
                 if (url) {
@@ -146,10 +146,10 @@ define(function (require, exports, module) {
 
             //event.on(eMask, 'drop', parseEventAndUpload);
             event.on(eDialog, 'drop', parseEventAndUpload);
-            event.on(eContent, 'drop', parseEventAndUpload);
+            event.on(eEditor, 'drop', parseEventAndUpload);
             //event.on(eMask, 'paste', parseEventAndUpload);
             event.on(eDialog, 'paste', parseEventAndUpload);
-            event.on(eContent, 'paste', parseEventAndUpload);
+            event.on(eEditor, 'paste', parseEventAndUpload);
         },
 
 
@@ -180,8 +180,7 @@ define(function (require, exports, module) {
 
             event.un(d, 'dragenter dragover', the._ondrag);
             event.un(the._eDialog, 'change drop paste', the._onchange);
-            event.un(the._eDialogMask, 'drop paste', the._onchange);
-            event.un(the._eEditorContent, 'drop paste', the._onchange);
+            event.un(the._eEditor, 'drop paste', the._onchange);
             the._dialog.destroy();
         }
     });

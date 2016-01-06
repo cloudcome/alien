@@ -236,8 +236,8 @@ define(function (require, exports, module) {
          * 获取内容节点
          * @returns {*}
          */
-        getContentNode: function () {
-            return this._eContent;
+        getNode: function () {
+            return this._eEditor;
         },
 
 
