@@ -16,7 +16,10 @@ define(function (require, exports, module) {
 
     var dato = require('./dato.js');
     var typeis = require('./typeis.js');
+    var compatible = require('../core/navigator/compatible.js');
 
+    var w = window;
+    var File = w[compatible.html5('File', w)];
     var defaultFilter = function (file) {
         return /^image\//.test(file.type);
     };
@@ -36,10 +39,20 @@ define(function (require, exports, module) {
         }
 
         dato.each(items, function (index, item) {
+            if (!item) {
+                return;
+            }
+
+            if (item.constructor === File) {
+                if (item && filter(item)) {
+                    files.push(item);
+                }
+            }
+
             if (item.kind === 'file') {
                 var file = item.getAsFile();
 
-                if (file && file.size > 0 && filter(file)) {
+                if (file && filter(file)) {
                     files.push(file);
                 }
             }

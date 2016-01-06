@@ -142,13 +142,11 @@ define(function (require, exports, module) {
                 return false;
             });
 
-
-
-            //event.on(eMask, 'drop', parseEventAndUpload);
-            event.on(eDialog, 'drop', parseEventAndUpload);
+            event.on(eMask, 'drop', parseEventAndUpload);
+            //event.on(eDialog, 'drop', parseEventAndUpload);
             event.on(eEditor, 'drop', parseEventAndUpload);
-            //event.on(eMask, 'paste', parseEventAndUpload);
-            event.on(eDialog, 'paste', parseEventAndUpload);
+            event.on(eMask, 'paste', parseEventAndUpload);
+            //event.on(eDialog, 'paste', parseEventAndUpload);
             event.on(eEditor, 'paste', parseEventAndUpload);
         },
 
