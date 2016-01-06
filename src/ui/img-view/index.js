@@ -34,7 +34,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var animation = require('../../core/dom/animation.js');
     var event = require('../../core/event/base.js');
-    var Hotkey = require('../../libs/hotkey.js');
+    var Hotkey = require('../../ui/hotkey/index.js');
     var Template = require('../../libs/template.js');
     var template = require('./template.html', 'html');
     var style = require('./style.css', 'css');

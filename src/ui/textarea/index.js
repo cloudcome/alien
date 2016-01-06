@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var textarea = require('../../utils/textarea.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
-    var Hotkey = require('../../libs/hotkey.js');
+    var Hotkey = require('../../ui/hotkey/index.js');
 
     var namespace = 'alien-ui-textarea';
     var defaults = {

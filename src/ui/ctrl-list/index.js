@@ -24,7 +24,7 @@ define(function (require, exports, module) {
 
     var ui = require('../');
     var Popup = require('../popup/');
-    var Hotkey = require('../../libs/hotkey.js');
+    var Hotkey = require('../../ui/hotkey/index.js');
     var Template = require('../../libs/template.js');
     var style = require('./style.css', 'css');
     var template = require('./template.html', 'html');

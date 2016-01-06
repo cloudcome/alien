@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
     var Template = require('../../libs/template.js');
-    var Hotkey = require('../../libs/hotkey.js');
+    var Hotkey = require('../../ui/hotkey/index.js');
     var template = require('template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
