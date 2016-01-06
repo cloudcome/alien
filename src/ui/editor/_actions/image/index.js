@@ -96,15 +96,20 @@ define(function (require, exports, module) {
                 the._dialog.close();
             };
 
-            event.on(the._eDialog, 'change', '.' + the._fileClass, the._onchange = function (eve) {
-                var val = this.value;
+            /**
+             * 解析事件对象并上传
+             * @param eve
+             */
+            var parseEventAndUpload = function (eve) {
+                var files = eventParser.parseFiles(eve, this);
 
-                if (!val) {
-                    return;
+                if (files.length) {
+                    eve.preventDefault();
+                    the.editor.emit('upload', eve, files[0], onUploadSuccess);
                 }
+            };
 
-                the.editor.emit('upload', eve, this, onUploadSuccess);
-            });
+            event.on(the._eDialog, 'change', '.' + the._fileClass, the._onchange = parseEventAndUpload);
 
             the._dialog
                 .before('open', function () {
@@ -133,19 +138,6 @@ define(function (require, exports, module) {
             event.on(d, 'dragenter dragover', function () {
                 return false;
             });
-
-            /**
-             * 解析事件对象并上传
-             * @param eve
-             */
-            var parseEventAndUpload = function (eve) {
-                var files = eventParser.parseFiles(eve, this);
-
-                if (files.length) {
-                    eve.preventDefault();
-                    the.editor.emit('upload', eve, files[0], onUploadSuccess);
-                }
-            };
 
             event.on(d, 'drop', parseEventAndUpload);
             event.on(d, 'paste', parseEventAndUpload);

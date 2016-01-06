@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 
     var ed = window.ed = new Editor('#textarea');
 
-    ed.on('upload', function (eve, file, done) {
+    ed.on('upload', function (eve, files, done) {
         setTimeout(function () {
             done('http://p18.qhimg.com/t0144d6a0802f22be4f.jpg');
         });
