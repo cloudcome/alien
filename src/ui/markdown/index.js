@@ -213,7 +213,15 @@ define(function (require, exports, module) {
 
             // [](link)
             the._textarea.bind(ctrl + '+l', function () {
-                the._textarea.wrap('[link description](', ')', true);
+                var link_url = 'link url';
+                the._textarea.insert('<' + link_url + '>', [1, link_url.length + 1]);
+                return false;
+            });
+
+            // ![](image)
+            the._textarea.bind(ctrl + '+g', function () {
+                var link_url = 'image url';
+                the._textarea.insert('![](' + link_url + ')', [4, link_url.length + 4]);
                 return false;
             });
 
