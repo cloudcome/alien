@@ -130,7 +130,6 @@ define(function (require, exports, module) {
                 }
 
                 var eventType = decoratedKeys.join('+') + character;
-                console.log(eventType);
                 var ret = the.emit(eventType, eve);
 
                 if (ret === false) {
