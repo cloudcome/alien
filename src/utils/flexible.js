@@ -1,4 +1,4 @@
-;(function () {
+(function () {
     'use strict';
 
     var win = window;
@@ -7,7 +7,7 @@
     var docHead = doc.head;
     var viewportMeta = doc.querySelector('meta[name="viewport"]');
     var dpr = docEl.dataset.dpr;
-    var maxWidth = docEl.dataset.maxWidth || 999999;
+    var maxWidth = docEl.dataset.maxWidth || 1024;
     var tid;
     var changedCallbackList = [];
 
