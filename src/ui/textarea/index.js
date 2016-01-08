@@ -146,8 +146,24 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 设置输入框的值
+         * @param [start] {Number} 光标起始位置
+         * @param [end] {Number} 光标终点位置
+         * @param value {String} 值
+         * @returns {Textarea}
+         */
         setValue: function (start, end, value) {
+            var the = this;
+            var args = allocation.args(arguments);
 
+            if (args.length !== 3) {
+                value = args[0];
+                start = end = value.length;
+            }
+
+            the._set(start, end, value);
+            return the;
         },
 
 
