@@ -117,6 +117,14 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取历史数据
+         */
+        getHistory: function () {
+            return localStorage.getJSON(this._id);
+        },
+
+
+        /**
          * 绑定事件
          * @param eventType
          * @param callback
@@ -135,6 +143,11 @@ define(function (require, exports, module) {
          */
         getValue: function () {
             return this._eTextarea.value;
+        },
+
+
+        setValue: function (start, end, value) {
+
         },
 
 
