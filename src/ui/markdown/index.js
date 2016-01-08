@@ -63,18 +63,9 @@ define(function (require, exports, module) {
             the._eTextarea = selector.query($textarea)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._index = alienIndex++;
-            the._initData();
             the._initNode();
             the._initEvent();
         },
-
-
-        _initData: function () {
-            var the = this;
-            var history = the._textarea.getHistory();
-
-        },
-
 
         /**
          * 初始化节点
