@@ -33,7 +33,9 @@ define(function (require, exports, module) {
     var namespace = 'alien-ui-textarea';
     var defaults = {
         tabSize: 4,
-        historyLength: 99
+        historyLength: 99,
+        // 最小不同值，即大于最小变化值会在实例化的时候发送 different 事件
+        minDifferent: 20
     };
 
     var Textarea = ui.create({
@@ -46,6 +48,7 @@ define(function (require, exports, module) {
             the._stack = [];
             the._set(0, 0, the._eTextarea.value);
             the._id = namespace + the._genId(the._eTextarea);
+            the._initData();
             the._initEvent();
         },
 
@@ -65,6 +68,33 @@ define(function (require, exports, module) {
 
             return '-/' + encodeURIComponent(location.href) + '/#' +
                 id + '.' + className + '<' + parentTagName + '><' + tagName + '>' + name;
+        },
+
+
+        /**
+         * 初始化数据
+         * @private
+         */
+        _initData: function () {
+            var the = this;
+            var minDiff = the._options.minDifferent;
+            var history = the.getHistory();
+            var now = the._eTextarea.value || '';
+            var old = history.value;
+            var oldLength = old.length;
+            var oldPrefix = old.slice(0, minDiff);
+            var oldSuffix = oldLength > minDiff ? old.slice(oldLength - minDiff) : '';
+            var complete = function (accepted) {
+                the.setValue(accepted ? history.value : now);
+            };
+
+            if (oldLength > minDiff && now.length < minDiff) {
+                the.emit('different', {
+                    oldLength: oldLength,
+                    oldPrefix: oldPrefix,
+                    oldSuffix: oldSuffix
+                }, complete);
+            }
         },
 
 

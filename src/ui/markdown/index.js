@@ -71,7 +71,7 @@ define(function (require, exports, module) {
 
         _initData: function () {
             var the = this;
-
+            var history = the._textarea.getHistory();
 
         },
 
