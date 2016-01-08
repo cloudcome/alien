@@ -13,8 +13,21 @@ define(function (require, exports, module) {
     'use strict';
 
     var Markdown = require('../../src/ui/markdown/index.js');
+    var confirm = require('../../src/widgets/confirm.js');
 
     var md = new Markdown('#demo');
+
+    md.on('different', function (old, accept) {
+        confirm(''.concat(
+            '当前有编辑器有之前未保存的历史记录，是否恢复？摘要如下：<br>',
+            old.start,
+            '...',
+            old.end + '<br>',
+            '共' + old.length + '字<br>'
+        )).on('sure', function () {
+            accept(true);
+        });
+    });
 
     md.on('upload', function (eve, file, done) {
         setTimeout(function () {

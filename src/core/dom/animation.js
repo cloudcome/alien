@@ -211,7 +211,7 @@ define(function (require, exports, module) {
          */
         queue.shift();
         queue.push(transition($ele, to, options), callback);
-        queue.begin();
+        queue.start();
     };
 
 
@@ -308,7 +308,7 @@ define(function (require, exports, module) {
          */
         queue.shift();
         queue.push(keyframes($ele, name, options), callback);
-        queue.begin();
+        queue.start();
     };
 
 
@@ -496,7 +496,7 @@ define(function (require, exports, module) {
          */
         queue.shift();
         queue.push(scrollTo($ele, to, options), callback);
-        queue.begin();
+        queue.start();
     };
 });
 

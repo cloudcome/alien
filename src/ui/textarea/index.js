@@ -82,18 +82,22 @@ define(function (require, exports, module) {
             var now = the._eTextarea.value || '';
             var old = history.value;
             var oldLength = old.length;
-            var oldPrefix = old.slice(0, minDiff);
-            var oldSuffix = oldLength > minDiff ? old.slice(oldLength - minDiff) : '';
+            var middleLength = Math.round(oldLength / 3);
+            var oldPrefix = old.slice(0, middleLength);
+            var oldSuffix = middleLength > minDiff ? old.slice(middleLength - minDiff) : '';
             var complete = function (accepted) {
                 the.setValue(accepted ? history.value : now);
+                the.focus();
             };
 
             if (oldLength > minDiff && now.length < minDiff) {
-                the.emit('different', {
-                    oldLength: oldLength,
-                    oldPrefix: oldPrefix,
-                    oldSuffix: oldSuffix
-                }, complete);
+                controller.nextTick(function () {
+                    the.emit('different', {
+                        length: oldLength,
+                        start: oldPrefix,
+                        end: oldSuffix
+                    }, complete);
+                });
             }
         },
 
