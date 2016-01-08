@@ -82,9 +82,9 @@ define(function (require, exports, module) {
             var now = the._eTextarea.value || '';
             var old = history.value;
             var oldLength = old.length;
-            var middleLength = Math.round(oldLength / 3);
+            var middleLength = Math.min(Math.round(oldLength / 3), minDiff);
             var oldPrefix = old.slice(0, middleLength);
-            var oldSuffix = middleLength > minDiff ? old.slice(middleLength - minDiff) : '';
+            var oldSuffix = middleLength < minDiff ? '' : old.slice(oldLength - middleLength * 2);
             var complete = function (accepted) {
                 the.setValue(accepted ? history.value : now);
                 the.focus();
