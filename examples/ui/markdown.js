@@ -24,8 +24,8 @@ define(function (require, exports, module) {
             '...',
             old.end + '<br>',
             '共' + old.length + '字<br>'
-        )).on('sure', function () {
-            accept(true);
+        )).on('complete', function (accepted) {
+            accept(accepted);
         });
     });
 
