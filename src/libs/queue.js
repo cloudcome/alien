@@ -1,4 +1,4 @@
-/*!
+/**
  * 队列控制
  * @author ydr.me
  * @create 2015-04-21 13:54
@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module libs/queue
+     * @requires utils/typeis
      * @requires utils/class
      * @requires libs/emitter
      * @module libs/queue
@@ -19,19 +20,26 @@ define(function (require, exports, module) {
     };
     var typeis = require('../utils/typeis.js');
     var klass = require('../utils/class.js');
+    var dato = require('../utils/dato.js');
     var Emitter = require('./emitter.js');
     var STATES = {
         ready: 1,
-        begin: 2,
+        start: 2,
         pause: 3,
         stop: 4
     };
     var index = 0;
+    var defaults = {
+        // 自动开始
+        auto: false
+    };
     var Queue = klass.extends(Emitter).create({
-        constructor: function () {
+        constructor: function (options) {
             var the = this;
 
             the.id = index++;
+            the._index = 0;
+            the._options = dato.extend({}, defaults, options);
             the._queueList = [];
             the.state = STATES.ready;
             the.className = 'queue';
@@ -71,6 +79,7 @@ define(function (require, exports, module) {
 
             callback = typeis.function(callback) ? callback : noop;
             the._queueList.push({
+                index: the._index++,
                 t: task,
                 c: callback
             });
@@ -78,7 +87,11 @@ define(function (require, exports, module) {
             /**
              * @event push
              */
-            the.emit('push');
+            the.emit('pushed');
+
+            if (the._options.auto) {
+                the.start();
+            }
 
             return the;
         },
@@ -103,7 +116,7 @@ define(function (require, exports, module) {
             /**
              * @event shift
              */
-            the.emit('shift');
+            the.emit('shifted');
 
             return the;
         },
@@ -113,14 +126,14 @@ define(function (require, exports, module) {
          * 开始执行队列
          * @returns {Queue}
          */
-        begin: function () {
+        start: function () {
             var the = this;
 
             if (the.state > STATES.ready) {
                 return the;
             }
 
-            the.state = STATES.begin;
+            the.state = STATES.start;
 
             if (the.size() === 0) {
                 the.state = STATES.ready;
@@ -136,7 +149,7 @@ define(function (require, exports, module) {
                     /**
                      * @event pause
                      */
-                    the.emit('pause');
+                    the.emit('paused');
                     return the;
                 }
 
@@ -144,7 +157,7 @@ define(function (require, exports, module) {
                     /**
                      * @event stop
                      */
-                    the.emit('stop');
+                    the.emit('stoped');
                     the.state = STATES.ready;
 
                     /**
@@ -169,7 +182,7 @@ define(function (require, exports, module) {
                     /**
                      * @event step
                      */
-                    the.emit('step');
+                    the.emit('steped');
                     item.c();
                     next();
                 });
@@ -189,7 +202,7 @@ define(function (require, exports, module) {
             var the = this;
 
 
-            if (the.state !== STATES.begin) {
+            if (the.state !== STATES.start) {
                 return the;
             }
 
@@ -200,10 +213,10 @@ define(function (require, exports, module) {
 
 
         /**
-         * 接续队列
+         * 恢复队列
          * @returns {Queue}
          */
-        continue: function () {
+        resume: function () {
             var the = this;
 
             if (the.state !== STATES.pause) {
@@ -212,7 +225,7 @@ define(function (require, exports, module) {
 
             the.state = STATES.ready;
 
-            return the.begin();
+            return the.start();
         },
 
 
@@ -263,7 +276,7 @@ define(function (require, exports, module) {
             /**
              * @event clear
              */
-            the.emit('clear');
+            the.emit('cleared');
 
             return the;
         }
