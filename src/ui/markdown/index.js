@@ -22,6 +22,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var attribute = require('../../core/dom/attribute.js');
     var event = require('../../core/event/base.js');
+    var Emitter = require('../../libs/emitter.js');
     var Template = require('../../libs/template.js');
     var Hotkey = require('../../ui/hotkey/index.js');
     var template = require('template.html', 'html');
@@ -151,6 +152,7 @@ define(function (require, exports, module) {
             };
 
             var ctrl = Hotkey.MAC_OS ? 'cmd' : 'ctrl';
+            Emitter.pipe(the._textarea, the);
 
             // fullscreen
             the._textarea.bind(ctrl + '+f11', function () {
