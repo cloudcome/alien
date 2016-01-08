@@ -32,9 +32,9 @@ define(function (require, exports, module) {
         var the = this;
 
         the.confirm = new Msg(options).on('close', function (index) {
-            var accepted = options.sureIndex === index;
-            the.emit('complete', accepted);
-            the.emit(accepted ? 'sure' : 'cancel');
+            var confirmed = options.sureIndex === index;
+            the.emit('complete', confirmed);
+            the.emit(confirmed ? 'sure' : 'cancel');
         });
     });
 
