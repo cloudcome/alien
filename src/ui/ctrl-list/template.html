@@ -1,7 +1,12 @@
 <div class="alien-ui-ctrllist-list" id="alien-ui-ctrllist-{{id}}">
     {{list list as index,item}}
-    <div class="alien-ui-ctrllist-item {{if !index}}alien-ui-ctrllist-item-active{{/if}}"
+    <div class="alien-ui-ctrllist-item {{if item.image}}alien-ui-ctrllist-item-hasimage{{/if}}"
          data-index="{{index}}"
-         data-value="{{=item.value}}">{{=item.text}}</div>
+         data-value="{{=item.value}}">
+        {{if item.image}}
+        <img class="alien-ui-ctrllist-image" src="{{=item.image}}"/>
+        {{/if}}
+        <div class="alien-ui-ctrllist-text">{{=item.text}}</div>
+    </div>
     {{/list}}
 </div>
