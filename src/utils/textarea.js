@@ -8,6 +8,7 @@
 define(function (require, exports, module) {
     /**
      * @module utils/textarea
+     * @reuqires core/dom/modification
      * @reuqires utils/allocation
      * @reuqires utils/typeis
      * @reuqires utils/controller
@@ -16,15 +17,42 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    var modification = require('../core/dom/modification.js');
     var allocation = require('./allocation.js');
     var typeis = require('./typeis.js');
     var controller = require('./controller.js');
     var number = require('./number.js');
 
     var doc = document;
-    var $textarea = doc.createElement('textarea');
+    var $textarea = modification.create('textarea');
     var supportSetSelectionRange = 'setSelectionRange' in $textarea;
     $textarea = null;
+    // @link https://github.com/Codecademy/textarea-helper/blob/master/textarea-helper.js
+    var typographyStyles = [
+        // Box Styles.
+        'box-sizing', 'height', 'width', 'padding-bottom',
+        'padding-left', 'padding-right', 'padding-top',
+
+        // Font stuff.
+        'font-family', 'font-size', 'font-style',
+        'font-variant', 'font-weight',
+
+        // Spacing etc.
+        'word-spacing', 'letter-spacing', 'line-height',
+        'text-decoration', 'text-indent', 'text-transform',
+
+        // The direction.
+        'direction'
+    ];
+    var mirrorEle = modification.create('div', {
+        tabindex: -1,
+        style: {
+            position: 'absolute',
+            top: '-9999em',
+            left: '-9999em'
+        }
+    });
+    modification.insert(mirrorEle, doc.body);
 
 
     /**
@@ -167,5 +195,20 @@ define(function (require, exports, module) {
             end: focusEnd,
             value: value
         };
+    };
+
+
+    exports.getSelectionRect = function (node) {
+        var sel = exports.getSelection(node);
+        var start = sel[0];
+        var end = sel[1];
+        // If available (thus IE), use the createTextRange method
+        if (typeis.Function(node.createTextRange)) {
+            var range = node.createTextRange();
+            range.collapse(true);
+            range.moveStart('character', start);
+            range.moveEnd('character', end - start);
+            return range.getBoundingClientRect();
+        }
     };
 });
