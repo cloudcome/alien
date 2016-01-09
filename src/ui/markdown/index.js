@@ -333,7 +333,7 @@ define(function (require, exports, module) {
             });
 
             // table
-            the._textarea.bind(ctrl + '+\\', function () {
+            the._textarea.bind(ctrl + '+T', function () {
                 var thead1 = 'thead1';
                 the._textarea.insert('\n\n' + thead1 + ' | thead2\n-------|--------\ntd1    | td2  \n\n', [2, 2 + thead1.length]);
                 return false;

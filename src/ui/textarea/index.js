@@ -44,7 +44,9 @@ define(function (require, exports, module) {
             var the = this;
 
             the._eTextarea = selector.query($textarea)[0];
-            the._hotkey = new Hotkey(the._eTextarea);
+            the._hotkey = new Hotkey(the._eTextarea, {
+                capture: true
+            });
             the._options = dato.extend({}, defaults, options);
             the._stack = [];
             the._id = namespace + the._genId(the._eTextarea);
