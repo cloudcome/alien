@@ -1,6 +1,6 @@
 <div class="alien-ui-ctrllist-list" id="alien-ui-ctrllist-{{id}}">
     {{list list as index,item}}
-    <div class="alien-ui-ctrllist-item"
+    <div class="alien-ui-ctrllist-item {{if !index}}alien-ui-ctrllist-item-active{{/if}}"
          data-index="{{index}}"
          data-value="{{=item.value}}">
         {{if item.image}}

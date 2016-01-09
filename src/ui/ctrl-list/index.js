@@ -243,6 +243,7 @@ define(function (require, exports, module) {
 
                 the._index--;
                 activeIndex(true);
+                return false;
             });
 
             // 下移
@@ -253,6 +254,7 @@ define(function (require, exports, module) {
 
                 the._index++;
                 activeIndex(true);
+                return false;
             });
 
             // esc
