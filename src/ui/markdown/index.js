@@ -242,13 +242,16 @@ define(function (require, exports, module) {
 
             // \n```\nblock code\n```\n
             the._textarea.bind(ctrl + '+k', function () {
-                the._textarea.wrap('\n```\n', '\n```\n\n', true);
+                var lines = the._textarea.getLines();
+                var lastLine = lines[lines.length - 1];
+                the._textarea.wrap('\n```\n', (lastLine.text.length > 1 ? '\n' : '') + '```\n\n', true);
                 return false;
             });
 
             // table
             the._textarea.bind(ctrl + '+\\', function () {
-                the._textarea.insert('\n\nthead1 | thead2\n-------|--------\ntd1    | td2  \n', [2, 2]);
+                var thead1 = 'thead1';
+                the._textarea.insert('\n\n' + thead1 + ' | thead2\n-------|--------\ntd1    | td2  \n\n', [2, 2 + thead1.length]);
                 return false;
             });
 
