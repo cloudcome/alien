@@ -1,14 +1,11 @@
-/*!
- * 文件描述
+/**
+ * marked render table
  * @author ydr.me
  * @create 2015-04-18 17:03
  */
 
 
 define(function (require, exports, module) {
-    /**
-     * @module parent/marked-render-table.js
-     */
     'use strict';
 
     var className = 'table table-radius table-bordered table-hover';
