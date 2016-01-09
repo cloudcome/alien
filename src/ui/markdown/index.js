@@ -243,8 +243,9 @@ define(function (require, exports, module) {
             // \n```\nblock code\n```\n
             the._textarea.bind(ctrl + '+k', function () {
                 var lines = the._textarea.getLines();
-                var lastLine = lines[lines.length - 1];
-                the._textarea.wrap('\n```\n', (lastLine.text.length > 1 ? '\n' : '') + '```\n\n', true);
+                var lineLength = lines.length;
+                var lastLine = lines[lineLength - 1];
+                the._textarea.wrap('\n```\n', (!lastLine.text.length && lineLength.length > 1 ? '' : '\n') + '```\n\n', true);
                 return false;
             });
 

@@ -81,8 +81,13 @@ define(function (require, exports, module) {
             var minDiff = the._options.minDifferent;
             var history = the.getHistory();
             var now = the._eTextarea.value || '';
-            var old = history.value;
+            var old = history.value || '';
             var oldLength = old.length;
+
+            if (!oldLength) {
+                return;
+            }
+
             var middleLength = Math.min(Math.round(oldLength / 3), minDiff);
             middleLength = Math.max(middleLength, minDiff / 2);
             var oldPrefix = old.slice(0, middleLength);
