@@ -158,9 +158,7 @@ define(function (require, exports, module) {
 
             // soft enter
             the.bind('shift+enter', function () {
-                var start = the._eTextarea.value.length + 1;
-                textarea.insert(the._eTextarea, '\n', [start]);
-                the._set(start, start);
+                the._softEnter();
                 return false;
             });
 
@@ -203,6 +201,21 @@ define(function (require, exports, module) {
 
             var newValue = value.slice(0, start) + value.slice(end);
             the._set(start, start, newValue);
+        },
+
+
+        /**
+         * 软回车
+         * @private
+         */
+        _softEnter: function () {
+            var the = this;
+            var lines = the.getLines();
+            var lastLine = lines[lines.length - 1];
+            var start = lastLine.end;
+
+            textarea.insert(the._eTextarea, '\n', [start], [start + 1]);
+            the._set(start + 1, start + 1);
         },
 
 
