@@ -198,17 +198,18 @@ define(function (require, exports, module) {
     };
 
 
+    var getSelectionRect = function (value, length) {
+        var text = value.slice(0, length);
+    };
+
+
     exports.getSelectionRect = function (node) {
         var sel = exports.getSelection(node);
-        var start = sel[0];
-        var end = sel[1];
-        // If available (thus IE), use the createTextRange method
-        if (typeis.Function(node.createTextRange)) {
-            var range = node.createTextRange();
-            range.collapse(true);
-            range.moveStart('character', start);
-            range.moveEnd('character', end - start);
-            return range.getBoundingClientRect();
-        }
+        var value = node.value;
+
+        return {
+            start: getSelectionRect(value, sel[0]),
+            end: getSelectionRect(value, sel[1])
+        };
     };
 });
