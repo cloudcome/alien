@@ -71,9 +71,9 @@ define(function (require, exports, module) {
             the._eTextarea = selector.query($textarea)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._index = alienIndex++;
-            the.updateAtList(the._options.atList);
             the._initNode();
             the._initEvent();
+            the.updateAtList(the._options.atList);
         },
 
 
@@ -97,6 +97,7 @@ define(function (require, exports, module) {
             });
 
             the._atList = atList2;
+            the._ctrlList.update(atList2);
             return the;
         },
 
@@ -139,8 +140,14 @@ define(function (require, exports, module) {
             the._textarea = new Textarea(the._eTextarea, {
                 tabSize: options.tabSize
             });
+            the._ctrlList = new CtrlList();
         },
 
+
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
             var eTextarea = the._eTextarea;
@@ -298,8 +305,11 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            // @
             the._textarea.bind('shift+2', function () {
                 the.emit('at');
+                var pos = the._textarea.getSelectionRect().start;
+                the._ctrlList.open(pos);
             });
 
             the._textarea.bind('enter', function () {

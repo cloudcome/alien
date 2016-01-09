@@ -91,7 +91,7 @@ define(function (require, exports, module) {
             the._text = the._list[0].text;
             the._value = the._list[0].value;
 
-            the._popup.setContent(tpl.render({
+            the._popup.html(tpl.render({
                 list: the._list,
                 id: alienIndex++
             }));

@@ -23,6 +23,28 @@ define(function (require, exports, module) {
         });
     });
 
+    md.updateAtList([{
+        text: '瑞哎可特',
+        image: 'http://assets.jikexueyuan.com/user/avtar/201509/08/09/1unctk3jcv2g5.jpeg',
+        value: 'rect'
+    }, {
+        text: '溜达页',
+        image: 'http://assets.jikexueyuan.com//share/jkxy_public/www/Data/Attachments/user/avtar/2937385.gif',
+        value: 'liud312312'
+    }, {
+        text: '修就的',
+        image: 'https://avatars2.githubusercontent.com/u/38180?s=140',
+        value: 'xiujiud'
+    }, {
+        text: 'Integ',
+        image: 'https://avatars2.githubusercontent.com/u/1772687?s=140',
+        value: 'Integ'
+    }, {
+        text: '横竖',
+        image: 'https://avatars2.githubusercontent.com/u/2787987?s=140',
+        value: 'hestnutchen'
+    }]);
+
     md.on('upload', function (eve, file, done) {
         setTimeout(function () {
             done({
