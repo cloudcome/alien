@@ -11,50 +11,12 @@
         </div>
         <div class="alien-ui-markdown-tips j-flag">
             <div class="alien-ui-markdown-title">Markdown 编辑器</div>
+            {{list helps as help}}
             <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+F11</span>
-                <span class="alien-ui-markdown-kbd">cmd+F11</span>
-                <span class="alien-ui-markdown-desc">全屏写作模式</span>
+                <span class="alien-ui-markdown-kbd">{{=help.key}}</span>
+                <span class="alien-ui-markdown-desc">{{=help.desc}}</span>
             </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+F12</span>
-                <span class="alien-ui-markdown-kbd">cmd+F12</span>
-                <span class="alien-ui-markdown-desc">全屏预览模式</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+B</span>
-                <span class="alien-ui-markdown-kbd">cmd+B</span>
-                <span class="alien-ui-markdown-desc">粗体</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+I</span>
-                <span class="alien-ui-markdown-kbd">cmd+I</span>
-                <span class="alien-ui-markdown-desc">斜体</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+E</span>
-                <span class="alien-ui-markdown-kbd">cmd+E</span>
-                <span class="alien-ui-markdown-desc">删除线</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+R</span>
-                <span class="alien-ui-markdown-kbd">cmd+R</span>
-                <span class="alien-ui-markdown-desc">插入分隔线</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+K</span>
-                <span class="alien-ui-markdown-kbd">cmd+K</span>
-                <span class="alien-ui-markdown-desc">插入代码块</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">ctrl+|</span>
-                <span class="alien-ui-markdown-kbd">cmd+|</span>
-                <span class="alien-ui-markdown-desc">插入表格</span>
-            </div>
-            <div class="alien-ui-markdown-line">
-                <span class="alien-ui-markdown-kbd">shift+enter</span>
-                <span class="alien-ui-markdown-desc">行内回车</span>
-            </div>
+            {{/list}}
         </div>
     </div>
 </div>
