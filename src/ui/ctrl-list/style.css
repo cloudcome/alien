@@ -5,11 +5,25 @@
   min-width: 200px;
   overflow: auto; }
   .alien-ui-ctrllist-item {
-    line-height: 14px;
-    font-size: 14px;
+    position: relative;
+    line-height: 20px;
+    padding: 5px;
     white-space: nowrap;
-    overflow: hidden;
-    padding: 5px 10px; }
+    overflow: hidden; }
     .alien-ui-ctrllist-item-active {
       background: #7390fe;
       color: #FFF; }
+  .alien-ui-ctrllist-image {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    float: left;
+    vertical-align: top;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0 4px 0 0; }
+  .alien-ui-ctrllist-text {
+    font-size: 14px;
+    float: left; }
