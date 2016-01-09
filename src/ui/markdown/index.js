@@ -358,24 +358,27 @@ define(function (require, exports, module) {
             });
 
             the._textarea.bind('enter', function () {
-                var nowLine0 = the._textarea.getLines()[0];
-                var prevSel = the._textarea.getSelection();
-                // 减去当前行的空白，定位到上一行末尾
-                var prevLines = the._textarea.getLines(prevSel[0] - 1 - nowLine0.text.length);
-                var prevLine0 = prevLines[0];
-                var prevText0 = prevLine0.text;
-                var match;
-
-                // order list
-                if ((match = prevText0.match(REG_ORDER))) {
-                    var nextOrder = number.parseInt(match[1]) + 1;
-                    the._textarea.insert(nextOrder + '. ', false);
-                }
-                // unorder list
-                else if ((match = prevText0.match(REG_UNORDER))) {
-                    var nextUnorder = match[1];
-                    the._textarea.insert(nextUnorder + ' ', false);
-                }
+                //setTimeout(function () {
+                //    console.log(the._eTextarea.selectionStart);
+                //    var nowLine0 = the._textarea.getLines()[0];
+                //    var prevSel = the._textarea.getSelection();
+                //    // 减去当前行的空白，定位到上一行末尾
+                //    var prevLines = the._textarea.getLines(prevSel[0] - 1 - nowLine0.text.length);
+                //    var prevLine0 = prevLines[0];
+                //    var prevText0 = prevLine0.text;
+                //    var match;
+                //
+                //    // order list
+                //    if ((match = prevText0.match(REG_ORDER))) {
+                //        var nextOrder = number.parseInt(match[1]) + 1;
+                //        the._textarea.insert(nextOrder + '. ', false);
+                //    }
+                //    // unorder list
+                //    else if ((match = prevText0.match(REG_UNORDER))) {
+                //        var nextUnorder = match[1];
+                //        the._textarea.insert(nextUnorder + ' ', false);
+                //    }
+                //}, 100);
 
                 return false;
             });
