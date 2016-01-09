@@ -65,46 +65,46 @@ define(function (require, exports, module) {
         // }
         atList: [],
         helps: [{
-            keys: ctrlKey + '+F11',
+            key: ctrlKey + '+F11',
             desc: '全屏写作模式'
         }, {
-            keys: ctrlKey + '+F12',
+            key: ctrlKey + '+F12',
             desc: '全屏预览模式'
         }, {
-            keys: ctrlKey + '+B',
+            key: ctrlKey + '+B',
             desc: '粗体'
         }, {
-            keys: ctrlKey + '+I',
+            key: ctrlKey + '+I',
             desc: '斜体'
         }, {
-            keys: ctrlKey + '+E',
+            key: ctrlKey + '+E',
             desc: '删除线'
         }, {
-            keys: ctrlKey + '+R',
+            key: ctrlKey + '+R',
             desc: '分割线'
         }, {
-            keys: ctrlKey + '+K',
+            key: ctrlKey + '+K',
             desc: '代码块'
         }, {
-            keys: ctrlKey + '+T',
+            key: ctrlKey + '+T',
             desc: '插入表格'
         }, {
-            keys: ctrlKey + '+G',
+            key: ctrlKey + '+G',
             desc: '插入图片'
         }, {
-            keys: ctrlKey + '+L',
+            key: ctrlKey + '+L',
             desc: '插入链接'
         }, {
-            keys: 'shift+enter',
+            key: 'shift+enter',
             desc: '软回车'
         }, {
-            keys: ctrlKey + '+X',
+            key: ctrlKey + '+X',
             desc: '剪切'
         }, {
-            keys: ctrlKey + '+Z',
+            key: ctrlKey + '+Z',
             desc: '撤销'
         }, {
-            keys: ctrlKey + '+shift+Z',
+            key: ctrlKey + '+shift+Z',
             desc: '恢复'
         }]
     };
@@ -153,7 +153,8 @@ define(function (require, exports, module) {
             var options = the._options;
             var html = tpl.render({
                 index: the._index,
-                prevClassName: options.prevClassName
+                prevClassName: options.prevClassName,
+                helps: options.helps
             });
             var node = the._eMarkdown = modification.parse(html)[0];
             var $flag = the._eFlag = modification.create('#comment', namespace + '-' + the._index);

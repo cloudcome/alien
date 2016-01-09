@@ -56,34 +56,34 @@
       color: #666; }
   .alien-ui-markdown-tips {
     display: none;
-    position: absolute;
-    background: #ffc;
-    top: 50%;
+    position: fixed;
+    background: #fff;
+    top: -5px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     min-width: 320px;
     font-size: 14px;
-    border-radius: 3px;
-    border: 1px solid #E6E6BC;
-    box-shadow: 0 0 12px 4px #CECEA0; }
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 0 12px 4px #A0A0A0;
+    padding: 10px 0; }
   .alien-ui-markdown-title {
     text-align: center;
     font-size: 20px;
     padding: 10px 0;
-    color: #82824D; }
+    color: #777; }
   .alien-ui-markdown-line {
     line-height: 1;
-    padding: 10px; }
+    padding: 3px 10px; }
   .alien-ui-markdown-kbd {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    background: #82824D;
+    background: #888;
     color: #fff;
     padding: 3px;
     border-radius: 2px;
     display: inline-block;
     margin: 0 2px; }
   .alien-ui-markdown-desc {
-    color: #949415; }
+    color: #888; }
   .alien-ui-markdown-fullscreen {
     position: fixed;
     top: 0;
