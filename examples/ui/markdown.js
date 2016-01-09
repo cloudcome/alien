@@ -18,13 +18,7 @@ define(function (require, exports, module) {
     var md = new Markdown('#demo');
 
     md.on('different', function (old, accept) {
-        confirm(''.concat(
-            '当前有编辑器有之前未保存的历史记录，是否恢复？摘要如下：<br>',
-            old.start,
-            '...',
-            old.end + '<br>',
-            '共' + old.length + '字<br>'
-        )).on('complete', function (confirmed) {
+        confirm(old.message).on('complete', function (confirmed) {
             accept(confirmed);
         });
     });

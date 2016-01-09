@@ -28,6 +28,7 @@ define(function (require, exports, module) {
     var textarea = require('../../utils/textarea.js');
     var controller = require('../../utils/controller.js');
     var dato = require('../../utils/dato.js');
+    var string = require('../../utils/string.js');
     var Hotkey = require('../../ui/hotkey/index.js');
 
     var namespace = 'alien-ui-textarea';
@@ -83,6 +84,7 @@ define(function (require, exports, module) {
             var old = history.value;
             var oldLength = old.length;
             var middleLength = Math.min(Math.round(oldLength / 3), minDiff);
+            middleLength = Math.max(middleLength, minDiff / 2);
             var oldPrefix = old.slice(0, middleLength);
             var oldSuffix = middleLength < minDiff ? '' : old.slice(oldLength - middleLength * 2);
             var complete = function (accepted) {
@@ -95,7 +97,14 @@ define(function (require, exports, module) {
                     the.emit('different', {
                         length: oldLength,
                         start: oldPrefix,
-                        end: oldSuffix
+                        end: oldSuffix,
+                        message: ''.concat(
+                            '当前内容与历史记录不一致，是否恢复？历史摘要如下：<br><br>',
+                            string.escapeHTML(oldPrefix) + '<br>',
+                            '...<br>',
+                            string.escapeHTML(oldSuffix) + '<br><br>',
+                            '共' + oldLength + '字'
+                        )
                     }, complete);
                 });
             }
