@@ -24,7 +24,8 @@ define(function (require, exports, module) {
     var event = require('../../core/event/base.js');
     var Emitter = require('../../libs/emitter.js');
     var Template = require('../../libs/template.js');
-    var Hotkey = require('../../ui/hotkey/index.js');
+    var Hotkey = require('../hotkey/index.js');
+    var CtrlList = require('../ctrl-list/index.js');
     var template = require('template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
@@ -70,16 +71,23 @@ define(function (require, exports, module) {
             the._eTextarea = selector.query($textarea)[0];
             the._options = dato.extend(true, {}, defaults, options);
             the._index = alienIndex++;
+            the.updateAtList(the._options.atList);
             the._initNode();
             the._initEvent();
         },
 
+
+        /**
+         * 更新 atList
+         * @param atList
+         * @returns {Markdown}
+         */
         updateAtList: function (atList) {
             var the = this;
             var atList2 = [];
 
             dato.each(atList, function (index, item) {
-                if(typeis.String){
+                if (typeis.String) {
                     item = {
                         value: item
                     };
@@ -90,6 +98,15 @@ define(function (require, exports, module) {
 
             the._atList = atList2;
             return the;
+        },
+
+
+        /**
+         * 获取 atList，返回非引用对象
+         * @returns {Array.<T>}
+         */
+        getAtList: function () {
+            return this._atList.concat([]);
         },
 
 
