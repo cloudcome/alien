@@ -35,6 +35,7 @@ define(function (require, exports, module) {
     var markedTable = require('./_marked-table.js');
     var REG_ORDER = /^\s*([1-9]\d*)\. /;
     var REG_UNORDER = /^\s*([-+*]) /;
+    var ctrlKey = Hotkey.MAC_OS ? 'cmd' : 'ctrl';
     var defaults = {
         marked: {
             highlight: null,
@@ -62,7 +63,50 @@ define(function (require, exports, module) {
         //     text: '',  // 如：用户昵称，可省略
         //     value: '', // 如：用户ID，必填
         // }
-        atList: []
+        atList: [],
+        helps: [{
+            keys: ctrlKey + '+F11',
+            desc: '全屏写作模式'
+        }, {
+            keys: ctrlKey + '+F12',
+            desc: '全屏预览模式'
+        }, {
+            keys: ctrlKey + '+B',
+            desc: '粗体'
+        }, {
+            keys: ctrlKey + '+I',
+            desc: '斜体'
+        }, {
+            keys: ctrlKey + '+E',
+            desc: '删除线'
+        }, {
+            keys: ctrlKey + '+R',
+            desc: '分割线'
+        }, {
+            keys: ctrlKey + '+K',
+            desc: '代码块'
+        }, {
+            keys: ctrlKey + '+T',
+            desc: '插入表格'
+        }, {
+            keys: ctrlKey + '+G',
+            desc: '插入图片'
+        }, {
+            keys: ctrlKey + '+L',
+            desc: '插入链接'
+        }, {
+            keys: 'shift+enter',
+            desc: '软回车'
+        }, {
+            keys: ctrlKey + '+X',
+            desc: '剪切'
+        }, {
+            keys: ctrlKey + '+Z',
+            desc: '撤销'
+        }, {
+            keys: ctrlKey + '+shift+Z',
+            desc: '恢复'
+        }]
     };
     var Markdown = ui.create({
         constructor: function ($textarea, options) {

@@ -47,7 +47,6 @@ define(function (require, exports, module) {
             the._hotkey = new Hotkey(the._eTextarea);
             the._options = dato.extend({}, defaults, options);
             the._stack = [];
-            the._set(0, 0, the._eTextarea.value);
             the._id = namespace + the._genId(the._eTextarea);
             the._initData();
             the._initEvent();
@@ -93,7 +92,9 @@ define(function (require, exports, module) {
             var oldPrefix = old.slice(0, middleLength);
             var oldSuffix = middleLength < minDiff ? '' : old.slice(oldLength - middleLength * 2);
             var complete = function (accepted) {
-                the.setValue(accepted ? history.value : now);
+                var value = accepted ? history.value : now;
+                var start = value.length;
+                the._set(start, start, value);
                 the.focus();
             };
 
@@ -113,6 +114,10 @@ define(function (require, exports, module) {
                     }, complete);
                 });
             }
+
+            var value = the._eTextarea.value;
+            var start = value.length;
+            the._set(start, start, value);
         },
 
 
@@ -122,6 +127,7 @@ define(function (require, exports, module) {
          */
         _initEvent: function () {
             var the = this;
+            var ctrlKey = Hotkey.MAC_OS ? 'cmd' : 'ctrl';
 
             the.bind('tab', function () {
                 the.increaseIndent();
@@ -133,12 +139,17 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            the.bind('cmd+z ctrl+z', function () {
+            the.bind(ctrlKey + '+z', function () {
                 the._get();
                 return false;
             });
 
-            the.bind('cmd+shift+z ctrl+shift+z', function () {
+            the.bind(ctrlKey + '+x', function () {
+                the._delLine();
+                return false;
+            });
+
+            the.bind(ctrlKey + '+shift+z', function () {
                 the._get(true);
                 return false;
             });
@@ -161,6 +172,35 @@ define(function (require, exports, module) {
                 the.holdIndent();
                 return false;
             });
+        },
+
+
+        /**
+         * 删除行
+         * @private
+         */
+        _delLine: function () {
+            var the = this;
+            var lines = the.getLines();
+            var lineLength = lines.length;
+            var firstLine = lines[0];
+            var lastLine = lines[lineLength - 1];
+            var start = firstLine.start;
+            var end = lastLine.end;
+            var value = the._eTextarea.value;
+            var sel = the.getSelection();
+
+            if (sel[0] !== sel[1]) {
+                start = sel[0];
+                end = sel[1];
+            }
+
+            if (end < value.length) {
+                end++;
+            }
+
+            var newValue = value.slice(0, start) + value.slice(end);
+            the._set(start, start, newValue);
         },
 
 
