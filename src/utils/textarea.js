@@ -234,7 +234,7 @@ define(function (require, exports, module) {
      */
     exports.getSelectionRect = function (node) {
         var sel = exports.getSelection(node);
-        var value = node.value;
+        var value = node.value || '';
 
         // 复制样式
         var nodeStyle = attribute.css(node, mirrorStyleKeys);

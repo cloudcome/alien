@@ -456,6 +456,15 @@ define(function (require, exports, module) {
 
 
         /**
+         * 获取选区范围
+         * @returns {{start, end}|{start: {left: *, top: *}, end: {left: *, top: *}}}
+         */
+        getSelectionRect: function () {
+            return textarea.getSelectionRect(this._eTextarea);
+        },
+
+
+        /**
          * 聚焦
          * @returns {Textarea}
          */
