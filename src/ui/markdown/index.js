@@ -55,7 +55,13 @@ define(function (require, exports, module) {
         tabSize: 4,
         prevClassName: '',
         imageClassName: 'img',
-        tableClassName: 'table table-radius table-bordered table-hover'
+        tableClassName: 'table table-radius table-bordered table-hover',
+        // {
+        //     image: '', // 如：用户头像，可省略
+        //     text: '',  // 如：用户昵称，可省略
+        //     value: '', // 如：用户ID，必填
+        // }
+        atList: []
     };
     var Markdown = ui.create({
         constructor: function ($textarea, options) {
@@ -67,6 +73,25 @@ define(function (require, exports, module) {
             the._initNode();
             the._initEvent();
         },
+
+        updateAtList: function (atList) {
+            var the = this;
+            var atList2 = [];
+
+            dato.each(atList, function (index, item) {
+                if(typeis.String){
+                    item = {
+                        value: item
+                    };
+                }
+
+                atList2.push(item);
+            });
+
+            the._atList = atList2;
+            return the;
+        },
+
 
         /**
          * 初始化节点
@@ -254,6 +279,10 @@ define(function (require, exports, module) {
                 var thead1 = 'thead1';
                 the._textarea.insert('\n\n' + thead1 + ' | thead2\n-------|--------\ntd1    | td2  \n\n', [2, 2 + thead1.length]);
                 return false;
+            });
+
+            the._textarea.bind('shift+2', function () {
+                the.emit('at');
             });
 
             the._textarea.bind('enter', function () {
