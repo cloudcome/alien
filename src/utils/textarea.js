@@ -18,6 +18,7 @@ define(function (require, exports, module) {
     'use strict';
 
     var modification = require('../core/dom/modification.js');
+    var attribute = require('../core/dom/attribute.js');
     var allocation = require('./allocation.js');
     var typeis = require('./typeis.js');
     var controller = require('./controller.js');
@@ -28,7 +29,7 @@ define(function (require, exports, module) {
     var supportSetSelectionRange = 'setSelectionRange' in $textarea;
     $textarea = null;
     // @link https://github.com/Codecademy/textarea-helper/blob/master/textarea-helper.js
-    var typographyStyles = [
+    var mirrorStyleKeys = [
         // Box Styles.
         'box-sizing', 'height', 'width', 'padding-bottom',
         'padding-left', 'padding-right', 'padding-top',
@@ -39,17 +40,26 @@ define(function (require, exports, module) {
 
         // Spacing etc.
         'word-spacing', 'letter-spacing', 'line-height',
-        'text-decoration', 'text-indent', 'text-transform',
+        'text-decoration', 'text-indent', 'text-transform', 'white-space',
 
         // The direction.
         'direction'
     ];
+    var spanStyles = {
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        fontSize: 0,
+        linHeight: 0,
+        padding: 0,
+        margin: 0
+    };
     var mirrorEle = modification.create('div', {
         tabindex: -1,
         style: {
             position: 'absolute',
-            top: '-9999em',
-            left: '-9999em'
+            //top: '-9999em',
+            //left: '-9999em'
         }
     });
     modification.insert(mirrorEle, doc.body);
@@ -199,7 +209,21 @@ define(function (require, exports, module) {
 
 
     var getSelectionRect = function (value, length) {
-        var text = value.slice(0, length);
+        mirrorEle.innerText = value.slice(0, length);
+        var spanEle = modification.create('span', {
+            style: spanStyles
+        });
+        modification.insert(spanEle, mirrorEle, 'beforeend');
+        var spanEleLeft = attribute.left(spanEle);
+        var spanEleTop = attribute.top(spanEle);
+        var mirrorEleLeft = attribute.left(mirrorEle);
+        var mirrorEleTop = attribute.top(mirrorEle);
+        var relativeLeft = spanEleLeft - mirrorEleLeft;
+        var relativeTop = spanEleTop - mirrorEleTop;
+        return {
+            left: relativeLeft,
+            top: relativeTop
+        };
     };
 
 
@@ -207,9 +231,23 @@ define(function (require, exports, module) {
         var sel = exports.getSelection(node);
         var value = node.value;
 
+        // 复制样式
+        var nodeStyle = attribute.css(node, mirrorStyleKeys);
+        attribute.css(mirrorEle, nodeStyle);
+        var nodeLeft = attribute.left(node);
+        var nodeTop = attribute.top(node);
+        var start = getSelectionRect(value, sel[0]);
+        var end = getSelectionRect(value, sel[1]);
+
         return {
-            start: getSelectionRect(value, sel[0]),
-            end: getSelectionRect(value, sel[1])
+            start: {
+                left: nodeLeft + start.left,
+                top: nodeTop + start.top
+            },
+            end: {
+                left: nodeLeft + end.left,
+                top: nodeTop + end.top
+            }
         };
     };
 });

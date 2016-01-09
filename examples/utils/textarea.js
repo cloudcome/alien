@@ -50,5 +50,9 @@ define(function (require, exports, module) {
         textarea.insert($textarea, '[' + Date.now() + ']', [2, 4], [2, 4]);
     };
 
+    document.getElementById('getSelectionRect').onclick = function () {
+        console.log(textarea.getSelectionRect($textarea));
+    };
+
     window.textarea = textarea;
 });
