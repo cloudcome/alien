@@ -58,8 +58,8 @@ define(function (require, exports, module) {
         tabindex: -1,
         style: {
             position: 'absolute',
-            //top: '-9999em',
-            //left: '-9999em'
+            top: '-9999em',
+            left: '-9999em'
         }
     });
     modification.insert(mirrorEle, doc.body);
@@ -227,6 +227,11 @@ define(function (require, exports, module) {
     };
 
 
+    /**
+     * 获取选区坐标
+     * @param node
+     * @returns {{start: {left: *, top: *}, end: {left: *, top: *}}}
+     */
     exports.getSelectionRect = function (node) {
         var sel = exports.getSelection(node);
         var value = node.value;
