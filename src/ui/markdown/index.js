@@ -303,8 +303,13 @@ define(function (require, exports, module) {
 
             // choose at one
             the._ctrlList.on('sure', function (people) {
-                the._textarea.insert(people.text + ' ', false);
+                the._textarea.insert(people.value + ' ', false);
                 return false;
+            });
+
+            // cancel at
+            the._textarea.bind('backspace', function () {
+                the._ctrlList.close();
             });
 
             the._textarea.bind('enter', function () {
