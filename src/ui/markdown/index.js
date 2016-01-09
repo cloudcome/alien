@@ -206,6 +206,12 @@ define(function (require, exports, module) {
                 return false;
             });
 
+            // ~~strikethough~~
+            the._textarea.bind(ctrl + '+e', function () {
+                the._textarea.wrap('~~', '~~', true);
+                return false;
+            });
+
             // -----
             the._textarea.bind(ctrl + '+r', function () {
                 the._textarea.insert('\n\n-----\n\n', false);
@@ -229,6 +235,12 @@ define(function (require, exports, module) {
             // \n```\nblock code\n```\n
             the._textarea.bind(ctrl + '+k', function () {
                 the._textarea.wrap('\n```\n', '\n```\n\n', true);
+                return false;
+            });
+
+            // table
+            the._textarea.bind(ctrl + '+\\', function () {
+                the._textarea.insert('\n\nthead1 | thead2\n-------|--------\ntd1    | td2  \n', [2, 2]);
                 return false;
             });
 
