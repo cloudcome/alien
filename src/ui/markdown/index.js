@@ -298,7 +298,7 @@ define(function (require, exports, module) {
             });
 
             // ~~strikethough~~
-            the._textarea.bind(ctrl + '+e', function () {
+            the._textarea.bind(ctrl + '+u', function () {
                 the._textarea.wrap('~~', '~~', true);
                 return false;
             });
@@ -333,7 +333,7 @@ define(function (require, exports, module) {
             });
 
             // table
-            the._textarea.bind(ctrl + '+T', function () {
+            the._textarea.bind(ctrl + '+e', function () {
                 var thead1 = 'thead1';
                 the._textarea.insert('\n\n' + thead1 + ' | thead2\n-------|--------\ntd1    | td2  \n\n', [2, 2 + thead1.length]);
                 return false;
