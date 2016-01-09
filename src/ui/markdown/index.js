@@ -301,6 +301,12 @@ define(function (require, exports, module) {
                 the._ctrlList.open(pos);
             });
 
+            // choose at one
+            the._ctrlList.on('sure', function (people) {
+                the._textarea.insert(people.text + ' ', false);
+                return false;
+            });
+
             the._textarea.bind('enter', function () {
                 var nowLine0 = the._textarea.getLines()[0];
                 var prevSel = the._textarea.getSelection();

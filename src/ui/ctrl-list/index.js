@@ -155,7 +155,6 @@ define(function (require, exports, module) {
         },
 
 
-
         /**
          * 初始化节点
          * @private
@@ -195,7 +194,7 @@ define(function (require, exports, module) {
 
                     if (itemsHeight > containerHeight) {
                         attribute.scrollTop(the._$popup, itemsHeight - containerHeight);
-                    }else{
+                    } else {
                         attribute.scrollTop(the._$popup, 0);
                     }
                 }
@@ -223,7 +222,9 @@ define(function (require, exports, module) {
                 the.close();
             };
 
-            the._hotkey = new Hotkey(doc);
+            the._hotkey = new Hotkey(doc, {
+                capture: true
+            });
 
             // 悬浮高亮
             event.on(the._$popup, 'mouseover', '.' + alienClass + '-item', the._onhover = function () {

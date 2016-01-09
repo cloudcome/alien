@@ -96,7 +96,8 @@ define(function (require, exports, module) {
         ctrl: 'ctrl',
         alt: 'alt',
         meta: 'cmd',
-        shift: 'shift'
+        shift: 'shift',
+        capture: false
     };
 
     var defaults = {};
@@ -141,7 +142,7 @@ define(function (require, exports, module) {
                     }
                 }
             });
-        });
+        }, the._options.capture);
     });
 
     Hotkey.defaults = defaults;
