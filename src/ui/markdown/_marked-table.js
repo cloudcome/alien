@@ -8,9 +8,17 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var className = 'table table-radius table-bordered table-hover';
+    var dato = require('../../utils/dato.js');
 
-    module.exports = function (thead, tbody) {
-        return '<table class="' + className + '"><thead>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+    var defaults = {
+        className: ''
+    };
+
+    module.exports = function (options) {
+        options = dato.extend({}, defaults, options);
+
+        return function (thead, tbody) {
+            return '<table class="' + options.className + '"><thead>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+        };
     };
 });

@@ -28,12 +28,10 @@ define(function (require, exports, module) {
     var template = require('template.html', 'html');
     var tpl = new Template(template);
     var style = require('./style.css', 'css');
-
     var namespace = 'alien-ui-markdown';
     var alienIndex = 0;
-    var markedRender = new marked.Renderer();
-    markedRender.image = require('./_marked-render-image.js');
-    markedRender.table = require('./_marked-render-table.js');
+    var markedImage = require('./_marked-image.js');
+    var markedTable = require('./_marked-table.js');
     var REG_ORDER = /^\s*([1-9]\d*)\. /;
     var REG_UNORDER = /^\s*([-+*]) /;
     var defaults = {
@@ -55,7 +53,9 @@ define(function (require, exports, module) {
         headers: [],
         footers: [],
         tabSize: 4,
-        prevClassName: ''
+        prevClassName: '',
+        imageClassName: 'img',
+        tableClassName: 'table table-radius table-bordered table-hover'
     };
     var Markdown = ui.create({
         constructor: function ($textarea, options) {
@@ -102,6 +102,14 @@ define(function (require, exports, module) {
         _initEvent: function () {
             var the = this;
             var eTextarea = the._eTextarea;
+            var options = the._options;
+            var markedRender = new marked.Renderer();
+            markedRender.image = markedImage({
+                className: options.imageClassName
+            });
+            markedRender.table = markedTable({
+                className: options.tableClassName
+            });
             var render = controller.debounce(function () {
                 the._eOutput.innerHTML = marked(the._textarea.getValue(), {
                     renderer: markedRender

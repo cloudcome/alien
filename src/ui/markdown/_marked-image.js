@@ -1,4 +1,4 @@
-/*!
+/**
  * marked render image
  * @author ydr.me
  * @create 2015-04-03 02:32:10
