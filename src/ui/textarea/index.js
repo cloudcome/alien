@@ -162,7 +162,7 @@ define(function (require, exports, module) {
                 return false;
             });
 
-            event.on(the._eTextarea, 'input', controller.debounce(function () {
+            event.on(the._eTextarea, 'input select', the._oninput = controller.debounce(function () {
                 var selection = the.getSelection();
 
                 the._set(selection[0], selection[1], this.value);
@@ -609,6 +609,17 @@ define(function (require, exports, module) {
             $textarea.value = point.value;
             textarea.setSelection($textarea, point.start, point.end);
             localStorage.setJSON(the._id, point);
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            the._hotkey.destroy();
+            event.un(the._eTextarea, 'input select', the._oninput);
         }
     });
 
