@@ -101,48 +101,60 @@ define(function (require, exports, module) {
     };
 
     var defaults = {};
-    var Hotkey = ui.create(function (ele, options) {
-        var the = this;
+    var Hotkey = ui.create({
+        constructor: function (ele, options) {
+            var the = this;
 
-        the._options = dato.extend({}, defaults, options);
-        event.on(ele, 'keydown', function (eve) {
-            var which = eve.which;
-            var specialKey = specialKeys[which];
-            var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
-            var characters = typeis.Array(character) ? character : [character];
-            var charactersMap = {};
+            the._ele = ele;
+            the._options = dato.extend({}, defaults, options);
+            event.on(ele, 'keydown', the._onkeydown = function (eve) {
+                var which = eve.which;
+                var specialKey = specialKeys[which];
+                var character = specialKey ? specialKey : String.fromCharCode(which).toLowerCase();
+                var characters = typeis.Array(character) ? character : [character];
+                var charactersMap = {};
 
-            dato.each(characters, function (index, character) {
-                charactersMap[character] = 1;
-            });
-
-            dato.each(characters, function (index, character) {
-                var decoratedKeys = [];
-
-                dato.each(decorationKeyMap, function (decorationKey, aliasKey) {
-                    if (eve[decorationKey + 'Key'] && !charactersMap[decorationKey] && !charactersMap[aliasKey]) {
-                        decoratedKeys.push(aliasKey);
-                    }
+                dato.each(characters, function (index, character) {
+                    charactersMap[character] = 1;
                 });
 
-                if (decoratedKeys.length) {
-                    decoratedKeys.push('');
-                }
+                dato.each(characters, function (index, character) {
+                    var decoratedKeys = [];
 
-                var eventType = decoratedKeys.join('+') + character;
-                var ret = the.emit(eventType, eve);
+                    dato.each(decorationKeyMap, function (decorationKey, aliasKey) {
+                        if (eve[decorationKey + 'Key'] && !charactersMap[decorationKey] && !charactersMap[aliasKey]) {
+                            decoratedKeys.push(aliasKey);
+                        }
+                    });
 
-                if (ret === false) {
-                    try {
-                        eve.preventDefault();
-                        eve.stopPropagation();
-                        eve.stopImmediatePropagation();
-                    } catch (err) {
-                        // ignore
+                    if (decoratedKeys.length) {
+                        decoratedKeys.push('');
                     }
-                }
-            });
-        }, the._options.capture);
+
+                    var eventType = decoratedKeys.join('+') + character;
+                    var ret = the.emit(eventType, eve);
+
+                    if (ret === false) {
+                        try {
+                            eve.preventDefault();
+                            eve.stopPropagation();
+                            eve.stopImmediatePropagation();
+                        } catch (err) {
+                            // ignore
+                        }
+                    }
+                });
+            }, the._options.capture);
+        },
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+
+            event.un(the._ele, 'keydown', the._onkeydown, the._options.capture);
+        }
     });
 
     Hotkey.defaults = defaults;
