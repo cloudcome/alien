@@ -84,30 +84,19 @@ define(function (require, exports, module) {
          */
         updateAtList: function (atList) {
             var the = this;
-            var atList2 = [];
 
-            dato.each(atList, function (index, item) {
-                if (typeis.String) {
-                    item = {
-                        value: item
-                    };
-                }
-
-                atList2.push(item);
-            });
-
-            the._atList = atList2;
-            the._ctrlList.update(atList2);
+            the._atList = atList;
+            the._ctrlList.update(atList);
             return the;
         },
 
 
         /**
-         * 获取 atList，返回非引用对象
+         * 获取 atList
          * @returns {Array.<T>}
          */
         getAtList: function () {
-            return this._atList.concat([]);
+            return this._atList;
         },
 
 
