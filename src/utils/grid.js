@@ -35,6 +35,7 @@ define(function (require, exports, module) {
      * @param [options.itemAside=false] {Boolean} 项目是否靠边
      * @param [options.desginWidth=640] {Number} 设计宽度
      * @param [options.className] {String} 容器添加的 className，否则添加自动 className
+     * @returns {{className: (string|string|string), blankWidth: number, gapWidth: number, desginWidth: number, dpr: (*|number)}}
      */
     exports.make = function (options) {
         var containerWidth = options.containerWidth;
@@ -68,6 +69,13 @@ define(function (require, exports, module) {
         }
 
         modification.importStyle(css);
-        return className;
+
+        return {
+            className: className,
+            blankWidth: blankWidth,
+            gapWidth: gapWidth,
+            desginWidth: desginWidth,
+            dpr: dpr
+        };
     };
 });
