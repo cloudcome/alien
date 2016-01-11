@@ -46,11 +46,9 @@
 
         docEl.style.fontSize = rem + 'px';
         flexible.rem = rem;
-        setTimeout(function () {
-            changedCallbackList.forEach(function (callback) {
-                callback.call(flexible);
-            });
-        }, 1);
+        changedCallbackList.forEach(function (callback) {
+            callback.call(flexible);
+        });
     };
 
     setTimeout(render);
