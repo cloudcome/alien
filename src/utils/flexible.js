@@ -38,10 +38,10 @@
     eMeta.setAttribute('content', 'width=device-width,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
     docHead.appendChild(eMeta);
     docEl.classList.add('dpr-' + dpr);
-    var viewWidth = Math.min(window.innerWidth, maxWidth);
+    var viewWidth = 0;
 
     var render = function () {
-        viewWidth = Math.min(window.innerWidth, maxWidth);
+        flexible.viewWidth = viewWidth = Math.min(window.innerWidth, maxWidth);
         var rem = viewWidth * dpr / 10;
 
         docEl.style.fontSize = rem + 'px';
