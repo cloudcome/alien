@@ -3,15 +3,15 @@
 }
 
 // px change to rem
-@function px2rem($px, $desgin-width : 640) {
-  $one-rem-as-such-px: $desgin-width / 10;
+@function px2rem($px, $desgin-width : 640, $dpr: 2) {
+  $one-rem-as-such-px: $desgin-width * $dpr / 10;
   @return strip-units($px / $one-rem-as-such-px) + rem;
 }
 
 // rem change to px
-@function rem2px($rem, $desgin-width : 640) {
-  $one-px-as-such-rem: 10 / $desgin-width;
-  @return strip-units($rem / $one-px-as-such-rem) + px;
+@function rem2px($rem, $desgin-width : 640, $dpr: 2) {
+  $one-rem-as-such-px: $desgin-width * $dpr / 10;
+  @return strip-units($rem * $one-rem-as-such-px) + px;
 }
 
 

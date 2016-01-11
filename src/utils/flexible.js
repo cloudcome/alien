@@ -38,10 +38,11 @@
     eMeta.setAttribute('content', 'width=device-width,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
     docHead.appendChild(eMeta);
     docEl.classList.add('dpr-' + dpr);
+    var viewWidth = Math.min(window.innerWidth, maxWidth);
 
     var render = function () {
-        var width = Math.min(window.innerWidth, maxWidth);
-        var rem = width * dpr / 10;
+        viewWidth = Math.min(window.innerWidth, maxWidth);
+        var rem = viewWidth * dpr / 10;
 
         docEl.style.fontSize = rem + 'px';
         flexible.rem = rem;
@@ -59,19 +60,29 @@
     /**
      * rem 尺寸转换为 px 尺寸
      * @param rem
+     * @param [desginWidth]
+     * @param [_dpr]
      * @returns {number}
      */
-    flexible.rem2px = function (rem) {
-        return parseFloat(rem) * flexible.rem;
+    flexible.rem2px = function (rem, desginWidth, _dpr) {
+        desginWidth = desginWidth || viewWidth;
+        _dpr = _dpr || dpr;
+        var _rem = desginWidth * _dpr / 10;
+        return parseFloat(rem) * _rem;
     };
 
     /**
      * px 尺寸转换为 rem 尺寸
      * @param px
+     * @param [desginWidth]
+     * @param [_dpr]
      * @returns {number}
      */
-    flexible.px2rem = function (px) {
-        return parseFloat(px) / flexible.rem;
+    flexible.px2rem = function (px, desginWidth, _dpr) {
+        desginWidth = desginWidth || viewWidth;
+        _dpr = _dpr || dpr;
+        var _rem = desginWidth * _dpr / 10;
+        return parseFloat(px) / _rem;
     };
 
     /**
