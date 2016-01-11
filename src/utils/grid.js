@@ -8,8 +8,6 @@
 define(function (require, exports, module) {
     /**
      * @module utils/grid
-     * @requires core/dom/modification
-     * @requires core/dom/attribute
      */
 
     'use strict';
@@ -19,8 +17,6 @@ define(function (require, exports, module) {
     if (!flexible) {
         throw 'markGrid reuqire flexible';
     }
-
-    var modification = require('../core/dom/modification.js');
 
     // 默认方式：[__A__A__A__]
     // 靠边方式：[A____A____A]
@@ -35,7 +31,7 @@ define(function (require, exports, module) {
      * @param [options.itemAside=false] {Boolean} 项目是否靠边
      * @param [options.desginWidth=640] {Number} 设计宽度
      * @param [options.className] {String} 容器添加的 className，否则添加自动 className
-     * @returns {{className: (string|string|string), blankWidth: number, gapWidth: number, desginWidth: number, dpr: (*|number)}}
+     * @returns {{css: string, className: string, blankWidth: number, gapWidth: number, desginWidth: number, dpr: number}}
      */
     exports.make = function (options) {
         var containerWidth = options.containerWidth;
@@ -68,9 +64,8 @@ define(function (require, exports, module) {
                 '}';
         }
 
-        modification.importStyle(css);
-
         return {
+            css: css,
             className: className,
             blankWidth: blankWidth,
             gapWidth: gapWidth,
