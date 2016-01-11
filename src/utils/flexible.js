@@ -53,7 +53,7 @@
         }, 1);
     };
 
-    render();
+    setTimeout(render);
     flexible.render = render;
 
 
