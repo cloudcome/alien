@@ -1,4 +1,4 @@
-/*!
+/**
  * drag.js
  * @author ydr.me
  * @create 2014-10-08 16:43
@@ -73,20 +73,27 @@ define(function (require, exports, module) {
 
         ele = _getDragable(eve.target);
 
-        if (ele) {
-            attr = attribute.attr(ele, 'draggablefor');
-            _dragfor = selector.query(attr ? '#' + attribute.attr(ele, 'draggablefor') : ele);
-            x0 = _eve ? _eve.clientX : null;
-            y0 = _eve ? _eve.clientY : null;
+        if (!ele) {
+            return;
+        }
 
-            if (x0 !== null && y0 !== null && state === 0 &&
-                ele !== document.body && _dragfor.length && _dragfor[0].contains(ele)) {
-                state = 1;
-                dragfor = _dragfor[0];
-                left = attribute.left(ele);
-                top = attribute.top(ele);
-                eve.preventDefault();
-            }
+        attr = attribute.attr(ele, 'draggablefor');
+
+        if (attr === 'false' || attr === 'null') {
+            return;
+        }
+
+        _dragfor = selector.query(attr ? '#' + attribute.attr(ele, 'draggablefor') : ele);
+        x0 = _eve ? _eve.clientX : null;
+        y0 = _eve ? _eve.clientY : null;
+
+        if (x0 !== null && y0 !== null && state === 0 &&
+            ele !== document.body && _dragfor.length && _dragfor[0].contains(ele)) {
+            state = 1;
+            dragfor = _dragfor[0];
+            left = attribute.left(ele);
+            top = attribute.top(ele);
+            eve.preventDefault();
         }
     });
 
@@ -156,8 +163,8 @@ define(function (require, exports, module) {
         var _eve = eve.type === 'mouseup' && eve.button === 0 ?
             eve :
             (eve.touches && eve.touches.length ?
-                eve.touches[0] :
-                (eve.changedTouches && eve.changedTouches.length ? eve.changedTouches[0] : null)
+                    eve.touches[0] :
+                    (eve.changedTouches && eve.changedTouches.length ? eve.changedTouches[0] : null)
             );
         // 先记录初始值，最后还原，再动画
         var from;
