@@ -32,7 +32,7 @@ define(function (require, exports, module) {
             '000000', '808080', 'c0c0c0', 'ffffff'
         ],
         style: {
-            width: 134
+            width: 122
         },
         type: 1
     };

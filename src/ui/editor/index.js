@@ -144,20 +144,8 @@ define(function (require, exports, module) {
             the._index = alienIndex++;
             the._options = dato.extend({}, defaults, options);
             the._commands = {};
-            the._initData();
             the._initNode();
             the._initEvent();
-        },
-
-
-        _initData: function () {
-            var the = this;
-            var options = the._options;
-
-            the._whiteMap = {};
-            dato.each(options.whiteList, function (index, tagName) {
-                the._whiteMap[tagName] = 1;
-            });
         },
 
 
@@ -172,12 +160,15 @@ define(function (require, exports, module) {
 
             dato.each(options.buttons, function (index, button) {
                 var item = defaultButtons[button];
+
                 if (item) {
+                    var action = item.command + item.type;
+
                     item.name = button;
                     buttons.push(item);
 
                     if (actions[item.command]) {
-                        the._commands[item.command] = new actions[item.command](the, {
+                        the._commands[action] = new actions[item.command](the, {
                             type: item.type
                         });
                     }
@@ -310,9 +301,6 @@ define(function (require, exports, module) {
                 the.sync();
             });
         },
-
-
-
 
 
         /**
