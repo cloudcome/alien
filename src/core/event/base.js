@@ -541,6 +541,10 @@ define(function (require, exports, module) {
         if (domId) {
             if (isCapture) {
                 if (typeis.function(originalListener)) {
+                    if (!isCaptureOriginalListeners[domId] || !isCaptureOriginalListeners[domId][eventType]) {
+                        return;
+                    }
+
                     findIndex = isCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
@@ -553,6 +557,10 @@ define(function (require, exports, module) {
                 }
             } else {
                 if (typeis.function(originalListener)) {
+                    if (!unCaptureOriginalListeners[domId] || !unCaptureOriginalListeners[domId][eventType]) {
+                        return;
+                    }
+
                     findIndex = unCaptureOriginalListeners[domId][eventType].indexOf(originalListener);
 
                     if (findIndex > -1) {
