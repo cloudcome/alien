@@ -134,13 +134,7 @@ define(function (require, exports, module) {
             'line', 'image'
         ],
         placeholder: '<p style="color:#888">输入，从这里开始</p>',
-        addClass: '',
-        whiteList: [
-            'p', 'div', 'section', 'article', 'hr', 'ul', 'ol', 'li', 'pre',
-            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-            'img', 'span', 'a', 'i', 'em', 's', 'u', 'b', 'br', 'small', 'strong', 'code', 'font',
-            'caption', 'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'
-        ]
+        addClass: ''
     };
     var Editor = ui.create({
         constructor: function (eTextarea, options) {
@@ -318,24 +312,7 @@ define(function (require, exports, module) {
         },
 
 
-        /**
-         * 清理 HTML
-         * @private
-         */
-        _clean: function () {
-            var the = this;
 
-            var eNodes = selector.query('*', the._eContent);
-
-            dato.each(eNodes, function (index, node) {
-                var tagName = node.tagName.toLowerCase();
-                var isWhite = the._whiteMap[tagName];
-
-                if (!isWhite) {
-                    modification.remove(node);
-                }
-            }, true);
-        },
 
 
         /**
@@ -358,11 +335,7 @@ define(function (require, exports, module) {
          * @returns {string}
          */
         getHTML: function () {
-            var the = this;
-
-            the._clean();
-
-            return the._wysiwyg.getHTML();
+            return this._wysiwyg.getHTML();
         },
 
 
