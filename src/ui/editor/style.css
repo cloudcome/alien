@@ -1,14 +1,14 @@
-.donkey-ui-editor {
+.alien-ui-editor {
   position: relative;
   border: 1px solid #ddd;
   box-shadow: 0 0 4px #eee;
   border-radius: 3px; }
-  .donkey-ui-editor-header {
+  .alien-ui-editor-header {
     border-bottom: 1px solid #ddd;
     box-shadow: 0 2px 5px #eee;
     background: #FBFBFB;
     padding: 5px; }
-  .donkey-ui-editor-icon {
+  .alien-ui-editor-icon {
     position: relative;
     display: inline-block;
     vertical-align: middle;
@@ -16,12 +16,12 @@
     height: 30px;
     border: 0;
     cursor: pointer; }
-    .donkey-ui-editor-icon:hover {
+    .alien-ui-editor-icon:hover {
       background: #eee; }
-    .donkey-ui-editor-icon-active,
-    .donkey-ui-editor-icon-active:hover {
+    .alien-ui-editor-icon-active,
+    .alien-ui-editor-icon-active:hover {
       background: #ddd; }
-    .donkey-ui-editor-icon:after {
+    .alien-ui-editor-icon:after {
       content: '';
       position: absolute;
       width: 20px;
@@ -30,56 +30,56 @@
       left: 50%;
       margin-top: -10px;
       margin-left: -10px; }
-    .donkey-ui-editor-icon-bold:after {
+    .alien-ui-editor-icon-bold:after {
       background-position: 0 0; }
-    .donkey-ui-editor-icon-italic:after {
+    .alien-ui-editor-icon-italic:after {
       background-position: -20px 0; }
-    .donkey-ui-editor-icon-underline:after {
+    .alien-ui-editor-icon-underline:after {
       background-position: -40px 0; }
-    .donkey-ui-editor-icon-strokethrouth:after {
+    .alien-ui-editor-icon-strokethrouth:after {
       background-position: -60px 0; }
-    .donkey-ui-editor-icon-orderlist:after {
+    .alien-ui-editor-icon-orderlist:after {
       background-position: -80px 0; }
-    .donkey-ui-editor-icon-unorderlist:after {
+    .alien-ui-editor-icon-unorderlist:after {
       background-position: -100px 0; }
-    .donkey-ui-editor-icon-justifyleft:after {
+    .alien-ui-editor-icon-justifyleft:after {
       background-position: -120px 0; }
-    .donkey-ui-editor-icon-justifyright:after {
+    .alien-ui-editor-icon-justifyright:after {
       background-position: -140px 0; }
-    .donkey-ui-editor-icon-justifycenter:after {
+    .alien-ui-editor-icon-justifycenter:after {
       background-position: -160px 0; }
-    .donkey-ui-editor-icon-justifyboth:after {
+    .alien-ui-editor-icon-justifyboth:after {
       background-position: -180px 0; }
-    .donkey-ui-editor-icon-forecolor:after {
+    .alien-ui-editor-icon-forecolor:after {
       background-position: 0 -20px; }
-    .donkey-ui-editor-icon-backcolor:after {
+    .alien-ui-editor-icon-backcolor:after {
       background-position: -20px -20px; }
-    .donkey-ui-editor-icon-location:after {
+    .alien-ui-editor-icon-location:after {
       background-position: -40px -20px; }
-    .donkey-ui-editor-icon-image:after {
+    .alien-ui-editor-icon-image:after {
       background-position: -60px -20px; }
-    .donkey-ui-editor-icon-source:after {
+    .alien-ui-editor-icon-source:after {
       background-position: -80px -20px; }
-    .donkey-ui-editor-icon-code:after {
+    .alien-ui-editor-icon-code:after {
       background-position: -100px -20px; }
-    .donkey-ui-editor-icon-link:after {
+    .alien-ui-editor-icon-link:after {
       background-position: -120px -20px; }
-    .donkey-ui-editor-icon-unlink:after {
+    .alien-ui-editor-icon-unlink:after {
       background-position: -140px -20px; }
-    .donkey-ui-editor-icon-heading:after {
+    .alien-ui-editor-icon-heading:after {
       background-position: -160px -20px; }
-    .donkey-ui-editor-icon-line:after {
+    .alien-ui-editor-icon-line:after {
       background-position: -180px -20px; }
-  .donkey-ui-editor-separator {
+  .alien-ui-editor-separator {
     display: inline-block;
     margin: 0 4px;
     border-right: 1px solid #efefef;
     border-left: 1px solid #fff;
     height: 30px;
     vertical-align: middle; }
-  .donkey-ui-editor-body {
+  .alien-ui-editor-body {
     overflow: auto; }
-  .donkey-ui-editor-content {
+  .alien-ui-editor-content {
     outline: none;
     position: relative;
     overflow: auto;

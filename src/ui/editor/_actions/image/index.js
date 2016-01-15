@@ -28,7 +28,7 @@ define(function (require, exports, module) {
     var tpl = new Template(template);
 
     var donkeyIndex = 0;
-    var namespace = 'donkey-ui-editor_action-image';
+    var namespace = 'alien-ui-editor_action-image';
     var RE_IMG_TYPE = /^image\//;
     /**
      * @property createObjectURL {Function}

@@ -1,4 +1,4 @@
-.donkey-ui-editor_dialog-action {
+.alien-ui-editor_dialog-action {
   border-top: 1px solid #EAEAEA;
   padding-top: 10px;
   margin-left: -15px;
@@ -8,7 +8,7 @@
   margin-bottom: -15px;
   padding-bottom: 15px; }
 
-.donkey-ui-editor_dialog-btn {
+.alien-ui-editor_dialog-btn {
   display: inline-block;
   border: 1px solid #ddd;
   padding: 6px 18px;
@@ -16,5 +16,5 @@
   cursor: pointer;
   border-radius: 3px;
   margin: 0 20px; }
-  .donkey-ui-editor_dialog-btn:hover {
+  .alien-ui-editor_dialog-btn:hover {
     background: #ECECEC; }

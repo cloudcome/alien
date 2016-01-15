@@ -40,8 +40,8 @@ define(function (require, exports, module) {
     var devicePixelRatio = window[compatible.html5('devicePixelRatio', window)];
     var willBackgroundSize = supportBackgroundSize && devicePixelRatio > 1;
 
-    var namespace = 'donkey-ui-editor';
-    var donkeyIndex = 0;
+    var namespace = 'alien-ui-editor';
+    var alienIndex = 0;
     var defaultButtons = {
         bold: {
             text: '加粗',
@@ -136,10 +136,10 @@ define(function (require, exports, module) {
         placeholder: '<p style="color:#888">输入，从这里开始</p>',
         addClass: '',
         whiteList: [
-            'p', 'div', 'hr', 'ul', 'ol', 'li', 'pre',
+            'p', 'div', 'section', 'article', 'hr', 'ul', 'ol', 'li', 'pre',
             'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
             'img', 'span', 'a', 'i', 'em', 's', 'u', 'b', 'br', 'small', 'strong', 'code', 'font',
-            'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'
+            'caption', 'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'
         ]
     };
     var Editor = ui.create({
@@ -147,7 +147,7 @@ define(function (require, exports, module) {
             var the = this;
 
             the._eTextarea = selector.query(eTextarea)[0];
-            the._index = donkeyIndex++;
+            the._index = alienIndex++;
             the._options = dato.extend({}, defaults, options);
             the._commands = {};
             the._initData();

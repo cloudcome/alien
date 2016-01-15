@@ -18,7 +18,7 @@ define(function (require, exports, module) {
     var modification = require('../../core/dom/modification.js');
     var style = require('./dialog.css', 'css');
 
-    var namespace = 'donkey-ui-editor_dialog';
+    var namespace = 'alien-ui-editor_dialog';
     ui.importStyle(style);
     module.exports = klass.extend(Dialog).create(function () {
         var the = this;

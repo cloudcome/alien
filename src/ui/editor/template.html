@@ -1,19 +1,19 @@
-<div class="donkey-ui-editor" id="donkey-ui-editor-{{index}}">
-    <div class="donkey-ui-editor-header j-flag">
+<div class="alien-ui-editor" id="alien-ui-editor-{{index}}">
+    <div class="alien-ui-editor-header j-flag">
         {{list buttons as index,button}}
         {{if button.text}}
-        <div class="donkey-ui-editor-icon donkey-ui-editor-icon-{{button.name}}"
+        <div class="alien-ui-editor-icon alien-ui-editor-icon-{{button.name}}"
              data-index="{{index}}"
              data-command="{{button.command||''}}"
              data-type="{{button.type||''}}"
              data-tooltip="{{=button.text}}"></div>
         {{else}}
-        <div class="donkey-ui-editor-separator" data-index="{{index}}"></div>
+        <div class="alien-ui-editor-separator" data-index="{{index}}"></div>
         {{/if}}
         {{/list}}
     </div>
-    <div class="donkey-ui-editor-body">
-        <div class="donkey-ui-editor-content j-flag" contenteditable="true" spellcheck="false"></div>
+    <div class="alien-ui-editor-body">
+        <div class="alien-ui-editor-content j-flag" contenteditable="true" spellcheck="false"></div>
     </div>
-    <div class="donkey-ui-editor-footer j-flag"></div>
+    <div class="alien-ui-editor-footer j-flag"></div>
 </div>
