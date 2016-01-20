@@ -1,4 +1,4 @@
-/*!
+/**
  * upload.js
  * @author ydr.me
  * @create 2014-10-09 15:29
@@ -98,6 +98,7 @@ define(function (require, exports, module) {
                     break;
 
                 case 'blob':
+                case 'file':
                     if (!options.blobName) {
                         throw new Error('require param `blobName`');
                     }
