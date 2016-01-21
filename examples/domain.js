@@ -1,7 +1,3 @@
-/**
- * Created by cloudcome on 15/12/22.
- */
-
 (function () {
     'use strict';
 
@@ -9,15 +5,14 @@
     var domainSuffix = '.com';
 
     //==================
-    var token = 'check-web-hichina-com%3Anq5mtl9fubcat4xzy2svmjb0k1gpvegw';
-    var isg2 = 'AlhY2y6LMYU1Ve4gzjaC-SzLqIzqILzL';
-    var url = 'http://pandavip.www.net.cn/check/checkdomain?token=' + token + '&isg2=' + isg2;
+    window.__token__ = 'check-web-hichina-com%3Aze2eyynbju2iuyfiwo1ne8rvm7r249fv';
+    window.__isg2__ = 'AlhY2y6LMYU1Ve4gzjaC-SzLqIzqILzL';
+
     var random = function (min, max) {
         return min + Math.floor(Math.random() * (max - min));
     };
-    var word = 'abcdefghijklmnopqrstuvwxyz1234567890-'; //
+    var word = 'abcdefghijklmnopqrstuvwxyz';//'1234567890-'; //
     var max = word.length - 1;
-    var __tt__ = 0;
     var map = {};
     var getScript = function (url, callback) {
         var script = document.createElement('script');
@@ -35,12 +30,17 @@
             return;
         }
 
-        __tt__ = setTimeout(function () {
+        window.__tt__ = setTimeout(function () {
             var i = domainLength;
             var w = '';
             while (i--) {
                 w += word[random(0, max)];
             }
+
+            var url = 'http://pandavip.www.net.cn/check/checkdomain?' +
+                'token=' + window.__token__ +
+                '&isg2=' + window.__isg2__;
+
             getScript(url + '&callback=__aa__&_=' + Date.now() + '&domain=' + w + domainSuffix, next);
         }, random(500, 3000));
     };
@@ -58,7 +58,6 @@
     };
 
     next();
-    window.__tt__ = __tt__;
     window.__rr__ = __rr__;
     window.__aa__ = __aa__;
     window.__bb__ = false;
