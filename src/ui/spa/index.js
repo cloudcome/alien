@@ -1,4 +1,4 @@
-/*!
+/**
  * 单页面应用
  * @author ydr.me
  * @create 2015-10-10 10:49
@@ -44,13 +44,17 @@ define(function (require, exports, module) {
             the._elseList = [];
             the._listen = true;
             the._index = 0;
-            the.$view = selector.query($view)[0];
+            the.$view = the.nodeView = selector.query($view)[0];
             the.className = 'spa';
             the._initNode();
             the._initEvent();
         },
 
 
+        /**
+         * 初始化节点
+         * @private
+         */
         _initNode: function () {
             var the = this;
 

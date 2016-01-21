@@ -30,24 +30,6 @@ define(function (require, exports, module) {
         .else(function (ready) {
             require.async('./pages/404.js', ready);
         })
-        //.before('leave', function (lastRoute, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
-        //.after('leave', function (lastRoute, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
-        //.before('enter', function (route, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
-        //.after('enter', function (route, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
-        //.before('update', function (route, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
-        //.after('update', function (route, params, query) {
-        //    console.log(this.alienEmitter.type, arguments);
-        //})
         .before('loading', function () {
             attribute.show($loading);
         })
