@@ -21,6 +21,21 @@ define(function (require, exports, module) {
 
 
     /**
+     * 判断对象是否有自己的静态属性
+     * @param obj
+     * @param key
+     * @returns {boolean}
+     */
+    exports.hasStatic = function (obj, key) {
+        try {
+            return Object.prototype.hasOwnProperty.call(obj, key);
+        } catch (err) {
+            return false;
+        }
+    };
+
+
+    /**
      * 遍历元素
      * @param {Array/Object} list  数组、可枚举对象
      * @param {Function} callback  回调，返回false时停止遍历
@@ -54,7 +69,7 @@ define(function (require, exports, module) {
         // 纯对象
         else if (list !== null && list !== udf) {
             for (i in list) {
-                if (list.hasOwnProperty(i)) {
+                if (exports.hasStatic(list, i)) {
                     if (callback.call(w, i, list[i]) === false) {
                         break;
                     }
@@ -120,7 +135,7 @@ define(function (require, exports, module) {
         for (; current < length; current++) {
             obj = args[current];
             for (i in obj) {
-                if (obj.hasOwnProperty(i) && obj[i] !== undefined) {
+                if (exports.hasStatic(obj, i) && obj[i] !== undefined) {
                     sourceType = typeis(source[i]);
                     objType = typeis(obj[i]);
 
