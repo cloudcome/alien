@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var domainLength = 4;
+    var domainLength = 3;
     var domainSuffix = '.com';
 
     //==================
@@ -11,7 +11,7 @@
     var random = function (min, max) {
         return min + Math.floor(Math.random() * (max - min));
     };
-    var word = 'abcdefghijklmnopqrstuvwxyz';//'1234567890-'; //
+    var word = 'abcdefghijklmnopqrstuvwxyz1234567890-'; //
     var max = word.length - 1;
     var map = {};
     var getScript = function (url, callback) {

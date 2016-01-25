@@ -9,17 +9,19 @@
 
 var seatransform = require('seatransform');
 var fse = require('fs-extra');
-var glob = require('glob');
 var path = require('ydr-utils').path;
+var glob = require('glob');
 
-var file = process.argv[2];
+var files = glob.sync(path.join(process.argv[2], '*'));
 
-glob(path.join(file, '*.js'), function (index, files) {
-    files.forEach(function (file) {
-        var code1 = fse.readFileSync(file, 'utf8');
-        var code2 = seatransform.transform(code1);
-        console.log(code2);
-    });
+files.forEach(function (file) {
+    var code1 = fse.readFileSync(file, 'utf8');
+    var code2 = seatransform.transform(code1);
+    var dirname = path.dirname(file);
+    var basename = path.basename(file);
+    var destFile = path.join(dirname, 'cmd-' + basename);
+    console.log(destFile);
+    fse.writeFileSync(destFile, code2, 'utf8');
 });
 
 
