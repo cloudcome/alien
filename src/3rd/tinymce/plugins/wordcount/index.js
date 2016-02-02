@@ -1,6 +1,7 @@
 define(function (require) {
     var tinymce = window.tinymce;
     var PluginManager = require("../../classes/AddOnManager").PluginManager;
+    var controller = require('../../../../utils/controller.js');
 
     /**
      * plugin.js
@@ -20,9 +21,10 @@ define(function (require) {
         // Included most unicode blocks see: http://en.wikipedia.org/wiki/Unicode_block
         // Latin-1_Supplement letters, a-z, u2019 == &rsquo;
         countre = editor.getParam('wordcount_countregex', /[\w\u2019\x27\-\u00C0-\u1FFF]+/g);
-        cleanre = editor.getParam('wordcount_cleanregex', /[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/g);
+        //cleanre = editor.getParam('wordcount_cleanregex', /[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/g);
 
         function update() {
+            console.log('update', self.getCount());
             editor.theme.panel.find('#wordcount').text(['Words: {0}', self.getCount()]);
         }
 
@@ -39,13 +41,13 @@ define(function (require) {
                         disabled: editor.settings.readonly
                     }, 0);
 
-                    editor.on('setcontent beforeaddundo', update);
+                    editor.on('change keyup', controller.debounce(update));
 
-                    editor.on('keyup', function (e) {
-                        if (e.keyCode == 32) {
-                            update();
-                        }
-                    });
+                    //editor.on('keyup', function (e) {
+                    //    if (e.keyCode == 32) {
+                    //        update();
+                    //    }
+                    //});
                 }, 0);
             }
         });
@@ -60,11 +62,14 @@ define(function (require) {
 
                 // deal with html entities
                 tx = tx.replace(/(\w+)(&#?[a-z0-9]+;)+(\w+)/i, "$1$3").replace(/&.+?;/g, ' ');
-                tx = tx.replace(cleanre, ''); // remove numbers and punctuation
+                //tx = tx.replace(cleanre, ''); // remove numbers and punctuation
 
                 var wordArray = tx.match(countre);
+
                 if (wordArray) {
-                    tc = wordArray.length;
+                    tinymce.each(wordArray, function (words) {
+                        tc += words.length;
+                    });
                 }
             }
 
