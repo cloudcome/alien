@@ -16,20 +16,38 @@ define(function (require, exports, module) {
     var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
     var dato = require('../../utils/dato.js');
+    var random = require('../../utils/random.js');
 
     var defaults = {
         // 内容样式
-        contentStyle: require('./content-style.css', 'css')
+        contentStyle: require('./content-style.css', 'css'),
+        height: 300,
+        minHeight: 100,
+        maxHeight: 1000
     };
     var Editor = ui.create({
         constructor: function (textareaEl, options) {
             var the = this;
 
-            textareaEl = the._textareaEl = selector.query(textareaEl)[0];
-            options = the._options = dato.extend({}, defaults, options);
+            the._textareaEl = selector.query(textareaEl)[0];
+            the._options = dato.extend({}, defaults, options);
+            the._initNode();
+        },
+
+
+        _initNode: function () {
+            var the = this;
+            var options = the._options;
+            var textareaEl = the._textareaEl;
+            var id = textareaEl.id;
+
+            id = textareaEl.id = id || 'editor-' + random.guid();
             the._editor = tinymce.init({
-                selector: textareaEl,
-                content_style: options.contentStyle
+                selector: '#' + id,
+                content_style: options.contentStyle,
+                height: options.height,
+                min_height: options.minHeight,
+                max_height: options.maxHeight
             });
         }
     });
