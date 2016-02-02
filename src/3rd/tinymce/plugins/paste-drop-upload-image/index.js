@@ -13,21 +13,23 @@ define(function (require, exports, module) {
     'use strict';
 
     var PluginManager = require("../../classes/AddOnManager").PluginManager;
+    var event = require('../../../../utils/event.js');
 
     PluginManager.add('paste-drop-upload-image', function (editor) {
         var self = this, settings = editor.settings;
+        var resolve = function (img) {
+            debugger;
+        };
 
         editor.on('dragenter dragover', function (e) {
             e.preventDefault();
             e.stopPropagation();
         });
 
-        editor.on('paste', function () {
+        editor.on('paste drop', function (eve) {
+            var imgs = event.parseFiles(eve, this.iframeElement);
 
-        });
-
-        editor.on('drop', function () {
-
+            editor.fire('upload', [eve, imgs, resolve]);
         });
     });
 });

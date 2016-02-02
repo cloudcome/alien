@@ -283,13 +283,16 @@ define(function (require, exports, module) {
             }
 
             function createEditor(id, settings, targetElm) {
-                if (!purgeDestroyedEditor(self.get(id))) {
-                    var editor = new Editor(id, settings, self);
+                var editor = purgeDestroyedEditor(self.get(id));
 
+                if (!editor) {
+                    editor = new Editor(id, settings, self);
                     editor.targetElm = editor.targetElm || targetElm;
                     editors.push(editor);
                     editor.render();
                 }
+
+                return editor;
             }
 
             function execCallback(name) {
@@ -306,105 +309,102 @@ define(function (require, exports, module) {
                 return className.constructor === RegExp ? className.test(elm.className) : DOM.hasClass(elm, className);
             }
 
-            function readyHandler() {
-                var l, co;
-
-                DOM.unbind(window, 'ready', readyHandler);
-
-                execCallback('onpageload');
-
-                if (settings.types) {
-                    // Process type specific selector
-                    each(settings.types, function (type) {
-                        each(DOM.select(type.selector), function (elm) {
-                            createEditor(createId(elm), extend({}, settings, type), elm);
-                        });
-                    });
-
-                    return;
-                } else if (settings.selector) {
-                    // Process global selector
-                    each(DOM.select(settings.selector), function (elm) {
-                        createEditor(createId(elm), settings, elm);
-                    });
-
-                    return;
-                } else if (settings.target) {
-                    createEditor(createId(settings.target), settings);
-                }
-
-                // Fallback to old setting
-                switch (settings.mode) {
-                    case "exact":
-                        l = settings.elements || '';
-
-                        if (l.length > 0) {
-                            each(explode(l), function (id) {
-                                var elm;
-
-                                if ((elm = DOM.get(id))) {
-                                    createEditor(id, settings, elm);
-                                } else {
-                                    each(document.forms, function (f) {
-                                        each(f.elements, function (e) {
-                                            if (e.name === id) {
-                                                id = 'mce_editor_' + instanceCounter++;
-                                                DOM.setAttrib(e, 'id', id);
-                                                createEditor(id, settings, e);
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                        }
-                        break;
-
-                    case "textareas":
-                    case "specific_textareas":
-                        each(DOM.select('textarea'), function (elm) {
-                            if (settings.editor_deselector && hasClass(elm, settings.editor_deselector)) {
-                                return;
-                            }
-
-                            if (!settings.editor_selector || hasClass(elm, settings.editor_selector)) {
-                                createEditor(createId(elm), settings, elm);
-                            }
-                        });
-                        break;
-                }
-
-                // Call onInit when all editors are initialized
-                if (settings.oninit) {
-                    l = co = 0;
-
-                    each(editors, function (ed) {
-                        co++;
-
-                        if (!ed.initialized) {
-                            // Wait for it
-                            ed.on('init', function () {
-                                l++;
-
-                                // All done
-                                if (l == co) {
-                                    execCallback('oninit');
-                                }
-                            });
-                        } else {
-                            l++;
-                        }
-
-                        // All done
-                        if (l == co) {
-                            execCallback('oninit');
-                        }
-                    });
-                }
-            }
+            //function readyHandler() {
+            //    //var l, co;
+            //    //execCallback('onpageload');
+            //    //
+            //    //
+            //    //if (settings.types) {
+            //    //    // Process type specific selector
+            //    //    each(settings.types, function (type) {
+            //    //        each(DOM.select(type.selector), function (elm) {
+            //    //            createEditor(createId(elm), extend({}, settings, type), elm);
+            //    //        });
+            //    //    });
+            //    //
+            //    //    return;
+            //    //} else if (settings.selector) {
+            //    //    // Process global selector
+            //    //    each(DOM.select(settings.selector), function (elm) {
+            //    //        createEditor(createId(elm), settings, elm);
+            //    //    });
+            //    //
+            //    //    return;
+            //    //} else if (settings.target) {
+            //    //    createEditor(createId(settings.target), settings);
+            //    //}
+            //    //
+            //    //// Fallback to old setting
+            //    //switch (settings.mode) {
+            //    //    case "exact":
+            //    //        l = settings.elements || '';
+            //    //
+            //    //        if (l.length > 0) {
+            //    //            each(explode(l), function (id) {
+            //    //                var elm;
+            //    //
+            //    //                if ((elm = DOM.get(id))) {
+            //    //                    createEditor(id, settings, elm);
+            //    //                } else {
+            //    //                    each(document.forms, function (f) {
+            //    //                        each(f.elements, function (e) {
+            //    //                            if (e.name === id) {
+            //    //                                id = 'mce_editor_' + instanceCounter++;
+            //    //                                DOM.setAttrib(e, 'id', id);
+            //    //                                createEditor(id, settings, e);
+            //    //                            }
+            //    //                        });
+            //    //                    });
+            //    //                }
+            //    //            });
+            //    //        }
+            //    //        break;
+            //    //
+            //    //    case "textareas":
+            //    //    case "specific_textareas":
+            //    //        each(DOM.select('textarea'), function (elm) {
+            //    //            if (settings.editor_deselector && hasClass(elm, settings.editor_deselector)) {
+            //    //                return;
+            //    //            }
+            //    //
+            //    //            if (!settings.editor_selector || hasClass(elm, settings.editor_selector)) {
+            //    //                createEditor(createId(elm), settings, elm);
+            //    //            }
+            //    //        });
+            //    //        break;
+            //    //}
+            //    //
+            //    //// Call onInit when all editors are initialized
+            //    //if (settings.oninit) {
+            //    //    l = co = 0;
+            //    //
+            //    //    each(editors, function (ed) {
+            //    //        co++;
+            //    //
+            //    //        if (!ed.initialized) {
+            //    //            // Wait for it
+            //    //            ed.on('init', function () {
+            //    //                l++;
+            //    //
+            //    //                // All done
+            //    //                if (l === co) {
+            //    //                    execCallback('oninit');
+            //    //                }
+            //    //            });
+            //    //        } else {
+            //    //            l++;
+            //    //        }
+            //    //
+            //    //        // All done
+            //    //        if (l === co) {
+            //    //            execCallback('oninit');
+            //    //        }
+            //    //    });
+            //    //}
+            //}
 
             self.settings = settings;
-
-            DOM.bind(window, 'ready', readyHandler);
+            return createEditor(createId(settings.ele), settings, settings.ele);
         },
 
         /**
