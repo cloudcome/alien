@@ -52,6 +52,7 @@ define(function (require, exports, module) {
                 name: 'file'
             });
 
+            the._fileEl = fileEl;
             the._editor = tinymce.init({
                 ele: textareaEl,
                 content_style: options.contentStyle,
@@ -128,7 +129,9 @@ define(function (require, exports, module) {
          */
         destroy: function () {
             var the = this;
+
             the._editor.destroy(false);
+            the._fileEl = null;
         }
     });
 
