@@ -20,6 +20,7 @@ define(function (require, exports, module) {
             if (canPlaceholder) {
                 editor.setContent(settings.placeholder);
                 editor.setDirty(false);
+                editor.startContent = '';
             }
         });
 
@@ -28,6 +29,10 @@ define(function (require, exports, module) {
                 editor.setContent('');
                 editor.setDirty(false);
             }
+        });
+
+        editor.on('GetContent', function (eve) {
+
         });
     });
 });

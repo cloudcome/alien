@@ -73,8 +73,34 @@ define(function (require, exports, module) {
             });
         },
 
+
+        /**
+         * 获取 html 内容
+         * @returns {*|String}
+         */
         getHTML: function () {
             return this._editor.getContent();
+        },
+
+
+        /**
+         * 设置 html 内容
+         * @param html
+         * @returns {Editor}
+         */
+        setHTML: function (html) {
+            var the = this;
+            the._editor.setContent(html);
+            return the;
+        },
+
+
+        /**
+         * 销毁实例
+         */
+        destroy: function () {
+            var the = this;
+            the._editor.destroy(false);
         }
     });
 
