@@ -45,6 +45,10 @@ define(function (require, exports, module) {
         editor.on('paste drop', function (eve) {
             var imgs = event.parseFiles(eve, this.iframeElement);
 
+            if (!imgs.length) {
+                return;
+            }
+
             editor.fire('upload', [eve, imgs, resolve]);
         });
     });
