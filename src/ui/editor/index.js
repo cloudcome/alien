@@ -15,8 +15,10 @@ define(function (require, exports, module) {
     var tinymce = require('../../3rd/tinymce/index.js');
     var ui = require('../index.js');
     var selector = require('../../core/dom/selector.js');
+    var modification = require('../../core/dom/modification.js');
     var dato = require('../../utils/dato.js');
-    var random = require('../../utils/random.js');
+    var eventUtil = require('../../utils/event.js');
+    var typeis = require('../../utils/typeis.js');
     var allocation = require('../../utils/allocation.js');
 
     var defaults = {
@@ -45,6 +47,10 @@ define(function (require, exports, module) {
             var the = this;
             var options = the._options;
             var textareaEl = the._textareaEl;
+            var fileEl = modification.create('input', {
+                type: 'file',
+                name: 'file'
+            });
 
             the._editor = tinymce.init({
                 ele: textareaEl,
@@ -53,8 +59,27 @@ define(function (require, exports, module) {
                 min_height: options.minHeight,
                 max_height: options.maxHeight,
                 placeholder: options.placeholder,
-                file_browser_callback: function () {
-                    debugger;
+                file_picker_callback: function (callback, value, meta) {
+                    fileEl.click();
+                    fileEl.onchange = function (eve) {
+                        var imgs = eventUtil.parseFiles(eve, fileEl);
+
+                        if (!imgs.length) {
+                            return;
+                        }
+
+                        the.emit('upload', eve, imgs, function (img) {
+                            if (typeis.String(img)) {
+                                img = {
+                                    src: img
+                                };
+                            }
+
+                            img.src = img.src || img.url;
+                            dato.extend(meta, img);
+                            callback(img.src, meta);
+                        });
+                    };
                 }
             });
         },

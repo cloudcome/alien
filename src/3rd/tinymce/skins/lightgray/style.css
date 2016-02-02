@@ -882,7 +882,7 @@ body .mce-abs-layout-item, .mce-abs-end {
 }
 
 .mce-btn.mce-active, .mce-btn.mce-active:hover {
-    background-color: #F3F3F3;
+    background-color: #ccc;
     border-color: #ccc;
 }
 
