@@ -42,9 +42,12 @@ define(function (require) {
             //tools: {title: 'Tools'}
         };
 
-        var defaultToolbar = "bold italic underline strikethrough | forecolor backcolor removeformat formatselect | " +
-            "alignleft aligncenter alignright alignjustify | " +
-            "bullist numlist | link unlink image table | fullscreen undo redo";
+        var defaultToolbar = [
+            "bold italic underline strikethrough | forecolor backcolor removeformat | " +
+            "bullist numlist | fullscreen undo redo",
+            "formatselect | alignleft aligncenter alignright alignjustify | " +
+            "link unlink image table"
+        ];
 
         function createToolbar(items, size) {
             var toolbarItems = [], buttonGroup;
@@ -156,30 +159,19 @@ define(function (require) {
                 }
             }
 
-            // Convert toolbar array to multiple options
-            if (tinymce.isArray(settings.toolbar)) {
-                // Empty toolbar array is the same as a disabled toolbar
-                if (settings.toolbar.length === 0) {
-                    return;
-                }
+            var toolbar = settings.toolbar || defaultToolbar;
 
-                tinymce.each(settings.toolbar, function (toolbar, i) {
-                    settings["toolbar" + (i + 1)] = toolbar;
-                });
+            toolbar = tinymce.isArray(toolbar) ? toolbar : [toolbar];
 
-                delete settings.toolbar;
-            }
+            tinymce.each(toolbar, function (toolbar, i) {
+                settings["toolbar" + (i + 1)] = toolbar;
+            });
 
             // Generate toolbar<n>
             for (var i = 1; i < 10; i++) {
                 if (!addToolbar(settings["toolbar" + i])) {
                     break;
                 }
-            }
-
-            // Generate toolbar or default toolbar unless it's disabled
-            if (!toolbars.length && settings.toolbar !== false) {
-                addToolbar(settings.toolbar || defaultToolbar);
             }
 
             if (toolbars.length) {
@@ -678,11 +670,6 @@ define(function (require) {
                     fixed: !!inlineToolbarContainer,
                     border: 1,
                     items: [
-                        settings.menubar === false ? null : {
-                            type: 'menubar',
-                            border: '0 0 1 0',
-                            items: createMenuButtons()
-                        },
                         createToolbars(settings.toolbar_items_size)
                     ]
                 });
@@ -748,7 +735,7 @@ define(function (require) {
 
             function switchMode() {
                 return function (e) {
-                    if (e.mode == 'readonly') {
+                    if (e.mode === 'readonly') {
                         panel.find('*').disabled(true);
                     } else {
                         panel.find('*').disabled(false);
@@ -765,11 +752,6 @@ define(function (require) {
                 layout: 'stack',
                 border: 1,
                 items: [
-                    settings.menubar === false ? null : {
-                        type: 'menubar',
-                        border: '0 0 1 0',
-                        items: createMenuButtons()
-                    },
                     createToolbars(settings.toolbar_items_size),
                     {
                         type: 'panel',
@@ -869,7 +851,6 @@ define(function (require) {
             //    }
             //
             //    // Load special skin for IE7
-            //    // TODO: Remove this when we drop IE7 support
             //    if (tinymce.Env.documentMode <= 7) {
             //        args.skinUiCss = skinUrl + '/skin.ie7.min.css';
             //    } else {

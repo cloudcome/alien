@@ -16,8 +16,8 @@
  * @extends tinymce.ui.Container
  */
 define(function (require, exports, module) {
-    var Toolbar = require("./Toolbar");
     "use strict";
+    var Toolbar = require("./Toolbar");
 
     return Toolbar.extend({
         Defaults: {
