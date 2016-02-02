@@ -1,4 +1,8 @@
 define(function (require) {
+    /*@polyfill string.js*/
+
+    'use strict';
+
     var tinymce = window.tinymce;
     var PluginManager = require("../../classes/AddOnManager").PluginManager;
     var controller = require('../../../../utils/controller.js');
@@ -56,24 +60,20 @@ define(function (require) {
         });
 
         self.getCount = function () {
-            var tx = editor.getContent({format: 'raw'});
+            var tx = editor.isDirty() ? editor.getContent({format: 'text'}) : '';
             var tc = 0;
 
             if (tx) {
-                tx = tx.replace(/\.\.\./g, ' '); // convert ellipses to spaces
-                tx = tx.replace(/<.[^<>]*?>/g, ' ').replace(/&nbsp;|&#160;/gi, ' '); // remove html tags and space chars
+                // convert ellipses to spaces
+                tx = tx.replace(/\.\.\./g, ' ')
+                    // remove html tags and space chars
+                    .replace(/&nbsp;|&#160;/gi, ' ')
+                    // deal with html entities
+                    .replace(/(\w+)(&#?[a-z0-9]+;)+(\w+)/i, "$1$3").replace(/&.+?;/g, ' ')
+                    // remove space
+                    .replace(/\s/g, '').trim();
 
-                // deal with html entities
-                tx = tx.replace(/(\w+)(&#?[a-z0-9]+;)+(\w+)/i, "$1$3").replace(/&.+?;/g, ' ');
-                //tx = tx.replace(cleanre, ''); // remove numbers and punctuation
-
-                var wordArray = tx.match(countre);
-
-                if (wordArray) {
-                    tinymce.each(wordArray, function (words) {
-                        tc += words.length;
-                    });
-                }
+                tc = tx.length;
             }
 
             return tc;
