@@ -14,6 +14,7 @@ define(function (require, exports, module) {
         var settings = editor.settings;
         var canPlaceholder = false;
 
+        // 载入内容之后，判断是否内容，没有的话显示占位
         editor.on('loadcontent', function (eve) {
             canPlaceholder = !eve.content && settings.placeholder
 
@@ -24,6 +25,7 @@ define(function (require, exports, module) {
             }
         });
 
+        // 第一次聚焦的时候设置为空
         editor.once('focus', function () {
             if (canPlaceholder) {
                 editor.setContent('');
@@ -31,8 +33,11 @@ define(function (require, exports, module) {
             }
         });
 
-        editor.on('GetContent', function (eve) {
-
+        // 销毁实例前保存内容，如果内容没有变化则设置为空
+        editor.once('SaveContent', function (eve) {
+            if (eve.destroy && canPlaceholder && !editor.isDirty()) {
+                eve.content = '';
+            }
         });
     });
 });

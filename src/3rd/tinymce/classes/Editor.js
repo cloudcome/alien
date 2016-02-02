@@ -1616,8 +1616,8 @@ define(function (require, exports, module) {
          * so all events etc that method has will get dispatched as well.
          *
          * @method save
-         * @param {Object} args Optional content object, this gets passed around through the whole save process.
-         * @return {String} HTML string that got set into the textarea/div.
+         * @param {Object} [args] Optional content object, this gets passed around through the whole save process.
+         * @return {String|undefined} HTML string that got set into the textarea/div.
          */
         save: function (args) {
             var self = this, elm = self.getElement(), html, form;
@@ -2075,7 +2075,9 @@ define(function (require, exports, module) {
             var self = this;
 
             if (!self.removed) {
-                self.save();
+                self.save({
+                    destroy: true
+                });
                 self.removed = 1;
                 self.unbindAllNativeEvents();
 
