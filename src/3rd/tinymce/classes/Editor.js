@@ -1989,7 +1989,7 @@ define(function (require, exports, module) {
          * @method convertURL
          * @param {string} url URL to convert.
          * @param {string} name Attribute name src, href etc.
-         * @param {string/HTMLElement} elm Tag name or HTML DOM element depending on HTML or DOM insert.
+         * @param {string/HTMLElement} [elm] Tag name or HTML DOM element depending on HTML or DOM insert.
          * @return {string} Converted URL string.
          */
         convertURL: function (url, name, elm) {

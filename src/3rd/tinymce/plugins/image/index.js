@@ -253,13 +253,6 @@ define(function (require) {
                 });
             }
 
-            function removePixelSuffix(value) {
-                if (value) {
-                    value = value.replace(/px$/, '');
-                }
-
-                return value;
-            }
 
             function srcChange(e) {
                 var srcURL, prependURL, absoluteURLPattern, meta = e.meta || {};
@@ -302,7 +295,7 @@ define(function (require) {
                 imgElm = dom.select('img', figureElm)[0];
             }
 
-            if (imgElm && (imgElm.nodeName != 'IMG' || imgElm.getAttribute('data-mce-object') || imgElm.getAttribute('data-mce-placeholder'))) {
+            if (imgElm && (imgElm.nodeName !== 'IMG' || imgElm.getAttribute('data-mce-object') || imgElm.getAttribute('data-mce-placeholder'))) {
                 imgElm = null;
             }
 
@@ -336,7 +329,7 @@ define(function (require) {
                     onselect: function (e) {
                         var altCtrl = win.find('#alt');
 
-                        if (!altCtrl.value() || (e.lastControl && altCtrl.value() == e.lastControl.text())) {
+                        if (!altCtrl.value() || (e.lastControl && altCtrl.value() === e.lastControl.text())) {
                             altCtrl.value(e.control.text());
                         }
 
@@ -367,63 +360,92 @@ define(function (require) {
                 };
             }
 
-            // General settings shared between simple and advanced dialogs
-            var generalFormItems = [
-                {
+
+            /**
+             * 生成远程图片项目
+             * @returns {*[]}
+             */
+            function generateItems() {
+                // General settings shared between simple and advanced dialogs
+                var generalFormItems = [
+                    {
+                        name: 'src',
+                        type: 'filepicker',
+                        filetype: 'image',
+                        label: 'Source',
+                        autofocus: true,
+                        onchange: srcChange
+                    },
+                    imageListCtrl
+                ];
+
+                if (editor.settings.image_description !== false) {
+                    generalFormItems.push({name: 'alt', type: 'textbox', label: 'Image description'});
+                }
+
+                if (editor.settings.image_title) {
+                    generalFormItems.push({name: 'title', type: 'textbox', label: 'Image Title'});
+                }
+
+                if (imageDimensions) {
+                    generalFormItems.push({
+                        type: 'container',
+                        label: 'Dimensions',
+                        layout: 'flex',
+                        direction: 'row',
+                        align: 'center',
+                        spacing: 5,
+                        items: [
+                            {
+                                name: 'width',
+                                type: 'textbox',
+                                maxLength: 5,
+                                size: 3,
+                                onchange: recalcSize,
+                                ariaLabel: 'Width'
+                            },
+                            {type: 'label', text: 'x'},
+                            {
+                                name: 'height',
+                                type: 'textbox',
+                                maxLength: 5,
+                                size: 3,
+                                onchange: recalcSize,
+                                ariaLabel: 'Height'
+                            },
+                            {name: 'constrain', type: 'checkbox', checked: true, text: 'Constrain proportions'}
+                        ]
+                    });
+                }
+
+                generalFormItems.push(classListCtrl);
+
+                if (editor.settings.image_caption && tinymce.Env.ceFalse) {
+                    generalFormItems.push({name: 'caption', type: 'checkbox', label: 'Caption'});
+                }
+
+                return generalFormItems;
+            }
+
+
+            /**
+             * 生成上传图片项目
+             */
+            function generateUploadImageItems() {
+                var items = [];
+
+                items.push({
                     name: 'src',
                     type: 'filepicker',
                     filetype: 'image',
                     label: 'Source',
                     autofocus: true,
                     onchange: srcChange
-                },
-                imageListCtrl
-            ];
-
-            if (editor.settings.image_description !== false) {
-                generalFormItems.push({name: 'alt', type: 'textbox', label: 'Image description'});
-            }
-
-            if (editor.settings.image_title) {
-                generalFormItems.push({name: 'title', type: 'textbox', label: 'Image Title'});
-            }
-
-            if (imageDimensions) {
-                generalFormItems.push({
-                    type: 'container',
-                    label: 'Dimensions',
-                    layout: 'flex',
-                    direction: 'row',
-                    align: 'center',
-                    spacing: 5,
-                    items: [
-                        {
-                            name: 'width',
-                            type: 'textbox',
-                            maxLength: 5,
-                            size: 3,
-                            onchange: recalcSize,
-                            ariaLabel: 'Width'
-                        },
-                        {type: 'label', text: 'x'},
-                        {
-                            name: 'height',
-                            type: 'textbox',
-                            maxLength: 5,
-                            size: 3,
-                            onchange: recalcSize,
-                            ariaLabel: 'Height'
-                        },
-                        {name: 'constrain', type: 'checkbox', checked: true, text: 'Constrain proportions'}
-                    ]
                 });
+
+                return items;
             }
 
-            generalFormItems.push(classListCtrl);
-
-            if (editor.settings.image_caption && tinymce.Env.ceFalse) {
-                generalFormItems.push({name: 'caption', type: 'checkbox', label: 'Caption'});
-            }
 
             function mergeMargins(css) {
                 if (css.margin) {
@@ -491,113 +513,13 @@ define(function (require) {
                 win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
             }
 
-            function updateVSpaceHSpaceBorder() {
-                if (!editor.settings.image_advtab) {
-                    return;
-                }
-
-                var data = win.toJSON(),
-                    css = dom.parseStyle(data.style);
-
-                win.find('#vspace').value("");
-                win.find('#hspace').value("");
-
-                css = mergeMargins(css);
-
-                //Move opposite equal margins to vspace/hspace field
-                if ((css['margin-top'] && css['margin-bottom']) || (css['margin-right'] && css['margin-left'])) {
-                    if (css['margin-top'] === css['margin-bottom']) {
-                        win.find('#vspace').value(removePixelSuffix(css['margin-top']));
-                    } else {
-                        win.find('#vspace').value('');
-                    }
-                    if (css['margin-right'] === css['margin-left']) {
-                        win.find('#hspace').value(removePixelSuffix(css['margin-right']));
-                    } else {
-                        win.find('#hspace').value('');
-                    }
-                }
-
-                //Move border-width
-                if (css['border-width']) {
-                    win.find('#border').value(removePixelSuffix(css['border-width']));
-                }
-
-                win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
-
-            }
-
-            if (editor.settings.image_advtab) {
-                // Parse styles from img
-                if (imgElm) {
-                    if (imgElm.style.marginLeft && imgElm.style.marginRight && imgElm.style.marginLeft === imgElm.style.marginRight) {
-                        data.hspace = removePixelSuffix(imgElm.style.marginLeft);
-                    }
-                    if (imgElm.style.marginTop && imgElm.style.marginBottom && imgElm.style.marginTop === imgElm.style.marginBottom) {
-                        data.vspace = removePixelSuffix(imgElm.style.marginTop);
-                    }
-                    if (imgElm.style.borderWidth) {
-                        data.border = removePixelSuffix(imgElm.style.borderWidth);
-                    }
-
-                    data.style = editor.dom.serializeStyle(editor.dom.parseStyle(editor.dom.getAttrib(imgElm, 'style')));
-                }
-
-                // Advanced dialog shows general+advanced tabs
-                win = editor.windowManager.open({
-                    title: 'Insert/edit image',
-                    data: data,
-                    bodyType: 'tabpanel',
-                    body: [
-                        {
-                            title: 'General',
-                            type: 'form',
-                            items: generalFormItems
-                        },
-
-                        {
-                            title: 'Advanced',
-                            type: 'form',
-                            pack: 'start',
-                            items: [
-                                {
-                                    label: 'Style',
-                                    name: 'style',
-                                    type: 'textbox',
-                                    onchange: updateVSpaceHSpaceBorder
-                                },
-                                {
-                                    type: 'form',
-                                    layout: 'grid',
-                                    packV: 'start',
-                                    columns: 2,
-                                    padding: 0,
-                                    alignH: ['left', 'right'],
-                                    defaults: {
-                                        type: 'textbox',
-                                        maxWidth: 50,
-                                        onchange: updateStyle
-                                    },
-                                    items: [
-                                        {label: 'Vertical space', name: 'vspace'},
-                                        {label: 'Horizontal space', name: 'hspace'},
-                                        {label: 'Border', name: 'border'}
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    onSubmit: onSubmitForm
-                });
-            } else {
-                // Simple default dialog
-                win = editor.windowManager.open({
-                    title: 'Insert/edit image',
-                    data: data,
-                    body: generalFormItems,
-                    onSubmit: onSubmitForm
-                });
-            }
+            // Simple default dialog
+            win = editor.windowManager.open({
+                title: 'Insert/edit image',
+                data: data,
+                body: generateItems(),
+                onSubmit: onSubmitForm
+            });
         }
 
         editor.on('preInit', function () {

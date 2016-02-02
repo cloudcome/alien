@@ -197,7 +197,9 @@ define(function () {
         "Tools": "工具",
         "View": "视图",
         "Table": "表格",
-        "Format": "格式"
+        "Format": "格式",
+        'Remote image': '远程图片',
+        'Upload image': '上传图片'
     });
 });
 

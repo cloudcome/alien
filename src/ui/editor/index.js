@@ -52,7 +52,10 @@ define(function (require, exports, module) {
                 height: options.height,
                 min_height: options.minHeight,
                 max_height: options.maxHeight,
-                placeholder: options.placeholder
+                placeholder: options.placeholder,
+                file_browser_callback: function () {
+                    debugger;
+                }
             });
         },
 

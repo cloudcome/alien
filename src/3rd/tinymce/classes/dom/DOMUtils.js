@@ -331,7 +331,7 @@ define(function (require, exports, module) {
          * @method getParent
          * @param {Node/String} node DOM node to search parents on or ID string.
          * @param {function} selector Selection function or CSS selector to execute on each node.
-         * @param {Node} root Optional root element, never go below this point.
+         * @param {Node} [root] Optional root element, never go below this point.
          * @return {Node} DOM Node or null if it wasn't found.
          */
         getParent: function (node, selector, root) {
@@ -815,7 +815,7 @@ define(function (require, exports, module) {
          * @method getAttrib
          * @param {String/Element} elm Element string id or DOM element to get attribute from.
          * @param {String} name Name of attribute to get.
-         * @param {String} defaultVal Optional default value to return if the attribute didn't exist.
+         * @param {String} [defaultVal] Optional default value to return if the attribute didn't exist.
          * @return {String} Attribute value string, default value or null if the attribute wasn't found.
          */
         getAttrib: function (elm, name, defaultVal) {
@@ -905,7 +905,7 @@ define(function (require, exports, module) {
          *
          * @method serializeStyle
          * @param {Object} styles Object to serialize as string, for example: {border: '1px solid red'}
-         * @param {String} name Optional element name.
+         * @param {String} [name] Optional element name.
          * @return {String} String representation of the style object, for example: border: 1px solid red.
          */
         serializeStyle: function (styles, name) {
