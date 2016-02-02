@@ -71,6 +71,10 @@ define(function (require, exports, module) {
                     the.emit.apply(the, args);
                 });
             });
+        },
+
+        getHTML: function () {
+            return this._editor.getContent();
         }
     });
 
