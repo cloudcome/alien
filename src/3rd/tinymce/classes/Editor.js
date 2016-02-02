@@ -1207,8 +1207,8 @@ define(function (require, exports, module) {
          *
          * @method getParam
          * @param {String} name Configruation parameter to retrive.
-         * @param {String} defaultVal Optional default value to return.
-         * @param {String} type Optional type parameter.
+         * @param {*} defaultVal Optional default value to return.
+         * @param {String} [type] Optional type parameter.
          * @return {String} Configuration parameter value or default value.
          * @example
          * // Returns a specific config value from the currently active editor

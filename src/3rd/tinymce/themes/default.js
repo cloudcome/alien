@@ -1,4 +1,6 @@
 define(function (require) {
+    'use strict';
+
     var tinymce = window.tinymce;
     var ThemeManager = require("../classes/AddOnManager").ThemeManager;
 
@@ -8,6 +10,8 @@ define(function (require) {
     require('../plugins/textcolor/index.js');
     require('../plugins/fullscreen/index.js');
     require('../plugins/paste-drop-upload-image/index.js');
+    require('../plugins/autoresize/index.js');
+    require('../plugins/wordcount/index.js');
 
     /**
      * theme.js

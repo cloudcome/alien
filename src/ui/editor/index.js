@@ -23,8 +23,7 @@ define(function (require, exports, module) {
         // 内容样式
         contentStyle: require('./content-style.css', 'css'),
         height: 300,
-        minHeight: 100,
-        maxHeight: 1000
+        maxHeight: 800
     };
     var Editor = ui.create({
         constructor: function (textareaEl, options) {
