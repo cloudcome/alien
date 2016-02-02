@@ -19,7 +19,7 @@ define(function (require, exports, module) {
 
     var defaults = {
         // 内容样式
-        contentStyle: ''
+        contentStyle: require('./content-style.css', 'css')
     };
     var Editor = ui.create({
         constructor: function (textareaEl, options) {
