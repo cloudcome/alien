@@ -12,6 +12,7 @@ define(function (require) {
     require('../plugins/paste-drop-upload-image/index.js');
     require('../plugins/autoresize/index.js');
     require('../plugins/wordcount/index.js');
+    require('../plugins/placeholder/index.js');
 
     /**
      * theme.js

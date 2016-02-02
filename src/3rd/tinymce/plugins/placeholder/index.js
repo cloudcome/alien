@@ -14,6 +14,8 @@ define(function (require, exports, module) {
     PluginManager.add('placeholder', function (editor) {
         var settings = editor.settings;
 
-        //editor.on('init');
+        editor.on('loadcontent', function () {
+            debugger;
+        });
     });
 });
