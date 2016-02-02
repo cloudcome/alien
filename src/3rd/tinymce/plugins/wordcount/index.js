@@ -24,6 +24,10 @@ define(function (require) {
         //cleanre = editor.getParam('wordcount_cleanregex', /[0-9.(),;:!?%#$?\x27\x22_+=\\\/\-]*/g);
 
         function update() {
+            if (editor.destroyed) {
+                return;
+            }
+
             editor.theme.panel.find('#wordcount').text(['Words: {0}', self.getCount()]);
         }
 
