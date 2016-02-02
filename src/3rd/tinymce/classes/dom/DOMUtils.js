@@ -567,7 +567,7 @@ define(function (require, exports, module) {
          * @method createHTML
          * @param {String} name Name of new element.
          * @param {Object} attrs Optional object name/value collection with element attributes.
-         * @param {String} html Optional HTML string to set as inner HTML of the element.
+         * @param {String} [html] Optional HTML string to set as inner HTML of the element.
          * @return {String} String with new HTML element, for example: <a href="#">test</a>.
          * @example
          * // Creates a html chunk and inserts it at the current selection/caret location

@@ -37,6 +37,10 @@ define(function (require, exports, module) {
         },
 
 
+        /**
+         * 初始化节点
+         * @private
+         */
         _initNode: function () {
             var the = this;
             var options = the._options;
@@ -51,6 +55,11 @@ define(function (require, exports, module) {
             });
         },
 
+
+        /**
+         * 初始化事件
+         * @private
+         */
         _initEvent: function () {
             var the = this;
             var events = ['upload'];

@@ -146,7 +146,7 @@ define(function (require, exports, module) {
          *
          * @method setContent
          * @param {String} content HTML contents to set could also be other formats depending on settings.
-         * @param {Object} args Optional settings object with for example data format.
+         * @param {Object} [args] Optional settings object with for example data format.
          * @example
          * // Inserts some HTML contents at the current selection
          * tinymce.activeEditor.selection.setContent('<strong>Some contents</strong>');
@@ -379,7 +379,7 @@ define(function (require, exports, module) {
          *
          * @method select
          * @param {Element} node HTML DOM element to select.
-         * @param {Boolean} content Optional bool state if the contents should be selected or not on non IE browser.
+         * @param {Boolean} [content] Optional bool state if the contents should be selected or not on non IE browser.
          * @return {Element} Selected element the same element as the one that got passed in.
          * @example
          * // Select the first paragraph in the active editor
