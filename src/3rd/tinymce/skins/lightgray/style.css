@@ -523,7 +523,14 @@ div.mce-fullscreen {
 }
 
 .mce-window-body .mce-listbox {
-    border-color: #ccc
+    border-color: #ccc;
+    background: #fff;
+}
+
+.mce-window-body .mce-listbox:hover,
+.mce-window-body .mce-listbox:focus{
+    border-color: #ccc;
+    background: #F3F3F3;
 }
 
 .mce-rtl .mce-window-head .mce-close {
@@ -875,8 +882,8 @@ body .mce-abs-layout-item, .mce-abs-end {
 }
 
 .mce-btn.mce-active, .mce-btn.mce-active:hover {
-    background-color: #dbdbdb;
-    border-color: #ccc
+    background-color: #F3F3F3;
+    border-color: #ccc;
 }
 
 .mce-btn:active {

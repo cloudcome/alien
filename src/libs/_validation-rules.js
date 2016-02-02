@@ -73,7 +73,7 @@ define(function (require, exports, module) {
 
             var isMultiple = _isMultiple(val);
             var boolean = typeis(val) === 'file' ? true :
-            (isMultiple ? val : (val || '')).length > 0;
+            (isMultiple ? val : String(val || '')).length > 0;
 
             //done(boolean ? null : '${path}不能为空');
             done(boolean ? null : lang.get('required'));
