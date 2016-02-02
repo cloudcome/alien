@@ -24,7 +24,7 @@ define(function (require, exports, module) {
         contentStyle: require('./content-style.css', 'css'),
         height: 300,
         maxHeight: 800,
-        placeholder: '点击开始输入'
+        placeholder: '<p style="color:#888">点击开始输入</p>'
     };
     var Editor = ui.create({
         constructor: function (textareaEl, options) {
@@ -51,7 +51,8 @@ define(function (require, exports, module) {
                 content_style: options.contentStyle,
                 height: options.height,
                 min_height: options.minHeight,
-                max_height: options.maxHeight
+                max_height: options.maxHeight,
+                placeholder: options.placeholder
             });
         },
 
