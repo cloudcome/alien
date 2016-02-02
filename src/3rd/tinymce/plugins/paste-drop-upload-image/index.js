@@ -1,15 +1,11 @@
 /**
- * 文件描述
+ * 粘贴、拖拽图片上传
  * @author ydr.me
  * @create 2016-02-02 11:47
  */
 
 
 define(function (require, exports, module) {
-    /**
-     * @module parent/index
-     */
-
     'use strict';
 
     var PluginManager = require("../../classes/AddOnManager").PluginManager;
@@ -43,7 +39,7 @@ define(function (require, exports, module) {
         });
 
         editor.on('paste drop', function (eve) {
-            var imgs = event.parseFiles(eve, this.iframeElement);
+            var imgs = event.parseFiles(eve, this.getDoc());
 
             if (!imgs.length) {
                 return;

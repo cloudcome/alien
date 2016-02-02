@@ -295,15 +295,15 @@ define(function (require, exports, module) {
                 return editor;
             }
 
-            function execCallback(name) {
-                var callback = settings[name];
-
-                if (!callback) {
-                    return;
-                }
-
-                return callback.apply(self, Array.prototype.slice.call(arguments, 2));
-            }
+            //function execCallback(name) {
+            //    var callback = settings[name];
+            //
+            //    if (!callback) {
+            //        return;
+            //    }
+            //
+            //    return callback.apply(self, Array.prototype.slice.call(arguments, 2));
+            //}
 
             function hasClass(elm, className) {
                 return className.constructor === RegExp ? className.test(elm.className) : DOM.hasClass(elm, className);
