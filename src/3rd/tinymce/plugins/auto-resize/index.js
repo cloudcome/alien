@@ -24,7 +24,7 @@ define(function (require) {
      * It will retain a minimum height, which is the height of the content area when
      * it's initialized.
      */
-    PluginManager.add('autoresize', function (editor) {
+    PluginManager.add('auto-resize', function (editor) {
         var settings = editor.settings, oldSize = 0;
 
         function isFullscreen() {
@@ -153,7 +153,7 @@ define(function (require) {
         // Add appropriate listeners for resizing content area
         editor.on("nodechange setcontent keyup FullscreenStateChanged", resize);
 
-        if (editor.getParam('autoresize_on_init', true)) {
+        if (editor.getParam('auto_resize_on_init', true)) {
             editor.on('init', function () {
                 // Hit it 20 times in 100 ms intervals
                 wait(20, 100, function () {

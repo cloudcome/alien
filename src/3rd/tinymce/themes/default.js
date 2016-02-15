@@ -10,7 +10,8 @@ define(function (require) {
     require('../plugins/textcolor/index.js');
     require('../plugins/fullscreen/index.js');
     require('../plugins/paste-drop-upload-image/index.js');
-    require('../plugins/autoresize/index.js');
+    require('../plugins/auto-fixed-toolbar/index.js');
+    require('../plugins/auto-resize/index.js');
     require('../plugins/wordcount/index.js');
     require('../plugins/placeholder/index.js');
 
@@ -27,6 +28,7 @@ define(function (require) {
     ThemeManager.add('default', function (editor) {
         var self = this, settings = editor.settings, Factory = tinymce.ui.Factory,
             each = tinymce.each, DOM = tinymce.DOM, Rect = tinymce.geom.Rect, FloatPanel = tinymce.ui.FloatPanel;
+        var toolbarId = 'toolbar-' + Date.now();
 
         // Default menus
         var defaultMenus = {
@@ -178,10 +180,12 @@ define(function (require) {
                 return {
                     type: 'panel',
                     layout: 'stack',
-                    classes: "toolbar-grp",
+                    id: toolbarId,
+                    classes: "toolbar",
                     ariaRoot: true,
                     ariaRemember: true,
-                    items: toolbars
+                    items: toolbars,
+                    border: '0 0 1'
                 };
             }
         }
@@ -191,109 +195,109 @@ define(function (require) {
          *
          * @return {Array} Menu buttons array.
          */
-        function createMenuButtons() {
-            var name, menuButtons = [];
-
-            function createMenuItem(name) {
-                var menuItem;
-
-                if (name == '|') {
-                    return {text: '|'};
-                }
-
-                menuItem = editor.menuItems[name];
-
-                return menuItem;
-            }
-
-            function createMenu(context) {
-                var menuButton, menu, menuItems, isUserDefined, removedMenuItems;
-
-                removedMenuItems = tinymce.makeMap((settings.removed_menuitems || '').split(/[ ,]/));
-
-                // User defined menu
-                if (settings.menu) {
-                    menu = settings.menu[context];
-                    isUserDefined = true;
-                } else {
-                    menu = defaultMenus[context];
-                }
-
-                if (menu) {
-                    menuButton = {text: menu.title};
-                    menuItems = [];
-
-                    // Default/user defined items
-                    each((menu.items || '').split(/[ ,]/), function (item) {
-                        var menuItem = createMenuItem(item);
-
-                        if (menuItem && !removedMenuItems[item]) {
-                            menuItems.push(createMenuItem(item));
-                        }
-                    });
-
-                    // Added though context
-                    if (!isUserDefined) {
-                        each(editor.menuItems, function (menuItem) {
-                            if (menuItem.context == context) {
-                                if (menuItem.separator == 'before') {
-                                    menuItems.push({text: '|'});
-                                }
-
-                                if (menuItem.prependToContext) {
-                                    menuItems.unshift(menuItem);
-                                } else {
-                                    menuItems.push(menuItem);
-                                }
-
-                                if (menuItem.separator == 'after') {
-                                    menuItems.push({text: '|'});
-                                }
-                            }
-                        });
-                    }
-
-                    for (var i = 0; i < menuItems.length; i++) {
-                        if (menuItems[i].text == '|') {
-                            if (i === 0 || i == menuItems.length - 1) {
-                                menuItems.splice(i, 1);
-                            }
-                        }
-                    }
-
-                    menuButton.menu = menuItems;
-
-                    if (!menuButton.menu.length) {
-                        return null;
-                    }
-                }
-
-                return menuButton;
-            }
-
-            var defaultMenuBar = [];
-            if (settings.menu) {
-                for (name in settings.menu) {
-                    defaultMenuBar.push(name);
-                }
-            } else {
-                for (name in defaultMenus) {
-                    defaultMenuBar.push(name);
-                }
-            }
-
-            var enabledMenuNames = typeof settings.menubar == "string" ? settings.menubar.split(/[ ,]/) : defaultMenuBar;
-            for (var i = 0; i < enabledMenuNames.length; i++) {
-                var menu = enabledMenuNames[i];
-                menu = createMenu(menu);
-
-                if (menu) {
-                    menuButtons.push(menu);
-                }
-            }
-
-            return menuButtons;
-        }
+        //function createMenuButtons() {
+        //    var name, menuButtons = [];
+        //
+        //    function createMenuItem(name) {
+        //        var menuItem;
+        //
+        //        if (name == '|') {
+        //            return {text: '|'};
+        //        }
+        //
+        //        menuItem = editor.menuItems[name];
+        //
+        //        return menuItem;
+        //    }
+        //
+        //    function createMenu(context) {
+        //        var menuButton, menu, menuItems, isUserDefined, removedMenuItems;
+        //
+        //        removedMenuItems = tinymce.makeMap((settings.removed_menuitems || '').split(/[ ,]/));
+        //
+        //        // User defined menu
+        //        if (settings.menu) {
+        //            menu = settings.menu[context];
+        //            isUserDefined = true;
+        //        } else {
+        //            menu = defaultMenus[context];
+        //        }
+        //
+        //        if (menu) {
+        //            menuButton = {text: menu.title};
+        //            menuItems = [];
+        //
+        //            // Default/user defined items
+        //            each((menu.items || '').split(/[ ,]/), function (item) {
+        //                var menuItem = createMenuItem(item);
+        //
+        //                if (menuItem && !removedMenuItems[item]) {
+        //                    menuItems.push(createMenuItem(item));
+        //                }
+        //            });
+        //
+        //            // Added though context
+        //            if (!isUserDefined) {
+        //                each(editor.menuItems, function (menuItem) {
+        //                    if (menuItem.context == context) {
+        //                        if (menuItem.separator == 'before') {
+        //                            menuItems.push({text: '|'});
+        //                        }
+        //
+        //                        if (menuItem.prependToContext) {
+        //                            menuItems.unshift(menuItem);
+        //                        } else {
+        //                            menuItems.push(menuItem);
+        //                        }
+        //
+        //                        if (menuItem.separator == 'after') {
+        //                            menuItems.push({text: '|'});
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //
+        //            for (var i = 0; i < menuItems.length; i++) {
+        //                if (menuItems[i].text == '|') {
+        //                    if (i === 0 || i == menuItems.length - 1) {
+        //                        menuItems.splice(i, 1);
+        //                    }
+        //                }
+        //            }
+        //
+        //            menuButton.menu = menuItems;
+        //
+        //            if (!menuButton.menu.length) {
+        //                return null;
+        //            }
+        //        }
+        //
+        //        return menuButton;
+        //    }
+        //
+        //    var defaultMenuBar = [];
+        //    if (settings.menu) {
+        //        for (name in settings.menu) {
+        //            defaultMenuBar.push(name);
+        //        }
+        //    } else {
+        //        for (name in defaultMenus) {
+        //            defaultMenuBar.push(name);
+        //        }
+        //    }
+        //
+        //    var enabledMenuNames = typeof settings.menubar == "string" ? settings.menubar.split(/[ ,]/) : defaultMenuBar;
+        //    for (var i = 0; i < enabledMenuNames.length; i++) {
+        //        var menu = enabledMenuNames[i];
+        //        menu = createMenu(menu);
+        //
+        //        if (menu) {
+        //            menuButtons.push(menu);
+        //        }
+        //    }
+        //
+        //    return menuButtons;
+        //}
 
         /**
          * Adds accessibility shortcut keys to panel.
@@ -758,8 +762,7 @@ define(function (require) {
                         name: 'iframe',
                         layout: 'stack',
                         classes: 'edit-area',
-                        html: '',
-                        border: '1 0 0 0'
+                        html: ''
                     }
                 ]
             });
@@ -872,6 +875,7 @@ define(function (require) {
                 }
             });
 
+
             if (settings.inline) {
                 return renderInlineUI(args);
             }
@@ -881,5 +885,8 @@ define(function (require) {
 
         self.resizeTo = resizeTo;
         self.resizeBy = resizeBy;
+        self.getToolbar = function () {
+            return self.toolbarEle || (self.toolbarEle = DOM.$('#' + toolbarId)[0]);
+        };
     });
 });

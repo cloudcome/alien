@@ -64,9 +64,8 @@ define(function (require) {
             var tc = 0;
 
             if (tx) {
-                // convert ellipses to spaces
-                tx = tx.replace(/\.\.\./g, ' ')
-                    // remove html tags and space chars
+                tx = tx
+                // remove html tags and space chars
                     .replace(/&nbsp;|&#160;/gi, ' ')
                     // deal with html entities
                     .replace(/(\w+)(&#?[a-z0-9]+;)+(\w+)/i, "$1$3").replace(/&.+?;/g, ' ')

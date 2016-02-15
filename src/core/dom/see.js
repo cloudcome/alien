@@ -22,10 +22,18 @@ define(function (require, exports, module) {
     var $body = doc.body;
     var tagDisplayMap = {};
     var getCSSDisplay = function ($ele) {
-        return win.getComputedStyle($ele, null).getPropertyValue('display');
+        try {
+            return win.getComputedStyle($ele, null).getPropertyValue('display');
+        } catch (err) {
+            return '';
+        }
     };
     var getStyleDisplay = function ($ele) {
-        return $ele.style.display;
+        try {
+            return $ele.style.display;
+        } catch (err) {
+            // ignore
+        }
     };
     var setStyleDisplay = function ($ele, display) {
         $ele.style.display = display;

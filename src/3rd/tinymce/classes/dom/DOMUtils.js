@@ -395,7 +395,7 @@ define(function (require, exports, module) {
          * Returns the specified element by ID or the input element if it isn't a string.
          *
          * @method get
-         * @param {String/Element} n Element id to look for or element to just pass though.
+         * @param {String/Element} elm Element id to look for or element to just pass though.
          * @return {Element} Element matching the specified id or null if it wasn't found.
          */
         get: function (elm) {

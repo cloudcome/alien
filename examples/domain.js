@@ -1,17 +1,18 @@
 (function () {
     'use strict';
 
-    var domainLength = 3;
+    var domainLength = 2;
     var domainSuffix = '.com';
+    var domainContain = 'yun';
 
     //==================
-    window.__token__ = 'check-web-hichina-com%3Aze2eyynbju2iuyfiwo1ne8rvm7r249fv';
-    window.__isg2__ = 'AlhY2y6LMYU1Ve4gzjaC-SzLqIzqILzL';
+    window.__token__ = 'check-web-hichina-com:o0kbabldcosgvnu57awzudcebdsbpq7z';
+    window.__isg2__ = 'Av7/CwUKrxd/s/yXvUtMAYIozh5CRcJb';
 
     var random = function (min, max) {
         return min + Math.floor(Math.random() * (max - min));
     };
-    var word = 'abcdefghijklmnopqrstuvwxyz1234567890-'; //
+    var word = 'abcdefghijklmnopqrstuvwxyz'//1234567890-'; //
     var max = word.length - 1;
     var map = {};
     var getScript = function (url, callback) {
@@ -37,6 +38,7 @@
                 w += word[random(0, max)];
             }
 
+            w += domainContain;
             var url = 'http://pandavip.www.net.cn/check/checkdomain?' +
                 'token=' + window.__token__ +
                 '&isg2=' + window.__isg2__;
